@@ -217,6 +217,472 @@
     }
   };
 
+  Object.assign(translations.sk, {
+    "English": "Angličtina",
+    "Slovak": "Slovenčina",
+    "Hungarian": "Maďarčina",
+    "Workforce folders": "Pracovné priečinky",
+    "workforce folders": "pracovné priečinky",
+    "Go to dashboard": "Prejsť na prehľad",
+    "Presenter avatar": "Avatar prezentujúceho",
+    "Current role": "Aktuálna rola",
+    "Guided demo progress": "Priebeh sprievodcu",
+    "Operational route preview": "Náhľad prevádzkovej trasy",
+    "Phone frame": "Rám telefónu",
+    "Action unavailable for current role.": "Akcia nie je dostupná pre aktuálnu rolu.",
+    "Presenter entry": "Vstup prezentujúceho",
+    "Auth facade": "Ukážkové prihlásenie",
+    "A static meeting prototype for dispatch, people files, compliance, logistics, and accounting signals.": "Statický prototyp na stretnutie pre dispečing, karty ľudí, súlad, logistiku a účtovné signály.",
+    "Cosmetic sign in": "Ukážkové prihlásenie",
+    "Open the live demo": "Otvoriť živé demo",
+    "Email": "E-mail",
+    "Password": "Heslo",
+    "Privileged roles would use 2FA here. This demo does not authenticate or send anything.": "Privilegované roly by tu použili 2FA. Toto demo neoveruje identitu ani nič neposiela.",
+    "Request": "Požiadavka",
+    "Pickup": "Vyzdvihnutie",
+    "Gate": "Brána",
+    "Cert": "Certifikát",
+    "Workers to Nitra": "Pracovníci do Nitry",
+    "Bus 2, Nitra depot": "Autobus 2, depo Nitra",
+    "Blacklist review": "Kontrola čiernej listiny",
+    "Forklift expiry": "Expirácia VZV",
+    "workers": "pracovníkov",
+    "The meeting starts from dispatch pressure: who is working, what is expiring, and what needs a manager decision.": "Stretnutie začína dispečerským tlakom: kto pracuje, čo expiruje a čo potrebuje rozhodnutie manažéra.",
+    "Working now": "Práve pracujú",
+    "Olha is active on Worksite A.": "Olha je aktívna na pracovisku A.",
+    "Docs expiring": "Dokumenty expirujú",
+    "Forklift and work permit alerts.": "Upozornenia na VZV a pracovné povolenie.",
+    "Blacklist queue": "Front čiernej listiny",
+    "One returnee needs review.": "Jeden navrátilec potrebuje kontrolu.",
+    "Hire approvals": "Schválenia prijatia",
+    "Tran waits for manager approval.": "Tran čaká na schválenie manažérom.",
+    "Today's manifest": "Dnešný manifest",
+    "Recent audit": "Nedávny audit",
+    "Help us confirm how demand enters the board before recruiters fill the work.": "Pomôžte nám potvrdiť, ako sa dopyt dostane na panel pred obsadením práce náborármi.",
+    "Partner": "Partner",
+    "Need": "Potreba",
+    "Next move": "Ďalší krok",
+    "Whichever model the team picks, the demo continues into the same shift and transport flow.": "Nech si tím vyberie ktorýkoľvek model, demo pokračuje do rovnakého toku zmien a dopravy.",
+    "Continue to risk check": "Pokračovať na kontrolu rizika",
+    "Add person": "Pridať osobu",
+    "Name or identifier": "Meno alebo identifikátor",
+    "Initial status": "Počiatočný status",
+    "Recruit, activation gated": "Kandidát, aktivácia blokovaná",
+    "People roster": "Zoznam ľudí",
+    "The headline moment: the recruiter starts adding a returnee and the blacklist gate catches it before activation.": "Hlavný moment: náborár začne pridávať navrátilca a brána čiernej listiny ho zachytí pred aktiváciou.",
+    "Ready for live check.": "Pripravené na živú kontrolu.",
+    "Type a name or identifier to compare against duplicate and blacklist records.": "Zadajte meno alebo identifikátor na porovnanie s duplicitami a čiernou listinou.",
+    "Blacklist match found: Bohdan Marchenko": "Zhoda na čiernej listine: Bohdan Marchenko",
+    "Category: repeated no-show. Activation is blocked until a manager reviews the record.": "Kategória: opakovaná neúčasť. Aktivácia je blokovaná, kým manažér neskontroluje záznam.",
+    "Saved with review flag": "Uložené s príznakom kontroly",
+    "Save as recruit with review flag": "Uložiť ako kandidáta s príznakom kontroly",
+    "Possible duplicate.": "Možná duplicita.",
+    "Olha Tkachenko already exists as a hired worker. Review before creating another profile.": "Olha Tkachenko už existuje ako prijatá pracovníčka. Pred vytvorením ďalšieho profilu ju skontrolujte.",
+    "No blacklist or duplicate match.": "Bez zhody na čiernej listine alebo v duplicitách.",
+    "The person can be saved as Recruit and moved into work test scheduling.": "Osobu možno uložiť ako kandidáta a presunúť do plánovania pracovnej skúšky.",
+    "Recruiters can recommend a candidate. Managers make the hire decision and the audit trail records it.": "Náborári môžu odporučiť kandidáta. Manažéri rozhodnú o prijatí a auditná stopa to zaznamená.",
+    "Work test": "Pracovná skúška",
+    "Scheduled for 17 Jun 2026": "Naplánované na 17 Jun 2026",
+    "Not scheduled": "Nenaplánované",
+    "Recommendation": "Odporúčanie",
+    "Recommend hire": "Odporučiť prijatie",
+    "Ready to recommend": "Pripravené na odporúčanie",
+    "Recruiter note": "Poznámka náborára",
+    "Arrived on time, understood safety briefing, suitable for warehouse picker.": "Prišiel načas, porozumel bezpečnostnej inštruktáži, vhodný pre skladový výber.",
+    "Manager decision": "Rozhodnutie manažéra",
+    "Approved as hired": "Schválené ako prijaté",
+    "Pending": "Čaká",
+    "Test scheduled": "Skúška naplánovaná",
+    "Schedule work test": "Naplánovať pracovnú skúšku",
+    "Recommended": "Odporúčané",
+    "Hire approved": "Prijatie schválené",
+    "Approve hire": "Schváliť prijatie",
+    "Audit entry": "Auditný záznam",
+    "Hire approved.": "Prijatie schválené.",
+    "Tran Van Minh changed from Recruit to Hired and the approval is in the audit log.": "Tran Van Minh sa zmenil z kandidáta na prijatého a schválenie je v audite.",
+    "Manager approval required.": "Vyžaduje sa schválenie manažérom.",
+    "Switch to Manager to approve the hire. Recruiter and Observer cannot complete this step.": "Pre schválenie prijatia prepnite na Manažéra. Náborár ani Pozorovateľ tento krok nemôžu dokončiť.",
+    "Olha is hired. The assignment ties the dated shift to a worksite, position, bus, pickup point, and time.": "Olha je prijatá. Priradenie spája dátumovanú zmenu s pracoviskom, pozíciou, autobusom, miestom vyzdvihnutia a časom.",
+    "Worker header": "Hlavička pracovníka",
+    "Position": "Pozícia",
+    "Transport group": "Dopravná skupina",
+    "Bus 2 capacity": "Kapacita autobusu 2",
+    "Driver Tomas V., pickup Nitra depot, 06:15.": "Vodič Tomas V., vyzdvihnutie depo Nitra, 06:15.",
+    "Capacity enforced.": "Kapacita vynútená.",
+    "Bus 2 is full after Olha. A future assignment would be blocked.": "Autobus 2 je po Olhe plný. Ďalšie priradenie by bolo blokované.",
+    "Capacity recorded only.": "Kapacita iba zaznamenaná.",
+    "The demo shows how an over-capacity transport row would be flagged, not blocked.": "Demo ukazuje, ako by sa riadok dopravy nad kapacitu označil, nie blokoval.",
+    "Shift table": "Tabuľka zmien",
+    "Assigned to shift": "Priradené na zmenu",
+    "Assign to shift": "Priradiť na zmenu",
+    "8 / 9 booked": "8 / 9 rezervované",
+    "9 / 9 full": "9 / 9 plné",
+    "10 / 9 recorded": "10 / 9 zaznamenané",
+    "The demo composes the message and records a fake sent state. No SMS is actually sent.": "Demo zostaví správu a zaznamená falošný stav odoslania. Žiadna SMS sa skutočne neposiela.",
+    "Primary channel: SMS, because many workers do not reliably use email.": "Primárny kanál: SMS, pretože mnohí pracovníci nepoužívajú e-mail spoľahlivo.",
+    "Olha, your pickup is Bus 2 at 06:15 from Nitra depot for Worksite A - Nitra warehouse. Reply by SMS if you cannot travel.": "Olha, vyzdvihnutie je autobusom 2 o 06:15 z depa Nitra na Pracovisko A - sklad Nitra. Ak nemôžete cestovať, odpovedzte SMS.",
+    "Sent": "Odoslané",
+    "Send pickup notice": "Odoslať pokyn na vyzdvihnutie",
+    "Sent confirmation shown.": "Zobrazené potvrdenie odoslania.",
+    "This is a demo receipt only. No message left the browser.": "Toto je iba demo potvrdenie. Žiadna správa neopustila prehliadač.",
+    "Transport context": "Kontext dopravy",
+    "The model supports one worker holding multiple dated shifts with different worksites and transport groups.": "Model podporuje jedného pracovníka s viacerými dátumovanými zmenami na rôznych pracoviskách a v rôznych dopravných skupinách.",
+    "Second shift added": "Druhá zmena pridaná",
+    "Add second shift": "Pridať druhú zmenu",
+    "Olha's dated shifts": "Dátumované zmeny Olhy",
+    "The leave record stores dates only. No medical detail is captured in this prototype.": "Záznam PN ukladá iba dátumy. V prototype sa nezachytáva žiadny zdravotný detail.",
+    "Dates only leave entry": "Záznam PN iba s dátumami",
+    "Leave type": "Typ absencie",
+    "From": "Od",
+    "To": "Do",
+    "No medical detail stored.": "Žiadny zdravotný detail sa neukladá.",
+    "The operational effect is enough: availability flips inactive and shifts in the window are cancelled.": "Stačí prevádzkový dopad: dostupnosť sa prepne na neaktívnu a zmeny v okne sa zrušia.",
+    "Sick leave recorded": "PN zaznamenaná",
+    "Record sick leave dates": "Zaznamenať dátumy PN",
+    "Worker state": "Stav pracovníka",
+    "Availability changed to inactive.": "Dostupnosť zmenená na neaktívnu.",
+    "Both dated shifts in the sick-leave window show cancelled.": "Obe dátumované zmeny v okne PN sa zobrazujú ako zrušené.",
+    "Affected shifts": "Dotknuté zmeny",
+    "Farrukh is hired and available, but the required forklift certificate is inside the expiry warning window.": "Farrukh je prijatý a dostupný, ale požadovaný certifikát na VZV je v expiračnom varovnom okne.",
+    "Forklift certificate expires in 12 days.": "Certifikát na VZV expiruje o 12 dní.",
+    "Expiry date: 25 Jun 2026. Forklift operator shifts require a valid certificate.": "Dátum expirácie: 25 Jun 2026. Zmeny operátora VZV vyžadujú platný certifikát.",
+    "Try assign forklift shift": "Skúsiť priradiť zmenu VZV",
+    "Assignment stopped.": "Priradenie zastavené.",
+    "Forklift operator requires a valid forklift certificate. Pick another worker or update the certificate record.": "Operátor VZV vyžaduje platný certifikát. Vyberte iného pracovníka alebo aktualizujte záznam certifikátu.",
+    "Document queue": "Front dokumentov",
+    "Document": "Dokument",
+    "State": "Stav",
+    "Forklift certificate": "Certifikát na VZV",
+    "Work permit": "Pracovné povolenie",
+    "Expires soon": "Čoskoro expiruje",
+    "18 days left": "Zostáva 18 dní",
+    "A coordinator can check today's workers, document state, and quick actions from a phone-sized screen.": "Koordinátor môže z obrazovky veľkosti telefónu skontrolovať dnešných pracovníkov, stav dokumentov a rýchle akcie.",
+    "Search workers": "Hľadať pracovníkov",
+    "Call": "Volať",
+    "Message": "Správa",
+    "Marked": "Označené",
+    "No-show": "Neúčasť",
+    "Room occupancy and worker-room assignment. Costs stay out of this demo.": "Obsadenosť izieb a priradenie pracovníkov k izbám. Náklady zostávajú mimo dema.",
+    "Room": "Izba",
+    "Occupancy": "Obsadenosť",
+    "Workers": "Pracovníci",
+    "Action": "Akcia",
+    "Assign worker": "Priradiť pracovníka",
+    "Gear and sizes": "Výstroj a veľkosti",
+    "Issued gear sits beside worker sizes so inventory can be prepared before the shift.": "Vydaná výstroj je pri veľkostiach pracovníkov, aby sa inventár pripravil pred zmenou.",
+    "Issued gear": "Vydaná výstroj",
+    "Worker sizes": "Veľkosti pracovníkov",
+    "Item": "Položka",
+    "Size": "Veľkosť",
+    "Helmet": "Prilba",
+    "Boots": "Topánky",
+    "Vest": "Vesta",
+    "Gloves": "Rukavice",
+    "Issued": "Vydané",
+    "Prepared": "Pripravené",
+    "Returned": "Vrátené",
+    "Standard": "Štandard",
+    "Read-only accounting sync status for the demo. No connection is attempted.": "Stav účtovnej synchronizácie iba na čítanie pre demo. Neprebieha žiadne pripojenie.",
+    "Demo data - connected via Pohoda mServer (XML)": "Demo dáta - pripojené cez Pohoda mServer (XML)",
+    "Placeholder figures only. This browser does not call Pohoda.": "Iba zástupné údaje. Tento prehliadač nevolá Pohodu.",
+    "Open invoices": "Otvorené faktúry",
+    "Ready payroll rows": "Pripravené mzdové riadky",
+    "Last XML import": "Posledný XML import",
+    "Sync warnings": "Upozornenia synchronizácie",
+    "Mocked": "Ukážkové",
+    "Use this screen after the walkthrough to read captured decisions and operational signals.": "Túto obrazovku použite po prechode na čítanie zachytených rozhodnutí a prevádzkových signálov.",
+    "Decisions": "Rozhodnutia",
+    "Operational report": "Prevádzkový report",
+    "Open manager field view": "Otvoriť terénny pohľad manažéra",
+    "Ukraine": "Ukrajina",
+    "Uzbekistan": "Uzbekistan",
+    "Vietnam": "Vietnam",
+    "Worksite A - Nitra warehouse": "Pracovisko A - sklad Nitra",
+    "Worksite B - Trnava site": "Pracovisko B - areál Trnava",
+    "Worksite A": "Pracovisko A",
+    "General laborer": "Pomocný pracovník",
+    "Bus 2, Nitra depot, 06:15": "Autobus 2, depo Nitra, 06:15",
+    "Bus 1, Trnava station, 10:40": "Autobus 1, stanica Trnava, 10:40",
+    "Bus 2, 06:15, Nitra depot": "Autobus 2, 06:15, depo Nitra",
+    "Bus 1, 10:40, Trnava station": "Autobus 1, 10:40, stanica Trnava",
+    "Own transport": "Vlastná doprava",
+    "Work permit expires in 18 days": "Pracovné povolenie expiruje o 18 dní",
+    "Forklift cert expires 25 Jun 2026": "Certifikát na VZV expiruje 25 Jun 2026",
+    "Residence card valid": "Pobytová karta platná",
+    "Contract ended": "Zmluva ukončená",
+    "Hired after work test": "Prijatý po pracovnej skúške",
+    "Room 12": "Izba 12",
+    "Room 14": "Izba 14",
+    "Room 18": "Izba 18",
+    "3/4 beds": "3/4 lôžka",
+    "2/4 beds": "2/4 lôžka",
+    "4/4 beds": "4/4 lôžka",
+    "Full": "Plné",
+    "None": "Žiadne",
+    "Not recorded": "Nezaznamenané",
+    "Pending issue": "Čaká na vydanie",
+    "Vest, helmet, gloves": "Vesta, prilba, rukavice",
+    "Helmet, boots": "Prilba, topánky",
+    "Vest, gloves": "Vesta, rukavice",
+    "Shirt M / trousers 40 / boots 39": "Tričko M / nohavice 40 / topánky 39",
+    "Shirt L / trousers 42 / boots 43": "Tričko L / nohavice 42 / topánky 43",
+    "Shirt S / trousers 38 / boots 40": "Tričko S / nohavice 38 / topánky 40",
+    "Shirt S / trousers 36 / boots 38": "Tričko S / nohavice 36 / topánky 38",
+    "Shirt XL / trousers 46 / boots 44": "Tričko XL / nohavice 46 / topánky 44",
+    "Dashboard opened for today's staffing picture.": "Prehľad otvorený pre dnešný obraz obsadenia.",
+    "Forklift certificate alert queued for Farrukh Yusupov.": "Upozornenie na certifikát VZV pre Farrukha Yusupova zaradené do frontu.",
+    "Blacklist review queue contains one returnee.": "Front kontroly čiernej listiny obsahuje jedného navrátilca.",
+    "Demand model: option A recorded.": "Model dopytu: možnosť A zaznamenaná.",
+    "Demand model: option B recorded.": "Model dopytu: možnosť B zaznamenaná.",
+    "Transport capacity: option A recorded.": "Kapacita dopravy: možnosť A zaznamenaná.",
+    "Transport capacity: option B recorded.": "Kapacita dopravy: možnosť B zaznamenaná.",
+    "Certificate storage: option A recorded.": "Ukladanie certifikátov: možnosť A zaznamenaná.",
+    "Certificate storage: option B recorded.": "Ukladanie certifikátov: možnosť B zaznamenaná.",
+    "Bohdan Marchenko saved as Recruit with manager review flag. Activation remains blocked.": "Bohdan Marchenko uložený ako kandidát s príznakom manažérskej kontroly. Aktivácia zostáva blokovaná.",
+    "Work test scheduled for Tran Van Minh.": "Pracovná skúška pre Tran Van Minh naplánovaná.",
+    "Recruiter recommended Tran Van Minh for hire.": "Náborár odporučil Tran Van Minh na prijatie.",
+    "Manager approved Tran Van Minh. Hire status changed from Recruit to Hired.": "Manažér schválil Tran Van Minh. Status prijatia sa zmenil z kandidáta na prijatého.",
+    "Olha Tkachenko assigned to Worksite A with Bus 2 pickup.": "Olha Tkachenko priradená na Pracovisko A s vyzdvihnutím autobusom 2.",
+    "Pickup notice marked sent for Olha Tkachenko. Demo only, no SMS sent.": "Pokyn na vyzdvihnutie pre Olhu Tkachenko označený ako odoslaný. Iba demo, SMS sa neodoslala.",
+    "Second same-day shift added for Olha Tkachenko at Worksite B.": "Druhá zmena v ten istý deň pridaná pre Olhu Tkachenko na Pracovisku B.",
+    "Sick leave dates recorded for Olha Tkachenko. Availability changed to Inactive.": "Dátumy PN pre Olhu Tkachenko zaznamenané. Dostupnosť zmenená na neaktívnu.",
+    "Forklift assignment stopped for Farrukh Yusupov because required certificate is expiring.": "Priradenie VZV pre Farrukha Yusupova zastavené, pretože požadovaný certifikát expiruje.",
+    "Manager marked a field no-show from the mobile view.": "Manažér označil terénnu neúčasť z mobilného pohľadu."
+  });
+
+  Object.assign(translations.hu, {
+    "English": "Angol",
+    "Slovak": "Szlovák",
+    "Hungarian": "Magyar",
+    "Workforce folders": "Munkaerő mappák",
+    "workforce folders": "munkaerő mappák",
+    "Go to dashboard": "Ugrás az áttekintésre",
+    "Presenter avatar": "Prezentáló avatárja",
+    "Current role": "Aktuális szerep",
+    "Guided demo progress": "Vezetett demó előrehaladása",
+    "Operational route preview": "Műveleti útvonal előnézet",
+    "Phone frame": "Telefonkeret",
+    "Action unavailable for current role.": "A művelet nem elérhető az aktuális szerepben.",
+    "Presenter entry": "Prezentálói belépés",
+    "Auth facade": "Belépési minta",
+    "A static meeting prototype for dispatch, people files, compliance, logistics, and accounting signals.": "Statikus tárgyalási prototípus diszpécserhez, dolgozói kartonokhoz, megfelelőséghez, logisztikához és könyvelési jelekhez.",
+    "Cosmetic sign in": "Minta bejelentkezés",
+    "Open the live demo": "Élő demó megnyitása",
+    "Email": "E-mail",
+    "Password": "Jelszó",
+    "Privileged roles would use 2FA here. This demo does not authenticate or send anything.": "A kiemelt szerepek itt 2FA-t használnának. Ez a demó nem hitelesít és nem küld semmit.",
+    "Request": "Igény",
+    "Pickup": "Felvétel",
+    "Gate": "Kapu",
+    "Cert": "Tanúsítvány",
+    "Workers to Nitra": "Dolgozók Nyitrára",
+    "Bus 2, Nitra depot": "2-es busz, nyitrai depó",
+    "Blacklist review": "Tiltólista ellenőrzés",
+    "Forklift expiry": "Targonca lejárat",
+    "workers": "dolgozó",
+    "The meeting starts from dispatch pressure: who is working, what is expiring, and what needs a manager decision.": "A megbeszélés a diszpécseri nyomásból indul: ki dolgozik, mi jár le, és mi igényel vezetői döntést.",
+    "Working now": "Most dolgoznak",
+    "Olha is active on Worksite A.": "Olha aktív az A munkaterületen.",
+    "Docs expiring": "Lejáró dokumentumok",
+    "Forklift and work permit alerts.": "Targonca és munkavállalási engedély riasztások.",
+    "Blacklist queue": "Tiltólista sor",
+    "One returnee needs review.": "Egy visszatérőt ellenőrizni kell.",
+    "Hire approvals": "Felvételi jóváhagyások",
+    "Tran waits for manager approval.": "Tran vezetői jóváhagyásra vár.",
+    "Today's manifest": "Mai manifest",
+    "Recent audit": "Friss audit",
+    "Help us confirm how demand enters the board before recruiters fill the work.": "Segítsen megerősíteni, hogyan kerül az igény a panelre, mielőtt a toborzók betöltik a munkát.",
+    "Partner": "Partner",
+    "Need": "Igény",
+    "Next move": "Következő lépés",
+    "Whichever model the team picks, the demo continues into the same shift and transport flow.": "Bármelyik modellt választja a csapat, a demó ugyanabba a műszak- és szállítási folyamatba lép tovább.",
+    "Continue to risk check": "Tovább a kockázatellenőrzéshez",
+    "Add person": "Személy hozzáadása",
+    "Name or identifier": "Név vagy azonosító",
+    "Initial status": "Kezdő státusz",
+    "Recruit, activation gated": "Jelölt, aktiválás blokkolva",
+    "People roster": "Dolgozói névsor",
+    "The headline moment: the recruiter starts adding a returnee and the blacklist gate catches it before activation.": "A fő pillanat: a toborzó visszatérőt kezd rögzíteni, és a tiltólista kapu még aktiválás előtt megfogja.",
+    "Ready for live check.": "Kész az élő ellenőrzésre.",
+    "Type a name or identifier to compare against duplicate and blacklist records.": "Adjon meg nevet vagy azonosítót a duplikátumokkal és a tiltólistával való összevetéshez.",
+    "Blacklist match found: Bohdan Marchenko": "Tiltólista egyezés: Bohdan Marchenko",
+    "Category: repeated no-show. Activation is blocked until a manager reviews the record.": "Kategória: ismételt meg nem jelenés. Az aktiválás vezetői ellenőrzésig blokkolt.",
+    "Saved with review flag": "Ellenőrzési jelzéssel mentve",
+    "Save as recruit with review flag": "Mentés jelöltként ellenőrzési jelzéssel",
+    "Possible duplicate.": "Lehetséges duplikátum.",
+    "Olha Tkachenko already exists as a hired worker. Review before creating another profile.": "Olha Tkachenko már felvett dolgozóként létezik. Új profil előtt ellenőrizze.",
+    "No blacklist or duplicate match.": "Nincs tiltólista- vagy duplikátumegyezés.",
+    "The person can be saved as Recruit and moved into work test scheduling.": "A személy jelöltként menthető és átvihető a próbanap ütemezésébe.",
+    "Recruiters can recommend a candidate. Managers make the hire decision and the audit trail records it.": "A toborzók ajánlhatnak jelöltet. A vezetők hozzák meg a felvételi döntést, az auditnapló pedig rögzíti.",
+    "Work test": "Próbanap",
+    "Scheduled for 17 Jun 2026": "Ütemezve: 17 Jun 2026",
+    "Not scheduled": "Nincs ütemezve",
+    "Recommendation": "Ajánlás",
+    "Recommend hire": "Felvétel ajánlása",
+    "Ready to recommend": "Ajánlásra kész",
+    "Recruiter note": "Toborzói megjegyzés",
+    "Arrived on time, understood safety briefing, suitable for warehouse picker.": "Időben érkezett, megértette a biztonsági eligazítást, alkalmas raktári komissiózónak.",
+    "Manager decision": "Vezetői döntés",
+    "Approved as hired": "Felvettként jóváhagyva",
+    "Pending": "Függőben",
+    "Test scheduled": "Teszt ütemezve",
+    "Schedule work test": "Próbanap ütemezése",
+    "Recommended": "Ajánlva",
+    "Hire approved": "Felvétel jóváhagyva",
+    "Approve hire": "Felvétel jóváhagyása",
+    "Audit entry": "Auditbejegyzés",
+    "Hire approved.": "Felvétel jóváhagyva.",
+    "Tran Van Minh changed from Recruit to Hired and the approval is in the audit log.": "Tran Van Minh jelöltből felvett státuszba került, a jóváhagyás az auditnaplóban van.",
+    "Manager approval required.": "Vezetői jóváhagyás szükséges.",
+    "Switch to Manager to approve the hire. Recruiter and Observer cannot complete this step.": "A felvétel jóváhagyásához váltson Vezető szerepre. Toborzó és Megfigyelő nem fejezheti be ezt a lépést.",
+    "Olha is hired. The assignment ties the dated shift to a worksite, position, bus, pickup point, and time.": "Olha felvéve. A kiosztás összeköti a dátumozott műszakot a munkaterülettel, pozícióval, busszal, felvételi ponttal és idővel.",
+    "Worker header": "Dolgozói fejléc",
+    "Position": "Pozíció",
+    "Transport group": "Szállítási csoport",
+    "Bus 2 capacity": "2-es busz kapacitása",
+    "Driver Tomas V., pickup Nitra depot, 06:15.": "Sofőr Tomas V., felvétel nyitrai depó, 06:15.",
+    "Capacity enforced.": "Kapacitás betartva.",
+    "Bus 2 is full after Olha. A future assignment would be blocked.": "Olha után a 2-es busz megtelt. Egy későbbi kiosztás blokkolva lenne.",
+    "Capacity recorded only.": "Kapacitás csak rögzítve.",
+    "The demo shows how an over-capacity transport row would be flagged, not blocked.": "A demó azt mutatja, hogyan lenne a kapacitáson felüli szállítási sor jelölve, nem blokkolva.",
+    "Shift table": "Műszaktábla",
+    "Assigned to shift": "Műszakra beosztva",
+    "Assign to shift": "Műszakra osztás",
+    "8 / 9 booked": "8 / 9 foglalt",
+    "9 / 9 full": "9 / 9 tele",
+    "10 / 9 recorded": "10 / 9 rögzítve",
+    "The demo composes the message and records a fake sent state. No SMS is actually sent.": "A demó összeállítja az üzenetet és minta elküldött állapotot rögzít. Valódi SMS nem megy ki.",
+    "Primary channel: SMS, because many workers do not reliably use email.": "Elsődleges csatorna: SMS, mert sok dolgozó nem használja megbízhatóan az e-mailt.",
+    "Olha, your pickup is Bus 2 at 06:15 from Nitra depot for Worksite A - Nitra warehouse. Reply by SMS if you cannot travel.": "Olha, a felvétel a 2-es busszal 06:15-kor indul a nyitrai depóból az A munkaterület - nyitrai raktár felé. Válaszoljon SMS-ben, ha nem tud utazni.",
+    "Sent": "Elküldve",
+    "Send pickup notice": "Felvételi értesítés küldése",
+    "Sent confirmation shown.": "Elküldési visszaigazolás megjelenítve.",
+    "This is a demo receipt only. No message left the browser.": "Ez csak demó visszaigazolás. Nem hagyta el üzenet a böngészőt.",
+    "Transport context": "Szállítási kontextus",
+    "The model supports one worker holding multiple dated shifts with different worksites and transport groups.": "A modell támogatja, hogy egy dolgozónak több dátumozott műszaka legyen eltérő munkaterületekkel és szállítási csoportokkal.",
+    "Second shift added": "Második műszak hozzáadva",
+    "Add second shift": "Második műszak hozzáadása",
+    "Olha's dated shifts": "Olha dátumozott műszakai",
+    "The leave record stores dates only. No medical detail is captured in this prototype.": "A távolléti rekord csak dátumokat tárol. A prototípus nem rögzít egészségügyi részletet.",
+    "Dates only leave entry": "Csak dátumos távolléti bejegyzés",
+    "Leave type": "Távollét típusa",
+    "From": "Ettől",
+    "To": "Eddig",
+    "No medical detail stored.": "Nincs egészségügyi részlet tárolva.",
+    "The operational effect is enough: availability flips inactive and shifts in the window are cancelled.": "Az üzemi hatás elég: az elérhetőség inaktívra vált, és az adott időszak műszakai törlődnek.",
+    "Sick leave recorded": "Betegszabadság rögzítve",
+    "Record sick leave dates": "Betegszabadság dátumainak rögzítése",
+    "Worker state": "Dolgozó állapota",
+    "Availability changed to inactive.": "Az elérhetőség inaktívra változott.",
+    "Both dated shifts in the sick-leave window show cancelled.": "A betegszabadság időszakában mindkét dátumozott műszak töröltként jelenik meg.",
+    "Affected shifts": "Érintett műszakok",
+    "Farrukh is hired and available, but the required forklift certificate is inside the expiry warning window.": "Farrukh felvett és elérhető, de a szükséges targoncatanúsítvány a lejárati figyelmeztetési időszakon belül van.",
+    "Forklift certificate expires in 12 days.": "A targoncatanúsítvány 12 nap múlva lejár.",
+    "Expiry date: 25 Jun 2026. Forklift operator shifts require a valid certificate.": "Lejárati dátum: 25 Jun 2026. A targoncavezetői műszakokhoz érvényes tanúsítvány szükséges.",
+    "Try assign forklift shift": "Targoncás műszak próbabeosztása",
+    "Assignment stopped.": "Kiosztás leállítva.",
+    "Forklift operator requires a valid forklift certificate. Pick another worker or update the certificate record.": "A targoncavezetőhöz érvényes targoncatanúsítvány kell. Válasszon másik dolgozót vagy frissítse a tanúsítvány rekordját.",
+    "Document queue": "Dokumentumsor",
+    "Document": "Dokumentum",
+    "State": "Állapot",
+    "Forklift certificate": "Targoncatanúsítvány",
+    "Work permit": "Munkavállalási engedély",
+    "Expires soon": "Hamarosan lejár",
+    "18 days left": "18 nap van hátra",
+    "A coordinator can check today's workers, document state, and quick actions from a phone-sized screen.": "A koordinátor telefonméretű képernyőről ellenőrizheti a mai dolgozókat, dokumentumállapotot és gyors műveleteket.",
+    "Search workers": "Dolgozók keresése",
+    "Call": "Hívás",
+    "Message": "Üzenet",
+    "Marked": "Megjelölve",
+    "No-show": "Nem jelent meg",
+    "Room occupancy and worker-room assignment. Costs stay out of this demo.": "Szobafoglaltság és dolgozó-szoba kiosztás. A költségek kívül maradnak a demón.",
+    "Room": "Szoba",
+    "Occupancy": "Foglaltság",
+    "Workers": "Dolgozók",
+    "Action": "Művelet",
+    "Assign worker": "Dolgozó hozzárendelése",
+    "Gear and sizes": "Felszerelés és méretek",
+    "Issued gear sits beside worker sizes so inventory can be prepared before the shift.": "A kiadott felszerelés a dolgozói méretek mellett van, hogy a készlet műszak előtt előkészíthető legyen.",
+    "Issued gear": "Kiadott felszerelés",
+    "Worker sizes": "Dolgozói méretek",
+    "Item": "Tétel",
+    "Size": "Méret",
+    "Helmet": "Sisak",
+    "Boots": "Bakancs",
+    "Vest": "Mellény",
+    "Gloves": "Kesztyű",
+    "Issued": "Kiadva",
+    "Prepared": "Előkészítve",
+    "Returned": "Visszaadva",
+    "Standard": "Standard",
+    "Read-only accounting sync status for the demo. No connection is attempted.": "Csak olvasható könyvelési szinkronállapot a demóhoz. Kapcsolódás nem történik.",
+    "Demo data - connected via Pohoda mServer (XML)": "Demóadat - Pohoda mServeren (XML) keresztül kapcsolva",
+    "Placeholder figures only. This browser does not call Pohoda.": "Csak helyőrző számok. Ez a böngésző nem hívja meg a Pohodát.",
+    "Open invoices": "Nyitott számlák",
+    "Ready payroll rows": "Kész bérsorok",
+    "Last XML import": "Utolsó XML import",
+    "Sync warnings": "Szinkron figyelmeztetések",
+    "Mocked": "Minta",
+    "Use this screen after the walkthrough to read captured decisions and operational signals.": "Ezt a képernyőt a bejárás után használja a rögzített döntések és üzemi jelek áttekintésére.",
+    "Decisions": "Döntések",
+    "Operational report": "Üzemi jelentés",
+    "Open manager field view": "Vezetői terepi nézet megnyitása",
+    "Ukraine": "Ukrajna",
+    "Uzbekistan": "Üzbegisztán",
+    "Vietnam": "Vietnám",
+    "Worksite A - Nitra warehouse": "A munkaterület - nyitrai raktár",
+    "Worksite B - Trnava site": "B munkaterület - nagyszombati telephely",
+    "Worksite A": "A munkaterület",
+    "General laborer": "Általános munkás",
+    "Bus 2, Nitra depot, 06:15": "2-es busz, nyitrai depó, 06:15",
+    "Bus 1, Trnava station, 10:40": "1-es busz, nagyszombati állomás, 10:40",
+    "Bus 2, 06:15, Nitra depot": "2-es busz, 06:15, nyitrai depó",
+    "Bus 1, 10:40, Trnava station": "1-es busz, 10:40, nagyszombati állomás",
+    "Own transport": "Saját közlekedés",
+    "Work permit expires in 18 days": "Munkavállalási engedély 18 nap múlva lejár",
+    "Forklift cert expires 25 Jun 2026": "Targoncaigazolvány lejár: 25 Jun 2026",
+    "Residence card valid": "Tartózkodási kártya érvényes",
+    "Contract ended": "Szerződés lezárva",
+    "Hired after work test": "Próbanap után felvéve",
+    "Room 12": "12-es szoba",
+    "Room 14": "14-es szoba",
+    "Room 18": "18-as szoba",
+    "3/4 beds": "3/4 ágy",
+    "2/4 beds": "2/4 ágy",
+    "4/4 beds": "4/4 ágy",
+    "Full": "Tele",
+    "None": "Nincs",
+    "Not recorded": "Nincs rögzítve",
+    "Pending issue": "Kiadásra vár",
+    "Vest, helmet, gloves": "Mellény, sisak, kesztyű",
+    "Helmet, boots": "Sisak, bakancs",
+    "Vest, gloves": "Mellény, kesztyű",
+    "Shirt M / trousers 40 / boots 39": "Póló M / nadrág 40 / bakancs 39",
+    "Shirt L / trousers 42 / boots 43": "Póló L / nadrág 42 / bakancs 43",
+    "Shirt S / trousers 38 / boots 40": "Póló S / nadrág 38 / bakancs 40",
+    "Shirt S / trousers 36 / boots 38": "Póló S / nadrág 36 / bakancs 38",
+    "Shirt XL / trousers 46 / boots 44": "Póló XL / nadrág 46 / bakancs 44",
+    "Dashboard opened for today's staffing picture.": "Megnyílt az áttekintés a mai létszámképhez.",
+    "Forklift certificate alert queued for Farrukh Yusupov.": "Targoncatanúsítvány-figyelmeztetés sorba állítva Farrukh Yusupovhoz.",
+    "Blacklist review queue contains one returnee.": "A tiltólista ellenőrzési sora egy visszatérőt tartalmaz.",
+    "Demand model: option A recorded.": "Igénymodell: A opció rögzítve.",
+    "Demand model: option B recorded.": "Igénymodell: B opció rögzítve.",
+    "Transport capacity: option A recorded.": "Szállítási kapacitás: A opció rögzítve.",
+    "Transport capacity: option B recorded.": "Szállítási kapacitás: B opció rögzítve.",
+    "Certificate storage: option A recorded.": "Tanúsítványtárolás: A opció rögzítve.",
+    "Certificate storage: option B recorded.": "Tanúsítványtárolás: B opció rögzítve.",
+    "Bohdan Marchenko saved as Recruit with manager review flag. Activation remains blocked.": "Bohdan Marchenko jelöltként mentve vezetői ellenőrzési jelzéssel. Az aktiválás blokkolva marad.",
+    "Work test scheduled for Tran Van Minh.": "Próbanap ütemezve Tran Van Minh számára.",
+    "Recruiter recommended Tran Van Minh for hire.": "A toborzó felvételre ajánlotta Tran Van Minht.",
+    "Manager approved Tran Van Minh. Hire status changed from Recruit to Hired.": "A vezető jóváhagyta Tran Van Minht. A felvételi státusz jelöltről felvettre változott.",
+    "Olha Tkachenko assigned to Worksite A with Bus 2 pickup.": "Olha Tkachenko az A munkaterületre beosztva 2-es buszos felvétellel.",
+    "Pickup notice marked sent for Olha Tkachenko. Demo only, no SMS sent.": "Olha Tkachenko felvételi értesítése elküldöttként jelölve. Csak demó, SMS nem ment ki.",
+    "Second same-day shift added for Olha Tkachenko at Worksite B.": "Második aznapi műszak hozzáadva Olha Tkachenko számára a B munkaterületen.",
+    "Sick leave dates recorded for Olha Tkachenko. Availability changed to Inactive.": "Olha Tkachenko betegszabadság-dátumai rögzítve. Az elérhetőség inaktívra váltott.",
+    "Forklift assignment stopped for Farrukh Yusupov because required certificate is expiring.": "Farrukh Yusupov targoncás beosztása leállítva, mert a szükséges tanúsítvány lejáróban van.",
+    "Manager marked a field no-show from the mobile view.": "A vezető a mobil nézetből terepi meg nem jelenést jelölt."
+  });
+
   const recruiterPermissions = new Set([
     "createPerson",
     "scheduleTest",
@@ -513,6 +979,33 @@
       .replaceAll("'", "&#39;");
   }
 
+  function localizeTree(scope) {
+    if (state.language === "en") {
+      return;
+    }
+    const dictionary = translations[state.language] || {};
+    const textNodes = [];
+    const walker = document.createTreeWalker(scope, NodeFilter.SHOW_TEXT);
+    while (walker.nextNode()) {
+      textNodes.push(walker.currentNode);
+    }
+    textNodes.forEach((node) => {
+      const original = node.nodeValue;
+      const trimmed = original.trim();
+      if (trimmed && dictionary[trimmed]) {
+        node.nodeValue = original.replace(trimmed, dictionary[trimmed]);
+      }
+    });
+    scope.querySelectorAll("[data-label], [aria-label], [title]").forEach((node) => {
+      ["data-label", "aria-label", "title"].forEach((attribute) => {
+        const value = node.getAttribute(attribute);
+        if (value && dictionary[value]) {
+          node.setAttribute(attribute, dictionary[value]);
+        }
+      });
+    });
+  }
+
   function getPerson(id) {
     return mockData.people.find((person) => person.id === id);
   }
@@ -545,7 +1038,7 @@
   function actionButton(permission, action, label, className = "primary-button", extra = "") {
     const disabled = permission && !can(permission);
     const displayLabel = t(label);
-    const title = disabled ? `Current role cannot ${displayLabel.toLowerCase()}.` : "";
+    const title = disabled ? t("Action unavailable for current role.") : "";
     return `
       <button class="${className}" data-action="${action}" ${extra} ${disabled ? "disabled" : ""} title="${escapeHtml(title)}">
         ${escapeHtml(displayLabel)}
@@ -751,7 +1244,7 @@
         <section class="login-visual" aria-label="Operational route preview">
           <div>
             <p class="eyebrow">Presenter entry</p>
-            <h1 class="login-title">${escapeHtml(brand.wordmark)} workforce folders</h1>
+            <h1 class="login-title">${escapeHtml(brand.wordmark)} ${escapeHtml(t("workforce folders"))}</h1>
             <p class="page-lede">A static meeting prototype for dispatch, people files, compliance, logistics, and accounting signals.</p>
           </div>
           <div class="login-route">
@@ -881,7 +1374,7 @@
         <section class="section">
           <div class="three-up">
             <div><p class="field-label">Partner</p><strong>${escapeHtml(request.name)}</strong></div>
-            <div><p class="field-label">Need</p><strong>${request.workersNeeded} workers</strong></div>
+            <div><p class="field-label">Need</p><strong>${request.workersNeeded} ${escapeHtml(t("workers"))}</strong></div>
             <div><p class="field-label">Worksite</p><strong>${escapeHtml(request.worksite)}</strong></div>
           </div>
         </section>
@@ -1301,8 +1794,8 @@
       <div class="metric-card">
         <span class="metric-value">${escapeHtml(value)}</span>
         <span>
-          <p class="metric-label">${escapeHtml(label)}</p>
-          <p class="metric-note">${escapeHtml(note)}</p>
+          <p class="metric-label">${escapeHtml(t(label))}</p>
+          <p class="metric-note">${escapeHtml(t(note))}</p>
         </span>
       </div>
     `;
@@ -1319,7 +1812,7 @@
               ${Object.entries(decisions).map(([key, decision]) => {
                 const choiceKey = state.decisionChoices[key];
                 const choice = choiceKey ? decision.options[choiceKey] : null;
-                return `<div class="decision-summary-item"><strong>${escapeHtml(decision.title)}</strong><p>${choice ? `${escapeHtml(choiceKey)} - ${escapeHtml(choice.label)}` : "Pending"}</p></div>`;
+                return `<div class="decision-summary-item"><strong>${escapeHtml(t(decision.title))}</strong><p>${choice ? `${escapeHtml(choiceKey)} - ${escapeHtml(t(choice.label))}` : escapeHtml(t("Pending"))}</p></div>`;
               }).join("")}
             </div>
           </section>
@@ -1338,7 +1831,7 @@
   }
 
   function plainReportRow(label, value) {
-    return `<p><strong>${escapeHtml(label)}:</strong> <span class="mono">${escapeHtml(value)}</span></p>`;
+    return `<p><strong>${escapeHtml(t(label))}:</strong> <span class="mono">${escapeHtml(value)}</span></p>`;
   }
 
   function renderDecision(decisionKey) {
@@ -1442,7 +1935,7 @@
     return `
       <ul class="audit-list">
         ${state.auditLog.slice(0, 6).map((item) => `
-          <li class="audit-item"><span class="audit-time">${escapeHtml(item.time)}</span><span>${escapeHtml(item.text)}</span></li>
+          <li class="audit-item"><span class="audit-time">${escapeHtml(item.time)}</span><span>${escapeHtml(t(item.text))}</span></li>
         `).join("")}
       </ul>
     `;
@@ -1632,12 +2125,14 @@
       const preview = document.getElementById("risk-result");
       if (preview) {
         preview.innerHTML = riskResultHtml();
+        localizeTree(preview);
       }
     }
   }
 
   function render() {
     root.innerHTML = state.view === "login" ? renderLogin() : renderShell();
+    localizeTree(root);
   }
 
   document.addEventListener("click", (event) => {

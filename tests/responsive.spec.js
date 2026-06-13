@@ -216,6 +216,38 @@ test("language switch works in all builds", async ({ page }) => {
   await expect(page.getByRole("heading", { name: /napi irányítópanel/i })).toBeVisible();
 });
 
+test("client language switch covers deeper operational screens", async ({ page }) => {
+  await openBuild(page, "corvinum", 1440, 1000);
+  await setLanguage(page, "SK");
+  await page.locator(".sidebar [data-action='nav'][data-view='people']").click();
+  await expect(page.getByText("Zhoda na čiernej listine")).toBeVisible();
+  await expect(page.locator("body")).not.toContainText("Blacklist match found");
+  await page.locator(".sidebar [data-action='nav'][data-view='approvals']").click();
+  await expect(page.getByText("Vyžaduje sa schválenie manažérom.")).toBeVisible();
+  await expect(page.locator("body")).not.toContainText("Manager approval required.");
+  await setLanguage(page, "HU");
+  await page.locator(".sidebar [data-action='nav'][data-view='documents']").click();
+  await expect(page.getByText("Dokumentumsor")).toBeVisible();
+  await expect(page.locator("body")).not.toContainText("Document queue");
+
+  await openBuild(page, "jober", 1440, 1000);
+  await setLanguage(page, "SK");
+  await page.locator(".folder-tabs [data-action='nav'][data-view='accommodation']").click();
+  await page.locator(".sub-tabs [data-action='nav'][data-view='equipment']").click();
+  await expect(page.getByRole("heading", { name: "Vydaná výstroj" })).toBeVisible();
+  await expect(page.locator("body")).not.toContainText("Issued gear");
+  await page.locator(".folder-tabs [data-action='nav'][data-view='pohoda']").click();
+  await expect(page.getByText("Otvorené faktúry")).toBeVisible();
+  await expect(page.locator("body")).not.toContainText("Open invoices");
+  await setLanguage(page, "HU");
+  await page.locator(".folder-tabs [data-action='nav'][data-view='accommodation']").click();
+  await page.locator(".sub-tabs [data-action='nav'][data-view='equipment']").click();
+  await expect(page.getByRole("heading", { name: "Kiadott felszerelés" })).toBeVisible();
+  await page.locator(".folder-tabs [data-action='nav'][data-view='people']").click();
+  await expect(page.getByText("Tiltólista egyezés")).toBeVisible();
+  await expect(page.locator("body")).not.toContainText("Blacklist match found");
+});
+
 for (const viewport of viewports) {
   test(`CorvinumEU build works at ${viewport.name} width`, async ({ page }) => {
     const consoleErrors = await openBuild(page, "corvinum", viewport.width, viewport.height);

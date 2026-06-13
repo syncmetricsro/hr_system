@@ -158,3 +158,28 @@ Visual review:
 
 Known issues:
 - Some deeper mock data/audit prose remains English by design. The spec now records that mock names, company names, dates, phone numbers, and audit data may remain fixed unless explicitly localized later.
+
+## 2026-06-13
+
+Client translation coverage retrofit.
+
+Static checks run:
+- `node --check demo/corvinum/app.js` passed.
+- `node --check demo/jober/app.js` passed.
+- `node --check tests/responsive.spec.js` passed.
+- Parsed `demo/corvinum/index.html` and `demo/jober/index.html` with Python `html.parser`; passed.
+- Scanned `demo/corvinum` and `demo/jober` for persistence APIs; no matches.
+- Scanned `demo/corvinum` and `demo/jober` for remote URLs and CSS `@import`; no matches.
+
+Source separation:
+- `grep -ri jober demo/corvinum/` returned no output.
+- `grep -ri corvinum demo/jober/` returned no output.
+
+Playwright results:
+- Built the pinned Docker image with `docker build -f Dockerfile.playwright -t hr-system-playwright-tests:1.60.0 .`.
+- Ran the suite with `demo/` mounted read-only, `test-artifacts/` writable, and network disabled.
+- `client language switch covers deeper operational screens` passed for CorvinumEU and Jober in Slovak and Hungarian.
+- Full suite result: 10 passed.
+
+Known issues:
+- Names, company names, phone numbers, and fixed dates intentionally remain unchanged mock data. Client-facing UI prose, callouts, audit text, mobile labels, and module labels now translate in the two client builds.

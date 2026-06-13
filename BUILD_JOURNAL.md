@@ -123,3 +123,26 @@ Verification:
 
 Next step:
 - Review Slovak and Hungarian wording with a fluent speaker before client presentation if exact business terminology matters.
+
+## 2026-06-13
+
+Expanded Slovak and Hungarian coverage for the client demos.
+
+What changed:
+- Added the missing Slovak/Hungarian strings for the CorvinumEU-only and Jober-only builds across story callouts, audit rows, mobile card labels, table values, document states, and action labels.
+- Added a small render-time localization pass in both client builds so existing literal panels and `data-label` values localize without refactoring every template.
+- Localized Jober-only Logistics and Accounting surfaces, including Accommodation, Equipment, sizes, and Pohoda metrics.
+- Updated the language spec to require client-facing callout prose, audit lines, mobile labels, and module labels to translate.
+- Added a Playwright regression that checks deeper translated screens, not only the dashboard heading.
+
+Decisions made:
+- Names, company names, phone numbers, and fixed dates remain unchanged mock data.
+- The internal combined demo was left as-is for this pass because the request targeted the two client-facing demos.
+
+Verification:
+- `grep -ri jober demo/corvinum/` returned no output.
+- `grep -ri corvinum demo/jober/` returned no output.
+- The pinned Docker Playwright suite passed with 10 tests, including the deeper Slovak/Hungarian coverage check.
+
+Next step:
+- Have a Slovak/Hungarian speaker review business terminology before presenting if exact wording matters.

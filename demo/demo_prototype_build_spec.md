@@ -178,7 +178,7 @@ The three DECISION screens (§6 steps 3, 6, 10) each record the presenter's pick
 
 All three builds include English, Slovak, and Hungarian UI labels. The language switch is demo-only in-memory state, like the role and decision state. It is intentionally not persisted, and it must not use any remote translation service.
 
-The language layer should keep navigation, guided controls, role labels, decision labels, page headings, table headers, and status badges translatable. Mock names, company names, phone numbers, dates, and audit data may remain fixed demo data unless explicitly localized later.
+The language layer should keep navigation, guided controls, role labels, decision labels, page headings, table headers, mobile card labels, status badges, callout prose, audit lines, and client-module labels translatable in the client-facing builds. Mock names, company names, phone numbers, and fixed dates may remain unchanged demo data.
 
 ---
 
