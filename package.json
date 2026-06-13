@@ -1,0 +1,12 @@
+{
+  "name": "hr-system-demo-tests",
+  "version": "0.0.0",
+  "private": true,
+  "packageManager": "pnpm@11.0.0",
+  "scripts": {
+    "test:responsive": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.60.0"
+  }
+}

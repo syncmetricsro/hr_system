@@ -1,0 +1,1661 @@
+(() => {
+  "use strict";
+
+  const brand = {
+    wordmark: "Jober",
+    subtitle: "Workforce folders"
+  };
+
+  const roles = ["Recruiter", "Manager", "Observer"];
+
+  const languages = [
+    { id: "en", label: "EN", name: "English" },
+    { id: "sk", label: "SK", name: "Slovak" },
+    { id: "hu", label: "HU", name: "Hungarian" }
+  ];
+
+  const translations = {
+    sk: {
+      "Language": "Jazyk",
+      "Language switch": "Prepínač jazyka",
+      "Role": "Rola",
+      "Role switch": "Prepínač roly",
+      "Recruiter": "Náborár",
+      "Manager": "Manažér",
+      "Observer": "Pozorovateľ",
+      "Decisions captured": "Zachytené rozhodnutia",
+      "Start guided demo": "Spustiť sprievodcu",
+      "Start": "Štart",
+      "Back": "Späť",
+      "Next": "Ďalej",
+      "Can approve hires, verify documents, demote, blacklist, and run field actions.": "Môže schvaľovať prijatia, overovať dokumenty, meniť statusy, pridávať na čiernu listinu a robiť terénne akcie.",
+      "Can create people, schedule tests, assign shifts, send pickup notices, and upload documents.": "Môže vytvárať ľudí, plánovať skúšky, priraďovať zmeny, posielať pokyny na vyzdvihnutie a nahrávať dokumenty.",
+      "Read-only view. Action buttons are disabled for meeting review.": "Režim iba na čítanie. Akčné tlačidlá sú vypnuté pre kontrolu na stretnutí.",
+      "Operations": "Prevádzka",
+      "People": "Ľudia",
+      "Compliance": "Súlad",
+      "Logistics": "Logistika",
+      "Accounting": "Účtovníctvo",
+      "Reports": "Reporty",
+      "Board": "Panel",
+      "Demand": "Dopyt",
+      "Shifts": "Zmeny",
+      "SMS pickup": "SMS vyzdvihnutie",
+      "Second shift": "Druhá zmena",
+      "Field mode": "Terénny režim",
+      "Roster scan": "Kontrola zoznamu",
+      "Approvals": "Schválenia",
+      "Documents": "Dokumenty",
+      "Sick leave": "PN",
+      "Accommodation": "Ubytovanie",
+      "Equipment": "Výstroj",
+      "Pohoda": "Pohoda",
+      "Review": "Kontrola",
+      "Sign in": "Prihlásiť sa",
+      "Manager dashboard": "Manažérsky prehľad",
+      "Demand decision": "Rozhodnutie o dopyte",
+      "Risk check": "Kontrola rizika",
+      "Work test approval": "Schválenie pracovnej skúšky",
+      "Shift + transport": "Zmena + doprava",
+      "Pickup SMS": "SMS na vyzdvihnutie",
+      "Certificate stop": "Zastavenie certifikátu",
+      "Manager field view": "Terénny pohľad manažéra",
+      "Daily control board": "Denný riadiaci panel",
+      "Demand intake": "Príjem dopytu",
+      "Worker file scan": "Kontrola karty pracovníka",
+      "Trial shift decision": "Rozhodnutie po skúšobnej zmene",
+      "Dispatch plan": "Dispečerský plán",
+      "Pickup message": "Správa o vyzdvihnutí",
+      "Second dispatch slot": "Druhý dispečerský slot",
+      "Leave dates set inactive": "Dátumy absencie nastavia neaktívne",
+      "Certificate expiry stop": "Zastavenie pri expirácii certifikátu",
+      "Pohoda snapshot": "Snímka Pohoda",
+      "Decision review": "Kontrola rozhodnutí",
+      "Recorded": "Zaznamenané",
+      "Observer read-only": "Pozorovateľ iba číta",
+      "Awaiting choice": "Čaká na výber",
+      "No choice recorded yet.": "Zatiaľ nie je zaznamenaný výber.",
+      "Close": "Zavrieť",
+      "Help us confirm how you actually work": "Pomôžte nám potvrdiť, ako naozaj pracujete",
+      "Person": "Osoba",
+      "Country": "Krajina",
+      "Status": "Status",
+      "Document state": "Stav dokumentu",
+      "Contact": "Kontakt",
+      "Worker": "Pracovník",
+      "Worksite": "Pracovisko",
+      "Shift": "Zmena",
+      "Transport": "Doprava",
+      "Demand model": "Model dopytu",
+      "How does a partner request become work?": "Ako sa požiadavka partnera zmení na prácu?",
+      "Order-driven": "Podľa objednávky",
+      "The partner request exists as an order record. Recruiters fill it by assigning workers to shifts.": "Požiadavka partnera existuje ako objednávka. Náborári ju plnia priraďovaním pracovníkov na zmeny.",
+      "Shift-driven": "Podľa zmien",
+      "Recruiters create dated shifts directly. There is no separate order object.": "Náborári vytvárajú dátumované zmeny priamo. Samostatná objednávka neexistuje.",
+      "Transport capacity": "Kapacita dopravy",
+      "What happens when the bus is full?": "Čo sa stane, keď je autobus plný?",
+      "Enforce capacity": "Vynútiť kapacitu",
+      "Block new assignments once the bus reaches capacity.": "Blokovať nové priradenia, keď autobus dosiahne kapacitu.",
+      "Record only": "Iba zaznamenať",
+      "Allow the assignment and record that transport is over capacity.": "Povoliť priradenie a zaznamenať prekročenie kapacity.",
+      "Certificate storage": "Ukladanie certifikátov",
+      "What should be stored for certificates?": "Čo sa má ukladať pri certifikátoch?",
+      "Store the file": "Uložiť súbor",
+      "Upload and keep the certificate document alongside type and expiry.": "Nahrať a ponechať dokument certifikátu spolu s typom a expiráciou.",
+      "Store certificate type and expiry date, with no file retained.": "Uložiť typ certifikátu a dátum expirácie bez uchovania súboru.",
+      "Hired": "Prijatý",
+      "Recruit": "Kandidát",
+      "Archived": "Archivovaný",
+      "Blacklisted": "Na čiernej listine",
+      "Working": "Pracuje",
+      "Available": "Dostupný",
+      "Inactive": "Neaktívny",
+      "Draft": "Návrh",
+      "Planned": "Plánované",
+      "Assigned": "Priradené",
+      "Cancelled": "Zrušené"
+    },
+    hu: {
+      "Language": "Nyelv",
+      "Language switch": "Nyelvváltó",
+      "Role": "Szerep",
+      "Role switch": "Szerepváltó",
+      "Recruiter": "Toborzó",
+      "Manager": "Vezető",
+      "Observer": "Megfigyelő",
+      "Decisions captured": "Rögzített döntések",
+      "Start guided demo": "Vezetett demó indítása",
+      "Start": "Indítás",
+      "Back": "Vissza",
+      "Next": "Tovább",
+      "Can approve hires, verify documents, demote, blacklist, and run field actions.": "Jóváhagyhat felvételeket, ellenőrizhet dokumentumokat, módosíthat státuszt, tiltólistázhat és terepi műveleteket végezhet.",
+      "Can create people, schedule tests, assign shifts, send pickup notices, and upload documents.": "Létrehozhat dolgozókat, teszteket ütemezhet, műszakokat oszthat be, felvételi értesítést küldhet és dokumentumokat tölthet fel.",
+      "Read-only view. Action buttons are disabled for meeting review.": "Csak olvasható nézet. A műveleti gombok ki vannak kapcsolva a megbeszéléshez.",
+      "Operations": "Műveletek",
+      "People": "Dolgozók",
+      "Compliance": "Megfelelőség",
+      "Logistics": "Logisztika",
+      "Accounting": "Könyvelés",
+      "Reports": "Jelentések",
+      "Board": "Panel",
+      "Demand": "Igény",
+      "Shifts": "Műszakok",
+      "SMS pickup": "Felvételi SMS",
+      "Second shift": "Második műszak",
+      "Field mode": "Terepi mód",
+      "Roster scan": "Névsor ellenőrzése",
+      "Approvals": "Jóváhagyások",
+      "Documents": "Dokumentumok",
+      "Sick leave": "Betegszabadság",
+      "Accommodation": "Szállás",
+      "Equipment": "Felszerelés",
+      "Pohoda": "Pohoda",
+      "Review": "Áttekintés",
+      "Sign in": "Bejelentkezés",
+      "Manager dashboard": "Vezetői áttekintés",
+      "Demand decision": "Igénydöntés",
+      "Risk check": "Kockázatellenőrzés",
+      "Work test approval": "Próbanap jóváhagyása",
+      "Shift + transport": "Műszak + szállítás",
+      "Pickup SMS": "Felvételi SMS",
+      "Certificate stop": "Tanúsítvány stop",
+      "Manager field view": "Vezetői terepi nézet",
+      "Daily control board": "Napi irányítópanel",
+      "Demand intake": "Igényfelvétel",
+      "Worker file scan": "Dolgozói karton ellenőrzése",
+      "Trial shift decision": "Próbanapi döntés",
+      "Dispatch plan": "Diszpécserterv",
+      "Pickup message": "Felvételi üzenet",
+      "Second dispatch slot": "Második beosztási slot",
+      "Leave dates set inactive": "Távolléti dátumok inaktívra állítanak",
+      "Certificate expiry stop": "Tanúsítvány lejárati stop",
+      "Pohoda snapshot": "Pohoda pillanatkép",
+      "Decision review": "Döntések áttekintése",
+      "Recorded": "Rögzítve",
+      "Observer read-only": "Megfigyelő csak olvas",
+      "Awaiting choice": "Választásra vár",
+      "No choice recorded yet.": "Még nincs rögzített választás.",
+      "Close": "Bezárás",
+      "Help us confirm how you actually work": "Segítsen megerősíteni, hogyan dolgoznak valójában",
+      "Person": "Személy",
+      "Country": "Ország",
+      "Status": "Státusz",
+      "Document state": "Dokumentumállapot",
+      "Contact": "Kapcsolat",
+      "Worker": "Dolgozó",
+      "Worksite": "Munkaterület",
+      "Shift": "Műszak",
+      "Transport": "Szállítás",
+      "Demand model": "Igénymodell",
+      "How does a partner request become work?": "Hogyan lesz a partneri igényből munka?",
+      "Order-driven": "Megrendelés-alapú",
+      "The partner request exists as an order record. Recruiters fill it by assigning workers to shifts.": "A partneri igény megrendelésként létezik. A toborzók dolgozókat osztanak műszakokra.",
+      "Shift-driven": "Műszak-alapú",
+      "Recruiters create dated shifts directly. There is no separate order object.": "A toborzók közvetlenül dátumozott műszakokat hoznak létre. Nincs külön megrendelésobjektum.",
+      "Transport capacity": "Szállítási kapacitás",
+      "What happens when the bus is full?": "Mi történik, ha a busz megtelt?",
+      "Enforce capacity": "Kapacitás betartása",
+      "Block new assignments once the bus reaches capacity.": "Új beosztások blokkolása, ha a busz eléri a kapacitást.",
+      "Record only": "Csak rögzítés",
+      "Allow the assignment and record that transport is over capacity.": "A beosztás engedélyezése és a kapacitástúllépés rögzítése.",
+      "Certificate storage": "Tanúsítványtárolás",
+      "What should be stored for certificates?": "Mit kell tárolni a tanúsítványoknál?",
+      "Store the file": "Fájl tárolása",
+      "Upload and keep the certificate document alongside type and expiry.": "A tanúsítvány dokumentumának feltöltése és megőrzése típussal és lejárattal együtt.",
+      "Store certificate type and expiry date, with no file retained.": "A tanúsítvány típusának és lejáratának tárolása fájl nélkül.",
+      "Hired": "Felvéve",
+      "Recruit": "Jelölt",
+      "Archived": "Archivált",
+      "Blacklisted": "Tiltólistás",
+      "Working": "Dolgozik",
+      "Available": "Elérhető",
+      "Inactive": "Inaktív",
+      "Draft": "Vázlat",
+      "Planned": "Tervezett",
+      "Assigned": "Beosztva",
+      "Cancelled": "Törölve"
+    }
+  };
+
+  const recruiterPermissions = new Set([
+    "createPerson",
+    "scheduleTest",
+    "recommendHire",
+    "assignShift",
+    "sendSms",
+    "recordSickLeave",
+    "uploadDocs"
+  ]);
+
+  const tabGroups = [
+    {
+      id: "operations",
+      label: "Operations",
+      defaultView: "dashboard",
+      views: [
+        { label: "Board", view: "dashboard" },
+        { label: "Demand", view: "requests" },
+        { label: "Shifts", view: "shifts" },
+        { label: "SMS pickup", view: "sms" },
+        { label: "Second shift", view: "second-shift" },
+        { label: "Field mode", view: "field" }
+      ]
+    },
+    {
+      id: "people",
+      label: "People",
+      defaultView: "people",
+      views: [
+        { label: "Roster scan", view: "people" },
+        { label: "Approvals", view: "approvals" }
+      ]
+    },
+    {
+      id: "compliance",
+      label: "Compliance",
+      defaultView: "documents",
+      views: [
+        { label: "Documents", view: "documents" },
+        { label: "Sick leave", view: "sick-leave" }
+      ]
+    },
+    {
+      id: "logistics",
+      label: "Logistics",
+      defaultView: "accommodation",
+      views: [
+        { label: "Accommodation", view: "accommodation" },
+        { label: "Equipment", view: "equipment" }
+      ]
+    },
+    {
+      id: "accounting",
+      label: "Accounting",
+      defaultView: "pohoda",
+      views: [
+        { label: "Pohoda", view: "pohoda" }
+      ]
+    },
+    {
+      id: "reports",
+      label: "Reports",
+      defaultView: "reports",
+      views: [
+        { label: "Review", view: "reports" }
+      ]
+    }
+  ];
+
+  const tourSteps = [
+    { id: "login", label: "Sign in", view: "login", meta: "Auth facade" },
+    { id: "dashboard", label: "Manager dashboard", view: "dashboard", meta: "Today" },
+    { id: "demand", label: "Demand decision", view: "requests", meta: "Decision 1" },
+    { id: "risk", label: "Risk check", view: "people", meta: "Blacklist gate" },
+    { id: "approval", label: "Work test approval", view: "approvals", meta: "Role switch" },
+    { id: "transport", label: "Shift + transport", view: "shifts", meta: "Decision 2" },
+    { id: "sms", label: "Pickup SMS", view: "sms", meta: "Fake send" },
+    { id: "second-shift", label: "Second shift", view: "second-shift", meta: "Same day" },
+    { id: "sick", label: "Sick leave", view: "sick-leave", meta: "Dates only" },
+    { id: "cert", label: "Certificate stop", view: "documents", meta: "Decision 3" },
+    { id: "field", label: "Manager field view", view: "field", meta: "Mobile" }
+  ];
+
+  const decisions = {
+    demand: {
+      title: "Demand model",
+      question: "How does a partner request become work?",
+      options: {
+        A: {
+          label: "Order-driven",
+          body: "The partner request exists as an order record. Recruiters fill it by assigning workers to shifts."
+        },
+        B: {
+          label: "Shift-driven",
+          body: "Recruiters create dated shifts directly. There is no separate order object."
+        }
+      }
+    },
+    transport: {
+      title: "Transport capacity",
+      question: "What happens when the bus is full?",
+      options: {
+        A: {
+          label: "Enforce capacity",
+          body: "Block new assignments once the bus reaches capacity."
+        },
+        B: {
+          label: "Record only",
+          body: "Allow the assignment and record that transport is over capacity."
+        }
+      }
+    },
+    cert: {
+      title: "Certificate storage",
+      question: "What should be stored for certificates?",
+      options: {
+        A: {
+          label: "Store the file",
+          body: "Upload and keep the certificate document alongside type and expiry."
+        },
+        B: {
+          label: "Dates only",
+          body: "Store certificate type and expiry date, with no file retained."
+        }
+      }
+    }
+  };
+
+  const mockData = {
+    partner: {
+      name: "Stavby Nitra s.r.o.",
+      requestId: "REQ-2026-0616-A",
+      workersNeeded: 12,
+      worksite: "Worksite A - Nitra warehouse",
+      date: "Tuesday, 16 Jun 2026",
+      position: "General laborer"
+    },
+    worksites: [
+      { id: "nitra", label: "Worksite A - Nitra warehouse", address: "Logisticka 14, Nitra" },
+      { id: "trnava", label: "Worksite B - Trnava site", address: "Priemyselna 8, Trnava" }
+    ],
+    positions: [
+      { label: "General laborer", requiredCert: "None" },
+      { label: "Warehouse picker", requiredCert: "None" },
+      { label: "Forklift operator", requiredCert: "Forklift certificate" }
+    ],
+    buses: [
+      { id: "bus1", label: "Bus 1", capacity: 15, booked: 11, driver: "Marek H.", pickup: "Trnava station", time: "10:40" },
+      { id: "bus2", label: "Bus 2", capacity: 9, booked: 8, driver: "Tomas V.", pickup: "Nitra depot", time: "06:15" }
+    ],
+    people: [
+      {
+        id: "olha",
+        name: "Olha Tkachenko",
+        scriptName: "Ольга Ткаченко",
+        country: "Ukraine",
+        phone: "+421 900 222 014",
+        hireStatus: "Hired",
+        availability: "Working",
+        document: "Work permit expires in 18 days",
+        room: "Room 12",
+        sizes: "Shirt M / trousers 40 / boots 39",
+        equipment: "Vest, helmet, gloves"
+      },
+      {
+        id: "bohdan",
+        name: "Bohdan Marchenko",
+        scriptName: "Богдан Марченко",
+        country: "Ukraine",
+        phone: "+421 900 441 118",
+        hireStatus: "Blacklisted",
+        availability: "Inactive",
+        document: "Archived",
+        room: "None",
+        sizes: "Not recorded",
+        equipment: "Returned",
+        blacklistReason: "Repeated no-show"
+      },
+      {
+        id: "farrukh",
+        name: "Farrukh Yusupov",
+        scriptName: "Фаррух Юсупов",
+        country: "Uzbekistan",
+        phone: "+421 900 873 331",
+        hireStatus: "Hired",
+        availability: "Available",
+        document: "Forklift cert expires 25 Jun 2026",
+        room: "Room 14",
+        sizes: "Shirt L / trousers 42 / boots 43",
+        equipment: "Helmet, boots",
+        certificate: {
+          type: "Forklift certificate",
+          expires: "25 Jun 2026",
+          daysLeft: 12
+        }
+      },
+      {
+        id: "tran",
+        name: "Tran Van Minh",
+        scriptName: "Tran Van Minh",
+        country: "Vietnam",
+        phone: "+421 900 730 822",
+        hireStatus: "Recruit",
+        availability: "Available",
+        document: "Test scheduled",
+        room: "None",
+        sizes: "Shirt S / trousers 38 / boots 40",
+        equipment: "Pending issue"
+      },
+      {
+        id: "dilnoza",
+        name: "Dilnoza Karimova",
+        scriptName: "Дилноза Каримова",
+        country: "Uzbekistan",
+        phone: "+421 900 611 203",
+        hireStatus: "Hired",
+        availability: "Available",
+        document: "Residence card valid",
+        room: "Room 12",
+        sizes: "Shirt S / trousers 36 / boots 38",
+        equipment: "Vest, gloves"
+      },
+      {
+        id: "mykola",
+        name: "Mykola Hrytsenko",
+        scriptName: "Микола Гриценко",
+        country: "Ukraine",
+        phone: "+421 900 511 290",
+        hireStatus: "Archived",
+        availability: "Inactive",
+        document: "Contract ended",
+        room: "None",
+        sizes: "Shirt XL / trousers 46 / boots 44",
+        equipment: "Returned"
+      }
+    ],
+    rooms: [
+      { room: "Room 12", occupancy: "3/4 beds", workers: "Olha Tkachenko, Dilnoza Karimova, Milan K." },
+      { room: "Room 14", occupancy: "2/4 beds", workers: "Farrukh Yusupov, Azizbek R." },
+      { room: "Room 18", occupancy: "4/4 beds", workers: "Full" }
+    ],
+    equipment: [
+      { worker: "Olha Tkachenko", item: "Helmet", status: "Issued", size: "Standard" },
+      { worker: "Farrukh Yusupov", item: "Boots", status: "Issued", size: "43" },
+      { worker: "Tran Van Minh", item: "Vest", status: "Prepared", size: "S" },
+      { worker: "Mykola Hrytsenko", item: "Gloves", status: "Returned", size: "L" }
+    ]
+  };
+
+  const state = {
+    signedIn: false,
+    language: "en",
+    role: "Manager",
+    view: "login",
+    currentStep: 0,
+    navOpen: false,
+    manifestOpen: false,
+    decisionsOpen: false,
+    decisionChoices: {
+      demand: null,
+      transport: null,
+      cert: null
+    },
+    riskInput: "Bohdan Marchenko",
+    bohdanFlagSaved: false,
+    testScheduled: true,
+    testRecommended: false,
+    tranApproved: false,
+    shiftAssigned: false,
+    smsSent: false,
+    secondShiftAdded: false,
+    sickLeaveRecorded: false,
+    certAssignmentTried: false,
+    noShowMarked: false,
+    auditLog: [
+      { time: "08:05", text: "Dashboard opened for today's staffing picture." },
+      { time: "08:18", text: "Forklift certificate alert queued for Farrukh Yusupov." },
+      { time: "08:27", text: "Blacklist review queue contains one returnee." }
+    ]
+  };
+
+  const root = document.getElementById("app");
+
+  function t(value) {
+    return translations[state.language]?.[value] || value;
+  }
+
+  function escapeHtml(value) {
+    return String(value)
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#39;");
+  }
+
+  function getPerson(id) {
+    return mockData.people.find((person) => person.id === id);
+  }
+
+  function setPerson(id, changes) {
+    const target = getPerson(id);
+    if (target) {
+      Object.assign(target, changes);
+    }
+  }
+
+  function nowTime() {
+    return new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+  }
+
+  function addAudit(text) {
+    state.auditLog.unshift({ time: nowTime(), text });
+  }
+
+  function can(permission) {
+    if (state.role === "Observer") {
+      return false;
+    }
+    if (state.role === "Manager") {
+      return true;
+    }
+    return recruiterPermissions.has(permission);
+  }
+
+  function actionButton(permission, action, label, className = "primary-button", extra = "") {
+    const disabled = permission && !can(permission);
+    const displayLabel = t(label);
+    const title = disabled ? `Current role cannot ${displayLabel.toLowerCase()}.` : "";
+    return `
+      <button class="${className}" data-action="${action}" ${extra} ${disabled ? "disabled" : ""} title="${escapeHtml(title)}">
+        ${escapeHtml(displayLabel)}
+      </button>
+    `;
+  }
+
+  function statusBadges(person) {
+    return `
+      <span class="badge hire-${person.hireStatus.toLowerCase()}">${escapeHtml(t(person.hireStatus))}</span>
+      <span class="badge availability-${person.availability.toLowerCase()}">${escapeHtml(t(person.availability))}</span>
+    `;
+  }
+
+  function renderTopbar() {
+    return `
+      <header class="topbar">
+        <button class="brand ghost-button" data-action="go-step" data-step="1" aria-label="Go to dashboard">
+          <span class="brand-mark" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+          </span>
+          <span class="brand-text">
+            <span class="brand-name">${escapeHtml(brand.wordmark)}</span>
+            <span class="brand-subtitle">${escapeHtml(brand.subtitle)}</span>
+          </span>
+        </button>
+        ${renderRoleSwitch("desktop-control")}
+        ${renderLanguageSwitch("desktop-control")}
+        <div class="topbar-group topbar-demo desktop-control">
+          <button class="toolbar-button" data-action="toggle-decisions">${escapeHtml(t("Decisions captured"))}</button>
+          <button class="toolbar-button" data-action="start-demo">${escapeHtml(t("Start guided demo"))}</button>
+          <button class="toolbar-button" data-action="prev-step" ${state.currentStep === 0 ? "disabled" : ""}>${escapeHtml(t("Back"))}</button>
+          <button class="toolbar-button" data-action="next-step" ${nextIsDisabled() ? "disabled" : ""}>${escapeHtml(t("Next"))}</button>
+          <span class="avatar" aria-label="Presenter avatar">${state.role.slice(0, 2).toUpperCase()}</span>
+        </div>
+        <div class="mobile-top-actions">
+          <button class="toolbar-button compact-button" data-action="toggle-decisions">${escapeHtml(t("Decisions captured"))}</button>
+          <button class="toolbar-button compact-button" data-action="start-demo">${escapeHtml(t("Start"))}</button>
+          <span class="avatar" aria-label="Presenter avatar">${state.role.slice(0, 2).toUpperCase()}</span>
+        </div>
+        ${renderRoleSwitch("mobile-role-control")}
+        ${renderLanguageSwitch("mobile-language-control")}
+      </header>
+    `;
+  }
+
+  function renderRoleSwitch(extraClass = "") {
+    return `
+      <div class="topbar-group ${extraClass}" aria-label="${escapeHtml(t("Role switch"))}">
+        <span class="control-label">${escapeHtml(t("Role"))}</span>
+        <span class="segmented">
+          ${roles.map((role) => `
+            <button class="segmented-button ${state.role === role ? "is-active" : ""}" data-action="set-role" data-role="${role}" aria-pressed="${state.role === role}">
+              ${escapeHtml(t(role))}
+            </button>
+          `).join("")}
+        </span>
+      </div>
+    `;
+  }
+
+  function renderLanguageSwitch(extraClass = "") {
+    return `
+      <div class="topbar-group ${extraClass}" aria-label="${escapeHtml(t("Language switch"))}">
+        <span class="control-label">${escapeHtml(t("Language"))}</span>
+        <span class="segmented">
+          ${languages.map((language) => `
+            <button class="segmented-button ${state.language === language.id ? "is-active" : ""}" data-action="set-language" data-language="${language.id}" aria-pressed="${state.language === language.id}" title="${escapeHtml(language.name)}">
+              ${escapeHtml(language.label)}
+            </button>
+          `).join("")}
+        </span>
+      </div>
+    `;
+  }
+
+  function nextIsDisabled() {
+    if (state.currentStep === tourSteps.length - 1) {
+      return true;
+    }
+    const step = tourSteps[state.currentStep];
+    if (step.id === "demand") {
+      return !state.decisionChoices.demand;
+    }
+    if (step.id === "transport") {
+      return !state.decisionChoices.transport;
+    }
+    if (step.id === "cert") {
+      return !state.decisionChoices.cert;
+    }
+    return false;
+  }
+
+  function activeGroup() {
+    return tabGroups.find((group) => group.views.some((item) => item.view === state.view)) || tabGroups[0];
+  }
+
+  function renderFolderTabs() {
+    const currentGroup = activeGroup();
+    return `
+      <nav class="folder-tabs" aria-label="Jober folders">
+        ${tabGroups.map((group) => `
+          <button class="folder-tab ${currentGroup.id === group.id ? "is-active" : ""}" data-action="nav" data-view="${group.defaultView}" aria-pressed="${currentGroup.id === group.id}">
+            ${escapeHtml(t(group.label))}
+          </button>
+        `).join("")}
+      </nav>
+      <nav class="sub-tabs" aria-label="${escapeHtml(currentGroup.label)} sections">
+        ${currentGroup.views.map((item) => `
+          <button class="sub-tab ${state.view === item.view ? "is-active" : ""}" data-action="nav" data-view="${item.view}" aria-pressed="${state.view === item.view}">
+            ${escapeHtml(t(item.label))}
+          </button>
+        `).join("")}
+      </nav>
+    `;
+  }
+
+  function renderStepBar() {
+    return `
+      <section class="step-bar" aria-label="Guided demo progress">
+        <div class="step-track">
+          ${tourSteps.map((step, index) => {
+            const done = index < state.currentStep;
+            const current = index === state.currentStep;
+            return `
+              <button class="step-dot ${done ? "is-done" : ""} ${current ? "is-current" : ""}" data-action="go-step" data-step="${index}" aria-current="${current ? "step" : "false"}" title="${escapeHtml(step.label)}">
+                <span>${index + 1}</span>
+                <strong>${escapeHtml(t(step.label))}</strong>
+              </button>
+            `;
+          }).join("")}
+        </div>
+        <div class="step-actions">
+          <button class="toolbar-button" data-action="prev-step" ${state.currentStep === 0 ? "disabled" : ""}>${escapeHtml(t("Back"))}</button>
+          <button class="toolbar-button" data-action="next-step" ${nextIsDisabled() ? "disabled" : ""}>${escapeHtml(t("Next"))}</button>
+        </div>
+      </section>
+    `;
+  }
+
+  function roleDescription() {
+    if (state.role === "Manager") {
+      return t("Can approve hires, verify documents, demote, blacklist, and run field actions.");
+    }
+    if (state.role === "Recruiter") {
+      return t("Can create people, schedule tests, assign shifts, send pickup notices, and upload documents.");
+    }
+    return t("Read-only view. Action buttons are disabled for meeting review.");
+  }
+
+  function renderRoleNotice() {
+    return `
+      <section class="role-strip" aria-label="Current role">
+        <strong>${escapeHtml(t(state.role))}</strong>
+        <span>${escapeHtml(roleDescription())}</span>
+      </section>
+    `;
+  }
+
+  function renderDecisionDrawer() {
+    if (!state.decisionsOpen) {
+      return "";
+    }
+    return `
+      <aside class="decision-drawer" aria-label="Decisions captured">
+        <div class="drawer-header">
+          <h2>${escapeHtml(t("Decisions captured"))}</h2>
+          <button class="ghost-button" data-action="toggle-decisions">${escapeHtml(t("Close"))}</button>
+        </div>
+        <div class="decision-summary">
+          ${Object.entries(decisions).map(([key, decision]) => {
+            const choiceKey = state.decisionChoices[key];
+            const choice = choiceKey ? decision.options[choiceKey] : null;
+            return `
+              <div class="decision-summary-item">
+                <strong>${escapeHtml(t(decision.title))}</strong>
+                <p>${choice ? `${escapeHtml(choiceKey)} - ${escapeHtml(t(choice.label))}` : escapeHtml(t("No choice recorded yet."))}</p>
+              </div>
+            `;
+          }).join("")}
+        </div>
+      </aside>
+    `;
+  }
+
+  function renderPageHeader(kicker, title, lede, actionHtml = "") {
+    return `
+      <header class="page-header">
+        <div>
+          <p class="page-kicker">${escapeHtml(t(kicker))}</p>
+          <h1 class="page-title">${escapeHtml(t(title))}</h1>
+          ${lede ? `<p class="page-lede">${escapeHtml(t(lede))}</p>` : ""}
+        </div>
+        <div class="inline-actions">${actionHtml}</div>
+      </header>
+    `;
+  }
+
+  function renderLogin() {
+    return `
+      ${renderTopbar()}
+      <main class="login-stage">
+        <section class="login-visual" aria-label="Operational route preview">
+          <div>
+            <p class="eyebrow">Presenter entry</p>
+            <h1 class="login-title">${escapeHtml(brand.wordmark)} workforce folders</h1>
+            <p class="page-lede">A static meeting prototype for dispatch, people files, compliance, logistics, and accounting signals.</p>
+          </div>
+          <div class="login-route">
+            <div class="route-block"><span class="muted">Request</span><strong>12</strong><span>Workers to Nitra</span></div>
+            <div class="route-block"><span class="muted">Pickup</span><strong>06:15</strong><span>Bus 2, Nitra depot</span></div>
+            <div class="route-block"><span class="muted">Gate</span><strong>1</strong><span>Blacklist review</span></div>
+            <div class="route-block"><span class="muted">Cert</span><strong>12d</strong><span>Forklift expiry</span></div>
+          </div>
+        </section>
+        <section class="login-panel">
+          <p class="eyebrow">Cosmetic sign in</p>
+          <h2 class="section-title">Open the live demo</h2>
+          <div class="stack">
+            <label class="field">
+              <span>Email</span>
+              <input type="email" value="manager@example.test" aria-label="Email">
+            </label>
+            <label class="field">
+              <span>Password</span>
+              <input type="password" value="demo-only" aria-label="Password">
+            </label>
+            <div class="info-strip">Privileged roles would use 2FA here. This demo does not authenticate or send anything.</div>
+            <button class="primary-button" data-action="sign-in">${escapeHtml(t("Sign in"))}</button>
+          </div>
+        </section>
+      </main>
+      ${renderDecisionDrawer()}
+    `;
+  }
+
+  function renderShell() {
+    return `
+      ${renderTopbar()}
+      <div class="folder-shell">
+        ${renderFolderTabs()}
+        ${renderStepBar()}
+        ${renderRoleNotice()}
+        <main class="main-content" id="main-content">
+          ${renderCurrentView()}
+        </main>
+      </div>
+      ${renderDecisionDrawer()}
+    `;
+  }
+
+  function renderCurrentView() {
+    switch (state.view) {
+      case "dashboard":
+        return renderDashboard();
+      case "people":
+        return renderPeople();
+      case "requests":
+        return renderRequests();
+      case "shifts":
+        return renderShifts();
+      case "sms":
+        return renderSms();
+      case "second-shift":
+        return renderSecondShift();
+      case "sick-leave":
+        return renderSickLeave();
+      case "documents":
+        return renderDocuments();
+      case "approvals":
+        return renderApprovals();
+      case "reports":
+        return renderReports();
+      case "field":
+        return renderFieldView();
+      case "accommodation":
+        return renderAccommodation();
+      case "equipment":
+        return renderEquipment();
+      case "pohoda":
+        return renderPohoda();
+      default:
+        return renderDashboard();
+    }
+  }
+
+  function renderDashboard() {
+    const working = mockData.people.filter((person) => person.availability === "Working").length;
+    const expiring = 2;
+    const blacklist = mockData.people.filter((person) => person.hireStatus === "Blacklisted").length;
+    const pending = getPerson("tran").hireStatus === "Recruit" ? 1 : 0;
+
+    return `
+      <section class="page">
+        ${renderPageHeader("Operations", "Daily control board", "The meeting starts from dispatch pressure: who is working, what is expiring, and what needs a manager decision.")}
+        <div class="metric-grid">
+          ${metricCard("Working now", working, "Olha is active on Worksite A.", "shifts")}
+          ${metricCard("Docs expiring", expiring, "Forklift and work permit alerts.", "documents")}
+          ${metricCard("Blacklist queue", blacklist, "One returnee needs review.", "people")}
+          ${metricCard("Hire approvals", pending, "Tran waits for manager approval.", "approvals")}
+        </div>
+        <div class="split">
+          <section class="section">
+            <h2 class="section-title">Today's manifest</h2>
+            ${renderShiftTable()}
+          </section>
+          <section class="section">
+            <h2 class="section-title">Recent audit</h2>
+            ${renderAudit()}
+          </section>
+        </div>
+      </section>
+    `;
+  }
+
+  function metricCard(label, value, note, view) {
+    return `
+      <button class="metric-card" data-action="nav" data-view="${view}">
+        <span class="metric-value">${escapeHtml(value)}</span>
+        <span>
+          <p class="metric-label">${escapeHtml(t(label))}</p>
+          <p class="metric-note">${escapeHtml(t(note))}</p>
+        </span>
+      </button>
+    `;
+  }
+
+  function renderRequests() {
+    const request = mockData.partner;
+    return `
+      <section class="page">
+        ${renderPageHeader("Decision 1", "Demand intake", "Help us confirm how demand enters the board before recruiters fill the work.")}
+        <section class="section">
+          <div class="three-up">
+            <div><p class="field-label">Partner</p><strong>${escapeHtml(request.name)}</strong></div>
+            <div><p class="field-label">Need</p><strong>${request.workersNeeded} workers</strong></div>
+            <div><p class="field-label">Worksite</p><strong>${escapeHtml(request.worksite)}</strong></div>
+          </div>
+        </section>
+        ${renderDecision("demand")}
+        <section class="section">
+          <h2 class="section-title">Next move</h2>
+          <p class="muted">Whichever model the team picks, the demo continues into the same shift and transport flow.</p>
+          <button class="primary-button" data-action="next-step" ${state.decisionChoices.demand ? "" : "disabled"}>Continue to risk check</button>
+        </section>
+      </section>
+    `;
+  }
+
+  function renderPeople() {
+    return `
+      <section class="page">
+        ${renderPageHeader("People", "Worker file scan", "The headline moment: the recruiter starts adding a returnee and the blacklist gate catches it before activation.")}
+        <section class="section">
+          <h2 class="section-title">Add person</h2>
+          <div class="split">
+            <div class="stack">
+              <label class="field">
+                <span>Name or identifier</span>
+                <input data-input="risk" value="${escapeHtml(state.riskInput)}" autocomplete="off" aria-describedby="risk-result">
+              </label>
+              <div class="form-grid">
+                <div class="field">
+                  <span class="field-label">Country</span>
+                  <span class="field-value">Ukraine</span>
+                </div>
+                <div class="field">
+                  <span class="field-label">Initial status</span>
+                  <span class="field-value">Recruit, activation gated</span>
+                </div>
+              </div>
+            </div>
+            <div id="risk-result">${riskResultHtml()}</div>
+          </div>
+        </section>
+        <section class="section">
+          <h2 class="section-title">People roster</h2>
+          ${renderPeopleTable()}
+        </section>
+      </section>
+    `;
+  }
+
+  function riskResultHtml() {
+    const input = state.riskInput.trim().toLowerCase();
+    const matchesBohdan = input.includes("bohdan") || input.includes("marchenko") || input.includes("богдан");
+    const matchesOlha = input.includes("olha") || input.includes("tkachenko") || input.includes("ольга");
+
+    if (!input) {
+      return `<div class="info-strip"><strong>Ready for live check.</strong><p class="muted">Type a name or identifier to compare against duplicate and blacklist records.</p></div>`;
+    }
+
+    if (matchesBohdan) {
+      return `
+        <div class="hard-stop">
+          <strong>Blacklist match found: Bohdan Marchenko</strong>
+          <p>Category: repeated no-show. Activation is blocked until a manager reviews the record.</p>
+          <div class="badge-row">${statusBadges(getPerson("bohdan"))}</div>
+          <div class="inline-actions">
+            ${actionButton("createPerson", "save-risk", state.bohdanFlagSaved ? "Saved with review flag" : "Save as recruit with review flag", state.bohdanFlagSaved ? "secondary-button" : "primary-button", state.bohdanFlagSaved ? "disabled" : "")}
+          </div>
+        </div>
+      `;
+    }
+
+    if (matchesOlha) {
+      return `<div class="warning"><strong>Possible duplicate.</strong><p>Olha Tkachenko already exists as a hired worker. Review before creating another profile.</p></div>`;
+    }
+
+    return `<div class="success"><strong>No blacklist or duplicate match.</strong><p>The person can be saved as Recruit and moved into work test scheduling.</p></div>`;
+  }
+
+  function renderApprovals() {
+    const tran = getPerson("tran");
+    return `
+      <section class="page">
+        ${renderPageHeader("People", "Trial shift decision", "Recruiters can recommend a candidate. Managers make the hire decision and the audit trail records it.")}
+        <div class="split">
+          <section class="section">
+            <h2 class="section-title">Tran Van Minh</h2>
+            <div class="badge-row">${statusBadges(tran)}</div>
+            <div class="form-grid">
+              <div class="field">
+                <span class="field-label">Work test</span>
+                <span class="field-value">${state.testScheduled ? "Scheduled for 17 Jun 2026" : "Not scheduled"}</span>
+              </div>
+              <div class="field">
+                <span class="field-label">Recommendation</span>
+                <span class="field-value">${state.testRecommended ? "Recommend hire" : "Ready to recommend"}</span>
+              </div>
+              <label class="field">
+                <span>Recruiter note</span>
+                <textarea>Arrived on time, understood safety briefing, suitable for warehouse picker.</textarea>
+              </label>
+              <div class="field">
+                <span class="field-label">Manager decision</span>
+                <span class="field-value">${state.tranApproved ? "Approved as hired" : "Pending"}</span>
+              </div>
+            </div>
+            <div class="inline-actions">
+              ${actionButton("scheduleTest", "schedule-test", state.testScheduled ? "Test scheduled" : "Schedule work test", "secondary-button", state.testScheduled ? "disabled" : "")}
+              ${actionButton("recommendHire", "recommend-hire", state.testRecommended ? "Recommended" : "Recommend hire", "secondary-button", state.testRecommended ? "disabled" : "")}
+              ${actionButton("approveHire", "approve-hire", state.tranApproved ? "Hire approved" : "Approve hire", "primary-button", state.tranApproved ? "disabled" : "")}
+            </div>
+          </section>
+          <section class="section">
+            <h2 class="section-title">Audit entry</h2>
+            ${state.tranApproved ? `<div class="success"><strong>Hire approved.</strong><p>Tran Van Minh changed from Recruit to Hired and the approval is in the audit log.</p></div>` : `<div class="info-strip"><strong>Manager approval required.</strong><p>Switch to Manager to approve the hire. Recruiter and Observer cannot complete this step.</p></div>`}
+            ${renderAudit()}
+          </section>
+        </div>
+      </section>
+    `;
+  }
+
+  function renderShifts() {
+    const olha = getPerson("olha");
+    const busText = transportCapacityText();
+    return `
+      <section class="page">
+        ${renderPageHeader("Operations", "Dispatch plan", "Olha is hired. The assignment ties the dated shift to a worksite, position, bus, pickup point, and time.")}
+        <section class="section">
+          <div class="split">
+            <div class="stack">
+              <h2 class="section-title">Worker header</h2>
+              <div class="person-name">
+                <span>${escapeHtml(olha.name)}</span>
+                <span class="script-name">${escapeHtml(olha.scriptName)}</span>
+              </div>
+              <div class="badge-row">${statusBadges(olha)}</div>
+              <div class="form-grid">
+                <div class="field"><span class="field-label">Worksite</span><span class="field-value">Worksite A - Nitra warehouse</span></div>
+                <div class="field"><span class="field-label">Position</span><span class="field-value">General laborer</span></div>
+                <div class="field"><span class="field-label">Shift</span><span class="field-value">16 Jun 2026, 07:00-15:00</span></div>
+                <div class="field"><span class="field-label">Transport group</span><span class="field-value">Bus 2, Nitra depot, 06:15</span></div>
+              </div>
+              <div class="inline-actions">
+                ${actionButton("assignShift", "assign-shift", state.shiftAssigned ? "Assigned to shift" : "Assign to shift", "primary-button", state.shiftAssigned ? "disabled" : "")}
+              </div>
+            </div>
+            <div class="stack">
+              <h2 class="section-title">Bus 2 capacity</h2>
+              <div class="capacity-meter">
+                <div class="meter-track"><div class="meter-fill" style="--meter-width: ${state.decisionChoices.transport === "B" ? "100%" : state.shiftAssigned ? "100%" : "89%"}"></div></div>
+                <strong class="mono">${escapeHtml(busText)}</strong>
+                <p class="muted">Driver Tomas V., pickup Nitra depot, 06:15.</p>
+              </div>
+              ${state.decisionChoices.transport === "A" ? `<div class="success"><strong>Capacity enforced.</strong><p>Bus 2 is full after Olha. A future assignment would be blocked.</p></div>` : ""}
+              ${state.decisionChoices.transport === "B" ? `<div class="warning"><strong>Capacity recorded only.</strong><p>The demo shows how an over-capacity transport row would be flagged, not blocked.</p></div>` : ""}
+            </div>
+          </div>
+        </section>
+        ${renderDecision("transport")}
+        <section class="section">
+          <h2 class="section-title">Shift table</h2>
+          ${renderShiftTable()}
+        </section>
+      </section>
+    `;
+  }
+
+  function transportCapacityText() {
+    if (state.decisionChoices.transport === "B") {
+      return "10 / 9 recorded";
+    }
+    if (state.shiftAssigned) {
+      return "9 / 9 full";
+    }
+    return "8 / 9 booked";
+  }
+
+  function renderSms() {
+    const olha = getPerson("olha");
+    const message = "Olha, your pickup is Bus 2 at 06:15 from Nitra depot for Worksite A - Nitra warehouse. Reply by SMS if you cannot travel.";
+    return `
+      <section class="page">
+        ${renderPageHeader("Operations", "Pickup message", "The demo composes the message and records a fake sent state. No SMS is actually sent.")}
+        <div class="split">
+          <section class="section">
+            <h2 class="section-title">${escapeHtml(olha.name)}</h2>
+            <div class="badge-row">${statusBadges(olha)}</div>
+            <p class="muted">Primary channel: SMS, because many workers do not reliably use email.</p>
+            <div class="message-box">${escapeHtml(message)}</div>
+            <div class="inline-actions">
+              ${actionButton("sendSms", "send-sms", state.smsSent ? "Sent" : "Send pickup notice", state.smsSent ? "secondary-button" : "primary-button", state.smsSent ? "disabled" : "")}
+            </div>
+            ${state.smsSent ? `<div class="success"><strong>Sent confirmation shown.</strong><p>This is a demo receipt only. No message left the browser.</p></div>` : ""}
+          </section>
+          <section class="section">
+            <h2 class="section-title">Transport context</h2>
+            ${renderShiftTable("olha-only")}
+          </section>
+        </div>
+      </section>
+    `;
+  }
+
+  function renderSecondShift() {
+    return `
+      <section class="page">
+        ${renderPageHeader("Operations", "Second dispatch slot", "The model supports one worker holding multiple dated shifts with different worksites and transport groups.")}
+        <section class="section">
+          <div class="form-grid">
+            <div class="field"><span class="field-label">Worker</span><span class="field-value">Olha Tkachenko</span></div>
+            <div class="field"><span class="field-label">Worksite</span><span class="field-value">Worksite B - Trnava site</span></div>
+            <div class="field"><span class="field-label">Shift</span><span class="field-value">16 Jun 2026, 17:30-21:30</span></div>
+            <div class="field"><span class="field-label">Transport</span><span class="field-value">Bus 1, Trnava station, 10:40</span></div>
+          </div>
+          <div class="inline-actions">
+            ${actionButton("assignShift", "add-second-shift", state.secondShiftAdded ? "Second shift added" : "Add second shift", state.secondShiftAdded ? "secondary-button" : "primary-button", state.secondShiftAdded ? "disabled" : "")}
+          </div>
+        </section>
+        <section class="section">
+          <h2 class="section-title">Olha's dated shifts</h2>
+          ${renderShiftTable("olha-only")}
+        </section>
+      </section>
+    `;
+  }
+
+  function renderSickLeave() {
+    const olha = getPerson("olha");
+    return `
+      <section class="page">
+        ${renderPageHeader("Compliance", "Leave dates set inactive", "The leave record stores dates only. No medical detail is captured in this prototype.")}
+        <div class="split">
+          <section class="section">
+            <h2 class="section-title">Dates only leave entry</h2>
+            <div class="form-grid">
+              <div class="field"><span class="field-label">Worker</span><span class="field-value">Olha Tkachenko</span></div>
+              <div class="field"><span class="field-label">Leave type</span><span class="field-value">Sick leave</span></div>
+              <div class="field"><span class="field-label">From</span><span class="field-value">16 Jun 2026</span></div>
+              <div class="field"><span class="field-label">To</span><span class="field-value">17 Jun 2026</span></div>
+            </div>
+            <div class="warning"><strong>No medical detail stored.</strong><p>The operational effect is enough: availability flips inactive and shifts in the window are cancelled.</p></div>
+            <div class="inline-actions">
+              ${actionButton("recordSickLeave", "record-sick-leave", state.sickLeaveRecorded ? "Sick leave recorded" : "Record sick leave dates", state.sickLeaveRecorded ? "secondary-button" : "primary-button", state.sickLeaveRecorded ? "disabled" : "")}
+            </div>
+          </section>
+          <section class="section">
+            <h2 class="section-title">Worker state</h2>
+            <div class="person-name">
+              <span>${escapeHtml(olha.name)}</span>
+              <span class="script-name">${escapeHtml(olha.scriptName)}</span>
+            </div>
+            <div class="badge-row">${statusBadges(olha)}</div>
+            ${state.sickLeaveRecorded ? `<div class="success"><strong>Availability changed to inactive.</strong><p>Both dated shifts in the sick-leave window show cancelled.</p></div>` : ""}
+          </section>
+        </div>
+        <section class="section">
+          <h2 class="section-title">Affected shifts</h2>
+          ${renderShiftTable("olha-only")}
+        </section>
+      </section>
+    `;
+  }
+
+  function renderDocuments() {
+    const farrukh = getPerson("farrukh");
+    return `
+      <section class="page">
+        ${renderPageHeader("Compliance", "Certificate expiry stop", "Farrukh is hired and available, but the required forklift certificate is inside the expiry warning window.")}
+        <div class="split">
+          <section class="section">
+            <h2 class="section-title">${escapeHtml(farrukh.name)}</h2>
+            <div class="person-name">
+              <span>${escapeHtml(farrukh.name)}</span>
+              <span class="script-name">${escapeHtml(farrukh.scriptName)}</span>
+            </div>
+            <div class="badge-row">${statusBadges(farrukh)}</div>
+            <div class="warning">
+              <strong>Forklift certificate expires in ${farrukh.certificate.daysLeft} days.</strong>
+              <p>Expiry date: ${escapeHtml(farrukh.certificate.expires)}. Forklift operator shifts require a valid certificate.</p>
+            </div>
+            <div class="inline-actions">
+              ${actionButton("assignShift", "try-forklift", "Try assign forklift shift", "danger-button")}
+            </div>
+            ${state.certAssignmentTried ? `<div class="hard-stop"><strong>Assignment stopped.</strong><p>Forklift operator requires a valid forklift certificate. Pick another worker or update the certificate record.</p></div>` : ""}
+          </section>
+          <section class="section">
+            <h2 class="section-title">Document queue</h2>
+            <table class="data-table">
+              <thead><tr><th>Worker</th><th>Document</th><th>State</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td data-label="Worker">Farrukh Yusupov</td>
+                  <td data-label="Document">Forklift certificate</td>
+                  <td data-label="State"><span class="badge availability-inactive">Expires soon</span></td>
+                </tr>
+                <tr>
+                  <td data-label="Worker">Olha Tkachenko</td>
+                  <td data-label="Document">Work permit</td>
+                  <td data-label="State"><span class="badge availability-available">18 days left</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+        </div>
+        ${renderDecision("cert")}
+      </section>
+    `;
+  }
+
+  function renderFieldView() {
+    const todayWorkers = [getPerson("olha"), getPerson("dilnoza"), getPerson("farrukh")];
+    return `
+      <section class="page">
+        ${renderPageHeader("Operations", "Field mode", "A coordinator can check today's workers, document state, and quick actions from a phone-sized screen.")}
+        <div class="phone-wrap">
+          <div class="phone" aria-label="Phone frame">
+            <div class="phone-screen">
+              <div class="phone-top"><strong>Today</strong><span>Worksite A</span></div>
+              <label class="field">
+                <span>Search workers</span>
+                <input value="Olha" aria-label="Search workers">
+              </label>
+              <div class="phone-list">
+                ${todayWorkers.map((person) => `
+                  <div class="phone-worker">
+                    <div class="person-name">
+                      <span>${escapeHtml(person.name)}</span>
+                      <span class="script-name">${escapeHtml(person.scriptName)}</span>
+                    </div>
+                    <div class="badge-row">${statusBadges(person)}</div>
+                    <span class="muted">${escapeHtml(person.document)}</span>
+                    <div class="phone-actions">
+                      <button ${state.role === "Observer" ? "disabled" : ""}>Call</button>
+                      <button ${state.role === "Observer" ? "disabled" : ""}>Message</button>
+                      <button data-action="mark-no-show" ${state.role !== "Manager" || state.noShowMarked ? "disabled" : ""}>${state.noShowMarked && person.id === "olha" ? "Marked" : "No-show"}</button>
+                    </div>
+                  </div>
+                `).join("")}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    `;
+  }
+
+  function renderAccommodation() {
+    return `
+      <section class="page">
+        ${renderPageHeader("Logistics", "Accommodation board", "Room occupancy and worker-room assignment. Costs stay out of this demo.")}
+        <section class="section">
+          <table class="data-table">
+            <thead><tr><th>Room</th><th>Occupancy</th><th>Workers</th><th>Action</th></tr></thead>
+            <tbody>
+              ${mockData.rooms.map((room) => `
+                <tr>
+                  <td data-label="Room"><strong>${escapeHtml(room.room)}</strong></td>
+                  <td data-label="Occupancy" class="mono">${escapeHtml(room.occupancy)}</td>
+                  <td data-label="Workers">${escapeHtml(room.workers)}</td>
+                  <td data-label="Action"><button class="secondary-button" ${state.role === "Observer" ? "disabled" : ""}>Assign worker</button></td>
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>
+        </section>
+      </section>
+    `;
+  }
+
+  function renderEquipment() {
+    return `
+      <section class="page">
+        ${renderPageHeader("Logistics", "Gear and sizes", "Issued gear sits beside worker sizes so inventory can be prepared before the shift.")}
+        <div class="split">
+          <section class="section">
+            <h2 class="section-title">Issued gear</h2>
+            <table class="data-table">
+              <thead><tr><th>Worker</th><th>Item</th><th>Status</th><th>Size</th></tr></thead>
+              <tbody>
+                ${mockData.equipment.map((item) => `
+                  <tr>
+                    <td data-label="Worker">${escapeHtml(item.worker)}</td>
+                    <td data-label="Item">${escapeHtml(item.item)}</td>
+                    <td data-label="Status">${escapeHtml(item.status)}</td>
+                    <td data-label="Size" class="mono">${escapeHtml(item.size)}</td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
+          </section>
+          <section class="section">
+            <h2 class="section-title">Worker sizes</h2>
+            ${mockData.people.filter((person) => person.hireStatus !== "Archived").map((person) => `
+              <p><strong>${escapeHtml(person.name)}</strong><br><span class="muted">${escapeHtml(person.sizes)}</span></p>
+            `).join("")}
+          </section>
+        </div>
+      </section>
+    `;
+  }
+
+  function renderPohoda() {
+    return `
+      <section class="page">
+        ${renderPageHeader("Accounting", "Pohoda snapshot", "Read-only accounting sync status for the demo. No connection is attempted.")}
+        <div class="info-strip"><strong>Demo data - connected via Pohoda mServer (XML)</strong><p>Placeholder figures only. This browser does not call Pohoda.</p></div>
+        <div class="metric-grid">
+          ${plainMetric("Open invoices", "18", "Mocked")}
+          ${plainMetric("Ready payroll rows", "42", "Mocked")}
+          ${plainMetric("Last XML import", "08:45", "Mocked")}
+          ${plainMetric("Sync warnings", "3", "Mocked")}
+        </div>
+      </section>
+    `;
+  }
+
+  function plainMetric(label, value, note) {
+    return `
+      <div class="metric-card">
+        <span class="metric-value">${escapeHtml(value)}</span>
+        <span>
+          <p class="metric-label">${escapeHtml(label)}</p>
+          <p class="metric-note">${escapeHtml(note)}</p>
+        </span>
+      </div>
+    `;
+  }
+
+  function renderReports() {
+    return `
+      <section class="page">
+        ${renderPageHeader("Reports", "Decision review", "Use this screen after the walkthrough to read captured decisions and operational signals.")}
+        <div class="split">
+          <section class="section">
+            <h2 class="section-title">Decisions</h2>
+            <div class="decision-summary">
+              ${Object.entries(decisions).map(([key, decision]) => {
+                const choiceKey = state.decisionChoices[key];
+                const choice = choiceKey ? decision.options[choiceKey] : null;
+                return `<div class="decision-summary-item"><strong>${escapeHtml(decision.title)}</strong><p>${choice ? `${escapeHtml(choiceKey)} - ${escapeHtml(choice.label)}` : "Pending"}</p></div>`;
+              }).join("")}
+            </div>
+          </section>
+          <section class="section">
+            <h2 class="section-title">Operational report</h2>
+            ${plainReportRow("Working now", mockData.people.filter((person) => person.availability === "Working").length)}
+            ${plainReportRow("Available", mockData.people.filter((person) => person.availability === "Available").length)}
+            ${plainReportRow("Inactive", mockData.people.filter((person) => person.availability === "Inactive").length)}
+            <div class="inline-actions">
+              <button class="secondary-button" data-action="nav" data-view="field">Open manager field view</button>
+            </div>
+          </section>
+        </div>
+      </section>
+    `;
+  }
+
+  function plainReportRow(label, value) {
+    return `<p><strong>${escapeHtml(label)}:</strong> <span class="mono">${escapeHtml(value)}</span></p>`;
+  }
+
+  function renderDecision(decisionKey) {
+    const decision = decisions[decisionKey];
+    const selected = state.decisionChoices[decisionKey];
+    return `
+      <section class="section">
+        <p class="eyebrow">${escapeHtml(t("Help us confirm how you actually work"))}</p>
+        <h2 class="section-title">${escapeHtml(t(decision.question))}</h2>
+        <div class="decision-grid">
+          ${Object.entries(decision.options).map(([choiceKey, option]) => `
+            <button class="decision-option ${selected === choiceKey ? "is-selected" : ""}" data-action="choose-decision" data-decision="${decisionKey}" data-choice="${choiceKey}" ${state.role === "Observer" ? "disabled" : ""}>
+              <span class="choice-marker">${escapeHtml(choiceKey)}</span>
+              <strong>${escapeHtml(t(option.label))}</strong>
+              <span>${escapeHtml(t(option.body))}</span>
+              <span class="muted">${selected === choiceKey ? escapeHtml(t("Recorded")) : state.role === "Observer" ? escapeHtml(t("Observer read-only")) : escapeHtml(t("Awaiting choice"))}</span>
+            </button>
+          `).join("")}
+        </div>
+      </section>
+    `;
+  }
+
+  function renderPeopleTable() {
+    return `
+      <table class="data-table">
+        <thead>
+          <tr><th>${escapeHtml(t("Person"))}</th><th>${escapeHtml(t("Country"))}</th><th>${escapeHtml(t("Status"))}</th><th>${escapeHtml(t("Document state"))}</th><th>${escapeHtml(t("Contact"))}</th></tr>
+        </thead>
+        <tbody>
+          ${mockData.people.map((person) => `
+            <tr>
+              <td data-label="Person"><span class="person-name"><span>${escapeHtml(person.name)}</span><span class="script-name">${escapeHtml(person.scriptName)}</span></span></td>
+              <td data-label="Country">${escapeHtml(person.country)}</td>
+              <td data-label="Status"><span class="badge-row">${statusBadges(person)}</span></td>
+              <td data-label="Document state">${escapeHtml(person.document)}</td>
+              <td data-label="Contact" class="mono">${escapeHtml(person.phone)}</td>
+            </tr>
+          `).join("")}
+        </tbody>
+      </table>
+    `;
+  }
+
+  function renderShiftTable(filter = "all") {
+    const rows = [];
+    if (state.shiftAssigned || filter === "all") {
+      rows.push({
+        worker: "Olha Tkachenko",
+        worksite: "Worksite A - Nitra warehouse",
+        shift: "16 Jun, 07:00-15:00",
+        transport: "Bus 2, 06:15, Nitra depot",
+        status: state.sickLeaveRecorded ? "Cancelled" : state.shiftAssigned ? "Assigned" : "Draft"
+      });
+    }
+    if (state.secondShiftAdded || filter === "all") {
+      rows.push({
+        worker: "Olha Tkachenko",
+        worksite: "Worksite B - Trnava site",
+        shift: "16 Jun, 17:30-21:30",
+        transport: "Bus 1, 10:40, Trnava station",
+        status: state.sickLeaveRecorded ? "Cancelled" : state.secondShiftAdded ? "Assigned" : "Planned"
+      });
+    }
+    if (filter === "all") {
+      rows.push({
+        worker: "Dilnoza Karimova",
+        worksite: "Worksite A - Nitra warehouse",
+        shift: "16 Jun, 07:00-15:00",
+        transport: "Bus 2, 06:15, Nitra depot",
+        status: "Assigned"
+      });
+      rows.push({
+        worker: "Farrukh Yusupov",
+        worksite: "Worksite B - Trnava site",
+        shift: "17 Jun, 08:00-16:00",
+        transport: "Own transport",
+        status: "Available"
+      });
+    }
+
+    return `
+      <table class="data-table">
+        <thead><tr><th>${escapeHtml(t("Worker"))}</th><th>${escapeHtml(t("Worksite"))}</th><th>${escapeHtml(t("Shift"))}</th><th>${escapeHtml(t("Transport"))}</th><th>${escapeHtml(t("Status"))}</th></tr></thead>
+        <tbody>
+          ${rows.map((row) => `
+            <tr>
+              <td data-label="Worker">${escapeHtml(row.worker)}</td>
+              <td data-label="Worksite">${escapeHtml(row.worksite)}</td>
+              <td data-label="Shift" class="mono">${escapeHtml(row.shift)}</td>
+              <td data-label="Transport">${escapeHtml(row.transport)}</td>
+              <td data-label="Status"><span class="badge ${row.status === "Cancelled" ? "availability-inactive" : "availability-working"}">${escapeHtml(t(row.status))}</span></td>
+            </tr>
+          `).join("")}
+        </tbody>
+      </table>
+    `;
+  }
+
+  function renderAudit() {
+    return `
+      <ul class="audit-list">
+        ${state.auditLog.slice(0, 6).map((item) => `
+          <li class="audit-item"><span class="audit-time">${escapeHtml(item.time)}</span><span>${escapeHtml(item.text)}</span></li>
+        `).join("")}
+      </ul>
+    `;
+  }
+
+  function goToStep(index) {
+    const nextIndex = Math.max(0, Math.min(tourSteps.length - 1, Number(index)));
+    const step = tourSteps[nextIndex];
+    state.currentStep = nextIndex;
+    state.view = step.view;
+    state.signedIn = step.view !== "login";
+    if (step.id === "approval" && state.role === "Observer") {
+      state.role = "Recruiter";
+    }
+    render();
+  }
+
+  function chooseDecision(decisionKey, choiceKey) {
+    if (!decisions[decisionKey] || !decisions[decisionKey].options[choiceKey]) {
+      return;
+    }
+    state.decisionChoices[decisionKey] = choiceKey;
+    addAudit(`${decisions[decisionKey].title}: option ${choiceKey} recorded.`);
+    if (decisionKey === "transport" && choiceKey === "B") {
+      state.shiftAssigned = true;
+      setPerson("olha", { availability: "Working" });
+    }
+  }
+
+  function handleAction(action, target) {
+    switch (action) {
+      case "sign-in":
+        state.signedIn = true;
+        state.role = "Manager";
+        state.navOpen = false;
+        state.manifestOpen = false;
+        goToStep(1);
+        return;
+      case "start-demo":
+        state.navOpen = false;
+        state.manifestOpen = false;
+        goToStep(0);
+        return;
+      case "prev-step":
+        state.manifestOpen = false;
+        goToStep(state.currentStep - 1);
+        return;
+      case "next-step":
+        state.manifestOpen = false;
+        goToStep(state.currentStep + 1);
+        return;
+      case "go-step":
+        state.navOpen = false;
+        state.manifestOpen = false;
+        goToStep(target.dataset.step);
+        return;
+      case "nav":
+        state.signedIn = true;
+        state.view = target.dataset.view;
+        state.navOpen = false;
+        render();
+        return;
+      case "toggle-nav":
+        state.navOpen = !state.navOpen;
+        render();
+        return;
+      case "close-nav":
+        state.navOpen = false;
+        render();
+        return;
+      case "toggle-manifest":
+        state.manifestOpen = !state.manifestOpen;
+        render();
+        return;
+      case "set-role":
+        if (roles.includes(target.dataset.role)) {
+          state.role = target.dataset.role;
+        }
+        render();
+        return;
+      case "set-language":
+        if (languages.some((language) => language.id === target.dataset.language)) {
+          state.language = target.dataset.language;
+        }
+        render();
+        return;
+      case "toggle-decisions":
+        state.decisionsOpen = !state.decisionsOpen;
+        render();
+        return;
+      case "choose-decision":
+        chooseDecision(target.dataset.decision, target.dataset.choice);
+        render();
+        return;
+      case "save-risk":
+        if (!can("createPerson")) {
+          return;
+        }
+        state.bohdanFlagSaved = true;
+        addAudit("Bohdan Marchenko saved as Recruit with manager review flag. Activation remains blocked.");
+        render();
+        return;
+      case "schedule-test":
+        if (!can("scheduleTest")) {
+          return;
+        }
+        state.testScheduled = true;
+        addAudit("Work test scheduled for Tran Van Minh.");
+        render();
+        return;
+      case "recommend-hire":
+        if (!can("recommendHire")) {
+          return;
+        }
+        state.testRecommended = true;
+        addAudit("Recruiter recommended Tran Van Minh for hire.");
+        render();
+        return;
+      case "approve-hire":
+        if (!can("approveHire")) {
+          return;
+        }
+        state.testRecommended = true;
+        state.tranApproved = true;
+        setPerson("tran", { hireStatus: "Hired", availability: "Available", document: "Hired after work test" });
+        addAudit("Manager approved Tran Van Minh. Hire status changed from Recruit to Hired.");
+        render();
+        return;
+      case "assign-shift":
+        if (!can("assignShift")) {
+          return;
+        }
+        state.shiftAssigned = true;
+        setPerson("olha", { availability: "Working" });
+        addAudit("Olha Tkachenko assigned to Worksite A with Bus 2 pickup.");
+        render();
+        return;
+      case "send-sms":
+        if (!can("sendSms")) {
+          return;
+        }
+        state.smsSent = true;
+        addAudit("Pickup notice marked sent for Olha Tkachenko. Demo only, no SMS sent.");
+        render();
+        return;
+      case "add-second-shift":
+        if (!can("assignShift")) {
+          return;
+        }
+        state.secondShiftAdded = true;
+        addAudit("Second same-day shift added for Olha Tkachenko at Worksite B.");
+        render();
+        return;
+      case "record-sick-leave":
+        if (!can("recordSickLeave")) {
+          return;
+        }
+        state.sickLeaveRecorded = true;
+        setPerson("olha", { availability: "Inactive" });
+        addAudit("Sick leave dates recorded for Olha Tkachenko. Availability changed to Inactive.");
+        render();
+        return;
+      case "try-forklift":
+        if (!can("assignShift")) {
+          return;
+        }
+        state.certAssignmentTried = true;
+        addAudit("Forklift assignment stopped for Farrukh Yusupov because required certificate is expiring.");
+        render();
+        return;
+      case "mark-no-show":
+        if (state.role !== "Manager") {
+          return;
+        }
+        state.noShowMarked = true;
+        addAudit("Manager marked a field no-show from the mobile view.");
+        render();
+        return;
+      default:
+        return;
+    }
+  }
+
+  function handleInput(target) {
+    if (target.dataset.input === "risk") {
+      state.riskInput = target.value;
+      const preview = document.getElementById("risk-result");
+      if (preview) {
+        preview.innerHTML = riskResultHtml();
+      }
+    }
+  }
+
+  function render() {
+    root.innerHTML = state.view === "login" ? renderLogin() : renderShell();
+  }
+
+  document.addEventListener("click", (event) => {
+    const target = event.target.closest("[data-action]");
+    if (!target) {
+      return;
+    }
+    event.preventDefault();
+    handleAction(target.dataset.action, target);
+  });
+
+  document.addEventListener("input", (event) => {
+    const target = event.target.closest("[data-input]");
+    if (!target) {
+      return;
+    }
+    handleInput(target);
+  });
+
+  render();
+})();

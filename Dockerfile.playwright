@@ -1,0 +1,18 @@
+FROM mcr.microsoft.com/playwright:v1.60.0-noble@sha256:9bd26ad900bb5e0f4dee75839e957a89ae89c2b7ab1e76050e559790e946b948
+
+ENV CI=1
+ENV PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
+ENV PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
+
+WORKDIR /work
+
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml playwright.config.js ./
+COPY tests ./tests
+
+RUN corepack enable \
+  && corepack prepare pnpm@11.0.0 --activate \
+  && pnpm install --frozen-lockfile --store-dir=/tmp/pnpm-store
+
+USER pwuser
+
+CMD ["./node_modules/.bin/playwright", "test"]

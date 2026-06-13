@@ -1,0 +1,5 @@
+demo
+test-artifacts
+node_modules
+.pnpm-store
+.git
