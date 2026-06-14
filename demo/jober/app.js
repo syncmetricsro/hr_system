@@ -6,7 +6,7 @@
     subtitle: "Workforce folders"
   };
 
-  const roles = ["Recruiter", "Manager", "Observer"];
+  const roles = ["Recruiter", "Manager", "Coordinator", "Observer"];
 
   const languages = [
     { id: "en", label: "EN", name: "English" },
@@ -22,6 +22,7 @@
       "Role switch": "Prepínač roly",
       "Recruiter": "Náborár",
       "Manager": "Manažér",
+      "Coordinator": "Koordinátor",
       "Observer": "Pozorovateľ",
       "Decisions captured": "Zachytené rozhodnutia",
       "Start guided demo": "Spustiť sprievodcu",
@@ -29,7 +30,8 @@
       "Back": "Späť",
       "Next": "Ďalej",
       "Can approve hires, verify documents, demote, blacklist, and run field actions.": "Môže schvaľovať prijatia, overovať dokumenty, meniť statusy, pridávať na čiernu listinu a robiť terénne akcie.",
-      "Can create people, schedule tests, assign shifts, send pickup notices, and upload documents.": "Môže vytvárať ľudí, plánovať skúšky, priraďovať zmeny, posielať pokyny na vyzdvihnutie a nahrávať dokumenty.",
+      "Can create people, schedule tests, assign shifts, send pickup notices, and update document metadata.": "Môže vytvárať ľudí, plánovať skúšky, priraďovať zmeny, posielať pokyny na vyzdvihnutie a aktualizovať metadáta dokumentov.",
+      "Can manage transport, accommodation, and equipment logistics.": "Môže spravovať dopravu, ubytovanie a výstroj.",
       "Read-only view. Action buttons are disabled for meeting review.": "Režim iba na čítanie. Akčné tlačidlá sú vypnuté pre kontrolu na stretnutí.",
       "Operations": "Prevádzka",
       "People": "Ľudia",
@@ -96,13 +98,14 @@
       "What happens when the bus is full?": "Čo sa stane, keď je autobus plný?",
       "Enforce capacity": "Vynútiť kapacitu",
       "Block new assignments once the bus reaches capacity.": "Blokovať nové priradenia, keď autobus dosiahne kapacitu.",
-      "Record only": "Iba zaznamenať",
-      "Allow the assignment and record that transport is over capacity.": "Povoliť priradenie a zaznamenať prekročenie kapacity.",
+      "Client decision: enforce capacity": "Rozhodnutie klienta: vynútiť kapacitu",
+      "Vehicle-specific capacity is enforced. A full vehicle blocks new assignments.": "Kapacita sa vynucuje podľa konkrétneho vozidla. Plné vozidlo blokuje nové priradenia.",
       "Certificate storage": "Ukladanie certifikátov",
       "What should be stored for certificates?": "Čo sa má ukladať pri certifikátoch?",
-      "Store the file": "Uložiť súbor",
-      "Upload and keep the certificate document alongside type and expiry.": "Nahrať a ponechať dokument certifikátu spolu s typom a expiráciou.",
-      "Store certificate type and expiry date, with no file retained.": "Uložiť typ certifikátu a dátum expirácie bez uchovania súboru.",
+      "Dates only": "Iba dátumy",
+      "Store certificate type, issue date, expiry date, and valid/invalid status. No file is retained.": "Uložiť typ certifikátu, dátum vydania, dátum expirácie a stav platný/neplatný. Súbor sa neuchováva.",
+      "Client decision: metadata only": "Rozhodnutie klienta: iba metadáta",
+      "Certificate records store type, issue date, expiry date, and valid/invalid status. No file is retained.": "Záznamy certifikátov ukladajú typ, dátum vydania, dátum expirácie a stav platný/neplatný. Súbor sa neuchováva.",
       "Hired": "Prijatý",
       "Recruit": "Kandidát",
       "Archived": "Archivovaný",
@@ -122,6 +125,7 @@
       "Role switch": "Szerepváltó",
       "Recruiter": "Toborzó",
       "Manager": "Vezető",
+      "Coordinator": "Koordinátor",
       "Observer": "Megfigyelő",
       "Decisions captured": "Rögzített döntések",
       "Start guided demo": "Vezetett demó indítása",
@@ -129,7 +133,8 @@
       "Back": "Vissza",
       "Next": "Tovább",
       "Can approve hires, verify documents, demote, blacklist, and run field actions.": "Jóváhagyhat felvételeket, ellenőrizhet dokumentumokat, módosíthat státuszt, tiltólistázhat és terepi műveleteket végezhet.",
-      "Can create people, schedule tests, assign shifts, send pickup notices, and upload documents.": "Létrehozhat dolgozókat, teszteket ütemezhet, műszakokat oszthat be, felvételi értesítést küldhet és dokumentumokat tölthet fel.",
+      "Can create people, schedule tests, assign shifts, send pickup notices, and update document metadata.": "Létrehozhat dolgozókat, teszteket ütemezhet, műszakokat oszthat be, felvételi értesítést küldhet és dokumentummetaadatokat frissíthet.",
+      "Can manage transport, accommodation, and equipment logistics.": "Szállítási, szállás- és felszerelési logisztikát kezelhet.",
       "Read-only view. Action buttons are disabled for meeting review.": "Csak olvasható nézet. A műveleti gombok ki vannak kapcsolva a megbeszéléshez.",
       "Operations": "Műveletek",
       "People": "Dolgozók",
@@ -196,13 +201,14 @@
       "What happens when the bus is full?": "Mi történik, ha a busz megtelt?",
       "Enforce capacity": "Kapacitás betartása",
       "Block new assignments once the bus reaches capacity.": "Új beosztások blokkolása, ha a busz eléri a kapacitást.",
-      "Record only": "Csak rögzítés",
-      "Allow the assignment and record that transport is over capacity.": "A beosztás engedélyezése és a kapacitástúllépés rögzítése.",
+      "Client decision: enforce capacity": "Ügyféldöntés: kapacitás betartása",
+      "Vehicle-specific capacity is enforced. A full vehicle blocks new assignments.": "A kapacitás járművenként érvényesül. A megtelt jármű blokkolja az új beosztásokat.",
       "Certificate storage": "Tanúsítványtárolás",
       "What should be stored for certificates?": "Mit kell tárolni a tanúsítványoknál?",
-      "Store the file": "Fájl tárolása",
-      "Upload and keep the certificate document alongside type and expiry.": "A tanúsítvány dokumentumának feltöltése és megőrzése típussal és lejárattal együtt.",
-      "Store certificate type and expiry date, with no file retained.": "A tanúsítvány típusának és lejáratának tárolása fájl nélkül.",
+      "Dates only": "Csak dátumok",
+      "Store certificate type, issue date, expiry date, and valid/invalid status. No file is retained.": "A tanúsítvány típusának, kiadási dátumának, lejárati dátumának és érvényes/érvénytelen státuszának tárolása. Fájl nem marad meg.",
+      "Client decision: metadata only": "Ügyféldöntés: csak metaadatok",
+      "Certificate records store type, issue date, expiry date, and valid/invalid status. No file is retained.": "A tanúsítványrekordok típust, kiadási dátumot, lejárati dátumot és érvényes/érvénytelen státuszt tárolnak. Fájl nem marad meg.",
       "Hired": "Felvéve",
       "Recruit": "Jelölt",
       "Archived": "Archivált",
@@ -303,21 +309,22 @@
     "Manager approval required.": "Vyžaduje sa schválenie manažérom.",
     "Switch to Manager to approve the hire. Recruiter and Observer cannot complete this step.": "Pre schválenie prijatia prepnite na Manažéra. Náborár ani Pozorovateľ tento krok nemôžu dokončiť.",
     "Olha is hired. The assignment ties the dated shift to a worksite, position, bus, pickup point, and time.": "Olha je prijatá. Priradenie spája dátumovanú zmenu s pracoviskom, pozíciou, autobusom, miestom vyzdvihnutia a časom.",
+    "Once hired, a worker is directly shift-eligible. The assignment ties the dated shift to a worksite, vehicle, pickup point, and time.": "Po prijatí je pracovník priamo spôsobilý na zmenu. Priradenie spája dátumovanú zmenu s pracoviskom, vozidlom, miestom vyzdvihnutia a časom.",
+    "Transport logistics view: assigned worksite, dated shift, vehicle, pickup point, and time.": "Logistický pohľad dopravy: priradené pracovisko, dátumovaná zmena, vozidlo, miesto vyzdvihnutia a čas.",
     "Worker header": "Hlavička pracovníka",
+    "Transport assignment": "Priradenie dopravy",
     "Position": "Pozícia",
     "Transport group": "Dopravná skupina",
     "Bus 2 capacity": "Kapacita autobusu 2",
+    "Vehicle capacity": "Kapacita vozidla",
     "Driver Tomas V., pickup Nitra depot, 06:15.": "Vodič Tomas V., vyzdvihnutie depo Nitra, 06:15.",
     "Capacity enforced.": "Kapacita vynútená.",
     "Bus 2 is full after Olha. A future assignment would be blocked.": "Autobus 2 je po Olhe plný. Ďalšie priradenie by bolo blokované.",
-    "Capacity recorded only.": "Kapacita iba zaznamenaná.",
-    "The demo shows how an over-capacity transport row would be flagged, not blocked.": "Demo ukazuje, ako by sa riadok dopravy nad kapacitu označil, nie blokoval.",
     "Shift table": "Tabuľka zmien",
     "Assigned to shift": "Priradené na zmenu",
     "Assign to shift": "Priradiť na zmenu",
     "8 / 9 booked": "8 / 9 rezervované",
     "9 / 9 full": "9 / 9 plné",
-    "10 / 9 recorded": "10 / 9 zaznamenané",
     "The demo composes the message and records a fake sent state. No SMS is actually sent.": "Demo zostaví správu a zaznamená falošný stav odoslania. Žiadna SMS sa skutočne neposiela.",
     "Primary channel: SMS, because many workers do not reliably use email.": "Primárny kanál: SMS, pretože mnohí pracovníci nepoužívajú e-mail spoľahlivo.",
     "Olha, your pickup is Bus 2 at 06:15 from Nitra depot for Worksite A - Nitra warehouse. Reply by SMS if you cannot travel.": "Olha, vyzdvihnutie je autobusom 2 o 06:15 z depa Nitra na Pracovisko A - sklad Nitra. Ak nemôžete cestovať, odpovedzte SMS.",
@@ -349,6 +356,12 @@
     "Try assign forklift shift": "Skúsiť priradiť zmenu VZV",
     "Assignment stopped.": "Priradenie zastavené.",
     "Forklift operator requires a valid forklift certificate. Pick another worker or update the certificate record.": "Operátor VZV vyžaduje platný certifikát. Vyberte iného pracovníka alebo aktualizujte záznam certifikátu.",
+    "Certificate metadata": "Metadáta certifikátu",
+    "Type": "Typ",
+    "Issue date": "Dátum vydania",
+    "Expiry date": "Dátum expirácie",
+    "Validity": "Platnosť",
+    "Valid until warning window": "Platný do varovného okna",
     "Document queue": "Front dokumentov",
     "Document": "Dokument",
     "State": "Stav",
@@ -357,6 +370,7 @@
     "Expires soon": "Čoskoro expiruje",
     "18 days left": "Zostáva 18 dní",
     "A coordinator can check today's workers, document state, and quick actions from a phone-sized screen.": "Koordinátor môže z obrazovky veľkosti telefónu skontrolovať dnešných pracovníkov, stav dokumentov a rýchle akcie.",
+    "A manager can check today's workers, document state, and quick actions from a phone-sized screen.": "Manažér môže z obrazovky veľkosti telefónu skontrolovať dnešných pracovníkov, stav dokumentov a rýchle akcie.",
     "Search workers": "Hľadať pracovníkov",
     "Call": "Volať",
     "Message": "Správa",
@@ -409,7 +423,7 @@
     "Work permit expires in 18 days": "Pracovné povolenie expiruje o 18 dní",
     "Forklift cert expires 25 Jun 2026": "Certifikát na VZV expiruje 25 Jun 2026",
     "Residence card valid": "Pobytová karta platná",
-    "Contract ended": "Zmluva ukončená",
+    "Profile archived": "Profil archivovaný",
     "Hired after work test": "Prijatý po pracovnej skúške",
     "Room 12": "Izba 12",
     "Room 14": "Izba 14",
@@ -536,21 +550,22 @@
     "Manager approval required.": "Vezetői jóváhagyás szükséges.",
     "Switch to Manager to approve the hire. Recruiter and Observer cannot complete this step.": "A felvétel jóváhagyásához váltson Vezető szerepre. Toborzó és Megfigyelő nem fejezheti be ezt a lépést.",
     "Olha is hired. The assignment ties the dated shift to a worksite, position, bus, pickup point, and time.": "Olha felvéve. A kiosztás összeköti a dátumozott műszakot a munkaterülettel, pozícióval, busszal, felvételi ponttal és idővel.",
+    "Once hired, a worker is directly shift-eligible. The assignment ties the dated shift to a worksite, vehicle, pickup point, and time.": "Felvétel után a dolgozó közvetlenül beosztható műszakra. A kiosztás összeköti a dátumozott műszakot a munkaterülettel, járművel, felvételi ponttal és idővel.",
+    "Transport logistics view: assigned worksite, dated shift, vehicle, pickup point, and time.": "Szállítási logisztikai nézet: hozzárendelt munkaterület, dátumozott műszak, jármű, felvételi pont és idő.",
     "Worker header": "Dolgozói fejléc",
+    "Transport assignment": "Szállítási beosztás",
     "Position": "Pozíció",
     "Transport group": "Szállítási csoport",
     "Bus 2 capacity": "2-es busz kapacitása",
+    "Vehicle capacity": "Jármű kapacitása",
     "Driver Tomas V., pickup Nitra depot, 06:15.": "Sofőr Tomas V., felvétel nyitrai depó, 06:15.",
     "Capacity enforced.": "Kapacitás betartva.",
     "Bus 2 is full after Olha. A future assignment would be blocked.": "Olha után a 2-es busz megtelt. Egy későbbi kiosztás blokkolva lenne.",
-    "Capacity recorded only.": "Kapacitás csak rögzítve.",
-    "The demo shows how an over-capacity transport row would be flagged, not blocked.": "A demó azt mutatja, hogyan lenne a kapacitáson felüli szállítási sor jelölve, nem blokkolva.",
     "Shift table": "Műszaktábla",
     "Assigned to shift": "Műszakra beosztva",
     "Assign to shift": "Műszakra osztás",
     "8 / 9 booked": "8 / 9 foglalt",
     "9 / 9 full": "9 / 9 tele",
-    "10 / 9 recorded": "10 / 9 rögzítve",
     "The demo composes the message and records a fake sent state. No SMS is actually sent.": "A demó összeállítja az üzenetet és minta elküldött állapotot rögzít. Valódi SMS nem megy ki.",
     "Primary channel: SMS, because many workers do not reliably use email.": "Elsődleges csatorna: SMS, mert sok dolgozó nem használja megbízhatóan az e-mailt.",
     "Olha, your pickup is Bus 2 at 06:15 from Nitra depot for Worksite A - Nitra warehouse. Reply by SMS if you cannot travel.": "Olha, a felvétel a 2-es busszal 06:15-kor indul a nyitrai depóból az A munkaterület - nyitrai raktár felé. Válaszoljon SMS-ben, ha nem tud utazni.",
@@ -582,6 +597,12 @@
     "Try assign forklift shift": "Targoncás műszak próbabeosztása",
     "Assignment stopped.": "Kiosztás leállítva.",
     "Forklift operator requires a valid forklift certificate. Pick another worker or update the certificate record.": "A targoncavezetőhöz érvényes targoncatanúsítvány kell. Válasszon másik dolgozót vagy frissítse a tanúsítvány rekordját.",
+    "Certificate metadata": "Tanúsítvány-metaadatok",
+    "Type": "Típus",
+    "Issue date": "Kiadási dátum",
+    "Expiry date": "Lejárati dátum",
+    "Validity": "Érvényesség",
+    "Valid until warning window": "Érvényes a figyelmeztetési időszakig",
     "Document queue": "Dokumentumsor",
     "Document": "Dokumentum",
     "State": "Állapot",
@@ -590,6 +611,7 @@
     "Expires soon": "Hamarosan lejár",
     "18 days left": "18 nap van hátra",
     "A coordinator can check today's workers, document state, and quick actions from a phone-sized screen.": "A koordinátor telefonméretű képernyőről ellenőrizheti a mai dolgozókat, dokumentumállapotot és gyors műveleteket.",
+    "A manager can check today's workers, document state, and quick actions from a phone-sized screen.": "A vezető telefonméretű képernyőről ellenőrizheti a mai dolgozókat, dokumentumállapotot és gyors műveleteket.",
     "Search workers": "Dolgozók keresése",
     "Call": "Hívás",
     "Message": "Üzenet",
@@ -642,7 +664,7 @@
     "Work permit expires in 18 days": "Munkavállalási engedély 18 nap múlva lejár",
     "Forklift cert expires 25 Jun 2026": "Targoncaigazolvány lejár: 25 Jun 2026",
     "Residence card valid": "Tartózkodási kártya érvényes",
-    "Contract ended": "Szerződés lezárva",
+    "Profile archived": "Profil archiválva",
     "Hired after work test": "Próbanap után felvéve",
     "Room 12": "12-es szoba",
     "Room 14": "14-es szoba",
@@ -788,10 +810,6 @@
         A: {
           label: "Enforce capacity",
           body: "Block new assignments once the bus reaches capacity."
-        },
-        B: {
-          label: "Record only",
-          body: "Allow the assignment and record that transport is over capacity."
         }
       }
     },
@@ -799,13 +817,9 @@
       title: "Certificate storage",
       question: "What should be stored for certificates?",
       options: {
-        A: {
-          label: "Store the file",
-          body: "Upload and keep the certificate document alongside type and expiry."
-        },
         B: {
           label: "Dates only",
-          body: "Store certificate type and expiry date, with no file retained."
+          body: "Store certificate type, issue date, expiry date, and valid/invalid status. No file is retained."
         }
       }
     }
@@ -913,7 +927,7 @@
         phone: "+421 900 511 290",
         hireStatus: "Archived",
         availability: "Inactive",
-        document: "Contract ended",
+        document: "Profile archived",
         room: "None",
         sizes: "Shirt XL / trousers 46 / boots 44",
         equipment: "Returned"
@@ -943,8 +957,8 @@
     decisionsOpen: false,
     decisionChoices: {
       demand: null,
-      transport: null,
-      cert: null
+      transport: "A",
+      cert: "B"
     },
     riskInput: "Bohdan Marchenko",
     bohdanFlagSaved: false,
@@ -965,6 +979,12 @@
   };
 
   const root = document.getElementById("app");
+  const coordinatorViews = new Set(["shifts", "sms", "second-shift", "accommodation", "equipment"]);
+  const coordinatorPermissions = new Set(["assignShift", "sendSms"]);
+  const lockedDecisions = {
+    transport: "A",
+    cert: "B"
+  };
 
   function t(value) {
     return translations[state.language]?.[value] || value;
@@ -1025,12 +1045,63 @@
     state.auditLog.unshift({ time: nowTime(), text });
   }
 
+  function isCoordinator() {
+    return state.role === "Coordinator";
+  }
+
+  function coordinatorDefaultView() {
+    return "shifts";
+  }
+
+  function isViewAllowed(view) {
+    return !isCoordinator() || coordinatorViews.has(view);
+  }
+
+  function normalizeRoleView() {
+    if (state.view === "login") {
+      return;
+    }
+    if (!isViewAllowed(state.view)) {
+      state.view = coordinatorDefaultView();
+    }
+    const stepIndex = tourSteps.findIndex((step) => step.view === state.view);
+    if (stepIndex >= 0) {
+      state.currentStep = stepIndex;
+    }
+  }
+
+  function visibleTabGroups() {
+    if (!isCoordinator()) {
+      return tabGroups;
+    }
+    return tabGroups
+      .map((group) => {
+        const views = group.views.filter((item) => coordinatorViews.has(item.view));
+        if (!views.length) {
+          return null;
+        }
+        return { ...group, defaultView: views[0].view, views };
+      })
+      .filter(Boolean);
+  }
+
+  function visibleTourSteps() {
+    return tourSteps.filter((step) => !isCoordinator() || step.view === "login" || coordinatorViews.has(step.view));
+  }
+
+  function currentVisibleStepIndex() {
+    return visibleTourSteps().findIndex((step) => step.view === state.view);
+  }
+
   function can(permission) {
     if (state.role === "Observer") {
       return false;
     }
     if (state.role === "Manager") {
       return true;
+    }
+    if (isCoordinator()) {
+      return coordinatorPermissions.has(permission);
     }
     return recruiterPermissions.has(permission);
   }
@@ -1116,31 +1187,29 @@
   }
 
   function nextIsDisabled() {
-    if (state.currentStep === tourSteps.length - 1) {
+    const steps = visibleTourSteps();
+    const visibleIndex = currentVisibleStepIndex();
+    if (visibleIndex < 0 || visibleIndex === steps.length - 1) {
       return true;
     }
     const step = tourSteps[state.currentStep];
     if (step.id === "demand") {
       return !state.decisionChoices.demand;
     }
-    if (step.id === "transport") {
-      return !state.decisionChoices.transport;
-    }
-    if (step.id === "cert") {
-      return !state.decisionChoices.cert;
-    }
     return false;
   }
 
   function activeGroup() {
-    return tabGroups.find((group) => group.views.some((item) => item.view === state.view)) || tabGroups[0];
+    const groups = visibleTabGroups();
+    return groups.find((group) => group.views.some((item) => item.view === state.view)) || groups[0];
   }
 
   function renderFolderTabs() {
+    const groups = visibleTabGroups();
     const currentGroup = activeGroup();
     return `
       <nav class="folder-tabs" aria-label="Jober folders">
-        ${tabGroups.map((group) => `
+        ${groups.map((group) => `
           <button class="folder-tab ${currentGroup.id === group.id ? "is-active" : ""}" data-action="nav" data-view="${group.defaultView}" aria-pressed="${currentGroup.id === group.id}">
             ${escapeHtml(t(group.label))}
           </button>
@@ -1157,22 +1226,25 @@
   }
 
   function renderStepBar() {
+    const steps = visibleTourSteps();
+    const visibleIndex = Math.max(0, currentVisibleStepIndex());
     return `
       <section class="step-bar" aria-label="Guided demo progress">
         <div class="step-track">
-          ${tourSteps.map((step, index) => {
+          ${steps.map((step) => {
+            const index = tourSteps.indexOf(step);
             const done = index < state.currentStep;
             const current = index === state.currentStep;
             return `
               <button class="step-dot ${done ? "is-done" : ""} ${current ? "is-current" : ""}" data-action="go-step" data-step="${index}" aria-current="${current ? "step" : "false"}" title="${escapeHtml(step.label)}">
-                <span>${index + 1}</span>
+                <span>${steps.indexOf(step) + 1}</span>
                 <strong>${escapeHtml(t(step.label))}</strong>
               </button>
             `;
           }).join("")}
         </div>
         <div class="step-actions">
-          <button class="toolbar-button" data-action="prev-step" ${state.currentStep === 0 ? "disabled" : ""}>${escapeHtml(t("Back"))}</button>
+          <button class="toolbar-button" data-action="prev-step" ${visibleIndex <= 0 ? "disabled" : ""}>${escapeHtml(t("Back"))}</button>
           <button class="toolbar-button" data-action="next-step" ${nextIsDisabled() ? "disabled" : ""}>${escapeHtml(t("Next"))}</button>
         </div>
       </section>
@@ -1184,7 +1256,10 @@
       return t("Can approve hires, verify documents, demote, blacklist, and run field actions.");
     }
     if (state.role === "Recruiter") {
-      return t("Can create people, schedule tests, assign shifts, send pickup notices, and upload documents.");
+      return t("Can create people, schedule tests, assign shifts, send pickup notices, and update document metadata.");
+    }
+    if (isCoordinator()) {
+      return t("Can manage transport, accommodation, and equipment logistics.");
     }
     return t("Read-only view. Action buttons are disabled for meeting review.");
   }
@@ -1499,19 +1574,18 @@
     const busText = transportCapacityText();
     return `
       <section class="page">
-        ${renderPageHeader("Operations", "Dispatch plan", "Olha is hired. The assignment ties the dated shift to a worksite, position, bus, pickup point, and time.")}
+        ${renderPageHeader("Operations", "Dispatch plan", isCoordinator() ? "Transport logistics view: assigned worksite, dated shift, vehicle, pickup point, and time." : "Once hired, a worker is directly shift-eligible. The assignment ties the dated shift to a worksite, vehicle, pickup point, and time.")}
         <section class="section">
           <div class="split">
             <div class="stack">
-              <h2 class="section-title">Worker header</h2>
+              <h2 class="section-title">${isCoordinator() ? "Transport assignment" : "Worker header"}</h2>
               <div class="person-name">
                 <span>${escapeHtml(olha.name)}</span>
-                <span class="script-name">${escapeHtml(olha.scriptName)}</span>
+                ${isCoordinator() ? "" : `<span class="script-name">${escapeHtml(olha.scriptName)}</span>`}
               </div>
-              <div class="badge-row">${statusBadges(olha)}</div>
+              ${isCoordinator() ? "" : `<div class="badge-row">${statusBadges(olha)}</div>`}
               <div class="form-grid">
                 <div class="field"><span class="field-label">Worksite</span><span class="field-value">Worksite A - Nitra warehouse</span></div>
-                <div class="field"><span class="field-label">Position</span><span class="field-value">General laborer</span></div>
                 <div class="field"><span class="field-label">Shift</span><span class="field-value">16 Jun 2026, 07:00-15:00</span></div>
                 <div class="field"><span class="field-label">Transport group</span><span class="field-value">Bus 2, Nitra depot, 06:15</span></div>
               </div>
@@ -1520,18 +1594,17 @@
               </div>
             </div>
             <div class="stack">
-              <h2 class="section-title">Bus 2 capacity</h2>
+              <h2 class="section-title">Vehicle capacity</h2>
               <div class="capacity-meter">
-                <div class="meter-track"><div class="meter-fill" style="--meter-width: ${state.decisionChoices.transport === "B" ? "100%" : state.shiftAssigned ? "100%" : "89%"}"></div></div>
+                <div class="meter-track"><div class="meter-fill" style="--meter-width: ${state.shiftAssigned ? "100%" : "89%"}"></div></div>
                 <strong class="mono">${escapeHtml(busText)}</strong>
                 <p class="muted">Driver Tomas V., pickup Nitra depot, 06:15.</p>
               </div>
-              ${state.decisionChoices.transport === "A" ? `<div class="success"><strong>Capacity enforced.</strong><p>Bus 2 is full after Olha. A future assignment would be blocked.</p></div>` : ""}
-              ${state.decisionChoices.transport === "B" ? `<div class="warning"><strong>Capacity recorded only.</strong><p>The demo shows how an over-capacity transport row would be flagged, not blocked.</p></div>` : ""}
+              <div class="success"><strong>Client decision: enforce capacity</strong><p>Vehicle-specific capacity is enforced. A full vehicle blocks new assignments.</p></div>
+              ${state.shiftAssigned ? `<div class="hard-stop"><strong>Capacity enforced.</strong><p>Bus 2 is full after Olha. A future assignment would be blocked.</p></div>` : ""}
             </div>
           </div>
         </section>
-        ${renderDecision("transport")}
         <section class="section">
           <h2 class="section-title">Shift table</h2>
           ${renderShiftTable()}
@@ -1541,9 +1614,6 @@
   }
 
   function transportCapacityText() {
-    if (state.decisionChoices.transport === "B") {
-      return "10 / 9 recorded";
-    }
     if (state.shiftAssigned) {
       return "9 / 9 full";
     }
@@ -1559,7 +1629,7 @@
         <div class="split">
           <section class="section">
             <h2 class="section-title">${escapeHtml(olha.name)}</h2>
-            <div class="badge-row">${statusBadges(olha)}</div>
+            ${isCoordinator() ? "" : `<div class="badge-row">${statusBadges(olha)}</div>`}
             <p class="muted">Primary channel: SMS, because many workers do not reliably use email.</p>
             <div class="message-box">${escapeHtml(message)}</div>
             <div class="inline-actions">
@@ -1659,25 +1729,29 @@
             ${state.certAssignmentTried ? `<div class="hard-stop"><strong>Assignment stopped.</strong><p>Forklift operator requires a valid forklift certificate. Pick another worker or update the certificate record.</p></div>` : ""}
           </section>
           <section class="section">
-            <h2 class="section-title">Document queue</h2>
+            <h2 class="section-title">Certificate metadata</h2>
+            <div class="success"><strong>Client decision: metadata only</strong><p>Certificate records store type, issue date, expiry date, and valid/invalid status. No file is retained.</p></div>
             <table class="data-table">
-              <thead><tr><th>Worker</th><th>Document</th><th>State</th></tr></thead>
+              <thead><tr><th>Worker</th><th>Type</th><th>Issue date</th><th>Expiry date</th><th>Validity</th></tr></thead>
               <tbody>
                 <tr>
                   <td data-label="Worker">Farrukh Yusupov</td>
-                  <td data-label="Document">Forklift certificate</td>
-                  <td data-label="State"><span class="badge availability-inactive">Expires soon</span></td>
+                  <td data-label="Type">Forklift certificate</td>
+                  <td data-label="Issue date">25 Jun 2024</td>
+                  <td data-label="Expiry date">25 Jun 2026</td>
+                  <td data-label="Validity"><span class="badge availability-inactive">Expires soon</span></td>
                 </tr>
                 <tr>
                   <td data-label="Worker">Olha Tkachenko</td>
-                  <td data-label="Document">Work permit</td>
-                  <td data-label="State"><span class="badge availability-available">18 days left</span></td>
+                  <td data-label="Type">Work permit</td>
+                  <td data-label="Issue date">08 Jul 2025</td>
+                  <td data-label="Expiry date">02 Jul 2026</td>
+                  <td data-label="Validity"><span class="badge availability-available">Valid until warning window</span></td>
                 </tr>
               </tbody>
             </table>
           </section>
         </div>
-        ${renderDecision("cert")}
       </section>
     `;
   }
@@ -1686,7 +1760,7 @@
     const todayWorkers = [getPerson("olha"), getPerson("dilnoza"), getPerson("farrukh")];
     return `
       <section class="page">
-        ${renderPageHeader("Operations", "Field mode", "A coordinator can check today's workers, document state, and quick actions from a phone-sized screen.")}
+        ${renderPageHeader("Operations", "Field mode", "A manager can check today's workers, document state, and quick actions from a phone-sized screen.")}
         <div class="phone-wrap">
           <div class="phone" aria-label="Phone frame">
             <div class="phone-screen">
@@ -1746,7 +1820,7 @@
     return `
       <section class="page">
         ${renderPageHeader("Logistics", "Gear and sizes", "Issued gear sits beside worker sizes so inventory can be prepared before the shift.")}
-        <div class="split">
+        <div class="${isCoordinator() ? "stack" : "split"}">
           <section class="section">
             <h2 class="section-title">Issued gear</h2>
             <table class="data-table">
@@ -1763,12 +1837,12 @@
               </tbody>
             </table>
           </section>
-          <section class="section">
+          ${isCoordinator() ? "" : `<section class="section">
             <h2 class="section-title">Worker sizes</h2>
             ${mockData.people.filter((person) => person.hireStatus !== "Archived").map((person) => `
               <p><strong>${escapeHtml(person.name)}</strong><br><span class="muted">${escapeHtml(person.sizes)}</span></p>
             `).join("")}
-          </section>
+          </section>`}
         </div>
       </section>
     `;
@@ -1913,9 +1987,10 @@
       });
     }
 
+    const showStatus = !isCoordinator();
     return `
       <table class="data-table">
-        <thead><tr><th>${escapeHtml(t("Worker"))}</th><th>${escapeHtml(t("Worksite"))}</th><th>${escapeHtml(t("Shift"))}</th><th>${escapeHtml(t("Transport"))}</th><th>${escapeHtml(t("Status"))}</th></tr></thead>
+        <thead><tr><th>${escapeHtml(t("Worker"))}</th><th>${escapeHtml(t("Worksite"))}</th><th>${escapeHtml(t("Shift"))}</th><th>${escapeHtml(t("Transport"))}</th>${showStatus ? `<th>${escapeHtml(t("Status"))}</th>` : ""}</tr></thead>
         <tbody>
           ${rows.map((row) => `
             <tr>
@@ -1923,7 +1998,7 @@
               <td data-label="Worksite">${escapeHtml(row.worksite)}</td>
               <td data-label="Shift" class="mono">${escapeHtml(row.shift)}</td>
               <td data-label="Transport">${escapeHtml(row.transport)}</td>
-              <td data-label="Status"><span class="badge ${row.status === "Cancelled" ? "availability-inactive" : "availability-working"}">${escapeHtml(t(row.status))}</span></td>
+              ${showStatus ? `<td data-label="Status"><span class="badge ${row.status === "Cancelled" ? "availability-inactive" : "availability-working"}">${escapeHtml(t(row.status))}</span></td>` : ""}
             </tr>
           `).join("")}
         </tbody>
@@ -1944,6 +2019,14 @@
   function goToStep(index) {
     const nextIndex = Math.max(0, Math.min(tourSteps.length - 1, Number(index)));
     const step = tourSteps[nextIndex];
+    if (step.view !== "login" && !isViewAllowed(step.view)) {
+      const fallbackIndex = tourSteps.findIndex((item) => item.view === coordinatorDefaultView());
+      state.currentStep = fallbackIndex;
+      state.view = coordinatorDefaultView();
+      state.signedIn = true;
+      render();
+      return;
+    }
     state.currentStep = nextIndex;
     state.view = step.view;
     state.signedIn = step.view !== "login";
@@ -1954,15 +2037,14 @@
   }
 
   function chooseDecision(decisionKey, choiceKey) {
+    if (lockedDecisions[decisionKey]) {
+      return;
+    }
     if (!decisions[decisionKey] || !decisions[decisionKey].options[choiceKey]) {
       return;
     }
     state.decisionChoices[decisionKey] = choiceKey;
     addAudit(`${decisions[decisionKey].title}: option ${choiceKey} recorded.`);
-    if (decisionKey === "transport" && choiceKey === "B") {
-      state.shiftAssigned = true;
-      setPerson("olha", { availability: "Working" });
-    }
   }
 
   function handleAction(action, target) {
@@ -1981,10 +2063,22 @@
         return;
       case "prev-step":
         state.manifestOpen = false;
+        if (isCoordinator()) {
+          const steps = visibleTourSteps();
+          const previous = steps[Math.max(0, currentVisibleStepIndex() - 1)];
+          goToStep(tourSteps.indexOf(previous));
+          return;
+        }
         goToStep(state.currentStep - 1);
         return;
       case "next-step":
         state.manifestOpen = false;
+        if (isCoordinator()) {
+          const steps = visibleTourSteps();
+          const next = steps[Math.min(steps.length - 1, currentVisibleStepIndex() + 1)];
+          goToStep(tourSteps.indexOf(next));
+          return;
+        }
         goToStep(state.currentStep + 1);
         return;
       case "go-step":
@@ -1993,6 +2087,9 @@
         goToStep(target.dataset.step);
         return;
       case "nav":
+        if (!isViewAllowed(target.dataset.view)) {
+          return;
+        }
         state.signedIn = true;
         state.view = target.dataset.view;
         state.navOpen = false;
@@ -2013,6 +2110,7 @@
       case "set-role":
         if (roles.includes(target.dataset.role)) {
           state.role = target.dataset.role;
+          normalizeRoleView();
         }
         render();
         return;
@@ -2131,6 +2229,7 @@
   }
 
   function render() {
+    normalizeRoleView();
     root.innerHTML = state.view === "login" ? renderLogin() : renderShell();
     localizeTree(root);
   }

@@ -126,10 +126,10 @@ textarea:focus-visible {
   z-index: 20;
   min-height: var(--topbar-height);
   display: grid;
-  grid-template-columns: minmax(220px, 1fr) auto auto auto auto;
-  gap: var(--control-group-gap);
+  grid-template-columns: minmax(180px, 1fr) auto auto auto auto;
+  gap: var(--space-2);
   align-items: center;
-  padding: 12px 22px;
+  padding: 12px;
   background: rgba(255, 255, 255, 0.92);
   border-bottom: 1px solid var(--line);
   backdrop-filter: blur(14px);
@@ -248,6 +248,10 @@ textarea:focus-visible {
   font-weight: 700;
   color: var(--ink);
   background: var(--surface-strong);
+}
+
+.topbar .toolbar-button {
+  padding-inline: var(--space-2);
 }
 
 .mobile-top-actions,

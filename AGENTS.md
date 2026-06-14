@@ -34,10 +34,24 @@ The demos:
 - keep the live two-client switch only in `demo/internal/`; remove the client switch entirely from both client-facing builds;
 - ship CorvinumEU as a sidebar + manifest-rail HR operations build;
 - ship Jober as a folder-tab build with Operations, People, Compliance, Logistics, Accounting, and Reports tabs;
-- has a **role switch** (Recruiter / Manager / Observer) that changes what actions are available, with Observer read-only;
+- has a **role switch** (Recruiter / Manager / Coordinator / Observer) that changes what actions and screens are available, with Observer read-only;
 - has an in-memory **language switch** for English, Slovak, and Hungarian in every build. Do not use remote translation services or persistence; language resets on reload.
-- surfaces **three open product questions as on-screen A/B choices** and records the chosen option in memory (the "decision capture" panel);
+- keeps the demand-model question as the only open on-screen A/B choice, while the decision panel marks Transport capacity = Enforce and Certificate storage = Dates only / metadata only as already answered;
 - uses mock data containing Cyrillic and Central-Asian names that must render correctly (this also demonstrates the multi-script requirement).
+
+Role boundaries:
+
+- **Recruiter** can create people, schedule tests, assign shifts/transport, send pickup notices, and update document metadata. Recruiter cannot approve hires, blacklist, demote, or verify certifications.
+- **Manager** can approve hires, blacklist/demote, verify certifications, and use HR/approval screens.
+- **Coordinator** is a distinct logistics role, not a Manager alias. In CorvinumEU, Coordinator sees transport logistics only. In Jober, Coordinator sees transport, accommodation, and equipment logistics. Coordinator screens must contain only logistics-relevant data: worker name, assigned worksite, transport group, shift dates, plus room/equipment issued in Jober. Coordinator must not see hire status, documents, certifications, screening/work-test results, approval history, or blacklist status; HR/approval screens must not be reachable and their data must be absent from the DOM.
+- **Observer** is read-only. Action buttons are disabled or hidden.
+- Permissions are role-based only; do not add per-person permission editing.
+
+Confirmed product decisions:
+
+- The product is shifts-first for assignment: once a worker is Hired, the worker is directly shift-eligible. Do not imply a contract/signing step before shifts.
+- Transport capacity is enforced per vehicle. A full vehicle blocks new assignments.
+- Certificate records are metadata only: type, issue date, expiry date, and valid/invalid status. No certificate file upload or retention.
 
 ### Technical constraints (demo)
 

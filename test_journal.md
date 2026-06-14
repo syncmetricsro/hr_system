@@ -183,3 +183,59 @@ Playwright results:
 
 Known issues:
 - Names, company names, phone numbers, and fixed dates intentionally remain unchanged mock data. Client-facing UI prose, callouts, audit text, mobile labels, and module labels now translate in the two client builds.
+
+## 2026-06-14
+
+Coordinator role and answered-decision regression checks.
+
+Static checks run:
+- `node --check demo/internal/app.js` passed.
+- `node --check demo/corvinum/app.js` passed.
+- `node --check demo/jober/app.js` passed.
+- `node --check tests/responsive.spec.js` passed.
+- `node --check playwright.config.js` passed.
+- Parsed `demo/internal/index.html`, `demo/corvinum/index.html`, and `demo/jober/index.html` with Python `html.parser`; passed.
+- Scanned all three builds for persistence APIs, remote script/style URLs, remote URLs, CSS `@import`, `fetch`, `XMLHttpRequest`, and `sendBeacon`; no matches.
+
+Source separation:
+- `grep -ri jober demo/corvinum/` returned no output.
+- `grep -ri corvinum demo/jober/` returned no output.
+
+Playwright results:
+- Built the pinned Docker image with `docker build -f Dockerfile.playwright -t hr-system-playwright-tests:1.60.0 .`.
+- Ran with `demo/` mounted read-only, `test-artifacts/` writable, and `--network none`.
+- Full suite result: 11 passed.
+- New regression passed: Coordinator role removes HR/approval data from the DOM across internal, CorvinumEU, and Jober at 375px and desktop.
+
+Verified behavior:
+- Coordinator defaults to logistics views, not HR dashboards.
+- CorvinumEU Coordinator exposes transport logistics only.
+- Jober Coordinator exposes Operations logistics plus Accommodation and Equipment.
+- Coordinator DOM does not include HR/approval screens or text such as blacklist, work test, manager approval, document queue, certificate metadata, Pohoda, hire status, or approval history.
+- Transport capacity shows Enforce as the answered decision and blocks full vehicles.
+- Certificate storage shows Dates only / metadata only as the answered decision.
+- Demand model remains the only interactive A/B decision.
+- No horizontal scroll at the tested widths; internal Jober/Coordinator was additionally checked at 1365px and 1440px.
+- No console/runtime errors were detected by Playwright.
+
+Visual review artifacts:
+- `test-artifacts/internal-phone-coordinator.png`
+- `test-artifacts/internal-desktop-coordinator.png`
+- `test-artifacts/corvinum-phone-coordinator.png`
+- `test-artifacts/corvinum-desktop-coordinator.png`
+- `test-artifacts/jober-phone-coordinator.png`
+- `test-artifacts/jober-desktop-coordinator.png`
+
+Known issues:
+- `shared_hr_platform_architecture.md` is still absent from the repo, so this implementation followed the pasted clarification.
+
+## 2026-06-14
+
+Decision drawer answered-state regression.
+
+Additional check added:
+- `answered product decisions appear in the decision drawer` verifies all three builds show Demand as unanswered, Transport capacity as `A - Enforce capacity`, and Certificate storage as `B - Dates only`.
+
+Playwright result:
+- Rebuilt the pinned Docker image and reran the suite with `demo/` read-only, `test-artifacts/` writable, and `--network none`.
+- Full suite result: 12 passed.

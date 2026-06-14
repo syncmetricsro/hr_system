@@ -146,3 +146,46 @@ Verification:
 
 Next step:
 - Have a Slovak/Hungarian speaker review business terminology before presenting if exact wording matters.
+
+## 2026-06-14
+
+Coordinator role and answered product decisions.
+
+What changed:
+- Added the distinct Coordinator role to `demo/internal/`, `demo/corvinum/`, and `demo/jober/`.
+- Enforced Coordinator as a real logistics-only permission boundary: CorvinumEU exposes only transport logistics; Jober exposes transport, accommodation, and equipment logistics.
+- Filtered Coordinator navigation and guided steps so HR-only screens are not reachable.
+- Removed HR/approval data from Coordinator-rendered DOM, including hire status, blacklist status, documents/certificates, work-test/approval content, and audit history.
+- Updated the shift flow to be shifts-first: once Hired, a worker is directly shift-eligible, with no contract/signing step.
+- Changed transport capacity from an open A/B decision to an answered client decision: vehicle-specific capacity is enforced and full vehicles block future assignments.
+- Changed certificate storage from an open A/B decision to metadata only: type, issue date, expiry date, and valid/invalid status; no file upload or retention.
+- Kept Demand model as the only open interactive A/B gate.
+- Tightened the internal top bar so the added Coordinator role does not cause desktop overflow after switching the internal build to Jober.
+- Updated `AGENTS.md`, `demo/demo_prototype_build_spec.md`, and the Playwright suite.
+
+Decisions made:
+- Treated Coordinator as not having dashboard access because the current dashboards contain HR/approval metrics. Coordinator defaults to the logistics shift/dispatch view instead.
+- Kept Jober Coordinator Logistics access data-driven through the existing folder/tab configuration.
+- Applied the pasted clarification because `shared_hr_platform_architecture.md` is referenced by the task/spec but is not present on disk.
+
+Verification:
+- `grep -ri jober demo/corvinum/` returned no output.
+- `grep -ri corvinum demo/jober/` returned no output.
+- The pinned Docker Playwright suite passed with 11 tests, including a Coordinator DOM-absence test across internal, CorvinumEU, and Jober at 375px and desktop.
+- Coordinator screenshots were generated for internal, CorvinumEU, and Jober at phone and desktop widths.
+
+Next step:
+- Confirm with the clients whether Coordinator should remain dashboard-free or receive a separate logistics-only dashboard later.
+
+## 2026-06-14
+
+Decision drawer regression added.
+
+What changed:
+- Added an explicit Playwright regression that opens the decision drawer in internal, CorvinumEU, and Jober and verifies:
+  - Demand model is still unanswered.
+  - Transport capacity is answered as `A - Enforce capacity`.
+  - Certificate storage is answered as `B - Dates only`.
+
+Verification:
+- The pinned Docker Playwright suite passed with 12 tests.

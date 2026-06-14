@@ -103,7 +103,7 @@ async function closeMobileNav(page) {
 }
 
 async function setRole(page, build, role, width) {
-  if (build === "corvinum" && width <= 1024) {
+  if ((build === "corvinum" || build === "internal") && width <= 1024) {
     await openMobileNav(page);
     await page.locator("#mobile-nav").getByRole("button", { name: role }).click();
     await closeMobileNav(page);
@@ -114,6 +114,16 @@ async function setRole(page, build, role, width) {
 
 async function setLanguage(page, language) {
   await page.getByRole("button", { name: language }).first().click();
+}
+
+async function setInternalClient(page, client, width) {
+  if (width <= 1024) {
+    await openMobileNav(page);
+    await page.locator("#mobile-nav").getByRole("button", { name: client }).click();
+    await closeMobileNav(page);
+    return;
+  }
+  await page.locator(".topbar").getByRole("button", { name: client }).click();
 }
 
 async function navigateCorvinum(page, label, width) {
@@ -185,6 +195,79 @@ async function expectActionSpacing(page) {
   }
 }
 
+async function expectNoCoordinatorHrDom(page, forbiddenViews, forbiddenText) {
+  for (const view of forbiddenViews) {
+    await expect(page.locator(`[data-view="${view}"]`), `${view} navigation should be absent`).toHaveCount(0);
+  }
+
+  const bodyText = await page.evaluate(() => document.body.textContent.replace(/\s+/g, " "));
+  for (const pattern of forbiddenText) {
+    expect(bodyText, `${pattern} should be absent from Coordinator DOM`).not.toMatch(pattern);
+  }
+}
+
+async function expectCoordinatorScope(page, build, width) {
+  await setRole(page, build, "Coordinator", width);
+  await expect(page.getByText("Transport logistics view: assigned worksite, dated shift, vehicle, pickup point, and time.")).toBeVisible();
+  await expect(page.getByRole("heading", { name: build === "jober" ? /dispatch plan/i : /assign shift and transport/i })).toBeVisible();
+  await expect(page.locator("main")).toContainText("Transport assignment");
+  await expect(page.locator("main")).toContainText("Vehicle capacity");
+  await expect(page.locator("main")).not.toContainText("Status");
+
+  const forbiddenViews = [
+    "dashboard",
+    "staffing",
+    "people",
+    "approvals",
+    "documents",
+    "sick-leave",
+    "field",
+    "pohoda",
+    "reports"
+  ];
+  const forbiddenText = [
+    /Blacklist/i,
+    /Blacklisted/i,
+    /Work test/i,
+    /Manager approval/i,
+    /Document queue/i,
+    /Certificate metadata/i,
+    /Certificate expiry/i,
+    /Forklift certificate/i,
+    /Hire approved/i,
+    /Recruiter note/i,
+    /Recommendation/i,
+    /Pohoda/i,
+    /Open invoices/i,
+    /\bHired\b/i,
+    /\bRecruit\b/i
+  ];
+
+  await expectNoCoordinatorHrDom(page, forbiddenViews, forbiddenText);
+
+  if (build === "jober") {
+    expect(await page.locator("[data-view='accommodation']").count()).toBeGreaterThan(0);
+    await navigateJoberTab(page, "Logistics");
+    await expect(page.getByRole("heading", { name: /accommodation board/i })).toBeVisible();
+    await navigateJoberSection(page, "Equipment");
+    await expect(page.getByRole("heading", { name: /issued gear/i })).toBeVisible();
+    expect(await page.locator("[data-view='accommodation']").count()).toBeGreaterThan(0);
+    expect(await page.locator("[data-view='equipment']").count()).toBeGreaterThan(0);
+    await expectNoCoordinatorHrDom(page, forbiddenViews, forbiddenText);
+    return;
+  }
+
+  await expect(page.locator("[data-view='accommodation']")).toHaveCount(0);
+  await expect(page.locator("[data-view='equipment']")).toHaveCount(0);
+
+  if (build === "internal") {
+    await setInternalClient(page, "Jober", width);
+    await expect(page.locator("[data-view='accommodation']")).toHaveCount(1);
+    await expect(page.locator("[data-view='equipment']")).toHaveCount(1);
+    await expectNoCoordinatorHrDom(page, forbiddenViews, forbiddenText);
+  }
+}
+
 const viewports = [
   { name: "phone", width: 375, height: 900 },
   { name: "tablet", width: 768, height: 900 },
@@ -227,8 +310,8 @@ test("client language switch covers deeper operational screens", async ({ page }
   await expect(page.locator("body")).not.toContainText("Manager approval required.");
   await setLanguage(page, "HU");
   await page.locator(".sidebar [data-action='nav'][data-view='documents']").click();
-  await expect(page.getByText("Dokumentumsor")).toBeVisible();
-  await expect(page.locator("body")).not.toContainText("Document queue");
+  await expect(page.getByText("Tanúsítvány-metaadatok")).toBeVisible();
+  await expect(page.locator("body")).not.toContainText("Certificate metadata");
 
   await openBuild(page, "jober", 1440, 1000);
   await setLanguage(page, "SK");
@@ -246,6 +329,36 @@ test("client language switch covers deeper operational screens", async ({ page }
   await page.locator(".folder-tabs [data-action='nav'][data-view='people']").click();
   await expect(page.getByText("Tiltólista egyezés")).toBeVisible();
   await expect(page.locator("body")).not.toContainText("Blacklist match found");
+});
+
+test("Coordinator role removes HR and approval data from the DOM", async ({ page }) => {
+  for (const build of ["internal", "corvinum", "jober"]) {
+    for (const viewport of [
+      { name: "phone", width: 375, height: 920 },
+      { name: "desktop", width: 1440, height: 1000 }
+    ]) {
+      const consoleErrors = await openBuild(page, build, viewport.width, viewport.height);
+      await expectCoordinatorScope(page, build, viewport.width);
+      await expectNoHorizontalScroll(page);
+      await captureVisual(page, build, `${viewport.name}-coordinator`);
+      expect(consoleErrors).toEqual([]);
+    }
+  }
+});
+
+test("answered product decisions appear in the decision drawer", async ({ page }) => {
+  for (const build of ["internal", "corvinum", "jober"]) {
+    const consoleErrors = await openBuild(page, build, 1440, 1000);
+    await page.getByRole("button", { name: "Decisions captured" }).click();
+    const drawer = page.locator(".decision-drawer");
+    await expect(drawer).toContainText("Demand model");
+    await expect(drawer).toContainText("No choice recorded yet.");
+    await expect(drawer).toContainText("Transport capacity");
+    await expect(drawer).toContainText("A - Enforce capacity");
+    await expect(drawer).toContainText("Certificate storage");
+    await expect(drawer).toContainText("B - Dates only");
+    expect(consoleErrors).toEqual([]);
+  }
 });
 
 for (const viewport of viewports) {

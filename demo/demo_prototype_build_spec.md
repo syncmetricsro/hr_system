@@ -14,7 +14,7 @@ A clickable front-end mockup used in a live client meeting. It is **not** produc
 It has two jobs, equally important:
 
 1. **Sell the vision** — walk a non-technical client through one worker's journey end to end so the product becomes tangible.
-2. **Extract decisions** — the client has been hard to get answers from in writing. Several open questions are built into the demo as on-screen A/B choices, so the client decides by clicking rather than by answering an email. The prototype records which option they picked (in memory) so the choices can be reviewed after the meeting.
+2. **Extract decisions** — the client has been hard to get answers from in writing. The remaining open demand-model question is built into the demo as an on-screen A/B choice, and the two answered choices stay visible in the decision panel so they can be reviewed after the meeting.
 
 Build everything in service of those two jobs. When in doubt, favour clarity and "showability" over completeness.
 
@@ -80,10 +80,11 @@ Read the `frontend-design` skill before building and produce a small token syste
 
 Present on every screen:
 
-- **Top bar:** wordmark · **Role switch** control (Recruiter / Manager / Observer) · **Language switch** control (EN / SK / HU) · user avatar. The Client switch appears only in `demo/internal/`.
+- **Top bar:** wordmark · **Role switch** control (Recruiter / Manager / Coordinator / Observer) · **Language switch** control (EN / SK / HU) · user avatar. The Client switch appears only in `demo/internal/`.
 - **Role switch behaviour:**
-  - *Recruiter* — can create people, schedule tests, assign shifts/transport, upload docs. Cannot approve hires or blacklist.
+  - *Recruiter* — can create people, schedule tests, assign shifts/transport, send pickup notices, and update document metadata. Cannot approve hires or blacklist.
   - *Manager* — everything, including approvals, demotion, blacklist, verification.
+  - *Coordinator* — a distinct logistics role, not a manager alias. In CorvinumEU, Coordinator sees transport logistics only. In Jober, Coordinator sees transport, accommodation, and equipment logistics. Coordinator views must contain only logistics data: worker name, assigned worksite, transport group, shift dates, plus room/equipment issued in Jober. Coordinator must not see hire status, documents, certifications, screening/work-test results, approval history, or blacklist status, and HR-only screens must not be reachable.
   - *Observer* — read-only. All action buttons hidden or visibly disabled. Use this to demonstrate the permission model in one click.
 - **CorvinumEU nav:** left sidebar with People · Staffing requests · Shifts & transport · Documents · Approvals · Reports.
 - **Jober nav:** top folder-style tabs:
@@ -109,10 +110,7 @@ Build these as the guided sequence. Each step is a screen or an action with a cl
 
 **5 — Work test + approval.** Recruiter schedules a work test for a clean candidate, fills a short recommendation form (a few fields + recommend/don't recommend). Switch to Manager role → **Approve hire**. Candidate's hire status flips **Recruit → Hired**. Show the audit entry being written.
 
-**6 — Assign to shift + transport (DECISION 2 — transport capacity).** Assign the now-Hired worker to a shift: worksite, position, date/time, and a **transport group** (a specific bus + pickup point + time). When the bus is near capacity, present the open question:
-   - **Option A — Enforce capacity:** block assignment when the bus is full.
-   - **Option B — Record only:** allow it, just record it.
-   Record the choice. Show both status dimensions in the worker's header: hire = Hired, availability = Working.
+**6 — Assign to shift + transport (DECISION 2 — transport capacity, answered).** Assign the now-Hired worker directly to a shift: worksite, position, date/time, and a **transport group** (a specific vehicle + pickup point + time). There is no contract or signing step before shift assignment. Vehicle capacity is enforced per vehicle; Bus 2 is a 9-seat vehicle and a full vehicle blocks new assignments. The decision panel shows **Enforce capacity** as already decided. Show both status dimensions in the worker's header for HR roles: hire = Hired, availability = Working. Hide those HR status dimensions from Coordinator.
 
 **7 — SMS pickup notice.** Show the pickup SMS composed and ready ("Bus 2, 06:15, Nitra depot…") with a **Send pickup notice** button that shows a "Sent" confirmation — but nothing is actually sent. Make clear this is the SMS channel (primary, since many workers lack email).
 
@@ -120,12 +118,9 @@ Build these as the guided sequence. Each step is a screen or an action with a cl
 
 **9 — Sick leave → auto-inactive.** Record a sick-leave entry (dates only — no medical detail, state this explicitly on screen). Availability auto-flips to **Inactive** and the shifts inside the window show as cancelled. Reinforces the dates-only, GDPR-light approach.
 
-**10 — Certification expiry hard-stop (DECISION 3 — cert storage).** A worker's forklift certificate is expiring in ~12 days; show the alert. Try to assign them to a Forklift-operator position → the system **hard-stops** it (required cert invalid). At the cert record, present the open question:
-   - **Option A — Store the file:** upload and keep the certificate document.
-   - **Option B — Dates only:** store type + expiry, no file.
-   Record the choice.
+**10 — Certification expiry hard-stop (DECISION 3 — cert storage, answered).** A worker's forklift certificate is expiring in ~12 days; show the alert. Try to assign them to a Forklift-operator position → the system **hard-stops** it (required cert invalid). Certificate records store metadata only: certificate type, issue date, expiry date, and valid/invalid status. No file upload or document retention is shown. The decision panel shows **Dates only** as already decided.
 
-**11 — Manager field view (mobile).** A narrow, phone-framed view: today's workers, quick search, status + document state at a glance, call / message shortcuts, "mark no-show". Demonstrates the mobile-first manager (= coordinator) use.
+**11 — Manager field view (mobile).** A narrow, phone-framed view: today's workers, quick search, status + document state at a glance, call / message shortcuts, "mark no-show". Demonstrates the mobile-first manager use. Coordinator remains a separate logistics role with narrower visibility.
 
 **12 — Internal-only Jober reveal.** In `demo/internal/`, flip the **Client switch** to Jober. The app re-skins and three nav items appear: **Accommodation**, **Equipment**, **Pohoda dashboard**. Client-facing builds do not include this reveal step: CorvinumEU stops after the manager field view, while Jober exposes those modules as normal tabs from the start.
 
@@ -150,7 +145,7 @@ Seed a small, coherent dataset so the narrative holds together. Names intentiona
 
 **Buses:** Bus 1 (capacity 15); Bus 2 (capacity 9, used for the near-capacity moment in step 6). Each with a named driver and a pickup point/time.
 
-**Documents/certs:** at least one expiring document and Farrukh's expiring forklift cert, to populate the dashboard alerts.
+**Documents/certs:** at least one expiring document and Farrukh's expiring forklift cert, to populate the dashboard alerts. Certificate records are metadata only: type, issue date, expiry date, and valid/invalid status. No certificate file upload or retention is part of the prototype.
 
 Keep all of this in one mock-data object in `app.js`.
 
@@ -172,7 +167,13 @@ These three never appear in `demo/corvinum/`, including in source.
 
 ## 9. Decision capture
 
-The three DECISION screens (§6 steps 3, 6, 10) each record the presenter's pick in an in-memory object. Add a small **"Decisions captured"** panel (reachable from the top bar) that lists the three questions and the option chosen for each, so the team can review them straight after the meeting. Resets on reload — that's acceptable; the presenter notes them down.
+The three DECISION records (§6 steps 3, 6, 10) are shown in an in-memory **"Decisions captured"** panel reachable from the top bar.
+
+- **Demand model** remains open and interactive.
+- **Transport capacity** is answered: **Enforce capacity**.
+- **Certificate storage** is answered: **Dates only** / metadata only.
+
+The panel resets on reload — that's acceptable; the presenter notes choices down after the meeting.
 
 ### 9.1 Language support
 
@@ -204,7 +205,8 @@ Show as "this is where X lives", do not build:
 - The CorvinumEU client build contains no Jober source strings or modules; the Jober client build contains no CorvinumEU source strings.
 - The Jober client build uses folder tabs as the primary navigation and exposes Accommodation, Equipment, and Pohoda as normal tabs.
 - English, Slovak, and Hungarian can be selected in all three builds without persistence or remote services.
-- Role switch visibly changes what an Observer can do versus a Manager.
-- The three decision screens record and display the chosen options.
+- Role switch visibly changes what Recruiter, Manager, Coordinator, and Observer can see/do.
+- Coordinator views remove HR/approval data from the DOM, not merely from visual emphasis.
+- The decision panel records the open Demand choice and displays the already-answered Transport and Certificate choices.
 - Cyrillic and Central-Asian names render correctly throughout.
 - Both status dimensions are visible and consistent wherever a person appears.
