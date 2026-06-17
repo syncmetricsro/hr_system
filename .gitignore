@@ -1,2 +1,27 @@
+__pycache__/
+*.py[cod]
+*.sqlite3
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+static/dist/
+media/
+.env
+.env.*
+!.env.example
+
+# Explicitly forbidden by AGENTS.md. Kept here so accidental local artifacts
+# stay untracked, while tools/check_no_node_artifacts.py still fails if they
+# appear in the working tree.
 node_modules/
+package.json
+package-lock.json
+pnpm-lock.yaml
+pnpm-workspace.yaml
+yarn.lock
+npm-shrinkwrap.json
+vite.config.*
+
 test-artifacts/

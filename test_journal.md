@@ -1,5 +1,35 @@
 # Test Journal
 
+## 2026-06-17
+
+Phase 0 static/supply-chain checks.
+
+Checks run:
+- `python3 scripts/check_no_node_artifacts.py`
+- `python3 scripts/verify_vendor_assets.py`
+- `python3 -m py_compile manage.py config/asgi.py config/wsgi.py config/urls.py config/settings/base.py config/settings/local.py config/settings/production.py apps/core/apps.py apps/core/views.py scripts/check_no_node_artifacts.py scripts/verify_vendor_assets.py`
+- `git diff --check`
+- `TAILWIND_BIN=/home/disane/.local/bin/tailwindcss TAILWIND_SHA256=73f0e5459054e5cfaa8ab6f3b940f3fbe0f13cc7fd83bc24e7c655033c203400 scripts/build_tailwind.sh`
+- Official Tailwind Labs `v4.3.0` `sha256sums.txt` was checked. The local `tailwindcss-linux-x64` binary matched the official SHA-256.
+- Docker Tailwind build-stage verification passed during image build.
+- `scripts/check_production_image.sh jober-platform:phase0` passed, confirming no Tailwind binary or Node/npm artifacts in the runtime image.
+- `scripts/ci_phase0.sh` passed. This runs the no-Node scan, vendor checksum verification, Python syntax checks, `docker build --no-cache`, and runtime image artifact check. The no-cache build exercised the Tailwind official-checksum verification stage.
+- `scripts/playwright_smoke.sh` passed. It uses `mcr.microsoft.com/playwright/python:v1.60.0-noble@sha256:8ff591d613b01c884cc488339ed4318b4513eaf0c57a164a878ba49e70e3f384`, verifies no Node/npm-family binary on `PATH`, verifies `playwright==1.60.0` in the hash-pinned test lock, builds a non-root test-runner image, starts production app + PostgreSQL + browser runner on an internal-only Docker network, and runs `tests/e2e/test_shell_smoke.py` with Chromium.
+- Negative guard check passed: `scripts/check_production_image.sh` exits non-zero against the digest-pinned Playwright Python test image and reports forbidden `/ms-playwright` browser files. The same script remains green against `jober-platform:phase0`.
+- `scripts/dev_db.sh up`, `status`, `url`, `psql`, `reset --yes`, and `down` passed. The script created an internal Docker network, generated gitignored local credentials, kept PostgreSQL off the host network, provided containerized `psql` access, and used the digest-pinned PostgreSQL image.
+- A loopback DB port was tested and removed from the helper because it was not reachable while the DB container was attached only to an internal Docker network.
+- Runtime lock generated in Docker and verified with `pip install --require-hashes -r requirements/runtime.lock`.
+- Test lock generated in Docker and verified with `pip install --require-hashes -r requirements/test.lock`.
+- `docker build -t jober-platform:phase0 .` passed.
+- `docker run --rm ... jober-platform:phase0 python manage.py check` passed.
+- Temporary PostgreSQL 17 container accepted `python manage.py migrate --noinput` from the app image.
+- Running app container returned `ok` from `/healthz/`.
+- `pytest tests/test_shell.py` passed inside the digest-pinned Python container with the hash-pinned test lock.
+- `ruff check apps config scripts tests manage.py` passed inside the digest-pinned Python container with the hash-pinned test lock.
+
+Expected current gaps:
+- Dokku staging remains pending until the staging app/domain/PostgreSQL service details are available.
+
 ## 2026-06-13
 
 Checks run:

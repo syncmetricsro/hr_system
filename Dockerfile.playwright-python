@@ -1,0 +1,21 @@
+FROM mcr.microsoft.com/playwright/python:v1.60.0-noble@sha256:8ff591d613b01c884cc488339ed4318b4513eaf0c57a164a878ba49e70e3f384 AS test-runner
+
+ENV PIP_DISABLE_PIP_VERSION_CHECK=1 \
+    PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
+
+WORKDIR /app
+
+COPY requirements/test.lock /app/requirements/test.lock
+
+RUN python -m pip install \
+    --no-cache-dir \
+    --require-hashes \
+    -r requirements/test.lock
+
+COPY tests/e2e /app/tests/e2e
+
+RUN addgroup --system jober-tests \
+    && adduser --system --ingroup jober-tests --home /app jober-tests \
+    && chown -R jober-tests:jober-tests /app
+
+USER jober-tests

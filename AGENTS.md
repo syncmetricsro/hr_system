@@ -1,213 +1,163 @@
-# AGENTS.md — HR_System
+# AGENTS.md — Jober Workforce Platform
 
-Instructions for any coding agent working in this repository. These rules are binding. If a rule here conflicts with a task, follow the rule and say why.
+Binding instructions for any coding agent working in this repository. If a rule here conflicts with a task, **follow the rule and say why**.
 
-This file is agent-agnostic. The detailed product and build requirements live in **`demo_prototype_build_spec.md`** — read it before building. This file governs scope, security, and how to work; the spec governs what to build.
-
----
-
-## Project state
-
-- The only thing to build right now is the **demo prototype**, in `HR_System/demo/`.
-- The demo is **static vanilla HTML, CSS, and JavaScript**. It has **no backend and no dependencies**, by design.
-- A production application will later live in the same `HR_System/` folder. Its package rules are in "Phase 2" below. **Do not scaffold or build it yet.** Do not create `src/`, `modules/`, or `clients/` now.
+This file governs **scope, security, supply chain, and how to work**. The **what to build** lives in the implementation plan (`jober_coding_agent_product_design_plan_v3_jober_only.md`) and the Jober v0.4 interview delta. When this file and the plan disagree on *security or dependencies*, this file wins.
 
 ---
 
-## Current task — build the demo
+## 0. Project state (read first)
 
-Build into `HR_System/demo/`. Follow `demo_prototype_build_spec.md` for the full spec. In brief, the deliverable is a clickable, presenter-driven prototype split into three static builds:
-
-- `demo/internal/` — the internal combined demo with the live CorvinumEU/Jober switch.
-- `demo/corvinum/` — the CorvinumEU-only client build.
-- `demo/jober/` — the Jober-only client build.
-
-The client builds must be true source-level separations, not runtime hiding:
-
-- `demo/corvinum/` must contain no Jober strings, data, modules, logos, or palette in HTML/CSS/JS.
-- `demo/jober/` must contain no CorvinumEU references in HTML/CSS/JS.
-- Verify with `grep -ri jober demo/corvinum/` and `grep -ri corvinum demo/jober/`; both must return no output.
-
-The demos:
-
-- walks one worker's journey end to end (create → risk check → work test → hire approval → shift + transport → SMS notice → second shift → sick leave → certification hard-stop → manager mobile view); the internal build also keeps the "become Jober" finale;
-- keep the live two-client switch only in `demo/internal/`; remove the client switch entirely from both client-facing builds;
-- ship CorvinumEU as a sidebar + manifest-rail HR operations build;
-- ship Jober as a folder-tab build with Operations, People, Compliance, Logistics, Accounting, and Reports tabs;
-- has a **role switch** (Recruiter / Manager / Coordinator / Observer) that changes what actions and screens are available, with Observer read-only;
-- has an in-memory **language switch** for English, Slovak, and Hungarian in every build. Do not use remote translation services or persistence; language resets on reload.
-- keeps the demand-model question as the only open on-screen A/B choice, while the decision panel marks Transport capacity = Enforce and Certificate storage = Dates only / metadata only as already answered;
-- uses mock data containing Cyrillic and Central-Asian names that must render correctly (this also demonstrates the multi-script requirement).
-
-Role boundaries:
-
-- **Recruiter** can create people, schedule tests, assign shifts/transport, send pickup notices, and update document metadata. Recruiter cannot approve hires, blacklist, demote, or verify certifications.
-- **Manager** can approve hires, blacklist/demote, verify certifications, and use HR/approval screens.
-- **Coordinator** is a distinct logistics role, not a Manager alias. In CorvinumEU, Coordinator sees transport logistics only. In Jober, Coordinator sees transport, accommodation, and equipment logistics. Coordinator screens must contain only logistics-relevant data: worker name, assigned worksite, transport group, shift dates, plus room/equipment issued in Jober. Coordinator must not see hire status, documents, certifications, screening/work-test results, approval history, or blacklist status; HR/approval screens must not be reachable and their data must be absent from the DOM.
-- **Observer** is read-only. Action buttons are disabled or hidden.
-- Permissions are role-based only; do not add per-person permission editing.
-
-Confirmed product decisions:
-
-- The product is shifts-first for assignment: once a worker is Hired, the worker is directly shift-eligible. Do not imply a contract/signing step before shifts.
-- Transport capacity is enforced per vehicle. A full vehicle blocks new assignments.
-- Certificate records are metadata only: type, issue date, expiry date, and valid/invalid status. No certificate file upload or retention.
-
-### Technical constraints (demo)
-
-- Plain **vanilla HTML/CSS/JS**. No framework, bundler, transpiler, or build step.
-- Suggested layout in `HR_System/demo/`: `index.html`, `app.js`, `styles.css`. A single self-contained `index.html` is also acceptable.
-- **No persistence APIs.** Hold all state in plain in-memory JS. Do **not** use `localStorage` / `sessionStorage`. State resets on reload — that is intended.
-- **UTF-8 throughout.**
-- Quality floor: visible keyboard focus, sensible contrast, `prefers-reduced-motion` respected; one mobile-framed view for the manager field screen.
-
-### Responsive behavior (demo)
-
-- The demo is presented on desktop computers, tablets, and phones. It must have no horizontal scrolling, clipping, or overlapping controls at `375px`, `768px`, and wide desktop widths.
-- Above `1024px`, the internal and CorvinumEU builds keep the desktop three-column shell: left nav, main content, and right Live manifest rail. The Jober build uses top folder-style tabs and no right rail.
-- From `641px` to `1024px`, internal and CorvinumEU collapse navigation into a reachable hamburger drawer, convert the Live manifest rail into a top progress strip, and let content use the full width. Jober keeps folder tabs at the top and uses a slim numbered step bar under them.
-- At `640px` and below, use a phone layout: dense tables become stacked labelled cards, decision A/B cards stack vertically, and the manager field view reads as a native phone screen rather than a shrunken desktop surface.
-- The Live manifest is the internal/CorvinumEU signature element and must remain available on mobile as an expandable progress strip. Jober's signature navigation is the folder-tab "ears" plus numbered step bar.
-- Guided Back/Next controls, Role switch, and decisions panel must remain usable at every responsive width. The Client switch exists only in `demo/internal/`.
-- Touch controls should have a minimum target around `44px`, consistent spacing between adjacent buttons, and adequate edge padding so nothing is clipped against the viewport.
+- This repository is the **real Jober production application**, not the old demo. The static vanilla-JS demo was a design reference only; its "install nothing / no backend" rules no longer apply here.
+- Scope is **Jober only**. Do not introduce CorvinumEU, multi-client abstractions, white-label infrastructure, shift scheduling, fleet/vehicles, sick leave, worker portal, or Pohoda. They are out of scope by decision, not by omission.
+- Stack is **npm-free by decision**: Django + htmx + Alpine.js + Tailwind standalone CLI + Playwright-Python + PostgreSQL + Dokku. There is **no Node.js, no npm, no React, no Vite** anywhere in the repository, build, or runtime.
 
 ---
 
-## Hard rules — security and dependencies (apply now and always)
+## 1. Golden rules (non-negotiable)
 
-### For the demo
-
-- **Install nothing into the demo.** Do not run any package installer for the demo, and `demo/` must contain no `package.json`, `node_modules`, or lockfile. (One exception exists for isolated dev **test tooling** — see "Test tooling" below — which never lives in `demo/`; the demo artifact itself stays dependency-free.)
-- **No backend.** No server runtime, API, or database.
-- **No remote code at runtime.** Do not add `<script src="…cdn…">` or remote stylesheet links that load third-party code on page load. Write the CSS by hand. If a remote asset ever seems genuinely necessary, **stop and ask first**; if approved, pin it and use Subresource Integrity (`integrity="sha384-…"`).
-- **Preview** with a runtime already on the machine — e.g. `python3 -m http.server` run from `HR_System/demo/`. Opening `index.html` directly is also fine.
-- **Do not install or recommend an editor extension** (e.g. a "Live Server") to run the demo. Editor marketplaces are an active supply-chain target; `python3 -m http.server` needs none.
-
-If a task seems to require a dependency or a backend, it has left the demo's scope. Stop and ask the human.
-
-### Operating-system and editor packages (always)
-
-- **Do not install system packages** via AUR, `yay`, `pacman`, or any OS package manager without explicit human approval. When approved, prefer the distribution's official vetted repositories over user-contributed ones (AUR is unvetted and has been used to deliver malware).
-- **Do not install editor extensions** or pull them from any marketplace.
-- **No pipe-to-shell installers** (`curl … | sh`, `wget … | bash`). Ever.
+1. **Never add Node.js, npm, pnpm, yarn, `package.json`, a JS lockfile, or `node_modules`** — anywhere, ever. The production image must build with no Node toolchain present.
+2. **Every dependency is pinned and verified.** Python packages are hash-pinned in a committed lockfile; vendored JS assets and downloaded binaries are SHA-256-verified and fail closed on mismatch.
+3. **Installs and builds run inside the container/CI, never against host secrets.** No build step ever has access to production credentials, SSH keys, or the deploy token.
+4. **Minimal dependencies.** Adding any new PyPI package requires an ADR and human approval. Default to the standard library and Django's batteries before reaching for a package.
+5. **No secrets in Git.** Provider credentials (Twilio, Telegram, SMTP, database) come from environment / a secret manager, never committed.
+6. **The agent does not fetch media or secrets.** It writes an asset/secret *request* and a runbook; a human supplies binaries, fonts, images, and credentials (see §7).
+7. **When a business decision is missing, stop and write a decision note.** Do not fossilize a guess into a migration and make humans excavate it later.
+8. **Small, reviewable PRs**, tests with every business-critical change, permissions + audit treated as part of each feature.
 
 ---
 
-## Images, video, and other media (all phases)
+## 2. Stack constraints
 
-Do **not** generate, download, or fetch images, video, audio, fonts, logos, or any other binary media yourself, and do not pull them from a CDN or stock-media site.
+**Use:**
+- Python; Django 6.x pinned to a supported release; PostgreSQL; Gunicorn.
+- Django templates, forms/formsets, sessions, localization, management commands.
+- Server-side authorization on every protected action. Django owns routing, rendering, validation, authorization, workflow state, and persistence.
+- **htmx** (vendored, pinned, checksummed) for server-driven interaction.
+- **Alpine.js** (vendored, pinned, checksummed) for narrow local UI state only — never persisted data, permissions, calculations, or workflow.
+- **Tailwind standalone CLI** for CSS (no PostCSS/Sass/Node).
+- **Playwright via PyPI + pytest** for browser tests.
 
-When the project needs a media asset, produce a short **asset request** and let the human deliver the file:
-
-- **Filename and path** where it should go (e.g. `HR_System/demo/assets/corvinum-logo.svg`).
-- **Generation prompt** — a precise prompt the human can paste into an image/video generator (subject, style, composition, palette, mood, transparent vs solid background, any text to include or avoid).
-- **Specs** — format, dimensions/aspect ratio, approximate file size, and for video its length and whether audio is needed.
-- **Runbook** — where the asset is used in the code and what happens once the human drops the file in (e.g. "referenced as the `--logo-corvinum` background; no code change needed once `corvinum-logo.svg` exists").
-
-Until the real asset arrives, use a clearly labelled placeholder (a neutral box, inline SVG shape, or solid-colour block with the asset name as alt text) so the layout works. Never leave a broken image link, and never invent a remote URL for an asset that does not exist.
-
----
-
-## Phase 2 — production build (future; these rules apply the moment any dependency is introduced)
-
-### Package manager
-
-- **pnpm only.** Never `npm`, `npx`, or `yarn` — not for installs, not for one-off execution.
-- **Require pnpm v11 or newer**, pinned via Corepack. v11 ships the secure defaults below.
-- **No global installs** (`pnpm add -g`) and **no `pnpm dlx`** of arbitrary packages.
-
-### Required `pnpm-workspace.yaml` hardening
-
-Keep these explicit even where they are pnpm 11 defaults, so the posture is enforced and auditable:
-
-```yaml
-# pnpm-workspace.yaml
-minimumReleaseAge: 1440          # 1-day cooldown; raise to 10080 for one week
-minimumReleaseAgeStrict: true    # fail the install if only a too-new version matches
-blockExoticSubdeps: true         # transitive deps may not resolve via git / tarball / http
-minimumReleaseAgeExclude: []     # ONLY vetted emergency security patches, added per-incident with human sign-off
-```
-
-Rationale: most malicious package versions are detected and pulled within hours, so a 1-day cooldown filters out smash-and-grab attacks. Do not lower `minimumReleaseAge` below 1440 or disable `blockExoticSubdeps` without explicit human approval.
-
-### Install scripts (lifecycle hooks)
-
-- Dependency `preinstall` / `install` / `postinstall` scripts are the primary attack delivery mechanism and stay **disabled by default**.
-- A dependency may run build scripts only after a human reviews why, by adding it to the `allowBuilds` allowlist.
-
-### Adding a dependency
-
-- **No new dependency without explicit human approval.** Prefer the platform, standard library, or a few lines of your own code over a package.
-- When proposing one, state: exact package and version, what it does, why writing it ourselves is worse, its maintenance/popularity signals, and whether it needs build scripts.
-- **Pin exact versions** (no `^` / `~`); rely on the committed lockfile.
-- **Registry sources only** — no git/tarball/`http` direct dependencies.
-- Commit `pnpm-lock.yaml`; install with `pnpm install --frozen-lockfile` by default and in CI.
-- Run `pnpm audit` after dependency changes and report findings.
-
-### CI / actions (when added)
-
-- Pin GitHub Actions to a commit SHA, not a mutable tag.
-- Pin container images to a digest (`@sha256:…`), not `latest`.
+**Never use:** Node/npm/React/Vite/SPA framework; a general browser REST API (JSON endpoints need a demonstrated external-integration need + ADR); CDN-hosted runtime assets.
 
 ---
 
-## Test tooling — runs in a pinned Docker container (isolated)
+## 3. Supply-chain hardening
 
-Headless-browser testing uses **Playwright**, and it runs **inside a pinned Docker container, not on the host.** This contains the riskiest moment — dependency install and any postinstall hook — away from host SSH keys, tokens, browser profiles, and env vars, and it removes the browser-download vector entirely because browsers are pre-baked into the official image.
+The whole point of this stack is a small, auditable dependency surface. Keep it that way.
 
-**Prerequisite:** Docker must be available in the guest (Ubuntu 24.04). Verify it (`docker --version`) and record the result in `ENVIRONMENT.md`. If Docker is not available, **stop and ask** — do not fall back to a host install of Playwright/Puppeteer without explicit approval.
+### 3.1 Python / PyPI
 
-- **Image:** the official Playwright image, **pinned by digest** — `mcr.microsoft.com/playwright:vX.Y.Z-noble@sha256:…` (the `noble` tag matches the Ubuntu 24.04 guest). Browsers are pre-baked; no browser download happens on the host or in the container.
-- **Dev-tooling workspace** (Playwright config, test specs, `package.json` with `@playwright/test` pinned exact, `pnpm-lock.yaml`) lives at the `HR_System/` root — **outside `demo/`**. It is dev tooling only, **not** the production `src/ modules/ clients/` scaffold, which is still not to be built.
-- **Dependency install happens inside the container build** (`pnpm install --frozen-lockfile`, browser download skipped since the image already has them). The install is contained in an image layer and never runs on the host.
-- **The test run is airtight:**
-  - mount `demo/` **read-only**; write screenshots/results to a **separate writable artifacts directory** only;
-  - run with **`--network none`** — the demo is served on localhost inside the container, so no external network is needed at run time;
-  - run as the image's **non-root** user;
-  - pass **no host secrets** — no SSH keys, tokens, or env vars; none are required;
-  - the container is disposable and cannot reach host source or credentials.
-- **The demo stays dependency-free and static.** The container and tooling are never a runtime dependency of `demo/`; what you present and ship is unchanged.
-- Keep Playwright in `devDependencies` only. Record the Playwright version and the **pinned image digest** in `ENVIRONMENT.md`, and the run command in `test_journal.md`.
+- **Hash-pinned, fully-locked dependencies.** Use `uv` (or pip-tools) to produce a lockfile with hashes for the full transitive tree. Install with hash enforcement (`uv pip sync` / `pip install --require-hashes`). A resolved-but-unhashed install is not acceptable.
+- **Exact version pins** for direct dependencies; no floating ranges (`>=`, `^`, `~`) in the committed lock.
+- **Commit the lockfile.** CI installs **only** from the committed lockfile; it never re-resolves freely.
+- **Cooldown.** Do not adopt a package version published less than ~3 days ago without explicit human approval. Newly published versions are the highest-risk window (compromised-maintainer pushes).
+- **Build-script caution.** Treat `setup.py` / build-backend execution as install-time code execution (the PyPI analogue of an npm postinstall). Prefer wheels over sdists; review any dependency that runs significant code at install/build.
+- **Approval gate.** New PyPI package → ADR stating why the standard library / Django can't do it, who maintains the package, and its transitive weight. No silent `uv add`.
+- **Installs happen inside the container build only.** Never `pip install` on a host that holds secrets.
+- **No pipe-to-shell** (`curl … | sh`) for anything, ever. No global installs.
 
-This **supersedes** the earlier browser-download postinstall exception — with the container image, no `allowBuilds` browser-download carve-out is needed. Everything else stands: pnpm only, no global installs, no pipe-to-shell installers, no OS or editor-marketplace installs, no other dependencies without approval.
+### 3.2 Vendored frontend assets (htmx, Alpine)
+
+- Vendored as **local files in the repo**, never CDN-loaded.
+- Pin exact versions; keep a **checked-in SHA-256 manifest**; CI **re-verifies and fails closed** on mismatch.
+- Record source URL, version, license, and retrieval date in a `vendor/MANIFEST.md`.
+- Upgrades happen through a deliberate PR that updates the file and the manifest hash together.
+
+### 3.3 Downloaded binaries (Tailwind standalone CLI, Playwright browsers)
+
+These replaced npm packages but are still supply-chain artifacts — treat them as such.
+
+- **Tailwind standalone CLI:** pin to **v4.3.0**, official Tailwind Labs release asset `tailwindcss-linux-x64`, SHA-256 `73f0e5459054e5cfaa8ab6f3b940f3fbe0f13cc7fd83bc24e7c655033c203400` from that release's `sha256sums.txt`. CI/Docker fetches it from the pinned release URL, verifies SHA-256 **before executing**, and **fails closed** on mismatch. Build CSS in a build stage; **exclude the binary from the runtime image**. Permit a `TAILWIND_BIN` override for local convenience only; never depend on a developer's workstation install in CI or Dokku.
+- **Playwright browsers:** installed via `python -m playwright install` in the **test environment only**. Never present in the production runtime image. Pin the Playwright version in the lockfile.
+
+### 3.4 Containers & CI
+
+- **Base images pinned by digest** (`@sha256:…`), not tags like `latest` or `6`.
+- **GitHub Actions pinned by commit SHA**, not by floating tag.
+- Build inside the container; no host secrets in the build context.
+- CI gates: ruff/format, pyright/type-check, pytest, Playwright smoke, migration consistency, **dependency hash verification**, **vendored-asset checksum verification**, secret scan, production image builds **without Node/npm**.
+
+### 3.5 Secrets & messaging providers (Twilio, Telegram, SMTP, DB)
+
+- All credentials via environment / approved secret manager. **No committed `.env`** with real values (`.env.example` with placeholders only).
+- **Verify inbound webhooks.** Twilio: validate the `X-Twilio-Signature`. Telegram: set and check a secret webhook token (and restrict to Telegram's IP ranges where feasible). Reject unverified callbacks.
+- **Least privilege** provider tokens; separate test vs production credentials; rotate on exposure.
+- Prefer calling provider **REST APIs through one pinned HTTP client** over adding large vendor SDKs (see the messaging spec). Any SDK adopted goes through §3.1's approval + hash-pin + cooldown.
 
 ---
 
-## Project journals — living docs you must keep current
+## 4. Build & run discipline
 
-Maintain four markdown journals at the **`HR_System/` root**. These are the one allowed exception to the "work only in `demo/`" rule. Create them if they don't exist, and update the relevant one as part of every change — not as an afterthought. They are how context survives between sessions and between different agents.
-
-- **`BUILD_JOURNAL.md`** — a running, dated log of what was built and why. Each entry: date, what changed, decisions made and their rationale, anything deferred, and the next step. Append new entries; don't rewrite history.
-- **`ENVIRONMENT.md`** — the development environment: OS, available runtimes and tools (e.g. `python3` for the static server, the browser used), versions, and explicitly what is *not* available. Record what you discover and keep it accurate. If a tool you need is missing, note it here and ask — do not install it.
-- **`deployment_journal.md`** — how the current build is deployed/served right now. For the demo this is the static-serve method (e.g. `python3 -m http.server` from `demo/`, or opening `index.html`). Update it whenever the deploy method changes.
-- **`test_journal.md`** — how the build is tested locally: the steps you run, the manual checklist (from the build spec's test plan), what passed or failed, and any known issues. Update it each time you test.
-
-Treat "journals updated" as part of done — when a unit of work is finished, the relevant journals should already reflect it.
+- One domain / work package per PR where practical; no unrelated refactors bundled with feature work.
+- Migrations reviewed for data-loss risk; back up before risky migrations.
+- Tests required: domain/service, view, form, template/htmx-fragment, and authorization + audit where applicable.
+- Update documentation and the relevant journal (§8) when behavior changes.
+- Idempotency on any action where a repeated submit could duplicate an important effect (room assignment, stock movement, approval, period lock, message send).
 
 ---
 
-## How to work here
+## 5. Security, data & privacy
 
-- Keep all current work inside `HR_System/demo/`. Do not touch or create anything elsewhere in `HR_System/` yet — the only exception is the project journals above, which live at the `HR_System/` root.
-- Match the design direction described in the build spec; write interface copy in plain, active-voice, sentence case ("Approve hire", "Send pickup notice").
-- Make small, reviewable changes and explain what each screen/file does.
+- **RBAC: four roles** (Recruiter, Coordinator, Manager/Admin, Observer). **Broad internal read visibility; actions gated by role.** No arbitrary per-user permission matrices in MVP.
+- **Audit old + new values** for every sensitive create/change — this is the safety net for the broad-read model. Audit is append-only to ordinary users.
+- **No real worker PII** until the real-data gate passes (signed DPA, approved hosting, reviewed permissions + sensitive-field visibility, documented blacklist/feedback retention, tested backups, passed security review). Use fictional data with Cyrillic / Central-Asian / Vietnamese names until then (also validates Unicode).
+- **Decimal money, never floats.** (The Django spike already found one truthiness/parse bug that silently zeroed amounts — parse with explicit `is not None` checks, not truthiness.)
+- HU/SK/UA via Django localization; **no English UI**. Every user-facing string goes through i18n.
 
-### Ask questions; don't guess
+---
 
-- When anything about the design or behaviour is unclear or underspecified — layout, visual direction, copy, a screen's contents, an interaction, edge cases, scope — **ask the human before building it.** Ask as many questions as you need; batch them so they can be answered in one pass. A clarifying question is always preferred over a confident guess that has to be redone.
-- Surface ambiguities early, while they are cheap to resolve, not after a screen has been built around an assumption.
+## 6. Mobile (coordinator field mode)
 
-### Design references in the repo (follow these)
+- htmx full-page-fallback first: every htmx interaction must also work as a normal request if the fragment swap fails.
+- Touch targets ≥ 44px; verified at 375×667 in a Playwright mobile project.
+- **Open caveat:** the spike proved a mobile list/filter/detail flow, **not** a rich field workflow. Before committing field mode to htmx-only, prove it on a real device. If it strains, raise an ADR for a *narrowly scoped* enhancement — never a SPA, never npm.
 
-- **Design guidance:** the official `frontend-design` skill is in the repo at `demo/frontend-design/SKILL.md`. Follow it for aesthetic direction — define a token system first, spend boldness on one signature element, and self-critique against generic SaaS-dashboard defaults before coding.
-- **Typography is decided** in `typography_and_fonts.md` (in `demo/`). Use **Option A** by default: system-font stacks via the given CSS variables, with **no remote stylesheets and no downloaded font files**. Only switch to Option B (self-hosted faces) if the human has delivered font files into `demo/assets/fonts/`. Do not load fonts from Google Fonts or any CDN.
+---
 
-### Request more skills when you need them
+## 7. Media & secret request rule
 
-- Design and build guidance can be supplied as **skill files** (a `SKILL.md` — portable markdown instructions).
-- If you reach a part you're unsure how to design or build well and a skill would help, **ask the human to provide the relevant skill** — name what you need (e.g. "a skill for accessible data tables"). The human fetches and delivers it, the same way they deliver media assets.
-- Do **not** install skills via a plugin or marketplace command yourself — that is prohibited by the security rules above. Only use skill markdown the human has placed in the repo.
+The agent **never fetches binaries, fonts, images, or credentials, and never signs up for provider accounts.** Instead it writes:
+- an **asset/secret request** listing exactly what's needed (filename/binary + version + SHA-256 to verify, or which env var + which provider), and
+- a **runbook** describing where the human places it and how the build consumes and verifies it.
 
-## When in doubt
+A human supplies the artifact; the agent then verifies it (checksum / presence) before use. This keeps every externally-sourced byte under human control.
 
-Stop and ask before installing, adding, or fetching anything that executes code. A blocked task is recoverable; a compromised dev or CI environment is not.
+Design references: the demo for visual language, plus `frontend-design/SKILL.md` and `typography_and_fonts.md`.
+
+---
+
+## 8. Documentation / living journals
+
+Keep these current at the repository root:
+- `BUILD_JOURNAL.md` — what was built, decisions, gotchas.
+- `ENVIRONMENT.md` — tools, versions, pins, how to set up locally.
+- `deployment_journal.md` — Dokku/staging/production steps and incidents.
+- `test_journal.md` — what's tested, gaps, last full-run results.
+- ADRs under `docs/adr/` for every architectural decision in the plan's Phase-0 list.
+
+---
+
+## 9. Operating-system & editor packages (always)
+
+- Do not install OS packages, AUR packages, or editor/marketplace extensions to make the build work. These are active supply-chain targets. If something seems to need one, **stop and ask**.
+
+---
+
+## 10. Ask / skills
+
+- When a requirement is unclear or a decision is missing, **ask or write a decision note** rather than guessing — especially for statuses, permissions, financial formulas, blacklist rules, legal basis, retention, or intake questions.
+- If a relevant Anthropic **skill** would help (e.g. document generation), request it rather than improvising.
+
+---
+
+## 11. Hard "never do" list
+
+- Never add Node/npm/React/Vite/`node_modules`.
+- Never load runtime assets from a CDN.
+- Never install an unpinned, unhashed, or unapproved dependency.
+- Never run an externally downloaded binary without verifying its SHA-256 first.
+- Never commit secrets or a populated `.env`.
+- Never act on an unverified inbound webhook.
+- Never put real worker PII in the system before the real-data gate.
+- Never resurrect CorvinumEU, shifts, fleet, sick leave, the worker portal, or Pohoda in a PR.

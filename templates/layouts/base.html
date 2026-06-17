@@ -1,0 +1,35 @@
+{% load static i18n %}
+<!doctype html>
+<html lang="{{ LANGUAGE_CODE|default:'sk' }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% trans "Jober prevádzka" %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'dist/css/app.css' %}">
+    <script defer src="{% static 'vendor/htmx.min.js' %}"></script>
+    <script defer src="{% static 'vendor/alpine.min.js' %}"></script>
+    <script defer src="{% static 'src/js/app.js' %}"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#obsah">{% trans "Preskočiť na obsah" %}</a>
+    <header class="app-header" x-data="{ open: false }">
+      <div class="brand-lockup" aria-label="{% trans 'Jober' %}">
+        <span class="brand-mark">JB</span>
+        <span class="brand-name">Jober</span>
+      </div>
+      <button class="icon-button mobile-only" type="button" x-on:click="open = !open" aria-controls="primary-nav" x-bind:aria-expanded="open.toString()">
+        <span class="sr-only">{% trans "Otvoriť navigáciu" %}</span>
+        <span aria-hidden="true">☰</span>
+      </button>
+      <nav id="primary-nav" class="folder-tabs" x-bind:data-open="open">
+        <a class="folder-tab is-active" href="{% url 'dashboard' %}">{% trans "Prehľad" %}</a>
+        <a class="folder-tab" href="#projekty">{% trans "Projekty" %}</a>
+        <a class="folder-tab" href="#teren">{% trans "Terén" %}</a>
+        <a class="folder-tab" href="#spravy">{% trans "Správy" %}</a>
+      </nav>
+    </header>
+    <main id="obsah" class="app-shell">
+      {% block content %}{% endblock %}
+    </main>
+  </body>
+</html>

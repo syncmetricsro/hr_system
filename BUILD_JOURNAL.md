@@ -1,5 +1,71 @@
 # Build Journal
 
+## 2026-06-17
+
+Started Phase 0 for the real Jober production app.
+
+What changed:
+- Removed tracked Node/PNPM/JavaScript Playwright artifacts from the production tree: `package.json`, `pnpm-lock.yaml`, `pnpm-workspace.yaml`, `Dockerfile.playwright`, `playwright.config.js`, and the old JS Playwright spec.
+- Added an npm-free Django skeleton: `manage.py`, `config/`, `apps/core/`, templates, static source files, and a health endpoint.
+- Added a Jober-only server-rendered shell with folder-tab navigation, Slovak UI strings, local asset references, and a mobile coordinator htmx interaction that also works as a normal full-page request.
+- Vendored htmx `2.0.4` and Alpine `3.15.12` as local static assets with licenses and SHA-256 checksums.
+- Added supply-chain scripts:
+  - `scripts/check_no_node_artifacts.py`
+  - `scripts/verify_vendor_assets.py`
+  - `scripts/build_tailwind.sh`
+- Added the Tailwind standalone CLI v4.3.0 provenance manifest and local convenience request.
+- Added Phase 0 product docs: source register, open decisions, demo inventory, removed-feature inventory, demo-to-Django map, risk/blocker list, and Dokku staging skeleton.
+- Added the required Phase 0 ADR set for scope, architecture, htmx/Alpine, Tailwind, npm exclusion, Python Playwright, RBAC, demo reuse, project assignment, and Pohoda exclusion.
+
+Decisions made:
+- The old static demo stays in the repo as a design reference, but the new production skeleton does not import Corvinum, shared-client structure, shifts, sick leave, worker portal, or Pohoda.
+- Docker is intentionally not completed in this slice because base-image digests must come from trusted/human-approved sources before execution or commit.
+- Python dependencies were not installed on the host. The hash-pinned lock remains a Phase 0 blocker until generated in an approved container/CI workflow.
+
+Next step:
+- Resolve base-image digests and the Python dependency lock, then add the Docker/CI path and run the Django shell against PostgreSQL.
+
+Follow-up:
+- Verified the local Tailwind standalone CLI at `/home/disane/.local/bin/tailwindcss`.
+- Confirmed it reports v4.3.0 and observed SHA-256 `73f0e5459054e5cfaa8ab6f3b940f3fbe0f13cc7fd83bc24e7c655033c203400`.
+- Ran `scripts/build_tailwind.sh`; it built `static/dist/css/app.css` successfully.
+- Updated the base template to load the compiled CSS output.
+
+Infrastructure follow-up:
+- Resolved Python base image digest: `python@sha256:d764629ce0ddd8c71fd371e9901efb324a95789d2315a47db7e4d27e78f1b0e9`.
+- Resolved PostgreSQL test image digest: `postgres@sha256:2203e6282d9e7de7c24d7da234e2a744fb325df366a3fd8ed940e8abbee39527`.
+- Added `requirements/runtime.in`, `requirements/test.in`, and generated hash-pinned `requirements/runtime.lock` / `requirements/test.lock` inside the digest-pinned Python container.
+- Added `Dockerfile`, `Procfile`, and `pytest.ini`.
+- Built `jober-platform:phase0` successfully; Docker build installs runtime dependencies from hash-pinned wheels and runs `collectstatic`.
+- Verified Django migrations against a temporary digest-pinned PostgreSQL 17 container and checked `/healthz/` from the running image.
+- Added Django smoke tests in `tests/test_shell.py`.
+- Tried Playwright-Python browser smoke; package install and Chromium download worked, but browser launch failed in the slim Python image because `libglib-2.0.so.0` is missing. Documented the decision in `docs/product/playwright-test-environment-note.md`.
+- Resolved the browser-test blocker by pinning the official Playwright Python test image:
+  `mcr.microsoft.com/playwright/python:v1.60.0-noble@sha256:8ff591d613b01c884cc488339ed4318b4513eaf0c57a164a878ba49e70e3f384`.
+- Confirmed the image has no `node`, `npm`, `pnpm`, or `yarn` on `PATH`.
+- Added `scripts/playwright_smoke.sh` and wired it into `scripts/ci_phase0.sh`.
+- Added `Dockerfile.playwright-python` to build a test-only runner image that installs `requirements/test.lock` with hash enforcement and runs as a non-root user.
+- Playwright browser smoke now runs app, PostgreSQL, and test runner on an internal-only Docker network. The browser reaches the app at `http://jober-phase0-app:8000`.
+- Playwright browser smoke passed against a temporary digest-pinned PostgreSQL 17 container and the built production app image.
+
+Local development database follow-up:
+- Added `scripts/dev_db.sh` for workstation PostgreSQL without host installation.
+- The script uses digest-pinned PostgreSQL 17, an internal Docker network, a named Docker volume, a containerized `psql` helper, and a generated gitignored `.env.dev-db`.
+- Verification showed a loopback DB port is not reachable from the host when this Docker daemon attaches the container only to an internal network, so the helper intentionally keeps PostgreSQL off the host network.
+- Added `docs/deployment/local-dev-db.md`.
+- Updated the open-decision register to keep recruiter/coordinator read scopes configurable until Jober answers the GDPR visibility question.
+
+Tailwind provenance follow-up:
+- Confirmed the exact workstation version is `tailwindcss v4.3.0`.
+- Confirmed official Tailwind Labs release `https://github.com/tailwindlabs/tailwindcss/releases/tag/v4.3.0` exists.
+- Pulled the official release `sha256sums.txt` and found the Linux x64 line:
+  `73f0e5459054e5cfaa8ab6f3b940f3fbe0f13cc7fd83bc24e7c655033c203400  ./tailwindcss-linux-x64`.
+- Confirmed the existing local binary matches the official checksum.
+- Added `vendor/tailwind/tailwindcss-v4.3.0-linux-x64.sha256`.
+- Added `scripts/fetch_tailwind.py`, `scripts/check_production_image.sh`, and `scripts/ci_phase0.sh`.
+- Updated the Dockerfile so the `tailwind` build stage fetches the pinned official binary, verifies the official checksum before execution, builds CSS, and excludes the binary from the final runtime image.
+- Added ADR 0013 documenting why the expected checksum comes from the vendor's `sha256sums.txt`, not from a self-derived local hash.
+
 ## 2026-06-13
 
 Built the v1 static HR operations demo inside `demo/`.

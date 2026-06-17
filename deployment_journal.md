@@ -1,5 +1,18 @@
 # Deployment Journal
 
+## 2026-06-17
+
+Phase 0 production deployment direction:
+- The static demo deployment notes below are historical and apply only to the old design reference.
+- Production target is a Jober-only Django app deployed to Dokku with PostgreSQL.
+- Added `docs/deployment/dokku-staging.md` as the staging shell/runbook.
+- No Dockerfile was added yet because `AGENTS.md` requires base images pinned by digest, and those digests have not been resolved from a trusted source.
+- No Tailwind binary was added; `vendor/tailwind/REQUEST.md` records the human-supplied artifact and checksum requirement.
+- No Python dependency install was run on the host.
+
+Current blocker:
+- Generate the hash-pinned Python dependency lock and choose digest-pinned base images inside an approved container/CI path before staging can run.
+
 ## 2026-06-13
 
 Current deployment method:

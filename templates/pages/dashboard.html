@@ -1,0 +1,54 @@
+{% extends "layouts/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Prevádzkový prehľad" %} · Jober{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <p class="eyebrow">{% trans "Pilotný shell" %}</p>
+  <h1>{% trans "Prevádzkový prehľad" %}</h1>
+  <p>{% trans "Prvá obrazovka overuje navigáciu, lokálne skripty a mobilnú prácu koordinátora bez zavádzania finálnych obchodných modelov." %}</p>
+</section>
+
+<section class="dashboard-grid" aria-label="{% trans 'Prevádzkové súhrny' %}">
+  <article class="metric-card">
+    <span>{% trans "Aktívne projekty" %}</span>
+    <strong>8</strong>
+  </article>
+  <article class="metric-card">
+    <span>{% trans "Otvorené pripravenosti" %}</span>
+    <strong>14</strong>
+  </article>
+  <article class="metric-card">
+    <span>{% trans "Mobilné úlohy" %}</span>
+    <strong>6</strong>
+  </article>
+</section>
+
+<section id="teren" class="two-column">
+  <div class="panel">
+    <div class="panel-head">
+      <div>
+        <p class="eyebrow">{% trans "Koordinátor" %}</p>
+        <h2>{% trans "Terénny rad" %}</h2>
+      </div>
+      <a
+        class="button button-secondary"
+        href="{% url 'field_queue' %}"
+        hx-get="{% url 'field_queue' %}"
+        hx-target="#field-panel"
+        hx-swap="outerHTML"
+      >
+        {% trans "Načítať rad" %}
+      </a>
+    </div>
+    {% include "partials/field_queue.html" %}
+  </div>
+
+  <aside class="panel">
+    <p class="eyebrow">{% trans "Pravidlo Phase 0" %}</p>
+    <h2>{% trans "Bez finálnych dát" %}</h2>
+    <p>{% trans "Tento shell používa iba fiktívne hodnoty. Skutočné osobné údaje prídu až po právnej a bezpečnostnej bráne." %}</p>
+  </aside>
+</section>
+{% endblock %}
