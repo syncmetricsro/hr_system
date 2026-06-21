@@ -1,8 +1,30 @@
 # Build Journal
 
-## 2026-06-17
+## 2026-06-21
 
-Started Phase 0 for the real Jober production app.
+Phase 1 — foundation slice: authentication, four-role RBAC, localization, append-only audit.
+
+What changed:
+- Added `apps/accounts` with a custom `User` (email login, custom manager, removed `username`) carrying a single fixed `role` field (`Role`: recruiter/coordinator/manager/observer). Set `AUTH_USER_MODEL = "accounts.User"` before any business migration.
+- Added action-gated RBAC in `apps/accounts/permissions.py`: an `Action` enum, an `ACTION_ROLES` map derived literally from plan §8.2–8.5 (with the inverse `ROLE_ACTIONS`), `can()`, a `require_action()` view decorator (redirect anonymous, 403 authenticated-but-denied), and a `{% can %}` template tag so hidden buttons are backed by real server checks.
+- Kept reads broad by default behind a single `BROAD_INTERNAL_READS` switch (env `JOBER_BROAD_INTERNAL_READS`) so the still-open GDPR recruiter/coordinator read-scope decision is not hardcoded (open-decisions.md).
+- Added `apps/audit`: append-only `AuditEvent` (immutable `save()` on update, `delete()` raises) and `record_event()` as the single write path; wired into login/logout. Read-only admin.
+- Replaced the static login view with real email/password auth (`apps/accounts/views.py`), gated `dashboard`/`field_queue` with `login_required`, added a logout button and a language switcher to the base template.
+- Wrapped app routes in `i18n_patterns` and added the `set_language` route; `healthz/` stays unprefixed.
+- Added `seed_demo`/`reset_demo` management commands creating one fictional user per role on the `demo.jober.test` domain (no real PII; asserted).
+- Added `docs/permissions/permission-matrix.md` (mirrors `ACTION_ROLES`) and ADR 0015 (custom user model).
+- Generated `accounts`/`audit` initial migrations inside the digest-pinned image.
+- Made `SESSION_COOKIE_SECURE`/`CSRF_COOKIE_SECURE` env-overridable (secure by default) so the HTTP-only internal smoke network can exercise authenticated flows; `playwright_smoke.sh` now seeds demo users and the smoke suite logs in.
+
+Decisions made:
+- Custom user model introduced now while the DB held only contrib migrations — the last cheap moment (ADR 0015).
+- No business modules (Person, intake, trials) in this slice; the permission matrix is authored ahead so future views adopt the correct gate from day one.
+
+Deferred:
+- Translation catalogs (`.po`/`.mo`) are not generated/compiled in this slice: `msgfmt`/`xgettext` are absent on the host and gettext is not in the hardened image, and all source UI strings are already Slovak (the default locale), so non-default languages fall back to Slovak msgids. The i18n machinery (prefixes, `set_language`, switcher) is fully wired and tested. Generating + compiling catalogs is a follow-up once gettext tooling is approved in the toolchain.
+
+Next step:
+- Phase 1 business spine: project administration and the Person model + lifecycle-status state machine, then hard-gated intake.
 
 What changed:
 - Removed tracked Node/PNPM/JavaScript Playwright artifacts from the production tree: `package.json`, `pnpm-lock.yaml`, `pnpm-workspace.yaml`, `Dockerfile.playwright`, `playwright.config.js`, and the old JS Playwright spec.

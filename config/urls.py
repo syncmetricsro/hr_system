@@ -1,10 +1,21 @@
-from django.urls import path
+from django.conf.urls.i18n import i18n_patterns
+from django.contrib import admin
+from django.urls import include, path
 
+from apps.accounts import views as account_views
 from apps.core import views
 
+# Routes that must not be language-prefixed.
 urlpatterns = [
-    path("", views.dashboard, name="dashboard"),
-    path("prihlasenie/", views.login_page, name="login"),
-    path("teren/rad/", views.field_queue, name="field_queue"),
     path("healthz/", views.healthz, name="healthz"),
+    path("i18n/", include("django.conf.urls.i18n")),
 ]
+
+# Language-prefixed application routes (LocaleMiddleware sets the active language).
+urlpatterns += i18n_patterns(
+    path("admin/", admin.site.urls),
+    path("", views.dashboard, name="dashboard"),
+    path("prihlasenie/", account_views.login_page, name="login"),
+    path("odhlasenie/", account_views.logout_view, name="logout"),
+    path("teren/rad/", views.field_queue, name="field_queue"),
+)

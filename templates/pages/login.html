@@ -7,6 +7,9 @@
 <section class="login-panel">
   <p class="eyebrow">{% trans "Interný systém" %}</p>
   <h1>{% trans "Prihlásenie tímu Jober" %}</h1>
+  {% if error %}
+    <p class="form-error" role="alert">{{ error }}</p>
+  {% endif %}
   <form class="stack" method="post" action=".">
     {% csrf_token %}
     <label>

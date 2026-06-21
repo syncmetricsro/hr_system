@@ -1,4 +1,4 @@
-{% load static i18n %}
+{% load static i18n rbac %}
 <!doctype html>
 <html lang="{{ LANGUAGE_CODE|default:'sk' }}">
   <head>
@@ -27,6 +27,27 @@
         <a class="folder-tab" href="#teren">{% trans "Terén" %}</a>
         <a class="folder-tab" href="#spravy">{% trans "Správy" %}</a>
       </nav>
+      <div class="header-account">
+        {% get_current_language as CURRENT_LANGUAGE %}
+        <form class="language-switch" action="{% url 'set_language' %}" method="post">
+          {% csrf_token %}
+          <input type="hidden" name="next" value="{{ request.path }}">
+          <label class="sr-only" for="language-select">{% trans "Jazyk" %}</label>
+          <select id="language-select" name="language" onchange="this.form.submit()">
+            {% get_available_languages as LANGUAGES %}
+            {% for code, name in LANGUAGES %}
+              <option value="{{ code }}"{% if code == CURRENT_LANGUAGE %} selected{% endif %}>{{ name }}</option>
+            {% endfor %}
+          </select>
+        </form>
+        {% if user.is_authenticated %}
+          <span class="account-role" aria-label="{% trans 'Rola' %}">{{ user.get_role_display }}</span>
+          <form class="logout-form" action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button class="icon-button" type="submit">{% trans "Odhlásiť sa" %}</button>
+          </form>
+        {% endif %}
+      </div>
     </header>
     <main id="obsah" class="app-shell">
       {% block content %}{% endblock %}

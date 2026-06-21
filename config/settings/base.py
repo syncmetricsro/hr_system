@@ -32,8 +32,12 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "apps.accounts",
+    "apps.audit",
     "apps.core",
 ]
+
+AUTH_USER_MODEL = "accounts.User"
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -101,6 +105,15 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+LOGIN_URL = "login"
+LOGIN_REDIRECT_URL = "dashboard"
+LOGOUT_REDIRECT_URL = "login"
+
+# Single switch for the still-open GDPR recruiter/coordinator read-scope
+# decision. Defaults to broad internal reads (plan §8.1 / ADR 0008); do not
+# hardcode a narrower split until Jober confirms (docs/product/open-decisions.md).
+BROAD_INTERNAL_READS = env_bool("JOBER_BROAD_INTERNAL_READS", True)
 
 CSRF_COOKIE_HTTPONLY = True
 SESSION_COOKIE_HTTPONLY = True

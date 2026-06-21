@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, HttpResponse
 from django.template.response import TemplateResponse
 
@@ -30,10 +31,7 @@ def healthz(_request: HttpRequest) -> HttpResponse:
     return HttpResponse("ok", content_type="text/plain")
 
 
-def login_page(request: HttpRequest) -> TemplateResponse:
-    return TemplateResponse(request, "pages/login.html")
-
-
+@login_required
 def dashboard(request: HttpRequest) -> TemplateResponse:
     return TemplateResponse(
         request,
@@ -45,6 +43,7 @@ def dashboard(request: HttpRequest) -> TemplateResponse:
     )
 
 
+@login_required
 def field_queue(request: HttpRequest) -> TemplateResponse:
     template = "partials/field_queue.html"
     context = {"projects": PROJECT_CARDS, "field_panel_open": True}

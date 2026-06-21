@@ -1,10 +1,10 @@
 # Phase 0 Risk And Blocker List
 
-Last updated: 2026-06-17
+Last updated: 2026-06-21
 
 ## Active workstation blockers
 
-- None.
+- Translation catalogs (`.po`/`.mo`) are not generated: `msgfmt`/`xgettext` are not installed on the host and gettext is not in the hardened image. i18n routing/switcher are wired and tested; non-default languages fall back to the Slovak source strings. Generating + compiling catalogs needs gettext approved in the toolchain (defer until non-Slovak copy is required).
 
 ## Server deployment pending
 
@@ -26,4 +26,4 @@ Last updated: 2026-06-17
 
 ## Recommended next Phase 1 task
 
-After Phase 0 infrastructure is green, start with authentication, four-role authorization, localization, and append-only audit conventions before any business module.
+The foundation slice (authentication, four-role action-gated RBAC, localization wiring, append-only audit, fictional seed/reset) is done and green (see 2026-06-21 build/test journal entries). Next: the Phase 1 business spine — project administration and the Person model + lifecycle-status state machine — then hard-gated recruiter intake. Each new view must adopt `require_action`/`{% can %}` and record sensitive changes via `record_event`, and must keep recruiter/coordinator read scope configurable (do not hardcode the GDPR split).

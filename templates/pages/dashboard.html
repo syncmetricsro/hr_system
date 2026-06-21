@@ -1,5 +1,5 @@
 {% extends "layouts/base.html" %}
-{% load i18n %}
+{% load i18n rbac %}
 
 {% block title %}{% trans "Prevádzkový prehľad" %} · Jober{% endblock %}
 
@@ -8,6 +8,10 @@
   <p class="eyebrow">{% trans "Pilotný shell" %}</p>
   <h1>{% trans "Prevádzkový prehľad" %}</h1>
   <p>{% trans "Prvá obrazovka overuje navigáciu, lokálne skripty a mobilnú prácu koordinátora bez zavádzania finálnych obchodných modelov." %}</p>
+  {% can 'project.manage' as may_manage_projects %}
+  {% if may_manage_projects %}
+    <a class="button button-primary" href="#projekty">{% trans "Spravovať projekty" %}</a>
+  {% endif %}
 </section>
 
 <section class="dashboard-grid" aria-label="{% trans 'Prevádzkové súhrny' %}">
