@@ -44,3 +44,13 @@ def test_dashboard_requires_login(page):
     # Hitting the app root unauthenticated must bounce to the login screen.
     page.goto(f"{base_url()}/")
     page.get_by_role("heading", name="Prihlásenie tímu Jober").wait_for()
+
+
+def test_static_css_is_served(page):
+    # Regression: the production image must serve collected static files (via
+    # WhiteNoise) with the correct content type, not the HTML 404 page.
+    page.goto(f"{base_url()}/prihlasenie/")
+    href = page.locator("link[rel='stylesheet']").first.get_attribute("href")
+    response = page.request.get(f"{base_url()}{href}")
+    assert response.status == 200
+    assert "text/css" in response.headers["content-type"]

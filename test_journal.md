@@ -16,6 +16,14 @@ Checks run:
 - `scripts/playwright_smoke.sh` (APP_IMAGE=jober-platform:phase1) — **4 passed**: it now seeds demo users, the mobile shell logs in then loads the field queue, the health endpoint returns `ok`, the login page renders, and the app root bounces unauthenticated visitors to login. App container ran with `DJANGO_SESSION_COOKIE_SECURE=0`/`DJANGO_CSRF_COOKIE_SECURE=0` because the internal smoke network is HTTP-only.
 - Verified seed data is fictional only (`@demo.jober.test`); no real PII.
 
+Follow-up (2026-06-21) — static serving fix:
+- Regenerated `runtime.lock` and `test.lock` in the digest-pinned Python image with `whitenoise==6.12.0` (transitive `certifi`/`greenlet` pinned back so the diff is WhiteNoise-only).
+- Rebuilt `jober-platform:phase1` and `jober-platform-playwright:phase1`.
+- `ruff check` clean; **unit tests 32 passed** (no warnings after moving WhiteNoise to production-only settings).
+- **Playwright smoke 5 passed**, including the new `test_static_css_is_served` (stylesheet returns `200 text/css`).
+- `check_no_node_artifacts.py` and `check_production_image.sh jober-platform:phase1` passed.
+- Verified against the live local stack: `app.css` serves `200 text/css` with a fingerprinted (manifest) filename.
+
 Expected current gaps:
 - Translation catalogs not compiled (gettext tooling deferred); non-default languages fall back to Slovak source strings.
 - Dokku staging still pending external server/domain/DB-service details.

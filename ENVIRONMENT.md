@@ -1,6 +1,12 @@
 # Environment
 
-Last updated: 2026-06-17
+Last updated: 2026-06-21
+
+Phase 1 additions:
+- New runtime dependency: `whitenoise==6.12.0`, serving collected static files under gunicorn (production settings only; ADR 0016). Hash-pinned in `runtime.lock` and `test.lock`.
+- Custom user model (`AUTH_USER_MODEL = accounts.User`); deploys must run `accounts`/`audit` migrations.
+- Deploy-time env vars: `JOBER_BROAD_INTERNAL_READS` (default on); `DJANGO_SESSION_COOKIE_SECURE` / `DJANGO_CSRF_COOKIE_SECURE` (default secure — only set to `0` on the HTTP-only smoke network, never on staging/production).
+- Local manual testing runs the production image over HTTP with those two flags + `DJANGO_SECURE_SSL_REDIRECT` set to `0`, app published on `:8000`, against a Postgres container on a shared (non-internal) Docker network. Seed with `manage.py seed_demo` (fictional `@demo.jober.test` users).
 
 System:
 - OS: Ubuntu 24.04.4 LTS in VirtualBox, Linux kernel `6.17.0-35-generic`.

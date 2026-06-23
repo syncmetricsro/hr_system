@@ -23,6 +23,12 @@ Decisions made:
 Deferred:
 - Translation catalogs (`.po`/`.mo`) are not generated/compiled in this slice: `msgfmt`/`xgettext` are absent on the host and gettext is not in the hardened image, and all source UI strings are already Slovak (the default locale), so non-default languages fall back to Slovak msgids. The i18n machinery (prefixes, `set_language`, switcher) is fully wired and tested. Generating + compiling catalogs is a follow-up once gettext tooling is approved in the toolchain.
 
+Follow-up (2026-06-21) — static serving fix:
+- Manual browser testing surfaced an unstyled shell: the production image (gunicorn) served no static files, so CSS/htmx/Alpine/app.js all returned the HTML 404 page (`text/html`, blocked by nosniff). Phase 0 smoke never requested an asset, so it was hidden.
+- Adopted WhiteNoise 6.12.0 (ADR 0016): `whitenoise.middleware.WhiteNoiseMiddleware` after SecurityMiddleware + `CompressedManifestStaticFilesStorage`, enabled in production settings only (local runserver/tests don't need it). Hash-pinned in `runtime.lock` and `test.lock`; pinned `certifi`/`greenlet` back to vetted versions so the lock diff is WhiteNoise-only (no cooldown-window pulls).
+- Made `SESSION_COOKIE_SECURE`/`CSRF_COOKIE_SECURE` env-overridable (secure by default) so the HTTP-only smoke network can run authenticated flows.
+- Added a Playwright regression (`test_static_css_is_served`) asserting the stylesheet serves `200 text/css`. Verified the live image serves `app.css` fingerprinted as `200 text/css`.
+
 Next step:
 - Phase 1 business spine: project administration and the Person model + lifecycle-status state machine, then hard-gated intake.
 
