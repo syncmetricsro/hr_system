@@ -14,7 +14,7 @@ Last updated: 2026-06-21
 | HTTPS + secure cookies on real host | ⚠️ Open | `SECURE_SSL_REDIRECT`/`SESSION_COOKIE_SECURE`/`CSRF_COOKIE_SECURE` default secure; **must not** set the `DJANGO_*_=0` overrides on staging/prod (those exist only for the HTTP smoke network). Verify once Dokku TLS is live. |
 | Dokku staging deploy | ⚠️ Open | Blocked on external staging app/domain/PostgreSQL service names. Runbook: `docs/deployment/dokku-staging.md`. |
 | DB migrations on deploy | ✅ Ready | `accounts`/`audit` initial migrations run cleanly on pinned PostgreSQL 17. |
-| Initial admin user | ⚠️ Open | No production superuser path yet. `seed_demo` is **fictional/staging only** — never run against a real-data DB. Need a documented `createsuperuser` step (custom email user) for go-live. |
+| Initial admin user | ✅ Ready (2026-06-21) | `manage.py ensure_superuser` — idempotent, env-driven (`DJANGO_SUPERUSER_EMAIL`/`_PASSWORD`), audited; wired into the Dokku release steps (`docs/deployment/dokku-staging.md`). `seed_demo` remains fictional/staging only — never against a real-data DB. |
 | Secret management | ⚠️ Open | `DJANGO_SECRET_KEY` and DB creds via env; confirm Dokku secret storage and rotation before prod. |
 | DB backups / restore | ⚠️ Open | Not yet defined for the Dokku PostgreSQL service. |
 

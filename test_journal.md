@@ -24,6 +24,10 @@ Follow-up (2026-06-21) — static serving fix:
 - `check_no_node_artifacts.py` and `check_production_image.sh jober-platform:phase1` passed.
 - Verified against the live local stack: `app.css` serves `200 text/css` with a fingerprinted (manifest) filename.
 
+Follow-up (2026-06-21) — production admin path:
+- Added `tests/test_ensure_superuser.py` (create, idempotent re-run, repair of a demoted account, error when env unset, `--skip-if-unset`). **Full unit suite 37 passed**; ruff clean.
+- Verified `ensure_superuser` in the rebuilt production image: create → "Vytvorený superuser", re-run → "už existuje a je v poriadku", no-env `--skip-if-unset` → skipped cleanly.
+
 Expected current gaps:
 - Translation catalogs not compiled (gettext tooling deferred); non-default languages fall back to Slovak source strings.
 - Dokku staging still pending external server/domain/DB-service details.

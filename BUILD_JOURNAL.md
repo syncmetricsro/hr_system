@@ -29,6 +29,11 @@ Follow-up (2026-06-21) — static serving fix:
 - Made `SESSION_COOKIE_SECURE`/`CSRF_COOKIE_SECURE` env-overridable (secure by default) so the HTTP-only smoke network can run authenticated flows.
 - Added a Playwright regression (`test_static_css_is_served`) asserting the stylesheet serves `200 text/css`. Verified the live image serves `app.css` fingerprinted as `200 text/css`.
 
+Follow-up (2026-06-21) — production admin path:
+- Added `manage.py ensure_superuser`: idempotent, env-driven (`DJANGO_SUPERUSER_EMAIL`/`DJANGO_SUPERUSER_PASSWORD`) Manager/Administrator superuser for non-interactive Dokku deploys; audited; `--skip-if-unset` for optional release steps. Created if absent, flags repaired if demoted, password left untouched on redeploy.
+- Wired into the Dokku release steps (`docs/deployment/dokku-staging.md`); marked the admin gate Ready in the production-readiness journal. `seed_demo` stays fictional/staging only.
+- Verified all paths (create / idempotent / repair / skip) in the production image.
+
 Next step:
 - Phase 1 business spine: project administration and the Person model + lifecycle-status state machine, then hard-gated intake.
 

@@ -26,8 +26,29 @@ dokku config:set jober-staging \
   DB_USER=<dokku-db-user> \
   DB_PASSWORD=<dokku-db-password> \
   DB_HOST=<dokku-db-host> \
-  DB_PORT=5432
+  DB_PORT=5432 \
+  DJANGO_SUPERUSER_EMAIL=<admin-email> \
+  DJANGO_SUPERUSER_PASSWORD=<admin-password>
 ```
+
+Do **not** set `DJANGO_SECURE_SSL_REDIRECT`, `DJANGO_SESSION_COOKIE_SECURE`, or
+`DJANGO_CSRF_COOKIE_SECURE` here — they default to secure and must stay on for a
+real (HTTPS) deployment. The `=0` overrides exist only for the local HTTP demo.
+
+## Release / deploy steps
+
+Run on each deploy (e.g. Dokku release phase / `app.json` predeploy):
+
+```bash
+python manage.py migrate --noinput
+python manage.py ensure_superuser   # idempotent; creates the admin from the env vars above
+```
+
+`ensure_superuser` is safe to re-run: it creates the Manager/Administrator
+superuser if absent and otherwise leaves it (and its password) alone. Do **not**
+run `seed_demo` against staging/production — it creates fictional users only.
+Static files are baked into the image at build time (`collectstatic`) and served
+by WhiteNoise, so no separate static step is needed.
 
 ## Blocked before deployment
 
