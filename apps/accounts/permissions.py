@@ -133,7 +133,7 @@ def require_action(action: Action) -> Callable:
             if user is None or not user.is_authenticated:
                 return redirect_to_login(request.get_full_path())
             if not can(user, action):
-                raise PermissionDenied(f"Rola nemá oprávnenie: {action.value}")
+                raise PermissionDenied(f"Role is not permitted to perform: {action.value}")
             return view(request, *args, **kwargs)
 
         return wrapped

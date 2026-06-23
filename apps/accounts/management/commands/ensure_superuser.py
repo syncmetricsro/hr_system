@@ -29,7 +29,7 @@ class Command(BaseCommand):
         if not email or not password:
             message = "DJANGO_SUPERUSER_EMAIL and DJANGO_SUPERUSER_PASSWORD must be set."
             if options["skip_if_unset"]:
-                self.stdout.write(self.style.WARNING(f"Preskočené: {message}"))
+                self.stdout.write(self.style.WARNING(f"Skipped: {message}"))
                 return
             raise CommandError(message)
 
@@ -39,7 +39,7 @@ class Command(BaseCommand):
         if user is None:
             user = User.objects.create_superuser(email=email, password=password, role=Role.MANAGER)
             record_event(user, "accounts.superuser_created", target=user)
-            self.stdout.write(self.style.SUCCESS(f"Vytvorený superuser: {email}"))
+            self.stdout.write(self.style.SUCCESS(f"Superuser created: {email}"))
             return
 
         # Already present: ensure it really is an active manager-superuser.
@@ -61,6 +61,6 @@ class Command(BaseCommand):
         if changed:
             user.save(update_fields=changed)
             record_event(user, "accounts.superuser_ensured", target=user, fields=changed)
-            self.stdout.write(self.style.SUCCESS(f"Aktualizovaný superuser: {email} ({', '.join(changed)})"))
+            self.stdout.write(self.style.SUCCESS(f"Superuser updated: {email} ({', '.join(changed)})"))
         else:
-            self.stdout.write(f"Superuser už existuje a je v poriadku: {email}")
+            self.stdout.write(f"Superuser already present and correct: {email}")

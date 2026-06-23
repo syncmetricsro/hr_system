@@ -23,18 +23,18 @@ class AuditEvent(models.Model):
         null=True,
         blank=True,
         related_name="audit_events",
-        verbose_name=_("aktér"),
+        verbose_name=_("actor"),
     )
-    action = models.CharField(_("akcia"), max_length=100)
-    target_type = models.CharField(_("typ cieľa"), max_length=100, blank=True)
-    target_id = models.CharField(_("identifikátor cieľa"), max_length=100, blank=True)
-    reason = models.TextField(_("dôvod"), blank=True)
-    metadata = models.JSONField(_("metadáta"), default=dict, blank=True)
-    created_at = models.DateTimeField(_("vytvorené"), auto_now_add=True)
+    action = models.CharField(_("action"), max_length=100)
+    target_type = models.CharField(_("target type"), max_length=100, blank=True)
+    target_id = models.CharField(_("target id"), max_length=100, blank=True)
+    reason = models.TextField(_("reason"), blank=True)
+    metadata = models.JSONField(_("metadata"), default=dict, blank=True)
+    created_at = models.DateTimeField(_("created"), auto_now_add=True)
 
     class Meta:
-        verbose_name = _("audítny záznam")
-        verbose_name_plural = _("audítne záznamy")
+        verbose_name = _("audit event")
+        verbose_name_plural = _("audit events")
         ordering = ("-created_at", "-id")
         indexes = [
             models.Index(fields=["action", "created_at"]),
@@ -46,8 +46,8 @@ class AuditEvent(models.Model):
 
     def save(self, *args, **kwargs):
         if self.pk is not None:
-            raise AuditError("Audítne záznamy sú nemenné a nedajú sa upraviť.")
+            raise AuditError("Audit events are immutable and cannot be modified.")
         return super().save(*args, **kwargs)
 
     def delete(self, *args, **kwargs):
-        raise AuditError("Audítne záznamy sa nedajú vymazať.")
+        raise AuditError("Audit events cannot be deleted.")

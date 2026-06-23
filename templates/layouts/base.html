@@ -4,35 +4,35 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block title %}{% trans "Jober prevádzka" %}{% endblock %}</title>
+    <title>{% block title %}{% trans "Jober operations" %}{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'dist/css/app.css' %}">
     <script defer src="{% static 'vendor/htmx.min.js' %}"></script>
     <script defer src="{% static 'vendor/alpine.min.js' %}"></script>
     <script defer src="{% static 'src/js/app.js' %}"></script>
   </head>
   <body>
-    <a class="skip-link" href="#obsah">{% trans "Preskočiť na obsah" %}</a>
+    <a class="skip-link" href="#obsah">{% trans "Skip to content" %}</a>
     <header class="app-header" x-data="{ open: false }">
       <div class="brand-lockup" aria-label="{% trans 'Jober' %}">
         <span class="brand-mark">JB</span>
         <span class="brand-name">Jober</span>
       </div>
       <button class="icon-button mobile-only" type="button" x-on:click="open = !open" aria-controls="primary-nav" x-bind:aria-expanded="open.toString()">
-        <span class="sr-only">{% trans "Otvoriť navigáciu" %}</span>
+        <span class="sr-only">{% trans "Open navigation" %}</span>
         <span aria-hidden="true">☰</span>
       </button>
       <nav id="primary-nav" class="folder-tabs" x-bind:data-open="open">
-        <a class="folder-tab is-active" href="{% url 'dashboard' %}">{% trans "Prehľad" %}</a>
-        <a class="folder-tab" href="#projekty">{% trans "Projekty" %}</a>
-        <a class="folder-tab" href="#teren">{% trans "Terén" %}</a>
-        <a class="folder-tab" href="#spravy">{% trans "Správy" %}</a>
+        <a class="folder-tab is-active" href="{% url 'dashboard' %}">{% trans "Overview" %}</a>
+        <a class="folder-tab" href="#projekty">{% trans "Projects" %}</a>
+        <a class="folder-tab" href="#teren">{% trans "Field" %}</a>
+        <a class="folder-tab" href="#spravy">{% trans "Messages" %}</a>
       </nav>
       <div class="header-account">
         {% get_current_language as CURRENT_LANGUAGE %}
         <form class="language-switch" action="{% url 'set_language' %}" method="post">
           {% csrf_token %}
           <input type="hidden" name="next" value="{{ request.path }}">
-          <label class="sr-only" for="language-select">{% trans "Jazyk" %}</label>
+          <label class="sr-only" for="language-select">{% trans "Language" %}</label>
           <select id="language-select" name="language" onchange="this.form.submit()">
             {% get_available_languages as LANGUAGES %}
             {% for code, name in LANGUAGES %}
@@ -41,10 +41,10 @@
           </select>
         </form>
         {% if user.is_authenticated %}
-          <span class="account-role" aria-label="{% trans 'Rola' %}">{{ user.get_role_display }}</span>
+          <span class="account-role" aria-label="{% trans 'Role' %}">{{ user.get_role_display }}</span>
           <form class="logout-form" action="{% url 'logout' %}" method="post">
             {% csrf_token %}
-            <button class="icon-button" type="submit">{% trans "Odhlásiť sa" %}</button>
+            <button class="icon-button" type="submit">{% trans "Sign out" %}</button>
           </form>
         {% endif %}
       </div>

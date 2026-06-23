@@ -27,7 +27,7 @@ def login_page(request: HttpRequest) -> HttpResponse:
             auth_login(request, user)
             record_event(user, "auth.login")
             return HttpResponseRedirect(reverse("dashboard"))
-        error = _("Nesprávny e-mail alebo heslo.")
+        error = _("Invalid email or password.")
 
     return TemplateResponse(request, "pages/login.html", {"error": error})
 

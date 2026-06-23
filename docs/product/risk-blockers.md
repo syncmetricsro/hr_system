@@ -4,7 +4,7 @@ Last updated: 2026-06-21
 
 ## Active workstation blockers
 
-- Translation catalogs (`.po`/`.mo`) are not generated: `msgfmt`/`xgettext` are not installed on the host and gettext is not in the hardened image. i18n routing/switcher are wired and tested; non-default languages fall back to the Slovak source strings. Generating + compiling catalogs needs gettext approved in the toolchain (defer until non-Slovak copy is required).
+- None. (Translation catalogs are now generated/compiled — English base language with SK/HU/UK catalogs, ADR 0017. gettext runs via `scripts/compile_messages.sh` against the app image, not the host. HU/UK + revised SK still need a fluent-speaker review before client use — tracked in the production readiness journal.)
 
 ## Server deployment pending
 

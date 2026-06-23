@@ -18,7 +18,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         if not options["yes"]:
-            raise CommandError("Pridajte --yes na potvrdenie odstránenia demo používateľov.")
+            raise CommandError("Pass --yes to confirm deletion of the demo users.")
 
         deleted, _ = User.objects.filter(email__endswith=f"@{DEMO_DOMAIN}").delete()
-        self.stdout.write(self.style.SUCCESS(f"Odstránených demo objektov: {deleted}"))
+        self.stdout.write(self.style.SUCCESS(f"Demo objects deleted: {deleted}"))

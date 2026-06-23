@@ -89,8 +89,11 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
+# Source strings are authored in English (the base/fallback language); the active
+# default shown to visitors is Slovak. SK/HU/UK ship as translation catalogs.
 LANGUAGE_CODE = "sk"
 LANGUAGES = [
+    ("en", "English"),
     ("sk", "Slovenčina"),
     ("hu", "Magyar"),
     ("uk", "Українська"),

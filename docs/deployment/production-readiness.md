@@ -25,7 +25,7 @@ Last updated: 2026-06-21
 | Real worker PII | ⚠️ Open (blocked) | Fictional data only until the legal/security real-data gate (Handoff.md, AGENTS.md). |
 | DPA / EU hosting / blacklist legal basis / leasing docs | ⚠️ Open | Lawyer items; block go-live, not coding. |
 | Finance sign convention | ⚠️ Open | Needs one filled month (Phase 4). |
-| Translation catalogs (HU/UK) | ⚠️ Open | i18n wired; catalogs not compiled (gettext not in toolchain). Non-default languages fall back to Slovak source. |
+| Translation catalogs (EN/SK/HU/UK) | ⚠️ Partial (2026-06-23) | English base language; SK/HU/UK catalogs compiled and shipped (ADR 0017). All four render. **HU/UK + revised SK are AI-authored — need a fluent-speaker review** before client-facing use. Recompile via `scripts/compile_messages.sh`. |
 
 ## RBAC / audit posture
 

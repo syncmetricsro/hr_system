@@ -45,7 +45,7 @@ class Command(BaseCommand):
 
         self.stdout.write(
             self.style.SUCCESS(
-                f"Seed hotový: {created} vytvorených, {updated} aktualizovaných. "
-                f"Heslo pre všetkých: {DEMO_PASSWORD}"
+                f"Seed complete: {created} created, {updated} updated. "
+                f"Password for all: {DEMO_PASSWORD}"
             )
         )

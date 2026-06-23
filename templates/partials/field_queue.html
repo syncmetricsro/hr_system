@@ -4,15 +4,15 @@
     <article class="field-card">
       <div>
         <h3>{{ project.name }}</h3>
-        <p>{% trans "Zodpovedný" %}: {{ project.coordinator }}</p>
+        <p>{% trans "Responsible" %}: {{ project.coordinator }}</p>
       </div>
       <dl>
         <div>
-          <dt>{% trans "Pripravenosť" %}</dt>
+          <dt>{% trans "Readiness" %}</dt>
           <dd>{{ project.readiness }}</dd>
         </div>
         <div>
-          <dt>{% trans "Chýba" %}</dt>
+          <dt>{% trans "Missing" %}</dt>
           <dd>{{ project.needs }}</dd>
         </div>
       </dl>

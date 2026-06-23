@@ -28,8 +28,14 @@ Follow-up (2026-06-21) — production admin path:
 - Added `tests/test_ensure_superuser.py` (create, idempotent re-run, repair of a demoted account, error when env unset, `--skip-if-unset`). **Full unit suite 37 passed**; ruff clean.
 - Verified `ensure_superuser` in the rebuilt production image: create → "Vytvorený superuser", re-run → "už existuje a je v poriadku", no-env `--skip-if-unset` → skipped cleanly.
 
+Follow-up (2026-06-23) — internationalization:
+- Regenerated migrations + extracted/compiled catalogs in the app image with gettext (via `scripts/compile_messages.sh`).
+- Added `tests/test_i18n.py`: dashboard renders the expected string in EN/SK/HU/UK and the unprefixed root redirects to `/sk/`. **Full unit suite 42 passed**; ruff clean.
+- Rebuilt `jober-platform:phase1` (now ships compiled `.mo`); **Playwright smoke 5 passed** (SK default unchanged).
+- Verified live: login `<h1>` renders correctly per prefix — EN "Sign in to the Jober team", SK "Prihlásenie tímu Jober", HU "Bejelentkezés a Jober csapatba", UK "Вхід до команди Jober".
+
 Expected current gaps:
-- Translation catalogs not compiled (gettext tooling deferred); non-default languages fall back to Slovak source strings.
+- HU/UK + revised SK translations are AI-authored, pending fluent-speaker review.
 - Dokku staging still pending external server/domain/DB-service details.
 
 ## 2026-06-17

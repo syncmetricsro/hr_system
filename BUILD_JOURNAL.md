@@ -34,6 +34,12 @@ Follow-up (2026-06-21) — production admin path:
 - Wired into the Dokku release steps (`docs/deployment/dokku-staging.md`); marked the admin gate Ready in the production-readiness journal. `seed_demo` stays fictional/staging only.
 - Verified all paths (create / idempotent / repair / skip) in the production image.
 
+Follow-up (2026-06-23) — internationalization:
+- Switched the codebase base language to **English** while keeping **Slovak as the visible default** (`LANGUAGE_CODE=sk`, ADR 0017). Rewrote all template/Python `gettext` source strings (and CLI/exception/dev messages) from Slovak to English.
+- Added English to the switcher (now EN/SK/HU/UK). Authored full **SK/HU/UK** catalogs (`locale/<lang>/LC_MESSAGES/django.po`) and compiled `.mo`; the SK catalog reproduces the previous Slovak text exactly, so the default rendering and existing tests are unchanged. HU/UK + revised SK are AI-authored, pending fluent-speaker review.
+- gettext is not in the runtime/test images; `scripts/compile_messages.sh` runs the app image with gettext apt-installed to extract/compile. Runtime image now `COPY`s `locale/`.
+- Regenerated the `accounts`/`audit` initial migrations (verbose-name/choice-label changes). Added `tests/test_i18n.py` (renders EN/SK/HU/UK + default redirect). Verified all four languages live on the login page.
+
 Next step:
 - Phase 1 business spine: project administration and the Person model + lifecycle-status state machine, then hard-gated intake.
 

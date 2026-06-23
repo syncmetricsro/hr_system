@@ -19,4 +19,4 @@ Phase 0 must not hardcode these into migrations or domain logic.
 | Deduction review | Missing-returnable-item process. | Not modeled in Phase 0. |
 | Finance sign convention | Whether costs are entered negative or stored positive and subtracted. | Phase 4 blocker; needs one filled month. |
 | Legal/privacy | DPA, EU hosting approval, blacklist legal basis, employee-leasing documents. | Blocks real-data gate, not fictional Phase 0 shell. |
-| Branding terminology | Final HU/SK/UA product wording and assets. | Use conservative Slovak shell labels until confirmed. |
+| Branding terminology | Final HU/SK/UA product wording and assets. | Base language is now English (ADR 0017); Slovak is the default rendering. EN/SK/HU/UK catalogs ship compiled, but HU/UK + revised SK are AI-authored and need a fluent-speaker review before client use. |
