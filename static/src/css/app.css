@@ -152,6 +152,15 @@ h1 {
   text-transform: uppercase;
 }
 
+/* Keep long words (e.g. Hungarian "BEJELENTKEZÉS") inside their container
+   instead of overflowing past panel edges. Wrap at spaces normally; only break
+   a word as a last resort (no auto-hyphenation, so "JOBER" stays intact). */
+h1,
+h2,
+h3 {
+  overflow-wrap: break-word;
+}
+
 h2 {
   margin-bottom: var(--space-4);
   font-size: 1.35rem;
@@ -241,9 +250,11 @@ dt {
 }
 
 .field-card dl {
-  display: flex;
-  gap: var(--space-4);
+  display: grid;
+  grid-template-columns: max-content 12rem;
+  column-gap: var(--space-6);
   margin: 0;
+  align-items: start;
 }
 
 dd {
@@ -289,6 +300,12 @@ dd {
 .login-panel {
   max-width: 460px;
   margin: 10vh auto;
+}
+
+/* Smaller than the shell h1 so the heading fits the fixed-width card across
+   languages without overflowing or breaking mid-word. */
+.login-panel h1 {
+  font-size: clamp(1.75rem, 4vw, 2.6rem);
 }
 
 label {
@@ -351,9 +368,13 @@ input {
     grid-template-columns: 1fr;
   }
 
-  .panel-head,
-  .field-card dl {
+  .panel-head {
     flex-direction: column;
+  }
+
+  .field-card dl {
+    grid-template-columns: 1fr;
+    row-gap: var(--space-3);
   }
 
   .button {
