@@ -1,5 +1,10 @@
 # Test Journal
 
+## 2026-06-28 (later) — Per-view RBAC gating
+
+- `tests/test_view_gating.py`: parametrized over every gated write/read endpoint (assign_trial, trial_outcome, readiness_update, activate_person, assign_room, issue_equipment, return_equipment, record_transport, finance_record, finance_summary, intake_start) — a denied role gets **403** and anonymous is **redirected to login**. Closes the gap where the new POST endpoints were only covered by the generic `require_action` test.
+- **Full unit suite: 115 passed**; ruff clean.
+
 ## 2026-06-28 (later) — Phase 1 peripheral modules + hard-gated intake
 
 Added across the accommodation, inventory, transport, finance, and intake slices; figures are cumulative as each landed.
