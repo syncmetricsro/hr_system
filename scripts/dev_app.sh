@@ -110,6 +110,9 @@ cmd_up() {
     -e DJANGO_SECURE_SSL_REDIRECT=0 \
     -e DJANGO_SESSION_COOKIE_SECURE=0 \
     -e DJANGO_CSRF_COOKIE_SECURE=0 \
+    -e TWILIO_ACCOUNT_SID="${TWILIO_ACCOUNT_SID:-}" \
+    -e TWILIO_AUTH_TOKEN="${TWILIO_AUTH_TOKEN:-}" \
+    -e TWILIO_FROM_NUMBER="${TWILIO_FROM_NUMBER:-}" \
     "${DB_ENV[@]}" "$IMAGE" >/dev/null
   wait_for_app
   print_access
