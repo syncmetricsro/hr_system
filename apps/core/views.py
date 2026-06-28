@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, HttpResponse
 from django.template.response import TemplateResponse
 
+from apps.accounts.models import Role
 from apps.people.models import LifecycleStatus, Person
 from apps.projects.models import Project, TrialAssignment, TrialOutcome
 
@@ -20,6 +21,9 @@ def dashboard(request: HttpRequest) -> TemplateResponse:
         .select_related("person", "project")
         .order_by("scheduled_date")
     )
+    # Coordinators see only their own projects' pending trials (routing).
+    if getattr(request.user, "role", None) == Role.COORDINATOR:
+        pending_trials = pending_trials.filter(project__responsible_coordinators=request.user)
     metrics = {
         "active_projects": Project.objects.filter(is_active=True).count(),
         "available": people.filter(lifecycle_status=LifecycleStatus.AVAILABLE).count(),

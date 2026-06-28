@@ -1,5 +1,11 @@
 # Build Journal
 
+## 2026-06-28 — Phase 2 (4/n): project/coordinator routing
+
+- The Trials queue and the dashboard's pending-trials list are now **scoped to a coordinator's own projects** (via `project.responsible_coordinators`); managers, observers, and recruiters still see all (broad read).
+
+Verification: ruff clean; **126 unit tests pass** (2 new: coordinator sees only their projects' trials; manager sees all).
+
 ## 2026-06-28 — Phase 2 (3/n): permission-controlled CSV exports
 
 - `apps/core/exports.py`: `people_csv`, `projects_csv` (gated `export.approved` — manager + observer) and `finance_csv` (gated `finance.view_summary`). Clean non-prefixed download URLs.

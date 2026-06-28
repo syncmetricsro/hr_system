@@ -8,6 +8,7 @@ from django.template.response import TemplateResponse
 from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
 
+from apps.accounts.models import Role
 from apps.accounts.permissions import Action, require_action
 from apps.people.models import Person
 from apps.projects.models import (
@@ -52,13 +53,19 @@ def project_detail(request: HttpRequest, pk: int) -> TemplateResponse:
 
 @login_required
 def trials_queue(request: HttpRequest) -> TemplateResponse:
-    """Coordinator field view: trials awaiting an outcome."""
+    """Coordinator field view: trials awaiting an outcome.
+
+    A coordinator sees only their own projects' trials (routing); managers,
+    observers, and recruiters see all (broad read)."""
     trials = (
         TrialAssignment.objects.filter(outcome=TrialOutcome.PENDING)
         .select_related("person", "project")
         .order_by("scheduled_date")
     )
-    return TemplateResponse(request, "pages/trials_queue.html", {"trials": trials})
+    scoped = getattr(request.user, "role", None) == Role.COORDINATOR
+    if scoped:
+        trials = trials.filter(project__responsible_coordinators=request.user)
+    return TemplateResponse(request, "pages/trials_queue.html", {"trials": trials, "scoped": scoped})
 
 
 @require_POST
