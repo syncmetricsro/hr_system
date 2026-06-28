@@ -127,3 +127,30 @@ class EquipmentIssue(models.Model):
 
     def __str__(self) -> str:
         return f"{self.item} -> {self.person} ({self.status})"
+
+
+class TransportWeek(models.Model):
+    """Weekly transport headcount per project (plan §11.10, minimal)."""
+
+    project = models.ForeignKey(
+        "projects.Project", on_delete=models.CASCADE, related_name="transport_weeks", verbose_name=_("project")
+    )
+    week_start = models.DateField(_("week start"))
+    headcount = models.PositiveIntegerField(_("headcount"), default=0)
+    note = models.CharField(_("note"), max_length=300, blank=True)
+    recorded_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True,
+        related_name="recorded_transport_weeks", verbose_name=_("recorded by"),
+    )
+    created_at = models.DateTimeField(_("created"), auto_now_add=True)
+
+    class Meta:
+        verbose_name = _("transport week")
+        verbose_name_plural = _("transport weeks")
+        ordering = ("-week_start",)
+        constraints = [
+            models.UniqueConstraint(fields=["project", "week_start"], name="unique_transport_week_per_project")
+        ]
+
+    def __str__(self) -> str:
+        return f"{self.project} {self.week_start}: {self.headcount}"

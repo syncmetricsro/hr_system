@@ -14,10 +14,12 @@ from apps.logistics.services import (
     CapacityError,
     assign_room,
     issue_equipment,
+    record_transport_week,
     release_room,
     return_equipment,
 )
 from apps.people.models import Person
+from apps.projects.models import Project
 
 
 @login_required
@@ -77,3 +79,19 @@ def return_equipment_view(request: HttpRequest, issue_pk: int) -> HttpResponse:
     return_equipment(issue, actor=request.user)
     messages.success(request, _("Equipment returned."))
     return redirect("person_detail", pk=issue.person_id)
+
+
+@require_POST
+@require_action(Action.TRANSPORT_RECORD)
+def record_transport_view(request: HttpRequest, project_pk: int) -> HttpResponse:
+    project = get_object_or_404(Project, pk=project_pk)
+    week_start = request.POST.get("week_start")
+    if week_start:
+        record_transport_week(
+            project, week_start, request.POST.get("headcount", 0),
+            actor=request.user, note=request.POST.get("note", ""),
+        )
+        messages.success(request, _("Transport week recorded."))
+    else:
+        messages.error(request, _("Week start is required."))
+    return redirect("project_detail", pk=project.pk)

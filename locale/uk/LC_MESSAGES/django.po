@@ -429,3 +429,25 @@ msgstr "Спорядження видано."
 
 msgid "Equipment returned."
 msgstr "Спорядження повернено."
+
+# --- logistics: transport ---
+msgid "Weekly transport"
+msgstr "Щотижневий транспорт"
+
+msgid "No transport weeks recorded."
+msgstr "Тижні транспорту не записані."
+
+msgid "Week start"
+msgstr "Початок тижня"
+
+msgid "Headcount"
+msgstr "Кількість осіб"
+
+msgid "Record week"
+msgstr "Записати тиждень"
+
+msgid "Transport week recorded."
+msgstr "Тиждень транспорту записано."
+
+msgid "Week start is required."
+msgstr "Початок тижня обов’язковий."

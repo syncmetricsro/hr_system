@@ -42,10 +42,11 @@ def project_detail(request: HttpRequest, pk: int) -> TemplateResponse:
         .select_related("person")
         .order_by("person__last_name")
     )
+    transport_weeks = project.transport_weeks.all()[:8]
     return TemplateResponse(
         request,
         "pages/project_detail.html",
-        {"project": project, "workers": workers},
+        {"project": project, "workers": workers, "transport_weeks": transport_weeks},
     )
 
 

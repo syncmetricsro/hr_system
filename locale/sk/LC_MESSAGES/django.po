@@ -429,3 +429,25 @@ msgstr "Vybavenie vydané."
 
 msgid "Equipment returned."
 msgstr "Vybavenie vrátené."
+
+# --- logistics: transport ---
+msgid "Weekly transport"
+msgstr "Týždenná doprava"
+
+msgid "No transport weeks recorded."
+msgstr "Nie sú zaznamenané žiadne týždne dopravy."
+
+msgid "Week start"
+msgstr "Začiatok týždňa"
+
+msgid "Headcount"
+msgstr "Počet osôb"
+
+msgid "Record week"
+msgstr "Zaznamenať týždeň"
+
+msgid "Transport week recorded."
+msgstr "Týždeň dopravy zaznamenaný."
+
+msgid "Week start is required."
+msgstr "Začiatok týždňa je povinný."

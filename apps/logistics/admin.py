@@ -8,6 +8,7 @@ from apps.logistics.models import (
     EquipmentItem,
     Room,
     RoomAssignment,
+    TransportWeek,
 )
 
 
@@ -50,3 +51,10 @@ class EquipmentIssueAdmin(admin.ModelAdmin):
     list_filter = ("status",)
     search_fields = ("person__search_name", "item__name")
     readonly_fields = ("issued_at", "returned_at")
+
+
+@admin.register(TransportWeek)
+class TransportWeekAdmin(admin.ModelAdmin):
+    list_display = ("project", "week_start", "headcount", "recorded_by")
+    list_filter = ("project",)
+    date_hierarchy = "week_start"

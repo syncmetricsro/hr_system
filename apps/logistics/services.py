@@ -9,6 +9,7 @@ from apps.logistics.models import (
     EquipmentIssueStatus,
     RoomAssignment,
     RoomAssignmentStatus,
+    TransportWeek,
 )
 
 
@@ -66,6 +67,22 @@ def issue_equipment(person, item, quantity=1, *, actor=None):
     )
     record_event(actor, "equipment.issued", target=issue, item=str(item))
     return issue
+
+
+@transaction.atomic
+def record_transport_week(project, week_start, headcount, *, actor=None, note: str = ""):
+    """Record/update a project's weekly transport headcount."""
+    week, _created = TransportWeek.objects.update_or_create(
+        project=project,
+        week_start=week_start,
+        defaults={
+            "headcount": max(0, int(headcount or 0)),
+            "note": note,
+            "recorded_by": actor if getattr(actor, "is_authenticated", False) else None,
+        },
+    )
+    record_event(actor, "transport.week_recorded", target=week, project=project.code)
+    return week
 
 
 @transaction.atomic

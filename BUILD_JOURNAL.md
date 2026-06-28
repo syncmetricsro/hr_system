@@ -1,5 +1,13 @@
 # Build Journal
 
+## 2026-06-28 (later) — Weekly transport reporting (Phase 1)
+
+- `apps/logistics`: `TransportWeek` (project + week_start + headcount; unique per project/week).
+- Service `record_transport_week` (update_or_create, audited).
+- UI: a Weekly transport panel on the project detail — recent weeks + a record form, gated by `transport.record`. Admin. i18n SK/HU/UK.
+
+Verification: ruff clean; **82 unit tests pass** (3 new: create, idempotent per week, RBAC).
+
 ## 2026-06-28 (later) — Minimal inventory / equipment (Phase 1)
 
 - `apps/logistics`: `EquipmentItem` catalog (name/size; no valuation — Phase 3) and `EquipmentIssue` (quantity, issued/returned).

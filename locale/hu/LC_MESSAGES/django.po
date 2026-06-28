@@ -429,3 +429,25 @@ msgstr "Felszerelés kiadva."
 
 msgid "Equipment returned."
 msgstr "Felszerelés visszavéve."
+
+# --- logistics: transport ---
+msgid "Weekly transport"
+msgstr "Heti szállítás"
+
+msgid "No transport weeks recorded."
+msgstr "Nincs rögzített szállítási hét."
+
+msgid "Week start"
+msgstr "Hét kezdete"
+
+msgid "Headcount"
+msgstr "Létszám"
+
+msgid "Record week"
+msgstr "Hét rögzítése"
+
+msgid "Transport week recorded."
+msgstr "Szállítási hét rögzítve."
+
+msgid "Week start is required."
+msgstr "A hét kezdete kötelező."
