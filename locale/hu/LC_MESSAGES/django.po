@@ -550,3 +550,6 @@ msgstr "Még nincs előzmény."
 
 msgid "Awaiting outcome"
 msgstr "Eredményre vár"
+
+msgid "Export"
+msgstr "Exportálás"

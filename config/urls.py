@@ -3,6 +3,7 @@ from django.contrib import admin
 from django.urls import include, path
 
 from apps.accounts import views as account_views
+from apps.core import exports as core_exports
 from apps.core import views
 from apps.finance import views as finance_views
 from apps.intake import views as intake_views
@@ -14,6 +15,9 @@ from apps.projects import views as project_views
 urlpatterns = [
     path("healthz/", views.healthz, name="healthz"),
     path("i18n/", include("django.conf.urls.i18n")),
+    path("export/people.csv", core_exports.people_csv, name="export_people"),
+    path("export/projects.csv", core_exports.projects_csv, name="export_projects"),
+    path("export/finance.csv", core_exports.finance_csv, name="export_finance"),
 ]
 
 # Language-prefixed application routes (LocaleMiddleware sets the active language).

@@ -1,5 +1,13 @@
 # Build Journal
 
+## 2026-06-28 — Phase 2 (3/n): permission-controlled CSV exports
+
+- `apps/core/exports.py`: `people_csv`, `projects_csv` (gated `export.approved` — manager + observer) and `finance_csv` (gated `finance.view_summary`). Clean non-prefixed download URLs.
+- Exports deliberately **exclude bulk sensitive fields** (DOB, disability, identifiers); those stay on the per-person card behind `can_view_sensitive`.
+- Gated **Export** buttons on the People, Projects, and Finance pages. i18n SK/HU/UK.
+
+Verification: ruff clean; **124 unit tests pass** (6 new: CSV content + content-type for manager/observer, 403 for recruiter, anonymous redirect).
+
 ## 2026-06-28 — Phase 2 (2/n): real dashboard
 
 Replaced the Phase 0 mock dashboard (hardcoded 8/14/6 + mock field panel) with live aggregates.

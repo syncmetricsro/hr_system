@@ -1,5 +1,5 @@
 {% extends "layouts/base.html" %}
-{% load i18n %}
+{% load i18n rbac %}
 
 {% block title %}{% trans "Projects" %} · Jober{% endblock %}
 
@@ -7,6 +7,10 @@
 <section class="page-head">
   <p class="eyebrow">{% trans "Operations" %}</p>
   <h1>{% trans "Projects" %}</h1>
+  {% can 'export.approved' as may_export %}
+  {% if may_export %}
+    <a class="button button-secondary" href="{% url 'export_projects' %}">{% trans "Export" %}</a>
+  {% endif %}
 </section>
 
 <section class="field-list" aria-label="{% trans 'Projects' %}">
