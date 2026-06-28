@@ -641,3 +641,52 @@ msgstr "Тренди транспорту"
 
 msgid "No transport data."
 msgstr "Немає даних про транспорт."
+
+# --- feedback ---
+msgid "Feedback"
+msgstr "Зворотний зв’язок"
+
+msgid "Feedback inbox"
+msgstr "Вхідні відгуки"
+
+msgid "Inbox"
+msgstr "Вхідні"
+
+msgid "Public links"
+msgstr "Публічні посилання"
+
+msgid "Feedback links"
+msgstr "Посилання для відгуків"
+
+msgid "Create link"
+msgstr "Створити посилання"
+
+msgid "Label"
+msgstr "Назва"
+
+msgid "Link"
+msgstr "Посилання"
+
+msgid "No feedback yet."
+msgstr "Поки немає відгуків."
+
+msgid "Your feedback"
+msgstr "Ваш відгук"
+
+msgid "Rating (1-5)"
+msgstr "Оцінка (1-5)"
+
+msgid "Submit"
+msgstr "Надіслати"
+
+msgid "Thank you for your feedback."
+msgstr "Дякуємо за ваш відгук."
+
+msgid "Message is required."
+msgstr "Повідомлення обов’язкове."
+
+msgid "Label is required."
+msgstr "Назва обов’язкова."
+
+msgid "Feedback link created."
+msgstr "Посилання для відгуків створено."

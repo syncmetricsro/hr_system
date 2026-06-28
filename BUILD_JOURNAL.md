@@ -1,5 +1,16 @@
 # Build Journal
 
+## 2026-06-29 — Phase 3 (4/n): QR feedback + manager inbox
+
+Worker-facing feedback (plan §10.1 `/feedback/<token>`, §11.11).
+
+- `apps/feedback`: `FeedbackLink` (tokenized public entry point the QR encodes; optional project) and `FeedbackSubmission` (message + optional rating; **no account/PII**).
+- Public **no-login** form at `/feedback/<token>/` (standalone template, not the app shell) → records a submission, shows a thank-you. Inactive/unknown token → 404.
+- **Manager-only inbox** (`feedback.view`) listing submissions + active links with their public URLs + a create-link form. Gated nav tab.
+- **Retention**: `purge_feedback` management command deletes submissions older than `FEEDBACK_RETENTION_DAYS` (≈1 month). i18n SK/HU/UK.
+
+Verification: ruff clean; **159 unit tests pass** (5 new: public submit, message required, inactive/unknown 404, inbox manager-only, retention purge); image builds.
+
 ## 2026-06-28 — Phase 3 (3/n): transport trends
 
 - `logistics.views.transport_trends`: last-12-weeks transport headcount per project + company total per week (plan §11.10), rendered as **dependency-free CSS bar charts** (no JS library).

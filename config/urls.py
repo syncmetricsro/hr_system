@@ -5,6 +5,7 @@ from django.urls import include, path
 from apps.accounts import views as account_views
 from apps.compliance import views as compliance_views
 from apps.core import exports as core_exports
+from apps.feedback import views as feedback_views
 from apps.core import views
 from apps.finance import views as finance_views
 from apps.intake import views as intake_views
@@ -21,6 +22,7 @@ urlpatterns = [
     path("export/projects.csv", core_exports.projects_csv, name="export_projects"),
     path("export/finance.csv", core_exports.finance_csv, name="export_finance"),
     path("webhooks/twilio/inbound/", messaging_views.twilio_inbound, name="twilio_inbound"),
+    path("feedback/<slug:token>/", feedback_views.feedback_form, name="feedback_form"),
 ]
 
 # Language-prefixed application routes (LocaleMiddleware sets the active language).
@@ -55,4 +57,6 @@ urlpatterns += i18n_patterns(
     path("intake/<int:pk>/", intake_views.intake_panel, name="intake_panel"),
     path("people/<int:person_pk>/sms/", messaging_views.send_sms_view, name="send_sms"),
     path("compliance/", compliance_views.compliance_list, name="compliance_list"),
+    path("feedback/", feedback_views.feedback_inbox, name="feedback_inbox"),
+    path("feedback/links/new/", feedback_views.feedback_link_create, name="feedback_link_create"),
 )

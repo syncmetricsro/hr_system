@@ -1,0 +1,35 @@
+{% load static i18n %}
+<!doctype html>
+<html lang="{{ LANGUAGE_CODE|default:'sk' }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% trans "Feedback" %} · Jober</title>
+    <link rel="stylesheet" href="{% static 'dist/css/app.css' %}">
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="login-panel">
+        <p class="eyebrow">Jober</p>
+        <h1>{% trans "Feedback" %}</h1>
+        {% if submitted %}
+          <p>{% trans "Thank you for your feedback." %}</p>
+        {% else %}
+          {% if error %}<p class="form-error">{{ error }}</p>{% endif %}
+          <form class="stack" method="post" action=".">
+            {% csrf_token %}
+            <label>
+              <span>{% trans "Rating (1-5)" %}</span>
+              <input type="number" name="rating" min="1" max="5">
+            </label>
+            <label>
+              <span>{% trans "Your feedback" %}</span>
+              <textarea name="message"></textarea>
+            </label>
+            <button class="button button-primary" type="submit">{% trans "Submit" %}</button>
+          </form>
+        {% endif %}
+      </section>
+    </main>
+  </body>
+</html>

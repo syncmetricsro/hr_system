@@ -31,6 +31,8 @@
         <a class="folder-tab" href="{% url 'transport_trends' %}">{% trans "Transport" %}</a>
         {% can 'finance.view_summary' as may_finance %}
         {% if may_finance %}<a class="folder-tab" href="{% url 'finance_summary' %}">{% trans "Finance" %}</a>{% endif %}
+        {% can 'feedback.view' as may_feedback %}
+        {% if may_feedback %}<a class="folder-tab" href="{% url 'feedback_inbox' %}">{% trans "Feedback" %}</a>{% endif %}
         <a class="folder-tab" href="#spravy">{% trans "Messages" %}</a>
       </nav>
       <div class="header-account">

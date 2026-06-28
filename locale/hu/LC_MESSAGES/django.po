@@ -641,3 +641,52 @@ msgstr "Szállítási trendek"
 
 msgid "No transport data."
 msgstr "Nincs szállítási adat."
+
+# --- feedback ---
+msgid "Feedback"
+msgstr "Visszajelzés"
+
+msgid "Feedback inbox"
+msgstr "Visszajelzés-postafiók"
+
+msgid "Inbox"
+msgstr "Postafiók"
+
+msgid "Public links"
+msgstr "Nyilvános linkek"
+
+msgid "Feedback links"
+msgstr "Visszajelzési linkek"
+
+msgid "Create link"
+msgstr "Link létrehozása"
+
+msgid "Label"
+msgstr "Címke"
+
+msgid "Link"
+msgstr "Link"
+
+msgid "No feedback yet."
+msgstr "Még nincs visszajelzés."
+
+msgid "Your feedback"
+msgstr "Az Ön visszajelzése"
+
+msgid "Rating (1-5)"
+msgstr "Értékelés (1-5)"
+
+msgid "Submit"
+msgstr "Küldés"
+
+msgid "Thank you for your feedback."
+msgstr "Köszönjük a visszajelzését."
+
+msgid "Message is required."
+msgstr "Az üzenet kötelező."
+
+msgid "Label is required."
+msgstr "A címke kötelező."
+
+msgid "Feedback link created."
+msgstr "Visszajelzési link létrehozva."
