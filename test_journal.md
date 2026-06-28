@@ -1,5 +1,16 @@
 # Test Journal
 
+## 2026-06-29 — Twilio SMS live verification (manual)
+
+Manual end-to-end check of the messaging slice against real Twilio, secrets via Doppler.
+
+- **Auth isolation:** `doppler run -- curl … Messages.json` returned **401** with a mismatched SID/token pair, then **201** after correcting the pair in Doppler — confirming the failure was credentials, not the app.
+- **In-app, Test credentials + magic number** (`+15005550006`): Send SMS recorded **Sent** (fail-closed when unconfigured was also observed first — correct behaviour).
+- **In-app, Live credentials + trial number** (`+1928…`) → Twilio **Virtual Phone** (`+18777804236`): message **Delivered** (Twilio Messaging Logs) and visible in the Virtual Phone simulator.
+- Verified the gated **Send SMS** panel (phone-gated, `sms.send`, coordinator-scoped) and the new **Edit-person** form used to set the recipient phone.
+
+Conclusion: messaging works end-to-end in production form. Outstanding items are operational only (account upgrade to drop the trial prefix; public inbound webhook URL).
+
 ## 2026-06-28 (later) — Per-view RBAC gating
 
 - `tests/test_view_gating.py`: parametrized over every gated write/read endpoint (assign_trial, trial_outcome, readiness_update, activate_person, assign_room, issue_equipment, return_equipment, record_transport, finance_record, finance_summary, intake_start) — a denied role gets **403** and anonymous is **redirected to login**. Closes the gap where the new POST endpoints were only covered by the generic `require_action` test.
