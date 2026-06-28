@@ -4,27 +4,9 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, HttpResponse
 from django.template.response import TemplateResponse
 
-
-PROJECT_CARDS = [
-    {
-        "name": "DHL Bratislava",
-        "coordinator": "Koordinátor A",
-        "readiness": "3/4",
-        "needs": "lekárska prehliadka",
-    },
-    {
-        "name": "WEBASTO",
-        "coordinator": "Koordinátor B",
-        "readiness": "4/4",
-        "needs": "pripravené",
-    },
-    {
-        "name": "CARGO",
-        "coordinator": "manažérsky override",
-        "readiness": "2/4",
-        "needs": "výstroj a doprava",
-    },
-]
+from apps.accounts.models import Role
+from apps.people.models import LifecycleStatus, Person
+from apps.projects.models import Project, TrialAssignment, TrialOutcome
 
 
 def healthz(_request: HttpRequest) -> HttpResponse:
@@ -33,20 +15,23 @@ def healthz(_request: HttpRequest) -> HttpResponse:
 
 @login_required
 def dashboard(request: HttpRequest) -> TemplateResponse:
+    people = Person.objects.filter(is_archived=False)
+    pending_trials = (
+        TrialAssignment.objects.filter(outcome=TrialOutcome.PENDING)
+        .select_related("person", "project")
+        .order_by("scheduled_date")
+    )
+    # Coordinators see only their own projects' pending trials (routing).
+    if getattr(request.user, "role", None) == Role.COORDINATOR:
+        pending_trials = pending_trials.filter(project__responsible_coordinators=request.user)
+    metrics = {
+        "active_projects": Project.objects.filter(is_active=True).count(),
+        "available": people.filter(lifecycle_status=LifecycleStatus.AVAILABLE).count(),
+        "working": people.filter(lifecycle_status=LifecycleStatus.WORKING).count(),
+        "awaiting_outcome": pending_trials.count(),
+    }
     return TemplateResponse(
         request,
         "pages/dashboard.html",
-        {
-            "projects": PROJECT_CARDS,
-            "field_panel_open": False,
-        },
+        {"metrics": metrics, "pending_trials": pending_trials[:8]},
     )
-
-
-@login_required
-def field_queue(request: HttpRequest) -> TemplateResponse:
-    template = "partials/field_queue.html"
-    context = {"projects": PROJECT_CARDS, "field_panel_open": True}
-    if request.headers.get("HX-Request") == "true":
-        return TemplateResponse(request, template, context)
-    return TemplateResponse(request, "pages/dashboard.html", context)

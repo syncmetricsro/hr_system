@@ -11,8 +11,18 @@
   {% if may_add %}
     <a class="button button-primary" href="{% url 'intake_start' %}">{% trans "Add person" %}</a>
   {% endif %}
+  {% can 'export.approved' as may_export %}
+  {% if may_export %}
+    <a class="button button-secondary" href="{% url 'export_people' %}">{% trans "Export" %}</a>
+  {% endif %}
   <form class="people-search" method="get" action="{% url 'people_list' %}">
     <input type="search" name="q" value="{{ query }}" placeholder="{% trans 'Search by name' %}" aria-label="{% trans 'Search by name' %}">
+    <select name="status" aria-label="{% trans 'Status' %}">
+      <option value="">{% trans "All statuses" %}</option>
+      {% for value, label in statuses %}
+        <option value="{{ value }}" {% if status == value %}selected{% endif %}>{{ label }}</option>
+      {% endfor %}
+    </select>
     <button class="button button-secondary" type="submit">{% trans "Search" %}</button>
   </form>
 </section>

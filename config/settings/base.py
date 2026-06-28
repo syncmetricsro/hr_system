@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "apps.logistics",
     "apps.finance",
     "apps.intake",
+    "apps.messaging",
     "apps.core",
 ]
 
@@ -122,6 +123,12 @@ LOGOUT_REDIRECT_URL = "login"
 # decision. Defaults to broad internal reads (plan §8.1 / ADR 0008); do not
 # hardcode a narrower split until Jober confirms (docs/product/open-decisions.md).
 BROAD_INTERNAL_READS = env_bool("JOBER_BROAD_INTERNAL_READS", True)
+
+# Twilio SMS — credentials come from the environment only, never the repo.
+# Unset = SMS is "not configured" and sends fail closed (dev/demo default).
+TWILIO_ACCOUNT_SID = os.getenv("TWILIO_ACCOUNT_SID", "")
+TWILIO_AUTH_TOKEN = os.getenv("TWILIO_AUTH_TOKEN", "")
+TWILIO_FROM_NUMBER = os.getenv("TWILIO_FROM_NUMBER", "")
 
 CSRF_COOKIE_HTTPONLY = True
 SESSION_COOKIE_HTTPONLY = True

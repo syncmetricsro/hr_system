@@ -513,3 +513,77 @@ msgstr "Немає опублікованої анкети прийому."
 
 msgid "Intake complete — person added."
 msgstr "Прийом завершено — особу додано."
+
+# --- person card: history + filter ---
+msgid "History"
+msgstr "Історія"
+
+msgid "All statuses"
+msgstr "Усі статуси"
+
+msgid "Trial scheduled"
+msgstr "Пробний день заплановано"
+
+msgid "Trial outcome"
+msgstr "Результат пробного дня"
+
+msgid "Assigned to project"
+msgstr "Призначено на проєкт"
+
+msgid "Room assigned"
+msgstr "Кімнату призначено"
+
+msgid "Equipment issued"
+msgstr "Спорядження видано"
+
+msgid "Readiness submitted"
+msgstr "Готовність подано"
+
+msgid "Intake completed"
+msgstr "Прийом завершено"
+
+msgid "Status changed"
+msgstr "Статус змінено"
+
+msgid "No history yet."
+msgstr "Ще немає історії."
+
+msgid "Awaiting outcome"
+msgstr "Очікує результату"
+
+msgid "Export"
+msgstr "Експорт"
+
+msgid "Reason if not applicable"
+msgstr "Причина, якщо не застосовується"
+
+msgid "Entry medical date"
+msgstr "Дата вхідного медогляду"
+
+# --- messaging / SMS ---
+msgid "Messaging"
+msgstr "Комунікація"
+
+msgid "Send SMS"
+msgstr "Надіслати SMS"
+
+msgid "Template"
+msgstr "Шаблон"
+
+msgid "Message"
+msgstr "Повідомлення"
+
+msgid "Or type a message"
+msgstr "Або введіть повідомлення"
+
+msgid "Message sent."
+msgstr "Повідомлення надіслано."
+
+msgid "Message failed: %(error)s"
+msgstr "Помилка повідомлення: %(error)s"
+
+msgid "This person has no phone number."
+msgstr "У цієї особи немає номера телефону."
+
+msgid "Message body is required."
+msgstr "Текст повідомлення обов’язковий."

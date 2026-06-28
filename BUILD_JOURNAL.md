@@ -1,5 +1,66 @@
 # Build Journal
 
+## 2026-06-28 — Phase 2 (6/6): approved SMS messaging (Phase 2 complete)
+
+Twilio SMS over the **standard library** — no SDK, no new dependency (ADR 0019).
+
+- `apps/messaging`: `MessageTemplate` (manager-managed), `OutboundMessage`, `InboundMessage`.
+- `services.py`: `_twilio_send` (urllib Basic-auth POST to Twilio `Messages.json`; creds from env, `SmsNotConfigured` when unset → recorded `failed`, never faked); `send_sms` (records + audits); `verify_twilio_signature` (base64 HMAC-SHA1, `compare_digest`).
+- Inbound webhook (`/webhooks/twilio/inbound/`): `csrf_exempt`, unauthenticated, **signature-verified, fails closed (403)**; stores inbound messages.
+- Send gated by `sms.send`; **coordinator-scoped** (a coordinator may only message people on their own projects). Templates manager-managed. No Telegram.
+- UI: a Send-SMS panel on the person card (template select or free text + recent messages). Settings: `TWILIO_ACCOUNT_SID/AUTH_TOKEN/FROM_NUMBER` from env. i18n SK/HU/UK.
+
+Live sending requires the operator to set the Twilio env vars and expose the webhook publicly; tests mock the network call.
+
+Verification: ruff clean; **137 unit tests pass** (9 new: sent on provider OK, fail-closed when unconfigured, signature accept/reject, webhook 403/200, RBAC, coordinator scope allow/deny); production image builds with all apps.
+
+**Phase 2 build items complete** (person card/history/search, dashboards, project/coordinator routing, complete trials/full readiness, exports, approved SMS).
+
+## 2026-06-28 — Phase 2 (5/n): full readiness (N/A reasons + entry-medical date)
+
+- `ReadinessRecord`: added `accommodation_na_reason` / `transport_na_reason`.
+- `update_readiness`: accommodation/transport now **require an explicit reason when marked N/A** (plan §11.6); accepts and stores the **entry-medical date**.
+- Readiness panel: per-pillar N/A reason inputs + an entry-medical date field.
+- i18n SK/HU/UK.
+
+Verification: ruff clean; **128 unit tests pass** (N/A-requires-reason, entry-medical-date saved; existing readiness tests updated to supply reasons).
+
+## 2026-06-28 — Phase 2 (4/n): project/coordinator routing
+
+- The Trials queue and the dashboard's pending-trials list are now **scoped to a coordinator's own projects** (via `project.responsible_coordinators`); managers, observers, and recruiters still see all (broad read).
+
+Verification: ruff clean; **126 unit tests pass** (2 new: coordinator sees only their projects' trials; manager sees all).
+
+## 2026-06-28 — Phase 2 (3/n): permission-controlled CSV exports
+
+- `apps/core/exports.py`: `people_csv`, `projects_csv` (gated `export.approved` — manager + observer) and `finance_csv` (gated `finance.view_summary`). Clean non-prefixed download URLs.
+- Exports deliberately **exclude bulk sensitive fields** (DOB, disability, identifiers); those stay on the per-person card behind `can_view_sensitive`.
+- Gated **Export** buttons on the People, Projects, and Finance pages. i18n SK/HU/UK.
+
+Verification: ruff clean; **124 unit tests pass** (6 new: CSV content + content-type for manager/observer, 403 for recruiter, anonymous redirect).
+
+## 2026-06-28 — Phase 2 (2/n): real dashboard
+
+Replaced the Phase 0 mock dashboard (hardcoded 8/14/6 + mock field panel) with live aggregates.
+
+- `apps/core/views.dashboard`: real counts — active projects, available, working, trials awaiting outcome — plus a list of pending trials.
+- `dashboard.html`: clickable metric cards (link to the filtered People list / Projects / Trials) and a real pending-trials panel.
+- Retired the mock `field_queue` view/route/partial and `PROJECT_CARDS`; updated the e2e smoke (it asserted the old mock) to check the real metric cards.
+- i18n: "Awaiting outcome" (SK/HU/UK).
+
+Verification: ruff clean; **118 unit tests pass** (1 new: dashboard shows real metrics + pending trial); **Playwright smoke 5 pass**; dashboard screenshot reviewed (live counts + pending trial).
+
+## 2026-06-28 — Phase 2 (1/n): person card history + search filter
+
+First Phase 2 slice (full person card / history / search).
+
+- `apps/people/services.py` `person_history(person)`: a newest-first unified timeline assembled from trials (scheduled + outcome), project assignments, room assignments, equipment issues, readiness submissions, intake completion, and the append-only audit log's lifecycle changes.
+- Person card: a **History** panel rendering that timeline.
+- People list: a **lifecycle-status filter** alongside the existing name search.
+- i18n SK/HU/UK for the new strings.
+
+Verification: ruff clean; **117 unit tests pass** (2 new: history is newest-first and covers the key event types; the status filter narrows the list). Browser-reviewed the card history + filtered list.
+
 ## 2026-06-28 (later) — Hard-gated intake engine (Phase 1 complete)
 
 Replaces intake-lite with the real questionnaire engine (§11.3 / §12.1). This was the last open Phase 1 build item.

@@ -267,12 +267,14 @@ dt {
   max-width: 360px;
 }
 
-.person-row {
+.person-row,
+a.metric-card {
   text-decoration: none;
   color: inherit;
 }
 
-.person-row:hover {
+.person-row:hover,
+a.metric-card:hover {
   border-color: var(--cobalt);
 }
 

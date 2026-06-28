@@ -513,3 +513,77 @@ msgstr "Žiadny publikovaný dotazník príjmu."
 
 msgid "Intake complete — person added."
 msgstr "Príjem dokončený — osoba pridaná."
+
+# --- person card: history + filter ---
+msgid "History"
+msgstr "História"
+
+msgid "All statuses"
+msgstr "Všetky stavy"
+
+msgid "Trial scheduled"
+msgstr "Skúška naplánovaná"
+
+msgid "Trial outcome"
+msgstr "Výsledok skúšky"
+
+msgid "Assigned to project"
+msgstr "Pridelený na projekt"
+
+msgid "Room assigned"
+msgstr "Izba pridelená"
+
+msgid "Equipment issued"
+msgstr "Vybavenie vydané"
+
+msgid "Readiness submitted"
+msgstr "Pripravenosť odoslaná"
+
+msgid "Intake completed"
+msgstr "Príjem dokončený"
+
+msgid "Status changed"
+msgstr "Stav zmenený"
+
+msgid "No history yet."
+msgstr "Zatiaľ žiadna história."
+
+msgid "Awaiting outcome"
+msgstr "Čaká na výsledok"
+
+msgid "Export"
+msgstr "Export"
+
+msgid "Reason if not applicable"
+msgstr "Dôvod, ak sa neaplikuje"
+
+msgid "Entry medical date"
+msgstr "Dátum vstupnej prehliadky"
+
+# --- messaging / SMS ---
+msgid "Messaging"
+msgstr "Komunikácia"
+
+msgid "Send SMS"
+msgstr "Poslať SMS"
+
+msgid "Template"
+msgstr "Šablóna"
+
+msgid "Message"
+msgstr "Správa"
+
+msgid "Or type a message"
+msgstr "Alebo napíšte správu"
+
+msgid "Message sent."
+msgstr "Správa odoslaná."
+
+msgid "Message failed: %(error)s"
+msgstr "Správa zlyhala: %(error)s"
+
+msgid "This person has no phone number."
+msgstr "Táto osoba nemá telefónne číslo."
+
+msgid "Message body is required."
+msgstr "Telo správy je povinné."

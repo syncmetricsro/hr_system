@@ -82,12 +82,21 @@
             <option value="not_applicable" {% if readiness.accommodation_state == "not_applicable" %}selected{% endif %}>{% trans "Not applicable" %}</option>
           </select>
         </label>
+        <label>{% trans "Reason if not applicable" %}
+          <input type="text" name="accommodation_na_reason" value="{{ readiness.accommodation_na_reason }}">
+        </label>
         <label>{% trans "Transport" %}
           <select name="transport">
             <option value="incomplete" {% if readiness.transport_state == "incomplete" %}selected{% endif %}>{% trans "Incomplete" %}</option>
             <option value="complete" {% if readiness.transport_state == "complete" %}selected{% endif %}>{% trans "Complete" %}</option>
             <option value="not_applicable" {% if readiness.transport_state == "not_applicable" %}selected{% endif %}>{% trans "Not applicable" %}</option>
           </select>
+        </label>
+        <label>{% trans "Reason if not applicable" %}
+          <input type="text" name="transport_na_reason" value="{{ readiness.transport_na_reason }}">
+        </label>
+        <label>{% trans "Entry medical date" %}
+          <input type="date" name="entry_medical_date" value="{{ readiness.entry_medical_date|date:'Y-m-d' }}">
         </label>
         <button class="button button-secondary" type="submit">{% trans "Save readiness" %}</button>
       </form>
@@ -195,5 +204,46 @@
       <button class="button button-primary" type="submit">{% trans "Issue equipment" %}</button>
     </form>
   {% endif %}
+</section>
+
+{% if can_message %}
+<section class="panel workflow-panel">
+  <p class="eyebrow">{% trans "Messaging" %}</p>
+  <h2>{% trans "Send SMS" %}</h2>
+  <form class="stack" method="post" action="{% url 'send_sms' person.pk %}">
+    {% csrf_token %}
+    {% if message_templates %}
+      <label>{% trans "Template" %}
+        <select name="template">
+          <option value="">—</option>
+          {% for t in message_templates %}<option value="{{ t.pk }}">{{ t.name }}</option>{% endfor %}
+        </select>
+      </label>
+    {% endif %}
+    <label>{% trans "Message" %}
+      <textarea name="body" placeholder="{% trans 'Or type a message' %}"></textarea>
+    </label>
+    <button class="button button-primary" type="submit">{% trans "Send SMS" %}</button>
+  </form>
+  {% if recent_messages %}
+    <ul class="plain-list">
+      {% for m in recent_messages %}
+        <li>{{ m.created_at|date:"Y-m-d H:i" }} — {{ m.get_status_display }}: {{ m.body|truncatechars:60 }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+</section>
+{% endif %}
+
+<section class="panel workflow-panel">
+  <p class="eyebrow">{% trans "Person" %}</p>
+  <h2>{% trans "History" %}</h2>
+  <ul class="plain-list">
+    {% for ev in history %}
+      <li>{{ ev.when|date:"Y-m-d H:i" }} — {{ ev.label }}{% if ev.detail %}: {{ ev.detail }}{% endif %}</li>
+    {% empty %}
+      <li>{% trans "No history yet." %}</li>
+    {% endfor %}
+  </ul>
 </section>
 {% endblock %}

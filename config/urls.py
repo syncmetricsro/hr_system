@@ -3,10 +3,12 @@ from django.contrib import admin
 from django.urls import include, path
 
 from apps.accounts import views as account_views
+from apps.core import exports as core_exports
 from apps.core import views
 from apps.finance import views as finance_views
 from apps.intake import views as intake_views
 from apps.logistics import views as logistics_views
+from apps.messaging import views as messaging_views
 from apps.people import views as people_views
 from apps.projects import views as project_views
 
@@ -14,6 +16,10 @@ from apps.projects import views as project_views
 urlpatterns = [
     path("healthz/", views.healthz, name="healthz"),
     path("i18n/", include("django.conf.urls.i18n")),
+    path("export/people.csv", core_exports.people_csv, name="export_people"),
+    path("export/projects.csv", core_exports.projects_csv, name="export_projects"),
+    path("export/finance.csv", core_exports.finance_csv, name="export_finance"),
+    path("webhooks/twilio/inbound/", messaging_views.twilio_inbound, name="twilio_inbound"),
 ]
 
 # Language-prefixed application routes (LocaleMiddleware sets the active language).
@@ -22,7 +28,6 @@ urlpatterns += i18n_patterns(
     path("", views.dashboard, name="dashboard"),
     path("prihlasenie/", account_views.login_page, name="login"),
     path("odhlasenie/", account_views.logout_view, name="logout"),
-    path("teren/rad/", views.field_queue, name="field_queue"),
     path("people/", people_views.people_list, name="people_list"),
     path("people/new/", people_views.person_create, name="person_create"),
     path("people/<int:pk>/", people_views.person_detail, name="person_detail"),
@@ -44,4 +49,5 @@ urlpatterns += i18n_patterns(
     path("finance/record/", finance_views.record_month, name="finance_record"),
     path("intake/start/", intake_views.intake_start, name="intake_start"),
     path("intake/<int:pk>/", intake_views.intake_panel, name="intake_panel"),
+    path("people/<int:person_pk>/sms/", messaging_views.send_sms_view, name="send_sms"),
 )

@@ -172,6 +172,8 @@ class ReadinessRecord(models.Model):
     gear_state = models.CharField(_("gear"), max_length=20, choices=PillarState.choices, default=PillarState.INCOMPLETE)
     accommodation_state = models.CharField(_("accommodation"), max_length=20, choices=PillarState.choices, default=PillarState.INCOMPLETE)
     transport_state = models.CharField(_("transport"), max_length=20, choices=PillarState.choices, default=PillarState.INCOMPLETE)
+    accommodation_na_reason = models.CharField(_("accommodation N/A reason"), max_length=200, blank=True)
+    transport_na_reason = models.CharField(_("transport N/A reason"), max_length=200, blank=True)
     entry_medical_date = models.DateField(_("entry medical date"), null=True, blank=True)
     submitted_by = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True,

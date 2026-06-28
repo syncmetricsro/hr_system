@@ -92,8 +92,23 @@ def test_readiness_ready_when_required_complete_optional_na(fixtures):
     update_readiness(r, actor=actor, states={
         "medical": PillarState.COMPLETE, "gear": PillarState.COMPLETE,
         "accommodation": PillarState.NOT_APPLICABLE, "transport": PillarState.NOT_APPLICABLE,
-    })
+    }, na_reasons={"accommodation": "private flat", "transport": "own car"})
     assert r.is_ready()
+
+
+def test_na_requires_a_reason(fixtures):
+    actor, project, person = fixtures
+    r = get_or_create_readiness(person, project)
+    with pytest.raises(WorkflowError):
+        update_readiness(r, actor=actor, states={"transport": PillarState.NOT_APPLICABLE})
+
+
+def test_entry_medical_date_is_saved(fixtures):
+    actor, project, person = fixtures
+    r = get_or_create_readiness(person, project)
+    update_readiness(r, actor=actor, states={"medical": PillarState.COMPLETE}, entry_medical_date="2026-05-01")
+    r.refresh_from_db()
+    assert str(r.entry_medical_date) == "2026-05-01"
 
 
 def test_medical_cannot_be_na(fixtures):
@@ -121,7 +136,7 @@ def test_full_path_to_working(fixtures):
     update_readiness(r, actor=actor, states={
         "medical": PillarState.COMPLETE, "gear": PillarState.COMPLETE,
         "accommodation": PillarState.COMPLETE, "transport": PillarState.NOT_APPLICABLE,
-    })
+    }, na_reasons={"transport": "own car"})
     activate_from_readiness(person, project, actor=actor)
     person.refresh_from_db()
     assert person.lifecycle_status == LifecycleStatus.WORKING

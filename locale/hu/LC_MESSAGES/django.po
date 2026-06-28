@@ -513,3 +513,77 @@ msgstr "Nincs közzétett felvételi kérdőív."
 
 msgid "Intake complete — person added."
 msgstr "Felvétel kész — személy hozzáadva."
+
+# --- person card: history + filter ---
+msgid "History"
+msgstr "Előzmények"
+
+msgid "All statuses"
+msgstr "Minden állapot"
+
+msgid "Trial scheduled"
+msgstr "Próbanap ütemezve"
+
+msgid "Trial outcome"
+msgstr "Próba eredménye"
+
+msgid "Assigned to project"
+msgstr "Projekthez rendelve"
+
+msgid "Room assigned"
+msgstr "Szoba hozzárendelve"
+
+msgid "Equipment issued"
+msgstr "Felszerelés kiadva"
+
+msgid "Readiness submitted"
+msgstr "Készenlét beküldve"
+
+msgid "Intake completed"
+msgstr "Felvétel befejezve"
+
+msgid "Status changed"
+msgstr "Állapot megváltozott"
+
+msgid "No history yet."
+msgstr "Még nincs előzmény."
+
+msgid "Awaiting outcome"
+msgstr "Eredményre vár"
+
+msgid "Export"
+msgstr "Exportálás"
+
+msgid "Reason if not applicable"
+msgstr "Indok, ha nem alkalmazható"
+
+msgid "Entry medical date"
+msgstr "Belépő orvosi dátuma"
+
+# --- messaging / SMS ---
+msgid "Messaging"
+msgstr "Üzenetküldés"
+
+msgid "Send SMS"
+msgstr "SMS küldése"
+
+msgid "Template"
+msgstr "Sablon"
+
+msgid "Message"
+msgstr "Üzenet"
+
+msgid "Or type a message"
+msgstr "Vagy írjon üzenetet"
+
+msgid "Message sent."
+msgstr "Üzenet elküldve."
+
+msgid "Message failed: %(error)s"
+msgstr "Üzenet sikertelen: %(error)s"
+
+msgid "This person has no phone number."
+msgstr "Ennek a személynek nincs telefonszáma."
+
+msgid "Message body is required."
+msgstr "Az üzenet törzse kötelező."
