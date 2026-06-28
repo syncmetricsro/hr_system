@@ -587,3 +587,22 @@ msgstr "Ennek a személynek nincs telefonszáma."
 
 msgid "Message body is required."
 msgstr "Az üzenet törzse kötelező."
+
+# --- compliance ---
+msgid "Compliance"
+msgstr "Megfelelőség"
+
+msgid "Alerts"
+msgstr "Figyelmeztetések"
+
+msgid "Expiring"
+msgstr "Hamarosan lejár"
+
+msgid "Expired"
+msgstr "Lejárt"
+
+msgid "Due"
+msgstr "Határidő"
+
+msgid "No compliance alerts."
+msgstr "Nincs megfelelőségi figyelmeztetés."

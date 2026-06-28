@@ -26,6 +26,7 @@
         <a class="folder-tab" href="{% url 'people_list' %}">{% trans "People" %}</a>
         <a class="folder-tab" href="{% url 'project_list' %}">{% trans "Projects" %}</a>
         <a class="folder-tab" href="{% url 'trials_queue' %}">{% trans "Field" %}</a>
+        <a class="folder-tab" href="{% url 'compliance_list' %}">{% trans "Compliance" %}</a>
         <a class="folder-tab" href="{% url 'accommodation_list' %}">{% trans "Accommodation" %}</a>
         {% can 'finance.view_summary' as may_finance %}
         {% if may_finance %}<a class="folder-tab" href="{% url 'finance_summary' %}">{% trans "Finance" %}</a>{% endif %}

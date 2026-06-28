@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "apps.finance",
     "apps.intake",
     "apps.messaging",
+    "apps.compliance",
     "apps.core",
 ]
 
@@ -129,6 +130,12 @@ BROAD_INTERNAL_READS = env_bool("JOBER_BROAD_INTERNAL_READS", True)
 TWILIO_ACCOUNT_SID = os.getenv("TWILIO_ACCOUNT_SID", "")
 TWILIO_AUTH_TOKEN = os.getenv("TWILIO_AUTH_TOKEN", "")
 TWILIO_FROM_NUMBER = os.getenv("TWILIO_FROM_NUMBER", "")
+
+# Compliance alerting windows. Medical validity drives the medical expiry alert;
+# the alert window is how far ahead a paper counts as "expiring" (≈ the 11/23-month
+# pattern = ~1 month before a 12/24-month validity).
+MEDICAL_VALIDITY_MONTHS = int(os.getenv("MEDICAL_VALIDITY_MONTHS", "12"))
+COMPLIANCE_ALERT_DAYS = int(os.getenv("COMPLIANCE_ALERT_DAYS", "30"))
 
 CSRF_COOKIE_HTTPONLY = True
 SESSION_COOKIE_HTTPONLY = True

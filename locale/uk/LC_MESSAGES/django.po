@@ -587,3 +587,22 @@ msgstr "У цієї особи немає номера телефону."
 
 msgid "Message body is required."
 msgstr "Текст повідомлення обов’язковий."
+
+# --- compliance ---
+msgid "Compliance"
+msgstr "Відповідність"
+
+msgid "Alerts"
+msgstr "Сповіщення"
+
+msgid "Expiring"
+msgstr "Незабаром спливає"
+
+msgid "Expired"
+msgstr "Прострочено"
+
+msgid "Due"
+msgstr "Термін"
+
+msgid "No compliance alerts."
+msgstr "Немає сповіщень відповідності."

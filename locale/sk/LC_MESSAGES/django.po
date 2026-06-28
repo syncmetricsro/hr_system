@@ -587,3 +587,22 @@ msgstr "Táto osoba nemá telefónne číslo."
 
 msgid "Message body is required."
 msgstr "Telo správy je povinné."
+
+# --- compliance ---
+msgid "Compliance"
+msgstr "Súlad"
+
+msgid "Alerts"
+msgstr "Upozornenia"
+
+msgid "Expiring"
+msgstr "Čoskoro vyprší"
+
+msgid "Expired"
+msgstr "Vypršané"
+
+msgid "Due"
+msgstr "Termín"
+
+msgid "No compliance alerts."
+msgstr "Žiadne upozornenia súladu."
