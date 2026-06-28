@@ -2,7 +2,13 @@ from __future__ import annotations
 
 from django.contrib import admin
 
-from apps.logistics.models import Accommodation, Room, RoomAssignment
+from apps.logistics.models import (
+    Accommodation,
+    EquipmentIssue,
+    EquipmentItem,
+    Room,
+    RoomAssignment,
+)
 
 
 class RoomInline(admin.TabularInline):
@@ -29,3 +35,18 @@ class RoomAssignmentAdmin(admin.ModelAdmin):
     list_display = ("person", "room", "status", "start_date", "end_date")
     list_filter = ("status",)
     search_fields = ("person__search_name",)
+
+
+@admin.register(EquipmentItem)
+class EquipmentItemAdmin(admin.ModelAdmin):
+    list_display = ("name", "size", "is_active")
+    list_filter = ("is_active",)
+    search_fields = ("name",)
+
+
+@admin.register(EquipmentIssue)
+class EquipmentIssueAdmin(admin.ModelAdmin):
+    list_display = ("person", "item", "quantity", "status", "issued_at", "returned_at")
+    list_filter = ("status",)
+    search_fields = ("person__search_name", "item__name")
+    readonly_fields = ("issued_at", "returned_at")

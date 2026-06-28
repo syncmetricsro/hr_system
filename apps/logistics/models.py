@@ -80,3 +80,50 @@ class RoomAssignment(models.Model):
 
     def __str__(self) -> str:
         return f"{self.person} -> {self.room} ({self.status})"
+
+
+class EquipmentItem(models.Model):
+    """Catalog item (plan §11.8, minimal Phase 1: no valuation/pricing)."""
+
+    name = models.CharField(_("name"), max_length=200)
+    size = models.CharField(_("size"), max_length=50, blank=True)
+    is_active = models.BooleanField(_("active"), default=True)
+    created_at = models.DateTimeField(_("created"), auto_now_add=True)
+
+    class Meta:
+        verbose_name = _("equipment item")
+        verbose_name_plural = _("equipment items")
+        ordering = ("name", "size")
+
+    def __str__(self) -> str:
+        return f"{self.name} {self.size}".strip()
+
+
+class EquipmentIssueStatus(models.TextChoices):
+    ISSUED = "issued", _("Issued")
+    RETURNED = "returned", _("Returned")
+
+
+class EquipmentIssue(models.Model):
+    person = models.ForeignKey(
+        "people.Person", on_delete=models.PROTECT, related_name="equipment_issues", verbose_name=_("person")
+    )
+    item = models.ForeignKey(
+        EquipmentItem, on_delete=models.PROTECT, related_name="issues", verbose_name=_("item")
+    )
+    quantity = models.PositiveIntegerField(_("quantity"), default=1)
+    status = models.CharField(_("status"), max_length=20, choices=EquipmentIssueStatus.choices, default=EquipmentIssueStatus.ISSUED)
+    issued_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True,
+        related_name="issued_equipment", verbose_name=_("issued by"),
+    )
+    issued_at = models.DateTimeField(_("issued at"), auto_now_add=True)
+    returned_at = models.DateTimeField(_("returned at"), null=True, blank=True)
+
+    class Meta:
+        verbose_name = _("equipment issue")
+        verbose_name_plural = _("equipment issues")
+        ordering = ("-issued_at",)
+
+    def __str__(self) -> str:
+        return f"{self.item} -> {self.person} ({self.status})"

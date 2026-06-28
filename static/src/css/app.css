@@ -330,6 +330,11 @@ dt {
   margin-top: var(--space-3);
 }
 
+.inline-form {
+  display: inline-block;
+  margin-left: var(--space-3);
+}
+
 dd {
   margin: var(--space-1) 0 0;
   font-weight: 800;

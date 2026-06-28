@@ -407,3 +407,25 @@ msgstr "Szoba hozzárendelve."
 
 msgid "Room released."
 msgstr "Szoba felszabadítva."
+
+# --- logistics: equipment ---
+msgid "Equipment"
+msgstr "Felszerelés"
+
+msgid "Return"
+msgstr "Visszavétel"
+
+msgid "Item"
+msgstr "Tétel"
+
+msgid "Quantity"
+msgstr "Mennyiség"
+
+msgid "Issue equipment"
+msgstr "Felszerelés kiadása"
+
+msgid "Equipment issued."
+msgstr "Felszerelés kiadva."
+
+msgid "Equipment returned."
+msgstr "Felszerelés visszavéve."

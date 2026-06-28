@@ -1,5 +1,14 @@
 # Build Journal
 
+## 2026-06-28 (later) — Minimal inventory / equipment (Phase 1)
+
+- `apps/logistics`: `EquipmentItem` catalog (name/size; no valuation — Phase 3) and `EquipmentIssue` (quantity, issued/returned).
+- Services `issue_equipment` / `return_equipment` (audited).
+- UI: an Equipment panel on the person hub — issue (item + quantity) and return, gated by `equipment.issue_return` (coordinator + manager).
+- Admin; `seed_people` seeds a small catalog. i18n SK/HU/UK.
+
+Verification: ruff clean; **79 unit tests pass** (3 new: issue, return, RBAC).
+
 ## 2026-06-28 (later) — Minimal accommodation (Phase 1)
 
 First of the deferred peripheral modules. Minimal per Phase 1 (no rates/valuation; those are Phase 3, open-decisions).

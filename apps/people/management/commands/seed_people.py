@@ -3,7 +3,7 @@ from __future__ import annotations
 from django.core.management.base import BaseCommand
 
 from apps.accounts.models import User
-from apps.logistics.models import Accommodation, Room
+from apps.logistics.models import Accommodation, EquipmentItem, Room
 from apps.logistics.services import assign_room
 from apps.people.models import LifecycleStatus, Person
 from apps.projects.models import Project
@@ -69,5 +69,9 @@ class Command(BaseCommand):
         working = Person.objects.filter(lifecycle_status=LifecycleStatus.WORKING).first()
         if working and not working.room_assignments.exists():
             assign_room(working, room, actor=coordinator)
+
+        # Minimal equipment catalog.
+        for name, size in [("Pracovná obuv", "42"), ("Reflexná vesta", "L"), ("Prilba", "")]:
+            EquipmentItem.objects.get_or_create(name=name, size=size)
 
         self.stdout.write(self.style.SUCCESS(f"People seeded: {Person.objects.count()} total"))

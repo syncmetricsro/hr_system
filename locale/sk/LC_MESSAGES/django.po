@@ -407,3 +407,25 @@ msgstr "Izba pridelená."
 
 msgid "Room released."
 msgstr "Izba uvoľnená."
+
+# --- logistics: equipment ---
+msgid "Equipment"
+msgstr "Vybavenie"
+
+msgid "Return"
+msgstr "Vrátiť"
+
+msgid "Item"
+msgstr "Položka"
+
+msgid "Quantity"
+msgstr "Množstvo"
+
+msgid "Issue equipment"
+msgstr "Vydať vybavenie"
+
+msgid "Equipment issued."
+msgstr "Vybavenie vydané."
+
+msgid "Equipment returned."
+msgstr "Vybavenie vrátené."

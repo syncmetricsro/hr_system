@@ -35,4 +35,6 @@ urlpatterns += i18n_patterns(
     path("accommodation/<int:pk>/", logistics_views.accommodation_detail, name="accommodation_detail"),
     path("people/<int:person_pk>/assign-room/", logistics_views.assign_room_view, name="assign_room"),
     path("people/<int:person_pk>/release-room/", logistics_views.release_room_view, name="release_room"),
+    path("people/<int:person_pk>/issue-equipment/", logistics_views.issue_equipment_view, name="issue_equipment"),
+    path("equipment/<int:issue_pk>/return/", logistics_views.return_equipment_view, name="return_equipment"),
 )

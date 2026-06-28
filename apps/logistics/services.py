@@ -4,7 +4,12 @@ from django.db import transaction
 from django.utils import timezone
 
 from apps.audit.services import record_event
-from apps.logistics.models import RoomAssignment, RoomAssignmentStatus
+from apps.logistics.models import (
+    EquipmentIssue,
+    EquipmentIssueStatus,
+    RoomAssignment,
+    RoomAssignmentStatus,
+)
 
 
 class CapacityError(Exception):
@@ -48,3 +53,27 @@ def release_room(person, *, actor=None):
         assignment.save(update_fields=["status", "end_date"])
         record_event(actor, "room.released", target=assignment)
     return assignment
+
+
+@transaction.atomic
+def issue_equipment(person, item, quantity=1, *, actor=None):
+    issue = EquipmentIssue.objects.create(
+        person=person,
+        item=item,
+        quantity=max(1, int(quantity or 1)),
+        status=EquipmentIssueStatus.ISSUED,
+        issued_by=actor if getattr(actor, "is_authenticated", False) else None,
+    )
+    record_event(actor, "equipment.issued", target=issue, item=str(item))
+    return issue
+
+
+@transaction.atomic
+def return_equipment(issue, *, actor=None):
+    if issue.status == EquipmentIssueStatus.RETURNED:
+        return issue
+    issue.status = EquipmentIssueStatus.RETURNED
+    issue.returned_at = timezone.now()
+    issue.save(update_fields=["status", "returned_at"])
+    record_event(actor, "equipment.returned", target=issue)
+    return issue

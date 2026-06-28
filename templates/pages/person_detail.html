@@ -163,4 +163,37 @@
     <p>—</p>
   {% endif %}
 </section>
+
+<section class="panel workflow-panel">
+  <p class="eyebrow">{% trans "Logistics" %}</p>
+  <h2>{% trans "Equipment" %}</h2>
+  {% can 'equipment.issue_return' as may_equip %}
+  {% if issued_equipment %}
+    <ul class="plain-list">
+      {% for issue in issued_equipment %}
+        <li>
+          {{ issue.item }} × {{ issue.quantity }}
+          {% if may_equip %}
+            <form class="inline-form" method="post" action="{% url 'return_equipment' issue.pk %}">
+              {% csrf_token %}
+              <button class="button button-secondary" type="submit">{% trans "Return" %}</button>
+            </form>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>—</p>
+  {% endif %}
+  {% if may_equip %}
+    <form class="people-search" method="post" action="{% url 'issue_equipment' person.pk %}">
+      {% csrf_token %}
+      <select name="item" aria-label="{% trans 'Item' %}">
+        {% for item in equipment_items %}<option value="{{ item.pk }}">{{ item }}</option>{% endfor %}
+      </select>
+      <input type="number" name="quantity" value="1" min="1" aria-label="{% trans 'Quantity' %}">
+      <button class="button button-primary" type="submit">{% trans "Issue equipment" %}</button>
+    </form>
+  {% endif %}
+</section>
 {% endblock %}

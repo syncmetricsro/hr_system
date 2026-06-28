@@ -407,3 +407,25 @@ msgstr "Кімнату призначено."
 
 msgid "Room released."
 msgstr "Кімнату звільнено."
+
+# --- logistics: equipment ---
+msgid "Equipment"
+msgstr "Спорядження"
+
+msgid "Return"
+msgstr "Повернути"
+
+msgid "Item"
+msgstr "Позиція"
+
+msgid "Quantity"
+msgstr "Кількість"
+
+msgid "Issue equipment"
+msgstr "Видати спорядження"
+
+msgid "Equipment issued."
+msgstr "Спорядження видано."
+
+msgid "Equipment returned."
+msgstr "Спорядження повернено."

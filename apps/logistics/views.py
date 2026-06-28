@@ -9,8 +9,14 @@ from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
 
 from apps.accounts.permissions import Action, require_action
-from apps.logistics.models import Accommodation, Room
-from apps.logistics.services import CapacityError, assign_room, release_room
+from apps.logistics.models import Accommodation, EquipmentIssue, EquipmentItem, Room
+from apps.logistics.services import (
+    CapacityError,
+    assign_room,
+    issue_equipment,
+    release_room,
+    return_equipment,
+)
 from apps.people.models import Person
 
 
@@ -52,3 +58,22 @@ def release_room_view(request: HttpRequest, person_pk: int) -> HttpResponse:
     release_room(person, actor=request.user)
     messages.success(request, _("Room released."))
     return redirect("person_detail", pk=person.pk)
+
+
+@require_POST
+@require_action(Action.EQUIPMENT_ISSUE_RETURN)
+def issue_equipment_view(request: HttpRequest, person_pk: int) -> HttpResponse:
+    person = get_object_or_404(Person, pk=person_pk)
+    item = get_object_or_404(EquipmentItem, pk=request.POST.get("item"))
+    issue_equipment(person, item, request.POST.get("quantity", 1), actor=request.user)
+    messages.success(request, _("Equipment issued."))
+    return redirect("person_detail", pk=person.pk)
+
+
+@require_POST
+@require_action(Action.EQUIPMENT_ISSUE_RETURN)
+def return_equipment_view(request: HttpRequest, issue_pk: int) -> HttpResponse:
+    issue = get_object_or_404(EquipmentIssue, pk=issue_pk)
+    return_equipment(issue, actor=request.user)
+    messages.success(request, _("Equipment returned."))
+    return redirect("person_detail", pk=issue.person_id)

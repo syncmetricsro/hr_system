@@ -12,7 +12,12 @@ from apps.audit.services import record_event
 from apps.people.forms import PersonForm
 from apps.people.models import LifecycleStatus, Person
 from apps.people.permissions import can_view_sensitive
-from apps.logistics.models import Room, RoomAssignmentStatus
+from apps.logistics.models import (
+    EquipmentItem,
+    EquipmentIssueStatus,
+    Room,
+    RoomAssignmentStatus,
+)
 from apps.projects.models import PillarState, Project, TrialOutcome
 from apps.projects.services import get_or_create_readiness
 
@@ -85,5 +90,9 @@ def person_detail(request: HttpRequest, pk: int) -> TemplateResponse:
             "rooms": Room.objects.select_related("accommodation").filter(
                 accommodation__is_active=True
             ),
+            "issued_equipment": person.equipment_issues.filter(
+                status=EquipmentIssueStatus.ISSUED
+            ).select_related("item"),
+            "equipment_items": EquipmentItem.objects.filter(is_active=True),
         },
     )
