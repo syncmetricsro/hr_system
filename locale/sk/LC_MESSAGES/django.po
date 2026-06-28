@@ -224,3 +224,43 @@ msgstr "Zdravotné postihnutie"
 
 msgid "Restricted — visible only to managers, observers, the owning recruiter, and the responsible coordinator."
 msgstr "Obmedzené — viditeľné iba pre manažérov, pozorovateľov, zodpovedného náborára a zodpovedného koordinátora."
+
+# --- projects UI ---
+msgid "Operations"
+msgstr "Prevádzka"
+
+msgid "Code"
+msgstr "Kód"
+
+msgid "Active"
+msgstr "Aktívny"
+
+msgid "No projects found."
+msgstr "Nenašli sa žiadne projekty."
+
+msgid "Project"
+msgstr "Projekt"
+
+msgid "Back to projects"
+msgstr "Späť na projekty"
+
+msgid "Partner"
+msgstr "Partner"
+
+msgid "Office"
+msgstr "Pobočka"
+
+msgid "Responsible coordinators"
+msgstr "Zodpovední koordinátori"
+
+msgid "Financial reporting"
+msgstr "Finančné vykazovanie"
+
+msgid "Assigned"
+msgstr "Pridelení"
+
+msgid "Workers"
+msgstr "Pracovníci"
+
+msgid "No workers assigned."
+msgstr "Nie sú pridelení žiadni pracovníci."

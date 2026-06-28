@@ -224,3 +224,43 @@ msgstr "Fogyatékosság"
 
 msgid "Restricted — visible only to managers, observers, the owning recruiter, and the responsible coordinator."
 msgstr "Korlátozott — csak a menedzserek, megfigyelők, a felelős toborzó és a felelős koordinátor számára látható."
+
+# --- projects UI ---
+msgid "Operations"
+msgstr "Műveletek"
+
+msgid "Code"
+msgstr "Kód"
+
+msgid "Active"
+msgstr "Aktív"
+
+msgid "No projects found."
+msgstr "Nincs találat."
+
+msgid "Project"
+msgstr "Projekt"
+
+msgid "Back to projects"
+msgstr "Vissza a projektekhez"
+
+msgid "Partner"
+msgstr "Partner"
+
+msgid "Office"
+msgstr "Iroda"
+
+msgid "Responsible coordinators"
+msgstr "Felelős koordinátorok"
+
+msgid "Financial reporting"
+msgstr "Pénzügyi jelentés"
+
+msgid "Assigned"
+msgstr "Hozzárendelve"
+
+msgid "Workers"
+msgstr "Dolgozók"
+
+msgid "No workers assigned."
+msgstr "Nincs hozzárendelt dolgozó."

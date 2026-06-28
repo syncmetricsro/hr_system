@@ -1,5 +1,12 @@
 # Test Journal
 
+## 2026-06-28 (later) — Project UI
+
+- Added `tests/test_project_views.py` (3): list requires login; list shows a project; detail lists assigned workers.
+- Translated + recompiled new project UI strings (SK/HU/UK), no duplicate-msgid errors.
+- **Full unit suite: 60 passed** (was 57); ruff clean.
+- Live check: `/projects/` and `/projects/<id>/` render in Slovak; DHL Bratislava detail lists the assigned worker linked to their person page. Screenshots reviewed.
+
 ## 2026-06-28 (later) — People UI
 
 - Added `tests/test_people_views.py` (5): list requires login; list shows a person; detail shows sensitive data to a manager and to the owning recruiter; detail hides it from an unconnected recruiter.

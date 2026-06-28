@@ -1,5 +1,17 @@
 # Build Journal
 
+## 2026-06-28 (later) — Project UI
+
+Read-only Project list + detail, mirroring the People pattern.
+
+What changed:
+- `apps/projects/views.py`: `project_list` and `project_detail` (login-gated). Detail shows code/partner/office/responsible coordinators/financial-reporting eligibility plus the active **Workers** on the project, each linked to their person page.
+- Templates `pages/project_list.html` + `pages/project_detail.html`; wired the **Projects** nav tab to the route and added `/projects/`, `/projects/<id>/`. Small `.plain-list` CSS.
+- i18n: translated the new project UI strings (SK/HU/UK) and recompiled.
+- Verified live (manager): list shows the three seeded projects with active status; DHL Bratislava detail lists the assigned worker linked back to People.
+
+Verification: ruff clean; **60 unit tests pass** (3 new project view tests); screenshots reviewed.
+
 ## 2026-06-28 (later) — People UI
 
 Surfaced the Person spine in the app (read-only), the lowest-hanging next slice.

@@ -224,3 +224,43 @@ msgstr "Інвалідність"
 
 msgid "Restricted — visible only to managers, observers, the owning recruiter, and the responsible coordinator."
 msgstr "Обмежено — видно лише менеджерам, спостерігачам, відповідальному рекрутеру та відповідальному координатору."
+
+# --- projects UI ---
+msgid "Operations"
+msgstr "Операції"
+
+msgid "Code"
+msgstr "Код"
+
+msgid "Active"
+msgstr "Активний"
+
+msgid "No projects found."
+msgstr "Проєктів не знайдено."
+
+msgid "Project"
+msgstr "Проєкт"
+
+msgid "Back to projects"
+msgstr "Назад до проєктів"
+
+msgid "Partner"
+msgstr "Партнер"
+
+msgid "Office"
+msgstr "Офіс"
+
+msgid "Responsible coordinators"
+msgstr "Відповідальні координатори"
+
+msgid "Financial reporting"
+msgstr "Фінансова звітність"
+
+msgid "Assigned"
+msgstr "Призначені"
+
+msgid "Workers"
+msgstr "Працівники"
+
+msgid "No workers assigned."
+msgstr "Немає призначених працівників."

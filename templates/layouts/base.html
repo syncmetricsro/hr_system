@@ -24,7 +24,7 @@
       <nav id="primary-nav" class="folder-tabs" x-bind:data-open="open">
         <a class="folder-tab is-active" href="{% url 'dashboard' %}">{% trans "Overview" %}</a>
         <a class="folder-tab" href="{% url 'people_list' %}">{% trans "People" %}</a>
-        <a class="folder-tab" href="#projekty">{% trans "Projects" %}</a>
+        <a class="folder-tab" href="{% url 'project_list' %}">{% trans "Projects" %}</a>
         <a class="folder-tab" href="#teren">{% trans "Field" %}</a>
         <a class="folder-tab" href="#spravy">{% trans "Messages" %}</a>
       </nav>
