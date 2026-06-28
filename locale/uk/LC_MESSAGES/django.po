@@ -625,3 +625,10 @@ msgstr "Вихід до Неактивний"
 
 msgid "Exit completed."
 msgstr "Вихід завершено."
+
+# --- transport trends ---
+msgid "Transport trends"
+msgstr "Тренди транспорту"
+
+msgid "No transport data."
+msgstr "Немає даних про транспорт."

@@ -625,3 +625,10 @@ msgstr "Odchod na Neaktívny"
 
 msgid "Exit completed."
 msgstr "Odchod dokončený."
+
+# --- transport trends ---
+msgid "Transport trends"
+msgstr "Trendy dopravy"
+
+msgid "No transport data."
+msgstr "Žiadne údaje o doprave."

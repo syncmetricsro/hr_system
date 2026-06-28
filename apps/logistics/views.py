@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from collections import defaultdict
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, HttpResponse
@@ -9,7 +11,13 @@ from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
 
 from apps.accounts.permissions import Action, require_action
-from apps.logistics.models import Accommodation, EquipmentIssue, EquipmentItem, Room
+from apps.logistics.models import (
+    Accommodation,
+    EquipmentIssue,
+    EquipmentItem,
+    Room,
+    TransportWeek,
+)
 from apps.logistics.services import (
     CapacityError,
     assign_room,
@@ -20,6 +28,41 @@ from apps.logistics.services import (
 )
 from apps.people.models import Person
 from apps.projects.models import Project
+
+
+@login_required
+def transport_trends(request: HttpRequest) -> TemplateResponse:
+    """Weekly transport headcount trends per project + company total (plan §11.10).
+
+    Rendered as dependency-free CSS bars (no JS charting library)."""
+    weeks = sorted(set(TransportWeek.objects.values_list("week_start", flat=True)))[-12:]
+    rows = TransportWeek.objects.filter(week_start__in=weeks).select_related("project")
+
+    by_project: dict = defaultdict(dict)
+    totals = {week: 0 for week in weeks}
+    max_headcount = 1
+    for row in rows:
+        by_project[row.project][row.week_start] = row.headcount
+        totals[row.week_start] += row.headcount
+        max_headcount = max(max_headcount, row.headcount)
+    max_total = max(list(totals.values()) or [1]) or 1
+
+    def pct(value: int, ceiling: int) -> int:
+        return int(value * 100 / ceiling) if ceiling else 0
+
+    series = []
+    for project, week_map in by_project.items():
+        series.append({
+            "project": project,
+            "weeks": [
+                {"week": w, "headcount": week_map.get(w, 0), "pct": pct(week_map.get(w, 0), max_headcount)}
+                for w in weeks
+            ],
+        })
+    company = [{"week": w, "total": totals[w], "pct": pct(totals[w], max_total)} for w in weeks]
+    return TemplateResponse(
+        request, "pages/transport_trends.html", {"series": series, "company": company},
+    )
 
 
 @login_required

@@ -47,6 +47,7 @@ urlpatterns += i18n_patterns(
     path("people/<int:person_pk>/issue-equipment/", logistics_views.issue_equipment_view, name="issue_equipment"),
     path("equipment/<int:issue_pk>/return/", logistics_views.return_equipment_view, name="return_equipment"),
     path("projects/<int:project_pk>/transport/", logistics_views.record_transport_view, name="record_transport"),
+    path("transport/", logistics_views.transport_trends, name="transport_trends"),
     path("finance/", finance_views.finance_summary, name="finance_summary"),
     path("finance/record/", finance_views.record_month, name="finance_record"),
     path("intake/start/", intake_views.intake_start, name="intake_start"),

@@ -1,5 +1,12 @@
 # Build Journal
 
+## 2026-06-28 — Phase 3 (3/n): transport trends
+
+- `logistics.views.transport_trends`: last-12-weeks transport headcount per project + company total per week (plan §11.10), rendered as **dependency-free CSS bar charts** (no JS library).
+- New Transport nav tab + `/transport/`. i18n SK/HU/UK.
+
+Verification: ruff clean; **151 unit tests pass** (2 new: login required; company total = sum across projects).
+
 ## 2026-06-28 — Phase 3 (2/n): exit reconciliation & recycling
 
 - `projects.services.exit_person`: atomic exit reconciliation (plan §11.13) — ends the active project assignment, releases the room, returns all issued equipment, then recycles the person to **Available** (default) or **Inactive**; audited. Orchestrates the existing lifecycle + logistics services. Missing-returnable-item **deductions remain an open decision** and are not modelled.

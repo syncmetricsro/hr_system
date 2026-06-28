@@ -1,0 +1,41 @@
+{% extends "layouts/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Transport trends" %} · Jober{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <p class="eyebrow">{% trans "Logistics" %}</p>
+  <h1>{% trans "Transport trends" %}</h1>
+</section>
+
+{% if company %}
+<section class="panel">
+  <p class="eyebrow">{% trans "Company total" %}</p>
+  <h2>{% trans "Weekly transport" %}</h2>
+  {% for w in company %}
+    <div class="trend-row">
+      <span class="trend-label">{{ w.week|date:"Y-m-d" }}</span>
+      <span class="bar"><span class="bar-fill" style="width: {{ w.pct }}%"></span></span>
+      <span class="trend-value">{{ w.total }}</span>
+    </div>
+  {% endfor %}
+</section>
+
+{% for s in series %}
+<section class="panel">
+  <p class="eyebrow">{% trans "Project" %}</p>
+  <h2>{{ s.project.name }}</h2>
+  {% for w in s.weeks %}
+    <div class="trend-row">
+      <span class="trend-label">{{ w.week|date:"Y-m-d" }}</span>
+      <span class="bar"><span class="bar-fill" style="width: {{ w.pct }}%"></span></span>
+      <span class="trend-value">{{ w.headcount }}</span>
+    </div>
+  {% endfor %}
+</section>
+{% endfor %}
+{% else %}
+<section class="panel"><p>{% trans "No transport data." %}</p></section>
+{% endif %}
+{% endblock %}
