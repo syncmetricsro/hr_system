@@ -690,3 +690,6 @@ msgstr "A címke kötelező."
 
 msgid "Feedback link created."
 msgstr "Visszajelzési link létrehozva."
+
+msgid "People by status"
+msgstr "Emberek állapot szerint"

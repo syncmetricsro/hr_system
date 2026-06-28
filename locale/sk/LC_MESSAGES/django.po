@@ -690,3 +690,6 @@ msgstr "Označenie je povinné."
 
 msgid "Feedback link created."
 msgstr "Odkaz na spätnú väzbu vytvorený."
+
+msgid "People by status"
+msgstr "Ľudia podľa stavu"
