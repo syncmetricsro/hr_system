@@ -1,0 +1,58 @@
+# Phase 3/4 — Open Questions for Jober
+
+Created: 2026-06-29
+
+These block the remaining Phase 3 modules (accommodation pricing, equipment
+deductions, blacklist) and the start of Phase 4 (finance). Each has a safe
+default we'll use if no answer arrives — except the blacklist, which can't be
+built for real use without the legal answer. Record the answer + date on each.
+
+## 1. Accommodation cost
+How should housing cost be tracked? Is there a **fixed monthly rate per room**,
+or **per bed / per person**? Do different accommodations/rooms have different
+rates, and are there **per-worker overrides** (someone pays a different amount)?
+Is the cost just **recorded for reporting**, or **charged/deducted** from the
+worker?
+- Why it matters: shapes the rate model + occupancy-cost reporting.
+- Safe default: monthly rate **per room**, recorded for reporting only (no
+  auto-deduction), with an optional per-assignment override.
+- **Answer:**
+
+## 2. Unreturned equipment (deduction review)
+When a worker does **not return** issued gear, what should happen? Is the
+item's **value deducted** from their pay? **Who reviews/approves** the
+deduction, and is there a waive/appeal step?
+- Why it matters: shapes the returns → deduction workflow (the valuation itself
+  is already built: latest manual unit price).
+- Safe default: flag unreturned items at their unit price for a **manager to
+  review/approve**; **no** automatic payroll deduction.
+- **Answer:**
+
+## 3. Blacklist (legal)
+Do you keep a list of workers who must **not be rehired/placed**, and what is
+the **legal basis (GDPR)** for it? What data identifies a person on it (name +
+ID number?), **who may see the reason** (managers only?), and how long is it
+kept (5 years was mentioned)? Should matching use a **hashed ID** so we never
+store the raw ID number?
+- Why it matters: lawyer item — **blocks building the blacklist module for real
+  use** (DPA / blacklist legality).
+- Safe default: none — needs the legal answer first. (We can build inert
+  mechanics, but the legal answer may reshape them.)
+- **Answer:**
+
+## 4. Finance sign convention (Phase 4)
+In your monthly finance sheet, are **costs entered as negative numbers**, or are
+costs **positive** and the system computes **revenue − cost**? Could you share
+**one filled-in month** so we match it exactly (and avoid the two summing bugs
+in the current spreadsheet)?
+- Why it matters: determines how "net" is computed across the finance module;
+  **Phase 4 blocker**.
+- Safe default: `net = revenue − cost` (current assumption), to confirm.
+- **Answer:**
+
+## 5. Inactive reasons (minor)
+What are the allowed reasons for marking a person **Inactive** (e.g. sick, left,
+suspended, military service)?
+- Why it matters: catalog values for the lifecycle.
+- Safe default: build a configurable list; seed a few placeholders.
+- **Answer:**
