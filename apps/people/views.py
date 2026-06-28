@@ -117,5 +117,10 @@ def person_detail(request: HttpRequest, pk: int) -> TemplateResponse:
             ),
             "message_templates": MessageTemplate.objects.filter(is_active=True),
             "recent_messages": person.messages.all()[:5],
+            "can_exit": user_can(request.user, Action.EXIT_RECONCILE) and (
+                person.lifecycle_status == LifecycleStatus.WORKING
+                or person.room_assignments.filter(status=RoomAssignmentStatus.ACTIVE).exists()
+                or person.equipment_issues.filter(status=EquipmentIssueStatus.ISSUED).exists()
+            ),
         },
     )

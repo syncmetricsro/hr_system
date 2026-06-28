@@ -606,3 +606,22 @@ msgstr "Termín"
 
 msgid "No compliance alerts."
 msgstr "Žiadne upozornenia súladu."
+
+# --- exit / recycling ---
+msgid "Exit"
+msgstr "Odchod"
+
+msgid "Exit & reconcile"
+msgstr "Odchod a vyúčtovanie"
+
+msgid "Ends the project assignment, releases the room, and returns issued equipment."
+msgstr "Ukončí pridelenie na projekt, uvoľní izbu a vráti vydané vybavenie."
+
+msgid "Exit to Available"
+msgstr "Odchod na Dostupný"
+
+msgid "Exit to Inactive"
+msgstr "Odchod na Neaktívny"
+
+msgid "Exit completed."
+msgstr "Odchod dokončený."

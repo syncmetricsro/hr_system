@@ -1,5 +1,13 @@
 # Build Journal
 
+## 2026-06-28 — Phase 3 (2/n): exit reconciliation & recycling
+
+- `projects.services.exit_person`: atomic exit reconciliation (plan §11.13) — ends the active project assignment, releases the room, returns all issued equipment, then recycles the person to **Available** (default) or **Inactive**; audited. Orchestrates the existing lifecycle + logistics services. Missing-returnable-item **deductions remain an open decision** and are not modelled.
+- Exit panel on the person card (gated `exit.reconcile` — coordinator + manager) with Exit-to-Available / Exit-to-Inactive; shown when there's something to reconcile (Working, active room, or issued equipment).
+- i18n SK/HU/UK. No new migrations (reuses existing models).
+
+Verification: ruff clean; **149 unit tests pass** (4 new: full reconcile + recycle, exit-to-inactive, view RBAC deny/allow).
+
 ## 2026-06-28 — Phase 3 (1/n): compliance alerts
 
 Fulfils the manager's earlier explicit ask (alerts for missing/expiring papers); plan §3 / §11.9.

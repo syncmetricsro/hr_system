@@ -20,6 +20,7 @@ from apps.projects.models import (
 from apps.projects.services import (
     WorkflowError,
     activate_from_readiness,
+    exit_person,
     get_or_create_readiness,
     record_trial_outcome,
     schedule_trial,
@@ -115,6 +116,16 @@ def readiness_update(request: HttpRequest, person_pk: int) -> HttpResponse:
         messages.success(request, _("Readiness saved."))
     except WorkflowError as exc:
         messages.error(request, str(exc))
+    return redirect("person_detail", pk=person.pk)
+
+
+@require_POST
+@require_action(Action.EXIT_RECONCILE)
+def exit_view(request: HttpRequest, person_pk: int) -> HttpResponse:
+    person = get_object_or_404(Person, pk=person_pk)
+    outcome = "inactive" if request.POST.get("outcome") == "inactive" else "available"
+    exit_person(person, actor=request.user, reason=request.POST.get("reason", ""), outcome=outcome)
+    messages.success(request, _("Exit completed."))
     return redirect("person_detail", pk=person.pk)
 
 
