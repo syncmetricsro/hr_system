@@ -1,5 +1,7 @@
 # Jober — Hungarian (hu) translation catalog.
 # Generated from English source strings. AI-authored; pending fluent-speaker review.
+# Operational UI strings are translated; admin-only model field labels fall back
+# to English until a later i18n pass.
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -7,6 +9,7 @@ msgstr ""
 "Language: hu\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+# --- accounts / admin ---
 msgid "Profile"
 msgstr "Profil"
 
@@ -28,48 +31,26 @@ msgstr "Menedzser/Adminisztrátor"
 msgid "Observer"
 msgstr "Megfigyelő"
 
-msgid "email"
-msgstr "e-mail"
-
-msgid "role"
-msgstr "szerepkör"
-
-msgid "user"
-msgstr "felhasználó"
-
-msgid "users"
-msgstr "felhasználók"
-
 msgid "Invalid email or password."
 msgstr "Hibás e-mail vagy jelszó."
 
-msgid "actor"
-msgstr "szereplő"
+# --- lifecycle status labels ---
+msgid "Available"
+msgstr "Elérhető"
 
-msgid "action"
-msgstr "művelet"
+msgid "Trial day"
+msgstr "Próbanap"
 
-msgid "target type"
-msgstr "céltípus"
+msgid "Working"
+msgstr "Dolgozik"
 
-msgid "target id"
-msgstr "cél azonosító"
+msgid "Inactive"
+msgstr "Inaktív"
 
-msgid "reason"
-msgstr "indok"
+msgid "Blacklisted"
+msgstr "Feketelistán"
 
-msgid "metadata"
-msgstr "metaadat"
-
-msgid "created"
-msgstr "létrehozva"
-
-msgid "audit event"
-msgstr "naplóbejegyzés"
-
-msgid "audit events"
-msgstr "naplóbejegyzések"
-
+# --- shell / navigation ---
 msgid "Jober operations"
 msgstr "Jober üzemeltetés"
 
@@ -84,6 +65,9 @@ msgstr "Navigáció megnyitása"
 
 msgid "Overview"
 msgstr "Áttekintés"
+
+msgid "People"
+msgstr "Emberek"
 
 msgid "Projects"
 msgstr "Projektek"
@@ -103,6 +87,7 @@ msgstr "Szerepkör"
 msgid "Sign out"
 msgstr "Kijelentkezés"
 
+# --- dashboard ---
 msgid "Operational overview"
 msgstr "Üzemeltetési áttekintés"
 
@@ -142,6 +127,16 @@ msgstr "Nincs végleges adat"
 msgid "This shell uses fictional values only. Real personal data arrives only after the legal and security gate."
 msgstr "Ez a felület csak fiktív értékeket használ. A valódi személyes adatok csak a jogi és biztonsági kapu után érkeznek."
 
+msgid "Responsible"
+msgstr "Felelős"
+
+msgid "Readiness"
+msgstr "Készenlét"
+
+msgid "Missing"
+msgstr "Hiányzik"
+
+# --- login ---
 msgid "Sign in"
 msgstr "Bejelentkezés"
 
@@ -160,11 +155,361 @@ msgstr "Jelszó"
 msgid "Continue"
 msgstr "Folytatás"
 
-msgid "Responsible"
-msgstr "Felelős"
+# --- people list / detail ---
+msgid "Workforce"
+msgstr "Munkaerő"
 
-msgid "Readiness"
-msgstr "Készenlét"
+msgid "Search by name"
+msgstr "Keresés név szerint"
 
-msgid "Missing"
-msgstr "Hiányzik"
+msgid "Search"
+msgstr "Keresés"
+
+msgid "Status"
+msgstr "Állapot"
+
+msgid "No people found."
+msgstr "Nincs találat."
+
+msgid "Person"
+msgstr "Személy"
+
+msgid "Back to people"
+msgstr "Vissza az emberekhez"
+
+msgid "Operational"
+msgstr "Üzemeltetési"
+
+msgid "Details"
+msgstr "Részletek"
+
+msgid "Phone"
+msgstr "Telefon"
+
+msgid "Address"
+msgstr "Cím"
+
+msgid "Nationality"
+msgstr "Állampolgárság"
+
+msgid "Current project"
+msgstr "Jelenlegi projekt"
+
+msgid "Owning recruiter"
+msgstr "Felelős toborzó"
+
+msgid "Rehire eligible"
+msgstr "Újrafoglalkoztatható"
+
+msgid "Yes"
+msgstr "Igen"
+
+msgid "No"
+msgstr "Nem"
+
+msgid "Restricted"
+msgstr "Korlátozott"
+
+msgid "Personal data"
+msgstr "Személyes adatok"
+
+msgid "Date of birth"
+msgstr "Születési dátum"
+
+msgid "Place of birth"
+msgstr "Születési hely"
+
+msgid "Disability"
+msgstr "Fogyatékosság"
+
+msgid "Restricted — visible only to managers, observers, the owning recruiter, and the responsible coordinator."
+msgstr "Korlátozott — csak a menedzserek, megfigyelők, a felelős toborzó és a felelős koordinátor számára látható."
+
+# --- projects UI ---
+msgid "Operations"
+msgstr "Műveletek"
+
+msgid "Code"
+msgstr "Kód"
+
+msgid "Active"
+msgstr "Aktív"
+
+msgid "No projects found."
+msgstr "Nincs találat."
+
+msgid "Project"
+msgstr "Projekt"
+
+msgid "Back to projects"
+msgstr "Vissza a projektekhez"
+
+msgid "Partner"
+msgstr "Partner"
+
+msgid "Office"
+msgstr "Iroda"
+
+msgid "Responsible coordinators"
+msgstr "Felelős koordinátorok"
+
+msgid "Financial reporting"
+msgstr "Pénzügyi jelentés"
+
+msgid "Assigned"
+msgstr "Hozzárendelve"
+
+msgid "Workers"
+msgstr "Dolgozók"
+
+msgid "No workers assigned."
+msgstr "Nincs hozzárendelt dolgozó."
+
+# --- workflow: trials / readiness / intake ---
+msgid "Next step"
+msgstr "Következő lépés"
+
+msgid "Send to a project trial"
+msgstr "Küldés próbanapra"
+
+msgid "Schedule trial"
+msgstr "Próbanap ütemezése"
+
+msgid "Record trial outcome"
+msgstr "Próba eredményének rögzítése"
+
+msgid "Pass"
+msgstr "Megfelelt"
+
+msgid "Fail"
+msgstr "Nem felelt meg"
+
+msgid "No-show"
+msgstr "Nem jelent meg"
+
+msgid "Awaiting the coordinator's outcome."
+msgstr "Várakozás a koordinátor eredményére."
+
+msgid "Trials"
+msgstr "Próbanapok"
+
+msgid "No trials awaiting an outcome."
+msgstr "Nincs eredményre váró próbanap."
+
+msgid "Trial scheduled."
+msgstr "Próbanap ütemezve."
+
+msgid "Trial outcome recorded."
+msgstr "Próba eredménye rögzítve."
+
+msgid "Pending"
+msgstr "Függőben"
+
+msgid "Four-pillar readiness"
+msgstr "Négypilléres készenlét"
+
+msgid "Medical"
+msgstr "Orvosi"
+
+msgid "Gear"
+msgstr "Felszerelés"
+
+msgid "Accommodation"
+msgstr "Szállás"
+
+msgid "Transport"
+msgstr "Szállítás"
+
+msgid "Incomplete"
+msgstr "Hiányos"
+
+msgid "Complete"
+msgstr "Kész"
+
+msgid "Not applicable"
+msgstr "Nem alkalmazható"
+
+msgid "Save readiness"
+msgstr "Készenlét mentése"
+
+msgid "Activate (Working)"
+msgstr "Aktiválás (Dolgozik)"
+
+msgid "Ready to activate"
+msgstr "Aktiválásra kész"
+
+msgid "Medical and gear required"
+msgstr "Orvosi és felszerelés szükséges"
+
+msgid "Readiness saved."
+msgstr "Készenlét elmentve."
+
+msgid "Activated — now Working."
+msgstr "Aktiválva — most Dolgozik."
+
+msgid "Add person"
+msgstr "Személy hozzáadása"
+
+msgid "Intake"
+msgstr "Felvétel"
+
+msgid "Save"
+msgstr "Mentés"
+
+msgid "First name"
+msgstr "Keresztnév"
+
+msgid "Last name"
+msgstr "Vezetéknév"
+
+msgid "Has disability"
+msgstr "Fogyatékossággal él"
+
+msgid "Disability type"
+msgstr "Fogyatékosság típusa"
+
+msgid "Preferred language"
+msgstr "Preferált nyelv"
+
+msgid "Person added."
+msgstr "Személy hozzáadva."
+
+# --- logistics: accommodation ---
+msgid "Logistics"
+msgstr "Logisztika"
+
+msgid "Release room"
+msgstr "Szoba felszabadítása"
+
+msgid "Room"
+msgstr "Szoba"
+
+msgid "Assign room"
+msgstr "Szoba hozzárendelése"
+
+msgid "Rooms"
+msgstr "Szobák"
+
+msgid "No accommodations found."
+msgstr "Nincs találat."
+
+msgid "Back"
+msgstr "Vissza"
+
+msgid "Occupancy"
+msgstr "Kihasználtság"
+
+msgid "No rooms."
+msgstr "Nincsenek szobák."
+
+msgid "Room assigned."
+msgstr "Szoba hozzárendelve."
+
+msgid "Room released."
+msgstr "Szoba felszabadítva."
+
+# --- logistics: equipment ---
+msgid "Equipment"
+msgstr "Felszerelés"
+
+msgid "Return"
+msgstr "Visszavétel"
+
+msgid "Item"
+msgstr "Tétel"
+
+msgid "Quantity"
+msgstr "Mennyiség"
+
+msgid "Issue equipment"
+msgstr "Felszerelés kiadása"
+
+msgid "Equipment issued."
+msgstr "Felszerelés kiadva."
+
+msgid "Equipment returned."
+msgstr "Felszerelés visszavéve."
+
+# --- logistics: transport ---
+msgid "Weekly transport"
+msgstr "Heti szállítás"
+
+msgid "No transport weeks recorded."
+msgstr "Nincs rögzített szállítási hét."
+
+msgid "Week start"
+msgstr "Hét kezdete"
+
+msgid "Headcount"
+msgstr "Létszám"
+
+msgid "Record week"
+msgstr "Hét rögzítése"
+
+msgid "Transport week recorded."
+msgstr "Szállítási hét rögzítve."
+
+msgid "Week start is required."
+msgstr "A hét kezdete kötelező."
+
+# --- finance ---
+msgid "Finance"
+msgstr "Pénzügyek"
+
+msgid "Reports"
+msgstr "Jelentések"
+
+msgid "Revenue"
+msgstr "Bevétel"
+
+msgid "Cost"
+msgstr "Költség"
+
+msgid "Net"
+msgstr "Nettó"
+
+msgid "Year"
+msgstr "Év"
+
+msgid "Month"
+msgstr "Hónap"
+
+msgid "Record month"
+msgstr "Hónap rögzítése"
+
+msgid "Financial months"
+msgstr "Pénzügyi hónapok"
+
+msgid "No financial months."
+msgstr "Nincs pénzügyi hónap."
+
+msgid "Company total"
+msgstr "Vállalati összesen"
+
+msgid "Financial month saved."
+msgstr "Pénzügyi hónap elmentve."
+
+msgid "Invalid input."
+msgstr "Érvénytelen bevitel."
+
+# --- intake engine ---
+msgid "Step"
+msgstr "Lépés"
+
+msgid "Next"
+msgstr "Tovább"
+
+msgid "Finish"
+msgstr "Befejezés"
+
+msgid "Required."
+msgstr "Kötelező."
+
+msgid "Please type a value (or the word for 'none')."
+msgstr "Adjon meg értéket (vagy a nincs szót)."
+
+msgid "No published intake questionnaire."
+msgstr "Nincs közzétett felvételi kérdőív."
+
+msgid "Intake complete — person added."
+msgstr "Felvétel kész — személy hozzáadva."

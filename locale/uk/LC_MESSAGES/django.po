@@ -1,5 +1,7 @@
 # Jober — Ukrainian (uk) translation catalog.
 # Generated from English source strings. AI-authored; pending fluent-speaker review.
+# Operational UI strings are translated; admin-only model field labels fall back
+# to English until a later i18n pass.
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -7,6 +9,7 @@ msgstr ""
 "Language: uk\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
+# --- accounts / admin ---
 msgid "Profile"
 msgstr "Профіль"
 
@@ -28,48 +31,26 @@ msgstr "Менеджер/Адміністратор"
 msgid "Observer"
 msgstr "Спостерігач"
 
-msgid "email"
-msgstr "електронна пошта"
-
-msgid "role"
-msgstr "роль"
-
-msgid "user"
-msgstr "користувач"
-
-msgid "users"
-msgstr "користувачі"
-
 msgid "Invalid email or password."
 msgstr "Невірна електронна пошта або пароль."
 
-msgid "actor"
-msgstr "актор"
+# --- lifecycle status labels ---
+msgid "Available"
+msgstr "Доступний"
 
-msgid "action"
-msgstr "дія"
+msgid "Trial day"
+msgstr "Пробний день"
 
-msgid "target type"
-msgstr "тип цілі"
+msgid "Working"
+msgstr "Працює"
 
-msgid "target id"
-msgstr "ідентифікатор цілі"
+msgid "Inactive"
+msgstr "Неактивний"
 
-msgid "reason"
-msgstr "причина"
+msgid "Blacklisted"
+msgstr "У чорному списку"
 
-msgid "metadata"
-msgstr "метадані"
-
-msgid "created"
-msgstr "створено"
-
-msgid "audit event"
-msgstr "подія аудиту"
-
-msgid "audit events"
-msgstr "події аудиту"
-
+# --- shell / navigation ---
 msgid "Jober operations"
 msgstr "Операції Jober"
 
@@ -84,6 +65,9 @@ msgstr "Відкрити навігацію"
 
 msgid "Overview"
 msgstr "Огляд"
+
+msgid "People"
+msgstr "Люди"
 
 msgid "Projects"
 msgstr "Проєкти"
@@ -103,6 +87,7 @@ msgstr "Роль"
 msgid "Sign out"
 msgstr "Вийти"
 
+# --- dashboard ---
 msgid "Operational overview"
 msgstr "Операційний огляд"
 
@@ -142,6 +127,16 @@ msgstr "Без остаточних даних"
 msgid "This shell uses fictional values only. Real personal data arrives only after the legal and security gate."
 msgstr "Ця оболонка використовує лише вигадані значення. Справжні персональні дані з’являться лише після юридичного та безпекового бар’єру."
 
+msgid "Responsible"
+msgstr "Відповідальний"
+
+msgid "Readiness"
+msgstr "Готовність"
+
+msgid "Missing"
+msgstr "Відсутнє"
+
+# --- login ---
 msgid "Sign in"
 msgstr "Вхід"
 
@@ -160,11 +155,361 @@ msgstr "Пароль"
 msgid "Continue"
 msgstr "Продовжити"
 
-msgid "Responsible"
-msgstr "Відповідальний"
+# --- people list / detail ---
+msgid "Workforce"
+msgstr "Робоча сила"
 
-msgid "Readiness"
-msgstr "Готовність"
+msgid "Search by name"
+msgstr "Пошук за іменем"
 
-msgid "Missing"
-msgstr "Відсутнє"
+msgid "Search"
+msgstr "Пошук"
+
+msgid "Status"
+msgstr "Статус"
+
+msgid "No people found."
+msgstr "Людей не знайдено."
+
+msgid "Person"
+msgstr "Особа"
+
+msgid "Back to people"
+msgstr "Назад до людей"
+
+msgid "Operational"
+msgstr "Операційні"
+
+msgid "Details"
+msgstr "Деталі"
+
+msgid "Phone"
+msgstr "Телефон"
+
+msgid "Address"
+msgstr "Адреса"
+
+msgid "Nationality"
+msgstr "Громадянство"
+
+msgid "Current project"
+msgstr "Поточний проєкт"
+
+msgid "Owning recruiter"
+msgstr "Відповідальний рекрутер"
+
+msgid "Rehire eligible"
+msgstr "Можливість повторного найму"
+
+msgid "Yes"
+msgstr "Так"
+
+msgid "No"
+msgstr "Ні"
+
+msgid "Restricted"
+msgstr "Обмежено"
+
+msgid "Personal data"
+msgstr "Особисті дані"
+
+msgid "Date of birth"
+msgstr "Дата народження"
+
+msgid "Place of birth"
+msgstr "Місце народження"
+
+msgid "Disability"
+msgstr "Інвалідність"
+
+msgid "Restricted — visible only to managers, observers, the owning recruiter, and the responsible coordinator."
+msgstr "Обмежено — видно лише менеджерам, спостерігачам, відповідальному рекрутеру та відповідальному координатору."
+
+# --- projects UI ---
+msgid "Operations"
+msgstr "Операції"
+
+msgid "Code"
+msgstr "Код"
+
+msgid "Active"
+msgstr "Активний"
+
+msgid "No projects found."
+msgstr "Проєктів не знайдено."
+
+msgid "Project"
+msgstr "Проєкт"
+
+msgid "Back to projects"
+msgstr "Назад до проєктів"
+
+msgid "Partner"
+msgstr "Партнер"
+
+msgid "Office"
+msgstr "Офіс"
+
+msgid "Responsible coordinators"
+msgstr "Відповідальні координатори"
+
+msgid "Financial reporting"
+msgstr "Фінансова звітність"
+
+msgid "Assigned"
+msgstr "Призначені"
+
+msgid "Workers"
+msgstr "Працівники"
+
+msgid "No workers assigned."
+msgstr "Немає призначених працівників."
+
+# --- workflow: trials / readiness / intake ---
+msgid "Next step"
+msgstr "Наступний крок"
+
+msgid "Send to a project trial"
+msgstr "Відправити на пробний день"
+
+msgid "Schedule trial"
+msgstr "Запланувати пробний день"
+
+msgid "Record trial outcome"
+msgstr "Записати результат пробного дня"
+
+msgid "Pass"
+msgstr "Пройшов"
+
+msgid "Fail"
+msgstr "Не пройшов"
+
+msgid "No-show"
+msgstr "Не з’явився"
+
+msgid "Awaiting the coordinator's outcome."
+msgstr "Очікування результату від координатора."
+
+msgid "Trials"
+msgstr "Пробні дні"
+
+msgid "No trials awaiting an outcome."
+msgstr "Немає пробних днів, що очікують результату."
+
+msgid "Trial scheduled."
+msgstr "Пробний день заплановано."
+
+msgid "Trial outcome recorded."
+msgstr "Результат пробного дня записано."
+
+msgid "Pending"
+msgstr "Очікує"
+
+msgid "Four-pillar readiness"
+msgstr "Чотиристовпова готовність"
+
+msgid "Medical"
+msgstr "Медичне"
+
+msgid "Gear"
+msgstr "Спорядження"
+
+msgid "Accommodation"
+msgstr "Проживання"
+
+msgid "Transport"
+msgstr "Транспорт"
+
+msgid "Incomplete"
+msgstr "Незавершено"
+
+msgid "Complete"
+msgstr "Завершено"
+
+msgid "Not applicable"
+msgstr "Не застосовується"
+
+msgid "Save readiness"
+msgstr "Зберегти готовність"
+
+msgid "Activate (Working)"
+msgstr "Активувати (Працює)"
+
+msgid "Ready to activate"
+msgstr "Готово до активації"
+
+msgid "Medical and gear required"
+msgstr "Потрібні медичне та спорядження"
+
+msgid "Readiness saved."
+msgstr "Готовність збережено."
+
+msgid "Activated — now Working."
+msgstr "Активовано — тепер Працює."
+
+msgid "Add person"
+msgstr "Додати особу"
+
+msgid "Intake"
+msgstr "Прийом"
+
+msgid "Save"
+msgstr "Зберегти"
+
+msgid "First name"
+msgstr "Ім’я"
+
+msgid "Last name"
+msgstr "Прізвище"
+
+msgid "Has disability"
+msgstr "Має інвалідність"
+
+msgid "Disability type"
+msgstr "Тип інвалідності"
+
+msgid "Preferred language"
+msgstr "Бажана мова"
+
+msgid "Person added."
+msgstr "Особу додано."
+
+# --- logistics: accommodation ---
+msgid "Logistics"
+msgstr "Логістика"
+
+msgid "Release room"
+msgstr "Звільнити кімнату"
+
+msgid "Room"
+msgstr "Кімната"
+
+msgid "Assign room"
+msgstr "Призначити кімнату"
+
+msgid "Rooms"
+msgstr "Кімнати"
+
+msgid "No accommodations found."
+msgstr "Житло не знайдено."
+
+msgid "Back"
+msgstr "Назад"
+
+msgid "Occupancy"
+msgstr "Заповненість"
+
+msgid "No rooms."
+msgstr "Немає кімнат."
+
+msgid "Room assigned."
+msgstr "Кімнату призначено."
+
+msgid "Room released."
+msgstr "Кімнату звільнено."
+
+# --- logistics: equipment ---
+msgid "Equipment"
+msgstr "Спорядження"
+
+msgid "Return"
+msgstr "Повернути"
+
+msgid "Item"
+msgstr "Позиція"
+
+msgid "Quantity"
+msgstr "Кількість"
+
+msgid "Issue equipment"
+msgstr "Видати спорядження"
+
+msgid "Equipment issued."
+msgstr "Спорядження видано."
+
+msgid "Equipment returned."
+msgstr "Спорядження повернено."
+
+# --- logistics: transport ---
+msgid "Weekly transport"
+msgstr "Щотижневий транспорт"
+
+msgid "No transport weeks recorded."
+msgstr "Тижні транспорту не записані."
+
+msgid "Week start"
+msgstr "Початок тижня"
+
+msgid "Headcount"
+msgstr "Кількість осіб"
+
+msgid "Record week"
+msgstr "Записати тиждень"
+
+msgid "Transport week recorded."
+msgstr "Тиждень транспорту записано."
+
+msgid "Week start is required."
+msgstr "Початок тижня обов’язковий."
+
+# --- finance ---
+msgid "Finance"
+msgstr "Фінанси"
+
+msgid "Reports"
+msgstr "Звіти"
+
+msgid "Revenue"
+msgstr "Дохід"
+
+msgid "Cost"
+msgstr "Витрати"
+
+msgid "Net"
+msgstr "Чистий"
+
+msgid "Year"
+msgstr "Рік"
+
+msgid "Month"
+msgstr "Місяць"
+
+msgid "Record month"
+msgstr "Записати місяць"
+
+msgid "Financial months"
+msgstr "Фінансові місяці"
+
+msgid "No financial months."
+msgstr "Немає фінансових місяців."
+
+msgid "Company total"
+msgstr "Загалом по компанії"
+
+msgid "Financial month saved."
+msgstr "Фінансовий місяць збережено."
+
+msgid "Invalid input."
+msgstr "Невірні дані."
+
+# --- intake engine ---
+msgid "Step"
+msgstr "Крок"
+
+msgid "Next"
+msgstr "Далі"
+
+msgid "Finish"
+msgstr "Завершити"
+
+msgid "Required."
+msgstr "Обов’язково."
+
+msgid "Please type a value (or the word for 'none')."
+msgstr "Введіть значення (або слово немає)."
+
+msgid "No published intake questionnaire."
+msgstr "Немає опублікованої анкети прийому."
+
+msgid "Intake complete — person added."
+msgstr "Прийом завершено — особу додано."

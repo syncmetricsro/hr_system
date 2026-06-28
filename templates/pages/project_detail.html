@@ -1,0 +1,69 @@
+{% extends "layouts/base.html" %}
+{% load i18n rbac %}
+
+{% block title %}{{ project.name }} · Jober{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <p class="eyebrow">{% trans "Project" %} · {% if project.is_active %}{% trans "Active" %}{% else %}{% trans "Inactive" %}{% endif %}</p>
+  <h1>{{ project.name }}</h1>
+  <a class="button button-secondary" href="{% url 'project_list' %}">{% trans "Back to projects" %}</a>
+</section>
+
+<section class="two-column">
+  <div class="panel">
+    <p class="eyebrow">{% trans "Operational" %}</p>
+    <h2>{% trans "Details" %}</h2>
+    <dl class="detail-grid">
+      <div><dt>{% trans "Code" %}</dt><dd>{{ project.code }}</dd></div>
+      <div><dt>{% trans "Partner" %}</dt><dd>{{ project.partner|default:"—" }}</dd></div>
+      <div><dt>{% trans "Office" %}</dt><dd>{{ project.office|default:"—" }}</dd></div>
+      <div>
+        <dt>{% trans "Responsible coordinators" %}</dt>
+        <dd>
+          {% for coordinator in project.responsible_coordinators.all %}
+            {{ coordinator }}{% if not forloop.last %}, {% endif %}
+          {% empty %}—{% endfor %}
+        </dd>
+      </div>
+      <div>
+        <dt>{% trans "Financial reporting" %}</dt>
+        <dd>{% if project.financial_reporting_eligible %}{% trans "Yes" %}{% else %}{% trans "No" %}{% endif %}</dd>
+      </div>
+    </dl>
+  </div>
+
+  <aside class="panel">
+    <p class="eyebrow">{% trans "Assigned" %}</p>
+    <h2>{% trans "Workers" %}</h2>
+    <ul class="plain-list">
+      {% for assignment in workers %}
+        <li><a href="{% url 'person_detail' assignment.person.pk %}">{{ assignment.person }}</a></li>
+      {% empty %}
+        <li>{% trans "No workers assigned." %}</li>
+      {% endfor %}
+    </ul>
+  </aside>
+</section>
+
+<section class="panel workflow-panel">
+  <p class="eyebrow">{% trans "Logistics" %}</p>
+  <h2>{% trans "Weekly transport" %}</h2>
+  <ul class="plain-list">
+    {% for week in transport_weeks %}
+      <li>{{ week.week_start }} — {{ week.headcount }}</li>
+    {% empty %}
+      <li>{% trans "No transport weeks recorded." %}</li>
+    {% endfor %}
+  </ul>
+  {% can 'transport.record' as may_transport %}
+  {% if may_transport %}
+    <form class="people-search" method="post" action="{% url 'record_transport' project.pk %}">
+      {% csrf_token %}
+      <input type="date" name="week_start" aria-label="{% trans 'Week start' %}">
+      <input type="number" name="headcount" value="0" min="0" aria-label="{% trans 'Headcount' %}">
+      <button class="button button-primary" type="submit">{% trans "Record week" %}</button>
+    </form>
+  {% endif %}
+</section>
+{% endblock %}

@@ -1,5 +1,53 @@
 # Test Journal
 
+## 2026-06-28 (later) — Per-view RBAC gating
+
+- `tests/test_view_gating.py`: parametrized over every gated write/read endpoint (assign_trial, trial_outcome, readiness_update, activate_person, assign_room, issue_equipment, return_equipment, record_transport, finance_record, finance_summary, intake_start) — a denied role gets **403** and anonymous is **redirected to login**. Closes the gap where the new POST endpoints were only covered by the generic `require_action` test.
+- **Full unit suite: 115 passed**; ruff clean.
+
+## 2026-06-28 (later) — Phase 1 peripheral modules + hard-gated intake
+
+Added across the accommodation, inventory, transport, finance, and intake slices; figures are cumulative as each landed.
+
+- `tests/test_logistics.py` (rooms): capacity enforcement, occupancy, one-active-room reassignment, release, RBAC.
+- `tests/test_inventory.py`: issue, return, RBAC.
+- `tests/test_transport.py`: weekly record, idempotent per week, RBAC.
+- `tests/test_finance.py`: net, dynamic company totals across projects, idempotent month, locked-month rejection, RBAC.
+- `tests/test_intake.py`: required blocks advance, typed-negative can't be blank, accepted-negative word completes + skips the conditional, positive answer requires the conditional, full completion creates an Available person, completed intake rejects further panels.
+- **Full unit suite: 93 passed**; ruff clean; all SK/HU/UK catalogs compile.
+- Production image rebuilt with all six business apps; migrations apply cleanly (pytest builds the test DB from them). Browser walkthroughs reviewed: full activation path, accommodation/finance pages, and the intake wizard.
+
+## 2026-06-28 (later) — Core Phase 1 workflow
+
+- Generated `projects` migration 0002 (TrialAssignment + ReadinessRecord).
+- Added `tests/test_workflow.py` (11): trial schedule sets Trial day; schedule requires Available; fail/no-show recycle; pass keeps Trial day + Completed; second trial keeps history; double outcome rejected; readiness ready only when required complete + optional complete/N/A; medical cannot be N/A; activation blocked until ready; **full path to Working**.
+- Translated + recompiled all new workflow/readiness/intake strings (SK/HU/UK); catalogs compile cleanly.
+- **Full unit suite: 71 passed** (was 60); ruff clean.
+- **End-to-end browser walkthrough** (Playwright, manager) of the whole demo path succeeded: add person → schedule trial → fail (recycle) → schedule trial → pass → readiness (medical+gear complete, accommodation/transport N/A) → activate → Working on DHL Bratislava. Readiness + Working screenshots reviewed (Slovak).
+
+## 2026-06-28 (later) — Project UI
+
+- Added `tests/test_project_views.py` (3): list requires login; list shows a project; detail lists assigned workers.
+- Translated + recompiled new project UI strings (SK/HU/UK), no duplicate-msgid errors.
+- **Full unit suite: 60 passed** (was 57); ruff clean.
+- Live check: `/projects/` and `/projects/<id>/` render in Slovak; DHL Bratislava detail lists the assigned worker linked to their person page. Screenshots reviewed.
+
+## 2026-06-28 (later) — People UI
+
+- Added `tests/test_people_views.py` (5): list requires login; list shows a person; detail shows sensitive data to a manager and to the owning recruiter; detail hides it from an unconnected recruiter.
+- Extracted + translated new UI strings (SK/HU/UK) and recompiled `.mo` cleanly (no duplicate-msgid errors).
+- **Full unit suite: 57 passed** (was 52); ruff clean.
+- Live check on the rebuilt image: `/people/` and `/people/<id>/` render in Slovak with translated lifecycle statuses; manager sees the restricted personal-data panel (disability shown). Screenshots reviewed.
+
+## 2026-06-28
+
+Phase 1 spine — Person + lifecycle + projects.
+
+- Generated `people` / `projects` initial migrations in the digest-pinned image.
+- Added `tests/test_people.py` (15 tests): search-name normalization; valid transition audited + invalid transition raises `LifecycleError`; activation creates one active assignment and sets `WORKING`; reassignment keeps exactly one active and retains history; DB unique-active constraint rejects a second active assignment (`IntegrityError`); `end_assignment` returns to `AVAILABLE`; sensitive-field visibility for oversight/owner/responsible-coordinator vs unconnected; `project.assign` role mapping.
+- **Full unit suite: 52 passed** (was 37); ruff clean.
+- End-to-end on pinned PostgreSQL: `migrate` + `seed_demo` + `seed_people` (3 projects, 5 people, one Working via assignment) all clean.
+
 ## 2026-06-21
 
 Phase 1 foundation slice checks (auth, RBAC, localization, audit).

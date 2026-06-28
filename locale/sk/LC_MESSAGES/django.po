@@ -1,5 +1,7 @@
 # Jober — Slovak (sk) translation catalog.
 # Generated from English source strings. AI-authored; pending fluent-speaker review.
+# Operational UI strings are translated; admin-only model field labels fall back
+# to English until a later i18n pass.
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -7,6 +9,7 @@ msgstr ""
 "Language: sk\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n>=2 && n<=4 ? 1 : 2);\n"
 
+# --- accounts / admin ---
 msgid "Profile"
 msgstr "Profil"
 
@@ -28,48 +31,26 @@ msgstr "Manažér/Administrátor"
 msgid "Observer"
 msgstr "Pozorovateľ"
 
-msgid "email"
-msgstr "e-mail"
-
-msgid "role"
-msgstr "rola"
-
-msgid "user"
-msgstr "používateľ"
-
-msgid "users"
-msgstr "používatelia"
-
 msgid "Invalid email or password."
 msgstr "Nesprávny e-mail alebo heslo."
 
-msgid "actor"
-msgstr "aktér"
+# --- lifecycle status labels ---
+msgid "Available"
+msgstr "Dostupný"
 
-msgid "action"
-msgstr "akcia"
+msgid "Trial day"
+msgstr "Skúšobný deň"
 
-msgid "target type"
-msgstr "typ cieľa"
+msgid "Working"
+msgstr "Pracuje"
 
-msgid "target id"
-msgstr "identifikátor cieľa"
+msgid "Inactive"
+msgstr "Neaktívny"
 
-msgid "reason"
-msgstr "dôvod"
+msgid "Blacklisted"
+msgstr "Na čiernej listine"
 
-msgid "metadata"
-msgstr "metadáta"
-
-msgid "created"
-msgstr "vytvorené"
-
-msgid "audit event"
-msgstr "audítny záznam"
-
-msgid "audit events"
-msgstr "audítne záznamy"
-
+# --- shell / navigation ---
 msgid "Jober operations"
 msgstr "Jober prevádzka"
 
@@ -84,6 +65,9 @@ msgstr "Otvoriť navigáciu"
 
 msgid "Overview"
 msgstr "Prehľad"
+
+msgid "People"
+msgstr "Ľudia"
 
 msgid "Projects"
 msgstr "Projekty"
@@ -103,6 +87,7 @@ msgstr "Rola"
 msgid "Sign out"
 msgstr "Odhlásiť sa"
 
+# --- dashboard ---
 msgid "Operational overview"
 msgstr "Prevádzkový prehľad"
 
@@ -142,6 +127,16 @@ msgstr "Bez finálnych dát"
 msgid "This shell uses fictional values only. Real personal data arrives only after the legal and security gate."
 msgstr "Tento shell používa iba fiktívne hodnoty. Skutočné osobné údaje prídu až po právnej a bezpečnostnej bráne."
 
+msgid "Responsible"
+msgstr "Zodpovedný"
+
+msgid "Readiness"
+msgstr "Pripravenosť"
+
+msgid "Missing"
+msgstr "Chýba"
+
+# --- login ---
 msgid "Sign in"
 msgstr "Prihlásenie"
 
@@ -160,11 +155,361 @@ msgstr "Heslo"
 msgid "Continue"
 msgstr "Pokračovať"
 
-msgid "Responsible"
-msgstr "Zodpovedný"
+# --- people list / detail ---
+msgid "Workforce"
+msgstr "Pracovná sila"
 
-msgid "Readiness"
-msgstr "Pripravenosť"
+msgid "Search by name"
+msgstr "Hľadať podľa mena"
 
-msgid "Missing"
-msgstr "Chýba"
+msgid "Search"
+msgstr "Hľadať"
+
+msgid "Status"
+msgstr "Stav"
+
+msgid "No people found."
+msgstr "Nenašli sa žiadni ľudia."
+
+msgid "Person"
+msgstr "Osoba"
+
+msgid "Back to people"
+msgstr "Späť na ľudí"
+
+msgid "Operational"
+msgstr "Prevádzkové"
+
+msgid "Details"
+msgstr "Podrobnosti"
+
+msgid "Phone"
+msgstr "Telefón"
+
+msgid "Address"
+msgstr "Adresa"
+
+msgid "Nationality"
+msgstr "Národnosť"
+
+msgid "Current project"
+msgstr "Aktuálny projekt"
+
+msgid "Owning recruiter"
+msgstr "Zodpovedný náborár"
+
+msgid "Rehire eligible"
+msgstr "Možnosť opätovného prijatia"
+
+msgid "Yes"
+msgstr "Áno"
+
+msgid "No"
+msgstr "Nie"
+
+msgid "Restricted"
+msgstr "Obmedzené"
+
+msgid "Personal data"
+msgstr "Osobné údaje"
+
+msgid "Date of birth"
+msgstr "Dátum narodenia"
+
+msgid "Place of birth"
+msgstr "Miesto narodenia"
+
+msgid "Disability"
+msgstr "Zdravotné postihnutie"
+
+msgid "Restricted — visible only to managers, observers, the owning recruiter, and the responsible coordinator."
+msgstr "Obmedzené — viditeľné iba pre manažérov, pozorovateľov, zodpovedného náborára a zodpovedného koordinátora."
+
+# --- projects UI ---
+msgid "Operations"
+msgstr "Prevádzka"
+
+msgid "Code"
+msgstr "Kód"
+
+msgid "Active"
+msgstr "Aktívny"
+
+msgid "No projects found."
+msgstr "Nenašli sa žiadne projekty."
+
+msgid "Project"
+msgstr "Projekt"
+
+msgid "Back to projects"
+msgstr "Späť na projekty"
+
+msgid "Partner"
+msgstr "Partner"
+
+msgid "Office"
+msgstr "Pobočka"
+
+msgid "Responsible coordinators"
+msgstr "Zodpovední koordinátori"
+
+msgid "Financial reporting"
+msgstr "Finančné vykazovanie"
+
+msgid "Assigned"
+msgstr "Pridelení"
+
+msgid "Workers"
+msgstr "Pracovníci"
+
+msgid "No workers assigned."
+msgstr "Nie sú pridelení žiadni pracovníci."
+
+# --- workflow: trials / readiness / intake ---
+msgid "Next step"
+msgstr "Ďalší krok"
+
+msgid "Send to a project trial"
+msgstr "Poslať na skúšobný deň"
+
+msgid "Schedule trial"
+msgstr "Naplánovať skúšku"
+
+msgid "Record trial outcome"
+msgstr "Zaznamenať výsledok skúšky"
+
+msgid "Pass"
+msgstr "Prešiel"
+
+msgid "Fail"
+msgstr "Neprešiel"
+
+msgid "No-show"
+msgstr "Nedostavil sa"
+
+msgid "Awaiting the coordinator's outcome."
+msgstr "Čaká sa na výsledok od koordinátora."
+
+msgid "Trials"
+msgstr "Skúšky"
+
+msgid "No trials awaiting an outcome."
+msgstr "Žiadne skúšky nečakajú na výsledok."
+
+msgid "Trial scheduled."
+msgstr "Skúška naplánovaná."
+
+msgid "Trial outcome recorded."
+msgstr "Výsledok skúšky zaznamenaný."
+
+msgid "Pending"
+msgstr "Čaká"
+
+msgid "Four-pillar readiness"
+msgstr "Štvorpilierová pripravenosť"
+
+msgid "Medical"
+msgstr "Lekárska"
+
+msgid "Gear"
+msgstr "Výstroj"
+
+msgid "Accommodation"
+msgstr "Ubytovanie"
+
+msgid "Transport"
+msgstr "Doprava"
+
+msgid "Incomplete"
+msgstr "Nekompletné"
+
+msgid "Complete"
+msgstr "Kompletné"
+
+msgid "Not applicable"
+msgstr "Neaplikovateľné"
+
+msgid "Save readiness"
+msgstr "Uložiť pripravenosť"
+
+msgid "Activate (Working)"
+msgstr "Aktivovať (Pracuje)"
+
+msgid "Ready to activate"
+msgstr "Pripravené na aktiváciu"
+
+msgid "Medical and gear required"
+msgstr "Vyžaduje sa lekárska a výstroj"
+
+msgid "Readiness saved."
+msgstr "Pripravenosť uložená."
+
+msgid "Activated — now Working."
+msgstr "Aktivované — teraz Pracuje."
+
+msgid "Add person"
+msgstr "Pridať osobu"
+
+msgid "Intake"
+msgstr "Príjem"
+
+msgid "Save"
+msgstr "Uložiť"
+
+msgid "First name"
+msgstr "Meno"
+
+msgid "Last name"
+msgstr "Priezvisko"
+
+msgid "Has disability"
+msgstr "Má zdravotné postihnutie"
+
+msgid "Disability type"
+msgstr "Typ postihnutia"
+
+msgid "Preferred language"
+msgstr "Preferovaný jazyk"
+
+msgid "Person added."
+msgstr "Osoba pridaná."
+
+# --- logistics: accommodation ---
+msgid "Logistics"
+msgstr "Logistika"
+
+msgid "Release room"
+msgstr "Uvoľniť izbu"
+
+msgid "Room"
+msgstr "Izba"
+
+msgid "Assign room"
+msgstr "Prideliť izbu"
+
+msgid "Rooms"
+msgstr "Izby"
+
+msgid "No accommodations found."
+msgstr "Nenašli sa žiadne ubytovania."
+
+msgid "Back"
+msgstr "Späť"
+
+msgid "Occupancy"
+msgstr "Obsadenosť"
+
+msgid "No rooms."
+msgstr "Žiadne izby."
+
+msgid "Room assigned."
+msgstr "Izba pridelená."
+
+msgid "Room released."
+msgstr "Izba uvoľnená."
+
+# --- logistics: equipment ---
+msgid "Equipment"
+msgstr "Vybavenie"
+
+msgid "Return"
+msgstr "Vrátiť"
+
+msgid "Item"
+msgstr "Položka"
+
+msgid "Quantity"
+msgstr "Množstvo"
+
+msgid "Issue equipment"
+msgstr "Vydať vybavenie"
+
+msgid "Equipment issued."
+msgstr "Vybavenie vydané."
+
+msgid "Equipment returned."
+msgstr "Vybavenie vrátené."
+
+# --- logistics: transport ---
+msgid "Weekly transport"
+msgstr "Týždenná doprava"
+
+msgid "No transport weeks recorded."
+msgstr "Nie sú zaznamenané žiadne týždne dopravy."
+
+msgid "Week start"
+msgstr "Začiatok týždňa"
+
+msgid "Headcount"
+msgstr "Počet osôb"
+
+msgid "Record week"
+msgstr "Zaznamenať týždeň"
+
+msgid "Transport week recorded."
+msgstr "Týždeň dopravy zaznamenaný."
+
+msgid "Week start is required."
+msgstr "Začiatok týždňa je povinný."
+
+# --- finance ---
+msgid "Finance"
+msgstr "Financie"
+
+msgid "Reports"
+msgstr "Reporty"
+
+msgid "Revenue"
+msgstr "Príjmy"
+
+msgid "Cost"
+msgstr "Náklady"
+
+msgid "Net"
+msgstr "Čisté"
+
+msgid "Year"
+msgstr "Rok"
+
+msgid "Month"
+msgstr "Mesiac"
+
+msgid "Record month"
+msgstr "Zaznamenať mesiac"
+
+msgid "Financial months"
+msgstr "Finančné mesiace"
+
+msgid "No financial months."
+msgstr "Žiadne finančné mesiace."
+
+msgid "Company total"
+msgstr "Celkový súčet firmy"
+
+msgid "Financial month saved."
+msgstr "Finančný mesiac uložený."
+
+msgid "Invalid input."
+msgstr "Neplatný vstup."
+
+# --- intake engine ---
+msgid "Step"
+msgstr "Krok"
+
+msgid "Next"
+msgstr "Ďalej"
+
+msgid "Finish"
+msgstr "Dokončiť"
+
+msgid "Required."
+msgstr "Povinné."
+
+msgid "Please type a value (or the word for 'none')."
+msgstr "Zadajte hodnotu (alebo slovo pre žiadne)."
+
+msgid "No published intake questionnaire."
+msgstr "Žiadny publikovaný dotazník príjmu."
+
+msgid "Intake complete — person added."
+msgstr "Príjem dokončený — osoba pridaná."

@@ -28,6 +28,7 @@ Legend: ✅ permitted · — denied
 | `intake.create_edit` | ✅ | — | ✅ | — |
 | `intake.assign_trial` | ✅ | — | ✅ | — |
 | `person.recycle_available` | ✅ | ✅ | ✅ | — |
+| `project.assign` (place/reassign a person on a project) | — | ✅ | ✅ | — |
 | `sms.send` | ✅ | ✅ | ✅ | — |
 | `trial.record_outcome` | — | ✅ | ✅ | — |
 | `readiness.complete` | — | ✅ | ✅ | — |
@@ -53,6 +54,14 @@ Legend: ✅ permitted · — denied
 | `feedback.view` (worker feedback inbox) | — | — | ✅ | — |
 | `finance.view_summary` | — | — | ✅ | ✅ |
 | `audit.view` | — | — | ✅ | — |
+
+## Person sensitive fields (per-object rule)
+
+DOB, place of birth, disability flag/type, and identifiers are **not** a flat
+role grant — visibility depends on the viewer's relationship to that person
+(phase1-open-questions Q4). Implemented as `apps.people.permissions.can_view_sensitive`:
+visible to **managers, observers, the owning recruiter, and the person's
+responsible coordinator(s)**; hidden from unconnected recruiters/coordinators.
 
 ## Notes per role
 

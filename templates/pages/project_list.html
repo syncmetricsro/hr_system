@@ -1,0 +1,30 @@
+{% extends "layouts/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Projects" %} · Jober{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <p class="eyebrow">{% trans "Operations" %}</p>
+  <h1>{% trans "Projects" %}</h1>
+</section>
+
+<section class="field-list" aria-label="{% trans 'Projects' %}">
+  {% for project in projects %}
+    <a class="field-card person-row" href="{% url 'project_detail' project.pk %}">
+      <div>
+        <h3>{{ project.name }}</h3>
+        <p>{% trans "Code" %}: {{ project.code }}{% if project.office %} · {{ project.office }}{% endif %}</p>
+      </div>
+      <dl>
+        <div>
+          <dt>{% trans "Status" %}</dt>
+          <dd>{% if project.is_active %}{% trans "Active" %}{% else %}{% trans "Inactive" %}{% endif %}</dd>
+        </div>
+      </dl>
+    </a>
+  {% empty %}
+    <p>{% trans "No projects found." %}</p>
+  {% endfor %}
+</section>
+{% endblock %}

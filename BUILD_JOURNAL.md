@@ -1,5 +1,126 @@
 # Build Journal
 
+## 2026-06-28 (later) — Hard-gated intake engine (Phase 1 complete)
+
+Replaces intake-lite with the real questionnaire engine (§11.3 / §12.1). This was the last open Phase 1 build item.
+
+- `apps/intake`: versioned questionnaire (`IntakeQuestionnaireVersion → IntakePanel → IntakeQuestion`) and `RecruitmentIntake → IntakeAnswer`.
+- Engine (`services.py`): `start_intake`, `save_panel`, `complete_intake`.
+  - **Sequential, server-driven panels** — `save_panel` always acts on `intake.current_panel_order`, so panels can't be bypassed by URL/forged POST.
+  - **Required** answers enforced server-side; **typed-negative** questions reject a blank field (no checkbox bypass) and recognise accepted "no/none" words (normalized); **conditional** questions are required only when their parent answer is positive.
+  - Completion maps stable_keys → Person fields and creates an `AVAILABLE` Person owned by the recruiter; audited.
+- Seed `seed_questionnaire` (published "Recruiter intake" v1: Identity / Contact / Compliance with a typed-negative disability question + conditional disability type). `dev_app.sh up` seeds it.
+- UI: `intake_start` → sequential `intake_panel` wizard (step X/Y, prefilled, per-field errors); "Add person" now starts the real intake. Admin for questionnaire authoring. i18n SK/HU/UK.
+
+Verification: ruff clean; **93 unit tests pass** (6 new: required blocks advance, typed-negative can't be blank, accepted-negative skips the conditional + completes, positive requires the conditional, full completion creates an Available person, completed intake rejects further panels). Browser walkthrough of the wizard reviewed.
+
+Phase 1 status: **all build items complete.** (Questionnaire *content* + per-language typed-negative phrases remain configurable/Tier-2; the manager-approval→coordinator-activation change is ADR 0018.)
+
+## 2026-06-28 (later) — Minimal financial month (Phase 1)
+
+Completes the deferred peripheral modules. Sign convention flagged as an
+assumption (Phase 4 blocker).
+
+- `apps/finance`: `FinancialMonth` (project/year/month, revenue, cost, lock; unique per project-month). `net = revenue - cost` documented as an **assumption** to confirm from one filled month (open-decisions). `company_totals` sums **dynamically** over all projects/months — never hardcoded — to avoid the manager's spreadsheet bugs.
+- Services `record_financial_month` (update_or_create; rejects edits to a locked month) and `company_totals`.
+- UI: a Finance summary page (totals + months + record form), gated `finance.view_summary` (manager + observer); the nav tab and record form are role-gated; `finance.manage` for writes. Admin; `seed_people` seeds two months. i18n SK/HU/UK.
+
+Verification: ruff clean; **87 unit tests pass** (5 new: net, dynamic totals, idempotent month, locked-month rejection, RBAC).
+
+## 2026-06-28 (later) — Weekly transport reporting (Phase 1)
+
+- `apps/logistics`: `TransportWeek` (project + week_start + headcount; unique per project/week).
+- Service `record_transport_week` (update_or_create, audited).
+- UI: a Weekly transport panel on the project detail — recent weeks + a record form, gated by `transport.record`. Admin. i18n SK/HU/UK.
+
+Verification: ruff clean; **82 unit tests pass** (3 new: create, idempotent per week, RBAC).
+
+## 2026-06-28 (later) — Minimal inventory / equipment (Phase 1)
+
+- `apps/logistics`: `EquipmentItem` catalog (name/size; no valuation — Phase 3) and `EquipmentIssue` (quantity, issued/returned).
+- Services `issue_equipment` / `return_equipment` (audited).
+- UI: an Equipment panel on the person hub — issue (item + quantity) and return, gated by `equipment.issue_return` (coordinator + manager).
+- Admin; `seed_people` seeds a small catalog. i18n SK/HU/UK.
+
+Verification: ruff clean; **79 unit tests pass** (3 new: issue, return, RBAC).
+
+## 2026-06-28 (later) — Minimal accommodation (Phase 1)
+
+First of the deferred peripheral modules. Minimal per Phase 1 (no rates/valuation; those are Phase 3, open-decisions).
+
+- `apps/logistics`: `Accommodation`, `Room` (capacity + occupancy/is_full), `RoomAssignment` with a DB one-active-room-per-person constraint.
+- Services `assign_room` (capacity-enforced, closes prior active room, audited) / `release_room`.
+- UI: Accommodation list/detail (occupancy) on a new nav tab; an assign/release-room panel on the person hub, gated by `room.assign` (coordinator + manager).
+- Admin for all three; `seed_people` now also creates an accommodation with rooms and houses the Working seed person.
+- i18n: logistics strings translated SK/HU/UK and compiled.
+
+Verification: ruff clean; **76 unit tests pass** (5 new: occupancy, capacity enforcement, one-active-room reassignment, release, RBAC).
+
+## 2026-06-28 (later) — Core Phase 1 workflow (demo cut)
+
+Made the intake → trial → readiness → activation vertical clickable end-to-end
+for tomorrow's customer demo. Deferred the peripheral minimal modules (room,
+inventory, transport, finance).
+
+What changed:
+- **Trials** (`apps/projects`): `TrialAssignment` (§11.5, append-preserving) + `schedule_trial` (handoff, requires Available → Trial day) and `record_trial_outcome` (pass keeps Trial day; fail/no-show recycles to Available, §12.3).
+- **Readiness + activation**: `ReadinessRecord` (four pillars; medical+gear required, accommodation/transport may be N/A; `is_ready`); `update_readiness` (rejects medical/gear N/A) and `activate_from_readiness` — the **system-enforced** coordinator activation (ADR 0018); CARGO/manager override still possible via direct `activate_on_project`.
+- **Intake-lite**: recruiter `PersonForm` + `person_create` (gated `intake.create_edit`), "Add person" on the People list.
+- **UI**: the person detail is now a **state-driven workflow hub** (assign-trial → record-outcome → readiness pillars → activate), a coordinator **Trials** queue wired to the Field nav, and a shell messages region. All actions gated with `require_action` + `{% can %}`.
+- i18n: translated all new workflow/readiness/intake strings (SK/HU/UK) and recompiled.
+- `scripts/dev_app.sh up` now also runs `seed_people` so the demo stack is populated.
+
+Verification: ruff clean; **71 unit tests pass** (11 new workflow tests incl. the full path to Working); **Playwright drove the entire demo path** (add person → trial → fail/recycle → re-trial → pass → readiness → activate → Working) and screenshots were reviewed — all in Slovak.
+
+Demo path: log in (manager does everything) → People → Add person → Schedule trial → Fail (recycles) → Schedule trial → Pass → Four-pillar readiness → Activate → Working on project.
+
+## 2026-06-28 (later) — Project UI
+
+Read-only Project list + detail, mirroring the People pattern.
+
+What changed:
+- `apps/projects/views.py`: `project_list` and `project_detail` (login-gated). Detail shows code/partner/office/responsible coordinators/financial-reporting eligibility plus the active **Workers** on the project, each linked to their person page.
+- Templates `pages/project_list.html` + `pages/project_detail.html`; wired the **Projects** nav tab to the route and added `/projects/`, `/projects/<id>/`. Small `.plain-list` CSS.
+- i18n: translated the new project UI strings (SK/HU/UK) and recompiled.
+- Verified live (manager): list shows the three seeded projects with active status; DHL Bratislava detail lists the assigned worker linked back to People.
+
+Verification: ruff clean; **60 unit tests pass** (3 new project view tests); screenshots reviewed.
+
+## 2026-06-28 (later) — People UI
+
+Surfaced the Person spine in the app (read-only), the lowest-hanging next slice.
+
+What changed:
+- `apps/people/views.py`: `people_list` (login-gated broad read, name search) and `person_detail`, which renders sensitive fields (DOB, place of birth, disability) only when `can_view_sensitive` allows (Q4); otherwise a restricted note.
+- Templates `pages/people_list.html` + `pages/person_detail.html` reusing the existing panel/field-card CSS; added a **People** nav tab and `/people/`, `/people/<id>/` routes.
+- Small CSS: `.people-search`, `.person-row`, `.detail-grid`.
+- i18n: translated the new operational UI strings (lifecycle status labels + People page) in SK/HU/UK and recompiled; admin-only model field labels fall back to English for now.
+- Verified live (manager): list shows seeded people with translated statuses; detail shows the restricted panel with disability for a permitted viewer.
+
+Verification: ruff clean; **57 unit tests pass** (5 new view tests incl. sensitive masking); screenshots of list + detail reviewed.
+
+Next step:
+- Recruiter intake (hard-gated) or trials + the readiness gate (which activates ADR 0018 enforcement).
+
+## 2026-06-28
+
+Phase 1 business spine — Person + lifecycle + project administration.
+
+What changed:
+- Added `apps/people`: `Person` with the canonical 5-state lifecycle (`AVAILABLE / TRIAL_DAY / WORKING / INACTIVE / BLACKLISTED`, plan §9.1), validated transition helper `set_status` (audited), search-normalized name, archive, **disability as a flag only** (no documents, Q1), and `owning_recruiter`.
+- Added `apps/projects`: `Project` (project↔coordinator many-to-many) and `ProjectAssignment` with a DB-level **one-active-assignment-per-person** constraint (§11.4); placement service `activate_on_project` / `end_assignment` (atomic, audited, history-preserving).
+- **Sensitive-field visibility** (`apps/people/permissions.can_view_sensitive`, Q4): DOB/place-of-birth/disability visible to managers, observers, owning recruiter, and responsible coordinator(s); hidden from unconnected recruiters/coordinators.
+- RBAC: added `project.assign` (coordinator + manager, Q2); updated `permission-matrix.md`.
+- Admin for Person/Project/ProjectAssignment; fictional `seed_people` (3 projects, 5 people, one Working via assignment; no real PII).
+- ADR 0018: coordinator-activated, **system-enforced** readiness gate replaces the §11.6/§12.4 manager-approval step (CARGO override retained). Readiness-gate enforcement + alert layer attach with `ReadinessRecord` (next slice).
+
+Decisions baked in: phase1-open-questions Q1–Q4 + the activation-gate answer.
+
+Verification: ruff clean; **52 unit tests pass** (lifecycle transitions, one-active-assignment + history, sensitive visibility, placement RBAC); migrate + seed_demo + seed_people run clean on pinned PostgreSQL.
+
+Next step:
+- Recruiter intake (hard-gated, typed-negative) and the Person card/list UI; then trials and the readiness gate + manager alerts.
+
 ## 2026-06-21
 
 Phase 1 — foundation slice: authentication, four-role RBAC, localization, append-only audit.
