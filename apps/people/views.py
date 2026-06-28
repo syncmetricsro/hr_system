@@ -23,6 +23,7 @@ from apps.logistics.models import (
     Room,
     RoomAssignmentStatus,
 )
+from apps.logistics.services import issued_equipment_value
 from apps.projects.models import PillarState, Project, TrialOutcome
 from apps.projects.services import get_or_create_readiness
 
@@ -129,6 +130,7 @@ def person_detail(request: HttpRequest, pk: int) -> TemplateResponse:
                 status=EquipmentIssueStatus.ISSUED
             ).select_related("item"),
             "equipment_items": EquipmentItem.objects.filter(is_active=True),
+            "issued_value": issued_equipment_value(person),
             "can_message": (
                 bool(person.phone)
                 and user_can(request.user, Action.SMS_SEND)

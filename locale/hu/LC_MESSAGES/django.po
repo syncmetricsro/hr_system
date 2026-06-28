@@ -693,3 +693,9 @@ msgstr "Visszajelzési link létrehozva."
 
 msgid "People by status"
 msgstr "Emberek állapot szerint"
+
+msgid "Value"
+msgstr "Érték"
+
+msgid "Equipment value"
+msgstr "Felszerelés értéke"

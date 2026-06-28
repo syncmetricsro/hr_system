@@ -56,6 +56,27 @@ def release_room(person, *, actor=None):
     return assignment
 
 
+def issued_equipment_value(person=None):
+    """Total value of currently-issued equipment (qty x unit_price), optionally
+    scoped to one person. Latest-manual-price valuation (round-4 confirmed)."""
+    from decimal import Decimal
+
+    from django.db.models import DecimalField, ExpressionWrapper, F, Sum
+
+    qs = EquipmentIssue.objects.filter(status=EquipmentIssueStatus.ISSUED)
+    if person is not None:
+        qs = qs.filter(person=person)
+    total = qs.aggregate(
+        value=Sum(
+            ExpressionWrapper(
+                F("quantity") * F("item__unit_price"),
+                output_field=DecimalField(max_digits=14, decimal_places=2),
+            )
+        )
+    )["value"]
+    return total or Decimal("0")
+
+
 @transaction.atomic
 def issue_equipment(person, item, quantity=1, *, actor=None):
     issue = EquipmentIssue.objects.create(

@@ -10,6 +10,7 @@ from apps.accounts.permissions import can as user_can
 from apps.compliance.services import compliance_alerts
 from apps.finance.services import company_totals
 from apps.logistics.models import Room, RoomAssignment, RoomAssignmentStatus
+from apps.logistics.services import issued_equipment_value
 from apps.people.models import LifecycleStatus, Person
 from apps.projects.models import Project, TrialAssignment, TrialOutcome
 
@@ -40,6 +41,7 @@ def reports(request: HttpRequest) -> TemplateResponse:
             "capacity": capacity,
             "occupied": occupied,
             "free": max(capacity - occupied, 0),
+            "equipment_value": issued_equipment_value(),
             "status_counts": status_counts,
             "finance": company_totals() if can_finance else None,
         },

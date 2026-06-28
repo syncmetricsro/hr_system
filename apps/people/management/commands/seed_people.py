@@ -71,9 +71,9 @@ class Command(BaseCommand):
         if working and not working.room_assignments.exists():
             assign_room(working, room, actor=coordinator)
 
-        # Minimal equipment catalog.
-        for name, size in [("Pracovná obuv", "42"), ("Reflexná vesta", "L"), ("Prilba", "")]:
-            EquipmentItem.objects.get_or_create(name=name, size=size)
+        # Minimal equipment catalog (with manual unit prices for valuation).
+        for name, size, price in [("Pracovná obuv", "42", "45.00"), ("Reflexná vesta", "L", "8.50"), ("Prilba", "", "15.00")]:
+            EquipmentItem.objects.get_or_create(name=name, size=size, defaults={"unit_price": price})
 
         # Minimal financial months (sign convention: net = revenue - cost, to confirm).
         for code, month, rev, cost in [("DHLBA", 5, "18000", "12000"), ("WEB", 5, "9000", "7000")]:
