@@ -59,6 +59,7 @@ RUN python -m pip install \
 COPY manage.py /app/manage.py
 COPY apps /app/apps
 COPY config /app/config
+COPY locale /app/locale
 COPY templates /app/templates
 COPY static/vendor /app/static/vendor
 COPY static/src/js /app/static/src/js

@@ -1,10 +1,10 @@
 # Phase 0 Risk And Blocker List
 
-Last updated: 2026-06-17
+Last updated: 2026-06-21
 
 ## Active workstation blockers
 
-- None.
+- None. (Translation catalogs are now generated/compiled — English base language with SK/HU/UK catalogs, ADR 0017. gettext runs via `scripts/compile_messages.sh` against the app image, not the host. HU/UK + revised SK still need a fluent-speaker review before client use — tracked in the production readiness journal.)
 
 ## Server deployment pending
 
@@ -26,4 +26,4 @@ Last updated: 2026-06-17
 
 ## Recommended next Phase 1 task
 
-After Phase 0 infrastructure is green, start with authentication, four-role authorization, localization, and append-only audit conventions before any business module.
+The foundation slice (authentication, four-role action-gated RBAC, localization wiring, append-only audit, fictional seed/reset) is done and green (see 2026-06-21 build/test journal entries). Next: the Phase 1 business spine — project administration and the Person model + lifecycle-status state machine — then hard-gated recruiter intake. Each new view must adopt `require_action`/`{% can %}` and record sensitive changes via `record_event`, and must keep recruiter/coordinator read scope configurable (do not hardcode the GDPR split).

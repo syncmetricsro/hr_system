@@ -1,23 +1,26 @@
 {% extends "layouts/base.html" %}
 {% load i18n %}
 
-{% block title %}{% trans "Prihlásenie" %} · Jober{% endblock %}
+{% block title %}{% trans "Sign in" %} · Jober{% endblock %}
 
 {% block content %}
 <section class="login-panel">
-  <p class="eyebrow">{% trans "Interný systém" %}</p>
-  <h1>{% trans "Prihlásenie tímu Jober" %}</h1>
+  <p class="eyebrow">{% trans "Internal system" %}</p>
+  <h1>{% trans "Sign in to the Jober team" %}</h1>
+  {% if error %}
+    <p class="form-error" role="alert">{{ error }}</p>
+  {% endif %}
   <form class="stack" method="post" action=".">
     {% csrf_token %}
     <label>
-      <span>{% trans "E-mail" %}</span>
+      <span>{% trans "Email" %}</span>
       <input type="email" name="email" autocomplete="username">
     </label>
     <label>
-      <span>{% trans "Heslo" %}</span>
+      <span>{% trans "Password" %}</span>
       <input type="password" name="password" autocomplete="current-password">
     </label>
-    <button class="button button-primary" type="submit">{% trans "Pokračovať" %}</button>
+    <button class="button button-primary" type="submit">{% trans "Continue" %}</button>
   </form>
 </section>
 {% endblock %}

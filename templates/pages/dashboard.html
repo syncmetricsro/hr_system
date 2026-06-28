@@ -1,26 +1,30 @@
 {% extends "layouts/base.html" %}
-{% load i18n %}
+{% load i18n rbac %}
 
-{% block title %}{% trans "Prevádzkový prehľad" %} · Jober{% endblock %}
+{% block title %}{% trans "Operational overview" %} · Jober{% endblock %}
 
 {% block content %}
 <section class="page-head">
-  <p class="eyebrow">{% trans "Pilotný shell" %}</p>
-  <h1>{% trans "Prevádzkový prehľad" %}</h1>
-  <p>{% trans "Prvá obrazovka overuje navigáciu, lokálne skripty a mobilnú prácu koordinátora bez zavádzania finálnych obchodných modelov." %}</p>
+  <p class="eyebrow">{% trans "Pilot shell" %}</p>
+  <h1>{% trans "Operational overview" %}</h1>
+  <p>{% trans "The first screen verifies navigation, local scripts, and the coordinator's mobile workflow without introducing final business models." %}</p>
+  {% can 'project.manage' as may_manage_projects %}
+  {% if may_manage_projects %}
+    <a class="button button-primary" href="#projekty">{% trans "Manage projects" %}</a>
+  {% endif %}
 </section>
 
-<section class="dashboard-grid" aria-label="{% trans 'Prevádzkové súhrny' %}">
+<section class="dashboard-grid" aria-label="{% trans 'Operational summaries' %}">
   <article class="metric-card">
-    <span>{% trans "Aktívne projekty" %}</span>
+    <span>{% trans "Active projects" %}</span>
     <strong>8</strong>
   </article>
   <article class="metric-card">
-    <span>{% trans "Otvorené pripravenosti" %}</span>
+    <span>{% trans "Open readiness checks" %}</span>
     <strong>14</strong>
   </article>
   <article class="metric-card">
-    <span>{% trans "Mobilné úlohy" %}</span>
+    <span>{% trans "Mobile tasks" %}</span>
     <strong>6</strong>
   </article>
 </section>
@@ -29,8 +33,8 @@
   <div class="panel">
     <div class="panel-head">
       <div>
-        <p class="eyebrow">{% trans "Koordinátor" %}</p>
-        <h2>{% trans "Terénny rad" %}</h2>
+        <p class="eyebrow">{% trans "Coordinator" %}</p>
+        <h2>{% trans "Field queue" %}</h2>
       </div>
       <a
         class="button button-secondary"
@@ -39,16 +43,16 @@
         hx-target="#field-panel"
         hx-swap="outerHTML"
       >
-        {% trans "Načítať rad" %}
+        {% trans "Load queue" %}
       </a>
     </div>
     {% include "partials/field_queue.html" %}
   </div>
 
   <aside class="panel">
-    <p class="eyebrow">{% trans "Pravidlo Phase 0" %}</p>
-    <h2>{% trans "Bez finálnych dát" %}</h2>
-    <p>{% trans "Tento shell používa iba fiktívne hodnoty. Skutočné osobné údaje prídu až po právnej a bezpečnostnej bráne." %}</p>
+    <p class="eyebrow">{% trans "Phase 0 rule" %}</p>
+    <h2>{% trans "No final data" %}</h2>
+    <p>{% trans "This shell uses fictional values only. Real personal data arrives only after the legal and security gate." %}</p>
   </aside>
 </section>
 {% endblock %}

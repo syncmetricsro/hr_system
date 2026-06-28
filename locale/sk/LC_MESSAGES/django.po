@@ -1,0 +1,170 @@
+# Jober — Slovak (sk) translation catalog.
+# Generated from English source strings. AI-authored; pending fluent-speaker review.
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sk\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n>=2 && n<=4 ? 1 : 2);\n"
+
+msgid "Profile"
+msgstr "Profil"
+
+msgid "Permissions"
+msgstr "Oprávnenia"
+
+msgid "Dates"
+msgstr "Dátumy"
+
+msgid "Recruiter"
+msgstr "Náborár"
+
+msgid "Coordinator"
+msgstr "Koordinátor"
+
+msgid "Manager/Administrator"
+msgstr "Manažér/Administrátor"
+
+msgid "Observer"
+msgstr "Pozorovateľ"
+
+msgid "email"
+msgstr "e-mail"
+
+msgid "role"
+msgstr "rola"
+
+msgid "user"
+msgstr "používateľ"
+
+msgid "users"
+msgstr "používatelia"
+
+msgid "Invalid email or password."
+msgstr "Nesprávny e-mail alebo heslo."
+
+msgid "actor"
+msgstr "aktér"
+
+msgid "action"
+msgstr "akcia"
+
+msgid "target type"
+msgstr "typ cieľa"
+
+msgid "target id"
+msgstr "identifikátor cieľa"
+
+msgid "reason"
+msgstr "dôvod"
+
+msgid "metadata"
+msgstr "metadáta"
+
+msgid "created"
+msgstr "vytvorené"
+
+msgid "audit event"
+msgstr "audítny záznam"
+
+msgid "audit events"
+msgstr "audítne záznamy"
+
+msgid "Jober operations"
+msgstr "Jober prevádzka"
+
+msgid "Skip to content"
+msgstr "Preskočiť na obsah"
+
+msgid "Jober"
+msgstr "Jober"
+
+msgid "Open navigation"
+msgstr "Otvoriť navigáciu"
+
+msgid "Overview"
+msgstr "Prehľad"
+
+msgid "Projects"
+msgstr "Projekty"
+
+msgid "Field"
+msgstr "Terén"
+
+msgid "Messages"
+msgstr "Správy"
+
+msgid "Language"
+msgstr "Jazyk"
+
+msgid "Role"
+msgstr "Rola"
+
+msgid "Sign out"
+msgstr "Odhlásiť sa"
+
+msgid "Operational overview"
+msgstr "Prevádzkový prehľad"
+
+msgid "Pilot shell"
+msgstr "Pilotný shell"
+
+msgid "The first screen verifies navigation, local scripts, and the coordinator's mobile workflow without introducing final business models."
+msgstr "Prvá obrazovka overuje navigáciu, lokálne skripty a mobilnú prácu koordinátora bez zavádzania finálnych obchodných modelov."
+
+msgid "Manage projects"
+msgstr "Spravovať projekty"
+
+msgid "Operational summaries"
+msgstr "Prevádzkové súhrny"
+
+msgid "Active projects"
+msgstr "Aktívne projekty"
+
+msgid "Open readiness checks"
+msgstr "Otvorené pripravenosti"
+
+msgid "Mobile tasks"
+msgstr "Mobilné úlohy"
+
+msgid "Field queue"
+msgstr "Terénny rad"
+
+msgid "Load queue"
+msgstr "Načítať rad"
+
+msgid "Phase 0 rule"
+msgstr "Pravidlo Phase 0"
+
+msgid "No final data"
+msgstr "Bez finálnych dát"
+
+msgid "This shell uses fictional values only. Real personal data arrives only after the legal and security gate."
+msgstr "Tento shell používa iba fiktívne hodnoty. Skutočné osobné údaje prídu až po právnej a bezpečnostnej bráne."
+
+msgid "Sign in"
+msgstr "Prihlásenie"
+
+msgid "Internal system"
+msgstr "Interný systém"
+
+msgid "Sign in to the Jober team"
+msgstr "Prihlásenie tímu Jober"
+
+msgid "Email"
+msgstr "E-mail"
+
+msgid "Password"
+msgstr "Heslo"
+
+msgid "Continue"
+msgstr "Pokračovať"
+
+msgid "Responsible"
+msgstr "Zodpovedný"
+
+msgid "Readiness"
+msgstr "Pripravenosť"
+
+msgid "Missing"
+msgstr "Chýba"

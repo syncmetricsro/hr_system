@@ -1,0 +1,170 @@
+# Jober — Hungarian (hu) translation catalog.
+# Generated from English source strings. AI-authored; pending fluent-speaker review.
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: hu\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Profile"
+msgstr "Profil"
+
+msgid "Permissions"
+msgstr "Jogosultságok"
+
+msgid "Dates"
+msgstr "Dátumok"
+
+msgid "Recruiter"
+msgstr "Toborzó"
+
+msgid "Coordinator"
+msgstr "Koordinátor"
+
+msgid "Manager/Administrator"
+msgstr "Menedzser/Adminisztrátor"
+
+msgid "Observer"
+msgstr "Megfigyelő"
+
+msgid "email"
+msgstr "e-mail"
+
+msgid "role"
+msgstr "szerepkör"
+
+msgid "user"
+msgstr "felhasználó"
+
+msgid "users"
+msgstr "felhasználók"
+
+msgid "Invalid email or password."
+msgstr "Hibás e-mail vagy jelszó."
+
+msgid "actor"
+msgstr "szereplő"
+
+msgid "action"
+msgstr "művelet"
+
+msgid "target type"
+msgstr "céltípus"
+
+msgid "target id"
+msgstr "cél azonosító"
+
+msgid "reason"
+msgstr "indok"
+
+msgid "metadata"
+msgstr "metaadat"
+
+msgid "created"
+msgstr "létrehozva"
+
+msgid "audit event"
+msgstr "naplóbejegyzés"
+
+msgid "audit events"
+msgstr "naplóbejegyzések"
+
+msgid "Jober operations"
+msgstr "Jober üzemeltetés"
+
+msgid "Skip to content"
+msgstr "Ugrás a tartalomra"
+
+msgid "Jober"
+msgstr "Jober"
+
+msgid "Open navigation"
+msgstr "Navigáció megnyitása"
+
+msgid "Overview"
+msgstr "Áttekintés"
+
+msgid "Projects"
+msgstr "Projektek"
+
+msgid "Field"
+msgstr "Terep"
+
+msgid "Messages"
+msgstr "Üzenetek"
+
+msgid "Language"
+msgstr "Nyelv"
+
+msgid "Role"
+msgstr "Szerepkör"
+
+msgid "Sign out"
+msgstr "Kijelentkezés"
+
+msgid "Operational overview"
+msgstr "Üzemeltetési áttekintés"
+
+msgid "Pilot shell"
+msgstr "Pilot felület"
+
+msgid "The first screen verifies navigation, local scripts, and the coordinator's mobile workflow without introducing final business models."
+msgstr "Az első képernyő ellenőrzi a navigációt, a helyi szkripteket és a koordinátor mobil munkafolyamatát anélkül, hogy végleges üzleti modelleket vezetne be."
+
+msgid "Manage projects"
+msgstr "Projektek kezelése"
+
+msgid "Operational summaries"
+msgstr "Üzemeltetési összesítők"
+
+msgid "Active projects"
+msgstr "Aktív projektek"
+
+msgid "Open readiness checks"
+msgstr "Nyitott készenléti ellenőrzések"
+
+msgid "Mobile tasks"
+msgstr "Mobil feladatok"
+
+msgid "Field queue"
+msgstr "Terepi sor"
+
+msgid "Load queue"
+msgstr "Sor betöltése"
+
+msgid "Phase 0 rule"
+msgstr "0. fázis szabály"
+
+msgid "No final data"
+msgstr "Nincs végleges adat"
+
+msgid "This shell uses fictional values only. Real personal data arrives only after the legal and security gate."
+msgstr "Ez a felület csak fiktív értékeket használ. A valódi személyes adatok csak a jogi és biztonsági kapu után érkeznek."
+
+msgid "Sign in"
+msgstr "Bejelentkezés"
+
+msgid "Internal system"
+msgstr "Belső rendszer"
+
+msgid "Sign in to the Jober team"
+msgstr "Bejelentkezés a Jober csapatba"
+
+msgid "Email"
+msgstr "E-mail"
+
+msgid "Password"
+msgstr "Jelszó"
+
+msgid "Continue"
+msgstr "Folytatás"
+
+msgid "Responsible"
+msgstr "Felelős"
+
+msgid "Readiness"
+msgstr "Készenlét"
+
+msgid "Missing"
+msgstr "Hiányzik"
