@@ -1,5 +1,17 @@
 # Test Journal
 
+## 2026-06-28 (later) — Phase 1 peripheral modules + hard-gated intake
+
+Added across the accommodation, inventory, transport, finance, and intake slices; figures are cumulative as each landed.
+
+- `tests/test_logistics.py` (rooms): capacity enforcement, occupancy, one-active-room reassignment, release, RBAC.
+- `tests/test_inventory.py`: issue, return, RBAC.
+- `tests/test_transport.py`: weekly record, idempotent per week, RBAC.
+- `tests/test_finance.py`: net, dynamic company totals across projects, idempotent month, locked-month rejection, RBAC.
+- `tests/test_intake.py`: required blocks advance, typed-negative can't be blank, accepted-negative word completes + skips the conditional, positive answer requires the conditional, full completion creates an Available person, completed intake rejects further panels.
+- **Full unit suite: 93 passed**; ruff clean; all SK/HU/UK catalogs compile.
+- Production image rebuilt with all six business apps; migrations apply cleanly (pytest builds the test DB from them). Browser walkthroughs reviewed: full activation path, accommodation/finance pages, and the intake wizard.
+
 ## 2026-06-28 (later) — Core Phase 1 workflow
 
 - Generated `projects` migration 0002 (TrialAssignment + ReadinessRecord).

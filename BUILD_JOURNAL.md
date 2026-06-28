@@ -1,5 +1,21 @@
 # Build Journal
 
+## 2026-06-28 (later) — Hard-gated intake engine (Phase 1 complete)
+
+Replaces intake-lite with the real questionnaire engine (§11.3 / §12.1). This was the last open Phase 1 build item.
+
+- `apps/intake`: versioned questionnaire (`IntakeQuestionnaireVersion → IntakePanel → IntakeQuestion`) and `RecruitmentIntake → IntakeAnswer`.
+- Engine (`services.py`): `start_intake`, `save_panel`, `complete_intake`.
+  - **Sequential, server-driven panels** — `save_panel` always acts on `intake.current_panel_order`, so panels can't be bypassed by URL/forged POST.
+  - **Required** answers enforced server-side; **typed-negative** questions reject a blank field (no checkbox bypass) and recognise accepted "no/none" words (normalized); **conditional** questions are required only when their parent answer is positive.
+  - Completion maps stable_keys → Person fields and creates an `AVAILABLE` Person owned by the recruiter; audited.
+- Seed `seed_questionnaire` (published "Recruiter intake" v1: Identity / Contact / Compliance with a typed-negative disability question + conditional disability type). `dev_app.sh up` seeds it.
+- UI: `intake_start` → sequential `intake_panel` wizard (step X/Y, prefilled, per-field errors); "Add person" now starts the real intake. Admin for questionnaire authoring. i18n SK/HU/UK.
+
+Verification: ruff clean; **93 unit tests pass** (6 new: required blocks advance, typed-negative can't be blank, accepted-negative skips the conditional + completes, positive requires the conditional, full completion creates an Available person, completed intake rejects further panels). Browser walkthrough of the wizard reviewed.
+
+Phase 1 status: **all build items complete.** (Questionnaire *content* + per-language typed-negative phrases remain configurable/Tier-2; the manager-approval→coordinator-activation change is ADR 0018.)
+
 ## 2026-06-28 (later) — Minimal financial month (Phase 1)
 
 Completes the deferred peripheral modules. Sign convention flagged as an

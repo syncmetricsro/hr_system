@@ -491,3 +491,25 @@ msgstr "Finančný mesiac uložený."
 
 msgid "Invalid input."
 msgstr "Neplatný vstup."
+
+# --- intake engine ---
+msgid "Step"
+msgstr "Krok"
+
+msgid "Next"
+msgstr "Ďalej"
+
+msgid "Finish"
+msgstr "Dokončiť"
+
+msgid "Required."
+msgstr "Povinné."
+
+msgid "Please type a value (or the word for 'none')."
+msgstr "Zadajte hodnotu (alebo slovo pre žiadne)."
+
+msgid "No published intake questionnaire."
+msgstr "Žiadny publikovaný dotazník príjmu."
+
+msgid "Intake complete — person added."
+msgstr "Príjem dokončený — osoba pridaná."

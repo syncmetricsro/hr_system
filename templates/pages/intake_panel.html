@@ -1,0 +1,49 @@
+{% extends "layouts/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Intake" %} · Jober{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <p class="eyebrow">{% trans "Intake" %} · {% trans "Step" %} {{ step }} / {{ total }}</p>
+  <h1>{{ panel.title }}</h1>
+  {% if panel.help_text %}<p>{{ panel.help_text }}</p>{% endif %}
+</section>
+
+<section class="panel">
+  <form class="stack" method="post" action="{% url 'intake_panel' intake.pk %}">
+    {% csrf_token %}
+    {% for item in questions %}
+      <label>
+        <span>{{ item.q.label }}{% if item.q.required %} *{% endif %}</span>
+        {% if item.q.type == "textarea" %}
+          <textarea name="{{ item.q.stable_key }}">{{ item.value }}</textarea>
+        {% elif item.q.type == "bool" %}
+          <select name="{{ item.q.stable_key }}">
+            <option value="">—</option>
+            <option value="yes" {% if item.value == "yes" %}selected{% endif %}>{% trans "Yes" %}</option>
+            <option value="no" {% if item.value == "no" %}selected{% endif %}>{% trans "No" %}</option>
+          </select>
+        {% elif item.q.type == "date" %}
+          <input type="date" name="{{ item.q.stable_key }}" value="{{ item.value }}">
+        {% elif item.q.type == "number" %}
+          <input type="number" name="{{ item.q.stable_key }}" value="{{ item.value }}">
+        {% elif item.q.type == "select" %}
+          <select name="{{ item.q.stable_key }}">
+            <option value="">—</option>
+            {% for opt in item.q.options %}
+              <option value="{{ opt }}" {% if item.value == opt %}selected{% endif %}>{{ opt }}</option>
+            {% endfor %}
+          </select>
+        {% else %}
+          <input type="text" name="{{ item.q.stable_key }}" value="{{ item.value }}">
+        {% endif %}
+        {% if item.error %}<span class="form-error">{{ item.error }}</span>{% endif %}
+      </label>
+    {% endfor %}
+    <button class="button button-primary" type="submit">
+      {% if step == total %}{% trans "Finish" %}{% else %}{% trans "Next" %}{% endif %}
+    </button>
+  </form>
+</section>
+{% endblock %}

@@ -5,6 +5,7 @@ from django.urls import include, path
 from apps.accounts import views as account_views
 from apps.core import views
 from apps.finance import views as finance_views
+from apps.intake import views as intake_views
 from apps.logistics import views as logistics_views
 from apps.people import views as people_views
 from apps.projects import views as project_views
@@ -41,4 +42,6 @@ urlpatterns += i18n_patterns(
     path("projects/<int:project_pk>/transport/", logistics_views.record_transport_view, name="record_transport"),
     path("finance/", finance_views.finance_summary, name="finance_summary"),
     path("finance/record/", finance_views.record_month, name="finance_record"),
+    path("intake/start/", intake_views.intake_start, name="intake_start"),
+    path("intake/<int:pk>/", intake_views.intake_panel, name="intake_panel"),
 )

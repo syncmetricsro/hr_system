@@ -100,6 +100,7 @@ cmd_up() {
   manage seed_demo >/dev/null
   echo "Seeding fictional projects and people ..."
   manage seed_people >/dev/null
+  manage seed_questionnaire >/dev/null
 
   docker rm -f "$APP" >/dev/null 2>&1 || true
   echo "Starting app on port ${PORT} ..."

@@ -491,3 +491,25 @@ msgstr "Фінансовий місяць збережено."
 
 msgid "Invalid input."
 msgstr "Невірні дані."
+
+# --- intake engine ---
+msgid "Step"
+msgstr "Крок"
+
+msgid "Next"
+msgstr "Далі"
+
+msgid "Finish"
+msgstr "Завершити"
+
+msgid "Required."
+msgstr "Обов’язково."
+
+msgid "Please type a value (or the word for 'none')."
+msgstr "Введіть значення (або слово немає)."
+
+msgid "No published intake questionnaire."
+msgstr "Немає опублікованої анкети прийому."
+
+msgid "Intake complete — person added."
+msgstr "Прийом завершено — особу додано."

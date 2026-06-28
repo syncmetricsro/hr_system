@@ -9,7 +9,7 @@
   <h1>{% trans "People" %}</h1>
   {% can 'intake.create_edit' as may_add %}
   {% if may_add %}
-    <a class="button button-primary" href="{% url 'person_create' %}">{% trans "Add person" %}</a>
+    <a class="button button-primary" href="{% url 'intake_start' %}">{% trans "Add person" %}</a>
   {% endif %}
   <form class="people-search" method="get" action="{% url 'people_list' %}">
     <input type="search" name="q" value="{{ query }}" placeholder="{% trans 'Search by name' %}" aria-label="{% trans 'Search by name' %}">

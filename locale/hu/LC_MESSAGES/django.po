@@ -491,3 +491,25 @@ msgstr "Pénzügyi hónap elmentve."
 
 msgid "Invalid input."
 msgstr "Érvénytelen bevitel."
+
+# --- intake engine ---
+msgid "Step"
+msgstr "Lépés"
+
+msgid "Next"
+msgstr "Tovább"
+
+msgid "Finish"
+msgstr "Befejezés"
+
+msgid "Required."
+msgstr "Kötelező."
+
+msgid "Please type a value (or the word for 'none')."
+msgstr "Adjon meg értéket (vagy a nincs szót)."
+
+msgid "No published intake questionnaire."
+msgstr "Nincs közzétett felvételi kérdőív."
+
+msgid "Intake complete — person added."
+msgstr "Felvétel kész — személy hozzáadva."
