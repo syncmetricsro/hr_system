@@ -257,6 +257,31 @@ dt {
   align-items: start;
 }
 
+.people-search {
+  display: flex;
+  gap: var(--space-3);
+  margin-top: var(--space-3);
+}
+
+.people-search input {
+  max-width: 360px;
+}
+
+.person-row {
+  text-decoration: none;
+  color: inherit;
+}
+
+.person-row:hover {
+  border-color: var(--cobalt);
+}
+
+.detail-grid {
+  display: grid;
+  gap: var(--space-4);
+  margin: 0;
+}
+
 dd {
   margin: var(--space-1) 0 0;
   font-weight: 800;

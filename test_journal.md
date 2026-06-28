@@ -1,5 +1,12 @@
 # Test Journal
 
+## 2026-06-28 (later) — People UI
+
+- Added `tests/test_people_views.py` (5): list requires login; list shows a person; detail shows sensitive data to a manager and to the owning recruiter; detail hides it from an unconnected recruiter.
+- Extracted + translated new UI strings (SK/HU/UK) and recompiled `.mo` cleanly (no duplicate-msgid errors).
+- **Full unit suite: 57 passed** (was 52); ruff clean.
+- Live check on the rebuilt image: `/people/` and `/people/<id>/` render in Slovak with translated lifecycle statuses; manager sees the restricted personal-data panel (disability shown). Screenshots reviewed.
+
 ## 2026-06-28
 
 Phase 1 spine — Person + lifecycle + projects.

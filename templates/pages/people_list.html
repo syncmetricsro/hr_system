@@ -1,0 +1,28 @@
+{% extends "layouts/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "People" %} · Jober{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <p class="eyebrow">{% trans "Workforce" %}</p>
+  <h1>{% trans "People" %}</h1>
+  <form class="people-search" method="get" action="{% url 'people_list' %}">
+    <input type="search" name="q" value="{{ query }}" placeholder="{% trans 'Search by name' %}" aria-label="{% trans 'Search by name' %}">
+    <button class="button button-secondary" type="submit">{% trans "Search" %}</button>
+  </form>
+</section>
+
+<section class="field-list" aria-label="{% trans 'People' %}">
+  {% for person in people %}
+    <a class="field-card person-row" href="{% url 'person_detail' person.pk %}">
+      <div>
+        <h3>{{ person }}</h3>
+        <p>{% trans "Status" %}: {{ person.get_lifecycle_status_display }}</p>
+      </div>
+    </a>
+  {% empty %}
+    <p>{% trans "No people found." %}</p>
+  {% endfor %}
+</section>
+{% endblock %}

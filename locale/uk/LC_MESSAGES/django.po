@@ -1,5 +1,7 @@
 # Jober — Ukrainian (uk) translation catalog.
 # Generated from English source strings. AI-authored; pending fluent-speaker review.
+# Operational UI strings are translated; admin-only model field labels fall back
+# to English until a later i18n pass.
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -7,6 +9,7 @@ msgstr ""
 "Language: uk\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
+# --- accounts / admin ---
 msgid "Profile"
 msgstr "Профіль"
 
@@ -28,48 +31,26 @@ msgstr "Менеджер/Адміністратор"
 msgid "Observer"
 msgstr "Спостерігач"
 
-msgid "email"
-msgstr "електронна пошта"
-
-msgid "role"
-msgstr "роль"
-
-msgid "user"
-msgstr "користувач"
-
-msgid "users"
-msgstr "користувачі"
-
 msgid "Invalid email or password."
 msgstr "Невірна електронна пошта або пароль."
 
-msgid "actor"
-msgstr "актор"
+# --- lifecycle status labels ---
+msgid "Available"
+msgstr "Доступний"
 
-msgid "action"
-msgstr "дія"
+msgid "Trial day"
+msgstr "Пробний день"
 
-msgid "target type"
-msgstr "тип цілі"
+msgid "Working"
+msgstr "Працює"
 
-msgid "target id"
-msgstr "ідентифікатор цілі"
+msgid "Inactive"
+msgstr "Неактивний"
 
-msgid "reason"
-msgstr "причина"
+msgid "Blacklisted"
+msgstr "У чорному списку"
 
-msgid "metadata"
-msgstr "метадані"
-
-msgid "created"
-msgstr "створено"
-
-msgid "audit event"
-msgstr "подія аудиту"
-
-msgid "audit events"
-msgstr "події аудиту"
-
+# --- shell / navigation ---
 msgid "Jober operations"
 msgstr "Операції Jober"
 
@@ -84,6 +65,9 @@ msgstr "Відкрити навігацію"
 
 msgid "Overview"
 msgstr "Огляд"
+
+msgid "People"
+msgstr "Люди"
 
 msgid "Projects"
 msgstr "Проєкти"
@@ -103,6 +87,7 @@ msgstr "Роль"
 msgid "Sign out"
 msgstr "Вийти"
 
+# --- dashboard ---
 msgid "Operational overview"
 msgstr "Операційний огляд"
 
@@ -142,6 +127,16 @@ msgstr "Без остаточних даних"
 msgid "This shell uses fictional values only. Real personal data arrives only after the legal and security gate."
 msgstr "Ця оболонка використовує лише вигадані значення. Справжні персональні дані з’являться лише після юридичного та безпекового бар’єру."
 
+msgid "Responsible"
+msgstr "Відповідальний"
+
+msgid "Readiness"
+msgstr "Готовність"
+
+msgid "Missing"
+msgstr "Відсутнє"
+
+# --- login ---
 msgid "Sign in"
 msgstr "Вхід"
 
@@ -160,11 +155,72 @@ msgstr "Пароль"
 msgid "Continue"
 msgstr "Продовжити"
 
-msgid "Responsible"
-msgstr "Відповідальний"
+# --- people list / detail ---
+msgid "Workforce"
+msgstr "Робоча сила"
 
-msgid "Readiness"
-msgstr "Готовність"
+msgid "Search by name"
+msgstr "Пошук за іменем"
 
-msgid "Missing"
-msgstr "Відсутнє"
+msgid "Search"
+msgstr "Пошук"
+
+msgid "Status"
+msgstr "Статус"
+
+msgid "No people found."
+msgstr "Людей не знайдено."
+
+msgid "Person"
+msgstr "Особа"
+
+msgid "Back to people"
+msgstr "Назад до людей"
+
+msgid "Operational"
+msgstr "Операційні"
+
+msgid "Details"
+msgstr "Деталі"
+
+msgid "Phone"
+msgstr "Телефон"
+
+msgid "Address"
+msgstr "Адреса"
+
+msgid "Nationality"
+msgstr "Громадянство"
+
+msgid "Current project"
+msgstr "Поточний проєкт"
+
+msgid "Owning recruiter"
+msgstr "Відповідальний рекрутер"
+
+msgid "Rehire eligible"
+msgstr "Можливість повторного найму"
+
+msgid "Yes"
+msgstr "Так"
+
+msgid "No"
+msgstr "Ні"
+
+msgid "Restricted"
+msgstr "Обмежено"
+
+msgid "Personal data"
+msgstr "Особисті дані"
+
+msgid "Date of birth"
+msgstr "Дата народження"
+
+msgid "Place of birth"
+msgstr "Місце народження"
+
+msgid "Disability"
+msgstr "Інвалідність"
+
+msgid "Restricted — visible only to managers, observers, the owning recruiter, and the responsible coordinator."
+msgstr "Обмежено — видно лише менеджерам, спостерігачам, відповідальному рекрутеру та відповідальному координатору."

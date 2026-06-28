@@ -4,6 +4,7 @@ from django.urls import include, path
 
 from apps.accounts import views as account_views
 from apps.core import views
+from apps.people import views as people_views
 
 # Routes that must not be language-prefixed.
 urlpatterns = [
@@ -18,4 +19,6 @@ urlpatterns += i18n_patterns(
     path("prihlasenie/", account_views.login_page, name="login"),
     path("odhlasenie/", account_views.logout_view, name="logout"),
     path("teren/rad/", views.field_queue, name="field_queue"),
+    path("people/", people_views.people_list, name="people_list"),
+    path("people/<int:pk>/", people_views.person_detail, name="person_detail"),
 )

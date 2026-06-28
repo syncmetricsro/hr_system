@@ -1,5 +1,21 @@
 # Build Journal
 
+## 2026-06-28 (later) — People UI
+
+Surfaced the Person spine in the app (read-only), the lowest-hanging next slice.
+
+What changed:
+- `apps/people/views.py`: `people_list` (login-gated broad read, name search) and `person_detail`, which renders sensitive fields (DOB, place of birth, disability) only when `can_view_sensitive` allows (Q4); otherwise a restricted note.
+- Templates `pages/people_list.html` + `pages/person_detail.html` reusing the existing panel/field-card CSS; added a **People** nav tab and `/people/`, `/people/<id>/` routes.
+- Small CSS: `.people-search`, `.person-row`, `.detail-grid`.
+- i18n: translated the new operational UI strings (lifecycle status labels + People page) in SK/HU/UK and recompiled; admin-only model field labels fall back to English for now.
+- Verified live (manager): list shows seeded people with translated statuses; detail shows the restricted panel with disability for a permitted viewer.
+
+Verification: ruff clean; **57 unit tests pass** (5 new view tests incl. sensitive masking); screenshots of list + detail reviewed.
+
+Next step:
+- Recruiter intake (hard-gated) or trials + the readiness gate (which activates ADR 0018 enforcement).
+
 ## 2026-06-28
 
 Phase 1 business spine — Person + lifecycle + project administration.

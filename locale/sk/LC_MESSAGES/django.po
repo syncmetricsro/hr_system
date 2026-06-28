@@ -1,5 +1,7 @@
 # Jober — Slovak (sk) translation catalog.
 # Generated from English source strings. AI-authored; pending fluent-speaker review.
+# Operational UI strings are translated; admin-only model field labels fall back
+# to English until a later i18n pass.
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -7,6 +9,7 @@ msgstr ""
 "Language: sk\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n>=2 && n<=4 ? 1 : 2);\n"
 
+# --- accounts / admin ---
 msgid "Profile"
 msgstr "Profil"
 
@@ -28,48 +31,26 @@ msgstr "Manažér/Administrátor"
 msgid "Observer"
 msgstr "Pozorovateľ"
 
-msgid "email"
-msgstr "e-mail"
-
-msgid "role"
-msgstr "rola"
-
-msgid "user"
-msgstr "používateľ"
-
-msgid "users"
-msgstr "používatelia"
-
 msgid "Invalid email or password."
 msgstr "Nesprávny e-mail alebo heslo."
 
-msgid "actor"
-msgstr "aktér"
+# --- lifecycle status labels ---
+msgid "Available"
+msgstr "Dostupný"
 
-msgid "action"
-msgstr "akcia"
+msgid "Trial day"
+msgstr "Skúšobný deň"
 
-msgid "target type"
-msgstr "typ cieľa"
+msgid "Working"
+msgstr "Pracuje"
 
-msgid "target id"
-msgstr "identifikátor cieľa"
+msgid "Inactive"
+msgstr "Neaktívny"
 
-msgid "reason"
-msgstr "dôvod"
+msgid "Blacklisted"
+msgstr "Na čiernej listine"
 
-msgid "metadata"
-msgstr "metadáta"
-
-msgid "created"
-msgstr "vytvorené"
-
-msgid "audit event"
-msgstr "audítny záznam"
-
-msgid "audit events"
-msgstr "audítne záznamy"
-
+# --- shell / navigation ---
 msgid "Jober operations"
 msgstr "Jober prevádzka"
 
@@ -84,6 +65,9 @@ msgstr "Otvoriť navigáciu"
 
 msgid "Overview"
 msgstr "Prehľad"
+
+msgid "People"
+msgstr "Ľudia"
 
 msgid "Projects"
 msgstr "Projekty"
@@ -103,6 +87,7 @@ msgstr "Rola"
 msgid "Sign out"
 msgstr "Odhlásiť sa"
 
+# --- dashboard ---
 msgid "Operational overview"
 msgstr "Prevádzkový prehľad"
 
@@ -142,6 +127,16 @@ msgstr "Bez finálnych dát"
 msgid "This shell uses fictional values only. Real personal data arrives only after the legal and security gate."
 msgstr "Tento shell používa iba fiktívne hodnoty. Skutočné osobné údaje prídu až po právnej a bezpečnostnej bráne."
 
+msgid "Responsible"
+msgstr "Zodpovedný"
+
+msgid "Readiness"
+msgstr "Pripravenosť"
+
+msgid "Missing"
+msgstr "Chýba"
+
+# --- login ---
 msgid "Sign in"
 msgstr "Prihlásenie"
 
@@ -160,11 +155,72 @@ msgstr "Heslo"
 msgid "Continue"
 msgstr "Pokračovať"
 
-msgid "Responsible"
-msgstr "Zodpovedný"
+# --- people list / detail ---
+msgid "Workforce"
+msgstr "Pracovná sila"
 
-msgid "Readiness"
-msgstr "Pripravenosť"
+msgid "Search by name"
+msgstr "Hľadať podľa mena"
 
-msgid "Missing"
-msgstr "Chýba"
+msgid "Search"
+msgstr "Hľadať"
+
+msgid "Status"
+msgstr "Stav"
+
+msgid "No people found."
+msgstr "Nenašli sa žiadni ľudia."
+
+msgid "Person"
+msgstr "Osoba"
+
+msgid "Back to people"
+msgstr "Späť na ľudí"
+
+msgid "Operational"
+msgstr "Prevádzkové"
+
+msgid "Details"
+msgstr "Podrobnosti"
+
+msgid "Phone"
+msgstr "Telefón"
+
+msgid "Address"
+msgstr "Adresa"
+
+msgid "Nationality"
+msgstr "Národnosť"
+
+msgid "Current project"
+msgstr "Aktuálny projekt"
+
+msgid "Owning recruiter"
+msgstr "Zodpovedný náborár"
+
+msgid "Rehire eligible"
+msgstr "Možnosť opätovného prijatia"
+
+msgid "Yes"
+msgstr "Áno"
+
+msgid "No"
+msgstr "Nie"
+
+msgid "Restricted"
+msgstr "Obmedzené"
+
+msgid "Personal data"
+msgstr "Osobné údaje"
+
+msgid "Date of birth"
+msgstr "Dátum narodenia"
+
+msgid "Place of birth"
+msgstr "Miesto narodenia"
+
+msgid "Disability"
+msgstr "Zdravotné postihnutie"
+
+msgid "Restricted — visible only to managers, observers, the owning recruiter, and the responsible coordinator."
+msgstr "Obmedzené — viditeľné iba pre manažérov, pozorovateľov, zodpovedného náborára a zodpovedného koordinátora."

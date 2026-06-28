@@ -1,0 +1,44 @@
+{% extends "layouts/base.html" %}
+{% load i18n %}
+
+{% block title %}{{ person }} · Jober{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <p class="eyebrow">{% trans "Person" %} · {{ person.get_lifecycle_status_display }}</p>
+  <h1>{{ person }}</h1>
+  <a class="button button-secondary" href="{% url 'people_list' %}">{% trans "Back to people" %}</a>
+</section>
+
+<section class="two-column">
+  <div class="panel">
+    <p class="eyebrow">{% trans "Operational" %}</p>
+    <h2>{% trans "Details" %}</h2>
+    <dl class="detail-grid">
+      <div><dt>{% trans "Phone" %}</dt><dd>{{ person.phone|default:"—" }}</dd></div>
+      <div><dt>{% trans "Address" %}</dt><dd>{{ person.address|default:"—" }}</dd></div>
+      <div><dt>{% trans "Nationality" %}</dt><dd>{{ person.nationality|default:"—" }}</dd></div>
+      <div><dt>{% trans "Current project" %}</dt><dd>{% if assignment %}{{ assignment.project.name }}{% else %}—{% endif %}</dd></div>
+      <div><dt>{% trans "Owning recruiter" %}</dt><dd>{{ person.owning_recruiter|default:"—" }}</dd></div>
+      <div><dt>{% trans "Rehire eligible" %}</dt><dd>{% if person.rehire_eligible %}{% trans "Yes" %}{% else %}{% trans "No" %}{% endif %}</dd></div>
+    </dl>
+  </div>
+
+  <aside class="panel">
+    <p class="eyebrow">{% trans "Restricted" %}</p>
+    <h2>{% trans "Personal data" %}</h2>
+    {% if show_sensitive %}
+      <dl class="detail-grid">
+        <div><dt>{% trans "Date of birth" %}</dt><dd>{{ person.date_of_birth|default:"—" }}</dd></div>
+        <div><dt>{% trans "Place of birth" %}</dt><dd>{{ person.place_of_birth|default:"—" }}</dd></div>
+        <div>
+          <dt>{% trans "Disability" %}</dt>
+          <dd>{% if person.has_disability %}{% trans "Yes" %}{% if person.disability_type %} — {{ person.disability_type }}{% endif %}{% else %}{% trans "No" %}{% endif %}</dd>
+        </div>
+      </dl>
+    {% else %}
+      <p>{% trans "Restricted — visible only to managers, observers, the owning recruiter, and the responsible coordinator." %}</p>
+    {% endif %}
+  </aside>
+</section>
+{% endblock %}
