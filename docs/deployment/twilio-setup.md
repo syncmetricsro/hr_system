@@ -51,6 +51,28 @@ The endpoint verifies `X-Twilio-Signature` against `TWILIO_AUTH_TOKEN` and fails
 closed (403) on a bad/missing signature. Needs a public URL (staging/prod or an
 ngrok tunnel). Alphanumeric senders cannot receive replies.
 
+## Secrets via Doppler (recommended)
+
+The app reads plain env vars, so Doppler needs no code changes — it just injects
+them. The repo's `doppler.yaml` selects project `hr_system`, config `dev`.
+
+One-time (interactive, done by you):
+```bash
+doppler login
+doppler setup          # picks up doppler.yaml -> hr_system / dev
+```
+
+Run locally with secrets injected (replaces the manual `export`s):
+```bash
+doppler run -- scripts/dev_app.sh up
+```
+`doppler run` sets `TWILIO_ACCOUNT_SID/AUTH_TOKEN/FROM_NUMBER` in the shell;
+`dev_app.sh` forwards them into the container. Verify with
+`docker exec jober-dev-app env | grep TWILIO`.
+
+For staging/prod, either sync Doppler → Dokku config, or run the dyno under a
+Doppler service token (`doppler run -- gunicorn …`). See the Dokku section below.
+
 ## Staging / production (Dokku)
 
 ```bash

@@ -1,0 +1,6 @@
+# Doppler project/config selection for this repo (no secret values here).
+# `doppler setup` reads this; then run the app with secrets injected, e.g.:
+#   doppler run -- scripts/dev_app.sh up
+setup:
+  project: hr_system
+  config: dev
