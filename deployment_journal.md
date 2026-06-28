@@ -1,5 +1,14 @@
 # Deployment Journal
 
+## 2026-06-29
+
+Secrets + Twilio SMS go-live readiness.
+
+- **Secrets via Doppler.** Project `hr_system`, config `dev` holds the Twilio creds. Local runs use `doppler run -- scripts/dev_app.sh up` (dev_app forwards `TWILIO_*` into the container; committed `doppler.yaml` selects the project/config). No secrets in git. See `docs/deployment/twilio-setup.md`.
+- **Twilio SMS verified live** end-to-end through the app: live SID/token + a trial number delivered to the Twilio Virtual Phone (`Delivered` in Messaging Logs). Test-credential magic-number path also verified.
+- New deploy-time env vars: `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN`, `TWILIO_FROM_NUMBER` (from Doppler/secret store, never the repo).
+- **Remaining for SMS prod:** upgrade the Twilio account (removes the trial prefix; allows arbitrary recipients), and configure the inbound webhook (`/webhooks/twilio/inbound/`) once a public HTTPS host exists (Dokku staging or a tunnel). For Dokku, inject Doppler secrets via sync (`doppler secrets download … | dokku config:set`) or a service token (`doppler run -- gunicorn …`).
+
 ## 2026-06-21
 
 Phase 1 deployment-relevant changes.

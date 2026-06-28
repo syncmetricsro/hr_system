@@ -4,7 +4,7 @@ Tracks what must be true before the Jober app serves real users/data, and the
 state of each gate. "Ready" = verified; "Open" = not done / needs a human or an
 external input. Update this whenever a gate changes state.
 
-Last updated: 2026-06-21
+Last updated: 2026-06-29
 
 ## Serving & runtime
 
@@ -15,8 +15,14 @@ Last updated: 2026-06-21
 | Dokku staging deploy | ⚠️ Open | Blocked on external staging app/domain/PostgreSQL service names. Runbook: `docs/deployment/dokku-staging.md`. |
 | DB migrations on deploy | ✅ Ready | `accounts`/`audit` initial migrations run cleanly on pinned PostgreSQL 17. |
 | Initial admin user | ✅ Ready (2026-06-21) | `manage.py ensure_superuser` — idempotent, env-driven (`DJANGO_SUPERUSER_EMAIL`/`_PASSWORD`), audited; wired into the Dokku release steps (`docs/deployment/dokku-staging.md`). `seed_demo` remains fictional/staging only — never against a real-data DB. |
-| Secret management | ⚠️ Open | `DJANGO_SECRET_KEY` and DB creds via env; confirm Dokku secret storage and rotation before prod. |
+| Secret management | 🟡 Partial (2026-06-29) | **Doppler** is the secrets source (project `hr_system`, config `dev`); `doppler run -- scripts/dev_app.sh up` injects env locally (`doppler.yaml`, `docs/deployment/twilio-setup.md`). Still to confirm: prod Doppler config + Dokku wiring (sync or service token) and `DJANGO_SECRET_KEY`/DB-cred rotation. |
 | DB backups / restore | ⚠️ Open | Not yet defined for the Dokku PostgreSQL service. |
+
+## Integrations
+
+| Gate | State | Notes |
+|---|---|---|
+| Twilio SMS | 🟡 Verified live (2026-06-29) | End-to-end delivery confirmed through the app: live creds (via Doppler) → trial number `+1928…` → Twilio Virtual Phone, **Delivered** in Messaging Logs. Code: stdlib client, signature-verified webhook (ADR 0019). **Remaining (ops, not code):** upgrade the Twilio account (drops the trial prefix; allows non-verified recipients) and point the inbound webhook at a public `/webhooks/twilio/inbound/` once staging/TLS exists. Real worker numbers stay behind the real-data gate. |
 
 ## Product / legal gates (block real data, not code)
 
