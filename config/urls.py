@@ -39,6 +39,7 @@ urlpatterns += i18n_patterns(
     path("people/<int:person_pk>/assign-trial/", project_views.assign_trial, name="assign_trial"),
     path("people/<int:person_pk>/readiness/", project_views.readiness_update, name="readiness_update"),
     path("people/<int:person_pk>/activate/", project_views.activate_person, name="activate_person"),
+    path("people/<int:person_pk>/exit/", project_views.exit_view, name="exit_person"),
     path("accommodation/", logistics_views.accommodation_list, name="accommodation_list"),
     path("accommodation/<int:pk>/", logistics_views.accommodation_detail, name="accommodation_detail"),
     path("people/<int:person_pk>/assign-room/", logistics_views.assign_room_view, name="assign_room"),

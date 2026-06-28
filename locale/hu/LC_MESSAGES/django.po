@@ -606,3 +606,22 @@ msgstr "Határidő"
 
 msgid "No compliance alerts."
 msgstr "Nincs megfelelőségi figyelmeztetés."
+
+# --- exit / recycling ---
+msgid "Exit"
+msgstr "Kilépés"
+
+msgid "Exit & reconcile"
+msgstr "Kilépés és elszámolás"
+
+msgid "Ends the project assignment, releases the room, and returns issued equipment."
+msgstr "Lezárja a projekt-hozzárendelést, felszabadítja a szobát és visszaveszi a kiadott felszerelést."
+
+msgid "Exit to Available"
+msgstr "Kilépés Elérhető állapotba"
+
+msgid "Exit to Inactive"
+msgstr "Kilépés Inaktív állapotba"
+
+msgid "Exit completed."
+msgstr "Kilépés befejezve."

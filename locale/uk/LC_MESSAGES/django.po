@@ -606,3 +606,22 @@ msgstr "Термін"
 
 msgid "No compliance alerts."
 msgstr "Немає сповіщень відповідності."
+
+# --- exit / recycling ---
+msgid "Exit"
+msgstr "Вихід"
+
+msgid "Exit & reconcile"
+msgstr "Вихід та звірка"
+
+msgid "Ends the project assignment, releases the room, and returns issued equipment."
+msgstr "Завершує призначення на проєкт, звільняє кімнату та повертає видане спорядження."
+
+msgid "Exit to Available"
+msgstr "Вихід до Доступний"
+
+msgid "Exit to Inactive"
+msgstr "Вихід до Неактивний"
+
+msgid "Exit completed."
+msgstr "Вихід завершено."

@@ -155,6 +155,30 @@ def activate_from_readiness(person, project, *, actor=None):
 
 
 @transaction.atomic
+def exit_person(person, *, actor=None, reason: str = "", outcome: str = "available"):
+    """Exit reconciliation (plan §11.13): end the active project assignment,
+    release the room, return all issued equipment, and recycle the person to
+    Available (default) or mark them Inactive.
+
+    Missing-returnable-item *deductions* are an open decision (open-decisions.md)
+    and are intentionally not modelled here yet.
+    """
+    from apps.logistics.models import EquipmentIssueStatus
+    from apps.logistics.services import release_room, return_equipment
+
+    end_assignment(person, actor=actor, reason=reason or "exit")
+    release_room(person, actor=actor)
+    for issue in person.equipment_issues.filter(status=EquipmentIssueStatus.ISSUED):
+        return_equipment(issue, actor=actor)
+
+    if outcome == "inactive" and person.lifecycle_status == LifecycleStatus.AVAILABLE:
+        person.set_status(LifecycleStatus.INACTIVE, actor=actor, reason=reason or "exit")
+
+    record_event(actor, "person.exited", target=person, reason=reason, outcome=outcome)
+    return person
+
+
+@transaction.atomic
 def end_assignment(person, *, actor=None, reason: str = ""):
     """End the active assignment and return the person to AVAILABLE."""
     today = timezone.localdate()
