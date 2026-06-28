@@ -1,5 +1,12 @@
 # Build Journal
 
+## 2026-06-29 — Phase 3 (5/n): operational reports
+
+- `core.views.reports`: read-only cross-module summary (plan §3) — active projects, total people, pending trials, compliance-alert count, accommodation occupancy, people-by-status, and a finance block gated by `finance.view_summary` (managers/observers). Reuses existing services; no new models.
+- Reports nav tab + `/reports/`. i18n SK/HU/UK.
+
+Verification: ruff clean; **163 unit tests pass** (4 new: login required, counts render, finance section hidden from recruiter / shown to observer).
+
 ## 2026-06-29 — Phase 3 (4/n): QR feedback + manager inbox
 
 Worker-facing feedback (plan §10.1 `/feedback/<token>`, §11.11).

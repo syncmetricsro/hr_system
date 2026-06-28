@@ -690,3 +690,6 @@ msgstr "Назва обов’язкова."
 
 msgid "Feedback link created."
 msgstr "Посилання для відгуків створено."
+
+msgid "People by status"
+msgstr "Люди за статусом"

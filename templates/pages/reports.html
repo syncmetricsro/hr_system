@@ -1,0 +1,43 @@
+{% extends "layouts/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Reports" %} · Jober{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <p class="eyebrow">{% trans "Operations" %}</p>
+  <h1>{% trans "Reports" %}</h1>
+</section>
+
+<section class="dashboard-grid" aria-label="{% trans 'Reports' %}">
+  <article class="metric-card"><span>{% trans "Active projects" %}</span><strong>{{ active_projects }}</strong></article>
+  <article class="metric-card"><span>{% trans "People" %}</span><strong>{{ total_people }}</strong></article>
+  <article class="metric-card"><span>{% trans "Awaiting outcome" %}</span><strong>{{ pending_trials }}</strong></article>
+  <article class="metric-card"><span>{% trans "Compliance" %}</span><strong>{{ compliance_count }}</strong></article>
+  <article class="metric-card"><span>{% trans "Occupancy" %}</span><strong>{{ occupied }}/{{ capacity }}</strong></article>
+</section>
+
+<section class="two-column">
+  <div class="panel">
+    <p class="eyebrow">{% trans "Workforce" %}</p>
+    <h2>{% trans "People by status" %}</h2>
+    <dl class="detail-grid">
+      {% for label, count in status_counts %}
+        <div><dt>{{ label }}</dt><dd>{{ count }}</dd></div>
+      {% endfor %}
+    </dl>
+  </div>
+
+  {% if finance %}
+  <aside class="panel">
+    <p class="eyebrow">{% trans "Company total" %}</p>
+    <h2>{% trans "Finance" %}</h2>
+    <dl class="detail-grid">
+      <div><dt>{% trans "Revenue" %}</dt><dd>{{ finance.revenue }}</dd></div>
+      <div><dt>{% trans "Cost" %}</dt><dd>{{ finance.cost }}</dd></div>
+      <div><dt>{% trans "Net" %}</dt><dd>{{ finance.net }}</dd></div>
+    </dl>
+  </aside>
+  {% endif %}
+</section>
+{% endblock %}
