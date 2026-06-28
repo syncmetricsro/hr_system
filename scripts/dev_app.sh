@@ -98,6 +98,8 @@ cmd_up() {
   manage migrate --noinput >/dev/null
   echo "Seeding fictional demo users ..."
   manage seed_demo >/dev/null
+  echo "Seeding fictional projects and people ..."
+  manage seed_people >/dev/null
 
   docker rm -f "$APP" >/dev/null 2>&1 || true
   echo "Starting app on port ${PORT} ..."

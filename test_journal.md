@@ -1,5 +1,13 @@
 # Test Journal
 
+## 2026-06-28 (later) — Core Phase 1 workflow
+
+- Generated `projects` migration 0002 (TrialAssignment + ReadinessRecord).
+- Added `tests/test_workflow.py` (11): trial schedule sets Trial day; schedule requires Available; fail/no-show recycle; pass keeps Trial day + Completed; second trial keeps history; double outcome rejected; readiness ready only when required complete + optional complete/N/A; medical cannot be N/A; activation blocked until ready; **full path to Working**.
+- Translated + recompiled all new workflow/readiness/intake strings (SK/HU/UK); catalogs compile cleanly.
+- **Full unit suite: 71 passed** (was 60); ruff clean.
+- **End-to-end browser walkthrough** (Playwright, manager) of the whole demo path succeeded: add person → schedule trial → fail (recycle) → schedule trial → pass → readiness (medical+gear complete, accommodation/transport N/A) → activate → Working on DHL Bratislava. Readiness + Working screenshots reviewed (Slovak).
+
 ## 2026-06-28 (later) — Project UI
 
 - Added `tests/test_project_views.py` (3): list requires login; list shows a project; detail lists assigned workers.

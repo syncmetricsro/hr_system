@@ -264,3 +264,112 @@ msgstr "Pracovníci"
 
 msgid "No workers assigned."
 msgstr "Nie sú pridelení žiadni pracovníci."
+
+# --- workflow: trials / readiness / intake ---
+msgid "Next step"
+msgstr "Ďalší krok"
+
+msgid "Send to a project trial"
+msgstr "Poslať na skúšobný deň"
+
+msgid "Schedule trial"
+msgstr "Naplánovať skúšku"
+
+msgid "Record trial outcome"
+msgstr "Zaznamenať výsledok skúšky"
+
+msgid "Pass"
+msgstr "Prešiel"
+
+msgid "Fail"
+msgstr "Neprešiel"
+
+msgid "No-show"
+msgstr "Nedostavil sa"
+
+msgid "Awaiting the coordinator's outcome."
+msgstr "Čaká sa na výsledok od koordinátora."
+
+msgid "Trials"
+msgstr "Skúšky"
+
+msgid "No trials awaiting an outcome."
+msgstr "Žiadne skúšky nečakajú na výsledok."
+
+msgid "Trial scheduled."
+msgstr "Skúška naplánovaná."
+
+msgid "Trial outcome recorded."
+msgstr "Výsledok skúšky zaznamenaný."
+
+msgid "Pending"
+msgstr "Čaká"
+
+msgid "Four-pillar readiness"
+msgstr "Štvorpilierová pripravenosť"
+
+msgid "Medical"
+msgstr "Lekárska"
+
+msgid "Gear"
+msgstr "Výstroj"
+
+msgid "Accommodation"
+msgstr "Ubytovanie"
+
+msgid "Transport"
+msgstr "Doprava"
+
+msgid "Incomplete"
+msgstr "Nekompletné"
+
+msgid "Complete"
+msgstr "Kompletné"
+
+msgid "Not applicable"
+msgstr "Neaplikovateľné"
+
+msgid "Save readiness"
+msgstr "Uložiť pripravenosť"
+
+msgid "Activate (Working)"
+msgstr "Aktivovať (Pracuje)"
+
+msgid "Ready to activate"
+msgstr "Pripravené na aktiváciu"
+
+msgid "Medical and gear required"
+msgstr "Vyžaduje sa lekárska a výstroj"
+
+msgid "Readiness saved."
+msgstr "Pripravenosť uložená."
+
+msgid "Activated — now Working."
+msgstr "Aktivované — teraz Pracuje."
+
+msgid "Add person"
+msgstr "Pridať osobu"
+
+msgid "Intake"
+msgstr "Príjem"
+
+msgid "Save"
+msgstr "Uložiť"
+
+msgid "First name"
+msgstr "Meno"
+
+msgid "Last name"
+msgstr "Priezvisko"
+
+msgid "Has disability"
+msgstr "Má zdravotné postihnutie"
+
+msgid "Disability type"
+msgstr "Typ postihnutia"
+
+msgid "Preferred language"
+msgstr "Preferovaný jazyk"
+
+msgid "Person added."
+msgstr "Osoba pridaná."

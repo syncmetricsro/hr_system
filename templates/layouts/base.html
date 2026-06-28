@@ -25,7 +25,7 @@
         <a class="folder-tab is-active" href="{% url 'dashboard' %}">{% trans "Overview" %}</a>
         <a class="folder-tab" href="{% url 'people_list' %}">{% trans "People" %}</a>
         <a class="folder-tab" href="{% url 'project_list' %}">{% trans "Projects" %}</a>
-        <a class="folder-tab" href="#teren">{% trans "Field" %}</a>
+        <a class="folder-tab" href="{% url 'trials_queue' %}">{% trans "Field" %}</a>
         <a class="folder-tab" href="#spravy">{% trans "Messages" %}</a>
       </nav>
       <div class="header-account">
@@ -51,6 +51,13 @@
       </div>
     </header>
     <main id="obsah" class="app-shell">
+      {% if messages %}
+        <ul class="messages" role="status">
+          {% for message in messages %}
+            <li class="message message-{{ message.tags }}">{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
       {% block content %}{% endblock %}
     </main>
   </body>

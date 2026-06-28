@@ -264,3 +264,112 @@ msgstr "Працівники"
 
 msgid "No workers assigned."
 msgstr "Немає призначених працівників."
+
+# --- workflow: trials / readiness / intake ---
+msgid "Next step"
+msgstr "Наступний крок"
+
+msgid "Send to a project trial"
+msgstr "Відправити на пробний день"
+
+msgid "Schedule trial"
+msgstr "Запланувати пробний день"
+
+msgid "Record trial outcome"
+msgstr "Записати результат пробного дня"
+
+msgid "Pass"
+msgstr "Пройшов"
+
+msgid "Fail"
+msgstr "Не пройшов"
+
+msgid "No-show"
+msgstr "Не з’явився"
+
+msgid "Awaiting the coordinator's outcome."
+msgstr "Очікування результату від координатора."
+
+msgid "Trials"
+msgstr "Пробні дні"
+
+msgid "No trials awaiting an outcome."
+msgstr "Немає пробних днів, що очікують результату."
+
+msgid "Trial scheduled."
+msgstr "Пробний день заплановано."
+
+msgid "Trial outcome recorded."
+msgstr "Результат пробного дня записано."
+
+msgid "Pending"
+msgstr "Очікує"
+
+msgid "Four-pillar readiness"
+msgstr "Чотиристовпова готовність"
+
+msgid "Medical"
+msgstr "Медичне"
+
+msgid "Gear"
+msgstr "Спорядження"
+
+msgid "Accommodation"
+msgstr "Проживання"
+
+msgid "Transport"
+msgstr "Транспорт"
+
+msgid "Incomplete"
+msgstr "Незавершено"
+
+msgid "Complete"
+msgstr "Завершено"
+
+msgid "Not applicable"
+msgstr "Не застосовується"
+
+msgid "Save readiness"
+msgstr "Зберегти готовність"
+
+msgid "Activate (Working)"
+msgstr "Активувати (Працює)"
+
+msgid "Ready to activate"
+msgstr "Готово до активації"
+
+msgid "Medical and gear required"
+msgstr "Потрібні медичне та спорядження"
+
+msgid "Readiness saved."
+msgstr "Готовність збережено."
+
+msgid "Activated — now Working."
+msgstr "Активовано — тепер Працює."
+
+msgid "Add person"
+msgstr "Додати особу"
+
+msgid "Intake"
+msgstr "Прийом"
+
+msgid "Save"
+msgstr "Зберегти"
+
+msgid "First name"
+msgstr "Ім’я"
+
+msgid "Last name"
+msgstr "Прізвище"
+
+msgid "Has disability"
+msgstr "Має інвалідність"
+
+msgid "Disability type"
+msgstr "Тип інвалідності"
+
+msgid "Preferred language"
+msgstr "Бажана мова"
+
+msgid "Person added."
+msgstr "Особу додано."

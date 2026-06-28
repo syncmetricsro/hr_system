@@ -100,3 +100,105 @@ class ProjectAssignment(models.Model):
 
     def __str__(self) -> str:
         return f"{self.person} -> {self.project} ({self.status})"
+
+
+class TrialState(models.TextChoices):
+    SCHEDULED = "scheduled", _("Scheduled")
+    COMPLETED = "completed", _("Completed")
+    CANCELLED = "cancelled", _("Cancelled")
+
+
+class TrialOutcome(models.TextChoices):
+    PENDING = "pending", _("Pending")
+    PASS = "pass", _("Pass")
+    FAIL = "fail", _("Fail")
+    NO_SHOW = "no_show", _("No-show")
+
+
+class TrialAssignment(models.Model):
+    """A trial-day workflow record (plan §11.5). History is append-preserving:
+    a new attempt creates a new record."""
+
+    person = models.ForeignKey(
+        "people.Person", on_delete=models.PROTECT, related_name="trials", verbose_name=_("person")
+    )
+    project = models.ForeignKey(
+        Project, on_delete=models.PROTECT, related_name="trials", verbose_name=_("project")
+    )
+    scheduled_date = models.DateField(_("scheduled date"), null=True, blank=True)
+    state = models.CharField(_("state"), max_length=20, choices=TrialState.choices, default=TrialState.SCHEDULED)
+    outcome = models.CharField(_("outcome"), max_length=20, choices=TrialOutcome.choices, default=TrialOutcome.PENDING)
+    note = models.CharField(_("note"), max_length=300, blank=True)
+    assigned_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True,
+        related_name="scheduled_trials", verbose_name=_("assigned by"),
+    )
+    outcome_recorded_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True,
+        related_name="recorded_trials", verbose_name=_("outcome recorded by"),
+    )
+    outcome_recorded_at = models.DateTimeField(_("outcome recorded at"), null=True, blank=True)
+    created_at = models.DateTimeField(_("created"), auto_now_add=True)
+
+    class Meta:
+        verbose_name = _("trial assignment")
+        verbose_name_plural = _("trial assignments")
+        ordering = ("-created_at",)
+
+    def __str__(self) -> str:
+        return f"{self.person} @ {self.project} ({self.outcome})"
+
+
+class PillarState(models.TextChoices):
+    INCOMPLETE = "incomplete", _("Incomplete")
+    COMPLETE = "complete", _("Complete")
+    NOT_APPLICABLE = "not_applicable", _("Not applicable")
+
+
+class ReadinessRecord(models.Model):
+    """Four-pillar readiness for a person on a project (plan §11.6).
+
+    Medical and gear are always required (cannot be N/A); accommodation and
+    transport may be N/A. Activation is system-enforced via ``is_ready`` (ADR 0018).
+    """
+
+    person = models.ForeignKey(
+        "people.Person", on_delete=models.PROTECT, related_name="readiness_records", verbose_name=_("person")
+    )
+    project = models.ForeignKey(
+        Project, on_delete=models.PROTECT, related_name="readiness_records", verbose_name=_("project")
+    )
+    medical_state = models.CharField(_("medical"), max_length=20, choices=PillarState.choices, default=PillarState.INCOMPLETE)
+    gear_state = models.CharField(_("gear"), max_length=20, choices=PillarState.choices, default=PillarState.INCOMPLETE)
+    accommodation_state = models.CharField(_("accommodation"), max_length=20, choices=PillarState.choices, default=PillarState.INCOMPLETE)
+    transport_state = models.CharField(_("transport"), max_length=20, choices=PillarState.choices, default=PillarState.INCOMPLETE)
+    entry_medical_date = models.DateField(_("entry medical date"), null=True, blank=True)
+    submitted_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True,
+        related_name="submitted_readiness", verbose_name=_("submitted by"),
+    )
+    submitted_at = models.DateTimeField(_("submitted at"), null=True, blank=True)
+    created_at = models.DateTimeField(_("created"), auto_now_add=True)
+    updated_at = models.DateTimeField(_("updated"), auto_now=True)
+
+    class Meta:
+        verbose_name = _("readiness record")
+        verbose_name_plural = _("readiness records")
+        constraints = [
+            models.UniqueConstraint(fields=["person", "project"], name="unique_readiness_per_person_project")
+        ]
+
+    def __str__(self) -> str:
+        return f"Readiness {self.person} @ {self.project}"
+
+    def is_ready(self) -> bool:
+        """Required pillars complete; optional pillars complete or N/A (§11.6)."""
+        required_ok = (
+            self.medical_state == PillarState.COMPLETE
+            and self.gear_state == PillarState.COMPLETE
+        )
+        optional_ok = (
+            self.accommodation_state in {PillarState.COMPLETE, PillarState.NOT_APPLICABLE}
+            and self.transport_state in {PillarState.COMPLETE, PillarState.NOT_APPLICABLE}
+        )
+        return required_ok and optional_ok

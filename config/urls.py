@@ -21,7 +21,13 @@ urlpatterns += i18n_patterns(
     path("odhlasenie/", account_views.logout_view, name="logout"),
     path("teren/rad/", views.field_queue, name="field_queue"),
     path("people/", people_views.people_list, name="people_list"),
+    path("people/new/", people_views.person_create, name="person_create"),
     path("people/<int:pk>/", people_views.person_detail, name="person_detail"),
     path("projects/", project_views.project_list, name="project_list"),
     path("projects/<int:pk>/", project_views.project_detail, name="project_detail"),
+    path("trials/", project_views.trials_queue, name="trials_queue"),
+    path("trials/<int:trial_pk>/outcome/", project_views.trial_outcome, name="trial_outcome"),
+    path("people/<int:person_pk>/assign-trial/", project_views.assign_trial, name="assign_trial"),
+    path("people/<int:person_pk>/readiness/", project_views.readiness_update, name="readiness_update"),
+    path("people/<int:person_pk>/activate/", project_views.activate_person, name="activate_person"),
 )

@@ -1,0 +1,30 @@
+{% extends "layouts/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Field" %} · Jober{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <p class="eyebrow">{% trans "Coordinator" %}</p>
+  <h1>{% trans "Trials" %}</h1>
+</section>
+
+<section class="field-list" aria-label="{% trans 'Trials' %}">
+  {% for trial in trials %}
+    <a class="field-card person-row" href="{% url 'person_detail' trial.person.pk %}">
+      <div>
+        <h3>{{ trial.person }}</h3>
+        <p>{{ trial.project.name }}{% if trial.scheduled_date %} · {{ trial.scheduled_date }}{% endif %}</p>
+      </div>
+      <dl>
+        <div>
+          <dt>{% trans "Status" %}</dt>
+          <dd>{{ trial.get_outcome_display }}</dd>
+        </div>
+      </dl>
+    </a>
+  {% empty %}
+    <p>{% trans "No trials awaiting an outcome." %}</p>
+  {% endfor %}
+</section>
+{% endblock %}

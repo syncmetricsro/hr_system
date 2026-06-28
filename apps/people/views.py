@@ -1,12 +1,19 @@
 from __future__ import annotations
 
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.http import HttpRequest
-from django.shortcuts import get_object_or_404
+from django.http import HttpRequest, HttpResponse
+from django.shortcuts import get_object_or_404, redirect
 from django.template.response import TemplateResponse
+from django.utils.translation import gettext as _
 
-from apps.people.models import Person
+from apps.accounts.permissions import Action, require_action
+from apps.audit.services import record_event
+from apps.people.forms import PersonForm
+from apps.people.models import LifecycleStatus, Person
 from apps.people.permissions import can_view_sensitive
+from apps.projects.models import PillarState, Project, TrialOutcome
+from apps.projects.services import get_or_create_readiness
 
 
 @login_required
@@ -23,18 +30,53 @@ def people_list(request: HttpRequest) -> TemplateResponse:
     )
 
 
+@require_action(Action.INTAKE_CREATE_EDIT)
+def person_create(request: HttpRequest) -> HttpResponse:
+    if request.method == "POST":
+        form = PersonForm(request.POST)
+        if form.is_valid():
+            person = form.save(commit=False)
+            person.owning_recruiter = request.user
+            person.save()
+            record_event(request.user, "person.created", target=person)
+            messages.success(request, _("Person added."))
+            return redirect("person_detail", pk=person.pk)
+    else:
+        form = PersonForm()
+    return TemplateResponse(request, "pages/person_form.html", {"form": form})
+
+
 @login_required
 def person_detail(request: HttpRequest, pk: int) -> TemplateResponse:
     person = get_object_or_404(Person, pk=pk)
     assignment = person.current_assignment()
+    pending_trial = person.trials.filter(outcome=TrialOutcome.PENDING).select_related("project").first()
+    # A passed trial with no pending trial means the person is in the readiness step.
+    passed_trial = (
+        person.trials.filter(outcome=TrialOutcome.PASS).order_by("-created_at").first()
+    )
+    in_readiness = (
+        person.lifecycle_status == LifecycleStatus.TRIAL_DAY
+        and pending_trial is None
+        and passed_trial is not None
+    )
+    readiness = None
+    if in_readiness:
+        readiness = get_or_create_readiness(person, passed_trial.project)
     return TemplateResponse(
         request,
         "pages/person_detail.html",
         {
             "person": person,
             "assignment": assignment,
-            # Sensitive fields (DOB, place of birth, disability) are only rendered
-            # when the viewer is permitted (plan §8.1 / Q4).
             "show_sensitive": can_view_sensitive(request.user, person),
+            "pending_trial": pending_trial,
+            "passed_trial": passed_trial,
+            "in_readiness": in_readiness,
+            "readiness": readiness,
+            "is_ready": readiness.is_ready() if readiness else False,
+            "PillarState": PillarState,
+            "is_available": person.lifecycle_status == LifecycleStatus.AVAILABLE,
+            "active_projects": Project.objects.filter(is_active=True),
         },
     )

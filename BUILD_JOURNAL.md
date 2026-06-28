@@ -1,5 +1,23 @@
 # Build Journal
 
+## 2026-06-28 (later) — Core Phase 1 workflow (demo cut)
+
+Made the intake → trial → readiness → activation vertical clickable end-to-end
+for tomorrow's customer demo. Deferred the peripheral minimal modules (room,
+inventory, transport, finance).
+
+What changed:
+- **Trials** (`apps/projects`): `TrialAssignment` (§11.5, append-preserving) + `schedule_trial` (handoff, requires Available → Trial day) and `record_trial_outcome` (pass keeps Trial day; fail/no-show recycles to Available, §12.3).
+- **Readiness + activation**: `ReadinessRecord` (four pillars; medical+gear required, accommodation/transport may be N/A; `is_ready`); `update_readiness` (rejects medical/gear N/A) and `activate_from_readiness` — the **system-enforced** coordinator activation (ADR 0018); CARGO/manager override still possible via direct `activate_on_project`.
+- **Intake-lite**: recruiter `PersonForm` + `person_create` (gated `intake.create_edit`), "Add person" on the People list.
+- **UI**: the person detail is now a **state-driven workflow hub** (assign-trial → record-outcome → readiness pillars → activate), a coordinator **Trials** queue wired to the Field nav, and a shell messages region. All actions gated with `require_action` + `{% can %}`.
+- i18n: translated all new workflow/readiness/intake strings (SK/HU/UK) and recompiled.
+- `scripts/dev_app.sh up` now also runs `seed_people` so the demo stack is populated.
+
+Verification: ruff clean; **71 unit tests pass** (11 new workflow tests incl. the full path to Working); **Playwright drove the entire demo path** (add person → trial → fail/recycle → re-trial → pass → readiness → activate → Working) and screenshots were reviewed — all in Slovak.
+
+Demo path: log in (manager does everything) → People → Add person → Schedule trial → Fail (recycles) → Schedule trial → Pass → Four-pillar readiness → Activate → Working on project.
+
 ## 2026-06-28 (later) — Project UI
 
 Read-only Project list + detail, mirroring the People pattern.

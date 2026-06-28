@@ -264,3 +264,112 @@ msgstr "Dolgozók"
 
 msgid "No workers assigned."
 msgstr "Nincs hozzárendelt dolgozó."
+
+# --- workflow: trials / readiness / intake ---
+msgid "Next step"
+msgstr "Következő lépés"
+
+msgid "Send to a project trial"
+msgstr "Küldés próbanapra"
+
+msgid "Schedule trial"
+msgstr "Próbanap ütemezése"
+
+msgid "Record trial outcome"
+msgstr "Próba eredményének rögzítése"
+
+msgid "Pass"
+msgstr "Megfelelt"
+
+msgid "Fail"
+msgstr "Nem felelt meg"
+
+msgid "No-show"
+msgstr "Nem jelent meg"
+
+msgid "Awaiting the coordinator's outcome."
+msgstr "Várakozás a koordinátor eredményére."
+
+msgid "Trials"
+msgstr "Próbanapok"
+
+msgid "No trials awaiting an outcome."
+msgstr "Nincs eredményre váró próbanap."
+
+msgid "Trial scheduled."
+msgstr "Próbanap ütemezve."
+
+msgid "Trial outcome recorded."
+msgstr "Próba eredménye rögzítve."
+
+msgid "Pending"
+msgstr "Függőben"
+
+msgid "Four-pillar readiness"
+msgstr "Négypilléres készenlét"
+
+msgid "Medical"
+msgstr "Orvosi"
+
+msgid "Gear"
+msgstr "Felszerelés"
+
+msgid "Accommodation"
+msgstr "Szállás"
+
+msgid "Transport"
+msgstr "Szállítás"
+
+msgid "Incomplete"
+msgstr "Hiányos"
+
+msgid "Complete"
+msgstr "Kész"
+
+msgid "Not applicable"
+msgstr "Nem alkalmazható"
+
+msgid "Save readiness"
+msgstr "Készenlét mentése"
+
+msgid "Activate (Working)"
+msgstr "Aktiválás (Dolgozik)"
+
+msgid "Ready to activate"
+msgstr "Aktiválásra kész"
+
+msgid "Medical and gear required"
+msgstr "Orvosi és felszerelés szükséges"
+
+msgid "Readiness saved."
+msgstr "Készenlét elmentve."
+
+msgid "Activated — now Working."
+msgstr "Aktiválva — most Dolgozik."
+
+msgid "Add person"
+msgstr "Személy hozzáadása"
+
+msgid "Intake"
+msgstr "Felvétel"
+
+msgid "Save"
+msgstr "Mentés"
+
+msgid "First name"
+msgstr "Keresztnév"
+
+msgid "Last name"
+msgstr "Vezetéknév"
+
+msgid "Has disability"
+msgstr "Fogyatékossággal él"
+
+msgid "Disability type"
+msgstr "Fogyatékosság típusa"
+
+msgid "Preferred language"
+msgstr "Preferált nyelv"
+
+msgid "Person added."
+msgstr "Személy hozzáadva."

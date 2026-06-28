@@ -1,5 +1,5 @@
 {% extends "layouts/base.html" %}
-{% load i18n %}
+{% load i18n rbac %}
 
 {% block title %}{{ person }} · Jober{% endblock %}
 
@@ -9,6 +9,101 @@
   <h1>{{ person }}</h1>
   <a class="button button-secondary" href="{% url 'people_list' %}">{% trans "Back to people" %}</a>
 </section>
+
+{# --- Workflow action panel (state-driven) --- #}
+{% if is_available %}
+  {% can 'intake.assign_trial' as may_assign %}
+  {% if may_assign %}
+    <section class="panel workflow-panel">
+      <p class="eyebrow">{% trans "Next step" %}</p>
+      <h2>{% trans "Send to a project trial" %}</h2>
+      <form class="people-search" method="post" action="{% url 'assign_trial' person.pk %}">
+        {% csrf_token %}
+        <select name="project" aria-label="{% trans 'Project' %}">
+          {% for project in active_projects %}
+            <option value="{{ project.pk }}">{{ project.name }}</option>
+          {% endfor %}
+        </select>
+        <button class="button button-primary" type="submit">{% trans "Schedule trial" %}</button>
+      </form>
+    </section>
+  {% endif %}
+{% elif pending_trial %}
+  <section class="panel workflow-panel">
+    <p class="eyebrow">{% trans "Trial day" %} · {{ pending_trial.project.name }}</p>
+    <h2>{% trans "Record trial outcome" %}</h2>
+    {% can 'trial.record_outcome' as may_record %}
+    {% if may_record %}
+      <div class="action-row">
+        <form method="post" action="{% url 'trial_outcome' pending_trial.pk %}">
+          {% csrf_token %}<input type="hidden" name="outcome" value="pass">
+          <button class="button button-primary" type="submit">{% trans "Pass" %}</button>
+        </form>
+        <form method="post" action="{% url 'trial_outcome' pending_trial.pk %}">
+          {% csrf_token %}<input type="hidden" name="outcome" value="fail">
+          <button class="button button-secondary" type="submit">{% trans "Fail" %}</button>
+        </form>
+        <form method="post" action="{% url 'trial_outcome' pending_trial.pk %}">
+          {% csrf_token %}<input type="hidden" name="outcome" value="no_show">
+          <button class="button button-secondary" type="submit">{% trans "No-show" %}</button>
+        </form>
+      </div>
+    {% else %}
+      <p>{% trans "Awaiting the coordinator's outcome." %}</p>
+    {% endif %}
+  </section>
+{% endif %}
+
+{% if in_readiness and readiness %}
+  <section class="panel workflow-panel">
+    <p class="eyebrow">{% trans "Readiness" %} · {{ passed_trial.project.name }}</p>
+    <h2>{% trans "Four-pillar readiness" %}</h2>
+    {% can 'readiness.complete' as may_ready %}
+    {% if may_ready %}
+      <form class="stack" method="post" action="{% url 'readiness_update' person.pk %}">
+        {% csrf_token %}
+        <input type="hidden" name="project" value="{{ passed_trial.project.pk }}">
+        <label>{% trans "Medical" %}
+          <select name="medical">
+            <option value="incomplete" {% if readiness.medical_state == "incomplete" %}selected{% endif %}>{% trans "Incomplete" %}</option>
+            <option value="complete" {% if readiness.medical_state == "complete" %}selected{% endif %}>{% trans "Complete" %}</option>
+          </select>
+        </label>
+        <label>{% trans "Gear" %}
+          <select name="gear">
+            <option value="incomplete" {% if readiness.gear_state == "incomplete" %}selected{% endif %}>{% trans "Incomplete" %}</option>
+            <option value="complete" {% if readiness.gear_state == "complete" %}selected{% endif %}>{% trans "Complete" %}</option>
+          </select>
+        </label>
+        <label>{% trans "Accommodation" %}
+          <select name="accommodation">
+            <option value="incomplete" {% if readiness.accommodation_state == "incomplete" %}selected{% endif %}>{% trans "Incomplete" %}</option>
+            <option value="complete" {% if readiness.accommodation_state == "complete" %}selected{% endif %}>{% trans "Complete" %}</option>
+            <option value="not_applicable" {% if readiness.accommodation_state == "not_applicable" %}selected{% endif %}>{% trans "Not applicable" %}</option>
+          </select>
+        </label>
+        <label>{% trans "Transport" %}
+          <select name="transport">
+            <option value="incomplete" {% if readiness.transport_state == "incomplete" %}selected{% endif %}>{% trans "Incomplete" %}</option>
+            <option value="complete" {% if readiness.transport_state == "complete" %}selected{% endif %}>{% trans "Complete" %}</option>
+            <option value="not_applicable" {% if readiness.transport_state == "not_applicable" %}selected{% endif %}>{% trans "Not applicable" %}</option>
+          </select>
+        </label>
+        <button class="button button-secondary" type="submit">{% trans "Save readiness" %}</button>
+      </form>
+      <form class="activate-form" method="post" action="{% url 'activate_person' person.pk %}">
+        {% csrf_token %}
+        <input type="hidden" name="project" value="{{ passed_trial.project.pk }}">
+        <button class="button button-primary" type="submit">{% trans "Activate (Working)" %}</button>
+        {% if is_ready %}
+          <span class="eyebrow">{% trans "Ready to activate" %}</span>
+        {% else %}
+          <span class="eyebrow">{% trans "Medical and gear required" %}</span>
+        {% endif %}
+      </form>
+    {% endif %}
+  </section>
+{% endif %}
 
 <section class="two-column">
   <div class="panel">
