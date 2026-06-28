@@ -1,5 +1,24 @@
 # Build Journal
 
+## 2026-06-28
+
+Phase 1 business spine — Person + lifecycle + project administration.
+
+What changed:
+- Added `apps/people`: `Person` with the canonical 5-state lifecycle (`AVAILABLE / TRIAL_DAY / WORKING / INACTIVE / BLACKLISTED`, plan §9.1), validated transition helper `set_status` (audited), search-normalized name, archive, **disability as a flag only** (no documents, Q1), and `owning_recruiter`.
+- Added `apps/projects`: `Project` (project↔coordinator many-to-many) and `ProjectAssignment` with a DB-level **one-active-assignment-per-person** constraint (§11.4); placement service `activate_on_project` / `end_assignment` (atomic, audited, history-preserving).
+- **Sensitive-field visibility** (`apps/people/permissions.can_view_sensitive`, Q4): DOB/place-of-birth/disability visible to managers, observers, owning recruiter, and responsible coordinator(s); hidden from unconnected recruiters/coordinators.
+- RBAC: added `project.assign` (coordinator + manager, Q2); updated `permission-matrix.md`.
+- Admin for Person/Project/ProjectAssignment; fictional `seed_people` (3 projects, 5 people, one Working via assignment; no real PII).
+- ADR 0018: coordinator-activated, **system-enforced** readiness gate replaces the §11.6/§12.4 manager-approval step (CARGO override retained). Readiness-gate enforcement + alert layer attach with `ReadinessRecord` (next slice).
+
+Decisions baked in: phase1-open-questions Q1–Q4 + the activation-gate answer.
+
+Verification: ruff clean; **52 unit tests pass** (lifecycle transitions, one-active-assignment + history, sensitive visibility, placement RBAC); migrate + seed_demo + seed_people run clean on pinned PostgreSQL.
+
+Next step:
+- Recruiter intake (hard-gated, typed-negative) and the Person card/list UI; then trials and the readiness gate + manager alerts.
+
 ## 2026-06-21
 
 Phase 1 — foundation slice: authentication, four-role RBAC, localization, append-only audit.

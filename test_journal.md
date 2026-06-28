@@ -1,5 +1,14 @@
 # Test Journal
 
+## 2026-06-28
+
+Phase 1 spine — Person + lifecycle + projects.
+
+- Generated `people` / `projects` initial migrations in the digest-pinned image.
+- Added `tests/test_people.py` (15 tests): search-name normalization; valid transition audited + invalid transition raises `LifecycleError`; activation creates one active assignment and sets `WORKING`; reassignment keeps exactly one active and retains history; DB unique-active constraint rejects a second active assignment (`IntegrityError`); `end_assignment` returns to `AVAILABLE`; sensitive-field visibility for oversight/owner/responsible-coordinator vs unconnected; `project.assign` role mapping.
+- **Full unit suite: 52 passed** (was 37); ruff clean.
+- End-to-end on pinned PostgreSQL: `migrate` + `seed_demo` + `seed_people` (3 projects, 5 people, one Working via assignment) all clean.
+
 ## 2026-06-21
 
 Phase 1 foundation slice checks (auth, RBAC, localization, audit).

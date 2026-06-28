@@ -29,6 +29,7 @@ class Action(str, Enum):
     SMS_SEND = "sms.send"
 
     # Coordinator field operations
+    PROJECT_ASSIGN = "project.assign"
     TRIAL_RECORD_OUTCOME = "trial.record_outcome"
     READINESS_COMPLETE = "readiness.complete"
     ROOM_ASSIGN = "room.assign"
@@ -66,6 +67,7 @@ ACTION_ROLES: dict[Action, frozenset[Role]] = {
     Action.INTAKE_ASSIGN_TRIAL: frozenset({_RECRUITER, _MANAGER}),
     Action.PERSON_RECYCLE_AVAILABLE: frozenset({_RECRUITER, _COORDINATOR, _MANAGER}),
     Action.SMS_SEND: frozenset({_RECRUITER, _COORDINATOR, _MANAGER}),
+    Action.PROJECT_ASSIGN: frozenset({_COORDINATOR, _MANAGER}),
     Action.TRIAL_RECORD_OUTCOME: frozenset({_COORDINATOR, _MANAGER}),
     Action.READINESS_COMPLETE: frozenset({_COORDINATOR, _MANAGER}),
     Action.ROOM_ASSIGN: frozenset({_COORDINATOR, _MANAGER}),
