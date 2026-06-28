@@ -136,4 +136,31 @@
     {% endif %}
   </aside>
 </section>
+
+<section class="panel workflow-panel">
+  <p class="eyebrow">{% trans "Logistics" %}</p>
+  <h2>{% trans "Accommodation" %}</h2>
+  {% can 'room.assign' as may_room %}
+  {% if current_room %}
+    <p>{{ current_room.room }}</p>
+    {% if may_room %}
+      <form method="post" action="{% url 'release_room' person.pk %}">
+        {% csrf_token %}
+        <button class="button button-secondary" type="submit">{% trans "Release room" %}</button>
+      </form>
+    {% endif %}
+  {% elif may_room %}
+    <form class="people-search" method="post" action="{% url 'assign_room' person.pk %}">
+      {% csrf_token %}
+      <select name="room" aria-label="{% trans 'Room' %}">
+        {% for room in rooms %}
+          <option value="{{ room.pk }}">{{ room }} ({{ room.occupancy }}/{{ room.capacity }})</option>
+        {% endfor %}
+      </select>
+      <button class="button button-primary" type="submit">{% trans "Assign room" %}</button>
+    </form>
+  {% else %}
+    <p>—</p>
+  {% endif %}
+</section>
 {% endblock %}

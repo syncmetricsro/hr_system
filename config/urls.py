@@ -4,6 +4,7 @@ from django.urls import include, path
 
 from apps.accounts import views as account_views
 from apps.core import views
+from apps.logistics import views as logistics_views
 from apps.people import views as people_views
 from apps.projects import views as project_views
 
@@ -30,4 +31,8 @@ urlpatterns += i18n_patterns(
     path("people/<int:person_pk>/assign-trial/", project_views.assign_trial, name="assign_trial"),
     path("people/<int:person_pk>/readiness/", project_views.readiness_update, name="readiness_update"),
     path("people/<int:person_pk>/activate/", project_views.activate_person, name="activate_person"),
+    path("accommodation/", logistics_views.accommodation_list, name="accommodation_list"),
+    path("accommodation/<int:pk>/", logistics_views.accommodation_detail, name="accommodation_detail"),
+    path("people/<int:person_pk>/assign-room/", logistics_views.assign_room_view, name="assign_room"),
+    path("people/<int:person_pk>/release-room/", logistics_views.release_room_view, name="release_room"),
 )

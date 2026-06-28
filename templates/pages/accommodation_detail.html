@@ -1,0 +1,25 @@
+{% extends "layouts/base.html" %}
+{% load i18n %}
+
+{% block title %}{{ accommodation.name }} · Jober{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <p class="eyebrow">{% trans "Accommodation" %}</p>
+  <h1>{{ accommodation.name }}</h1>
+  <a class="button button-secondary" href="{% url 'accommodation_list' %}">{% trans "Back" %}</a>
+</section>
+
+<section class="field-list" aria-label="{% trans 'Rooms' %}">
+  {% for room in rooms %}
+    <article class="field-card">
+      <div><h3>{{ room.label }}</h3></div>
+      <dl>
+        <div><dt>{% trans "Occupancy" %}</dt><dd>{{ room.occupancy }}/{{ room.capacity }}</dd></div>
+      </dl>
+    </article>
+  {% empty %}
+    <p>{% trans "No rooms." %}</p>
+  {% endfor %}
+</section>
+{% endblock %}

@@ -373,3 +373,37 @@ msgstr "Preferált nyelv"
 
 msgid "Person added."
 msgstr "Személy hozzáadva."
+
+# --- logistics: accommodation ---
+msgid "Logistics"
+msgstr "Logisztika"
+
+msgid "Release room"
+msgstr "Szoba felszabadítása"
+
+msgid "Room"
+msgstr "Szoba"
+
+msgid "Assign room"
+msgstr "Szoba hozzárendelése"
+
+msgid "Rooms"
+msgstr "Szobák"
+
+msgid "No accommodations found."
+msgstr "Nincs találat."
+
+msgid "Back"
+msgstr "Vissza"
+
+msgid "Occupancy"
+msgstr "Kihasználtság"
+
+msgid "No rooms."
+msgstr "Nincsenek szobák."
+
+msgid "Room assigned."
+msgstr "Szoba hozzárendelve."
+
+msgid "Room released."
+msgstr "Szoba felszabadítva."

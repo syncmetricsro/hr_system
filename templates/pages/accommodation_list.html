@@ -1,0 +1,27 @@
+{% extends "layouts/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Accommodation" %} · Jober{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <p class="eyebrow">{% trans "Logistics" %}</p>
+  <h1>{% trans "Accommodation" %}</h1>
+</section>
+
+<section class="field-list" aria-label="{% trans 'Accommodation' %}">
+  {% for acc in accommodations %}
+    <a class="field-card person-row" href="{% url 'accommodation_detail' acc.pk %}">
+      <div>
+        <h3>{{ acc.name }}</h3>
+        <p>{{ acc.address }}</p>
+      </div>
+      <dl>
+        <div><dt>{% trans "Rooms" %}</dt><dd>{{ acc.rooms.count }}</dd></div>
+      </dl>
+    </a>
+  {% empty %}
+    <p>{% trans "No accommodations found." %}</p>
+  {% endfor %}
+</section>
+{% endblock %}

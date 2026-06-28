@@ -373,3 +373,37 @@ msgstr "Preferovaný jazyk"
 
 msgid "Person added."
 msgstr "Osoba pridaná."
+
+# --- logistics: accommodation ---
+msgid "Logistics"
+msgstr "Logistika"
+
+msgid "Release room"
+msgstr "Uvoľniť izbu"
+
+msgid "Room"
+msgstr "Izba"
+
+msgid "Assign room"
+msgstr "Prideliť izbu"
+
+msgid "Rooms"
+msgstr "Izby"
+
+msgid "No accommodations found."
+msgstr "Nenašli sa žiadne ubytovania."
+
+msgid "Back"
+msgstr "Späť"
+
+msgid "Occupancy"
+msgstr "Obsadenosť"
+
+msgid "No rooms."
+msgstr "Žiadne izby."
+
+msgid "Room assigned."
+msgstr "Izba pridelená."
+
+msgid "Room released."
+msgstr "Izba uvoľnená."

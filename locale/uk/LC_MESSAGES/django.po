@@ -373,3 +373,37 @@ msgstr "Бажана мова"
 
 msgid "Person added."
 msgstr "Особу додано."
+
+# --- logistics: accommodation ---
+msgid "Logistics"
+msgstr "Логістика"
+
+msgid "Release room"
+msgstr "Звільнити кімнату"
+
+msgid "Room"
+msgstr "Кімната"
+
+msgid "Assign room"
+msgstr "Призначити кімнату"
+
+msgid "Rooms"
+msgstr "Кімнати"
+
+msgid "No accommodations found."
+msgstr "Житло не знайдено."
+
+msgid "Back"
+msgstr "Назад"
+
+msgid "Occupancy"
+msgstr "Заповненість"
+
+msgid "No rooms."
+msgstr "Немає кімнат."
+
+msgid "Room assigned."
+msgstr "Кімнату призначено."
+
+msgid "Room released."
+msgstr "Кімнату звільнено."

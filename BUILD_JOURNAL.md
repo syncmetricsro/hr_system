@@ -1,5 +1,17 @@
 # Build Journal
 
+## 2026-06-28 (later) — Minimal accommodation (Phase 1)
+
+First of the deferred peripheral modules. Minimal per Phase 1 (no rates/valuation; those are Phase 3, open-decisions).
+
+- `apps/logistics`: `Accommodation`, `Room` (capacity + occupancy/is_full), `RoomAssignment` with a DB one-active-room-per-person constraint.
+- Services `assign_room` (capacity-enforced, closes prior active room, audited) / `release_room`.
+- UI: Accommodation list/detail (occupancy) on a new nav tab; an assign/release-room panel on the person hub, gated by `room.assign` (coordinator + manager).
+- Admin for all three; `seed_people` now also creates an accommodation with rooms and houses the Working seed person.
+- i18n: logistics strings translated SK/HU/UK and compiled.
+
+Verification: ruff clean; **76 unit tests pass** (5 new: occupancy, capacity enforcement, one-active-room reassignment, release, RBAC).
+
 ## 2026-06-28 (later) — Core Phase 1 workflow (demo cut)
 
 Made the intake → trial → readiness → activation vertical clickable end-to-end
