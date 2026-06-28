@@ -1,5 +1,16 @@
 # Build Journal
 
+## 2026-06-28 (later) — Minimal financial month (Phase 1)
+
+Completes the deferred peripheral modules. Sign convention flagged as an
+assumption (Phase 4 blocker).
+
+- `apps/finance`: `FinancialMonth` (project/year/month, revenue, cost, lock; unique per project-month). `net = revenue - cost` documented as an **assumption** to confirm from one filled month (open-decisions). `company_totals` sums **dynamically** over all projects/months — never hardcoded — to avoid the manager's spreadsheet bugs.
+- Services `record_financial_month` (update_or_create; rejects edits to a locked month) and `company_totals`.
+- UI: a Finance summary page (totals + months + record form), gated `finance.view_summary` (manager + observer); the nav tab and record form are role-gated; `finance.manage` for writes. Admin; `seed_people` seeds two months. i18n SK/HU/UK.
+
+Verification: ruff clean; **87 unit tests pass** (5 new: net, dynamic totals, idempotent month, locked-month rejection, RBAC).
+
 ## 2026-06-28 (later) — Weekly transport reporting (Phase 1)
 
 - `apps/logistics`: `TransportWeek` (project + week_start + headcount; unique per project/week).

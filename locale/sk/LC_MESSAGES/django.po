@@ -451,3 +451,43 @@ msgstr "Týždeň dopravy zaznamenaný."
 
 msgid "Week start is required."
 msgstr "Začiatok týždňa je povinný."
+
+# --- finance ---
+msgid "Finance"
+msgstr "Financie"
+
+msgid "Reports"
+msgstr "Reporty"
+
+msgid "Revenue"
+msgstr "Príjmy"
+
+msgid "Cost"
+msgstr "Náklady"
+
+msgid "Net"
+msgstr "Čisté"
+
+msgid "Year"
+msgstr "Rok"
+
+msgid "Month"
+msgstr "Mesiac"
+
+msgid "Record month"
+msgstr "Zaznamenať mesiac"
+
+msgid "Financial months"
+msgstr "Finančné mesiace"
+
+msgid "No financial months."
+msgstr "Žiadne finančné mesiace."
+
+msgid "Company total"
+msgstr "Celkový súčet firmy"
+
+msgid "Financial month saved."
+msgstr "Finančný mesiac uložený."
+
+msgid "Invalid input."
+msgstr "Neplatný vstup."

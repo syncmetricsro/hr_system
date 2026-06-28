@@ -451,3 +451,43 @@ msgstr "Тиждень транспорту записано."
 
 msgid "Week start is required."
 msgstr "Початок тижня обов’язковий."
+
+# --- finance ---
+msgid "Finance"
+msgstr "Фінанси"
+
+msgid "Reports"
+msgstr "Звіти"
+
+msgid "Revenue"
+msgstr "Дохід"
+
+msgid "Cost"
+msgstr "Витрати"
+
+msgid "Net"
+msgstr "Чистий"
+
+msgid "Year"
+msgstr "Рік"
+
+msgid "Month"
+msgstr "Місяць"
+
+msgid "Record month"
+msgstr "Записати місяць"
+
+msgid "Financial months"
+msgstr "Фінансові місяці"
+
+msgid "No financial months."
+msgstr "Немає фінансових місяців."
+
+msgid "Company total"
+msgstr "Загалом по компанії"
+
+msgid "Financial month saved."
+msgstr "Фінансовий місяць збережено."
+
+msgid "Invalid input."
+msgstr "Невірні дані."

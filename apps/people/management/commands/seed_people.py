@@ -3,6 +3,7 @@ from __future__ import annotations
 from django.core.management.base import BaseCommand
 
 from apps.accounts.models import User
+from apps.finance.services import record_financial_month
 from apps.logistics.models import Accommodation, EquipmentItem, Room
 from apps.logistics.services import assign_room
 from apps.people.models import LifecycleStatus, Person
@@ -73,5 +74,9 @@ class Command(BaseCommand):
         # Minimal equipment catalog.
         for name, size in [("Pracovná obuv", "42"), ("Reflexná vesta", "L"), ("Prilba", "")]:
             EquipmentItem.objects.get_or_create(name=name, size=size)
+
+        # Minimal financial months (sign convention: net = revenue - cost, to confirm).
+        for code, month, rev, cost in [("DHLBA", 5, "18000", "12000"), ("WEB", 5, "9000", "7000")]:
+            record_financial_month(projects[code], 2026, month, rev, cost, actor=coordinator)
 
         self.stdout.write(self.style.SUCCESS(f"People seeded: {Person.objects.count()} total"))

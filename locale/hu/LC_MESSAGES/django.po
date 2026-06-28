@@ -451,3 +451,43 @@ msgstr "Szállítási hét rögzítve."
 
 msgid "Week start is required."
 msgstr "A hét kezdete kötelező."
+
+# --- finance ---
+msgid "Finance"
+msgstr "Pénzügyek"
+
+msgid "Reports"
+msgstr "Jelentések"
+
+msgid "Revenue"
+msgstr "Bevétel"
+
+msgid "Cost"
+msgstr "Költség"
+
+msgid "Net"
+msgstr "Nettó"
+
+msgid "Year"
+msgstr "Év"
+
+msgid "Month"
+msgstr "Hónap"
+
+msgid "Record month"
+msgstr "Hónap rögzítése"
+
+msgid "Financial months"
+msgstr "Pénzügyi hónapok"
+
+msgid "No financial months."
+msgstr "Nincs pénzügyi hónap."
+
+msgid "Company total"
+msgstr "Vállalati összesen"
+
+msgid "Financial month saved."
+msgstr "Pénzügyi hónap elmentve."
+
+msgid "Invalid input."
+msgstr "Érvénytelen bevitel."

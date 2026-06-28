@@ -4,6 +4,7 @@ from django.urls import include, path
 
 from apps.accounts import views as account_views
 from apps.core import views
+from apps.finance import views as finance_views
 from apps.logistics import views as logistics_views
 from apps.people import views as people_views
 from apps.projects import views as project_views
@@ -38,4 +39,6 @@ urlpatterns += i18n_patterns(
     path("people/<int:person_pk>/issue-equipment/", logistics_views.issue_equipment_view, name="issue_equipment"),
     path("equipment/<int:issue_pk>/return/", logistics_views.return_equipment_view, name="return_equipment"),
     path("projects/<int:project_pk>/transport/", logistics_views.record_transport_view, name="record_transport"),
+    path("finance/", finance_views.finance_summary, name="finance_summary"),
+    path("finance/record/", finance_views.record_month, name="finance_record"),
 )
