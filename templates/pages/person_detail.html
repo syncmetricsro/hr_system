@@ -82,12 +82,21 @@
             <option value="not_applicable" {% if readiness.accommodation_state == "not_applicable" %}selected{% endif %}>{% trans "Not applicable" %}</option>
           </select>
         </label>
+        <label>{% trans "Reason if not applicable" %}
+          <input type="text" name="accommodation_na_reason" value="{{ readiness.accommodation_na_reason }}">
+        </label>
         <label>{% trans "Transport" %}
           <select name="transport">
             <option value="incomplete" {% if readiness.transport_state == "incomplete" %}selected{% endif %}>{% trans "Incomplete" %}</option>
             <option value="complete" {% if readiness.transport_state == "complete" %}selected{% endif %}>{% trans "Complete" %}</option>
             <option value="not_applicable" {% if readiness.transport_state == "not_applicable" %}selected{% endif %}>{% trans "Not applicable" %}</option>
           </select>
+        </label>
+        <label>{% trans "Reason if not applicable" %}
+          <input type="text" name="transport_na_reason" value="{{ readiness.transport_na_reason }}">
+        </label>
+        <label>{% trans "Entry medical date" %}
+          <input type="date" name="entry_medical_date" value="{{ readiness.entry_medical_date|date:'Y-m-d' }}">
         </label>
         <button class="button button-secondary" type="submit">{% trans "Save readiness" %}</button>
       </form>

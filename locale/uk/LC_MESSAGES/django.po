@@ -553,3 +553,9 @@ msgstr "Очікує результату"
 
 msgid "Export"
 msgstr "Експорт"
+
+msgid "Reason if not applicable"
+msgstr "Причина, якщо не застосовується"
+
+msgid "Entry medical date"
+msgstr "Дата вхідного медогляду"

@@ -1,5 +1,14 @@
 # Build Journal
 
+## 2026-06-28 — Phase 2 (5/n): full readiness (N/A reasons + entry-medical date)
+
+- `ReadinessRecord`: added `accommodation_na_reason` / `transport_na_reason`.
+- `update_readiness`: accommodation/transport now **require an explicit reason when marked N/A** (plan §11.6); accepts and stores the **entry-medical date**.
+- Readiness panel: per-pillar N/A reason inputs + an entry-medical date field.
+- i18n SK/HU/UK.
+
+Verification: ruff clean; **128 unit tests pass** (N/A-requires-reason, entry-medical-date saved; existing readiness tests updated to supply reasons).
+
 ## 2026-06-28 — Phase 2 (4/n): project/coordinator routing
 
 - The Trials queue and the dashboard's pending-trials list are now **scoped to a coordinator's own projects** (via `project.responsible_coordinators`); managers, observers, and recruiters still see all (broad read).

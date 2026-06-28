@@ -553,3 +553,9 @@ msgstr "Čaká na výsledok"
 
 msgid "Export"
 msgstr "Export"
+
+msgid "Reason if not applicable"
+msgstr "Dôvod, ak sa neaplikuje"
+
+msgid "Entry medical date"
+msgstr "Dátum vstupnej prehliadky"

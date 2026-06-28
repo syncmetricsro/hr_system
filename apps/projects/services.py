@@ -109,8 +109,12 @@ def get_or_create_readiness(person, project) -> ReadinessRecord:
 
 
 @transaction.atomic
-def update_readiness(readiness, *, actor=None, states: dict, entry_medical_date=None):
-    """Set the four pillar states (§11.6). Medical and gear cannot be N/A."""
+def update_readiness(readiness, *, actor=None, states: dict, na_reasons: dict | None = None, entry_medical_date=None):
+    """Set the four pillar states (§11.6). Medical and gear cannot be N/A;
+    accommodation/transport require an explicit reason when marked N/A."""
+    from django.utils.dateparse import parse_date
+
+    na_reasons = na_reasons or {}
     valid = set(PillarState.values)
     for pillar in ("medical", "gear", "accommodation", "transport"):
         value = states.get(pillar)
@@ -121,8 +125,19 @@ def update_readiness(readiness, *, actor=None, states: dict, entry_medical_date=
         if pillar in {"medical", "gear"} and value == PillarState.NOT_APPLICABLE:
             raise WorkflowError("Medical and gear cannot be marked not-applicable.")
         setattr(readiness, f"{pillar}_state", value)
+        if pillar in {"accommodation", "transport"}:
+            if value == PillarState.NOT_APPLICABLE:
+                reason = (na_reasons.get(pillar) or "").strip()
+                if not reason:
+                    raise WorkflowError(f"A reason is required to mark {pillar} not-applicable.")
+                setattr(readiness, f"{pillar}_na_reason", reason)
+            else:
+                setattr(readiness, f"{pillar}_na_reason", "")
+
     if entry_medical_date is not None:
-        readiness.entry_medical_date = entry_medical_date
+        readiness.entry_medical_date = (
+            parse_date(entry_medical_date) if isinstance(entry_medical_date, str) else entry_medical_date
+        )
     readiness.submitted_by = actor if getattr(actor, "is_authenticated", False) else None
     readiness.submitted_at = timezone.now()
     readiness.save()

@@ -553,3 +553,9 @@ msgstr "Eredményre vár"
 
 msgid "Export"
 msgstr "Exportálás"
+
+msgid "Reason if not applicable"
+msgstr "Indok, ha nem alkalmazható"
+
+msgid "Entry medical date"
+msgstr "Belépő orvosi dátuma"

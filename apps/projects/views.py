@@ -103,8 +103,15 @@ def readiness_update(request: HttpRequest, person_pk: int) -> HttpResponse:
         pillar: request.POST.get(pillar)
         for pillar in ("medical", "gear", "accommodation", "transport")
     }
+    na_reasons = {
+        "accommodation": request.POST.get("accommodation_na_reason", ""),
+        "transport": request.POST.get("transport_na_reason", ""),
+    }
     try:
-        update_readiness(readiness, actor=request.user, states=states)
+        update_readiness(
+            readiness, actor=request.user, states=states, na_reasons=na_reasons,
+            entry_medical_date=request.POST.get("entry_medical_date") or None,
+        )
         messages.success(request, _("Readiness saved."))
     except WorkflowError as exc:
         messages.error(request, str(exc))
