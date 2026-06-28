@@ -625,3 +625,10 @@ msgstr "Kilépés Inaktív állapotba"
 
 msgid "Exit completed."
 msgstr "Kilépés befejezve."
+
+# --- transport trends ---
+msgid "Transport trends"
+msgstr "Szállítási trendek"
+
+msgid "No transport data."
+msgstr "Nincs szállítási adat."

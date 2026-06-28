@@ -337,6 +337,40 @@ a.metric-card:hover {
   margin-left: var(--space-3);
 }
 
+.trend-row {
+  display: grid;
+  grid-template-columns: 6rem 1fr 3rem;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
+}
+
+.trend-label {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: #526174;
+}
+
+.bar {
+  display: block;
+  height: 14px;
+  background: var(--line);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  display: block;
+  height: 100%;
+  background: var(--cobalt);
+  border-radius: 4px;
+}
+
+.trend-value {
+  font-weight: 800;
+  text-align: right;
+}
+
 dd {
   margin: var(--space-1) 0 0;
   font-weight: 800;
