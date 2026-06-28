@@ -87,6 +87,9 @@ class EquipmentItem(models.Model):
 
     name = models.CharField(_("name"), max_length=200)
     size = models.CharField(_("size"), max_length=50, blank=True)
+    # Valuation: latest price at order date, entered manually (round-4 confirmed:
+    # no weighted-average). The price *value* is operator data; the method is fixed.
+    unit_price = models.DecimalField(_("unit price"), max_digits=10, decimal_places=2, default=0)
     is_active = models.BooleanField(_("active"), default=True)
     created_at = models.DateTimeField(_("created"), auto_now_add=True)
 

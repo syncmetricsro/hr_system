@@ -693,3 +693,9 @@ msgstr "Odkaz na spätnú väzbu vytvorený."
 
 msgid "People by status"
 msgstr "Ľudia podľa stavu"
+
+msgid "Value"
+msgstr "Hodnota"
+
+msgid "Equipment value"
+msgstr "Hodnota vybavenia"

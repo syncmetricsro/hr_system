@@ -1,5 +1,14 @@
 # Build Journal
 
+## 2026-06-29 — Phase 3 (6/n): inventory valuation
+
+The unblocked part of inventory (round-4 confirmed valuation method: latest manual price, no weighted-average). Deduction review for missing items stays deferred (open decision).
+
+- `EquipmentItem.unit_price` (manual latest price). `issued_equipment_value(person=None)` sums active issues × price (DB aggregate), company-wide or per person.
+- Surfaced on the person card equipment panel (per-person value) and the Reports page (company "Equipment value" card). Admin shows/edits price; `seed_people` sets demo prices. i18n SK/HU/UK.
+
+Verification: ruff clean; **166 unit tests pass** (3 new: qty×price sum company/per-person, returns excluded, zero when none).
+
 ## 2026-06-29 — Phase 3 (5/n): operational reports
 
 - `core.views.reports`: read-only cross-module summary (plan §3) — active projects, total people, pending trials, compliance-alert count, accommodation occupancy, people-by-status, and a finance block gated by `finance.view_summary` (managers/observers). Reuses existing services; no new models.

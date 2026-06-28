@@ -182,6 +182,7 @@
   <h2>{% trans "Equipment" %}</h2>
   {% can 'equipment.issue_return' as may_equip %}
   {% if issued_equipment %}
+    <p class="eyebrow">{% trans "Value" %}: {{ issued_value }}</p>
     <ul class="plain-list">
       {% for issue in issued_equipment %}
         <li>

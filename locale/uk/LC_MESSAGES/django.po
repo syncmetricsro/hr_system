@@ -693,3 +693,9 @@ msgstr "Посилання для відгуків створено."
 
 msgid "People by status"
 msgstr "Люди за статусом"
+
+msgid "Value"
+msgstr "Вартість"
+
+msgid "Equipment value"
+msgstr "Вартість спорядження"

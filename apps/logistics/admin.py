@@ -40,7 +40,7 @@ class RoomAssignmentAdmin(admin.ModelAdmin):
 
 @admin.register(EquipmentItem)
 class EquipmentItemAdmin(admin.ModelAdmin):
-    list_display = ("name", "size", "is_active")
+    list_display = ("name", "size", "unit_price", "is_active")
     list_filter = ("is_active",)
     search_fields = ("name",)
 
