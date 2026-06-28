@@ -1,5 +1,15 @@
 # Build Journal
 
+## 2026-06-28 — Phase 3 (1/n): compliance alerts
+
+Fulfils the manager's earlier explicit ask (alerts for missing/expiring papers); plan §3 / §11.9.
+
+- `apps/compliance`: `Certificate` (metadata only — dates, no file storage, matching the demo decision).
+- `services.compliance_alerts(viewer)`: surfaces **missing / expiring / expired** papers across workers — medical derived from the latest readiness **entry-medical date** + `MEDICAL_VALIDITY_MONTHS`; certificates by `expiry_date`; window = `COMPLIANCE_ALERT_DAYS` (the ~11/23-month pattern = ~1 month before a 12/24-month validity). Coordinator-scoped (own active-project people); managers/observers see all. `add_months` helper (no external dep).
+- Compliance page on a new nav tab; certificate admin; settings `MEDICAL_VALIDITY_MONTHS` / `COMPLIANCE_ALERT_DAYS` (env-overridable). i18n SK/HU/UK.
+
+Verification: ruff clean; **145 unit tests pass** (8 new: add_months clamping, missing medical, expired/expiring/far-future certs, valid recent medical, login required, coordinator scoping).
+
 ## 2026-06-28 — Phase 2 (6/6): approved SMS messaging (Phase 2 complete)
 
 Twilio SMS over the **standard library** — no SDK, no new dependency (ADR 0019).

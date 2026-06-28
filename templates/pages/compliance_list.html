@@ -1,0 +1,38 @@
+{% extends "layouts/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Compliance" %} · Jober{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <p class="eyebrow">{% trans "Alerts" %}</p>
+  <h1>{% trans "Compliance" %}</h1>
+</section>
+
+<section class="field-list" aria-label="{% trans 'Compliance' %}">
+  {% for a in alerts %}
+    <a class="field-card person-row" href="{% url 'person_detail' a.person.pk %}">
+      <div>
+        <h3>{{ a.person }}</h3>
+        <p>{{ a.item }}</p>
+      </div>
+      <dl>
+        <div>
+          <dt>{% trans "Status" %}</dt>
+          <dd>
+            {% if a.severity == "expired" %}{% trans "Expired" %}
+            {% elif a.severity == "missing" %}{% trans "Missing" %}
+            {% else %}{% trans "Expiring" %}{% endif %}
+          </dd>
+        </div>
+        <div>
+          <dt>{% trans "Due" %}</dt>
+          <dd>{% if a.due %}{{ a.due|date:"Y-m-d" }}{% else %}—{% endif %}</dd>
+        </div>
+      </dl>
+    </a>
+  {% empty %}
+    <p>{% trans "No compliance alerts." %}</p>
+  {% endfor %}
+</section>
+{% endblock %}

@@ -3,6 +3,7 @@ from django.contrib import admin
 from django.urls import include, path
 
 from apps.accounts import views as account_views
+from apps.compliance import views as compliance_views
 from apps.core import exports as core_exports
 from apps.core import views
 from apps.finance import views as finance_views
@@ -50,4 +51,5 @@ urlpatterns += i18n_patterns(
     path("intake/start/", intake_views.intake_start, name="intake_start"),
     path("intake/<int:pk>/", intake_views.intake_panel, name="intake_panel"),
     path("people/<int:person_pk>/sms/", messaging_views.send_sms_view, name="send_sms"),
+    path("compliance/", compliance_views.compliance_list, name="compliance_list"),
 )
