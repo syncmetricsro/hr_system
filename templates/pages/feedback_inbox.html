@@ -1,0 +1,48 @@
+{% extends "layouts/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Feedback inbox" %} · Jober{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <p class="eyebrow">{% trans "Inbox" %}</p>
+  <h1>{% trans "Feedback inbox" %}</h1>
+</section>
+
+<section class="panel">
+  <p class="eyebrow">{% trans "Public links" %}</p>
+  <h2>{% trans "Feedback links" %}</h2>
+  <ul class="plain-list">
+    {% for l in links %}
+      <li>{{ l.label }} — <code>{{ request.scheme }}://{{ request.get_host }}{% url 'feedback_form' l.token %}</code></li>
+    {% empty %}
+      <li>—</li>
+    {% endfor %}
+  </ul>
+  <form class="people-search" method="post" action="{% url 'feedback_link_create' %}">
+    {% csrf_token %}
+    <input type="text" name="label" placeholder="{% trans 'Label' %}" aria-label="{% trans 'Label' %}">
+    <select name="project" aria-label="{% trans 'Project' %}">
+      <option value="">—</option>
+      {% for p in projects %}<option value="{{ p.pk }}">{{ p.name }}</option>{% endfor %}
+    </select>
+    <button class="button button-primary" type="submit">{% trans "Create link" %}</button>
+  </form>
+</section>
+
+<section class="field-list" aria-label="{% trans 'Feedback inbox' %}">
+  {% for s in submissions %}
+    <article class="field-card">
+      <div>
+        <h3>{{ s.created_at|date:"Y-m-d H:i" }}{% if s.rating %} · {{ s.rating }}/5{% endif %}</h3>
+        <p>{{ s.message }}</p>
+      </div>
+      <dl>
+        <div><dt>{% trans "Link" %}</dt><dd>{{ s.link.label }}</dd></div>
+      </dl>
+    </article>
+  {% empty %}
+    <p>{% trans "No feedback yet." %}</p>
+  {% endfor %}
+</section>
+{% endblock %}

@@ -641,3 +641,52 @@ msgstr "Trendy dopravy"
 
 msgid "No transport data."
 msgstr "Žiadne údaje o doprave."
+
+# --- feedback ---
+msgid "Feedback"
+msgstr "Spätná väzba"
+
+msgid "Feedback inbox"
+msgstr "Schránka spätnej väzby"
+
+msgid "Inbox"
+msgstr "Schránka"
+
+msgid "Public links"
+msgstr "Verejné odkazy"
+
+msgid "Feedback links"
+msgstr "Odkazy na spätnú väzbu"
+
+msgid "Create link"
+msgstr "Vytvoriť odkaz"
+
+msgid "Label"
+msgstr "Označenie"
+
+msgid "Link"
+msgstr "Odkaz"
+
+msgid "No feedback yet."
+msgstr "Zatiaľ žiadna spätná väzba."
+
+msgid "Your feedback"
+msgstr "Vaša spätná väzba"
+
+msgid "Rating (1-5)"
+msgstr "Hodnotenie (1-5)"
+
+msgid "Submit"
+msgstr "Odoslať"
+
+msgid "Thank you for your feedback."
+msgstr "Ďakujeme za vašu spätnú väzbu."
+
+msgid "Message is required."
+msgstr "Správa je povinná."
+
+msgid "Label is required."
+msgstr "Označenie je povinné."
+
+msgid "Feedback link created."
+msgstr "Odkaz na spätnú väzbu vytvorený."

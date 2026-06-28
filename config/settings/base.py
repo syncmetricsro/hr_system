@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "apps.intake",
     "apps.messaging",
     "apps.compliance",
+    "apps.feedback",
     "apps.core",
 ]
 
@@ -136,6 +137,9 @@ TWILIO_FROM_NUMBER = os.getenv("TWILIO_FROM_NUMBER", "")
 # pattern = ~1 month before a 12/24-month validity).
 MEDICAL_VALIDITY_MONTHS = int(os.getenv("MEDICAL_VALIDITY_MONTHS", "12"))
 COMPLIANCE_ALERT_DAYS = int(os.getenv("COMPLIANCE_ALERT_DAYS", "30"))
+
+# Worker feedback is retained briefly only (plan §11.11 ≈ 1 month).
+FEEDBACK_RETENTION_DAYS = int(os.getenv("FEEDBACK_RETENTION_DAYS", "31"))
 
 CSRF_COOKIE_HTTPONLY = True
 SESSION_COOKIE_HTTPONLY = True
