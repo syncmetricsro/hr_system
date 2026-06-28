@@ -22,7 +22,6 @@ urlpatterns += i18n_patterns(
     path("", views.dashboard, name="dashboard"),
     path("prihlasenie/", account_views.login_page, name="login"),
     path("odhlasenie/", account_views.logout_view, name="logout"),
-    path("teren/rad/", views.field_queue, name="field_queue"),
     path("people/", people_views.people_list, name="people_list"),
     path("people/new/", people_views.person_create, name="person_create"),
     path("people/<int:pk>/", people_views.person_detail, name="person_detail"),

@@ -547,3 +547,6 @@ msgstr "Állapot megváltozott"
 
 msgid "No history yet."
 msgstr "Még nincs előzmény."
+
+msgid "Awaiting outcome"
+msgstr "Eredményre vár"

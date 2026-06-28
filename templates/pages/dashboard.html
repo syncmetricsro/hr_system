@@ -5,54 +5,38 @@
 
 {% block content %}
 <section class="page-head">
-  <p class="eyebrow">{% trans "Pilot shell" %}</p>
+  <p class="eyebrow">{% trans "Operations" %}</p>
   <h1>{% trans "Operational overview" %}</h1>
-  <p>{% trans "The first screen verifies navigation, local scripts, and the coordinator's mobile workflow without introducing final business models." %}</p>
   {% can 'project.manage' as may_manage_projects %}
   {% if may_manage_projects %}
-    <a class="button button-primary" href="#projekty">{% trans "Manage projects" %}</a>
+    <a class="button button-primary" href="{% url 'project_list' %}">{% trans "Manage projects" %}</a>
   {% endif %}
 </section>
 
 <section class="dashboard-grid" aria-label="{% trans 'Operational summaries' %}">
-  <article class="metric-card">
-    <span>{% trans "Active projects" %}</span>
-    <strong>8</strong>
-  </article>
-  <article class="metric-card">
-    <span>{% trans "Open readiness checks" %}</span>
-    <strong>14</strong>
-  </article>
-  <article class="metric-card">
-    <span>{% trans "Mobile tasks" %}</span>
-    <strong>6</strong>
-  </article>
+  <a class="metric-card" href="{% url 'project_list' %}">
+    <span>{% trans "Active projects" %}</span><strong>{{ metrics.active_projects }}</strong>
+  </a>
+  <a class="metric-card" href="{% url 'people_list' %}?status=available">
+    <span>{% trans "Available" %}</span><strong>{{ metrics.available }}</strong>
+  </a>
+  <a class="metric-card" href="{% url 'people_list' %}?status=working">
+    <span>{% trans "Working" %}</span><strong>{{ metrics.working }}</strong>
+  </a>
+  <a class="metric-card" href="{% url 'trials_queue' %}">
+    <span>{% trans "Awaiting outcome" %}</span><strong>{{ metrics.awaiting_outcome }}</strong>
+  </a>
 </section>
 
-<section id="teren" class="two-column">
-  <div class="panel">
-    <div class="panel-head">
-      <div>
-        <p class="eyebrow">{% trans "Coordinator" %}</p>
-        <h2>{% trans "Field queue" %}</h2>
-      </div>
-      <a
-        class="button button-secondary"
-        href="{% url 'field_queue' %}"
-        hx-get="{% url 'field_queue' %}"
-        hx-target="#field-panel"
-        hx-swap="outerHTML"
-      >
-        {% trans "Load queue" %}
-      </a>
-    </div>
-    {% include "partials/field_queue.html" %}
-  </div>
-
-  <aside class="panel">
-    <p class="eyebrow">{% trans "Phase 0 rule" %}</p>
-    <h2>{% trans "No final data" %}</h2>
-    <p>{% trans "This shell uses fictional values only. Real personal data arrives only after the legal and security gate." %}</p>
-  </aside>
+<section class="panel">
+  <p class="eyebrow">{% trans "Coordinator" %}</p>
+  <h2>{% trans "Trials" %}</h2>
+  <ul class="plain-list">
+    {% for trial in pending_trials %}
+      <li><a href="{% url 'person_detail' trial.person.pk %}">{{ trial.person }}</a> · {{ trial.project.name }}</li>
+    {% empty %}
+      <li>{% trans "No trials awaiting an outcome." %}</li>
+    {% endfor %}
+  </ul>
 </section>
 {% endblock %}

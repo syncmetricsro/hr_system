@@ -26,8 +26,9 @@ def _login(page) -> None:
 def test_shell_renders_mobile(page):
     page.set_viewport_size({"width": 375, "height": 667})
     _login(page)
-    page.get_by_role("link", name="Načítať rad").click()
-    page.get_by_text("DHL Bratislava").wait_for()
+    # Dashboard shows real operational metric cards.
+    page.get_by_role("heading", name="Prevádzkový prehľad").wait_for()
+    page.get_by_text("Aktívne projekty").wait_for()
 
 
 def test_health_endpoint(page):

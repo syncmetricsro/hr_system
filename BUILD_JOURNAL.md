@@ -1,5 +1,16 @@
 # Build Journal
 
+## 2026-06-28 — Phase 2 (2/n): real dashboard
+
+Replaced the Phase 0 mock dashboard (hardcoded 8/14/6 + mock field panel) with live aggregates.
+
+- `apps/core/views.dashboard`: real counts — active projects, available, working, trials awaiting outcome — plus a list of pending trials.
+- `dashboard.html`: clickable metric cards (link to the filtered People list / Projects / Trials) and a real pending-trials panel.
+- Retired the mock `field_queue` view/route/partial and `PROJECT_CARDS`; updated the e2e smoke (it asserted the old mock) to check the real metric cards.
+- i18n: "Awaiting outcome" (SK/HU/UK).
+
+Verification: ruff clean; **118 unit tests pass** (1 new: dashboard shows real metrics + pending trial); **Playwright smoke 5 pass**; dashboard screenshot reviewed (live counts + pending trial).
+
 ## 2026-06-28 — Phase 2 (1/n): person card history + search filter
 
 First Phase 2 slice (full person card / history / search).
