@@ -1,5 +1,21 @@
 # Build Journal
 
+## 2026-06-28 — Phase 2 (6/6): approved SMS messaging (Phase 2 complete)
+
+Twilio SMS over the **standard library** — no SDK, no new dependency (ADR 0019).
+
+- `apps/messaging`: `MessageTemplate` (manager-managed), `OutboundMessage`, `InboundMessage`.
+- `services.py`: `_twilio_send` (urllib Basic-auth POST to Twilio `Messages.json`; creds from env, `SmsNotConfigured` when unset → recorded `failed`, never faked); `send_sms` (records + audits); `verify_twilio_signature` (base64 HMAC-SHA1, `compare_digest`).
+- Inbound webhook (`/webhooks/twilio/inbound/`): `csrf_exempt`, unauthenticated, **signature-verified, fails closed (403)**; stores inbound messages.
+- Send gated by `sms.send`; **coordinator-scoped** (a coordinator may only message people on their own projects). Templates manager-managed. No Telegram.
+- UI: a Send-SMS panel on the person card (template select or free text + recent messages). Settings: `TWILIO_ACCOUNT_SID/AUTH_TOKEN/FROM_NUMBER` from env. i18n SK/HU/UK.
+
+Live sending requires the operator to set the Twilio env vars and expose the webhook publicly; tests mock the network call.
+
+Verification: ruff clean; **137 unit tests pass** (9 new: sent on provider OK, fail-closed when unconfigured, signature accept/reject, webhook 403/200, RBAC, coordinator scope allow/deny); production image builds with all apps.
+
+**Phase 2 build items complete** (person card/history/search, dashboards, project/coordinator routing, complete trials/full readiness, exports, approved SMS).
+
 ## 2026-06-28 — Phase 2 (5/n): full readiness (N/A reasons + entry-medical date)
 
 - `ReadinessRecord`: added `accommodation_na_reason` / `transport_na_reason`.

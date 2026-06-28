@@ -559,3 +559,31 @@ msgstr "Indok, ha nem alkalmazható"
 
 msgid "Entry medical date"
 msgstr "Belépő orvosi dátuma"
+
+# --- messaging / SMS ---
+msgid "Messaging"
+msgstr "Üzenetküldés"
+
+msgid "Send SMS"
+msgstr "SMS küldése"
+
+msgid "Template"
+msgstr "Sablon"
+
+msgid "Message"
+msgstr "Üzenet"
+
+msgid "Or type a message"
+msgstr "Vagy írjon üzenetet"
+
+msgid "Message sent."
+msgstr "Üzenet elküldve."
+
+msgid "Message failed: %(error)s"
+msgstr "Üzenet sikertelen: %(error)s"
+
+msgid "This person has no phone number."
+msgstr "Ennek a személynek nincs telefonszáma."
+
+msgid "Message body is required."
+msgstr "Az üzenet törzse kötelező."

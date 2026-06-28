@@ -10,9 +10,12 @@ from django.utils.translation import gettext as _
 from apps.accounts.permissions import Action, require_action
 from apps.audit.services import record_event
 from apps.people.forms import PersonForm
+from apps.accounts.models import Role
+from apps.accounts.permissions import can as user_can
 from apps.people.models import LifecycleStatus, Person
 from apps.people.permissions import can_view_sensitive
 from apps.people.services import person_history
+from apps.messaging.models import MessageTemplate
 from apps.logistics.models import (
     EquipmentItem,
     EquipmentIssueStatus,
@@ -104,5 +107,15 @@ def person_detail(request: HttpRequest, pk: int) -> TemplateResponse:
                 status=EquipmentIssueStatus.ISSUED
             ).select_related("item"),
             "equipment_items": EquipmentItem.objects.filter(is_active=True),
+            "can_message": (
+                bool(person.phone)
+                and user_can(request.user, Action.SMS_SEND)
+                and (
+                    request.user.role != Role.COORDINATOR
+                    or request.user.pk in person.responsible_coordinator_ids()
+                )
+            ),
+            "message_templates": MessageTemplate.objects.filter(is_active=True),
+            "recent_messages": person.messages.all()[:5],
         },
     )

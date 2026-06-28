@@ -559,3 +559,31 @@ msgstr "Причина, якщо не застосовується"
 
 msgid "Entry medical date"
 msgstr "Дата вхідного медогляду"
+
+# --- messaging / SMS ---
+msgid "Messaging"
+msgstr "Комунікація"
+
+msgid "Send SMS"
+msgstr "Надіслати SMS"
+
+msgid "Template"
+msgstr "Шаблон"
+
+msgid "Message"
+msgstr "Повідомлення"
+
+msgid "Or type a message"
+msgstr "Або введіть повідомлення"
+
+msgid "Message sent."
+msgstr "Повідомлення надіслано."
+
+msgid "Message failed: %(error)s"
+msgstr "Помилка повідомлення: %(error)s"
+
+msgid "This person has no phone number."
+msgstr "У цієї особи немає номера телефону."
+
+msgid "Message body is required."
+msgstr "Текст повідомлення обов’язковий."

@@ -559,3 +559,31 @@ msgstr "Dôvod, ak sa neaplikuje"
 
 msgid "Entry medical date"
 msgstr "Dátum vstupnej prehliadky"
+
+# --- messaging / SMS ---
+msgid "Messaging"
+msgstr "Komunikácia"
+
+msgid "Send SMS"
+msgstr "Poslať SMS"
+
+msgid "Template"
+msgstr "Šablóna"
+
+msgid "Message"
+msgstr "Správa"
+
+msgid "Or type a message"
+msgstr "Alebo napíšte správu"
+
+msgid "Message sent."
+msgstr "Správa odoslaná."
+
+msgid "Message failed: %(error)s"
+msgstr "Správa zlyhala: %(error)s"
+
+msgid "This person has no phone number."
+msgstr "Táto osoba nemá telefónne číslo."
+
+msgid "Message body is required."
+msgstr "Telo správy je povinné."

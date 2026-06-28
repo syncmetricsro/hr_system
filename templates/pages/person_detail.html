@@ -206,6 +206,35 @@
   {% endif %}
 </section>
 
+{% if can_message %}
+<section class="panel workflow-panel">
+  <p class="eyebrow">{% trans "Messaging" %}</p>
+  <h2>{% trans "Send SMS" %}</h2>
+  <form class="stack" method="post" action="{% url 'send_sms' person.pk %}">
+    {% csrf_token %}
+    {% if message_templates %}
+      <label>{% trans "Template" %}
+        <select name="template">
+          <option value="">—</option>
+          {% for t in message_templates %}<option value="{{ t.pk }}">{{ t.name }}</option>{% endfor %}
+        </select>
+      </label>
+    {% endif %}
+    <label>{% trans "Message" %}
+      <textarea name="body" placeholder="{% trans 'Or type a message' %}"></textarea>
+    </label>
+    <button class="button button-primary" type="submit">{% trans "Send SMS" %}</button>
+  </form>
+  {% if recent_messages %}
+    <ul class="plain-list">
+      {% for m in recent_messages %}
+        <li>{{ m.created_at|date:"Y-m-d H:i" }} — {{ m.get_status_display }}: {{ m.body|truncatechars:60 }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+</section>
+{% endif %}
+
 <section class="panel workflow-panel">
   <p class="eyebrow">{% trans "Person" %}</p>
   <h2>{% trans "History" %}</h2>
