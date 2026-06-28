@@ -32,6 +32,7 @@ urlpatterns += i18n_patterns(
     path("people/", people_views.people_list, name="people_list"),
     path("people/new/", people_views.person_create, name="person_create"),
     path("people/<int:pk>/", people_views.person_detail, name="person_detail"),
+    path("people/<int:pk>/edit/", people_views.person_edit, name="person_edit"),
     path("projects/", project_views.project_list, name="project_list"),
     path("projects/<int:pk>/", project_views.project_detail, name="project_detail"),
     path("trials/", project_views.trials_queue, name="trials_queue"),

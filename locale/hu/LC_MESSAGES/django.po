@@ -374,6 +374,15 @@ msgstr "Preferált nyelv"
 msgid "Person added."
 msgstr "Személy hozzáadva."
 
+msgid "Edit"
+msgstr "Szerkesztés"
+
+msgid "Edit person"
+msgstr "Személy szerkesztése"
+
+msgid "Person updated."
+msgstr "Személy frissítve."
+
 # --- logistics: accommodation ---
 msgid "Logistics"
 msgstr "Logisztika"

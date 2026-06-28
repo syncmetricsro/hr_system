@@ -374,6 +374,15 @@ msgstr "Preferovaný jazyk"
 msgid "Person added."
 msgstr "Osoba pridaná."
 
+msgid "Edit"
+msgstr "Upraviť"
+
+msgid "Edit person"
+msgstr "Upraviť osobu"
+
+msgid "Person updated."
+msgstr "Osoba aktualizovaná."
+
 # --- logistics: accommodation ---
 msgid "Logistics"
 msgstr "Logistika"

@@ -8,6 +8,10 @@
   <p class="eyebrow">{% trans "Person" %} · {{ person.get_lifecycle_status_display }}</p>
   <h1>{{ person }}</h1>
   <a class="button button-secondary" href="{% url 'people_list' %}">{% trans "Back to people" %}</a>
+  {% can 'intake.create_edit' as may_edit %}
+  {% if may_edit %}
+    <a class="button button-secondary" href="{% url 'person_edit' person.pk %}">{% trans "Edit" %}</a>
+  {% endif %}
 </section>
 
 {# --- Workflow action panel (state-driven) --- #}

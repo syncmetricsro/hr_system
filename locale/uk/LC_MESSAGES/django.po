@@ -374,6 +374,15 @@ msgstr "Бажана мова"
 msgid "Person added."
 msgstr "Особу додано."
 
+msgid "Edit"
+msgstr "Редагувати"
+
+msgid "Edit person"
+msgstr "Редагувати особу"
+
+msgid "Person updated."
+msgstr "Особу оновлено."
+
 # --- logistics: accommodation ---
 msgid "Logistics"
 msgstr "Логістика"

@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.template.response import TemplateResponse
+from django.urls import reverse
 from django.utils.translation import gettext as _
 
 from apps.accounts.permissions import Action, require_action
@@ -61,7 +62,28 @@ def person_create(request: HttpRequest) -> HttpResponse:
             return redirect("person_detail", pk=person.pk)
     else:
         form = PersonForm()
-    return TemplateResponse(request, "pages/person_form.html", {"form": form})
+    return TemplateResponse(
+        request, "pages/person_form.html",
+        {"form": form, "form_action": reverse("person_create"), "heading": _("Add person")},
+    )
+
+
+@require_action(Action.INTAKE_CREATE_EDIT)
+def person_edit(request: HttpRequest, pk: int) -> HttpResponse:
+    person = get_object_or_404(Person, pk=pk)
+    if request.method == "POST":
+        form = PersonForm(request.POST, instance=person)
+        if form.is_valid():
+            form.save()
+            record_event(request.user, "person.updated", target=person)
+            messages.success(request, _("Person updated."))
+            return redirect("person_detail", pk=person.pk)
+    else:
+        form = PersonForm(instance=person)
+    return TemplateResponse(
+        request, "pages/person_form.html",
+        {"form": form, "form_action": reverse("person_edit", args=[person.pk]), "heading": _("Edit person")},
+    )
 
 
 @login_required
