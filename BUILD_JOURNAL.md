@@ -1,5 +1,16 @@
 # Build Journal
 
+## 2026-06-28 — Phase 2 (1/n): person card history + search filter
+
+First Phase 2 slice (full person card / history / search).
+
+- `apps/people/services.py` `person_history(person)`: a newest-first unified timeline assembled from trials (scheduled + outcome), project assignments, room assignments, equipment issues, readiness submissions, intake completion, and the append-only audit log's lifecycle changes.
+- Person card: a **History** panel rendering that timeline.
+- People list: a **lifecycle-status filter** alongside the existing name search.
+- i18n SK/HU/UK for the new strings.
+
+Verification: ruff clean; **117 unit tests pass** (2 new: history is newest-first and covers the key event types; the status filter narrows the list). Browser-reviewed the card history + filtered list.
+
 ## 2026-06-28 (later) — Hard-gated intake engine (Phase 1 complete)
 
 Replaces intake-lite with the real questionnaire engine (§11.3 / §12.1). This was the last open Phase 1 build item.

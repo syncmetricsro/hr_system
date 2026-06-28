@@ -513,3 +513,37 @@ msgstr "Nincs közzétett felvételi kérdőív."
 
 msgid "Intake complete — person added."
 msgstr "Felvétel kész — személy hozzáadva."
+
+# --- person card: history + filter ---
+msgid "History"
+msgstr "Előzmények"
+
+msgid "All statuses"
+msgstr "Minden állapot"
+
+msgid "Trial scheduled"
+msgstr "Próbanap ütemezve"
+
+msgid "Trial outcome"
+msgstr "Próba eredménye"
+
+msgid "Assigned to project"
+msgstr "Projekthez rendelve"
+
+msgid "Room assigned"
+msgstr "Szoba hozzárendelve"
+
+msgid "Equipment issued"
+msgstr "Felszerelés kiadva"
+
+msgid "Readiness submitted"
+msgstr "Készenlét beküldve"
+
+msgid "Intake completed"
+msgstr "Felvétel befejezve"
+
+msgid "Status changed"
+msgstr "Állapot megváltozott"
+
+msgid "No history yet."
+msgstr "Még nincs előzmény."

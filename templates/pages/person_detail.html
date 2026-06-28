@@ -196,4 +196,16 @@
     </form>
   {% endif %}
 </section>
+
+<section class="panel workflow-panel">
+  <p class="eyebrow">{% trans "Person" %}</p>
+  <h2>{% trans "History" %}</h2>
+  <ul class="plain-list">
+    {% for ev in history %}
+      <li>{{ ev.when|date:"Y-m-d H:i" }} — {{ ev.label }}{% if ev.detail %}: {{ ev.detail }}{% endif %}</li>
+    {% empty %}
+      <li>{% trans "No history yet." %}</li>
+    {% endfor %}
+  </ul>
+</section>
 {% endblock %}

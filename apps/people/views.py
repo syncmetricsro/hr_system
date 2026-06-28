@@ -12,6 +12,7 @@ from apps.audit.services import record_event
 from apps.people.forms import PersonForm
 from apps.people.models import LifecycleStatus, Person
 from apps.people.permissions import can_view_sensitive
+from apps.people.services import person_history
 from apps.logistics.models import (
     EquipmentItem,
     EquipmentIssueStatus,
@@ -26,13 +27,21 @@ from apps.projects.services import get_or_create_readiness
 def people_list(request: HttpRequest) -> TemplateResponse:
     # Broad internal read: any authenticated role may see the operational list.
     query = (request.GET.get("q") or "").strip()
+    status = (request.GET.get("status") or "").strip()
     people = Person.objects.filter(is_archived=False)
     if query:
         people = people.filter(search_name__contains=query.lower())
+    if status in LifecycleStatus.values:
+        people = people.filter(lifecycle_status=status)
     return TemplateResponse(
         request,
         "pages/people_list.html",
-        {"people": people, "query": query},
+        {
+            "people": people,
+            "query": query,
+            "status": status,
+            "statuses": LifecycleStatus.choices,
+        },
     )
 
 
@@ -76,6 +85,7 @@ def person_detail(request: HttpRequest, pk: int) -> TemplateResponse:
             "person": person,
             "assignment": assignment,
             "show_sensitive": can_view_sensitive(request.user, person),
+            "history": person_history(person),
             "pending_trial": pending_trial,
             "passed_trial": passed_trial,
             "in_readiness": in_readiness,

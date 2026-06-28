@@ -513,3 +513,37 @@ msgstr "Немає опублікованої анкети прийому."
 
 msgid "Intake complete — person added."
 msgstr "Прийом завершено — особу додано."
+
+# --- person card: history + filter ---
+msgid "History"
+msgstr "Історія"
+
+msgid "All statuses"
+msgstr "Усі статуси"
+
+msgid "Trial scheduled"
+msgstr "Пробний день заплановано"
+
+msgid "Trial outcome"
+msgstr "Результат пробного дня"
+
+msgid "Assigned to project"
+msgstr "Призначено на проєкт"
+
+msgid "Room assigned"
+msgstr "Кімнату призначено"
+
+msgid "Equipment issued"
+msgstr "Спорядження видано"
+
+msgid "Readiness submitted"
+msgstr "Готовність подано"
+
+msgid "Intake completed"
+msgstr "Прийом завершено"
+
+msgid "Status changed"
+msgstr "Статус змінено"
+
+msgid "No history yet."
+msgstr "Ще немає історії."
