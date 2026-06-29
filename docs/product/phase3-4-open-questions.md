@@ -56,3 +56,38 @@ suspended, military service)?
 - Why it matters: catalog values for the lifecycle.
 - Safe default: build a configurable list; seed a few placeholders.
 - **Answer:**
+
+---
+
+## Magyar — kérdések Jobernek
+
+A fenti kérdések magyarul, továbbküldéshez.
+
+**1. Szállásköltség**
+A szállás díja fix **havi díj szobánként**, vagy **ágyanként / személyenként**?
+Eltérő díjak vannak-e a különböző szállásoknál/szobáknál, és vannak-e
+**munkavállalónkénti eltérések** (valaki más összeget fizet)? A költséget csak
+**nyilvántartjuk** (riportokhoz), vagy **levonjuk/felszámítjuk** a
+munkavállalónak?
+
+**2. Vissza nem adott felszerelés**
+Ha egy munkavállaló **nem adja vissza** a kiadott felszerelést, **levonjuk-e az
+értékét** a béréből? **Ki hagyja jóvá** a levonást, és van-e elengedési/
+fellebbezési lépés? (Az értéket már számoljuk a kézi egységárból — ez csak a
+folyamat.)
+
+**3. Feketelista (jogi)**
+Vezetnek-e listát azokról, akiket **nem szabad újra felvenni/kihelyezni**, és mi
+ennek a **jogalapja (GDPR)**? Milyen adat azonosítja a személyt (név +
+igazolványszám?), **ki láthatja az indokot** (csak vezetők?), meddig őrzik (5
+év?), és az egyezést **hashelt azonosítóval** végezzük-e, hogy soha ne tároljuk
+a nyers számot?
+
+**4. Pénzügyi előjel-konvenció (Phase 4)**
+A havi pénzügyi táblázatban a költségeket **negatív számként** viszik be, vagy
+**pozitívan**, és a rendszer számolja a **bevétel − költség** értéket? Meg
+tudnának osztani **egy kitöltött hónapot**, hogy pontosan egyezzünk?
+
+**5. Inaktív okok (kisebb)**
+Milyen okok engedélyezettek a munkavállaló **Inaktívra** állításához (beteg,
+kilépett, felfüggesztve, sorkatonai szolgálat, …)?
