@@ -53,4 +53,28 @@
     {% endfor %}
   </dl>
 </section>
+
+<section class="panel">
+  <p class="eyebrow">{% trans "Company total" %}</p>
+  <h2>{% trans "Per-project results" %}</h2>
+  <dl class="detail-grid">
+    {% for p in project_results %}
+      <div><dt>{{ p.name }}</dt><dd>{{ p.net }}</dd></div>
+    {% empty %}
+      <div><dd>{% trans "No financial months." %}</dd></div>
+    {% endfor %}
+  </dl>
+</section>
+
+<section class="panel">
+  <p class="eyebrow">{% trans "Company total" %}</p>
+  <h2>{% trans "Yearly results" %}</h2>
+  <ul class="plain-list">
+    {% for y in years %}
+      <li><a href="{% url 'finance_year' y.year %}">{{ y.year }}</a> — {% trans "Net" %}: {{ y.net }}</li>
+    {% empty %}
+      <li>{% trans "No financial months." %}</li>
+    {% endfor %}
+  </ul>
+</section>
 {% endblock %}

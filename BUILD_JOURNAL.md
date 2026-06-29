@@ -215,6 +215,20 @@ Verification: ruff clean; **57 unit tests pass** (5 new view tests incl. sensiti
 Next step:
 - Recruiter intake (hard-gated) or trials + the readiness gate (which activates ADR 0018 enforcement).
 
+## 2026-06-29 (later)
+
+Phase 4 finance — month lock/reopen and yearly/per-project rollups.
+
+What changed:
+- `apps/finance/services.py`: `lock_month` (close a month, audited `finance.locked`) and `reopen_month` (**reason mandatory**, recorded in the audit `reason` field as `finance.reopened` — Finance_Specs §5). Added read-only aggregations `project_totals(year=None)` and `yearly_totals()`; `company_totals` now takes an optional `year`. All dynamic — every project/month included.
+- `apps/finance/views.py` + `config/urls.py`: `finance_month_lock` / `finance_month_reopen` (POST, FINANCE_MANAGE) and a `finance_year` page (per-project results + group breakdown + month list for one year). The month-detail form is now read-only when the month is locked (`editable = can_manage and not is_locked`), with manager-only lock / reopen-with-reason controls. The summary page gained per-project results and a yearly list linking into `finance_year`.
+- No model changes (reuses `FinancialMonth.is_locked`), so no new migration.
+
+Verification: ruff clean; **177 unit tests pass** (was 173) — lock blocks edits + reopen needs a reason, reopen reason is audited, the save view no-ops on a locked month, and project/yearly/company aggregations (incl. year filter + empty-year zero) are correct. Catalogs recompiled SK/HU/UK (fixed two fuzzy mis-matches: "Lock month"/"Reopen month").
+
+Next step:
+- Per-project line-item *columns* per `Finance_Specs.md`, or move to the accommodation pricing slice (Q1 safe-default).
+
 ## 2026-06-29
 
 Phase 4 finance — configurable line-item catalog + per-month entry, recalc and group breakdowns.

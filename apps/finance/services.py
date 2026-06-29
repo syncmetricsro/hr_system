@@ -73,6 +73,63 @@ def group_breakdown(months=None) -> list[dict]:
 
 
 @transaction.atomic
+def lock_month(month, *, actor=None):
+    """Close a financial month: no further line-item edits until reopened."""
+    month.is_locked = True
+    month.save(update_fields=["is_locked", "updated_at"])
+    record_event(actor, "finance.locked", target=month)
+    return month
+
+
+@transaction.atomic
+def reopen_month(month, *, reason, actor=None):
+    """Reopen a locked month. A reason is mandatory and is recorded in the audit
+    trail (Finance_Specs §5: reopening a closed month needs a reason + audit)."""
+    reason = (reason or "").strip()
+    if not reason:
+        raise FinanceError("A reason is required to reopen a locked month.")
+    month.is_locked = False
+    month.save(update_fields=["is_locked", "updated_at"])
+    record_event(actor, "finance.reopened", target=month, reason=reason)
+    return month
+
+
+def project_totals(year=None):
+    """Per-project results (revenue, cost, net) — dynamic over all months or one
+    year. Costs/revenues never hardcoded; every project is included."""
+    qs = FinancialMonth.objects.all()
+    if year is not None:
+        qs = qs.filter(year=year)
+    rows = []
+    for r in (
+        qs.values("project_id", "project__name", "project__code")
+        .annotate(revenue=Sum("revenue"), cost=Sum("cost"))
+        .order_by("project__name")
+    ):
+        rev = r["revenue"] or Decimal("0")
+        cost = r["cost"] or Decimal("0")
+        rows.append({
+            "project_id": r["project_id"], "name": r["project__name"],
+            "code": r["project__code"], "revenue": rev, "cost": cost, "net": rev - cost,
+        })
+    return rows
+
+
+def yearly_totals():
+    """Company results rolled up per year (newest first)."""
+    rows = []
+    for r in (
+        FinancialMonth.objects.values("year")
+        .annotate(revenue=Sum("revenue"), cost=Sum("cost"))
+        .order_by("-year")
+    ):
+        rev = r["revenue"] or Decimal("0")
+        cost = r["cost"] or Decimal("0")
+        rows.append({"year": r["year"], "revenue": rev, "cost": cost, "net": rev - cost})
+    return rows
+
+
+@transaction.atomic
 def record_financial_month(project, year, month, revenue, cost, *, actor=None, note: str = ""):
     existing = FinancialMonth.objects.filter(project=project, year=year, month=month).first()
     if existing and existing.is_locked:
@@ -90,9 +147,13 @@ def record_financial_month(project, year, month, revenue, cost, *, actor=None, n
     return obj
 
 
-def company_totals():
-    """Dynamic grand totals over every project/month (never hardcoded)."""
-    agg = FinancialMonth.objects.aggregate(revenue=Sum("revenue"), cost=Sum("cost"))
+def company_totals(year=None):
+    """Dynamic grand totals over every project/month (never hardcoded). Pass
+    ``year`` to scope to a single year for the yearly rollup."""
+    qs = FinancialMonth.objects.all()
+    if year is not None:
+        qs = qs.filter(year=year)
+    agg = qs.aggregate(revenue=Sum("revenue"), cost=Sum("cost"))
     revenue = agg["revenue"] or Decimal("0")
     cost = agg["cost"] or Decimal("0")
     return {"revenue": revenue, "cost": cost, "net": revenue - cost}

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-29 12:19+0200\n"
+"POT-Creation-Date: 2026-06-29 14:48+0200\n"
 "Language: hu\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -278,16 +278,18 @@ msgstr "Pénzügyi hónapok"
 msgid "financial months"
 msgstr "Pénzügyi hónapok"
 
-#: apps/finance/models.py:54 templates/pages/finance_month_detail.html:15
+#: apps/finance/models.py:54 templates/pages/finance_month_detail.html:33
 #: templates/pages/finance_summary.html:15
-#: templates/pages/finance_summary.html:39 templates/pages/reports.html:38
+#: templates/pages/finance_summary.html:39 templates/pages/finance_year.html:15
+#: templates/pages/reports.html:38
 msgid "Cost"
 msgstr "Költség"
 
 #: apps/finance/models.py:55 apps/finance/models.py:67
-#: templates/pages/finance_month_detail.html:14
+#: templates/pages/finance_month_detail.html:32
 #: templates/pages/finance_summary.html:14
-#: templates/pages/finance_summary.html:38 templates/pages/reports.html:37
+#: templates/pages/finance_summary.html:38 templates/pages/finance_year.html:14
+#: templates/pages/reports.html:37
 msgid "Revenue"
 msgstr "Bevétel"
 
@@ -378,15 +380,23 @@ msgstr ""
 msgid "finance line items"
 msgstr ""
 
-#: apps/finance/views.py:67
+#: apps/finance/views.py:91
 msgid "Saved and recalculated."
 msgstr "Mentve és újraszámolva."
 
-#: apps/finance/views.py:69 apps/finance/views.py:88
+#: apps/finance/views.py:93 apps/finance/views.py:133
 msgid "Invalid input."
 msgstr "Érvénytelen bevitel."
 
-#: apps/finance/views.py:86
+#: apps/finance/views.py:102
+msgid "Month locked."
+msgstr "A hónap zárolva."
+
+#: apps/finance/views.py:112
+msgid "Month reopened."
+msgstr "A hónap újranyitva."
+
+#: apps/finance/views.py:131
 msgid "Financial month saved."
 msgstr "Pénzügyi hónap elmentve."
 
@@ -1337,9 +1347,10 @@ msgstr "Jelentések"
 
 # --- finance ---
 #: templates/layouts/base.html:34 templates/pages/finance_month_detail.html:8
-#: templates/pages/finance_month_detail.html:21
+#: templates/pages/finance_month_detail.html:39
 #: templates/pages/finance_summary.html:4
-#: templates/pages/finance_summary.html:9 templates/pages/reports.html:35
+#: templates/pages/finance_summary.html:9 templates/pages/finance_year.html:4
+#: templates/pages/finance_year.html:8 templates/pages/reports.html:35
 msgid "Finance"
 msgstr "Pénzügyek"
 
@@ -1367,6 +1378,7 @@ msgstr "Kijelentkezés"
 
 #: templates/pages/accommodation_detail.html:10
 #: templates/pages/finance_month_detail.html:10
+#: templates/pages/finance_year.html:10
 msgid "Back"
 msgstr "Vissza"
 
@@ -1518,26 +1530,46 @@ msgstr "Link"
 msgid "No feedback yet."
 msgstr "Még nincs visszajelzés."
 
+#: templates/pages/finance_month_detail.html:8
+#: templates/pages/finance_summary.html:24 templates/pages/finance_year.html:50
+msgid "Locked"
+msgstr "Zárolva"
+
 #: templates/pages/finance_month_detail.html:16
+#: templates/pages/finance_month_detail.html:20
+msgid "Reopen month"
+msgstr "Hónap újranyitása"
+
+#: templates/pages/finance_month_detail.html:19
+msgid "Reason"
+msgstr "Indok"
+
+#: templates/pages/finance_month_detail.html:25
+msgid "Lock month"
+msgstr "Hónap zárolása"
+
+#: templates/pages/finance_month_detail.html:34
 #: templates/pages/finance_summary.html:16
-#: templates/pages/finance_summary.html:24 templates/pages/reports.html:39
+#: templates/pages/finance_summary.html:24
+#: templates/pages/finance_summary.html:74 templates/pages/finance_year.html:16
+#: templates/pages/finance_year.html:50 templates/pages/reports.html:39
 msgid "Net"
 msgstr "Nettó"
 
-#: templates/pages/finance_month_detail.html:22
+#: templates/pages/finance_month_detail.html:40
 msgid "Line items"
 msgstr "Tételek"
 
-#: templates/pages/finance_month_detail.html:32
+#: templates/pages/finance_month_detail.html:50
 msgid "Save & recalculate"
 msgstr "Mentés és újraszámolás"
 
-#: templates/pages/finance_month_detail.html:42
-#: templates/pages/finance_summary.html:47
+#: templates/pages/finance_month_detail.html:60
+#: templates/pages/finance_summary.html:47 templates/pages/finance_year.html:33
 msgid "Group breakdown"
 msgstr "Csoportos bontás"
 
-#: templates/pages/finance_month_detail.html:43
+#: templates/pages/finance_month_detail.html:61
 msgid "By group"
 msgstr "Csoport szerint"
 
@@ -1548,20 +1580,21 @@ msgstr "Exportálás"
 
 #: templates/pages/finance_summary.html:13
 #: templates/pages/finance_summary.html:20
-#: templates/pages/finance_summary.html:46 templates/pages/reports.html:34
-#: templates/pages/transport_trends.html:14
+#: templates/pages/finance_summary.html:46
+#: templates/pages/finance_summary.html:58
+#: templates/pages/finance_summary.html:70 templates/pages/finance_year.html:13
+#: templates/pages/reports.html:34 templates/pages/transport_trends.html:14
 msgid "Company total"
 msgstr "Vállalati összesen"
 
-#: templates/pages/finance_summary.html:21
+#: templates/pages/finance_summary.html:21 templates/pages/finance_year.html:46
 msgid "Financial months"
 msgstr "Pénzügyi hónapok"
 
-#: templates/pages/finance_summary.html:24
-msgid "Locked"
-msgstr "Zárolva"
-
 #: templates/pages/finance_summary.html:26
+#: templates/pages/finance_summary.html:64
+#: templates/pages/finance_summary.html:76 templates/pages/finance_year.html:27
+#: templates/pages/finance_year.html:52
 msgid "No financial months."
 msgstr "Nincs pénzügyi hónap."
 
@@ -1577,11 +1610,19 @@ msgstr "Hónap"
 msgid "Record month"
 msgstr "Hónap rögzítése"
 
-#: templates/pages/finance_summary.html:52
+#: templates/pages/finance_summary.html:52 templates/pages/finance_year.html:39
 #, fuzzy
 #| msgid "No history yet."
 msgid "No line items yet."
 msgstr "Még nincsenek tételek."
+
+#: templates/pages/finance_summary.html:59 templates/pages/finance_year.html:21
+msgid "Per-project results"
+msgstr "Eredmények projektenként"
+
+#: templates/pages/finance_summary.html:71 templates/pages/finance_year.html:8
+msgid "Yearly results"
+msgstr "Éves eredmények"
 
 #: templates/pages/intake_panel.html:4 templates/pages/intake_panel.html:8
 #: templates/pages/person_form.html:8
