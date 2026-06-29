@@ -4,698 +4,1979 @@
 # to English until a later i18n pass.
 msgid ""
 msgstr ""
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-29 12:19+0200\n"
+"Language: uk\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: uk\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 # --- accounts / admin ---
+#: apps/accounts/admin.py:18
 msgid "Profile"
 msgstr "Профіль"
 
+#: apps/accounts/admin.py:19
 msgid "Permissions"
 msgstr "Дозволи"
 
+#: apps/accounts/admin.py:20
 msgid "Dates"
 msgstr "Дати"
 
+#: apps/accounts/models.py:11
 msgid "Recruiter"
 msgstr "Рекрутер"
 
+#: apps/accounts/models.py:12 templates/pages/dashboard.html:32
+#: templates/pages/trials_queue.html:8
 msgid "Coordinator"
 msgstr "Координатор"
 
+#: apps/accounts/models.py:13
 msgid "Manager/Administrator"
 msgstr "Менеджер/Адміністратор"
 
+#: apps/accounts/models.py:14
 msgid "Observer"
 msgstr "Спостерігач"
 
+#: apps/accounts/models.py:52
+#, fuzzy
+#| msgid "Email"
+msgid "email"
+msgstr "Електронна пошта"
+
+#: apps/accounts/models.py:54
+msgid "role"
+msgstr ""
+
+#: apps/accounts/models.py:66
+msgid "user"
+msgstr ""
+
+#: apps/accounts/models.py:67
+msgid "users"
+msgstr ""
+
+#: apps/accounts/views.py:30
 msgid "Invalid email or password."
 msgstr "Невірна електронна пошта або пароль."
 
+#: apps/audit/models.py:26
+msgid "actor"
+msgstr ""
+
+# --- projects UI ---
+#: apps/audit/models.py:28
+#, fuzzy
+#| msgid "Operations"
+msgid "action"
+msgstr "Операції"
+
+#: apps/audit/models.py:29
+msgid "target type"
+msgstr ""
+
+#: apps/audit/models.py:30
+msgid "target id"
+msgstr ""
+
+#: apps/audit/models.py:31
+msgid "reason"
+msgstr ""
+
+#: apps/audit/models.py:32
+msgid "metadata"
+msgstr ""
+
+#: apps/audit/models.py:33 apps/compliance/models.py:17
+#: apps/feedback/models.py:26 apps/feedback/models.py:48
+#: apps/finance/models.py:33 apps/intake/models.py:31
+#: apps/logistics/models.py:16 apps/logistics/models.py:68
+#: apps/logistics/models.py:94 apps/logistics/models.py:148
+#: apps/messaging/models.py:17 apps/messaging/models.py:45
+#: apps/people/models.py:104 apps/projects/models.py:29
+#: apps/projects/models.py:85 apps/projects/models.py:141
+#: apps/projects/models.py:183
+msgid "created"
+msgstr ""
+
+#: apps/audit/models.py:36
+msgid "audit event"
+msgstr ""
+
+#: apps/audit/models.py:37
+msgid "audit events"
+msgstr ""
+
+#: apps/compliance/models.py:12 apps/intake/models.py:100
+#: apps/logistics/models.py:56 apps/logistics/models.py:112
+#: apps/messaging/models.py:35 apps/people/models.py:108
+#: apps/projects/models.py:57 apps/projects/models.py:123
+#: apps/projects/models.py:166
+#, fuzzy
+#| msgid "Person"
+msgid "person"
+msgstr "Особа"
+
+#: apps/compliance/models.py:14 apps/intake/models.py:24
+#: apps/logistics/models.py:12 apps/logistics/models.py:88
+#: apps/messaging/models.py:11 apps/projects/models.py:12
+#, fuzzy
+#| msgid "Last name"
+msgid "name"
+msgstr "Прізвище"
+
+#: apps/compliance/models.py:15
+msgid "issue date"
+msgstr ""
+
+#: apps/compliance/models.py:16
+msgid "expiry date"
+msgstr ""
+
+#: apps/compliance/models.py:20
+msgid "certificate"
+msgstr ""
+
+#: apps/compliance/models.py:21
+msgid "certificates"
+msgstr ""
+
+#: apps/feedback/models.py:19
+msgid "token"
+msgstr ""
+
+#: apps/feedback/models.py:20 apps/finance/models.py:79
+#: apps/intake/models.py:65 apps/logistics/models.py:31
+#, fuzzy
+#| msgid "Label"
+msgid "label"
+msgstr "Назва"
+
+#: apps/feedback/models.py:23 apps/finance/models.py:21
+#: apps/logistics/models.py:139 apps/projects/models.py:33
+#: apps/projects/models.py:63 apps/projects/models.py:126
+#: apps/projects/models.py:169
+#, fuzzy
+#| msgid "Project"
+msgid "project"
+msgstr "Проєкт"
+
+#: apps/feedback/models.py:25 apps/finance/models.py:82
+#: apps/logistics/models.py:14 apps/logistics/models.py:93
+#: apps/messaging/models.py:13 apps/projects/models.py:16
+#, fuzzy
+#| msgid "Inactive"
+msgid "active"
+msgstr "Неактивний"
+
+#: apps/feedback/models.py:29
+#, fuzzy
+#| msgid "Feedback links"
+msgid "feedback link"
+msgstr "Посилання для відгуків"
+
+#: apps/feedback/models.py:30
+#, fuzzy
+#| msgid "Feedback links"
+msgid "feedback links"
+msgstr "Посилання для відгуків"
+
+#: apps/feedback/models.py:44
+msgid "link"
+msgstr ""
+
+#: apps/feedback/models.py:46
+#, fuzzy
+#| msgid "Message"
+msgid "message"
+msgstr "Повідомлення"
+
+# --- projects UI ---
+#: apps/feedback/models.py:47
+#, fuzzy
+#| msgid "Operations"
+msgid "rating"
+msgstr "Операції"
+
+#: apps/feedback/models.py:51
+#, fuzzy
+#| msgid "Feedback inbox"
+msgid "feedback submission"
+msgstr "Вхідні відгуки"
+
+#: apps/feedback/models.py:52
+#, fuzzy
+#| msgid "Feedback links"
+msgid "feedback submissions"
+msgstr "Посилання для відгуків"
+
+#: apps/feedback/views.py:29
+msgid "Message is required."
+msgstr "Повідомлення обов’язкове."
+
+#: apps/feedback/views.py:54
+msgid "Feedback link created."
+msgstr "Посилання для відгуків створено."
+
+#: apps/feedback/views.py:56
+msgid "Label is required."
+msgstr "Назва обов’язкова."
+
+#: apps/finance/models.py:23
+msgid "year"
+msgstr ""
+
+#: apps/finance/models.py:24 apps/finance/models.py:101
+#, fuzzy
+#| msgid "Month"
+msgid "month"
+msgstr "Місяць"
+
+#: apps/finance/models.py:25
+#, fuzzy
+#| msgid "Revenue"
+msgid "revenue"
+msgstr "Дохід"
+
+#: apps/finance/models.py:26
+msgid "cost"
+msgstr ""
+
+#: apps/finance/models.py:27 apps/logistics/models.py:143
+#: apps/projects/models.py:131
+msgid "note"
+msgstr ""
+
+#: apps/finance/models.py:28
+msgid "locked"
+msgstr ""
+
+#: apps/finance/models.py:31 apps/logistics/models.py:146
+msgid "recorded by"
+msgstr ""
+
+#: apps/finance/models.py:34 apps/people/models.py:105
+#: apps/projects/models.py:30 apps/projects/models.py:86
+#: apps/projects/models.py:184
+#, fuzzy
+#| msgid "Person updated."
+msgid "updated"
+msgstr "Особу оновлено."
+
+#: apps/finance/models.py:37
+#, fuzzy
+#| msgid "Financial months"
+msgid "financial month"
+msgstr "Фінансові місяці"
+
+#: apps/finance/models.py:38
+#, fuzzy
+#| msgid "Financial months"
+msgid "financial months"
+msgstr "Фінансові місяці"
+
+#: apps/finance/models.py:54 templates/pages/finance_month_detail.html:15
+#: templates/pages/finance_summary.html:15
+#: templates/pages/finance_summary.html:39 templates/pages/reports.html:38
+msgid "Cost"
+msgstr "Витрати"
+
+#: apps/finance/models.py:55 apps/finance/models.py:67
+#: templates/pages/finance_month_detail.html:14
+#: templates/pages/finance_summary.html:14
+#: templates/pages/finance_summary.html:38 templates/pages/reports.html:37
+msgid "Revenue"
+msgstr "Дохід"
+
+#: apps/finance/models.py:59
+msgid "Labour"
+msgstr "Праця"
+
+#: apps/finance/models.py:60 templates/layouts/base.html:31
+#: templates/pages/person_detail.html:92
+msgid "Transport"
+msgstr "Транспорт"
+
+#: apps/finance/models.py:61 templates/layouts/base.html:30
+#: templates/pages/accommodation_detail.html:8
+#: templates/pages/accommodation_list.html:4
+#: templates/pages/accommodation_list.html:9
+#: templates/pages/accommodation_list.html:12
+#: templates/pages/person_detail.html:82 templates/pages/person_detail.html:155
+msgid "Accommodation"
+msgstr "Проживання"
+
+# --- compliance ---
+#: apps/finance/models.py:62 templates/layouts/base.html:29
+#: templates/pages/compliance_list.html:4
+#: templates/pages/compliance_list.html:9
+#: templates/pages/compliance_list.html:12 templates/pages/reports.html:16
+msgid "Compliance"
+msgstr "Відповідність"
+
+#: apps/finance/models.py:63
+#, fuzzy
+#| msgid "Overview"
+msgid "Overhead"
+msgstr "Накладні витрати"
+
+# --- logistics: equipment ---
+#: apps/finance/models.py:64 templates/pages/person_detail.html:182
+msgid "Equipment"
+msgstr "Спорядження"
+
+#: apps/finance/models.py:65
+msgid "Damage"
+msgstr "Збитки"
+
+#: apps/finance/models.py:66
+msgid "Welfare"
+msgstr "Соціальні витрати"
+
+#: apps/finance/models.py:68
+msgid "Other"
+msgstr "Інше"
+
+#: apps/finance/models.py:80
+msgid "kind"
+msgstr ""
+
+#: apps/finance/models.py:81
+msgid "group"
+msgstr ""
+
+#: apps/finance/models.py:83 apps/intake/models.py:51 apps/intake/models.py:68
+msgid "order"
+msgstr ""
+
+#: apps/finance/models.py:86
+msgid "finance category"
+msgstr ""
+
+#: apps/finance/models.py:87
+msgid "finance categories"
+msgstr ""
+
+#: apps/finance/models.py:104
+msgid "category"
+msgstr ""
+
+#: apps/finance/models.py:106
+#, fuzzy
+#| msgid "Headcount"
+msgid "amount"
+msgstr "Кількість осіб"
+
+#: apps/finance/models.py:109
+msgid "finance line item"
+msgstr ""
+
+#: apps/finance/models.py:110
+msgid "finance line items"
+msgstr ""
+
+#: apps/finance/views.py:67
+msgid "Saved and recalculated."
+msgstr "Збережено та перераховано."
+
+#: apps/finance/views.py:69 apps/finance/views.py:88
+msgid "Invalid input."
+msgstr "Невірні дані."
+
+#: apps/finance/views.py:86
+msgid "Financial month saved."
+msgstr "Фінансовий місяць збережено."
+
+#: apps/intake/models.py:9 apps/intake/models.py:90
+msgid "Draft"
+msgstr ""
+
+#: apps/intake/models.py:10
+msgid "Published"
+msgstr ""
+
+#: apps/intake/models.py:11
+#, fuzzy
+#| msgid "Required."
+msgid "Retired"
+msgstr "Обов’язково."
+
+#: apps/intake/models.py:15
+msgid "Text"
+msgstr ""
+
+#: apps/intake/models.py:16
+msgid "Long text"
+msgstr ""
+
+#: apps/intake/models.py:17
+msgid "Yes/No"
+msgstr ""
+
+#: apps/intake/models.py:18
+#, fuzzy
+#| msgid "Dates"
+msgid "Date"
+msgstr "Дати"
+
+#: apps/intake/models.py:19
+msgid "Number"
+msgstr ""
+
+#: apps/intake/models.py:20
+msgid "Choice"
+msgstr ""
+
+#: apps/intake/models.py:25
+#, fuzzy
+#| msgid "Permissions"
+msgid "version"
+msgstr "Дозволи"
+
+#: apps/intake/models.py:26 apps/intake/models.py:102
+#: apps/logistics/models.py:61 apps/logistics/models.py:118
+#: apps/messaging/models.py:39 apps/projects/models.py:66
+#, fuzzy
+#| msgid "Status"
+msgid "status"
+msgstr "Статус"
+
+#: apps/intake/models.py:27
+msgid "effective date"
+msgstr ""
+
+#: apps/intake/models.py:34
+#, fuzzy
+#| msgid "No published intake questionnaire."
+msgid "intake questionnaire version"
+msgstr "Немає опублікованої анкети прийому."
+
+#: apps/intake/models.py:35
+#, fuzzy
+#| msgid "No published intake questionnaire."
+msgid "intake questionnaire versions"
+msgstr "Немає опублікованої анкети прийому."
+
+#: apps/intake/models.py:47 apps/intake/models.py:94
+msgid "questionnaire"
+msgstr ""
+
+#: apps/intake/models.py:49
+msgid "title"
+msgstr ""
+
+#: apps/intake/models.py:50
+msgid "help"
+msgstr ""
+
+#: apps/intake/models.py:54
+msgid "intake panel"
+msgstr ""
+
+#: apps/intake/models.py:55
+msgid "intake panels"
+msgstr ""
+
+#: apps/intake/models.py:63
+msgid "panel"
+msgstr ""
+
+#: apps/intake/models.py:64
+msgid "stable key"
+msgstr ""
+
+#: apps/intake/models.py:66
+msgid "type"
+msgstr ""
+
+#: apps/intake/models.py:67
+#, fuzzy
+#| msgid "Required."
+msgid "required"
+msgstr "Обов’язково."
+
+# --- projects UI ---
+#: apps/intake/models.py:69
+#, fuzzy
+#| msgid "Operations"
+msgid "options"
+msgstr "Операції"
+
+#: apps/intake/models.py:70
+msgid "requires typed negative"
+msgstr ""
+
+#: apps/intake/models.py:71
+msgid "accepted negatives"
+msgstr ""
+
+#: apps/intake/models.py:74
+msgid "conditional on"
+msgstr ""
+
+#: apps/intake/models.py:77
+#, fuzzy
+#| msgid "No published intake questionnaire."
+msgid "intake question"
+msgstr "Немає опублікованої анкети прийому."
+
+#: apps/intake/models.py:78
+#, fuzzy
+#| msgid "No published intake questionnaire."
+msgid "intake questions"
+msgstr "Немає опублікованої анкети прийому."
+
+#: apps/intake/models.py:91 apps/projects/models.py:107
+#, fuzzy
+#| msgid "Complete"
+msgid "Completed"
+msgstr "Завершено"
+
+#: apps/intake/models.py:103
+#, fuzzy
+#| msgid "Current project"
+msgid "current panel"
+msgstr "Поточний проєкт"
+
+#: apps/intake/models.py:104
+msgid "started"
+msgstr ""
+
+#: apps/intake/models.py:105
+#, fuzzy
+#| msgid "Incomplete"
+msgid "completed"
+msgstr "Незавершено"
+
+#: apps/intake/models.py:108
+msgid "recruitment intake"
+msgstr ""
+
+#: apps/intake/models.py:109
+msgid "recruitment intakes"
+msgstr ""
+
+#: apps/intake/models.py:117
+#, fuzzy
+#| msgid "Intake"
+msgid "intake"
+msgstr "Прийом"
+
+#: apps/intake/models.py:118
+msgid "question"
+msgstr ""
+
+#: apps/intake/models.py:119
+#, fuzzy
+#| msgid "Value"
+msgid "value"
+msgstr "Вартість"
+
+#: apps/intake/models.py:120
+msgid "normalized value"
+msgstr ""
+
+#: apps/intake/models.py:124
+msgid "answered at"
+msgstr ""
+
+#: apps/intake/models.py:127
+msgid "intake answer"
+msgstr ""
+
+#: apps/intake/models.py:128
+msgid "intake answers"
+msgstr ""
+
+#: apps/intake/views.py:25
+msgid "No published intake questionnaire."
+msgstr "Немає опублікованої анкети прийому."
+
+#: apps/intake/views.py:43
+msgid "Intake complete — person added."
+msgstr "Прийом завершено — особу додано."
+
+#: apps/intake/views.py:47
+msgid "Please type a value (or the word for 'none')."
+msgstr "Введіть значення (або слово немає)."
+
+#: apps/intake/views.py:47
+msgid "Required."
+msgstr "Обов’язково."
+
+#: apps/logistics/models.py:13 apps/people/models.py:67
+#, fuzzy
+#| msgid "Address"
+msgid "address"
+msgstr "Адреса"
+
+#: apps/logistics/models.py:15 apps/projects/models.py:24
+msgid "notes"
+msgstr ""
+
+#: apps/logistics/models.py:19 apps/logistics/models.py:29
+#: apps/projects/models.py:173
+#, fuzzy
+#| msgid "Accommodation"
+msgid "accommodation"
+msgstr "Проживання"
+
+#: apps/logistics/models.py:20
+#, fuzzy
+#| msgid "Accommodation"
+msgid "accommodations"
+msgstr "Проживання"
+
+#: apps/logistics/models.py:32
+msgid "capacity"
+msgstr ""
+
+#: apps/logistics/models.py:35 apps/logistics/models.py:59
+#, fuzzy
+#| msgid "No rooms."
+msgid "room"
+msgstr "Немає кімнат."
+
+#: apps/logistics/models.py:36
+#, fuzzy
+#| msgid "Rooms"
+msgid "rooms"
+msgstr "Кімнати"
+
+#: apps/logistics/models.py:50 apps/projects/models.py:42
+#: templates/pages/project_detail.html:8 templates/pages/project_list.html:26
+msgid "Active"
+msgstr "Активний"
+
+#: apps/logistics/models.py:51 apps/projects/models.py:43
+msgid "Ended"
+msgstr ""
+
+#: apps/logistics/models.py:62 apps/projects/models.py:71
+msgid "start date"
+msgstr ""
+
+#: apps/logistics/models.py:63 apps/projects/models.py:72
+#, fuzzy
+#| msgid "Person updated."
+msgid "end date"
+msgstr "Особу оновлено."
+
+#: apps/logistics/models.py:66 apps/projects/models.py:79
+#: apps/projects/models.py:134
+#, fuzzy
+#| msgid "Assigned"
+msgid "assigned by"
+msgstr "Призначені"
+
+#: apps/logistics/models.py:71
+#, fuzzy
+#| msgid "Room assigned"
+msgid "room assignment"
+msgstr "Кімнату призначено"
+
+#: apps/logistics/models.py:72
+#, fuzzy
+#| msgid "Room assigned"
+msgid "room assignments"
+msgstr "Кімнату призначено"
+
+#: apps/logistics/models.py:89
+msgid "size"
+msgstr ""
+
+#: apps/logistics/models.py:92
+msgid "unit price"
+msgstr ""
+
+#: apps/logistics/models.py:97
+#, fuzzy
+#| msgid "Equipment issued"
+msgid "equipment item"
+msgstr "Спорядження видано"
+
+#: apps/logistics/models.py:98
+#, fuzzy
+#| msgid "Equipment issued"
+msgid "equipment items"
+msgstr "Спорядження видано"
+
+#: apps/logistics/models.py:106
+msgid "Issued"
+msgstr ""
+
+#: apps/logistics/models.py:107
+#, fuzzy
+#| msgid "Return"
+msgid "Returned"
+msgstr "Повернути"
+
+#: apps/logistics/models.py:115
+msgid "item"
+msgstr ""
+
+#: apps/logistics/models.py:117
+#, fuzzy
+#| msgid "Quantity"
+msgid "quantity"
+msgstr "Кількість"
+
+#: apps/logistics/models.py:121
+msgid "issued by"
+msgstr ""
+
+#: apps/logistics/models.py:123
+msgid "issued at"
+msgstr ""
+
+#: apps/logistics/models.py:124
+msgid "returned at"
+msgstr ""
+
+#: apps/logistics/models.py:127
+#, fuzzy
+#| msgid "Equipment issued"
+msgid "equipment issue"
+msgstr "Спорядження видано"
+
+#: apps/logistics/models.py:128
+#, fuzzy
+#| msgid "Equipment issued"
+msgid "equipment issues"
+msgstr "Спорядження видано"
+
+#: apps/logistics/models.py:141
+#, fuzzy
+#| msgid "Week start"
+msgid "week start"
+msgstr "Початок тижня"
+
+#: apps/logistics/models.py:142
+#, fuzzy
+#| msgid "Headcount"
+msgid "headcount"
+msgstr "Кількість осіб"
+
+#: apps/logistics/models.py:151
+#, fuzzy
+#| msgid "Transport"
+msgid "transport week"
+msgstr "Транспорт"
+
+# --- transport trends ---
+#: apps/logistics/models.py:152
+#, fuzzy
+#| msgid "Transport trends"
+msgid "transport weeks"
+msgstr "Тренди транспорту"
+
+#: apps/logistics/views.py:93
+msgid "Room assigned."
+msgstr "Кімнату призначено."
+
+#: apps/logistics/views.py:104
+msgid "Room released."
+msgstr "Кімнату звільнено."
+
+#: apps/logistics/views.py:114
+msgid "Equipment issued."
+msgstr "Спорядження видано."
+
+#: apps/logistics/views.py:123
+msgid "Equipment returned."
+msgstr "Спорядження повернено."
+
+#: apps/logistics/views.py:137
+msgid "Transport week recorded."
+msgstr "Тиждень транспорту записано."
+
+#: apps/logistics/views.py:139
+msgid "Week start is required."
+msgstr "Початок тижня обов’язковий."
+
+#: apps/messaging/models.py:12 apps/messaging/models.py:38
+#: apps/messaging/models.py:58
+msgid "body"
+msgstr ""
+
+#: apps/messaging/models.py:20
+#, fuzzy
+#| msgid "Message sent."
+msgid "message template"
+msgstr "Повідомлення надіслано."
+
+#: apps/messaging/models.py:21
+#, fuzzy
+#| msgid "Message sent."
+msgid "message templates"
+msgstr "Повідомлення надіслано."
+
+#: apps/messaging/models.py:30
+msgid "Queued"
+msgstr ""
+
+#: apps/messaging/models.py:31
+msgid "Sent"
+msgstr ""
+
+#: apps/messaging/models.py:32
+#, fuzzy
+#| msgid "Fail"
+msgid "Failed"
+msgstr "Не пройшов"
+
+#: apps/messaging/models.py:37
+msgid "to"
+msgstr ""
+
+#: apps/messaging/models.py:40 apps/messaging/models.py:59
+msgid "provider id"
+msgstr ""
+
+#: apps/messaging/models.py:41
+msgid "error"
+msgstr ""
+
+#: apps/messaging/models.py:48
+msgid "outbound message"
+msgstr ""
+
+#: apps/messaging/models.py:49
+msgid "outbound messages"
+msgstr ""
+
+#: apps/messaging/models.py:57
+msgid "from"
+msgstr ""
+
+#: apps/messaging/models.py:60
+msgid "received"
+msgstr ""
+
+#: apps/messaging/models.py:63
+msgid "inbound message"
+msgstr ""
+
+#: apps/messaging/models.py:64
+msgid "inbound messages"
+msgstr ""
+
+#: apps/messaging/views.py:30
+msgid "This person has no phone number."
+msgstr "У цієї особи немає номера телефону."
+
+#: apps/messaging/views.py:41
+msgid "Message body is required."
+msgstr "Текст повідомлення обов’язковий."
+
+#: apps/messaging/views.py:46
+msgid "Message sent."
+msgstr "Повідомлення надіслано."
+
+#: apps/messaging/views.py:48
+#, python-format
+msgid "Message failed: %(error)s"
+msgstr "Помилка повідомлення: %(error)s"
+
+#: apps/people/forms.py:20
+msgid "First name"
+msgstr "Ім’я"
+
+#: apps/people/forms.py:21
+msgid "Last name"
+msgstr "Прізвище"
+
+#: apps/people/forms.py:22 templates/pages/person_detail.html:126
+msgid "Phone"
+msgstr "Телефон"
+
+#: apps/people/forms.py:23 templates/pages/person_detail.html:127
+msgid "Address"
+msgstr "Адреса"
+
+#: apps/people/forms.py:24 templates/pages/person_detail.html:128
+msgid "Nationality"
+msgstr "Громадянство"
+
+#: apps/people/forms.py:25
+msgid "Preferred language"
+msgstr "Бажана мова"
+
+#: apps/people/forms.py:26 templates/pages/person_detail.html:140
+msgid "Date of birth"
+msgstr "Дата народження"
+
+#: apps/people/forms.py:27 templates/pages/person_detail.html:141
+msgid "Place of birth"
+msgstr "Місце народження"
+
+#: apps/people/forms.py:28
+msgid "Has disability"
+msgstr "Має інвалідність"
+
+#: apps/people/forms.py:29
+msgid "Disability type"
+msgstr "Тип інвалідності"
+
 # --- lifecycle status labels ---
+#: apps/people/models.py:12 templates/pages/dashboard.html:21
 msgid "Available"
 msgstr "Доступний"
 
+#: apps/people/models.py:13 templates/pages/person_detail.html:37
 msgid "Trial day"
 msgstr "Пробний день"
 
+#: apps/people/models.py:14 templates/pages/dashboard.html:24
 msgid "Working"
 msgstr "Працює"
 
+#: apps/people/models.py:15 templates/pages/project_detail.html:8
+#: templates/pages/project_list.html:26
 msgid "Inactive"
 msgstr "Неактивний"
 
+#: apps/people/models.py:16
 msgid "Blacklisted"
 msgstr "У чорному списку"
 
+#: apps/people/models.py:62
+#, fuzzy
+#| msgid "First name"
+msgid "first name"
+msgstr "Ім’я"
+
+#: apps/people/models.py:63
+#, fuzzy
+#| msgid "Last name"
+msgid "last name"
+msgstr "Прізвище"
+
+#: apps/people/models.py:64
+#, fuzzy
+#| msgid "Date of birth"
+msgid "date of birth"
+msgstr "Дата народження"
+
+#: apps/people/models.py:65
+#, fuzzy
+#| msgid "Place of birth"
+msgid "place of birth"
+msgstr "Місце народження"
+
+#: apps/people/models.py:66
+#, fuzzy
+#| msgid "Phone"
+msgid "phone"
+msgstr "Телефон"
+
+#: apps/people/models.py:68
+#, fuzzy
+#| msgid "Nationality"
+msgid "nationality"
+msgstr "Громадянство"
+
+#: apps/people/models.py:70
+#, fuzzy
+#| msgid "Preferred language"
+msgid "preferred language"
+msgstr "Бажана мова"
+
+#: apps/people/models.py:74
+#, fuzzy
+#| msgid "Has disability"
+msgid "has disability"
+msgstr "Має інвалідність"
+
+#: apps/people/models.py:75
+#, fuzzy
+#| msgid "Disability type"
+msgid "disability type"
+msgstr "Тип інвалідності"
+
+#: apps/people/models.py:79
+#, fuzzy
+#| msgid "All statuses"
+msgid "lifecycle status"
+msgstr "Усі статуси"
+
+#: apps/people/models.py:92
+#, fuzzy
+#| msgid "Owning recruiter"
+msgid "owning recruiter"
+msgstr "Відповідальний рекрутер"
+
+#: apps/people/models.py:93
+msgid "The recruiter who entered this person."
+msgstr ""
+
+#: apps/people/models.py:95
+#, fuzzy
+#| msgid "Rehire eligible"
+msgid "rehire eligible"
+msgstr "Можливість повторного найму"
+
+#: apps/people/models.py:98
+msgid "archived"
+msgstr ""
+
+#: apps/people/models.py:99
+msgid "archived at"
+msgstr ""
+
+#: apps/people/models.py:102
+#, fuzzy
+#| msgid "Search by name"
+msgid "search name"
+msgstr "Пошук за іменем"
+
+#: apps/people/models.py:109
+#, fuzzy
+#| msgid "People"
+msgid "people"
+msgstr "Люди"
+
+#: apps/people/services.py:17
+msgid "Trial scheduled"
+msgstr "Пробний день заплановано"
+
+#: apps/people/services.py:21
+msgid "Trial outcome"
+msgstr "Результат пробного дня"
+
+#: apps/people/services.py:26
+msgid "Assigned to project"
+msgstr "Призначено на проєкт"
+
+#: apps/people/services.py:29
+msgid "Room assigned"
+msgstr "Кімнату призначено"
+
+#: apps/people/services.py:32
+msgid "Equipment issued"
+msgstr "Спорядження видано"
+
+#: apps/people/services.py:36
+msgid "Readiness submitted"
+msgstr "Готовність подано"
+
+#: apps/people/services.py:40
+msgid "Intake completed"
+msgstr "Прийом завершено"
+
+#: apps/people/services.py:48
+msgid "Status changed"
+msgstr "Статус змінено"
+
+#: apps/people/views.py:62
+msgid "Person added."
+msgstr "Особу додано."
+
+#: apps/people/views.py:68 templates/pages/people_list.html:12
+msgid "Add person"
+msgstr "Додати особу"
+
+#: apps/people/views.py:80
+msgid "Person updated."
+msgstr "Особу оновлено."
+
+#: apps/people/views.py:86
+msgid "Edit person"
+msgstr "Редагувати особу"
+
+#: apps/projects/models.py:13
+#, fuzzy
+#| msgid "Partner"
+msgid "partner"
+msgstr "Партнер"
+
+#: apps/projects/models.py:14
+msgid "code"
+msgstr ""
+
+#: apps/projects/models.py:15
+#, fuzzy
+#| msgid "Office"
+msgid "office"
+msgstr "Офіс"
+
+#: apps/projects/models.py:22
+#, fuzzy
+#| msgid "Responsible coordinators"
+msgid "responsible coordinators"
+msgstr "Відповідальні координатори"
+
+#: apps/projects/models.py:26
+#, fuzzy
+#| msgid "Financial reporting"
+msgid "financial reporting eligible"
+msgstr "Фінансова звітність"
+
+#: apps/projects/models.py:34
+#, fuzzy
+#| msgid "Projects"
+msgid "projects"
+msgstr "Проєкти"
+
+#: apps/projects/models.py:44 apps/projects/models.py:108
+msgid "Cancelled"
+msgstr ""
+
+#: apps/projects/models.py:81
+msgid "assignment reason"
+msgstr ""
+
+#: apps/projects/models.py:83
+#, fuzzy
+#| msgid "Coordinator"
+msgid "coordinator snapshot"
+msgstr "Координатор"
+
+#: apps/projects/models.py:89
+msgid "project assignment"
+msgstr ""
+
+#: apps/projects/models.py:90
+msgid "project assignments"
+msgstr ""
+
+#: apps/projects/models.py:106
+#, fuzzy
+#| msgid "Schedule trial"
+msgid "Scheduled"
+msgstr "Запланувати пробний день"
+
+#: apps/projects/models.py:112
+msgid "Pending"
+msgstr "Очікує"
+
+#: apps/projects/models.py:113 templates/pages/person_detail.html:44
+msgid "Pass"
+msgstr "Пройшов"
+
+#: apps/projects/models.py:114 templates/pages/person_detail.html:48
+msgid "Fail"
+msgstr "Не пройшов"
+
+#: apps/projects/models.py:115 templates/pages/person_detail.html:52
+msgid "No-show"
+msgstr "Не з’явився"
+
+#: apps/projects/models.py:128
+#, fuzzy
+#| msgid "Schedule trial"
+msgid "scheduled date"
+msgstr "Запланувати пробний день"
+
+#: apps/projects/models.py:129
+msgid "state"
+msgstr ""
+
+#: apps/projects/models.py:130
+#, fuzzy
+#| msgid "Trial outcome"
+msgid "outcome"
+msgstr "Результат пробного дня"
+
+#: apps/projects/models.py:138
+#, fuzzy
+#| msgid "Trial outcome recorded."
+msgid "outcome recorded by"
+msgstr "Результат пробного дня записано."
+
+#: apps/projects/models.py:140
+#, fuzzy
+#| msgid "Trial outcome recorded."
+msgid "outcome recorded at"
+msgstr "Результат пробного дня записано."
+
+#: apps/projects/models.py:144
+msgid "trial assignment"
+msgstr ""
+
+#: apps/projects/models.py:145
+msgid "trial assignments"
+msgstr ""
+
+#: apps/projects/models.py:153 templates/pages/person_detail.html:72
+#: templates/pages/person_detail.html:78 templates/pages/person_detail.html:84
+#: templates/pages/person_detail.html:94
+msgid "Incomplete"
+msgstr "Незавершено"
+
+#: apps/projects/models.py:154 templates/pages/person_detail.html:73
+#: templates/pages/person_detail.html:79 templates/pages/person_detail.html:85
+#: templates/pages/person_detail.html:95
+msgid "Complete"
+msgstr "Завершено"
+
+#: apps/projects/models.py:155 templates/pages/person_detail.html:86
+#: templates/pages/person_detail.html:96
+msgid "Not applicable"
+msgstr "Не застосовується"
+
+#: apps/projects/models.py:171
+#, fuzzy
+#| msgid "Medical"
+msgid "medical"
+msgstr "Медичне"
+
+#: apps/projects/models.py:172
+msgid "gear"
+msgstr ""
+
+#: apps/projects/models.py:174
+#, fuzzy
+#| msgid "Transport"
+msgid "transport"
+msgstr "Транспорт"
+
+#: apps/projects/models.py:175
+#, fuzzy
+#| msgid "No accommodations found."
+msgid "accommodation N/A reason"
+msgstr "Житло не знайдено."
+
+# --- transport trends ---
+#: apps/projects/models.py:176
+#, fuzzy
+#| msgid "Transport trends"
+msgid "transport N/A reason"
+msgstr "Тренди транспорту"
+
+#: apps/projects/models.py:177
+#, fuzzy
+#| msgid "Entry medical date"
+msgid "entry medical date"
+msgstr "Дата вхідного медогляду"
+
+#: apps/projects/models.py:180
+msgid "submitted by"
+msgstr ""
+
+#: apps/projects/models.py:182
+msgid "submitted at"
+msgstr ""
+
+#: apps/projects/models.py:187
+#, fuzzy
+#| msgid "Readiness saved."
+msgid "readiness record"
+msgstr "Готовність збережено."
+
+#: apps/projects/models.py:188
+#, fuzzy
+#| msgid "Open readiness checks"
+msgid "readiness records"
+msgstr "Відкриті перевірки готовності"
+
+#: apps/projects/views.py:79
+msgid "Trial scheduled."
+msgstr "Пробний день заплановано."
+
+#: apps/projects/views.py:91
+msgid "Trial outcome recorded."
+msgstr "Результат пробного дня записано."
+
+#: apps/projects/views.py:116
+msgid "Readiness saved."
+msgstr "Готовність збережено."
+
+#: apps/projects/views.py:128
+msgid "Exit completed."
+msgstr "Вихід завершено."
+
+#: apps/projects/views.py:139
+msgid "Activated — now Working."
+msgstr "Активовано — тепер Працює."
+
 # --- shell / navigation ---
+#: templates/layouts/base.html:7
 msgid "Jober operations"
 msgstr "Операції Jober"
 
+#: templates/layouts/base.html:14
 msgid "Skip to content"
 msgstr "Перейти до вмісту"
 
+#: templates/layouts/base.html:16
 msgid "Jober"
 msgstr "Jober"
 
+#: templates/layouts/base.html:21
 msgid "Open navigation"
 msgstr "Відкрити навігацію"
 
+#: templates/layouts/base.html:25
 msgid "Overview"
 msgstr "Огляд"
 
+#: templates/layouts/base.html:26 templates/pages/people_list.html:4
+#: templates/pages/people_list.html:9 templates/pages/people_list.html:30
+#: templates/pages/reports.html:14
 msgid "People"
 msgstr "Люди"
 
+#: templates/layouts/base.html:27 templates/pages/project_list.html:4
+#: templates/pages/project_list.html:9 templates/pages/project_list.html:16
 msgid "Projects"
 msgstr "Проєкти"
 
+#: templates/layouts/base.html:28 templates/pages/trials_queue.html:4
 msgid "Field"
 msgstr "Поле"
 
+#: templates/layouts/base.html:32 templates/pages/finance_summary.html:8
+#: templates/pages/reports.html:4 templates/pages/reports.html:9
+#: templates/pages/reports.html:12
+msgid "Reports"
+msgstr "Звіти"
+
+# --- finance ---
+#: templates/layouts/base.html:34 templates/pages/finance_month_detail.html:8
+#: templates/pages/finance_month_detail.html:21
+#: templates/pages/finance_summary.html:4
+#: templates/pages/finance_summary.html:9 templates/pages/reports.html:35
+msgid "Finance"
+msgstr "Фінанси"
+
+# --- feedback ---
+#: templates/layouts/base.html:36 templates/pages/feedback_form.html:7
+#: templates/pages/feedback_form.html:14
+msgid "Feedback"
+msgstr "Зворотний зв’язок"
+
+#: templates/layouts/base.html:37
 msgid "Messages"
 msgstr "Повідомлення"
 
+#: templates/layouts/base.html:44
 msgid "Language"
 msgstr "Мова"
 
+#: templates/layouts/base.html:53
 msgid "Role"
 msgstr "Роль"
 
+#: templates/layouts/base.html:56
 msgid "Sign out"
 msgstr "Вийти"
 
-# --- dashboard ---
-msgid "Operational overview"
-msgstr "Операційний огляд"
+#: templates/pages/accommodation_detail.html:10
+#: templates/pages/finance_month_detail.html:10
+msgid "Back"
+msgstr "Назад"
 
-msgid "Pilot shell"
-msgstr "Пілотна оболонка"
+#: templates/pages/accommodation_detail.html:13
+#: templates/pages/accommodation_list.html:20
+msgid "Rooms"
+msgstr "Кімнати"
 
-msgid "The first screen verifies navigation, local scripts, and the coordinator's mobile workflow without introducing final business models."
-msgstr "Перший екран перевіряє навігацію, локальні скрипти та мобільний робочий процес координатора без впровадження остаточних бізнес-моделей."
+#: templates/pages/accommodation_detail.html:18 templates/pages/reports.html:17
+msgid "Occupancy"
+msgstr "Заповненість"
 
-msgid "Manage projects"
-msgstr "Керувати проєктами"
+#: templates/pages/accommodation_detail.html:22
+msgid "No rooms."
+msgstr "Немає кімнат."
 
-msgid "Operational summaries"
-msgstr "Операційні зведення"
+# --- logistics: accommodation ---
+#: templates/pages/accommodation_list.html:8
+#: templates/pages/person_detail.html:154
+#: templates/pages/person_detail.html:181
+#: templates/pages/project_detail.html:50
+#: templates/pages/transport_trends.html:8
+msgid "Logistics"
+msgstr "Логістика"
 
-msgid "Active projects"
-msgstr "Активні проєкти"
+#: templates/pages/accommodation_list.html:24
+msgid "No accommodations found."
+msgstr "Житло не знайдено."
 
-msgid "Open readiness checks"
-msgstr "Відкриті перевірки готовності"
+#: templates/pages/compliance_list.html:8
+msgid "Alerts"
+msgstr "Сповіщення"
 
-msgid "Mobile tasks"
-msgstr "Мобільні завдання"
+#: templates/pages/compliance_list.html:21 templates/pages/people_list.html:20
+#: templates/pages/people_list.html:35 templates/pages/project_list.html:25
+#: templates/pages/trials_queue.html:21
+msgid "Status"
+msgstr "Статус"
 
-msgid "Field queue"
-msgstr "Польова черга"
+#: templates/pages/compliance_list.html:23
+msgid "Expired"
+msgstr "Прострочено"
 
-msgid "Load queue"
-msgstr "Завантажити чергу"
-
-msgid "Phase 0 rule"
-msgstr "Правило фази 0"
-
-msgid "No final data"
-msgstr "Без остаточних даних"
-
-msgid "This shell uses fictional values only. Real personal data arrives only after the legal and security gate."
-msgstr "Ця оболонка використовує лише вигадані значення. Справжні персональні дані з’являться лише після юридичного та безпекового бар’єру."
-
-msgid "Responsible"
-msgstr "Відповідальний"
-
-msgid "Readiness"
-msgstr "Готовність"
-
+#: templates/pages/compliance_list.html:24
 msgid "Missing"
 msgstr "Відсутнє"
 
+#: templates/pages/compliance_list.html:25
+msgid "Expiring"
+msgstr "Незабаром спливає"
+
+#: templates/pages/compliance_list.html:29
+msgid "Due"
+msgstr "Термін"
+
+#: templates/pages/compliance_list.html:35
+msgid "No compliance alerts."
+msgstr "Немає сповіщень відповідності."
+
+# --- dashboard ---
+#: templates/pages/dashboard.html:4 templates/pages/dashboard.html:9
+msgid "Operational overview"
+msgstr "Операційний огляд"
+
+# --- projects UI ---
+#: templates/pages/dashboard.html:8 templates/pages/project_list.html:8
+#: templates/pages/reports.html:8
+msgid "Operations"
+msgstr "Операції"
+
+#: templates/pages/dashboard.html:12
+msgid "Manage projects"
+msgstr "Керувати проєктами"
+
+#: templates/pages/dashboard.html:16
+msgid "Operational summaries"
+msgstr "Операційні зведення"
+
+#: templates/pages/dashboard.html:18 templates/pages/reports.html:13
+msgid "Active projects"
+msgstr "Активні проєкти"
+
+#: templates/pages/dashboard.html:27 templates/pages/reports.html:15
+msgid "Awaiting outcome"
+msgstr "Очікує результату"
+
+#: templates/pages/dashboard.html:33 templates/pages/trials_queue.html:9
+#: templates/pages/trials_queue.html:12
+msgid "Trials"
+msgstr "Пробні дні"
+
+#: templates/pages/dashboard.html:38 templates/pages/trials_queue.html:27
+msgid "No trials awaiting an outcome."
+msgstr "Немає пробних днів, що очікують результату."
+
+#: templates/pages/feedback_form.html:16
+msgid "Thank you for your feedback."
+msgstr "Дякуємо за ваш відгук."
+
+#: templates/pages/feedback_form.html:22
+msgid "Rating (1-5)"
+msgstr "Оцінка (1-5)"
+
+#: templates/pages/feedback_form.html:26
+msgid "Your feedback"
+msgstr "Ваш відгук"
+
+#: templates/pages/feedback_form.html:29
+msgid "Submit"
+msgstr "Надіслати"
+
+#: templates/pages/feedback_inbox.html:4 templates/pages/feedback_inbox.html:9
+#: templates/pages/feedback_inbox.html:33
+msgid "Feedback inbox"
+msgstr "Вхідні відгуки"
+
+#: templates/pages/feedback_inbox.html:8
+msgid "Inbox"
+msgstr "Вхідні"
+
+#: templates/pages/feedback_inbox.html:13
+msgid "Public links"
+msgstr "Публічні посилання"
+
+#: templates/pages/feedback_inbox.html:14
+msgid "Feedback links"
+msgstr "Посилання для відгуків"
+
+#: templates/pages/feedback_inbox.html:24
+msgid "Label"
+msgstr "Назва"
+
+#: templates/pages/feedback_inbox.html:25
+#: templates/pages/finance_summary.html:33
+#: templates/pages/person_detail.html:26 templates/pages/project_detail.html:8
+#: templates/pages/transport_trends.html:27
+msgid "Project"
+msgstr "Проєкт"
+
+#: templates/pages/feedback_inbox.html:29
+msgid "Create link"
+msgstr "Створити посилання"
+
+#: templates/pages/feedback_inbox.html:41
+msgid "Link"
+msgstr "Посилання"
+
+#: templates/pages/feedback_inbox.html:45
+msgid "No feedback yet."
+msgstr "Поки немає відгуків."
+
+#: templates/pages/finance_month_detail.html:16
+#: templates/pages/finance_summary.html:16
+#: templates/pages/finance_summary.html:24 templates/pages/reports.html:39
+msgid "Net"
+msgstr "Чистий"
+
+#: templates/pages/finance_month_detail.html:22
+msgid "Line items"
+msgstr "Позиції"
+
+#: templates/pages/finance_month_detail.html:32
+msgid "Save & recalculate"
+msgstr "Зберегти та перерахувати"
+
+#: templates/pages/finance_month_detail.html:42
+#: templates/pages/finance_summary.html:47
+msgid "Group breakdown"
+msgstr "Розподіл за групами"
+
+#: templates/pages/finance_month_detail.html:43
+msgid "By group"
+msgstr "За групою"
+
+#: templates/pages/finance_summary.html:10 templates/pages/people_list.html:16
+#: templates/pages/project_list.html:12
+msgid "Export"
+msgstr "Експорт"
+
+#: templates/pages/finance_summary.html:13
+#: templates/pages/finance_summary.html:20
+#: templates/pages/finance_summary.html:46 templates/pages/reports.html:34
+#: templates/pages/transport_trends.html:14
+msgid "Company total"
+msgstr "Загалом по компанії"
+
+#: templates/pages/finance_summary.html:21
+msgid "Financial months"
+msgstr "Фінансові місяці"
+
+#: templates/pages/finance_summary.html:24
+msgid "Locked"
+msgstr "Заблоковано"
+
+#: templates/pages/finance_summary.html:26
+msgid "No financial months."
+msgstr "Немає фінансових місяців."
+
+#: templates/pages/finance_summary.html:36
+msgid "Year"
+msgstr "Рік"
+
+#: templates/pages/finance_summary.html:37
+msgid "Month"
+msgstr "Місяць"
+
+#: templates/pages/finance_summary.html:40
+msgid "Record month"
+msgstr "Записати місяць"
+
+#: templates/pages/finance_summary.html:52
+#, fuzzy
+#| msgid "No history yet."
+msgid "No line items yet."
+msgstr "Поки немає позицій."
+
+#: templates/pages/intake_panel.html:4 templates/pages/intake_panel.html:8
+#: templates/pages/person_form.html:8
+msgid "Intake"
+msgstr "Прийом"
+
+# --- intake engine ---
+#: templates/pages/intake_panel.html:8
+msgid "Step"
+msgstr "Крок"
+
+#: templates/pages/intake_panel.html:24 templates/pages/person_detail.html:131
+#: templates/pages/person_detail.html:144
+#: templates/pages/project_detail.html:31
+msgid "Yes"
+msgstr "Так"
+
+#: templates/pages/intake_panel.html:25 templates/pages/person_detail.html:131
+#: templates/pages/person_detail.html:144
+#: templates/pages/project_detail.html:31
+msgid "No"
+msgstr "Ні"
+
+#: templates/pages/intake_panel.html:45
+msgid "Finish"
+msgstr "Завершити"
+
+#: templates/pages/intake_panel.html:45
+msgid "Next"
+msgstr "Далі"
+
 # --- login ---
+#: templates/pages/login.html:4
 msgid "Sign in"
 msgstr "Вхід"
 
+#: templates/pages/login.html:8
 msgid "Internal system"
 msgstr "Внутрішня система"
 
+#: templates/pages/login.html:9
 msgid "Sign in to the Jober team"
 msgstr "Вхід до команди Jober"
 
+#: templates/pages/login.html:16
 msgid "Email"
 msgstr "Електронна пошта"
 
+#: templates/pages/login.html:20
 msgid "Password"
 msgstr "Пароль"
 
+#: templates/pages/login.html:23
 msgid "Continue"
 msgstr "Продовжити"
 
 # --- people list / detail ---
+#: templates/pages/people_list.html:8 templates/pages/reports.html:23
 msgid "Workforce"
 msgstr "Робоча сила"
 
+#: templates/pages/people_list.html:19
 msgid "Search by name"
 msgstr "Пошук за іменем"
 
-msgid "Search"
-msgstr "Пошук"
-
-msgid "Status"
-msgstr "Статус"
-
-msgid "No people found."
-msgstr "Людей не знайдено."
-
-msgid "Person"
-msgstr "Особа"
-
-msgid "Back to people"
-msgstr "Назад до людей"
-
-msgid "Operational"
-msgstr "Операційні"
-
-msgid "Details"
-msgstr "Деталі"
-
-msgid "Phone"
-msgstr "Телефон"
-
-msgid "Address"
-msgstr "Адреса"
-
-msgid "Nationality"
-msgstr "Громадянство"
-
-msgid "Current project"
-msgstr "Поточний проєкт"
-
-msgid "Owning recruiter"
-msgstr "Відповідальний рекрутер"
-
-msgid "Rehire eligible"
-msgstr "Можливість повторного найму"
-
-msgid "Yes"
-msgstr "Так"
-
-msgid "No"
-msgstr "Ні"
-
-msgid "Restricted"
-msgstr "Обмежено"
-
-msgid "Personal data"
-msgstr "Особисті дані"
-
-msgid "Date of birth"
-msgstr "Дата народження"
-
-msgid "Place of birth"
-msgstr "Місце народження"
-
-msgid "Disability"
-msgstr "Інвалідність"
-
-msgid "Restricted — visible only to managers, observers, the owning recruiter, and the responsible coordinator."
-msgstr "Обмежено — видно лише менеджерам, спостерігачам, відповідальному рекрутеру та відповідальному координатору."
-
-# --- projects UI ---
-msgid "Operations"
-msgstr "Операції"
-
-msgid "Code"
-msgstr "Код"
-
-msgid "Active"
-msgstr "Активний"
-
-msgid "No projects found."
-msgstr "Проєктів не знайдено."
-
-msgid "Project"
-msgstr "Проєкт"
-
-msgid "Back to projects"
-msgstr "Назад до проєктів"
-
-msgid "Partner"
-msgstr "Партнер"
-
-msgid "Office"
-msgstr "Офіс"
-
-msgid "Responsible coordinators"
-msgstr "Відповідальні координатори"
-
-msgid "Financial reporting"
-msgstr "Фінансова звітність"
-
-msgid "Assigned"
-msgstr "Призначені"
-
-msgid "Workers"
-msgstr "Працівники"
-
-msgid "No workers assigned."
-msgstr "Немає призначених працівників."
-
-# --- workflow: trials / readiness / intake ---
-msgid "Next step"
-msgstr "Наступний крок"
-
-msgid "Send to a project trial"
-msgstr "Відправити на пробний день"
-
-msgid "Schedule trial"
-msgstr "Запланувати пробний день"
-
-msgid "Record trial outcome"
-msgstr "Записати результат пробного дня"
-
-msgid "Pass"
-msgstr "Пройшов"
-
-msgid "Fail"
-msgstr "Не пройшов"
-
-msgid "No-show"
-msgstr "Не з’явився"
-
-msgid "Awaiting the coordinator's outcome."
-msgstr "Очікування результату від координатора."
-
-msgid "Trials"
-msgstr "Пробні дні"
-
-msgid "No trials awaiting an outcome."
-msgstr "Немає пробних днів, що очікують результату."
-
-msgid "Trial scheduled."
-msgstr "Пробний день заплановано."
-
-msgid "Trial outcome recorded."
-msgstr "Результат пробного дня записано."
-
-msgid "Pending"
-msgstr "Очікує"
-
-msgid "Four-pillar readiness"
-msgstr "Чотиристовпова готовність"
-
-msgid "Medical"
-msgstr "Медичне"
-
-msgid "Gear"
-msgstr "Спорядження"
-
-msgid "Accommodation"
-msgstr "Проживання"
-
-msgid "Transport"
-msgstr "Транспорт"
-
-msgid "Incomplete"
-msgstr "Незавершено"
-
-msgid "Complete"
-msgstr "Завершено"
-
-msgid "Not applicable"
-msgstr "Не застосовується"
-
-msgid "Save readiness"
-msgstr "Зберегти готовність"
-
-msgid "Activate (Working)"
-msgstr "Активувати (Працює)"
-
-msgid "Ready to activate"
-msgstr "Готово до активації"
-
-msgid "Medical and gear required"
-msgstr "Потрібні медичне та спорядження"
-
-msgid "Readiness saved."
-msgstr "Готовність збережено."
-
-msgid "Activated — now Working."
-msgstr "Активовано — тепер Працює."
-
-msgid "Add person"
-msgstr "Додати особу"
-
-msgid "Intake"
-msgstr "Прийом"
-
-msgid "Save"
-msgstr "Зберегти"
-
-msgid "First name"
-msgstr "Ім’я"
-
-msgid "Last name"
-msgstr "Прізвище"
-
-msgid "Has disability"
-msgstr "Має інвалідність"
-
-msgid "Disability type"
-msgstr "Тип інвалідності"
-
-msgid "Preferred language"
-msgstr "Бажана мова"
-
-msgid "Person added."
-msgstr "Особу додано."
-
-msgid "Edit"
-msgstr "Редагувати"
-
-msgid "Edit person"
-msgstr "Редагувати особу"
-
-msgid "Person updated."
-msgstr "Особу оновлено."
-
-# --- logistics: accommodation ---
-msgid "Logistics"
-msgstr "Логістика"
-
-msgid "Release room"
-msgstr "Звільнити кімнату"
-
-msgid "Room"
-msgstr "Кімната"
-
-msgid "Assign room"
-msgstr "Призначити кімнату"
-
-msgid "Rooms"
-msgstr "Кімнати"
-
-msgid "No accommodations found."
-msgstr "Житло не знайдено."
-
-msgid "Back"
-msgstr "Назад"
-
-msgid "Occupancy"
-msgstr "Заповненість"
-
-msgid "No rooms."
-msgstr "Немає кімнат."
-
-msgid "Room assigned."
-msgstr "Кімнату призначено."
-
-msgid "Room released."
-msgstr "Кімнату звільнено."
-
-# --- logistics: equipment ---
-msgid "Equipment"
-msgstr "Спорядження"
-
-msgid "Return"
-msgstr "Повернути"
-
-msgid "Item"
-msgstr "Позиція"
-
-msgid "Quantity"
-msgstr "Кількість"
-
-msgid "Issue equipment"
-msgstr "Видати спорядження"
-
-msgid "Equipment issued."
-msgstr "Спорядження видано."
-
-msgid "Equipment returned."
-msgstr "Спорядження повернено."
-
-# --- logistics: transport ---
-msgid "Weekly transport"
-msgstr "Щотижневий транспорт"
-
-msgid "No transport weeks recorded."
-msgstr "Тижні транспорту не записані."
-
-msgid "Week start"
-msgstr "Початок тижня"
-
-msgid "Headcount"
-msgstr "Кількість осіб"
-
-msgid "Record week"
-msgstr "Записати тиждень"
-
-msgid "Transport week recorded."
-msgstr "Тиждень транспорту записано."
-
-msgid "Week start is required."
-msgstr "Початок тижня обов’язковий."
-
-# --- finance ---
-msgid "Finance"
-msgstr "Фінанси"
-
-msgid "Reports"
-msgstr "Звіти"
-
-msgid "Revenue"
-msgstr "Дохід"
-
-msgid "Cost"
-msgstr "Витрати"
-
-msgid "Net"
-msgstr "Чистий"
-
-msgid "Year"
-msgstr "Рік"
-
-msgid "Month"
-msgstr "Місяць"
-
-msgid "Record month"
-msgstr "Записати місяць"
-
-msgid "Financial months"
-msgstr "Фінансові місяці"
-
-msgid "No financial months."
-msgstr "Немає фінансових місяців."
-
-msgid "Company total"
-msgstr "Загалом по компанії"
-
-msgid "Financial month saved."
-msgstr "Фінансовий місяць збережено."
-
-msgid "Invalid input."
-msgstr "Невірні дані."
-
-# --- intake engine ---
-msgid "Step"
-msgstr "Крок"
-
-msgid "Next"
-msgstr "Далі"
-
-msgid "Finish"
-msgstr "Завершити"
-
-msgid "Required."
-msgstr "Обов’язково."
-
-msgid "Please type a value (or the word for 'none')."
-msgstr "Введіть значення (або слово немає)."
-
-msgid "No published intake questionnaire."
-msgstr "Немає опублікованої анкети прийому."
-
-msgid "Intake complete — person added."
-msgstr "Прийом завершено — особу додано."
-
-# --- person card: history + filter ---
-msgid "History"
-msgstr "Історія"
-
+#: templates/pages/people_list.html:21
 msgid "All statuses"
 msgstr "Усі статуси"
 
-msgid "Trial scheduled"
-msgstr "Пробний день заплановано"
+#: templates/pages/people_list.html:26
+msgid "Search"
+msgstr "Пошук"
 
-msgid "Trial outcome"
-msgstr "Результат пробного дня"
+#: templates/pages/people_list.html:39
+msgid "No people found."
+msgstr "Людей не знайдено."
 
-msgid "Assigned to project"
-msgstr "Призначено на проєкт"
+#: templates/pages/person_detail.html:8 templates/pages/person_detail.html:262
+msgid "Person"
+msgstr "Особа"
 
-msgid "Room assigned"
-msgstr "Кімнату призначено"
+#: templates/pages/person_detail.html:10 templates/pages/person_form.html:10
+msgid "Back to people"
+msgstr "Назад до людей"
 
-msgid "Equipment issued"
-msgstr "Спорядження видано"
+#: templates/pages/person_detail.html:13
+msgid "Edit"
+msgstr "Редагувати"
 
-msgid "Readiness submitted"
-msgstr "Готовність подано"
+# --- workflow: trials / readiness / intake ---
+#: templates/pages/person_detail.html:22
+msgid "Next step"
+msgstr "Наступний крок"
 
-msgid "Intake completed"
-msgstr "Прийом завершено"
+#: templates/pages/person_detail.html:23
+msgid "Send to a project trial"
+msgstr "Відправити на пробний день"
 
-msgid "Status changed"
-msgstr "Статус змінено"
+#: templates/pages/person_detail.html:31
+msgid "Schedule trial"
+msgstr "Запланувати пробний день"
 
-msgid "No history yet."
-msgstr "Ще немає історії."
+#: templates/pages/person_detail.html:38
+msgid "Record trial outcome"
+msgstr "Записати результат пробного дня"
 
-msgid "Awaiting outcome"
-msgstr "Очікує результату"
+#: templates/pages/person_detail.html:56
+msgid "Awaiting the coordinator's outcome."
+msgstr "Очікування результату від координатора."
 
-msgid "Export"
-msgstr "Експорт"
+#: templates/pages/person_detail.html:63
+msgid "Readiness"
+msgstr "Готовність"
 
+#: templates/pages/person_detail.html:64
+msgid "Four-pillar readiness"
+msgstr "Чотиристовпова готовність"
+
+#: templates/pages/person_detail.html:70
+msgid "Medical"
+msgstr "Медичне"
+
+#: templates/pages/person_detail.html:76
+msgid "Gear"
+msgstr "Спорядження"
+
+#: templates/pages/person_detail.html:89 templates/pages/person_detail.html:99
 msgid "Reason if not applicable"
 msgstr "Причина, якщо не застосовується"
 
+#: templates/pages/person_detail.html:102
 msgid "Entry medical date"
 msgstr "Дата вхідного медогляду"
 
-# --- messaging / SMS ---
-msgid "Messaging"
-msgstr "Комунікація"
+#: templates/pages/person_detail.html:105
+msgid "Save readiness"
+msgstr "Зберегти готовність"
 
-msgid "Send SMS"
-msgstr "Надіслати SMS"
+#: templates/pages/person_detail.html:110
+msgid "Activate (Working)"
+msgstr "Активувати (Працює)"
 
-msgid "Template"
-msgstr "Шаблон"
+#: templates/pages/person_detail.html:112
+msgid "Ready to activate"
+msgstr "Готово до активації"
 
-msgid "Message"
-msgstr "Повідомлення"
+#: templates/pages/person_detail.html:114
+msgid "Medical and gear required"
+msgstr "Потрібні медичне та спорядження"
 
-msgid "Or type a message"
-msgstr "Або введіть повідомлення"
+#: templates/pages/person_detail.html:123
+#: templates/pages/project_detail.html:15
+msgid "Operational"
+msgstr "Операційні"
 
-msgid "Message sent."
-msgstr "Повідомлення надіслано."
+#: templates/pages/person_detail.html:124
+#: templates/pages/project_detail.html:16
+msgid "Details"
+msgstr "Деталі"
 
-msgid "Message failed: %(error)s"
-msgstr "Помилка повідомлення: %(error)s"
+#: templates/pages/person_detail.html:129
+msgid "Current project"
+msgstr "Поточний проєкт"
 
-msgid "This person has no phone number."
-msgstr "У цієї особи немає номера телефону."
+#: templates/pages/person_detail.html:130
+msgid "Owning recruiter"
+msgstr "Відповідальний рекрутер"
 
-msgid "Message body is required."
-msgstr "Текст повідомлення обов’язковий."
+#: templates/pages/person_detail.html:131
+msgid "Rehire eligible"
+msgstr "Можливість повторного найму"
 
-# --- compliance ---
-msgid "Compliance"
-msgstr "Відповідність"
+#: templates/pages/person_detail.html:136
+msgid "Restricted"
+msgstr "Обмежено"
 
-msgid "Alerts"
-msgstr "Сповіщення"
+#: templates/pages/person_detail.html:137
+msgid "Personal data"
+msgstr "Особисті дані"
 
-msgid "Expiring"
-msgstr "Незабаром спливає"
+#: templates/pages/person_detail.html:143
+msgid "Disability"
+msgstr "Інвалідність"
 
-msgid "Expired"
-msgstr "Прострочено"
+#: templates/pages/person_detail.html:148
+msgid ""
+"Restricted — visible only to managers, observers, the owning recruiter, and "
+"the responsible coordinator."
+msgstr ""
+"Обмежено — видно лише менеджерам, спостерігачам, відповідальному рекрутеру "
+"та відповідальному координатору."
 
-msgid "Due"
-msgstr "Термін"
+#: templates/pages/person_detail.html:162
+msgid "Release room"
+msgstr "Звільнити кімнату"
 
-msgid "No compliance alerts."
-msgstr "Немає сповіщень відповідності."
+#: templates/pages/person_detail.html:168
+msgid "Room"
+msgstr "Кімната"
 
-# --- exit / recycling ---
-msgid "Exit"
-msgstr "Вихід"
+#: templates/pages/person_detail.html:173
+msgid "Assign room"
+msgstr "Призначити кімнату"
 
-msgid "Exit & reconcile"
-msgstr "Вихід та звірка"
-
-msgid "Ends the project assignment, releases the room, and returns issued equipment."
-msgstr "Завершує призначення на проєкт, звільняє кімнату та повертає видане спорядження."
-
-msgid "Exit to Available"
-msgstr "Вихід до Доступний"
-
-msgid "Exit to Inactive"
-msgstr "Вихід до Неактивний"
-
-msgid "Exit completed."
-msgstr "Вихід завершено."
-
-# --- transport trends ---
-msgid "Transport trends"
-msgstr "Тренди транспорту"
-
-msgid "No transport data."
-msgstr "Немає даних про транспорт."
-
-# --- feedback ---
-msgid "Feedback"
-msgstr "Зворотний зв’язок"
-
-msgid "Feedback inbox"
-msgstr "Вхідні відгуки"
-
-msgid "Inbox"
-msgstr "Вхідні"
-
-msgid "Public links"
-msgstr "Публічні посилання"
-
-msgid "Feedback links"
-msgstr "Посилання для відгуків"
-
-msgid "Create link"
-msgstr "Створити посилання"
-
-msgid "Label"
-msgstr "Назва"
-
-msgid "Link"
-msgstr "Посилання"
-
-msgid "No feedback yet."
-msgstr "Поки немає відгуків."
-
-msgid "Your feedback"
-msgstr "Ваш відгук"
-
-msgid "Rating (1-5)"
-msgstr "Оцінка (1-5)"
-
-msgid "Submit"
-msgstr "Надіслати"
-
-msgid "Thank you for your feedback."
-msgstr "Дякуємо за ваш відгук."
-
-msgid "Message is required."
-msgstr "Повідомлення обов’язкове."
-
-msgid "Label is required."
-msgstr "Назва обов’язкова."
-
-msgid "Feedback link created."
-msgstr "Посилання для відгуків створено."
-
-msgid "People by status"
-msgstr "Люди за статусом"
-
+#: templates/pages/person_detail.html:185
 msgid "Value"
 msgstr "Вартість"
 
+#: templates/pages/person_detail.html:193
+msgid "Return"
+msgstr "Повернути"
+
+#: templates/pages/person_detail.html:205
+msgid "Item"
+msgstr "Позиція"
+
+#: templates/pages/person_detail.html:208
+msgid "Quantity"
+msgstr "Кількість"
+
+#: templates/pages/person_detail.html:209
+msgid "Issue equipment"
+msgstr "Видати спорядження"
+
+# --- exit / recycling ---
+#: templates/pages/person_detail.html:216
+msgid "Exit"
+msgstr "Вихід"
+
+#: templates/pages/person_detail.html:217
+msgid "Exit & reconcile"
+msgstr "Вихід та звірка"
+
+#: templates/pages/person_detail.html:218
+msgid ""
+"Ends the project assignment, releases the room, and returns issued equipment."
+msgstr ""
+"Завершує призначення на проєкт, звільняє кімнату та повертає видане "
+"спорядження."
+
+#: templates/pages/person_detail.html:222
+msgid "Exit to Available"
+msgstr "Вихід до Доступний"
+
+#: templates/pages/person_detail.html:226
+msgid "Exit to Inactive"
+msgstr "Вихід до Неактивний"
+
+# --- messaging / SMS ---
+#: templates/pages/person_detail.html:234
+msgid "Messaging"
+msgstr "Комунікація"
+
+#: templates/pages/person_detail.html:235
+#: templates/pages/person_detail.html:249
+msgid "Send SMS"
+msgstr "Надіслати SMS"
+
+#: templates/pages/person_detail.html:239
+msgid "Template"
+msgstr "Шаблон"
+
+#: templates/pages/person_detail.html:246
+msgid "Message"
+msgstr "Повідомлення"
+
+#: templates/pages/person_detail.html:247
+msgid "Or type a message"
+msgstr "Або введіть повідомлення"
+
+# --- person card: history + filter ---
+#: templates/pages/person_detail.html:263
+msgid "History"
+msgstr "Історія"
+
+#: templates/pages/person_detail.html:268
+msgid "No history yet."
+msgstr "Ще немає історії."
+
+#: templates/pages/person_form.html:17
+msgid "Save"
+msgstr "Зберегти"
+
+#: templates/pages/project_detail.html:10
+msgid "Back to projects"
+msgstr "Назад до проєктів"
+
+#: templates/pages/project_detail.html:18 templates/pages/project_list.html:21
+msgid "Code"
+msgstr "Код"
+
+#: templates/pages/project_detail.html:19
+msgid "Partner"
+msgstr "Партнер"
+
+#: templates/pages/project_detail.html:20
+msgid "Office"
+msgstr "Офіс"
+
+#: templates/pages/project_detail.html:22
+msgid "Responsible coordinators"
+msgstr "Відповідальні координатори"
+
+#: templates/pages/project_detail.html:30
+msgid "Financial reporting"
+msgstr "Фінансова звітність"
+
+#: templates/pages/project_detail.html:37
+msgid "Assigned"
+msgstr "Призначені"
+
+#: templates/pages/project_detail.html:38
+msgid "Workers"
+msgstr "Працівники"
+
+#: templates/pages/project_detail.html:43
+msgid "No workers assigned."
+msgstr "Немає призначених працівників."
+
+# --- logistics: transport ---
+#: templates/pages/project_detail.html:51
+#: templates/pages/transport_trends.html:15
+msgid "Weekly transport"
+msgstr "Щотижневий транспорт"
+
+#: templates/pages/project_detail.html:56
+msgid "No transport weeks recorded."
+msgstr "Тижні транспорту не записані."
+
+#: templates/pages/project_detail.html:63
+msgid "Week start"
+msgstr "Початок тижня"
+
+#: templates/pages/project_detail.html:64
+msgid "Headcount"
+msgstr "Кількість осіб"
+
+#: templates/pages/project_detail.html:65
+msgid "Record week"
+msgstr "Записати тиждень"
+
+#: templates/pages/project_list.html:31
+msgid "No projects found."
+msgstr "Проєктів не знайдено."
+
+#: templates/pages/reports.html:18
 msgid "Equipment value"
 msgstr "Вартість спорядження"
+
+#: templates/pages/reports.html:24
+msgid "People by status"
+msgstr "Люди за статусом"
+
+# --- transport trends ---
+#: templates/pages/transport_trends.html:4
+#: templates/pages/transport_trends.html:9
+msgid "Transport trends"
+msgstr "Тренди транспорту"
+
+#: templates/pages/transport_trends.html:39
+msgid "No transport data."
+msgstr "Немає даних про транспорт."
+
+#~ msgid "Pilot shell"
+#~ msgstr "Пілотна оболонка"
+
+#~ msgid ""
+#~ "The first screen verifies navigation, local scripts, and the "
+#~ "coordinator's mobile workflow without introducing final business models."
+#~ msgstr ""
+#~ "Перший екран перевіряє навігацію, локальні скрипти та мобільний робочий "
+#~ "процес координатора без впровадження остаточних бізнес-моделей."
+
+#~ msgid "Mobile tasks"
+#~ msgstr "Мобільні завдання"
+
+#~ msgid "Field queue"
+#~ msgstr "Польова черга"
+
+#~ msgid "Load queue"
+#~ msgstr "Завантажити чергу"
+
+#~ msgid "Phase 0 rule"
+#~ msgstr "Правило фази 0"
+
+#~ msgid "No final data"
+#~ msgstr "Без остаточних даних"
+
+#~ msgid ""
+#~ "This shell uses fictional values only. Real personal data arrives only "
+#~ "after the legal and security gate."
+#~ msgstr ""
+#~ "Ця оболонка використовує лише вигадані значення. Справжні персональні "
+#~ "дані з’являться лише після юридичного та безпекового бар’єру."
+
+#~ msgid "Responsible"
+#~ msgstr "Відповідальний"
