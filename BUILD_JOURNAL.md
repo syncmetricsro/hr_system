@@ -215,6 +215,24 @@ Verification: ruff clean; **57 unit tests pass** (5 new view tests incl. sensiti
 Next step:
 - Recruiter intake (hard-gated) or trials + the readiness gate (which activates ADR 0018 enforcement).
 
+## 2026-06-29
+
+Phase 4 finance — configurable line-item catalog + per-month entry, recalc and group breakdowns.
+
+What changed:
+- `apps/finance/models.py`: `FinanceCategory` (configurable catalog: label, `kind` cost/revenue, `group`, active, order) and `FinanceLineItem` (one positive amount per category per `FinancialMonth`, unique together). Amounts are stored **positive**; the sign comes from `kind`, so `net = revenues − costs` holds regardless of which sign convention the source spreadsheet used (the open Phase-4 confirmation does not block this design).
+- `apps/finance/services.py`: `set_line_item` (locked-month guarded, audited), `recompute_month` (rolls line items into `revenue`/`cost` by `kind` — summed **dynamically over the full set**, so it cannot reproduce the spreadsheet's off-by-one cost bug), and `group_breakdown` (per-group revenue−cost across one/all months for the manager's transport/accommodation/overhead view).
+- `apps/finance/views.py` + `config/urls.py`: `finance_month_detail` (line-item entry form, gated FINANCE_VIEW_SUMMARY) and `finance_month_save` (FINANCE_MANAGE, POST → set items → recalc). `finance_summary` now shows the company group breakdown and links each month to its detail page.
+- `seed_finance` management command seeds the 25-category catalog from `Finance_Specs.md §2` (idempotent); wired into `scripts/dev_app.sh up`. Admin registered for category + line item.
+- i18n: new finance strings + group labels translated SK/HU/UK; fixed a reused-but-wrong "Overhead" (was "Prehľad"/overview → "Réžia") and "No line items yet." string.
+
+Assumption recorded (still to confirm with Jober, one filled month): `net = revenue − cost`. The positive-amount + sign-by-kind model makes this robust either way.
+
+Verification: ruff clean; **173 unit tests pass** (was 166) — recompute sums by kind, dynamic totals cover every cost row, locked-month blocks edits, group breakdown nets revenue−cost, save view persists + recomputes, detail view gated from recruiters. Migration `0002` builds cleanly under pytest; catalogs compiled. (Run `scripts/dev_app.sh rebuild` to pick up the new code in the local demo.)
+
+Next step:
+- Month lock/reopen UI (reason + audit) and the yearly rollup view; then per-project line-item columns per `Finance_Specs.md`.
+
 ## 2026-06-28
 
 Phase 1 business spine — Person + lifecycle + project administration.

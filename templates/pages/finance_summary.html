@@ -21,7 +21,7 @@
   <h2>{% trans "Financial months" %}</h2>
   <ul class="plain-list">
     {% for m in months %}
-      <li>{{ m.project.name }} · {{ m.year }}-{{ m.month }} — {% trans "Net" %}: {{ m.net }}</li>
+      <li><a href="{% url 'finance_month_detail' m.pk %}">{{ m.project.name }} · {{ m.year }}-{{ m.month }}</a> — {% trans "Net" %}: {{ m.net }}{% if m.is_locked %} · {% trans "Locked" %}{% endif %}</li>
     {% empty %}
       <li>{% trans "No financial months." %}</li>
     {% endfor %}
@@ -40,5 +40,17 @@
       <button class="button button-primary" type="submit">{% trans "Record month" %}</button>
     </form>
   {% endif %}
+</section>
+
+<section class="panel">
+  <p class="eyebrow">{% trans "Company total" %}</p>
+  <h2>{% trans "Group breakdown" %}</h2>
+  <dl class="detail-grid">
+    {% for g in groups %}
+      <div><dt>{{ g.label }}</dt><dd>{{ g.net }}</dd></div>
+    {% empty %}
+      <div><dd>{% trans "No line items yet." %}</dd></div>
+    {% endfor %}
+  </dl>
 </section>
 {% endblock %}

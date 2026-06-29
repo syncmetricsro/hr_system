@@ -48,3 +48,70 @@ class FinancialMonth(models.Model):
     def net(self) -> Decimal:
         # Assumption: revenue - cost (see class docstring; confirm in Phase 4).
         return self.revenue - self.cost
+
+
+class FinanceCategoryKind(models.TextChoices):
+    COST = "cost", _("Cost")
+    REVENUE = "revenue", _("Revenue")
+
+
+class FinanceGroup(models.TextChoices):
+    LABOUR = "labour", _("Labour")
+    TRANSPORT = "transport", _("Transport")
+    ACCOMMODATION = "accommodation", _("Accommodation")
+    COMPLIANCE = "compliance", _("Compliance")
+    OVERHEAD = "overhead", _("Overhead")
+    EQUIPMENT = "equipment", _("Equipment")
+    DAMAGE = "damage", _("Damage")
+    WELFARE = "welfare", _("Welfare")
+    REVENUE = "revenue", _("Revenue")
+    OTHER = "other", _("Other")
+
+
+class FinanceCategory(models.Model):
+    """A finance line-item category (the configurable catalog, Finance_Specs §2).
+
+    Amounts are stored positive; the sign comes from ``kind`` (cost vs revenue),
+    so net = revenues - costs regardless of the spreadsheet's sign convention
+    (still to confirm with one filled month). ``group`` powers the manager's
+    transport/accommodation/overhead breakdowns."""
+
+    label = models.CharField(_("label"), max_length=120)
+    kind = models.CharField(_("kind"), max_length=10, choices=FinanceCategoryKind.choices)
+    group = models.CharField(_("group"), max_length=20, choices=FinanceGroup.choices, default=FinanceGroup.OTHER)
+    is_active = models.BooleanField(_("active"), default=True)
+    order = models.PositiveIntegerField(_("order"), default=0)
+
+    class Meta:
+        verbose_name = _("finance category")
+        verbose_name_plural = _("finance categories")
+        ordering = ("kind", "order", "label")
+        constraints = [
+            models.UniqueConstraint(fields=["label", "kind"], name="unique_finance_category_label_kind")
+        ]
+
+    def __str__(self) -> str:
+        return f"{self.label} ({self.kind})"
+
+
+class FinanceLineItem(models.Model):
+    """One amount for one category on one project-month. Amount is positive."""
+
+    month = models.ForeignKey(
+        FinancialMonth, on_delete=models.CASCADE, related_name="line_items", verbose_name=_("month")
+    )
+    category = models.ForeignKey(
+        FinanceCategory, on_delete=models.PROTECT, related_name="line_items", verbose_name=_("category")
+    )
+    amount = models.DecimalField(_("amount"), max_digits=12, decimal_places=2, default=Decimal("0"))
+
+    class Meta:
+        verbose_name = _("finance line item")
+        verbose_name_plural = _("finance line items")
+        ordering = ("category__kind", "category__order")
+        constraints = [
+            models.UniqueConstraint(fields=["month", "category"], name="unique_line_item_per_month_category")
+        ]
+
+    def __str__(self) -> str:
+        return f"{self.category.label}: {self.amount}"

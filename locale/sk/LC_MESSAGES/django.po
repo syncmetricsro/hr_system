@@ -4,698 +4,1976 @@
 # to English until a later i18n pass.
 msgid ""
 msgstr ""
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-29 12:19+0200\n"
+"Language: sk\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: sk\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n>=2 && n<=4 ? 1 : 2);\n"
 
 # --- accounts / admin ---
+#: apps/accounts/admin.py:18
 msgid "Profile"
 msgstr "Profil"
 
+#: apps/accounts/admin.py:19
 msgid "Permissions"
 msgstr "Oprávnenia"
 
+#: apps/accounts/admin.py:20
 msgid "Dates"
 msgstr "Dátumy"
 
+#: apps/accounts/models.py:11
 msgid "Recruiter"
 msgstr "Náborár"
 
+#: apps/accounts/models.py:12 templates/pages/dashboard.html:32
+#: templates/pages/trials_queue.html:8
 msgid "Coordinator"
 msgstr "Koordinátor"
 
+#: apps/accounts/models.py:13
 msgid "Manager/Administrator"
 msgstr "Manažér/Administrátor"
 
+#: apps/accounts/models.py:14
 msgid "Observer"
 msgstr "Pozorovateľ"
 
+#: apps/accounts/models.py:52
+#, fuzzy
+#| msgid "Email"
+msgid "email"
+msgstr "E-mail"
+
+#: apps/accounts/models.py:54
+msgid "role"
+msgstr ""
+
+#: apps/accounts/models.py:66
+msgid "user"
+msgstr ""
+
+#: apps/accounts/models.py:67
+msgid "users"
+msgstr ""
+
+#: apps/accounts/views.py:30
 msgid "Invalid email or password."
 msgstr "Nesprávny e-mail alebo heslo."
 
+#: apps/audit/models.py:26
+msgid "actor"
+msgstr ""
+
+# --- projects UI ---
+#: apps/audit/models.py:28
+#, fuzzy
+#| msgid "Operations"
+msgid "action"
+msgstr "Prevádzka"
+
+#: apps/audit/models.py:29
+msgid "target type"
+msgstr ""
+
+#: apps/audit/models.py:30
+msgid "target id"
+msgstr ""
+
+#: apps/audit/models.py:31
+msgid "reason"
+msgstr ""
+
+#: apps/audit/models.py:32
+msgid "metadata"
+msgstr ""
+
+#: apps/audit/models.py:33 apps/compliance/models.py:17
+#: apps/feedback/models.py:26 apps/feedback/models.py:48
+#: apps/finance/models.py:33 apps/intake/models.py:31
+#: apps/logistics/models.py:16 apps/logistics/models.py:68
+#: apps/logistics/models.py:94 apps/logistics/models.py:148
+#: apps/messaging/models.py:17 apps/messaging/models.py:45
+#: apps/people/models.py:104 apps/projects/models.py:29
+#: apps/projects/models.py:85 apps/projects/models.py:141
+#: apps/projects/models.py:183
+msgid "created"
+msgstr ""
+
+#: apps/audit/models.py:36
+msgid "audit event"
+msgstr ""
+
+#: apps/audit/models.py:37
+msgid "audit events"
+msgstr ""
+
+#: apps/compliance/models.py:12 apps/intake/models.py:100
+#: apps/logistics/models.py:56 apps/logistics/models.py:112
+#: apps/messaging/models.py:35 apps/people/models.py:108
+#: apps/projects/models.py:57 apps/projects/models.py:123
+#: apps/projects/models.py:166
+#, fuzzy
+#| msgid "Person"
+msgid "person"
+msgstr "Osoba"
+
+#: apps/compliance/models.py:14 apps/intake/models.py:24
+#: apps/logistics/models.py:12 apps/logistics/models.py:88
+#: apps/messaging/models.py:11 apps/projects/models.py:12
+#, fuzzy
+#| msgid "Last name"
+msgid "name"
+msgstr "Priezvisko"
+
+#: apps/compliance/models.py:15
+msgid "issue date"
+msgstr ""
+
+#: apps/compliance/models.py:16
+msgid "expiry date"
+msgstr ""
+
+#: apps/compliance/models.py:20
+msgid "certificate"
+msgstr ""
+
+#: apps/compliance/models.py:21
+msgid "certificates"
+msgstr ""
+
+#: apps/feedback/models.py:19
+msgid "token"
+msgstr ""
+
+#: apps/feedback/models.py:20 apps/finance/models.py:79
+#: apps/intake/models.py:65 apps/logistics/models.py:31
+#, fuzzy
+#| msgid "Label"
+msgid "label"
+msgstr "Označenie"
+
+#: apps/feedback/models.py:23 apps/finance/models.py:21
+#: apps/logistics/models.py:139 apps/projects/models.py:33
+#: apps/projects/models.py:63 apps/projects/models.py:126
+#: apps/projects/models.py:169
+#, fuzzy
+#| msgid "Project"
+msgid "project"
+msgstr "Projekt"
+
+#: apps/feedback/models.py:25 apps/finance/models.py:82
+#: apps/logistics/models.py:14 apps/logistics/models.py:93
+#: apps/messaging/models.py:13 apps/projects/models.py:16
+#, fuzzy
+#| msgid "Inactive"
+msgid "active"
+msgstr "Neaktívny"
+
+#: apps/feedback/models.py:29
+#, fuzzy
+#| msgid "Feedback links"
+msgid "feedback link"
+msgstr "Odkazy na spätnú väzbu"
+
+#: apps/feedback/models.py:30
+#, fuzzy
+#| msgid "Feedback links"
+msgid "feedback links"
+msgstr "Odkazy na spätnú väzbu"
+
+#: apps/feedback/models.py:44
+msgid "link"
+msgstr ""
+
+#: apps/feedback/models.py:46
+#, fuzzy
+#| msgid "Message"
+msgid "message"
+msgstr "Správa"
+
+# --- projects UI ---
+#: apps/feedback/models.py:47
+#, fuzzy
+#| msgid "Operations"
+msgid "rating"
+msgstr "Prevádzka"
+
+#: apps/feedback/models.py:51
+#, fuzzy
+#| msgid "Feedback inbox"
+msgid "feedback submission"
+msgstr "Schránka spätnej väzby"
+
+#: apps/feedback/models.py:52
+#, fuzzy
+#| msgid "Feedback links"
+msgid "feedback submissions"
+msgstr "Odkazy na spätnú väzbu"
+
+#: apps/feedback/views.py:29
+msgid "Message is required."
+msgstr "Správa je povinná."
+
+#: apps/feedback/views.py:54
+msgid "Feedback link created."
+msgstr "Odkaz na spätnú väzbu vytvorený."
+
+#: apps/feedback/views.py:56
+msgid "Label is required."
+msgstr "Označenie je povinné."
+
+#: apps/finance/models.py:23
+msgid "year"
+msgstr ""
+
+#: apps/finance/models.py:24 apps/finance/models.py:101
+#, fuzzy
+#| msgid "Month"
+msgid "month"
+msgstr "Mesiac"
+
+#: apps/finance/models.py:25
+#, fuzzy
+#| msgid "Revenue"
+msgid "revenue"
+msgstr "Príjmy"
+
+#: apps/finance/models.py:26
+msgid "cost"
+msgstr ""
+
+#: apps/finance/models.py:27 apps/logistics/models.py:143
+#: apps/projects/models.py:131
+msgid "note"
+msgstr ""
+
+#: apps/finance/models.py:28
+msgid "locked"
+msgstr ""
+
+#: apps/finance/models.py:31 apps/logistics/models.py:146
+msgid "recorded by"
+msgstr ""
+
+#: apps/finance/models.py:34 apps/people/models.py:105
+#: apps/projects/models.py:30 apps/projects/models.py:86
+#: apps/projects/models.py:184
+#, fuzzy
+#| msgid "Person updated."
+msgid "updated"
+msgstr "Osoba aktualizovaná."
+
+#: apps/finance/models.py:37
+#, fuzzy
+#| msgid "Financial months"
+msgid "financial month"
+msgstr "Finančné mesiace"
+
+#: apps/finance/models.py:38
+#, fuzzy
+#| msgid "Financial months"
+msgid "financial months"
+msgstr "Finančné mesiace"
+
+#: apps/finance/models.py:54 templates/pages/finance_month_detail.html:15
+#: templates/pages/finance_summary.html:15
+#: templates/pages/finance_summary.html:39 templates/pages/reports.html:38
+msgid "Cost"
+msgstr "Náklady"
+
+#: apps/finance/models.py:55 apps/finance/models.py:67
+#: templates/pages/finance_month_detail.html:14
+#: templates/pages/finance_summary.html:14
+#: templates/pages/finance_summary.html:38 templates/pages/reports.html:37
+msgid "Revenue"
+msgstr "Príjmy"
+
+#: apps/finance/models.py:59
+msgid "Labour"
+msgstr "Práca"
+
+#: apps/finance/models.py:60 templates/layouts/base.html:31
+#: templates/pages/person_detail.html:92
+msgid "Transport"
+msgstr "Doprava"
+
+#: apps/finance/models.py:61 templates/layouts/base.html:30
+#: templates/pages/accommodation_detail.html:8
+#: templates/pages/accommodation_list.html:4
+#: templates/pages/accommodation_list.html:9
+#: templates/pages/accommodation_list.html:12
+#: templates/pages/person_detail.html:82 templates/pages/person_detail.html:155
+msgid "Accommodation"
+msgstr "Ubytovanie"
+
+# --- compliance ---
+#: apps/finance/models.py:62 templates/layouts/base.html:29
+#: templates/pages/compliance_list.html:4
+#: templates/pages/compliance_list.html:9
+#: templates/pages/compliance_list.html:12 templates/pages/reports.html:16
+msgid "Compliance"
+msgstr "Súlad"
+
+#: apps/finance/models.py:63
+#, fuzzy
+#| msgid "Overview"
+msgid "Overhead"
+msgstr "Réžia"
+
+# --- logistics: equipment ---
+#: apps/finance/models.py:64 templates/pages/person_detail.html:182
+msgid "Equipment"
+msgstr "Vybavenie"
+
+#: apps/finance/models.py:65
+msgid "Damage"
+msgstr "Škody"
+
+#: apps/finance/models.py:66
+msgid "Welfare"
+msgstr "Benefity"
+
+#: apps/finance/models.py:68
+msgid "Other"
+msgstr "Ostatné"
+
+#: apps/finance/models.py:80
+msgid "kind"
+msgstr ""
+
+#: apps/finance/models.py:81
+msgid "group"
+msgstr ""
+
+#: apps/finance/models.py:83 apps/intake/models.py:51 apps/intake/models.py:68
+msgid "order"
+msgstr ""
+
+#: apps/finance/models.py:86
+msgid "finance category"
+msgstr ""
+
+#: apps/finance/models.py:87
+msgid "finance categories"
+msgstr ""
+
+#: apps/finance/models.py:104
+msgid "category"
+msgstr ""
+
+#: apps/finance/models.py:106
+#, fuzzy
+#| msgid "Headcount"
+msgid "amount"
+msgstr "Počet osôb"
+
+#: apps/finance/models.py:109
+msgid "finance line item"
+msgstr ""
+
+#: apps/finance/models.py:110
+msgid "finance line items"
+msgstr ""
+
+#: apps/finance/views.py:67
+msgid "Saved and recalculated."
+msgstr "Uložené a prepočítané."
+
+#: apps/finance/views.py:69 apps/finance/views.py:88
+msgid "Invalid input."
+msgstr "Neplatný vstup."
+
+#: apps/finance/views.py:86
+msgid "Financial month saved."
+msgstr "Finančný mesiac uložený."
+
+#: apps/intake/models.py:9 apps/intake/models.py:90
+msgid "Draft"
+msgstr ""
+
+#: apps/intake/models.py:10
+msgid "Published"
+msgstr ""
+
+#: apps/intake/models.py:11
+#, fuzzy
+#| msgid "Required."
+msgid "Retired"
+msgstr "Povinné."
+
+#: apps/intake/models.py:15
+msgid "Text"
+msgstr ""
+
+#: apps/intake/models.py:16
+msgid "Long text"
+msgstr ""
+
+#: apps/intake/models.py:17
+msgid "Yes/No"
+msgstr ""
+
+#: apps/intake/models.py:18
+#, fuzzy
+#| msgid "Dates"
+msgid "Date"
+msgstr "Dátumy"
+
+#: apps/intake/models.py:19
+msgid "Number"
+msgstr ""
+
+#: apps/intake/models.py:20
+msgid "Choice"
+msgstr ""
+
+#: apps/intake/models.py:25
+#, fuzzy
+#| msgid "Permissions"
+msgid "version"
+msgstr "Oprávnenia"
+
+#: apps/intake/models.py:26 apps/intake/models.py:102
+#: apps/logistics/models.py:61 apps/logistics/models.py:118
+#: apps/messaging/models.py:39 apps/projects/models.py:66
+#, fuzzy
+#| msgid "Status"
+msgid "status"
+msgstr "Stav"
+
+#: apps/intake/models.py:27
+msgid "effective date"
+msgstr ""
+
+#: apps/intake/models.py:34
+#, fuzzy
+#| msgid "No published intake questionnaire."
+msgid "intake questionnaire version"
+msgstr "Žiadny publikovaný dotazník príjmu."
+
+#: apps/intake/models.py:35
+#, fuzzy
+#| msgid "No published intake questionnaire."
+msgid "intake questionnaire versions"
+msgstr "Žiadny publikovaný dotazník príjmu."
+
+#: apps/intake/models.py:47 apps/intake/models.py:94
+msgid "questionnaire"
+msgstr ""
+
+#: apps/intake/models.py:49
+msgid "title"
+msgstr ""
+
+#: apps/intake/models.py:50
+msgid "help"
+msgstr ""
+
+#: apps/intake/models.py:54
+msgid "intake panel"
+msgstr ""
+
+#: apps/intake/models.py:55
+msgid "intake panels"
+msgstr ""
+
+#: apps/intake/models.py:63
+msgid "panel"
+msgstr ""
+
+#: apps/intake/models.py:64
+msgid "stable key"
+msgstr ""
+
+#: apps/intake/models.py:66
+msgid "type"
+msgstr ""
+
+#: apps/intake/models.py:67
+#, fuzzy
+#| msgid "Required."
+msgid "required"
+msgstr "Povinné."
+
+# --- projects UI ---
+#: apps/intake/models.py:69
+#, fuzzy
+#| msgid "Operations"
+msgid "options"
+msgstr "Prevádzka"
+
+#: apps/intake/models.py:70
+msgid "requires typed negative"
+msgstr ""
+
+#: apps/intake/models.py:71
+msgid "accepted negatives"
+msgstr ""
+
+#: apps/intake/models.py:74
+msgid "conditional on"
+msgstr ""
+
+#: apps/intake/models.py:77
+#, fuzzy
+#| msgid "No published intake questionnaire."
+msgid "intake question"
+msgstr "Žiadny publikovaný dotazník príjmu."
+
+#: apps/intake/models.py:78
+#, fuzzy
+#| msgid "No published intake questionnaire."
+msgid "intake questions"
+msgstr "Žiadny publikovaný dotazník príjmu."
+
+#: apps/intake/models.py:91 apps/projects/models.py:107
+#, fuzzy
+#| msgid "Complete"
+msgid "Completed"
+msgstr "Kompletné"
+
+#: apps/intake/models.py:103
+#, fuzzy
+#| msgid "Current project"
+msgid "current panel"
+msgstr "Aktuálny projekt"
+
+#: apps/intake/models.py:104
+msgid "started"
+msgstr ""
+
+#: apps/intake/models.py:105
+#, fuzzy
+#| msgid "Incomplete"
+msgid "completed"
+msgstr "Nekompletné"
+
+#: apps/intake/models.py:108
+msgid "recruitment intake"
+msgstr ""
+
+#: apps/intake/models.py:109
+msgid "recruitment intakes"
+msgstr ""
+
+#: apps/intake/models.py:117
+#, fuzzy
+#| msgid "Intake"
+msgid "intake"
+msgstr "Príjem"
+
+#: apps/intake/models.py:118
+msgid "question"
+msgstr ""
+
+#: apps/intake/models.py:119
+#, fuzzy
+#| msgid "Value"
+msgid "value"
+msgstr "Hodnota"
+
+#: apps/intake/models.py:120
+msgid "normalized value"
+msgstr ""
+
+#: apps/intake/models.py:124
+msgid "answered at"
+msgstr ""
+
+#: apps/intake/models.py:127
+msgid "intake answer"
+msgstr ""
+
+#: apps/intake/models.py:128
+msgid "intake answers"
+msgstr ""
+
+#: apps/intake/views.py:25
+msgid "No published intake questionnaire."
+msgstr "Žiadny publikovaný dotazník príjmu."
+
+#: apps/intake/views.py:43
+msgid "Intake complete — person added."
+msgstr "Príjem dokončený — osoba pridaná."
+
+#: apps/intake/views.py:47
+msgid "Please type a value (or the word for 'none')."
+msgstr "Zadajte hodnotu (alebo slovo pre žiadne)."
+
+#: apps/intake/views.py:47
+msgid "Required."
+msgstr "Povinné."
+
+#: apps/logistics/models.py:13 apps/people/models.py:67
+#, fuzzy
+#| msgid "Address"
+msgid "address"
+msgstr "Adresa"
+
+#: apps/logistics/models.py:15 apps/projects/models.py:24
+msgid "notes"
+msgstr ""
+
+#: apps/logistics/models.py:19 apps/logistics/models.py:29
+#: apps/projects/models.py:173
+#, fuzzy
+#| msgid "Accommodation"
+msgid "accommodation"
+msgstr "Ubytovanie"
+
+#: apps/logistics/models.py:20
+#, fuzzy
+#| msgid "Accommodation"
+msgid "accommodations"
+msgstr "Ubytovanie"
+
+#: apps/logistics/models.py:32
+msgid "capacity"
+msgstr ""
+
+#: apps/logistics/models.py:35 apps/logistics/models.py:59
+#, fuzzy
+#| msgid "No rooms."
+msgid "room"
+msgstr "Žiadne izby."
+
+#: apps/logistics/models.py:36
+#, fuzzy
+#| msgid "Rooms"
+msgid "rooms"
+msgstr "Izby"
+
+#: apps/logistics/models.py:50 apps/projects/models.py:42
+#: templates/pages/project_detail.html:8 templates/pages/project_list.html:26
+msgid "Active"
+msgstr "Aktívny"
+
+#: apps/logistics/models.py:51 apps/projects/models.py:43
+msgid "Ended"
+msgstr ""
+
+#: apps/logistics/models.py:62 apps/projects/models.py:71
+msgid "start date"
+msgstr ""
+
+#: apps/logistics/models.py:63 apps/projects/models.py:72
+#, fuzzy
+#| msgid "Person updated."
+msgid "end date"
+msgstr "Osoba aktualizovaná."
+
+#: apps/logistics/models.py:66 apps/projects/models.py:79
+#: apps/projects/models.py:134
+#, fuzzy
+#| msgid "Assigned"
+msgid "assigned by"
+msgstr "Pridelení"
+
+#: apps/logistics/models.py:71
+#, fuzzy
+#| msgid "Room assigned"
+msgid "room assignment"
+msgstr "Izba pridelená"
+
+#: apps/logistics/models.py:72
+#, fuzzy
+#| msgid "Room assigned"
+msgid "room assignments"
+msgstr "Izba pridelená"
+
+#: apps/logistics/models.py:89
+msgid "size"
+msgstr ""
+
+#: apps/logistics/models.py:92
+msgid "unit price"
+msgstr ""
+
+#: apps/logistics/models.py:97
+#, fuzzy
+#| msgid "Equipment issued"
+msgid "equipment item"
+msgstr "Vybavenie vydané"
+
+#: apps/logistics/models.py:98
+#, fuzzy
+#| msgid "Equipment issued"
+msgid "equipment items"
+msgstr "Vybavenie vydané"
+
+#: apps/logistics/models.py:106
+msgid "Issued"
+msgstr ""
+
+#: apps/logistics/models.py:107
+#, fuzzy
+#| msgid "Return"
+msgid "Returned"
+msgstr "Vrátiť"
+
+#: apps/logistics/models.py:115
+msgid "item"
+msgstr ""
+
+#: apps/logistics/models.py:117
+#, fuzzy
+#| msgid "Quantity"
+msgid "quantity"
+msgstr "Množstvo"
+
+#: apps/logistics/models.py:121
+msgid "issued by"
+msgstr ""
+
+#: apps/logistics/models.py:123
+msgid "issued at"
+msgstr ""
+
+#: apps/logistics/models.py:124
+msgid "returned at"
+msgstr ""
+
+#: apps/logistics/models.py:127
+#, fuzzy
+#| msgid "Equipment issued"
+msgid "equipment issue"
+msgstr "Vybavenie vydané"
+
+#: apps/logistics/models.py:128
+#, fuzzy
+#| msgid "Equipment issued"
+msgid "equipment issues"
+msgstr "Vybavenie vydané"
+
+#: apps/logistics/models.py:141
+#, fuzzy
+#| msgid "Week start"
+msgid "week start"
+msgstr "Začiatok týždňa"
+
+#: apps/logistics/models.py:142
+#, fuzzy
+#| msgid "Headcount"
+msgid "headcount"
+msgstr "Počet osôb"
+
+#: apps/logistics/models.py:151
+#, fuzzy
+#| msgid "Transport"
+msgid "transport week"
+msgstr "Doprava"
+
+# --- transport trends ---
+#: apps/logistics/models.py:152
+#, fuzzy
+#| msgid "Transport trends"
+msgid "transport weeks"
+msgstr "Trendy dopravy"
+
+#: apps/logistics/views.py:93
+msgid "Room assigned."
+msgstr "Izba pridelená."
+
+#: apps/logistics/views.py:104
+msgid "Room released."
+msgstr "Izba uvoľnená."
+
+#: apps/logistics/views.py:114
+msgid "Equipment issued."
+msgstr "Vybavenie vydané."
+
+#: apps/logistics/views.py:123
+msgid "Equipment returned."
+msgstr "Vybavenie vrátené."
+
+#: apps/logistics/views.py:137
+msgid "Transport week recorded."
+msgstr "Týždeň dopravy zaznamenaný."
+
+#: apps/logistics/views.py:139
+msgid "Week start is required."
+msgstr "Začiatok týždňa je povinný."
+
+#: apps/messaging/models.py:12 apps/messaging/models.py:38
+#: apps/messaging/models.py:58
+msgid "body"
+msgstr ""
+
+#: apps/messaging/models.py:20
+#, fuzzy
+#| msgid "Message sent."
+msgid "message template"
+msgstr "Správa odoslaná."
+
+#: apps/messaging/models.py:21
+#, fuzzy
+#| msgid "Message sent."
+msgid "message templates"
+msgstr "Správa odoslaná."
+
+#: apps/messaging/models.py:30
+msgid "Queued"
+msgstr ""
+
+#: apps/messaging/models.py:31
+msgid "Sent"
+msgstr ""
+
+#: apps/messaging/models.py:32
+#, fuzzy
+#| msgid "Fail"
+msgid "Failed"
+msgstr "Neprešiel"
+
+#: apps/messaging/models.py:37
+msgid "to"
+msgstr ""
+
+#: apps/messaging/models.py:40 apps/messaging/models.py:59
+msgid "provider id"
+msgstr ""
+
+#: apps/messaging/models.py:41
+msgid "error"
+msgstr ""
+
+#: apps/messaging/models.py:48
+msgid "outbound message"
+msgstr ""
+
+#: apps/messaging/models.py:49
+msgid "outbound messages"
+msgstr ""
+
+#: apps/messaging/models.py:57
+msgid "from"
+msgstr ""
+
+#: apps/messaging/models.py:60
+msgid "received"
+msgstr ""
+
+#: apps/messaging/models.py:63
+msgid "inbound message"
+msgstr ""
+
+#: apps/messaging/models.py:64
+msgid "inbound messages"
+msgstr ""
+
+#: apps/messaging/views.py:30
+msgid "This person has no phone number."
+msgstr "Táto osoba nemá telefónne číslo."
+
+#: apps/messaging/views.py:41
+msgid "Message body is required."
+msgstr "Telo správy je povinné."
+
+#: apps/messaging/views.py:46
+msgid "Message sent."
+msgstr "Správa odoslaná."
+
+#: apps/messaging/views.py:48
+#, python-format
+msgid "Message failed: %(error)s"
+msgstr "Správa zlyhala: %(error)s"
+
+#: apps/people/forms.py:20
+msgid "First name"
+msgstr "Meno"
+
+#: apps/people/forms.py:21
+msgid "Last name"
+msgstr "Priezvisko"
+
+#: apps/people/forms.py:22 templates/pages/person_detail.html:126
+msgid "Phone"
+msgstr "Telefón"
+
+#: apps/people/forms.py:23 templates/pages/person_detail.html:127
+msgid "Address"
+msgstr "Adresa"
+
+#: apps/people/forms.py:24 templates/pages/person_detail.html:128
+msgid "Nationality"
+msgstr "Národnosť"
+
+#: apps/people/forms.py:25
+msgid "Preferred language"
+msgstr "Preferovaný jazyk"
+
+#: apps/people/forms.py:26 templates/pages/person_detail.html:140
+msgid "Date of birth"
+msgstr "Dátum narodenia"
+
+#: apps/people/forms.py:27 templates/pages/person_detail.html:141
+msgid "Place of birth"
+msgstr "Miesto narodenia"
+
+#: apps/people/forms.py:28
+msgid "Has disability"
+msgstr "Má zdravotné postihnutie"
+
+#: apps/people/forms.py:29
+msgid "Disability type"
+msgstr "Typ postihnutia"
+
 # --- lifecycle status labels ---
+#: apps/people/models.py:12 templates/pages/dashboard.html:21
 msgid "Available"
 msgstr "Dostupný"
 
+#: apps/people/models.py:13 templates/pages/person_detail.html:37
 msgid "Trial day"
 msgstr "Skúšobný deň"
 
+#: apps/people/models.py:14 templates/pages/dashboard.html:24
 msgid "Working"
 msgstr "Pracuje"
 
+#: apps/people/models.py:15 templates/pages/project_detail.html:8
+#: templates/pages/project_list.html:26
 msgid "Inactive"
 msgstr "Neaktívny"
 
+#: apps/people/models.py:16
 msgid "Blacklisted"
 msgstr "Na čiernej listine"
 
+#: apps/people/models.py:62
+#, fuzzy
+#| msgid "First name"
+msgid "first name"
+msgstr "Meno"
+
+#: apps/people/models.py:63
+#, fuzzy
+#| msgid "Last name"
+msgid "last name"
+msgstr "Priezvisko"
+
+#: apps/people/models.py:64
+#, fuzzy
+#| msgid "Date of birth"
+msgid "date of birth"
+msgstr "Dátum narodenia"
+
+#: apps/people/models.py:65
+#, fuzzy
+#| msgid "Place of birth"
+msgid "place of birth"
+msgstr "Miesto narodenia"
+
+#: apps/people/models.py:66
+#, fuzzy
+#| msgid "Phone"
+msgid "phone"
+msgstr "Telefón"
+
+#: apps/people/models.py:68
+#, fuzzy
+#| msgid "Nationality"
+msgid "nationality"
+msgstr "Národnosť"
+
+#: apps/people/models.py:70
+#, fuzzy
+#| msgid "Preferred language"
+msgid "preferred language"
+msgstr "Preferovaný jazyk"
+
+#: apps/people/models.py:74
+#, fuzzy
+#| msgid "Has disability"
+msgid "has disability"
+msgstr "Má zdravotné postihnutie"
+
+#: apps/people/models.py:75
+#, fuzzy
+#| msgid "Disability type"
+msgid "disability type"
+msgstr "Typ postihnutia"
+
+#: apps/people/models.py:79
+#, fuzzy
+#| msgid "All statuses"
+msgid "lifecycle status"
+msgstr "Všetky stavy"
+
+#: apps/people/models.py:92
+#, fuzzy
+#| msgid "Owning recruiter"
+msgid "owning recruiter"
+msgstr "Zodpovedný náborár"
+
+#: apps/people/models.py:93
+msgid "The recruiter who entered this person."
+msgstr ""
+
+#: apps/people/models.py:95
+#, fuzzy
+#| msgid "Rehire eligible"
+msgid "rehire eligible"
+msgstr "Možnosť opätovného prijatia"
+
+#: apps/people/models.py:98
+msgid "archived"
+msgstr ""
+
+#: apps/people/models.py:99
+msgid "archived at"
+msgstr ""
+
+#: apps/people/models.py:102
+#, fuzzy
+#| msgid "Search by name"
+msgid "search name"
+msgstr "Hľadať podľa mena"
+
+#: apps/people/models.py:109
+#, fuzzy
+#| msgid "People"
+msgid "people"
+msgstr "Ľudia"
+
+#: apps/people/services.py:17
+msgid "Trial scheduled"
+msgstr "Skúška naplánovaná"
+
+#: apps/people/services.py:21
+msgid "Trial outcome"
+msgstr "Výsledok skúšky"
+
+#: apps/people/services.py:26
+msgid "Assigned to project"
+msgstr "Pridelený na projekt"
+
+#: apps/people/services.py:29
+msgid "Room assigned"
+msgstr "Izba pridelená"
+
+#: apps/people/services.py:32
+msgid "Equipment issued"
+msgstr "Vybavenie vydané"
+
+#: apps/people/services.py:36
+msgid "Readiness submitted"
+msgstr "Pripravenosť odoslaná"
+
+#: apps/people/services.py:40
+msgid "Intake completed"
+msgstr "Príjem dokončený"
+
+#: apps/people/services.py:48
+msgid "Status changed"
+msgstr "Stav zmenený"
+
+#: apps/people/views.py:62
+msgid "Person added."
+msgstr "Osoba pridaná."
+
+#: apps/people/views.py:68 templates/pages/people_list.html:12
+msgid "Add person"
+msgstr "Pridať osobu"
+
+#: apps/people/views.py:80
+msgid "Person updated."
+msgstr "Osoba aktualizovaná."
+
+#: apps/people/views.py:86
+msgid "Edit person"
+msgstr "Upraviť osobu"
+
+#: apps/projects/models.py:13
+#, fuzzy
+#| msgid "Partner"
+msgid "partner"
+msgstr "Partner"
+
+#: apps/projects/models.py:14
+msgid "code"
+msgstr ""
+
+#: apps/projects/models.py:15
+#, fuzzy
+#| msgid "Office"
+msgid "office"
+msgstr "Pobočka"
+
+#: apps/projects/models.py:22
+#, fuzzy
+#| msgid "Responsible coordinators"
+msgid "responsible coordinators"
+msgstr "Zodpovední koordinátori"
+
+#: apps/projects/models.py:26
+#, fuzzy
+#| msgid "Financial reporting"
+msgid "financial reporting eligible"
+msgstr "Finančné vykazovanie"
+
+#: apps/projects/models.py:34
+#, fuzzy
+#| msgid "Projects"
+msgid "projects"
+msgstr "Projekty"
+
+#: apps/projects/models.py:44 apps/projects/models.py:108
+msgid "Cancelled"
+msgstr ""
+
+#: apps/projects/models.py:81
+msgid "assignment reason"
+msgstr ""
+
+#: apps/projects/models.py:83
+#, fuzzy
+#| msgid "Coordinator"
+msgid "coordinator snapshot"
+msgstr "Koordinátor"
+
+#: apps/projects/models.py:89
+msgid "project assignment"
+msgstr ""
+
+#: apps/projects/models.py:90
+msgid "project assignments"
+msgstr ""
+
+#: apps/projects/models.py:106
+#, fuzzy
+#| msgid "Schedule trial"
+msgid "Scheduled"
+msgstr "Naplánovať skúšku"
+
+#: apps/projects/models.py:112
+msgid "Pending"
+msgstr "Čaká"
+
+#: apps/projects/models.py:113 templates/pages/person_detail.html:44
+msgid "Pass"
+msgstr "Prešiel"
+
+#: apps/projects/models.py:114 templates/pages/person_detail.html:48
+msgid "Fail"
+msgstr "Neprešiel"
+
+#: apps/projects/models.py:115 templates/pages/person_detail.html:52
+msgid "No-show"
+msgstr "Nedostavil sa"
+
+#: apps/projects/models.py:128
+#, fuzzy
+#| msgid "Schedule trial"
+msgid "scheduled date"
+msgstr "Naplánovať skúšku"
+
+#: apps/projects/models.py:129
+msgid "state"
+msgstr ""
+
+#: apps/projects/models.py:130
+#, fuzzy
+#| msgid "Trial outcome"
+msgid "outcome"
+msgstr "Výsledok skúšky"
+
+#: apps/projects/models.py:138
+#, fuzzy
+#| msgid "Trial outcome recorded."
+msgid "outcome recorded by"
+msgstr "Výsledok skúšky zaznamenaný."
+
+#: apps/projects/models.py:140
+#, fuzzy
+#| msgid "Trial outcome recorded."
+msgid "outcome recorded at"
+msgstr "Výsledok skúšky zaznamenaný."
+
+#: apps/projects/models.py:144
+msgid "trial assignment"
+msgstr ""
+
+#: apps/projects/models.py:145
+msgid "trial assignments"
+msgstr ""
+
+#: apps/projects/models.py:153 templates/pages/person_detail.html:72
+#: templates/pages/person_detail.html:78 templates/pages/person_detail.html:84
+#: templates/pages/person_detail.html:94
+msgid "Incomplete"
+msgstr "Nekompletné"
+
+#: apps/projects/models.py:154 templates/pages/person_detail.html:73
+#: templates/pages/person_detail.html:79 templates/pages/person_detail.html:85
+#: templates/pages/person_detail.html:95
+msgid "Complete"
+msgstr "Kompletné"
+
+#: apps/projects/models.py:155 templates/pages/person_detail.html:86
+#: templates/pages/person_detail.html:96
+msgid "Not applicable"
+msgstr "Neaplikovateľné"
+
+#: apps/projects/models.py:171
+#, fuzzy
+#| msgid "Medical"
+msgid "medical"
+msgstr "Lekárska"
+
+#: apps/projects/models.py:172
+msgid "gear"
+msgstr ""
+
+#: apps/projects/models.py:174
+#, fuzzy
+#| msgid "Transport"
+msgid "transport"
+msgstr "Doprava"
+
+#: apps/projects/models.py:175
+#, fuzzy
+#| msgid "No accommodations found."
+msgid "accommodation N/A reason"
+msgstr "Nenašli sa žiadne ubytovania."
+
+# --- transport trends ---
+#: apps/projects/models.py:176
+#, fuzzy
+#| msgid "Transport trends"
+msgid "transport N/A reason"
+msgstr "Trendy dopravy"
+
+#: apps/projects/models.py:177
+#, fuzzy
+#| msgid "Entry medical date"
+msgid "entry medical date"
+msgstr "Dátum vstupnej prehliadky"
+
+#: apps/projects/models.py:180
+msgid "submitted by"
+msgstr ""
+
+#: apps/projects/models.py:182
+msgid "submitted at"
+msgstr ""
+
+#: apps/projects/models.py:187
+#, fuzzy
+#| msgid "Readiness saved."
+msgid "readiness record"
+msgstr "Pripravenosť uložená."
+
+#: apps/projects/models.py:188
+#, fuzzy
+#| msgid "Open readiness checks"
+msgid "readiness records"
+msgstr "Otvorené pripravenosti"
+
+#: apps/projects/views.py:79
+msgid "Trial scheduled."
+msgstr "Skúška naplánovaná."
+
+#: apps/projects/views.py:91
+msgid "Trial outcome recorded."
+msgstr "Výsledok skúšky zaznamenaný."
+
+#: apps/projects/views.py:116
+msgid "Readiness saved."
+msgstr "Pripravenosť uložená."
+
+#: apps/projects/views.py:128
+msgid "Exit completed."
+msgstr "Odchod dokončený."
+
+#: apps/projects/views.py:139
+msgid "Activated — now Working."
+msgstr "Aktivované — teraz Pracuje."
+
 # --- shell / navigation ---
+#: templates/layouts/base.html:7
 msgid "Jober operations"
 msgstr "Jober prevádzka"
 
+#: templates/layouts/base.html:14
 msgid "Skip to content"
 msgstr "Preskočiť na obsah"
 
+#: templates/layouts/base.html:16
 msgid "Jober"
 msgstr "Jober"
 
+#: templates/layouts/base.html:21
 msgid "Open navigation"
 msgstr "Otvoriť navigáciu"
 
+#: templates/layouts/base.html:25
 msgid "Overview"
 msgstr "Prehľad"
 
+#: templates/layouts/base.html:26 templates/pages/people_list.html:4
+#: templates/pages/people_list.html:9 templates/pages/people_list.html:30
+#: templates/pages/reports.html:14
 msgid "People"
 msgstr "Ľudia"
 
+#: templates/layouts/base.html:27 templates/pages/project_list.html:4
+#: templates/pages/project_list.html:9 templates/pages/project_list.html:16
 msgid "Projects"
 msgstr "Projekty"
 
+#: templates/layouts/base.html:28 templates/pages/trials_queue.html:4
 msgid "Field"
 msgstr "Terén"
 
+#: templates/layouts/base.html:32 templates/pages/finance_summary.html:8
+#: templates/pages/reports.html:4 templates/pages/reports.html:9
+#: templates/pages/reports.html:12
+msgid "Reports"
+msgstr "Reporty"
+
+# --- finance ---
+#: templates/layouts/base.html:34 templates/pages/finance_month_detail.html:8
+#: templates/pages/finance_month_detail.html:21
+#: templates/pages/finance_summary.html:4
+#: templates/pages/finance_summary.html:9 templates/pages/reports.html:35
+msgid "Finance"
+msgstr "Financie"
+
+# --- feedback ---
+#: templates/layouts/base.html:36 templates/pages/feedback_form.html:7
+#: templates/pages/feedback_form.html:14
+msgid "Feedback"
+msgstr "Spätná väzba"
+
+#: templates/layouts/base.html:37
 msgid "Messages"
 msgstr "Správy"
 
+#: templates/layouts/base.html:44
 msgid "Language"
 msgstr "Jazyk"
 
+#: templates/layouts/base.html:53
 msgid "Role"
 msgstr "Rola"
 
+#: templates/layouts/base.html:56
 msgid "Sign out"
 msgstr "Odhlásiť sa"
 
-# --- dashboard ---
-msgid "Operational overview"
-msgstr "Prevádzkový prehľad"
+#: templates/pages/accommodation_detail.html:10
+#: templates/pages/finance_month_detail.html:10
+msgid "Back"
+msgstr "Späť"
 
-msgid "Pilot shell"
-msgstr "Pilotný shell"
+#: templates/pages/accommodation_detail.html:13
+#: templates/pages/accommodation_list.html:20
+msgid "Rooms"
+msgstr "Izby"
 
-msgid "The first screen verifies navigation, local scripts, and the coordinator's mobile workflow without introducing final business models."
-msgstr "Prvá obrazovka overuje navigáciu, lokálne skripty a mobilnú prácu koordinátora bez zavádzania finálnych obchodných modelov."
+#: templates/pages/accommodation_detail.html:18 templates/pages/reports.html:17
+msgid "Occupancy"
+msgstr "Obsadenosť"
 
-msgid "Manage projects"
-msgstr "Spravovať projekty"
+#: templates/pages/accommodation_detail.html:22
+msgid "No rooms."
+msgstr "Žiadne izby."
 
-msgid "Operational summaries"
-msgstr "Prevádzkové súhrny"
+# --- logistics: accommodation ---
+#: templates/pages/accommodation_list.html:8
+#: templates/pages/person_detail.html:154
+#: templates/pages/person_detail.html:181
+#: templates/pages/project_detail.html:50
+#: templates/pages/transport_trends.html:8
+msgid "Logistics"
+msgstr "Logistika"
 
-msgid "Active projects"
-msgstr "Aktívne projekty"
+#: templates/pages/accommodation_list.html:24
+msgid "No accommodations found."
+msgstr "Nenašli sa žiadne ubytovania."
 
-msgid "Open readiness checks"
-msgstr "Otvorené pripravenosti"
+#: templates/pages/compliance_list.html:8
+msgid "Alerts"
+msgstr "Upozornenia"
 
-msgid "Mobile tasks"
-msgstr "Mobilné úlohy"
+#: templates/pages/compliance_list.html:21 templates/pages/people_list.html:20
+#: templates/pages/people_list.html:35 templates/pages/project_list.html:25
+#: templates/pages/trials_queue.html:21
+msgid "Status"
+msgstr "Stav"
 
-msgid "Field queue"
-msgstr "Terénny rad"
+#: templates/pages/compliance_list.html:23
+msgid "Expired"
+msgstr "Vypršané"
 
-msgid "Load queue"
-msgstr "Načítať rad"
-
-msgid "Phase 0 rule"
-msgstr "Pravidlo Phase 0"
-
-msgid "No final data"
-msgstr "Bez finálnych dát"
-
-msgid "This shell uses fictional values only. Real personal data arrives only after the legal and security gate."
-msgstr "Tento shell používa iba fiktívne hodnoty. Skutočné osobné údaje prídu až po právnej a bezpečnostnej bráne."
-
-msgid "Responsible"
-msgstr "Zodpovedný"
-
-msgid "Readiness"
-msgstr "Pripravenosť"
-
+#: templates/pages/compliance_list.html:24
 msgid "Missing"
 msgstr "Chýba"
 
+#: templates/pages/compliance_list.html:25
+msgid "Expiring"
+msgstr "Čoskoro vyprší"
+
+#: templates/pages/compliance_list.html:29
+msgid "Due"
+msgstr "Termín"
+
+#: templates/pages/compliance_list.html:35
+msgid "No compliance alerts."
+msgstr "Žiadne upozornenia súladu."
+
+# --- dashboard ---
+#: templates/pages/dashboard.html:4 templates/pages/dashboard.html:9
+msgid "Operational overview"
+msgstr "Prevádzkový prehľad"
+
+# --- projects UI ---
+#: templates/pages/dashboard.html:8 templates/pages/project_list.html:8
+#: templates/pages/reports.html:8
+msgid "Operations"
+msgstr "Prevádzka"
+
+#: templates/pages/dashboard.html:12
+msgid "Manage projects"
+msgstr "Spravovať projekty"
+
+#: templates/pages/dashboard.html:16
+msgid "Operational summaries"
+msgstr "Prevádzkové súhrny"
+
+#: templates/pages/dashboard.html:18 templates/pages/reports.html:13
+msgid "Active projects"
+msgstr "Aktívne projekty"
+
+#: templates/pages/dashboard.html:27 templates/pages/reports.html:15
+msgid "Awaiting outcome"
+msgstr "Čaká na výsledok"
+
+#: templates/pages/dashboard.html:33 templates/pages/trials_queue.html:9
+#: templates/pages/trials_queue.html:12
+msgid "Trials"
+msgstr "Skúšky"
+
+#: templates/pages/dashboard.html:38 templates/pages/trials_queue.html:27
+msgid "No trials awaiting an outcome."
+msgstr "Žiadne skúšky nečakajú na výsledok."
+
+#: templates/pages/feedback_form.html:16
+msgid "Thank you for your feedback."
+msgstr "Ďakujeme za vašu spätnú väzbu."
+
+#: templates/pages/feedback_form.html:22
+msgid "Rating (1-5)"
+msgstr "Hodnotenie (1-5)"
+
+#: templates/pages/feedback_form.html:26
+msgid "Your feedback"
+msgstr "Vaša spätná väzba"
+
+#: templates/pages/feedback_form.html:29
+msgid "Submit"
+msgstr "Odoslať"
+
+#: templates/pages/feedback_inbox.html:4 templates/pages/feedback_inbox.html:9
+#: templates/pages/feedback_inbox.html:33
+msgid "Feedback inbox"
+msgstr "Schránka spätnej väzby"
+
+#: templates/pages/feedback_inbox.html:8
+msgid "Inbox"
+msgstr "Schránka"
+
+#: templates/pages/feedback_inbox.html:13
+msgid "Public links"
+msgstr "Verejné odkazy"
+
+#: templates/pages/feedback_inbox.html:14
+msgid "Feedback links"
+msgstr "Odkazy na spätnú väzbu"
+
+#: templates/pages/feedback_inbox.html:24
+msgid "Label"
+msgstr "Označenie"
+
+#: templates/pages/feedback_inbox.html:25
+#: templates/pages/finance_summary.html:33
+#: templates/pages/person_detail.html:26 templates/pages/project_detail.html:8
+#: templates/pages/transport_trends.html:27
+msgid "Project"
+msgstr "Projekt"
+
+#: templates/pages/feedback_inbox.html:29
+msgid "Create link"
+msgstr "Vytvoriť odkaz"
+
+#: templates/pages/feedback_inbox.html:41
+msgid "Link"
+msgstr "Odkaz"
+
+#: templates/pages/feedback_inbox.html:45
+msgid "No feedback yet."
+msgstr "Zatiaľ žiadna spätná väzba."
+
+#: templates/pages/finance_month_detail.html:16
+#: templates/pages/finance_summary.html:16
+#: templates/pages/finance_summary.html:24 templates/pages/reports.html:39
+msgid "Net"
+msgstr "Čisté"
+
+#: templates/pages/finance_month_detail.html:22
+msgid "Line items"
+msgstr "Položky"
+
+#: templates/pages/finance_month_detail.html:32
+msgid "Save & recalculate"
+msgstr "Uložiť a prepočítať"
+
+#: templates/pages/finance_month_detail.html:42
+#: templates/pages/finance_summary.html:47
+msgid "Group breakdown"
+msgstr "Rozpis podľa skupín"
+
+#: templates/pages/finance_month_detail.html:43
+msgid "By group"
+msgstr "Podľa skupiny"
+
+#: templates/pages/finance_summary.html:10 templates/pages/people_list.html:16
+#: templates/pages/project_list.html:12
+msgid "Export"
+msgstr "Export"
+
+#: templates/pages/finance_summary.html:13
+#: templates/pages/finance_summary.html:20
+#: templates/pages/finance_summary.html:46 templates/pages/reports.html:34
+#: templates/pages/transport_trends.html:14
+msgid "Company total"
+msgstr "Celkový súčet firmy"
+
+#: templates/pages/finance_summary.html:21
+msgid "Financial months"
+msgstr "Finančné mesiace"
+
+#: templates/pages/finance_summary.html:24
+msgid "Locked"
+msgstr "Uzamknuté"
+
+#: templates/pages/finance_summary.html:26
+msgid "No financial months."
+msgstr "Žiadne finančné mesiace."
+
+#: templates/pages/finance_summary.html:36
+msgid "Year"
+msgstr "Rok"
+
+#: templates/pages/finance_summary.html:37
+msgid "Month"
+msgstr "Mesiac"
+
+#: templates/pages/finance_summary.html:40
+msgid "Record month"
+msgstr "Zaznamenať mesiac"
+
+#: templates/pages/finance_summary.html:52
+#, fuzzy
+#| msgid "No history yet."
+msgid "No line items yet."
+msgstr "Zatiaľ žiadne položky."
+
+#: templates/pages/intake_panel.html:4 templates/pages/intake_panel.html:8
+#: templates/pages/person_form.html:8
+msgid "Intake"
+msgstr "Príjem"
+
+# --- intake engine ---
+#: templates/pages/intake_panel.html:8
+msgid "Step"
+msgstr "Krok"
+
+#: templates/pages/intake_panel.html:24 templates/pages/person_detail.html:131
+#: templates/pages/person_detail.html:144
+#: templates/pages/project_detail.html:31
+msgid "Yes"
+msgstr "Áno"
+
+#: templates/pages/intake_panel.html:25 templates/pages/person_detail.html:131
+#: templates/pages/person_detail.html:144
+#: templates/pages/project_detail.html:31
+msgid "No"
+msgstr "Nie"
+
+#: templates/pages/intake_panel.html:45
+msgid "Finish"
+msgstr "Dokončiť"
+
+#: templates/pages/intake_panel.html:45
+msgid "Next"
+msgstr "Ďalej"
+
 # --- login ---
+#: templates/pages/login.html:4
 msgid "Sign in"
 msgstr "Prihlásenie"
 
+#: templates/pages/login.html:8
 msgid "Internal system"
 msgstr "Interný systém"
 
+#: templates/pages/login.html:9
 msgid "Sign in to the Jober team"
 msgstr "Prihlásenie tímu Jober"
 
+#: templates/pages/login.html:16
 msgid "Email"
 msgstr "E-mail"
 
+#: templates/pages/login.html:20
 msgid "Password"
 msgstr "Heslo"
 
+#: templates/pages/login.html:23
 msgid "Continue"
 msgstr "Pokračovať"
 
 # --- people list / detail ---
+#: templates/pages/people_list.html:8 templates/pages/reports.html:23
 msgid "Workforce"
 msgstr "Pracovná sila"
 
+#: templates/pages/people_list.html:19
 msgid "Search by name"
 msgstr "Hľadať podľa mena"
 
-msgid "Search"
-msgstr "Hľadať"
-
-msgid "Status"
-msgstr "Stav"
-
-msgid "No people found."
-msgstr "Nenašli sa žiadni ľudia."
-
-msgid "Person"
-msgstr "Osoba"
-
-msgid "Back to people"
-msgstr "Späť na ľudí"
-
-msgid "Operational"
-msgstr "Prevádzkové"
-
-msgid "Details"
-msgstr "Podrobnosti"
-
-msgid "Phone"
-msgstr "Telefón"
-
-msgid "Address"
-msgstr "Adresa"
-
-msgid "Nationality"
-msgstr "Národnosť"
-
-msgid "Current project"
-msgstr "Aktuálny projekt"
-
-msgid "Owning recruiter"
-msgstr "Zodpovedný náborár"
-
-msgid "Rehire eligible"
-msgstr "Možnosť opätovného prijatia"
-
-msgid "Yes"
-msgstr "Áno"
-
-msgid "No"
-msgstr "Nie"
-
-msgid "Restricted"
-msgstr "Obmedzené"
-
-msgid "Personal data"
-msgstr "Osobné údaje"
-
-msgid "Date of birth"
-msgstr "Dátum narodenia"
-
-msgid "Place of birth"
-msgstr "Miesto narodenia"
-
-msgid "Disability"
-msgstr "Zdravotné postihnutie"
-
-msgid "Restricted — visible only to managers, observers, the owning recruiter, and the responsible coordinator."
-msgstr "Obmedzené — viditeľné iba pre manažérov, pozorovateľov, zodpovedného náborára a zodpovedného koordinátora."
-
-# --- projects UI ---
-msgid "Operations"
-msgstr "Prevádzka"
-
-msgid "Code"
-msgstr "Kód"
-
-msgid "Active"
-msgstr "Aktívny"
-
-msgid "No projects found."
-msgstr "Nenašli sa žiadne projekty."
-
-msgid "Project"
-msgstr "Projekt"
-
-msgid "Back to projects"
-msgstr "Späť na projekty"
-
-msgid "Partner"
-msgstr "Partner"
-
-msgid "Office"
-msgstr "Pobočka"
-
-msgid "Responsible coordinators"
-msgstr "Zodpovední koordinátori"
-
-msgid "Financial reporting"
-msgstr "Finančné vykazovanie"
-
-msgid "Assigned"
-msgstr "Pridelení"
-
-msgid "Workers"
-msgstr "Pracovníci"
-
-msgid "No workers assigned."
-msgstr "Nie sú pridelení žiadni pracovníci."
-
-# --- workflow: trials / readiness / intake ---
-msgid "Next step"
-msgstr "Ďalší krok"
-
-msgid "Send to a project trial"
-msgstr "Poslať na skúšobný deň"
-
-msgid "Schedule trial"
-msgstr "Naplánovať skúšku"
-
-msgid "Record trial outcome"
-msgstr "Zaznamenať výsledok skúšky"
-
-msgid "Pass"
-msgstr "Prešiel"
-
-msgid "Fail"
-msgstr "Neprešiel"
-
-msgid "No-show"
-msgstr "Nedostavil sa"
-
-msgid "Awaiting the coordinator's outcome."
-msgstr "Čaká sa na výsledok od koordinátora."
-
-msgid "Trials"
-msgstr "Skúšky"
-
-msgid "No trials awaiting an outcome."
-msgstr "Žiadne skúšky nečakajú na výsledok."
-
-msgid "Trial scheduled."
-msgstr "Skúška naplánovaná."
-
-msgid "Trial outcome recorded."
-msgstr "Výsledok skúšky zaznamenaný."
-
-msgid "Pending"
-msgstr "Čaká"
-
-msgid "Four-pillar readiness"
-msgstr "Štvorpilierová pripravenosť"
-
-msgid "Medical"
-msgstr "Lekárska"
-
-msgid "Gear"
-msgstr "Výstroj"
-
-msgid "Accommodation"
-msgstr "Ubytovanie"
-
-msgid "Transport"
-msgstr "Doprava"
-
-msgid "Incomplete"
-msgstr "Nekompletné"
-
-msgid "Complete"
-msgstr "Kompletné"
-
-msgid "Not applicable"
-msgstr "Neaplikovateľné"
-
-msgid "Save readiness"
-msgstr "Uložiť pripravenosť"
-
-msgid "Activate (Working)"
-msgstr "Aktivovať (Pracuje)"
-
-msgid "Ready to activate"
-msgstr "Pripravené na aktiváciu"
-
-msgid "Medical and gear required"
-msgstr "Vyžaduje sa lekárska a výstroj"
-
-msgid "Readiness saved."
-msgstr "Pripravenosť uložená."
-
-msgid "Activated — now Working."
-msgstr "Aktivované — teraz Pracuje."
-
-msgid "Add person"
-msgstr "Pridať osobu"
-
-msgid "Intake"
-msgstr "Príjem"
-
-msgid "Save"
-msgstr "Uložiť"
-
-msgid "First name"
-msgstr "Meno"
-
-msgid "Last name"
-msgstr "Priezvisko"
-
-msgid "Has disability"
-msgstr "Má zdravotné postihnutie"
-
-msgid "Disability type"
-msgstr "Typ postihnutia"
-
-msgid "Preferred language"
-msgstr "Preferovaný jazyk"
-
-msgid "Person added."
-msgstr "Osoba pridaná."
-
-msgid "Edit"
-msgstr "Upraviť"
-
-msgid "Edit person"
-msgstr "Upraviť osobu"
-
-msgid "Person updated."
-msgstr "Osoba aktualizovaná."
-
-# --- logistics: accommodation ---
-msgid "Logistics"
-msgstr "Logistika"
-
-msgid "Release room"
-msgstr "Uvoľniť izbu"
-
-msgid "Room"
-msgstr "Izba"
-
-msgid "Assign room"
-msgstr "Prideliť izbu"
-
-msgid "Rooms"
-msgstr "Izby"
-
-msgid "No accommodations found."
-msgstr "Nenašli sa žiadne ubytovania."
-
-msgid "Back"
-msgstr "Späť"
-
-msgid "Occupancy"
-msgstr "Obsadenosť"
-
-msgid "No rooms."
-msgstr "Žiadne izby."
-
-msgid "Room assigned."
-msgstr "Izba pridelená."
-
-msgid "Room released."
-msgstr "Izba uvoľnená."
-
-# --- logistics: equipment ---
-msgid "Equipment"
-msgstr "Vybavenie"
-
-msgid "Return"
-msgstr "Vrátiť"
-
-msgid "Item"
-msgstr "Položka"
-
-msgid "Quantity"
-msgstr "Množstvo"
-
-msgid "Issue equipment"
-msgstr "Vydať vybavenie"
-
-msgid "Equipment issued."
-msgstr "Vybavenie vydané."
-
-msgid "Equipment returned."
-msgstr "Vybavenie vrátené."
-
-# --- logistics: transport ---
-msgid "Weekly transport"
-msgstr "Týždenná doprava"
-
-msgid "No transport weeks recorded."
-msgstr "Nie sú zaznamenané žiadne týždne dopravy."
-
-msgid "Week start"
-msgstr "Začiatok týždňa"
-
-msgid "Headcount"
-msgstr "Počet osôb"
-
-msgid "Record week"
-msgstr "Zaznamenať týždeň"
-
-msgid "Transport week recorded."
-msgstr "Týždeň dopravy zaznamenaný."
-
-msgid "Week start is required."
-msgstr "Začiatok týždňa je povinný."
-
-# --- finance ---
-msgid "Finance"
-msgstr "Financie"
-
-msgid "Reports"
-msgstr "Reporty"
-
-msgid "Revenue"
-msgstr "Príjmy"
-
-msgid "Cost"
-msgstr "Náklady"
-
-msgid "Net"
-msgstr "Čisté"
-
-msgid "Year"
-msgstr "Rok"
-
-msgid "Month"
-msgstr "Mesiac"
-
-msgid "Record month"
-msgstr "Zaznamenať mesiac"
-
-msgid "Financial months"
-msgstr "Finančné mesiace"
-
-msgid "No financial months."
-msgstr "Žiadne finančné mesiace."
-
-msgid "Company total"
-msgstr "Celkový súčet firmy"
-
-msgid "Financial month saved."
-msgstr "Finančný mesiac uložený."
-
-msgid "Invalid input."
-msgstr "Neplatný vstup."
-
-# --- intake engine ---
-msgid "Step"
-msgstr "Krok"
-
-msgid "Next"
-msgstr "Ďalej"
-
-msgid "Finish"
-msgstr "Dokončiť"
-
-msgid "Required."
-msgstr "Povinné."
-
-msgid "Please type a value (or the word for 'none')."
-msgstr "Zadajte hodnotu (alebo slovo pre žiadne)."
-
-msgid "No published intake questionnaire."
-msgstr "Žiadny publikovaný dotazník príjmu."
-
-msgid "Intake complete — person added."
-msgstr "Príjem dokončený — osoba pridaná."
-
-# --- person card: history + filter ---
-msgid "History"
-msgstr "História"
-
+#: templates/pages/people_list.html:21
 msgid "All statuses"
 msgstr "Všetky stavy"
 
-msgid "Trial scheduled"
-msgstr "Skúška naplánovaná"
+#: templates/pages/people_list.html:26
+msgid "Search"
+msgstr "Hľadať"
 
-msgid "Trial outcome"
-msgstr "Výsledok skúšky"
+#: templates/pages/people_list.html:39
+msgid "No people found."
+msgstr "Nenašli sa žiadni ľudia."
 
-msgid "Assigned to project"
-msgstr "Pridelený na projekt"
+#: templates/pages/person_detail.html:8 templates/pages/person_detail.html:262
+msgid "Person"
+msgstr "Osoba"
 
-msgid "Room assigned"
-msgstr "Izba pridelená"
+#: templates/pages/person_detail.html:10 templates/pages/person_form.html:10
+msgid "Back to people"
+msgstr "Späť na ľudí"
 
-msgid "Equipment issued"
-msgstr "Vybavenie vydané"
+#: templates/pages/person_detail.html:13
+msgid "Edit"
+msgstr "Upraviť"
 
-msgid "Readiness submitted"
-msgstr "Pripravenosť odoslaná"
+# --- workflow: trials / readiness / intake ---
+#: templates/pages/person_detail.html:22
+msgid "Next step"
+msgstr "Ďalší krok"
 
-msgid "Intake completed"
-msgstr "Príjem dokončený"
+#: templates/pages/person_detail.html:23
+msgid "Send to a project trial"
+msgstr "Poslať na skúšobný deň"
 
-msgid "Status changed"
-msgstr "Stav zmenený"
+#: templates/pages/person_detail.html:31
+msgid "Schedule trial"
+msgstr "Naplánovať skúšku"
 
-msgid "No history yet."
-msgstr "Zatiaľ žiadna história."
+#: templates/pages/person_detail.html:38
+msgid "Record trial outcome"
+msgstr "Zaznamenať výsledok skúšky"
 
-msgid "Awaiting outcome"
-msgstr "Čaká na výsledok"
+#: templates/pages/person_detail.html:56
+msgid "Awaiting the coordinator's outcome."
+msgstr "Čaká sa na výsledok od koordinátora."
 
-msgid "Export"
-msgstr "Export"
+#: templates/pages/person_detail.html:63
+msgid "Readiness"
+msgstr "Pripravenosť"
 
+#: templates/pages/person_detail.html:64
+msgid "Four-pillar readiness"
+msgstr "Štvorpilierová pripravenosť"
+
+#: templates/pages/person_detail.html:70
+msgid "Medical"
+msgstr "Lekárska"
+
+#: templates/pages/person_detail.html:76
+msgid "Gear"
+msgstr "Výstroj"
+
+#: templates/pages/person_detail.html:89 templates/pages/person_detail.html:99
 msgid "Reason if not applicable"
 msgstr "Dôvod, ak sa neaplikuje"
 
+#: templates/pages/person_detail.html:102
 msgid "Entry medical date"
 msgstr "Dátum vstupnej prehliadky"
 
-# --- messaging / SMS ---
-msgid "Messaging"
-msgstr "Komunikácia"
+#: templates/pages/person_detail.html:105
+msgid "Save readiness"
+msgstr "Uložiť pripravenosť"
 
-msgid "Send SMS"
-msgstr "Poslať SMS"
+#: templates/pages/person_detail.html:110
+msgid "Activate (Working)"
+msgstr "Aktivovať (Pracuje)"
 
-msgid "Template"
-msgstr "Šablóna"
+#: templates/pages/person_detail.html:112
+msgid "Ready to activate"
+msgstr "Pripravené na aktiváciu"
 
-msgid "Message"
-msgstr "Správa"
+#: templates/pages/person_detail.html:114
+msgid "Medical and gear required"
+msgstr "Vyžaduje sa lekárska a výstroj"
 
-msgid "Or type a message"
-msgstr "Alebo napíšte správu"
+#: templates/pages/person_detail.html:123
+#: templates/pages/project_detail.html:15
+msgid "Operational"
+msgstr "Prevádzkové"
 
-msgid "Message sent."
-msgstr "Správa odoslaná."
+#: templates/pages/person_detail.html:124
+#: templates/pages/project_detail.html:16
+msgid "Details"
+msgstr "Podrobnosti"
 
-msgid "Message failed: %(error)s"
-msgstr "Správa zlyhala: %(error)s"
+#: templates/pages/person_detail.html:129
+msgid "Current project"
+msgstr "Aktuálny projekt"
 
-msgid "This person has no phone number."
-msgstr "Táto osoba nemá telefónne číslo."
+#: templates/pages/person_detail.html:130
+msgid "Owning recruiter"
+msgstr "Zodpovedný náborár"
 
-msgid "Message body is required."
-msgstr "Telo správy je povinné."
+#: templates/pages/person_detail.html:131
+msgid "Rehire eligible"
+msgstr "Možnosť opätovného prijatia"
 
-# --- compliance ---
-msgid "Compliance"
-msgstr "Súlad"
+#: templates/pages/person_detail.html:136
+msgid "Restricted"
+msgstr "Obmedzené"
 
-msgid "Alerts"
-msgstr "Upozornenia"
+#: templates/pages/person_detail.html:137
+msgid "Personal data"
+msgstr "Osobné údaje"
 
-msgid "Expiring"
-msgstr "Čoskoro vyprší"
+#: templates/pages/person_detail.html:143
+msgid "Disability"
+msgstr "Zdravotné postihnutie"
 
-msgid "Expired"
-msgstr "Vypršané"
+#: templates/pages/person_detail.html:148
+msgid ""
+"Restricted — visible only to managers, observers, the owning recruiter, and "
+"the responsible coordinator."
+msgstr ""
+"Obmedzené — viditeľné iba pre manažérov, pozorovateľov, zodpovedného "
+"náborára a zodpovedného koordinátora."
 
-msgid "Due"
-msgstr "Termín"
+#: templates/pages/person_detail.html:162
+msgid "Release room"
+msgstr "Uvoľniť izbu"
 
-msgid "No compliance alerts."
-msgstr "Žiadne upozornenia súladu."
+#: templates/pages/person_detail.html:168
+msgid "Room"
+msgstr "Izba"
 
-# --- exit / recycling ---
-msgid "Exit"
-msgstr "Odchod"
+#: templates/pages/person_detail.html:173
+msgid "Assign room"
+msgstr "Prideliť izbu"
 
-msgid "Exit & reconcile"
-msgstr "Odchod a vyúčtovanie"
-
-msgid "Ends the project assignment, releases the room, and returns issued equipment."
-msgstr "Ukončí pridelenie na projekt, uvoľní izbu a vráti vydané vybavenie."
-
-msgid "Exit to Available"
-msgstr "Odchod na Dostupný"
-
-msgid "Exit to Inactive"
-msgstr "Odchod na Neaktívny"
-
-msgid "Exit completed."
-msgstr "Odchod dokončený."
-
-# --- transport trends ---
-msgid "Transport trends"
-msgstr "Trendy dopravy"
-
-msgid "No transport data."
-msgstr "Žiadne údaje o doprave."
-
-# --- feedback ---
-msgid "Feedback"
-msgstr "Spätná väzba"
-
-msgid "Feedback inbox"
-msgstr "Schránka spätnej väzby"
-
-msgid "Inbox"
-msgstr "Schránka"
-
-msgid "Public links"
-msgstr "Verejné odkazy"
-
-msgid "Feedback links"
-msgstr "Odkazy na spätnú väzbu"
-
-msgid "Create link"
-msgstr "Vytvoriť odkaz"
-
-msgid "Label"
-msgstr "Označenie"
-
-msgid "Link"
-msgstr "Odkaz"
-
-msgid "No feedback yet."
-msgstr "Zatiaľ žiadna spätná väzba."
-
-msgid "Your feedback"
-msgstr "Vaša spätná väzba"
-
-msgid "Rating (1-5)"
-msgstr "Hodnotenie (1-5)"
-
-msgid "Submit"
-msgstr "Odoslať"
-
-msgid "Thank you for your feedback."
-msgstr "Ďakujeme za vašu spätnú väzbu."
-
-msgid "Message is required."
-msgstr "Správa je povinná."
-
-msgid "Label is required."
-msgstr "Označenie je povinné."
-
-msgid "Feedback link created."
-msgstr "Odkaz na spätnú väzbu vytvorený."
-
-msgid "People by status"
-msgstr "Ľudia podľa stavu"
-
+#: templates/pages/person_detail.html:185
 msgid "Value"
 msgstr "Hodnota"
 
+#: templates/pages/person_detail.html:193
+msgid "Return"
+msgstr "Vrátiť"
+
+#: templates/pages/person_detail.html:205
+msgid "Item"
+msgstr "Položka"
+
+#: templates/pages/person_detail.html:208
+msgid "Quantity"
+msgstr "Množstvo"
+
+#: templates/pages/person_detail.html:209
+msgid "Issue equipment"
+msgstr "Vydať vybavenie"
+
+# --- exit / recycling ---
+#: templates/pages/person_detail.html:216
+msgid "Exit"
+msgstr "Odchod"
+
+#: templates/pages/person_detail.html:217
+msgid "Exit & reconcile"
+msgstr "Odchod a vyúčtovanie"
+
+#: templates/pages/person_detail.html:218
+msgid ""
+"Ends the project assignment, releases the room, and returns issued equipment."
+msgstr "Ukončí pridelenie na projekt, uvoľní izbu a vráti vydané vybavenie."
+
+#: templates/pages/person_detail.html:222
+msgid "Exit to Available"
+msgstr "Odchod na Dostupný"
+
+#: templates/pages/person_detail.html:226
+msgid "Exit to Inactive"
+msgstr "Odchod na Neaktívny"
+
+# --- messaging / SMS ---
+#: templates/pages/person_detail.html:234
+msgid "Messaging"
+msgstr "Komunikácia"
+
+#: templates/pages/person_detail.html:235
+#: templates/pages/person_detail.html:249
+msgid "Send SMS"
+msgstr "Poslať SMS"
+
+#: templates/pages/person_detail.html:239
+msgid "Template"
+msgstr "Šablóna"
+
+#: templates/pages/person_detail.html:246
+msgid "Message"
+msgstr "Správa"
+
+#: templates/pages/person_detail.html:247
+msgid "Or type a message"
+msgstr "Alebo napíšte správu"
+
+# --- person card: history + filter ---
+#: templates/pages/person_detail.html:263
+msgid "History"
+msgstr "História"
+
+#: templates/pages/person_detail.html:268
+msgid "No history yet."
+msgstr "Zatiaľ žiadna história."
+
+#: templates/pages/person_form.html:17
+msgid "Save"
+msgstr "Uložiť"
+
+#: templates/pages/project_detail.html:10
+msgid "Back to projects"
+msgstr "Späť na projekty"
+
+#: templates/pages/project_detail.html:18 templates/pages/project_list.html:21
+msgid "Code"
+msgstr "Kód"
+
+#: templates/pages/project_detail.html:19
+msgid "Partner"
+msgstr "Partner"
+
+#: templates/pages/project_detail.html:20
+msgid "Office"
+msgstr "Pobočka"
+
+#: templates/pages/project_detail.html:22
+msgid "Responsible coordinators"
+msgstr "Zodpovední koordinátori"
+
+#: templates/pages/project_detail.html:30
+msgid "Financial reporting"
+msgstr "Finančné vykazovanie"
+
+#: templates/pages/project_detail.html:37
+msgid "Assigned"
+msgstr "Pridelení"
+
+#: templates/pages/project_detail.html:38
+msgid "Workers"
+msgstr "Pracovníci"
+
+#: templates/pages/project_detail.html:43
+msgid "No workers assigned."
+msgstr "Nie sú pridelení žiadni pracovníci."
+
+# --- logistics: transport ---
+#: templates/pages/project_detail.html:51
+#: templates/pages/transport_trends.html:15
+msgid "Weekly transport"
+msgstr "Týždenná doprava"
+
+#: templates/pages/project_detail.html:56
+msgid "No transport weeks recorded."
+msgstr "Nie sú zaznamenané žiadne týždne dopravy."
+
+#: templates/pages/project_detail.html:63
+msgid "Week start"
+msgstr "Začiatok týždňa"
+
+#: templates/pages/project_detail.html:64
+msgid "Headcount"
+msgstr "Počet osôb"
+
+#: templates/pages/project_detail.html:65
+msgid "Record week"
+msgstr "Zaznamenať týždeň"
+
+#: templates/pages/project_list.html:31
+msgid "No projects found."
+msgstr "Nenašli sa žiadne projekty."
+
+#: templates/pages/reports.html:18
 msgid "Equipment value"
 msgstr "Hodnota vybavenia"
+
+#: templates/pages/reports.html:24
+msgid "People by status"
+msgstr "Ľudia podľa stavu"
+
+# --- transport trends ---
+#: templates/pages/transport_trends.html:4
+#: templates/pages/transport_trends.html:9
+msgid "Transport trends"
+msgstr "Trendy dopravy"
+
+#: templates/pages/transport_trends.html:39
+msgid "No transport data."
+msgstr "Žiadne údaje o doprave."
+
+#~ msgid "Pilot shell"
+#~ msgstr "Pilotný shell"
+
+#~ msgid ""
+#~ "The first screen verifies navigation, local scripts, and the "
+#~ "coordinator's mobile workflow without introducing final business models."
+#~ msgstr ""
+#~ "Prvá obrazovka overuje navigáciu, lokálne skripty a mobilnú prácu "
+#~ "koordinátora bez zavádzania finálnych obchodných modelov."
+
+#~ msgid "Mobile tasks"
+#~ msgstr "Mobilné úlohy"
+
+#~ msgid "Field queue"
+#~ msgstr "Terénny rad"
+
+#~ msgid "Load queue"
+#~ msgstr "Načítať rad"
+
+#~ msgid "Phase 0 rule"
+#~ msgstr "Pravidlo Phase 0"
+
+#~ msgid "No final data"
+#~ msgstr "Bez finálnych dát"
+
+#~ msgid ""
+#~ "This shell uses fictional values only. Real personal data arrives only "
+#~ "after the legal and security gate."
+#~ msgstr ""
+#~ "Tento shell používa iba fiktívne hodnoty. Skutočné osobné údaje prídu až "
+#~ "po právnej a bezpečnostnej bráne."
+
+#~ msgid "Responsible"
+#~ msgstr "Zodpovedný"
