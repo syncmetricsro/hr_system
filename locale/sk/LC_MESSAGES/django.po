@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-29 12:19+0200\n"
+"POT-Creation-Date: 2026-06-29 14:48+0200\n"
 "Language: sk\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -278,16 +278,18 @@ msgstr "Finančné mesiace"
 msgid "financial months"
 msgstr "Finančné mesiace"
 
-#: apps/finance/models.py:54 templates/pages/finance_month_detail.html:15
+#: apps/finance/models.py:54 templates/pages/finance_month_detail.html:33
 #: templates/pages/finance_summary.html:15
-#: templates/pages/finance_summary.html:39 templates/pages/reports.html:38
+#: templates/pages/finance_summary.html:39 templates/pages/finance_year.html:15
+#: templates/pages/reports.html:38
 msgid "Cost"
 msgstr "Náklady"
 
 #: apps/finance/models.py:55 apps/finance/models.py:67
-#: templates/pages/finance_month_detail.html:14
+#: templates/pages/finance_month_detail.html:32
 #: templates/pages/finance_summary.html:14
-#: templates/pages/finance_summary.html:38 templates/pages/reports.html:37
+#: templates/pages/finance_summary.html:38 templates/pages/finance_year.html:14
+#: templates/pages/reports.html:37
 msgid "Revenue"
 msgstr "Príjmy"
 
@@ -378,15 +380,23 @@ msgstr ""
 msgid "finance line items"
 msgstr ""
 
-#: apps/finance/views.py:67
+#: apps/finance/views.py:91
 msgid "Saved and recalculated."
 msgstr "Uložené a prepočítané."
 
-#: apps/finance/views.py:69 apps/finance/views.py:88
+#: apps/finance/views.py:93 apps/finance/views.py:133
 msgid "Invalid input."
 msgstr "Neplatný vstup."
 
-#: apps/finance/views.py:86
+#: apps/finance/views.py:102
+msgid "Month locked."
+msgstr "Mesiac uzamknutý."
+
+#: apps/finance/views.py:112
+msgid "Month reopened."
+msgstr "Mesiac znovu otvorený."
+
+#: apps/finance/views.py:131
 msgid "Financial month saved."
 msgstr "Finančný mesiac uložený."
 
@@ -1337,9 +1347,10 @@ msgstr "Reporty"
 
 # --- finance ---
 #: templates/layouts/base.html:34 templates/pages/finance_month_detail.html:8
-#: templates/pages/finance_month_detail.html:21
+#: templates/pages/finance_month_detail.html:39
 #: templates/pages/finance_summary.html:4
-#: templates/pages/finance_summary.html:9 templates/pages/reports.html:35
+#: templates/pages/finance_summary.html:9 templates/pages/finance_year.html:4
+#: templates/pages/finance_year.html:8 templates/pages/reports.html:35
 msgid "Finance"
 msgstr "Financie"
 
@@ -1367,6 +1378,7 @@ msgstr "Odhlásiť sa"
 
 #: templates/pages/accommodation_detail.html:10
 #: templates/pages/finance_month_detail.html:10
+#: templates/pages/finance_year.html:10
 msgid "Back"
 msgstr "Späť"
 
@@ -1518,26 +1530,46 @@ msgstr "Odkaz"
 msgid "No feedback yet."
 msgstr "Zatiaľ žiadna spätná väzba."
 
+#: templates/pages/finance_month_detail.html:8
+#: templates/pages/finance_summary.html:24 templates/pages/finance_year.html:50
+msgid "Locked"
+msgstr "Uzamknuté"
+
 #: templates/pages/finance_month_detail.html:16
+#: templates/pages/finance_month_detail.html:20
+msgid "Reopen month"
+msgstr "Znovu otvoriť mesiac"
+
+#: templates/pages/finance_month_detail.html:19
+msgid "Reason"
+msgstr "Dôvod"
+
+#: templates/pages/finance_month_detail.html:25
+msgid "Lock month"
+msgstr "Uzamknúť mesiac"
+
+#: templates/pages/finance_month_detail.html:34
 #: templates/pages/finance_summary.html:16
-#: templates/pages/finance_summary.html:24 templates/pages/reports.html:39
+#: templates/pages/finance_summary.html:24
+#: templates/pages/finance_summary.html:74 templates/pages/finance_year.html:16
+#: templates/pages/finance_year.html:50 templates/pages/reports.html:39
 msgid "Net"
 msgstr "Čisté"
 
-#: templates/pages/finance_month_detail.html:22
+#: templates/pages/finance_month_detail.html:40
 msgid "Line items"
 msgstr "Položky"
 
-#: templates/pages/finance_month_detail.html:32
+#: templates/pages/finance_month_detail.html:50
 msgid "Save & recalculate"
 msgstr "Uložiť a prepočítať"
 
-#: templates/pages/finance_month_detail.html:42
-#: templates/pages/finance_summary.html:47
+#: templates/pages/finance_month_detail.html:60
+#: templates/pages/finance_summary.html:47 templates/pages/finance_year.html:33
 msgid "Group breakdown"
 msgstr "Rozpis podľa skupín"
 
-#: templates/pages/finance_month_detail.html:43
+#: templates/pages/finance_month_detail.html:61
 msgid "By group"
 msgstr "Podľa skupiny"
 
@@ -1548,20 +1580,21 @@ msgstr "Export"
 
 #: templates/pages/finance_summary.html:13
 #: templates/pages/finance_summary.html:20
-#: templates/pages/finance_summary.html:46 templates/pages/reports.html:34
-#: templates/pages/transport_trends.html:14
+#: templates/pages/finance_summary.html:46
+#: templates/pages/finance_summary.html:58
+#: templates/pages/finance_summary.html:70 templates/pages/finance_year.html:13
+#: templates/pages/reports.html:34 templates/pages/transport_trends.html:14
 msgid "Company total"
 msgstr "Celkový súčet firmy"
 
-#: templates/pages/finance_summary.html:21
+#: templates/pages/finance_summary.html:21 templates/pages/finance_year.html:46
 msgid "Financial months"
 msgstr "Finančné mesiace"
 
-#: templates/pages/finance_summary.html:24
-msgid "Locked"
-msgstr "Uzamknuté"
-
 #: templates/pages/finance_summary.html:26
+#: templates/pages/finance_summary.html:64
+#: templates/pages/finance_summary.html:76 templates/pages/finance_year.html:27
+#: templates/pages/finance_year.html:52
 msgid "No financial months."
 msgstr "Žiadne finančné mesiace."
 
@@ -1577,11 +1610,19 @@ msgstr "Mesiac"
 msgid "Record month"
 msgstr "Zaznamenať mesiac"
 
-#: templates/pages/finance_summary.html:52
+#: templates/pages/finance_summary.html:52 templates/pages/finance_year.html:39
 #, fuzzy
 #| msgid "No history yet."
 msgid "No line items yet."
 msgstr "Zatiaľ žiadne položky."
+
+#: templates/pages/finance_summary.html:59 templates/pages/finance_year.html:21
+msgid "Per-project results"
+msgstr "Výsledky podľa projektu"
+
+#: templates/pages/finance_summary.html:71 templates/pages/finance_year.html:8
+msgid "Yearly results"
+msgstr "Ročné výsledky"
 
 #: templates/pages/intake_panel.html:4 templates/pages/intake_panel.html:8
 #: templates/pages/person_form.html:8

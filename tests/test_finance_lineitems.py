@@ -13,9 +13,14 @@ from apps.finance.models import (
 )
 from apps.finance.services import (
     FinanceError,
+    company_totals,
     group_breakdown,
+    lock_month,
+    project_totals,
     recompute_month,
+    reopen_month,
     set_line_item,
+    yearly_totals,
 )
 from apps.projects.models import Project
 
@@ -121,3 +126,56 @@ def test_detail_view_gated_to_internal(client, setup, django_user_model):
     client.force_login(recruiter)
     resp = client.get(reverse("finance_month_detail", kwargs={"pk": month.pk}))
     assert resp.status_code == 403  # recruiters cannot view finance summary
+
+
+def test_lock_then_reopen_requires_reason(setup):
+    actor, month, wage, *_ = setup
+    lock_month(month, actor=actor)
+    month.refresh_from_db()
+    assert month.is_locked
+    with pytest.raises(FinanceError):
+        set_line_item(month, wage, "100", actor=actor)
+    with pytest.raises(FinanceError):
+        reopen_month(month, reason="   ", actor=actor)  # blank reason rejected
+    reopen_month(month, reason="Late invoice correction", actor=actor)
+    month.refresh_from_db()
+    assert not month.is_locked
+    set_line_item(month, wage, "100", actor=actor)  # editable again
+
+
+def test_reopen_audits_reason(setup, django_user_model):
+    from apps.audit.models import AuditEvent
+
+    actor, month, *_ = setup
+    lock_month(month, actor=actor)
+    reopen_month(month, reason="Client adjustment", actor=actor)
+    event = AuditEvent.objects.filter(action="finance.reopened").latest("created_at")
+    assert event.reason == "Client adjustment"
+
+
+def test_lock_view_blocks_save(client, setup):
+    actor, month, wage, fuel, invoice = setup
+    lock_month(month, actor=actor)
+    client.force_login(actor)
+    resp = client.post(
+        reverse("finance_month_save", kwargs={"pk": month.pk}),
+        {f"cat_{wage.pk}": "999"},
+    )
+    assert resp.status_code == 302
+    assert not month.line_items.filter(category=wage).exists()  # locked: nothing written
+
+
+def test_project_and_yearly_totals(setup):
+    actor, month, wage, fuel, invoice = setup
+    set_line_item(month, invoice, "18000", actor=actor)
+    set_line_item(month, wage, "12000", actor=actor)
+    recompute_month(month, actor=actor)
+    projects = project_totals()
+    assert projects[0]["net"] == Decimal("6000")
+    assert project_totals(2026)[0]["net"] == Decimal("6000")
+    assert project_totals(2099) == []
+    years = yearly_totals()
+    assert years[0]["year"] == 2026
+    assert years[0]["net"] == Decimal("6000")
+    assert company_totals(2026)["net"] == Decimal("6000")
+    assert company_totals(2099)["net"] == Decimal("0")

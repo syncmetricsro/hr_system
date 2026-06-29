@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-29 12:19+0200\n"
+"POT-Creation-Date: 2026-06-29 14:48+0200\n"
 "Language: uk\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -279,16 +279,18 @@ msgstr "Фінансові місяці"
 msgid "financial months"
 msgstr "Фінансові місяці"
 
-#: apps/finance/models.py:54 templates/pages/finance_month_detail.html:15
+#: apps/finance/models.py:54 templates/pages/finance_month_detail.html:33
 #: templates/pages/finance_summary.html:15
-#: templates/pages/finance_summary.html:39 templates/pages/reports.html:38
+#: templates/pages/finance_summary.html:39 templates/pages/finance_year.html:15
+#: templates/pages/reports.html:38
 msgid "Cost"
 msgstr "Витрати"
 
 #: apps/finance/models.py:55 apps/finance/models.py:67
-#: templates/pages/finance_month_detail.html:14
+#: templates/pages/finance_month_detail.html:32
 #: templates/pages/finance_summary.html:14
-#: templates/pages/finance_summary.html:38 templates/pages/reports.html:37
+#: templates/pages/finance_summary.html:38 templates/pages/finance_year.html:14
+#: templates/pages/reports.html:37
 msgid "Revenue"
 msgstr "Дохід"
 
@@ -379,15 +381,23 @@ msgstr ""
 msgid "finance line items"
 msgstr ""
 
-#: apps/finance/views.py:67
+#: apps/finance/views.py:91
 msgid "Saved and recalculated."
 msgstr "Збережено та перераховано."
 
-#: apps/finance/views.py:69 apps/finance/views.py:88
+#: apps/finance/views.py:93 apps/finance/views.py:133
 msgid "Invalid input."
 msgstr "Невірні дані."
 
-#: apps/finance/views.py:86
+#: apps/finance/views.py:102
+msgid "Month locked."
+msgstr "Місяць заблоковано."
+
+#: apps/finance/views.py:112
+msgid "Month reopened."
+msgstr "Місяць знову відкрито."
+
+#: apps/finance/views.py:131
 msgid "Financial month saved."
 msgstr "Фінансовий місяць збережено."
 
@@ -1338,9 +1348,10 @@ msgstr "Звіти"
 
 # --- finance ---
 #: templates/layouts/base.html:34 templates/pages/finance_month_detail.html:8
-#: templates/pages/finance_month_detail.html:21
+#: templates/pages/finance_month_detail.html:39
 #: templates/pages/finance_summary.html:4
-#: templates/pages/finance_summary.html:9 templates/pages/reports.html:35
+#: templates/pages/finance_summary.html:9 templates/pages/finance_year.html:4
+#: templates/pages/finance_year.html:8 templates/pages/reports.html:35
 msgid "Finance"
 msgstr "Фінанси"
 
@@ -1368,6 +1379,7 @@ msgstr "Вийти"
 
 #: templates/pages/accommodation_detail.html:10
 #: templates/pages/finance_month_detail.html:10
+#: templates/pages/finance_year.html:10
 msgid "Back"
 msgstr "Назад"
 
@@ -1519,26 +1531,46 @@ msgstr "Посилання"
 msgid "No feedback yet."
 msgstr "Поки немає відгуків."
 
+#: templates/pages/finance_month_detail.html:8
+#: templates/pages/finance_summary.html:24 templates/pages/finance_year.html:50
+msgid "Locked"
+msgstr "Заблоковано"
+
 #: templates/pages/finance_month_detail.html:16
+#: templates/pages/finance_month_detail.html:20
+msgid "Reopen month"
+msgstr "Відкрити місяць знову"
+
+#: templates/pages/finance_month_detail.html:19
+msgid "Reason"
+msgstr "Причина"
+
+#: templates/pages/finance_month_detail.html:25
+msgid "Lock month"
+msgstr "Заблокувати місяць"
+
+#: templates/pages/finance_month_detail.html:34
 #: templates/pages/finance_summary.html:16
-#: templates/pages/finance_summary.html:24 templates/pages/reports.html:39
+#: templates/pages/finance_summary.html:24
+#: templates/pages/finance_summary.html:74 templates/pages/finance_year.html:16
+#: templates/pages/finance_year.html:50 templates/pages/reports.html:39
 msgid "Net"
 msgstr "Чистий"
 
-#: templates/pages/finance_month_detail.html:22
+#: templates/pages/finance_month_detail.html:40
 msgid "Line items"
 msgstr "Позиції"
 
-#: templates/pages/finance_month_detail.html:32
+#: templates/pages/finance_month_detail.html:50
 msgid "Save & recalculate"
 msgstr "Зберегти та перерахувати"
 
-#: templates/pages/finance_month_detail.html:42
-#: templates/pages/finance_summary.html:47
+#: templates/pages/finance_month_detail.html:60
+#: templates/pages/finance_summary.html:47 templates/pages/finance_year.html:33
 msgid "Group breakdown"
 msgstr "Розподіл за групами"
 
-#: templates/pages/finance_month_detail.html:43
+#: templates/pages/finance_month_detail.html:61
 msgid "By group"
 msgstr "За групою"
 
@@ -1549,20 +1581,21 @@ msgstr "Експорт"
 
 #: templates/pages/finance_summary.html:13
 #: templates/pages/finance_summary.html:20
-#: templates/pages/finance_summary.html:46 templates/pages/reports.html:34
-#: templates/pages/transport_trends.html:14
+#: templates/pages/finance_summary.html:46
+#: templates/pages/finance_summary.html:58
+#: templates/pages/finance_summary.html:70 templates/pages/finance_year.html:13
+#: templates/pages/reports.html:34 templates/pages/transport_trends.html:14
 msgid "Company total"
 msgstr "Загалом по компанії"
 
-#: templates/pages/finance_summary.html:21
+#: templates/pages/finance_summary.html:21 templates/pages/finance_year.html:46
 msgid "Financial months"
 msgstr "Фінансові місяці"
 
-#: templates/pages/finance_summary.html:24
-msgid "Locked"
-msgstr "Заблоковано"
-
 #: templates/pages/finance_summary.html:26
+#: templates/pages/finance_summary.html:64
+#: templates/pages/finance_summary.html:76 templates/pages/finance_year.html:27
+#: templates/pages/finance_year.html:52
 msgid "No financial months."
 msgstr "Немає фінансових місяців."
 
@@ -1578,11 +1611,19 @@ msgstr "Місяць"
 msgid "Record month"
 msgstr "Записати місяць"
 
-#: templates/pages/finance_summary.html:52
+#: templates/pages/finance_summary.html:52 templates/pages/finance_year.html:39
 #, fuzzy
 #| msgid "No history yet."
 msgid "No line items yet."
 msgstr "Поки немає позицій."
+
+#: templates/pages/finance_summary.html:59 templates/pages/finance_year.html:21
+msgid "Per-project results"
+msgstr "Результати за проєктами"
+
+#: templates/pages/finance_summary.html:71 templates/pages/finance_year.html:8
+msgid "Yearly results"
+msgstr "Річні результати"
 
 #: templates/pages/intake_panel.html:4 templates/pages/intake_panel.html:8
 #: templates/pages/person_form.html:8

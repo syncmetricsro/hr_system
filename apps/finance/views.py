@@ -14,9 +14,13 @@ from apps.finance.services import (
     FinanceError,
     company_totals,
     group_breakdown,
+    lock_month,
+    project_totals,
     recompute_month,
     record_financial_month,
+    reopen_month,
     set_line_item,
+    yearly_totals,
 )
 from apps.projects.models import Project
 
@@ -31,7 +35,25 @@ def finance_summary(request: HttpRequest) -> HttpResponse:
             "months": months,
             "totals": company_totals(),
             "groups": group_breakdown(),
+            "project_results": project_totals(),
+            "years": yearly_totals(),
             "projects": Project.objects.filter(is_active=True),
+        },
+    )
+
+
+@require_action(Action.FINANCE_VIEW_SUMMARY)
+def finance_year(request: HttpRequest, year: int) -> HttpResponse:
+    months = FinancialMonth.objects.select_related("project").filter(year=year)
+    return TemplateResponse(
+        request,
+        "pages/finance_year.html",
+        {
+            "year": year,
+            "months": months,
+            "totals": company_totals(year),
+            "groups": group_breakdown(list(months)),
+            "project_results": project_totals(year),
         },
     )
 
@@ -42,6 +64,7 @@ def finance_month_detail(request: HttpRequest, pk: int) -> HttpResponse:
     categories = FinanceCategory.objects.filter(is_active=True)
     amounts = {li.category_id: li.amount for li in month.line_items.all()}
     rows = [{"category": c, "amount": amounts.get(c.id, "")} for c in categories]
+    can_manage = user_can(request.user, Action.FINANCE_MANAGE)
     return TemplateResponse(
         request,
         "pages/finance_month_detail.html",
@@ -49,7 +72,8 @@ def finance_month_detail(request: HttpRequest, pk: int) -> HttpResponse:
             "month": month,
             "rows": rows,
             "groups": group_breakdown([month]),
-            "can_manage": user_can(request.user, Action.FINANCE_MANAGE),
+            "can_manage": can_manage,
+            "editable": can_manage and not month.is_locked,
         },
     )
 
@@ -67,6 +91,27 @@ def finance_month_save(request: HttpRequest, pk: int) -> HttpResponse:
         messages.success(request, _("Saved and recalculated."))
     except (FinanceError, ValueError) as exc:
         messages.error(request, str(exc) or _("Invalid input."))
+    return redirect("finance_month_detail", pk=month.pk)
+
+
+@require_POST
+@require_action(Action.FINANCE_MANAGE)
+def finance_month_lock(request: HttpRequest, pk: int) -> HttpResponse:
+    month = get_object_or_404(FinancialMonth, pk=pk)
+    lock_month(month, actor=request.user)
+    messages.success(request, _("Month locked."))
+    return redirect("finance_month_detail", pk=month.pk)
+
+
+@require_POST
+@require_action(Action.FINANCE_MANAGE)
+def finance_month_reopen(request: HttpRequest, pk: int) -> HttpResponse:
+    month = get_object_or_404(FinancialMonth, pk=pk)
+    try:
+        reopen_month(month, reason=request.POST.get("reason"), actor=request.user)
+        messages.success(request, _("Month reopened."))
+    except FinanceError as exc:
+        messages.error(request, str(exc))
     return redirect("finance_month_detail", pk=month.pk)
 
 
