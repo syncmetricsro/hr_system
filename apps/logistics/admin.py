@@ -27,13 +27,13 @@ class AccommodationAdmin(admin.ModelAdmin):
 
 @admin.register(Room)
 class RoomAdmin(admin.ModelAdmin):
-    list_display = ("accommodation", "label", "capacity")
+    list_display = ("accommodation", "label", "capacity", "monthly_rate")
     list_filter = ("accommodation",)
 
 
 @admin.register(RoomAssignment)
 class RoomAssignmentAdmin(admin.ModelAdmin):
-    list_display = ("person", "room", "status", "start_date", "end_date")
+    list_display = ("person", "room", "status", "start_date", "end_date", "rate_override")
     list_filter = ("status",)
     search_fields = ("person__search_name",)
 

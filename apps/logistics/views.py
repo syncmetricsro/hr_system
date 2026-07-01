@@ -11,20 +11,25 @@ from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
 
 from apps.accounts.permissions import Action, require_action
+from apps.accounts.permissions import can as user_can
 from apps.logistics.models import (
     Accommodation,
     EquipmentIssue,
     EquipmentItem,
     Room,
+    RoomAssignment,
     TransportWeek,
 )
 from apps.logistics.services import (
     CapacityError,
+    accommodation_cost_report,
     assign_room,
     issue_equipment,
     record_transport_week,
     release_room,
     return_equipment,
+    set_assignment_rate,
+    set_room_rate,
 )
 from apps.people.models import Person
 from apps.projects.models import Project
@@ -79,8 +84,38 @@ def accommodation_detail(request: HttpRequest, pk: int) -> TemplateResponse:
     return TemplateResponse(
         request,
         "pages/accommodation_detail.html",
-        {"accommodation": accommodation, "rooms": accommodation.rooms.all()},
+        {
+            "accommodation": accommodation,
+            "rooms": accommodation.rooms.all(),
+            "can_manage": user_can(request.user, Action.ACCOMMODATION_MANAGE),
+        },
     )
+
+
+@require_action(Action.ACCOMMODATION_MANAGE)
+def accommodation_costs(request: HttpRequest) -> TemplateResponse:
+    """Occupancy + monthly-cost report per accommodation (reporting only, Q1)."""
+    return TemplateResponse(
+        request, "pages/accommodation_costs.html", accommodation_cost_report()
+    )
+
+
+@require_POST
+@require_action(Action.ACCOMMODATION_MANAGE)
+def set_room_rate_view(request: HttpRequest, pk: int) -> HttpResponse:
+    room = get_object_or_404(Room, pk=pk)
+    set_room_rate(room, request.POST.get("monthly_rate") or 0, actor=request.user)
+    messages.success(request, _("Room rate saved."))
+    return redirect("accommodation_detail", pk=room.accommodation_id)
+
+
+@require_POST
+@require_action(Action.ACCOMMODATION_MANAGE)
+def set_assignment_rate_view(request: HttpRequest, pk: int) -> HttpResponse:
+    assignment = get_object_or_404(RoomAssignment, pk=pk)
+    set_assignment_rate(assignment, request.POST.get("rate_override"), actor=request.user)
+    messages.success(request, _("Rate override saved."))
+    return redirect("person_detail", pk=assignment.person_id)
 
 
 @require_POST

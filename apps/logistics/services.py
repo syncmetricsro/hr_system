@@ -1,10 +1,13 @@
 from __future__ import annotations
 
+from decimal import Decimal
+
 from django.db import transaction
 from django.utils import timezone
 
 from apps.audit.services import record_event
 from apps.logistics.models import (
+    Accommodation,
     EquipmentIssue,
     EquipmentIssueStatus,
     RoomAssignment,
@@ -15,6 +18,63 @@ from apps.logistics.models import (
 
 class CapacityError(Exception):
     """Raised when a room is at capacity."""
+
+
+@transaction.atomic
+def set_room_rate(room, rate, *, actor=None):
+    """Set a room's monthly rate (EUR). Recorded for reporting only (Q1)."""
+    room.monthly_rate = Decimal(rate or 0)
+    room.save(update_fields=["monthly_rate"])
+    record_event(actor, "accommodation.rate_set", target=room, rate=str(room.monthly_rate))
+    return room
+
+
+@transaction.atomic
+def set_assignment_rate(assignment, rate, *, actor=None):
+    """Set or clear the per-assignment monthly-rate override (blank clears it)."""
+    assignment.rate_override = None if rate in (None, "") else Decimal(rate)
+    assignment.save(update_fields=["rate_override"])
+    record_event(
+        actor, "accommodation.assignment_rate_set", target=assignment,
+        rate=("" if assignment.rate_override is None else str(assignment.rate_override)),
+    )
+    return assignment
+
+
+def accommodation_cost_report():
+    """Per-accommodation occupancy + monthly cost, plus a company total.
+
+    Two figures per accommodation, both dynamic (never hardcoded):
+    - ``room_cost`` — the standing monthly cost of the rooms (Σ room.monthly_rate);
+    - ``assigned_cost`` — the amount attributed to housed workers
+      (Σ effective_rate over active assignments, i.e. override or room rate).
+
+    Reporting only — no automatic deduction is created (Q1 pending confirmation).
+    """
+    rows = []
+    company = {"rooms": 0, "capacity": 0, "occupancy": 0,
+               "room_cost": Decimal("0"), "assigned_cost": Decimal("0")}
+    for acc in Accommodation.objects.prefetch_related("rooms__assignments"):
+        rooms = list(acc.rooms.all())
+        capacity = sum(r.capacity for r in rooms)
+        room_cost = sum((r.monthly_rate for r in rooms), Decimal("0"))
+        occupancy = 0
+        assigned_cost = Decimal("0")
+        for r in rooms:
+            for a in r.assignments.all():
+                if a.status == RoomAssignmentStatus.ACTIVE:
+                    occupancy += 1
+                    assigned_cost += a.effective_rate
+        rows.append({
+            "accommodation": acc, "rooms": len(rooms), "capacity": capacity,
+            "occupancy": occupancy, "room_cost": room_cost, "assigned_cost": assigned_cost,
+        })
+        company["rooms"] += len(rooms)
+        company["capacity"] += capacity
+        company["occupancy"] += occupancy
+        company["room_cost"] += room_cost
+        company["assigned_cost"] += assigned_cost
+    return {"rows": rows, "company": company}
 
 
 @transaction.atomic
