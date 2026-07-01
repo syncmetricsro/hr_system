@@ -1,0 +1,39 @@
+{% extends "layouts/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Equipment reviews" %} · Jober{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <p class="eyebrow">{% trans "Logistics" %}</p>
+  <h1>{% trans "Equipment reviews" %}</h1>
+</section>
+
+<p class="muted">{% trans "Unreturned items awaiting a charge decision. Approving records the charge for recovery — no amount is deducted automatically." %}</p>
+
+<section class="dashboard-grid" aria-label="{% trans 'Company total' %}">
+  <article class="metric-card"><span>{% trans "Outstanding" %}</span><strong>{{ total }}</strong></article>
+</section>
+
+<section class="field-list" aria-label="{% trans 'Equipment reviews' %}">
+  {% for issue in issues %}
+    <article class="field-card">
+      <div>
+        <h3><a href="{% url 'person_detail' issue.person_id %}">{{ issue.person }}</a></h3>
+        <p>{{ issue.item }} × {{ issue.quantity }}</p>
+      </div>
+      <dl>
+        <div><dt>{% trans "Charge amount" %}</dt><dd>{{ issue.charge_amount }}</dd></div>
+      </dl>
+      <form class="people-search" method="post" action="{% url 'review_deduction' issue.pk %}">
+        {% csrf_token %}
+        <input type="text" name="note" aria-label="{% trans 'Review note' %}" placeholder="{% trans 'Review note' %}">
+        <button class="button button-primary" type="submit" name="decision" value="approve">{% trans "Approve charge" %}</button>
+        <button class="button button-secondary" type="submit" name="decision" value="waive">{% trans "Waive" %}</button>
+      </form>
+    </article>
+  {% empty %}
+    <p>{% trans "Nothing awaiting review." %}</p>
+  {% endfor %}
+</section>
+{% endblock %}

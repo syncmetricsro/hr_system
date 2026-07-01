@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-01 17:36+0200\n"
+"POT-Creation-Date: 2026-07-01 17:59+0200\n"
 "Language: hu\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -94,7 +94,7 @@ msgstr ""
 #: apps/feedback/models.py:26 apps/feedback/models.py:48
 #: apps/finance/models.py:33 apps/intake/models.py:31
 #: apps/logistics/models.py:27 apps/logistics/models.py:87
-#: apps/logistics/models.py:119 apps/logistics/models.py:173
+#: apps/logistics/models.py:119 apps/logistics/models.py:202
 #: apps/messaging/models.py:17 apps/messaging/models.py:45
 #: apps/people/models.py:104 apps/projects/models.py:29
 #: apps/projects/models.py:85 apps/projects/models.py:141
@@ -111,7 +111,7 @@ msgid "audit events"
 msgstr ""
 
 #: apps/compliance/models.py:12 apps/intake/models.py:100
-#: apps/logistics/models.py:71 apps/logistics/models.py:137
+#: apps/logistics/models.py:71 apps/logistics/models.py:151
 #: apps/messaging/models.py:35 apps/people/models.py:108
 #: apps/projects/models.py:57 apps/projects/models.py:123
 #: apps/projects/models.py:166
@@ -156,7 +156,7 @@ msgid "label"
 msgstr "Címke"
 
 #: apps/feedback/models.py:23 apps/finance/models.py:21
-#: apps/logistics/models.py:164 apps/projects/models.py:33
+#: apps/logistics/models.py:193 apps/projects/models.py:33
 #: apps/projects/models.py:63 apps/projects/models.py:126
 #: apps/projects/models.py:169
 #, fuzzy
@@ -245,7 +245,7 @@ msgstr "Bevétel"
 msgid "cost"
 msgstr ""
 
-#: apps/finance/models.py:27 apps/logistics/models.py:168
+#: apps/finance/models.py:27 apps/logistics/models.py:197
 #: apps/projects/models.py:131
 msgid "note"
 msgstr ""
@@ -254,7 +254,7 @@ msgstr ""
 msgid "locked"
 msgstr ""
 
-#: apps/finance/models.py:31 apps/logistics/models.py:171
+#: apps/finance/models.py:31 apps/logistics/models.py:200
 msgid "recorded by"
 msgstr ""
 
@@ -449,7 +449,7 @@ msgid "version"
 msgstr "Jogosultságok"
 
 #: apps/intake/models.py:26 apps/intake/models.py:102
-#: apps/logistics/models.py:76 apps/logistics/models.py:143
+#: apps/logistics/models.py:76 apps/logistics/models.py:157
 #: apps/messaging/models.py:39 apps/projects/models.py:66
 #, fuzzy
 #| msgid "Status"
@@ -737,94 +737,142 @@ msgstr ""
 msgid "Returned"
 msgstr "Visszavétel"
 
-#: apps/logistics/models.py:140
+#: apps/logistics/models.py:143
+msgid "None"
+msgstr ""
+
+#: apps/logistics/models.py:144
+msgid "Pending review"
+msgstr "Ellenőrzésre vár"
+
+#: apps/logistics/models.py:145
+msgid "Charge approved"
+msgstr "Levonás jóváhagyva"
+
+#: apps/logistics/models.py:146
+msgid "Waived"
+msgstr "Elengedve"
+
+#: apps/logistics/models.py:154
 msgid "item"
 msgstr ""
 
-#: apps/logistics/models.py:142
+#: apps/logistics/models.py:156
 #, fuzzy
 #| msgid "Quantity"
 msgid "quantity"
 msgstr "Mennyiség"
 
-#: apps/logistics/models.py:146
+#: apps/logistics/models.py:161
+#, fuzzy
+#| msgid "Status"
+msgid "review status"
+msgstr "Állapot"
+
+#: apps/logistics/models.py:165
+#, fuzzy
+#| msgid "Headcount"
+msgid "charge amount"
+msgstr "Létszám"
+
+#: apps/logistics/models.py:169
+msgid "reviewed by"
+msgstr ""
+
+#: apps/logistics/models.py:171
+msgid "reviewed at"
+msgstr ""
+
+#: apps/logistics/models.py:172
+msgid "review note"
+msgstr ""
+
+#: apps/logistics/models.py:175
 msgid "issued by"
 msgstr ""
 
-#: apps/logistics/models.py:148
+#: apps/logistics/models.py:177
 msgid "issued at"
 msgstr ""
 
-#: apps/logistics/models.py:149
+#: apps/logistics/models.py:178
 msgid "returned at"
 msgstr ""
 
-#: apps/logistics/models.py:152
+#: apps/logistics/models.py:181
 #, fuzzy
 #| msgid "Equipment issued"
 msgid "equipment issue"
 msgstr "Felszerelés kiadva"
 
-#: apps/logistics/models.py:153
+#: apps/logistics/models.py:182
 #, fuzzy
 #| msgid "Equipment issued"
 msgid "equipment issues"
 msgstr "Felszerelés kiadva"
 
-#: apps/logistics/models.py:166
+#: apps/logistics/models.py:195
 #, fuzzy
 #| msgid "Week start"
 msgid "week start"
 msgstr "Hét kezdete"
 
-#: apps/logistics/models.py:167
+#: apps/logistics/models.py:196
 #, fuzzy
 #| msgid "Headcount"
 msgid "headcount"
 msgstr "Létszám"
 
-#: apps/logistics/models.py:176
+#: apps/logistics/models.py:205
 #, fuzzy
 #| msgid "Transport"
 msgid "transport week"
 msgstr "Szállítás"
 
 # --- transport trends ---
-#: apps/logistics/models.py:177
+#: apps/logistics/models.py:206
 #, fuzzy
 #| msgid "Transport trends"
 msgid "transport weeks"
 msgstr "Szállítási trendek"
 
-#: apps/logistics/views.py:108
+#: apps/logistics/views.py:112
 msgid "Room rate saved."
 msgstr "Szobadíj mentve."
 
-#: apps/logistics/views.py:117
+#: apps/logistics/views.py:121
 msgid "Rate override saved."
 msgstr "Egyedi díj mentve."
 
-#: apps/logistics/views.py:128
+#: apps/logistics/views.py:132
 msgid "Room assigned."
 msgstr "Szoba hozzárendelve."
 
-#: apps/logistics/views.py:139
+#: apps/logistics/views.py:143
 msgid "Room released."
 msgstr "Szoba felszabadítva."
 
-#: apps/logistics/views.py:149
+#: apps/logistics/views.py:153
 msgid "Equipment issued."
 msgstr "Felszerelés kiadva."
 
-#: apps/logistics/views.py:158
+#: apps/logistics/views.py:162
 msgid "Equipment returned."
 msgstr "Felszerelés visszavéve."
 
 #: apps/logistics/views.py:172
+msgid "Flagged for deduction review."
+msgstr "Levonási ellenőrzésre jelölve."
+
+#: apps/logistics/views.py:195
+msgid "Review recorded."
+msgstr "Ellenőrzés rögzítve."
+
+#: apps/logistics/views.py:211
 msgid "Transport week recorded."
 msgstr "Szállítási hét rögzítve."
 
-#: apps/logistics/views.py:174
+#: apps/logistics/views.py:213
 msgid "Week start is required."
 msgstr "A hét kezdete kötelező."
 
@@ -1366,8 +1414,12 @@ msgstr "Terep"
 msgid "Reports"
 msgstr "Jelentések"
 
+#: templates/layouts/base.html:34
+msgid "Reviews"
+msgstr "Ellenőrzések"
+
 # --- finance ---
-#: templates/layouts/base.html:34 templates/pages/finance_month_detail.html:8
+#: templates/layouts/base.html:36 templates/pages/finance_month_detail.html:8
 #: templates/pages/finance_month_detail.html:39
 #: templates/pages/finance_summary.html:4
 #: templates/pages/finance_summary.html:9 templates/pages/finance_year.html:4
@@ -1376,24 +1428,24 @@ msgid "Finance"
 msgstr "Pénzügyek"
 
 # --- feedback ---
-#: templates/layouts/base.html:36 templates/pages/feedback_form.html:7
+#: templates/layouts/base.html:38 templates/pages/feedback_form.html:7
 #: templates/pages/feedback_form.html:14
 msgid "Feedback"
 msgstr "Visszajelzés"
 
-#: templates/layouts/base.html:37
+#: templates/layouts/base.html:39
 msgid "Messages"
 msgstr "Üzenetek"
 
-#: templates/layouts/base.html:44
+#: templates/layouts/base.html:46
 msgid "Language"
 msgstr "Nyelv"
 
-#: templates/layouts/base.html:53
+#: templates/layouts/base.html:55
 msgid "Role"
 msgstr "Szerepkör"
 
-#: templates/layouts/base.html:56
+#: templates/layouts/base.html:58
 msgid "Sign out"
 msgstr "Kijelentkezés"
 
@@ -1419,6 +1471,7 @@ msgid "Reporting only — no amounts are deducted from workers."
 msgstr "Csak kimutatáshoz — a munkavállalóktól semmi nem kerül levonásra."
 
 #: templates/pages/accommodation_costs.html:15
+#: templates/pages/equipment_reviews.html:14
 #: templates/pages/finance_summary.html:13
 #: templates/pages/finance_summary.html:20
 #: templates/pages/finance_summary.html:46
@@ -1471,6 +1524,7 @@ msgstr "Nincsenek szobák."
 
 # --- logistics: accommodation ---
 #: templates/pages/accommodation_list.html:8
+#: templates/pages/equipment_reviews.html:8
 #: templates/pages/person_detail.html:154
 #: templates/pages/person_detail.html:190
 #: templates/pages/project_detail.html:50
@@ -1543,6 +1597,42 @@ msgstr "Próbanapok"
 #: templates/pages/dashboard.html:38 templates/pages/trials_queue.html:27
 msgid "No trials awaiting an outcome."
 msgstr "Nincs eredményre váró próbanap."
+
+#: templates/pages/equipment_reviews.html:4
+#: templates/pages/equipment_reviews.html:9
+#: templates/pages/equipment_reviews.html:18
+msgid "Equipment reviews"
+msgstr "Felszerelés-ellenőrzés"
+
+#: templates/pages/equipment_reviews.html:12
+msgid ""
+"Unreturned items awaiting a charge decision. Approving records the charge "
+"for recovery — no amount is deducted automatically."
+msgstr "Vissza nem adott tételek, amelyek levonási döntésre várnak. A jóváhagyás rögzíti a levonást behajtásra — semmilyen összeg nem kerül automatikusan levonásra."
+
+#: templates/pages/equipment_reviews.html:15
+msgid "Outstanding"
+msgstr "Fennálló"
+
+#: templates/pages/equipment_reviews.html:26
+msgid "Charge amount"
+msgstr "Levonás összege"
+
+#: templates/pages/equipment_reviews.html:30
+msgid "Review note"
+msgstr "Ellenőrzési megjegyzés"
+
+#: templates/pages/equipment_reviews.html:31
+msgid "Approve charge"
+msgstr "Levonás jóváhagyása"
+
+#: templates/pages/equipment_reviews.html:32
+msgid "Waive"
+msgstr "Elenged"
+
+#: templates/pages/equipment_reviews.html:36
+msgid "Nothing awaiting review."
+msgstr "Semmi nem vár ellenőrzésre."
 
 #: templates/pages/feedback_form.html:16
 msgid "Thank you for your feedback."
@@ -1761,7 +1851,7 @@ msgstr "Keresés"
 msgid "No people found."
 msgstr "Nincs találat."
 
-#: templates/pages/person_detail.html:8 templates/pages/person_detail.html:271
+#: templates/pages/person_detail.html:8 templates/pages/person_detail.html:279
 msgid "Person"
 msgstr "Személy"
 
@@ -1900,74 +1990,78 @@ msgstr "Szoba hozzárendelése"
 msgid "Value"
 msgstr "Érték"
 
-#: templates/pages/person_detail.html:202
+#: templates/pages/person_detail.html:203
 msgid "Return"
 msgstr "Visszavétel"
 
-#: templates/pages/person_detail.html:214
+#: templates/pages/person_detail.html:207
+msgid "Flag unreturned"
+msgstr "Vissza nem adottnak jelöl"
+
+#: templates/pages/person_detail.html:222
 msgid "Item"
 msgstr "Tétel"
 
-#: templates/pages/person_detail.html:217
+#: templates/pages/person_detail.html:225
 msgid "Quantity"
 msgstr "Mennyiség"
 
-#: templates/pages/person_detail.html:218
+#: templates/pages/person_detail.html:226
 msgid "Issue equipment"
 msgstr "Felszerelés kiadása"
 
 # --- exit / recycling ---
-#: templates/pages/person_detail.html:225
+#: templates/pages/person_detail.html:233
 msgid "Exit"
 msgstr "Kilépés"
 
-#: templates/pages/person_detail.html:226
+#: templates/pages/person_detail.html:234
 msgid "Exit & reconcile"
 msgstr "Kilépés és elszámolás"
 
-#: templates/pages/person_detail.html:227
+#: templates/pages/person_detail.html:235
 msgid ""
 "Ends the project assignment, releases the room, and returns issued equipment."
 msgstr ""
 "Lezárja a projekt-hozzárendelést, felszabadítja a szobát és visszaveszi a "
 "kiadott felszerelést."
 
-#: templates/pages/person_detail.html:231
+#: templates/pages/person_detail.html:239
 msgid "Exit to Available"
 msgstr "Kilépés Elérhető állapotba"
 
-#: templates/pages/person_detail.html:235
+#: templates/pages/person_detail.html:243
 msgid "Exit to Inactive"
 msgstr "Kilépés Inaktív állapotba"
 
 # --- messaging / SMS ---
-#: templates/pages/person_detail.html:243
+#: templates/pages/person_detail.html:251
 msgid "Messaging"
 msgstr "Üzenetküldés"
 
-#: templates/pages/person_detail.html:244
-#: templates/pages/person_detail.html:258
+#: templates/pages/person_detail.html:252
+#: templates/pages/person_detail.html:266
 msgid "Send SMS"
 msgstr "SMS küldése"
 
-#: templates/pages/person_detail.html:248
+#: templates/pages/person_detail.html:256
 msgid "Template"
 msgstr "Sablon"
 
-#: templates/pages/person_detail.html:255
+#: templates/pages/person_detail.html:263
 msgid "Message"
 msgstr "Üzenet"
 
-#: templates/pages/person_detail.html:256
+#: templates/pages/person_detail.html:264
 msgid "Or type a message"
 msgstr "Vagy írjon üzenetet"
 
 # --- person card: history + filter ---
-#: templates/pages/person_detail.html:272
+#: templates/pages/person_detail.html:280
 msgid "History"
 msgstr "Előzmények"
 
-#: templates/pages/person_detail.html:277
+#: templates/pages/person_detail.html:285
 msgid "No history yet."
 msgstr "Még nincs előzmény."
 

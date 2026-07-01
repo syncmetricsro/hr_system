@@ -47,10 +47,10 @@ class EquipmentItemAdmin(admin.ModelAdmin):
 
 @admin.register(EquipmentIssue)
 class EquipmentIssueAdmin(admin.ModelAdmin):
-    list_display = ("person", "item", "quantity", "status", "issued_at", "returned_at")
-    list_filter = ("status",)
+    list_display = ("person", "item", "quantity", "status", "review_status", "charge_amount", "issued_at", "returned_at")
+    list_filter = ("status", "review_status")
     search_fields = ("person__search_name", "item__name")
-    readonly_fields = ("issued_at", "returned_at")
+    readonly_fields = ("issued_at", "returned_at", "reviewed_at")
 
 
 @admin.register(TransportWeek)

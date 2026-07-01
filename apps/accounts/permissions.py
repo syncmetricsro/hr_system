@@ -41,6 +41,7 @@ class Action(str, Enum):
     APPROVAL_ACTIVATE = "approval.activate"
     PROJECT_MANAGE = "project.manage"
     ACCOMMODATION_MANAGE = "accommodation.manage"
+    EQUIPMENT_REVIEW_DEDUCTION = "equipment.review_deduction"
     CATALOG_MANAGE = "catalog.manage"
     USER_MANAGE = "user.manage"
     BLACKLIST_DECIDE = "blacklist.decide"
@@ -77,6 +78,7 @@ ACTION_ROLES: dict[Action, frozenset[Role]] = {
     Action.APPROVAL_ACTIVATE: frozenset({_MANAGER}),
     Action.PROJECT_MANAGE: frozenset({_MANAGER}),
     Action.ACCOMMODATION_MANAGE: frozenset({_MANAGER}),
+    Action.EQUIPMENT_REVIEW_DEDUCTION: frozenset({_MANAGER}),
     Action.CATALOG_MANAGE: frozenset({_MANAGER}),
     Action.USER_MANAGE: frozenset({_MANAGER}),
     Action.BLACKLIST_DECIDE: frozenset({_MANAGER}),

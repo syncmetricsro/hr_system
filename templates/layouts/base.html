@@ -30,6 +30,8 @@
         <a class="folder-tab" href="{% url 'accommodation_list' %}">{% trans "Accommodation" %}</a>
         <a class="folder-tab" href="{% url 'transport_trends' %}">{% trans "Transport" %}</a>
         <a class="folder-tab" href="{% url 'reports' %}">{% trans "Reports" %}</a>
+        {% can 'equipment.review_deduction' as may_equip_review %}
+        {% if may_equip_review %}<a class="folder-tab" href="{% url 'equipment_reviews' %}">{% trans "Reviews" %}</a>{% endif %}
         {% can 'finance.view_summary' as may_finance %}
         {% if may_finance %}<a class="folder-tab" href="{% url 'finance_summary' %}">{% trans "Finance" %}</a>{% endif %}
         {% can 'feedback.view' as may_feedback %}

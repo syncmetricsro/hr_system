@@ -215,6 +215,43 @@ Verification: ruff clean; **57 unit tests pass** (5 new view tests incl. sensiti
 Next step:
 - Recruiter intake (hard-gated) or trials + the readiness gate (which activates ADR 0018 enforcement).
 
+## 2026-06-29 (later 3)
+
+Phase 3 unreturned-equipment deduction review queue (Q2 safe default).
+
+What changed:
+- `apps/logistics/models.py`: `DeductionReviewStatus` (NONE/PENDING/APPROVED/
+  WAIVED) + `review_status`, `charge_amount`, `reviewed_by/at`, `review_note` on
+  `EquipmentIssue`. Migration `0006`. The charge review is **separate from the
+  physical status** — a flagged item is still ISSUED (not returned) but its
+  *charge* is under manager review. **No payroll deduction is ever executed**;
+  APPROVED only records the manager's decision to recover (Q2 safe default).
+- `apps/logistics/services.py`: `flag_unreturned` (snapshots
+  `quantity × item.unit_price`, guarded to issued + un-reviewed), `review_deduction`
+  (approve/waive, guarded to pending, audited), `pending_deduction_reviews`
+  (queue + dynamic outstanding total). `exit_person` now **skips already-flagged
+  items** when auto-returning (leaves them for the queue), replacing the old
+  "deductions not modelled yet" note.
+- RBAC: new **manager-only** `equipment.review_deduction` (queue + approve/waive);
+  flagging uses the existing coordinator+manager `equipment.issue_return`.
+  permission-matrix.md updated.
+- views/urls: `flag_unreturned`, `equipment_reviews` (queue), `review_deduction`.
+  Templates: per-item "Flag unreturned" + status badges on the person card; a
+  manager review-queue page (approve/waive + note, outstanding total, "no
+  automatic deduction" note); a manager-only **Reviews** nav tab. Admin + i18n
+  SK/HU/UK.
+
+Verification: ruff clean; **192 unit tests pass** (was 184) — flag snapshots the
+charge at unit price, can't flag returned/double-flag, approve/waive records the
+reviewer + note, review requires pending + a valid decision, the queue total is
+dynamic, **exit leaves flagged items for review** while auto-returning the rest,
+manager-only RBAC, and the queue view is 403 for coordinator / 200 for manager.
+Migration `0006` builds under pytest.
+
+Next step:
+- Inactive-reasons catalog + exit recycling (small lifecycle slice), or wait on
+  the blocked items (blacklist legal; the finance/accommodation/equipment answers).
+
 ## 2026-06-29 (later 2)
 
 Phase 3 accommodation pricing + occupancy-cost reporting (Q1 safe default).
