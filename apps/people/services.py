@@ -1,11 +1,27 @@
 from __future__ import annotations
 
 from django.db import transaction
+from django.db.models import Count
 from django.utils.translation import gettext as _
 
 from apps.audit.models import AuditEvent
 from apps.audit.services import record_event
-from apps.people.models import LifecycleError, LifecycleStatus
+from apps.people.models import LifecycleError, LifecycleStatus, Person
+
+
+def inactive_by_reason(*, include_archived: bool = False) -> list[dict]:
+    """Count of Inactive people grouped by their structured reason (Q5), newest
+    bucket first. Null reasons fall into a 'No reason' bucket. Non-archived by
+    default, matching the reports page's workforce counts."""
+    qs = Person.objects.filter(lifecycle_status=LifecycleStatus.INACTIVE)
+    if not include_archived:
+        qs = qs.filter(is_archived=False)
+    rows = []
+    for r in (
+        qs.values("inactive_reason__label").annotate(count=Count("id")).order_by("-count")
+    ):
+        rows.append({"label": r["inactive_reason__label"] or _("No reason"), "count": r["count"]})
+    return rows
 
 
 @transaction.atomic

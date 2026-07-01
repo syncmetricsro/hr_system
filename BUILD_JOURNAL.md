@@ -215,6 +215,22 @@ Verification: ruff clean; **57 unit tests pass** (5 new view tests incl. sensiti
 Next step:
 - Recruiter intake (hard-gated) or trials + the readiness gate (which activates ADR 0018 enforcement).
 
+## 2026-06-29 (later 5)
+
+Reports polish — inactive-by-reason breakdown.
+
+What changed:
+- `apps/people/services.py`: `inactive_by_reason(include_archived=False)` —
+  counts Inactive people grouped by their structured reason (Q5), most-common
+  first, with a "No reason" bucket for nulls; non-archived by default to match
+  the reports page's workforce counts.
+- Reports view/template gained an "Inactive by reason" panel next to "People by
+  status". i18n SK/HU/UK.
+
+Verification: ruff clean; **202 unit tests pass** (was 198) — grouping/ordering,
+null bucket, archived excluded by default (and included on request), empty case.
+(Read-only reporting; no model change, no migration.)
+
 ## 2026-06-29 (later 4)
 
 Inactive-reasons catalog + exit recycling (Q5 + lifecycle polish).

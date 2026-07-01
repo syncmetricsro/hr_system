@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-01 18:32+0200\n"
+"POT-Creation-Date: 2026-07-01 21:14+0200\n"
 "Language: sk\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -283,7 +283,7 @@ msgstr "Finančné mesiace"
 #: apps/finance/models.py:54 templates/pages/finance_month_detail.html:33
 #: templates/pages/finance_summary.html:15
 #: templates/pages/finance_summary.html:39 templates/pages/finance_year.html:15
-#: templates/pages/reports.html:38
+#: templates/pages/reports.html:47
 msgid "Cost"
 msgstr "Náklady"
 
@@ -291,7 +291,7 @@ msgstr "Náklady"
 #: templates/pages/finance_month_detail.html:32
 #: templates/pages/finance_summary.html:14
 #: templates/pages/finance_summary.html:38 templates/pages/finance_year.html:14
-#: templates/pages/reports.html:37
+#: templates/pages/reports.html:46
 msgid "Revenue"
 msgstr "Príjmy"
 
@@ -1139,35 +1139,39 @@ msgstr "Hľadať podľa mena"
 msgid "people"
 msgstr "Ľudia"
 
-#: apps/people/services.py:34
+#: apps/people/services.py:23
+msgid "No reason"
+msgstr "Bez dôvodu"
+
+#: apps/people/services.py:50
 msgid "Trial scheduled"
 msgstr "Skúška naplánovaná"
 
-#: apps/people/services.py:38
+#: apps/people/services.py:54
 msgid "Trial outcome"
 msgstr "Výsledok skúšky"
 
-#: apps/people/services.py:43
+#: apps/people/services.py:59
 msgid "Assigned to project"
 msgstr "Pridelený na projekt"
 
-#: apps/people/services.py:46
+#: apps/people/services.py:62
 msgid "Room assigned"
 msgstr "Izba pridelená"
 
-#: apps/people/services.py:49
+#: apps/people/services.py:65
 msgid "Equipment issued"
 msgstr "Vybavenie vydané"
 
-#: apps/people/services.py:53
+#: apps/people/services.py:69
 msgid "Readiness submitted"
 msgstr "Pripravenosť odoslaná"
 
-#: apps/people/services.py:57
+#: apps/people/services.py:73
 msgid "Intake completed"
 msgstr "Príjem dokončený"
 
-#: apps/people/services.py:65
+#: apps/people/services.py:81
 msgid "Status changed"
 msgstr "Stav zmenený"
 
@@ -1448,7 +1452,7 @@ msgstr "Kontroly"
 #: templates/pages/finance_month_detail.html:39
 #: templates/pages/finance_summary.html:4
 #: templates/pages/finance_summary.html:9 templates/pages/finance_year.html:4
-#: templates/pages/finance_year.html:8 templates/pages/reports.html:35
+#: templates/pages/finance_year.html:8 templates/pages/reports.html:44
 msgid "Finance"
 msgstr "Financie"
 
@@ -1502,7 +1506,7 @@ msgstr "Iba na účely reportingu — pracovníkom sa nič nestrháva."
 #: templates/pages/finance_summary.html:46
 #: templates/pages/finance_summary.html:58
 #: templates/pages/finance_summary.html:70 templates/pages/finance_year.html:13
-#: templates/pages/reports.html:34 templates/pages/transport_trends.html:14
+#: templates/pages/reports.html:43 templates/pages/transport_trends.html:14
 msgid "Company total"
 msgstr "Celkový súčet firmy"
 
@@ -1740,7 +1744,7 @@ msgstr "Uzamknúť mesiac"
 #: templates/pages/finance_summary.html:16
 #: templates/pages/finance_summary.html:24
 #: templates/pages/finance_summary.html:74 templates/pages/finance_year.html:16
-#: templates/pages/finance_year.html:50 templates/pages/reports.html:39
+#: templates/pages/finance_year.html:50 templates/pages/reports.html:48
 msgid "Net"
 msgstr "Čisté"
 
@@ -2186,6 +2190,14 @@ msgstr "Hodnota vybavenia"
 #: templates/pages/reports.html:24
 msgid "People by status"
 msgstr "Ľudia podľa stavu"
+
+#: templates/pages/reports.html:31
+msgid "Inactive by reason"
+msgstr "Neaktívni podľa dôvodu"
+
+#: templates/pages/reports.html:36
+msgid "No inactive people."
+msgstr "Žiadni neaktívni ľudia."
 
 # --- transport trends ---
 #: templates/pages/transport_trends.html:4
