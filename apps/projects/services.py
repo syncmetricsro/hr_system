@@ -155,14 +155,20 @@ def activate_from_readiness(person, project, *, actor=None):
 
 
 @transaction.atomic
-def exit_person(person, *, actor=None, reason: str = "", outcome: str = "available"):
+def exit_person(person, *, actor=None, reason: str = "", outcome: str = "available",
+                inactive_reason=None):
     """Exit reconciliation (plan §11.13): end the active project assignment,
     release the room, return all issued equipment, and recycle the person to
     Available (default) or mark them Inactive.
 
     Items already flagged as unreturned (review_status != NONE) are left for the
     manager deduction-review queue (Q2 safe default) rather than auto-returned.
+
+    When exiting to Inactive, a structured ``inactive_reason`` (InactiveReason,
+    Q5 catalog) and the since-date are recorded on the person.
     """
+    from django.utils import timezone
+
     from apps.logistics.models import DeductionReviewStatus, EquipmentIssueStatus
     from apps.logistics.services import release_room, return_equipment
 
@@ -175,8 +181,14 @@ def exit_person(person, *, actor=None, reason: str = "", outcome: str = "availab
 
     if outcome == "inactive" and person.lifecycle_status == LifecycleStatus.AVAILABLE:
         person.set_status(LifecycleStatus.INACTIVE, actor=actor, reason=reason or "exit")
+        person.inactive_reason = inactive_reason
+        person.inactive_since = timezone.localdate()
+        person.save(update_fields=["inactive_reason", "inactive_since", "updated_at"])
 
-    record_event(actor, "person.exited", target=person, reason=reason, outcome=outcome)
+    record_event(
+        actor, "person.exited", target=person, reason=reason, outcome=outcome,
+        inactive_reason=(inactive_reason.label if inactive_reason else ""),
+    )
     return person
 
 

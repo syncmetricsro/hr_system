@@ -10,7 +10,7 @@ from django.views.decorators.http import require_POST
 
 from apps.accounts.models import Role
 from apps.accounts.permissions import Action, require_action
-from apps.people.models import Person
+from apps.people.models import InactiveReason, Person
 from apps.projects.models import (
     AssignmentStatus,
     Project,
@@ -124,7 +124,15 @@ def readiness_update(request: HttpRequest, person_pk: int) -> HttpResponse:
 def exit_view(request: HttpRequest, person_pk: int) -> HttpResponse:
     person = get_object_or_404(Person, pk=person_pk)
     outcome = "inactive" if request.POST.get("outcome") == "inactive" else "available"
-    exit_person(person, actor=request.user, reason=request.POST.get("reason", ""), outcome=outcome)
+    reason_obj = None
+    if outcome == "inactive" and request.POST.get("inactive_reason"):
+        reason_obj = InactiveReason.objects.filter(
+            pk=request.POST.get("inactive_reason"), is_active=True
+        ).first()
+    exit_person(
+        person, actor=request.user, reason=request.POST.get("reason", ""),
+        outcome=outcome, inactive_reason=reason_obj,
+    )
     messages.success(request, _("Exit completed."))
     return redirect("person_detail", pk=person.pk)
 

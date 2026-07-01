@@ -240,9 +240,30 @@
     </form>
     <form method="post" action="{% url 'exit_person' person.pk %}">
       {% csrf_token %}<input type="hidden" name="outcome" value="inactive">
+      <select name="inactive_reason" aria-label="{% trans 'Inactive reason' %}">
+        <option value="">{% trans "Reason…" %}</option>
+        {% for r in inactive_reasons %}<option value="{{ r.pk }}">{{ r.label }}</option>{% endfor %}
+      </select>
       <button class="button button-secondary" type="submit">{% trans "Exit to Inactive" %}</button>
     </form>
   </div>
+</section>
+{% endif %}
+
+{% if is_inactive %}
+<section class="panel workflow-panel">
+  <p class="eyebrow">{% trans "Lifecycle" %}</p>
+  <h2>{% trans "Inactive" %}</h2>
+  <p class="muted">
+    {% trans "Reason" %}: {{ person.inactive_reason.label|default:"—" }}
+    {% if person.inactive_since %} · {% trans "Since" %} {{ person.inactive_since }}{% endif %}
+  </p>
+  {% if can_recycle %}
+    <form method="post" action="{% url 'recycle_person' person.pk %}">
+      {% csrf_token %}
+      <button class="button button-primary" type="submit">{% trans "Recycle to Available" %}</button>
+    </form>
+  {% endif %}
 </section>
 {% endif %}
 

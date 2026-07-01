@@ -7,15 +7,16 @@ from django.shortcuts import get_object_or_404, redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.translation import gettext as _
+from django.views.decorators.http import require_POST
 
 from apps.accounts.permissions import Action, require_action
 from apps.audit.services import record_event
 from apps.people.forms import PersonForm
 from apps.accounts.models import Role
 from apps.accounts.permissions import can as user_can
-from apps.people.models import LifecycleStatus, Person
+from apps.people.models import InactiveReason, LifecycleError, LifecycleStatus, Person
 from apps.people.permissions import can_view_sensitive
-from apps.people.services import person_history
+from apps.people.services import person_history, recycle_to_available
 from apps.messaging.models import MessageTemplate
 from apps.logistics.models import (
     EquipmentItem,
@@ -146,5 +147,23 @@ def person_detail(request: HttpRequest, pk: int) -> TemplateResponse:
                 or person.room_assignments.filter(status=RoomAssignmentStatus.ACTIVE).exists()
                 or person.equipment_issues.filter(status=EquipmentIssueStatus.ISSUED).exists()
             ),
+            "inactive_reasons": InactiveReason.objects.filter(is_active=True),
+            "is_inactive": person.lifecycle_status == LifecycleStatus.INACTIVE,
+            "can_recycle": (
+                person.lifecycle_status == LifecycleStatus.INACTIVE
+                and user_can(request.user, Action.PERSON_RECYCLE_AVAILABLE)
+            ),
         },
     )
+
+
+@require_POST
+@require_action(Action.PERSON_RECYCLE_AVAILABLE)
+def recycle_person(request: HttpRequest, person_pk: int) -> HttpResponse:
+    person = get_object_or_404(Person, pk=person_pk)
+    try:
+        recycle_to_available(person, actor=request.user, reason=request.POST.get("reason", ""))
+        messages.success(request, _("Recycled to Available."))
+    except LifecycleError as exc:
+        messages.error(request, str(exc))
+    return redirect("person_detail", pk=person.pk)
