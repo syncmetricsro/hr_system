@@ -215,6 +215,39 @@ Verification: ruff clean; **57 unit tests pass** (5 new view tests incl. sensiti
 Next step:
 - Recruiter intake (hard-gated) or trials + the readiness gate (which activates ADR 0018 enforcement).
 
+## 2026-06-29 (later 4)
+
+Inactive-reasons catalog + exit recycling (Q5 + lifecycle polish).
+
+What changed:
+- `apps/people/models.py`: `InactiveReason` catalog (label, is_active, order —
+  configurable in admin) and `Person.inactive_reason` FK + `Person.inactive_since`.
+  Migration `0002`; data migration `0003` seeds the Q5 placeholders (Sick,
+  Quit / left, Suspended, Military service, Other).
+- `apps/projects/services.py`: `exit_person` now takes `inactive_reason` and,
+  when exiting to Inactive, records the structured reason + since-date on the
+  person (replacing the free-text-only exit).
+- `apps/people/services.py`: `recycle_to_available` — returns an **Inactive**
+  person to the **Available** pool (INACTIVE→AVAILABLE is already an allowed
+  transition), clears the reason/since, audited `person.recycled`. Guarded to
+  Inactive-only.
+- views/urls: exit form captures the reason; `recycle_person` (POST) wires the
+  previously-defined-but-**unused** `person.recycle_available` action
+  (recruiter + coordinator + manager). Templates: reason `<select>` on the
+  Exit-to-Inactive form, plus an Inactive panel showing the reason/since and a
+  Recycle-to-Available button. Admin for `InactiveReason` + reason column on
+  Person. i18n SK/HU/UK.
+
+Verification: ruff clean; **198 unit tests pass** (was 192) — the `0003`
+migration seeds the placeholders, exit-to-inactive records reason + since,
+recycle clears them and returns Available, recycle is guarded to Inactive-only,
+RBAC (recruiter/coordinator/manager yes, observer no), and the recycle view is
+403 for observer / 302 + Available for coordinator.
+
+Next step:
+- Remaining work is blocked on Jober (blacklist legal Q3; the charge/deduct
+  behaviours behind Q1/Q2/Q4). This clears the last safe-default-buildable slice.
+
 ## 2026-06-29 (later 3)
 
 Phase 3 unreturned-equipment deduction review queue (Q2 safe default).

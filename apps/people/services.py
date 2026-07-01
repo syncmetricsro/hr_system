@@ -1,8 +1,25 @@
 from __future__ import annotations
 
+from django.db import transaction
 from django.utils.translation import gettext as _
 
 from apps.audit.models import AuditEvent
+from apps.audit.services import record_event
+from apps.people.models import LifecycleError, LifecycleStatus
+
+
+@transaction.atomic
+def recycle_to_available(person, *, actor=None, reason: str = ""):
+    """Return an Inactive person to the Available pool (exit recycling). Clears
+    the structured inactive reason/since. Raises if the person is not Inactive."""
+    if person.lifecycle_status != LifecycleStatus.INACTIVE:
+        raise LifecycleError("Only an Inactive person can be recycled to Available.")
+    person.set_status(LifecycleStatus.AVAILABLE, actor=actor, reason=reason or "recycled")
+    person.inactive_reason = None
+    person.inactive_since = None
+    person.save(update_fields=["inactive_reason", "inactive_since", "updated_at"])
+    record_event(actor, "person.recycled", target=person, reason=reason)
+    return person
 
 
 def person_history(person) -> list[dict]:

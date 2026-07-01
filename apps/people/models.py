@@ -55,6 +55,24 @@ class LifecycleError(Exception):
     """Raised on a disallowed lifecycle transition."""
 
 
+class InactiveReason(models.Model):
+    """Configurable catalog of reasons a person is marked Inactive (Q5 safe
+    default: a configurable list, seeded with a few placeholders). Editable in
+    admin; seeded by migration."""
+
+    label = models.CharField(_("label"), max_length=120, unique=True)
+    is_active = models.BooleanField(_("active"), default=True)
+    order = models.PositiveIntegerField(_("order"), default=0)
+
+    class Meta:
+        verbose_name = _("inactive reason")
+        verbose_name_plural = _("inactive reasons")
+        ordering = ("order", "label")
+
+    def __str__(self) -> str:
+        return self.label
+
+
 class Person(models.Model):
     """A worker/candidate. Fictional data only until the real-data legal gate."""
 
@@ -81,6 +99,14 @@ class Person(models.Model):
         choices=LifecycleStatus.choices,
         default=LifecycleStatus.AVAILABLE,
     )
+
+    # Inactive metadata (Q5): structured reason + since-date, set when marked
+    # Inactive and cleared on recycle back to Available.
+    inactive_reason = models.ForeignKey(
+        InactiveReason, on_delete=models.SET_NULL, null=True, blank=True,
+        related_name="people", verbose_name=_("inactive reason"),
+    )
+    inactive_since = models.DateField(_("inactive since"), null=True, blank=True)
 
     # Ownership / eligibility
     owning_recruiter = models.ForeignKey(
