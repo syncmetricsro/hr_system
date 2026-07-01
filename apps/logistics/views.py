@@ -22,12 +22,16 @@ from apps.logistics.models import (
 )
 from apps.logistics.services import (
     CapacityError,
+    DeductionReviewError,
     accommodation_cost_report,
     assign_room,
+    flag_unreturned,
     issue_equipment,
+    pending_deduction_reviews,
     record_transport_week,
     release_room,
     return_equipment,
+    review_deduction,
     set_assignment_rate,
     set_room_rate,
 )
@@ -157,6 +161,41 @@ def return_equipment_view(request: HttpRequest, issue_pk: int) -> HttpResponse:
     return_equipment(issue, actor=request.user)
     messages.success(request, _("Equipment returned."))
     return redirect("person_detail", pk=issue.person_id)
+
+
+@require_POST
+@require_action(Action.EQUIPMENT_ISSUE_RETURN)
+def flag_unreturned_view(request: HttpRequest, issue_pk: int) -> HttpResponse:
+    issue = get_object_or_404(EquipmentIssue, pk=issue_pk)
+    try:
+        flag_unreturned(issue, actor=request.user)
+        messages.success(request, _("Flagged for deduction review."))
+    except DeductionReviewError as exc:
+        messages.error(request, str(exc))
+    return redirect("person_detail", pk=issue.person_id)
+
+
+@require_action(Action.EQUIPMENT_REVIEW_DEDUCTION)
+def equipment_reviews(request: HttpRequest) -> TemplateResponse:
+    """Manager queue of unreturned items awaiting an approve/waive decision (Q2)."""
+    return TemplateResponse(
+        request, "pages/equipment_reviews.html", pending_deduction_reviews()
+    )
+
+
+@require_POST
+@require_action(Action.EQUIPMENT_REVIEW_DEDUCTION)
+def review_deduction_view(request: HttpRequest, issue_pk: int) -> HttpResponse:
+    issue = get_object_or_404(EquipmentIssue, pk=issue_pk)
+    try:
+        review_deduction(
+            issue, request.POST.get("decision"),
+            actor=request.user, note=request.POST.get("note", ""),
+        )
+        messages.success(request, _("Review recorded."))
+    except DeductionReviewError as exc:
+        messages.error(request, str(exc))
+    return redirect("equipment_reviews")
 
 
 @require_POST

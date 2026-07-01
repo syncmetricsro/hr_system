@@ -39,6 +39,7 @@ Legend: ✅ permitted · — denied
 | `approval.activate` | — | — | ✅ | — |
 | `project.manage` | — | — | ✅ | — |
 | `accommodation.manage` | — | — | ✅ | — |
+| `equipment.review_deduction` | — | — | ✅ | — |
 | `catalog.manage` | — | — | ✅ | — |
 | `user.manage` | — | — | ✅ | — |
 | `blacklist.decide` | — | — | ✅ | — |

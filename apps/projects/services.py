@@ -160,15 +160,17 @@ def exit_person(person, *, actor=None, reason: str = "", outcome: str = "availab
     release the room, return all issued equipment, and recycle the person to
     Available (default) or mark them Inactive.
 
-    Missing-returnable-item *deductions* are an open decision (open-decisions.md)
-    and are intentionally not modelled here yet.
+    Items already flagged as unreturned (review_status != NONE) are left for the
+    manager deduction-review queue (Q2 safe default) rather than auto-returned.
     """
-    from apps.logistics.models import EquipmentIssueStatus
+    from apps.logistics.models import DeductionReviewStatus, EquipmentIssueStatus
     from apps.logistics.services import release_room, return_equipment
 
     end_assignment(person, actor=actor, reason=reason or "exit")
     release_room(person, actor=actor)
-    for issue in person.equipment_issues.filter(status=EquipmentIssueStatus.ISSUED):
+    for issue in person.equipment_issues.filter(
+        status=EquipmentIssueStatus.ISSUED, review_status=DeductionReviewStatus.NONE
+    ):
         return_equipment(issue, actor=actor)
 
     if outcome == "inactive" and person.lifecycle_status == LifecycleStatus.AVAILABLE:

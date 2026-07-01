@@ -132,6 +132,20 @@ class EquipmentIssueStatus(models.TextChoices):
     RETURNED = "returned", _("Returned")
 
 
+class DeductionReviewStatus(models.TextChoices):
+    """Charge-review lifecycle for an unreturned item (Q2 safe default).
+
+    Separate from the physical ``status``: a flagged item is still ISSUED (not
+    returned) but its *charge* is under manager review. No payroll deduction is
+    ever executed — APPROVED only records the manager's decision to recover.
+    """
+
+    NONE = "none", _("None")
+    PENDING = "pending", _("Pending review")
+    APPROVED = "approved", _("Charge approved")
+    WAIVED = "waived", _("Waived")
+
+
 class EquipmentIssue(models.Model):
     person = models.ForeignKey(
         "people.Person", on_delete=models.PROTECT, related_name="equipment_issues", verbose_name=_("person")
@@ -141,6 +155,21 @@ class EquipmentIssue(models.Model):
     )
     quantity = models.PositiveIntegerField(_("quantity"), default=1)
     status = models.CharField(_("status"), max_length=20, choices=EquipmentIssueStatus.choices, default=EquipmentIssueStatus.ISSUED)
+    # Unreturned-item deduction review (Q2). Flagging snapshots the value; the
+    # manager approves or waives. No automatic payroll deduction is performed.
+    review_status = models.CharField(
+        _("review status"), max_length=20,
+        choices=DeductionReviewStatus.choices, default=DeductionReviewStatus.NONE,
+    )
+    charge_amount = models.DecimalField(
+        _("charge amount"), max_digits=12, decimal_places=2, null=True, blank=True
+    )
+    reviewed_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True,
+        related_name="reviewed_equipment_deductions", verbose_name=_("reviewed by"),
+    )
+    reviewed_at = models.DateTimeField(_("reviewed at"), null=True, blank=True)
+    review_note = models.CharField(_("review note"), max_length=300, blank=True)
     issued_by = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True,
         related_name="issued_equipment", verbose_name=_("issued by"),

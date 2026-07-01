@@ -8,6 +8,7 @@ from django.utils import timezone
 from apps.audit.services import record_event
 from apps.logistics.models import (
     Accommodation,
+    DeductionReviewStatus,
     EquipmentIssue,
     EquipmentIssueStatus,
     RoomAssignment,
@@ -18,6 +19,10 @@ from apps.logistics.models import (
 
 class CapacityError(Exception):
     """Raised when a room is at capacity."""
+
+
+class DeductionReviewError(Exception):
+    """Raised on an invalid unreturned-equipment review transition."""
 
 
 @transaction.atomic
@@ -135,6 +140,57 @@ def issued_equipment_value(person=None):
         )
     )["value"]
     return total or Decimal("0")
+
+
+@transaction.atomic
+def flag_unreturned(issue, *, actor=None):
+    """Flag an issued-but-not-returned item for manager review (Q2 safe default).
+
+    Snapshots the charge at the item's current unit price × quantity. Does not
+    deduct anything — it only opens a review for a manager to approve or waive.
+    """
+    if issue.status != EquipmentIssueStatus.ISSUED:
+        raise DeductionReviewError("Only an issued item can be flagged as unreturned.")
+    if issue.review_status != DeductionReviewStatus.NONE:
+        raise DeductionReviewError("This item is already under review.")
+    issue.review_status = DeductionReviewStatus.PENDING
+    issue.charge_amount = Decimal(issue.item.unit_price) * issue.quantity
+    issue.save(update_fields=["review_status", "charge_amount"])
+    record_event(actor, "equipment.flagged_unreturned", target=issue, amount=str(issue.charge_amount))
+    return issue
+
+
+@transaction.atomic
+def review_deduction(issue, decision, *, actor=None, note: str = ""):
+    """Manager decision on a pending unreturned-item charge: ``approve`` records
+    the charge as approved-for-recovery (no automatic payroll deduction), ``waive``
+    drops it. Both are audited."""
+    if issue.review_status != DeductionReviewStatus.PENDING:
+        raise DeductionReviewError("This item is not pending review.")
+    if decision == "approve":
+        issue.review_status = DeductionReviewStatus.APPROVED
+    elif decision == "waive":
+        issue.review_status = DeductionReviewStatus.WAIVED
+    else:
+        raise DeductionReviewError("Decision must be 'approve' or 'waive'.")
+    issue.reviewed_by = actor if getattr(actor, "is_authenticated", False) else None
+    issue.reviewed_at = timezone.now()
+    issue.review_note = note or ""
+    issue.save(update_fields=["review_status", "reviewed_by", "reviewed_at", "review_note"])
+    record_event(actor, "equipment.deduction_reviewed", target=issue, decision=decision)
+    return issue
+
+
+def pending_deduction_reviews():
+    """Manager review queue: items flagged unreturned and awaiting a decision,
+    with the outstanding charge total (dynamic)."""
+    qs = (
+        EquipmentIssue.objects.filter(review_status=DeductionReviewStatus.PENDING)
+        .select_related("person", "item")
+        .order_by("-issued_at")
+    )
+    total = sum((i.charge_amount or Decimal("0") for i in qs), Decimal("0"))
+    return {"issues": qs, "total": total}
 
 
 @transaction.atomic

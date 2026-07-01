@@ -196,11 +196,19 @@
       {% for issue in issued_equipment %}
         <li>
           {{ issue.item }} × {{ issue.quantity }}
-          {% if may_equip %}
-            <form class="inline-form" method="post" action="{% url 'return_equipment' issue.pk %}">
-              {% csrf_token %}
-              <button class="button button-secondary" type="submit">{% trans "Return" %}</button>
-            </form>
+          {% if issue.review_status == 'none' %}
+            {% if may_equip %}
+              <form class="inline-form" method="post" action="{% url 'return_equipment' issue.pk %}">
+                {% csrf_token %}
+                <button class="button button-secondary" type="submit">{% trans "Return" %}</button>
+              </form>
+              <form class="inline-form" method="post" action="{% url 'flag_unreturned' issue.pk %}">
+                {% csrf_token %}
+                <button class="button button-secondary" type="submit">{% trans "Flag unreturned" %}</button>
+              </form>
+            {% endif %}
+          {% else %}
+            <span class="badge">{{ issue.get_review_status_display }}{% if issue.charge_amount %} · {{ issue.charge_amount }}{% endif %}</span>
           {% endif %}
         </li>
       {% endfor %}
