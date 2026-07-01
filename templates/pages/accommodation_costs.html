@@ -1,0 +1,36 @@
+{% extends "layouts/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Accommodation costs" %} · Jober{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <p class="eyebrow">{% trans "Accommodation" %}</p>
+  <h1>{% trans "Cost report" %}</h1>
+  <a class="button button-secondary" href="{% url 'accommodation_list' %}">{% trans "Back" %}</a>
+</section>
+
+<p class="muted">{% trans "Reporting only — no amounts are deducted from workers." %}</p>
+
+<section class="dashboard-grid" aria-label="{% trans 'Company total' %}">
+  <article class="metric-card"><span>{% trans "Occupancy" %}</span><strong>{{ company.occupancy }}/{{ company.capacity }}</strong></article>
+  <article class="metric-card"><span>{% trans "Room cost" %}</span><strong>{{ company.room_cost }}</strong></article>
+  <article class="metric-card"><span>{% trans "Assigned cost" %}</span><strong>{{ company.assigned_cost }}</strong></article>
+</section>
+
+<section class="field-list" aria-label="{% trans 'Accommodation' %}">
+  {% for row in rows %}
+    <article class="field-card">
+      <div><h3>{{ row.accommodation.name }}</h3></div>
+      <dl>
+        <div><dt>{% trans "Rooms" %}</dt><dd>{{ row.rooms }}</dd></div>
+        <div><dt>{% trans "Occupancy" %}</dt><dd>{{ row.occupancy }}/{{ row.capacity }}</dd></div>
+        <div><dt>{% trans "Room cost" %}</dt><dd>{{ row.room_cost }}</dd></div>
+        <div><dt>{% trans "Assigned cost" %}</dt><dd>{{ row.assigned_cost }}</dd></div>
+      </dl>
+    </article>
+  {% empty %}
+    <p>{% trans "No accommodations found." %}</p>
+  {% endfor %}
+</section>
+{% endblock %}

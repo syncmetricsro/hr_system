@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-29 14:48+0200\n"
+"POT-Creation-Date: 2026-07-01 17:36+0200\n"
 "Language: sk\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -93,8 +93,8 @@ msgstr ""
 #: apps/audit/models.py:33 apps/compliance/models.py:17
 #: apps/feedback/models.py:26 apps/feedback/models.py:48
 #: apps/finance/models.py:33 apps/intake/models.py:31
-#: apps/logistics/models.py:16 apps/logistics/models.py:68
-#: apps/logistics/models.py:94 apps/logistics/models.py:148
+#: apps/logistics/models.py:27 apps/logistics/models.py:87
+#: apps/logistics/models.py:119 apps/logistics/models.py:173
 #: apps/messaging/models.py:17 apps/messaging/models.py:45
 #: apps/people/models.py:104 apps/projects/models.py:29
 #: apps/projects/models.py:85 apps/projects/models.py:141
@@ -111,7 +111,7 @@ msgid "audit events"
 msgstr ""
 
 #: apps/compliance/models.py:12 apps/intake/models.py:100
-#: apps/logistics/models.py:56 apps/logistics/models.py:112
+#: apps/logistics/models.py:71 apps/logistics/models.py:137
 #: apps/messaging/models.py:35 apps/people/models.py:108
 #: apps/projects/models.py:57 apps/projects/models.py:123
 #: apps/projects/models.py:166
@@ -121,7 +121,7 @@ msgid "person"
 msgstr "Osoba"
 
 #: apps/compliance/models.py:14 apps/intake/models.py:24
-#: apps/logistics/models.py:12 apps/logistics/models.py:88
+#: apps/logistics/models.py:23 apps/logistics/models.py:113
 #: apps/messaging/models.py:11 apps/projects/models.py:12
 #, fuzzy
 #| msgid "Last name"
@@ -149,14 +149,14 @@ msgid "token"
 msgstr ""
 
 #: apps/feedback/models.py:20 apps/finance/models.py:79
-#: apps/intake/models.py:65 apps/logistics/models.py:31
+#: apps/intake/models.py:65 apps/logistics/models.py:42
 #, fuzzy
 #| msgid "Label"
 msgid "label"
 msgstr "Označenie"
 
 #: apps/feedback/models.py:23 apps/finance/models.py:21
-#: apps/logistics/models.py:139 apps/projects/models.py:33
+#: apps/logistics/models.py:164 apps/projects/models.py:33
 #: apps/projects/models.py:63 apps/projects/models.py:126
 #: apps/projects/models.py:169
 #, fuzzy
@@ -165,7 +165,7 @@ msgid "project"
 msgstr "Projekt"
 
 #: apps/feedback/models.py:25 apps/finance/models.py:82
-#: apps/logistics/models.py:14 apps/logistics/models.py:93
+#: apps/logistics/models.py:25 apps/logistics/models.py:118
 #: apps/messaging/models.py:13 apps/projects/models.py:16
 #, fuzzy
 #| msgid "Inactive"
@@ -245,7 +245,7 @@ msgstr "Príjmy"
 msgid "cost"
 msgstr ""
 
-#: apps/finance/models.py:27 apps/logistics/models.py:143
+#: apps/finance/models.py:27 apps/logistics/models.py:168
 #: apps/projects/models.py:131
 msgid "note"
 msgstr ""
@@ -254,7 +254,7 @@ msgstr ""
 msgid "locked"
 msgstr ""
 
-#: apps/finance/models.py:31 apps/logistics/models.py:146
+#: apps/finance/models.py:31 apps/logistics/models.py:171
 msgid "recorded by"
 msgstr ""
 
@@ -303,10 +303,12 @@ msgid "Transport"
 msgstr "Doprava"
 
 #: apps/finance/models.py:61 templates/layouts/base.html:30
+#: templates/pages/accommodation_costs.html:8
+#: templates/pages/accommodation_costs.html:21
 #: templates/pages/accommodation_detail.html:8
 #: templates/pages/accommodation_list.html:4
 #: templates/pages/accommodation_list.html:9
-#: templates/pages/accommodation_list.html:12
+#: templates/pages/accommodation_list.html:14
 #: templates/pages/person_detail.html:82 templates/pages/person_detail.html:155
 msgid "Accommodation"
 msgstr "Ubytovanie"
@@ -326,7 +328,7 @@ msgid "Overhead"
 msgstr "Réžia"
 
 # --- logistics: equipment ---
-#: apps/finance/models.py:64 templates/pages/person_detail.html:182
+#: apps/finance/models.py:64 templates/pages/person_detail.html:191
 msgid "Equipment"
 msgstr "Vybavenie"
 
@@ -447,7 +449,7 @@ msgid "version"
 msgstr "Oprávnenia"
 
 #: apps/intake/models.py:26 apps/intake/models.py:102
-#: apps/logistics/models.py:61 apps/logistics/models.py:118
+#: apps/logistics/models.py:76 apps/logistics/models.py:143
 #: apps/messaging/models.py:39 apps/projects/models.py:66
 #, fuzzy
 #| msgid "Status"
@@ -617,193 +619,212 @@ msgstr "Zadajte hodnotu (alebo slovo pre žiadne)."
 msgid "Required."
 msgstr "Povinné."
 
-#: apps/logistics/models.py:13 apps/people/models.py:67
+#: apps/logistics/models.py:24 apps/people/models.py:67
 #, fuzzy
 #| msgid "Address"
 msgid "address"
 msgstr "Adresa"
 
-#: apps/logistics/models.py:15 apps/projects/models.py:24
+#: apps/logistics/models.py:26 apps/projects/models.py:24
 msgid "notes"
 msgstr ""
 
-#: apps/logistics/models.py:19 apps/logistics/models.py:29
+#: apps/logistics/models.py:30 apps/logistics/models.py:40
 #: apps/projects/models.py:173
 #, fuzzy
 #| msgid "Accommodation"
 msgid "accommodation"
 msgstr "Ubytovanie"
 
-#: apps/logistics/models.py:20
+#: apps/logistics/models.py:31
 #, fuzzy
 #| msgid "Accommodation"
 msgid "accommodations"
 msgstr "Ubytovanie"
 
-#: apps/logistics/models.py:32
+#: apps/logistics/models.py:43
 msgid "capacity"
 msgstr ""
 
-#: apps/logistics/models.py:35 apps/logistics/models.py:59
+#: apps/logistics/models.py:46
+msgid "monthly rate"
+msgstr ""
+
+#: apps/logistics/models.py:50 apps/logistics/models.py:74
 #, fuzzy
 #| msgid "No rooms."
 msgid "room"
 msgstr "Žiadne izby."
 
-#: apps/logistics/models.py:36
+#: apps/logistics/models.py:51
 #, fuzzy
 #| msgid "Rooms"
 msgid "rooms"
 msgstr "Izby"
 
-#: apps/logistics/models.py:50 apps/projects/models.py:42
+#: apps/logistics/models.py:65 apps/projects/models.py:42
 #: templates/pages/project_detail.html:8 templates/pages/project_list.html:26
 msgid "Active"
 msgstr "Aktívny"
 
-#: apps/logistics/models.py:51 apps/projects/models.py:43
+#: apps/logistics/models.py:66 apps/projects/models.py:43
 msgid "Ended"
 msgstr ""
 
-#: apps/logistics/models.py:62 apps/projects/models.py:71
+#: apps/logistics/models.py:77 apps/projects/models.py:71
 msgid "start date"
 msgstr ""
 
-#: apps/logistics/models.py:63 apps/projects/models.py:72
+#: apps/logistics/models.py:78 apps/projects/models.py:72
 #, fuzzy
 #| msgid "Person updated."
 msgid "end date"
 msgstr "Osoba aktualizovaná."
 
-#: apps/logistics/models.py:66 apps/projects/models.py:79
+# --- dashboard ---
+#: apps/logistics/models.py:81
+#, fuzzy
+#| msgid "Operational overview"
+msgid "rate override"
+msgstr "Prevádzkový prehľad"
+
+#: apps/logistics/models.py:85 apps/projects/models.py:79
 #: apps/projects/models.py:134
 #, fuzzy
 #| msgid "Assigned"
 msgid "assigned by"
 msgstr "Pridelení"
 
-#: apps/logistics/models.py:71
+#: apps/logistics/models.py:90
 #, fuzzy
 #| msgid "Room assigned"
 msgid "room assignment"
 msgstr "Izba pridelená"
 
-#: apps/logistics/models.py:72
+#: apps/logistics/models.py:91
 #, fuzzy
 #| msgid "Room assigned"
 msgid "room assignments"
 msgstr "Izba pridelená"
 
-#: apps/logistics/models.py:89
+#: apps/logistics/models.py:114
 msgid "size"
 msgstr ""
 
-#: apps/logistics/models.py:92
+#: apps/logistics/models.py:117
 msgid "unit price"
 msgstr ""
 
-#: apps/logistics/models.py:97
+#: apps/logistics/models.py:122
 #, fuzzy
 #| msgid "Equipment issued"
 msgid "equipment item"
 msgstr "Vybavenie vydané"
 
-#: apps/logistics/models.py:98
+#: apps/logistics/models.py:123
 #, fuzzy
 #| msgid "Equipment issued"
 msgid "equipment items"
 msgstr "Vybavenie vydané"
 
-#: apps/logistics/models.py:106
+#: apps/logistics/models.py:131
 msgid "Issued"
 msgstr ""
 
-#: apps/logistics/models.py:107
+#: apps/logistics/models.py:132
 #, fuzzy
 #| msgid "Return"
 msgid "Returned"
 msgstr "Vrátiť"
 
-#: apps/logistics/models.py:115
+#: apps/logistics/models.py:140
 msgid "item"
 msgstr ""
 
-#: apps/logistics/models.py:117
+#: apps/logistics/models.py:142
 #, fuzzy
 #| msgid "Quantity"
 msgid "quantity"
 msgstr "Množstvo"
 
-#: apps/logistics/models.py:121
+#: apps/logistics/models.py:146
 msgid "issued by"
 msgstr ""
 
-#: apps/logistics/models.py:123
+#: apps/logistics/models.py:148
 msgid "issued at"
 msgstr ""
 
-#: apps/logistics/models.py:124
+#: apps/logistics/models.py:149
 msgid "returned at"
 msgstr ""
 
-#: apps/logistics/models.py:127
+#: apps/logistics/models.py:152
 #, fuzzy
 #| msgid "Equipment issued"
 msgid "equipment issue"
 msgstr "Vybavenie vydané"
 
-#: apps/logistics/models.py:128
+#: apps/logistics/models.py:153
 #, fuzzy
 #| msgid "Equipment issued"
 msgid "equipment issues"
 msgstr "Vybavenie vydané"
 
-#: apps/logistics/models.py:141
+#: apps/logistics/models.py:166
 #, fuzzy
 #| msgid "Week start"
 msgid "week start"
 msgstr "Začiatok týždňa"
 
-#: apps/logistics/models.py:142
+#: apps/logistics/models.py:167
 #, fuzzy
 #| msgid "Headcount"
 msgid "headcount"
 msgstr "Počet osôb"
 
-#: apps/logistics/models.py:151
+#: apps/logistics/models.py:176
 #, fuzzy
 #| msgid "Transport"
 msgid "transport week"
 msgstr "Doprava"
 
 # --- transport trends ---
-#: apps/logistics/models.py:152
+#: apps/logistics/models.py:177
 #, fuzzy
 #| msgid "Transport trends"
 msgid "transport weeks"
 msgstr "Trendy dopravy"
 
-#: apps/logistics/views.py:93
+#: apps/logistics/views.py:108
+msgid "Room rate saved."
+msgstr "Sadzba izby uložená."
+
+#: apps/logistics/views.py:117
+msgid "Rate override saved."
+msgstr "Úprava sadzby uložená."
+
+#: apps/logistics/views.py:128
 msgid "Room assigned."
 msgstr "Izba pridelená."
 
-#: apps/logistics/views.py:104
+#: apps/logistics/views.py:139
 msgid "Room released."
 msgstr "Izba uvoľnená."
 
-#: apps/logistics/views.py:114
+#: apps/logistics/views.py:149
 msgid "Equipment issued."
 msgstr "Vybavenie vydané."
 
-#: apps/logistics/views.py:123
+#: apps/logistics/views.py:158
 msgid "Equipment returned."
 msgstr "Vybavenie vrátené."
 
-#: apps/logistics/views.py:137
+#: apps/logistics/views.py:172
 msgid "Transport week recorded."
 msgstr "Týždeň dopravy zaznamenaný."
 
-#: apps/logistics/views.py:139
+#: apps/logistics/views.py:174
 msgid "Week start is required."
 msgstr "Začiatok týždňa je povinný."
 
@@ -1376,37 +1397,86 @@ msgstr "Rola"
 msgid "Sign out"
 msgstr "Odhlásiť sa"
 
+#: templates/pages/accommodation_costs.html:4
+msgid "Accommodation costs"
+msgstr "Náklady na ubytovanie"
+
+#: templates/pages/accommodation_costs.html:9
+#: templates/pages/accommodation_detail.html:11
+#: templates/pages/accommodation_list.html:11
+msgid "Cost report"
+msgstr "Prehľad nákladov"
+
+#: templates/pages/accommodation_costs.html:10
 #: templates/pages/accommodation_detail.html:10
 #: templates/pages/finance_month_detail.html:10
 #: templates/pages/finance_year.html:10
 msgid "Back"
 msgstr "Späť"
 
-#: templates/pages/accommodation_detail.html:13
-#: templates/pages/accommodation_list.html:20
-msgid "Rooms"
-msgstr "Izby"
+#: templates/pages/accommodation_costs.html:13
+msgid "Reporting only — no amounts are deducted from workers."
+msgstr "Iba na účely reportingu — pracovníkom sa nič nestrháva."
 
-#: templates/pages/accommodation_detail.html:18 templates/pages/reports.html:17
+#: templates/pages/accommodation_costs.html:15
+#: templates/pages/finance_summary.html:13
+#: templates/pages/finance_summary.html:20
+#: templates/pages/finance_summary.html:46
+#: templates/pages/finance_summary.html:58
+#: templates/pages/finance_summary.html:70 templates/pages/finance_year.html:13
+#: templates/pages/reports.html:34 templates/pages/transport_trends.html:14
+msgid "Company total"
+msgstr "Celkový súčet firmy"
+
+#: templates/pages/accommodation_costs.html:16
+#: templates/pages/accommodation_costs.html:27
+#: templates/pages/accommodation_detail.html:19 templates/pages/reports.html:17
 msgid "Occupancy"
 msgstr "Obsadenosť"
 
-#: templates/pages/accommodation_detail.html:22
+#: templates/pages/accommodation_costs.html:17
+#: templates/pages/accommodation_costs.html:28
+msgid "Room cost"
+msgstr "Náklady na izby"
+
+#: templates/pages/accommodation_costs.html:18
+#: templates/pages/accommodation_costs.html:29
+msgid "Assigned cost"
+msgstr "Priradené náklady"
+
+#: templates/pages/accommodation_costs.html:26
+#: templates/pages/accommodation_detail.html:14
+#: templates/pages/accommodation_list.html:22
+msgid "Rooms"
+msgstr "Izby"
+
+#: templates/pages/accommodation_costs.html:33
+#: templates/pages/accommodation_list.html:26
+msgid "No accommodations found."
+msgstr "Nenašli sa žiadne ubytovania."
+
+#: templates/pages/accommodation_detail.html:20
+#: templates/pages/accommodation_detail.html:25
+#: templates/pages/person_detail.html:160
+msgid "Monthly rate"
+msgstr "Mesačná sadzba"
+
+#: templates/pages/accommodation_detail.html:26
+msgid "Save rate"
+msgstr "Uložiť sadzbu"
+
+#: templates/pages/accommodation_detail.html:31
 msgid "No rooms."
 msgstr "Žiadne izby."
 
 # --- logistics: accommodation ---
 #: templates/pages/accommodation_list.html:8
 #: templates/pages/person_detail.html:154
-#: templates/pages/person_detail.html:181
+#: templates/pages/person_detail.html:190
 #: templates/pages/project_detail.html:50
 #: templates/pages/transport_trends.html:8
 msgid "Logistics"
 msgstr "Logistika"
-
-#: templates/pages/accommodation_list.html:24
-msgid "No accommodations found."
-msgstr "Nenašli sa žiadne ubytovania."
 
 #: templates/pages/compliance_list.html:8
 msgid "Alerts"
@@ -1578,15 +1648,6 @@ msgstr "Podľa skupiny"
 msgid "Export"
 msgstr "Export"
 
-#: templates/pages/finance_summary.html:13
-#: templates/pages/finance_summary.html:20
-#: templates/pages/finance_summary.html:46
-#: templates/pages/finance_summary.html:58
-#: templates/pages/finance_summary.html:70 templates/pages/finance_year.html:13
-#: templates/pages/reports.html:34 templates/pages/transport_trends.html:14
-msgid "Company total"
-msgstr "Celkový súčet firmy"
-
 #: templates/pages/finance_summary.html:21 templates/pages/finance_year.html:46
 msgid "Financial months"
 msgstr "Finančné mesiace"
@@ -1700,7 +1761,7 @@ msgstr "Hľadať"
 msgid "No people found."
 msgstr "Nenašli sa žiadni ľudia."
 
-#: templates/pages/person_detail.html:8 templates/pages/person_detail.html:262
+#: templates/pages/person_detail.html:8 templates/pages/person_detail.html:271
 msgid "Person"
 msgstr "Osoba"
 
@@ -1815,88 +1876,96 @@ msgstr ""
 "Obmedzené — viditeľné iba pre manažérov, pozorovateľov, zodpovedného "
 "náborára a zodpovedného koordinátora."
 
-#: templates/pages/person_detail.html:162
+#: templates/pages/person_detail.html:164
 msgid "Release room"
 msgstr "Uvoľniť izbu"
 
-#: templates/pages/person_detail.html:168
+#: templates/pages/person_detail.html:170
+msgid "Rate override"
+msgstr "Úprava sadzby"
+
+#: templates/pages/person_detail.html:171
+msgid "Save override"
+msgstr "Uložiť úpravu"
+
+#: templates/pages/person_detail.html:177
 msgid "Room"
 msgstr "Izba"
 
-#: templates/pages/person_detail.html:173
+#: templates/pages/person_detail.html:182
 msgid "Assign room"
 msgstr "Prideliť izbu"
 
-#: templates/pages/person_detail.html:185
+#: templates/pages/person_detail.html:194
 msgid "Value"
 msgstr "Hodnota"
 
-#: templates/pages/person_detail.html:193
+#: templates/pages/person_detail.html:202
 msgid "Return"
 msgstr "Vrátiť"
 
-#: templates/pages/person_detail.html:205
+#: templates/pages/person_detail.html:214
 msgid "Item"
 msgstr "Položka"
 
-#: templates/pages/person_detail.html:208
+#: templates/pages/person_detail.html:217
 msgid "Quantity"
 msgstr "Množstvo"
 
-#: templates/pages/person_detail.html:209
+#: templates/pages/person_detail.html:218
 msgid "Issue equipment"
 msgstr "Vydať vybavenie"
 
 # --- exit / recycling ---
-#: templates/pages/person_detail.html:216
+#: templates/pages/person_detail.html:225
 msgid "Exit"
 msgstr "Odchod"
 
-#: templates/pages/person_detail.html:217
+#: templates/pages/person_detail.html:226
 msgid "Exit & reconcile"
 msgstr "Odchod a vyúčtovanie"
 
-#: templates/pages/person_detail.html:218
+#: templates/pages/person_detail.html:227
 msgid ""
 "Ends the project assignment, releases the room, and returns issued equipment."
 msgstr "Ukončí pridelenie na projekt, uvoľní izbu a vráti vydané vybavenie."
 
-#: templates/pages/person_detail.html:222
+#: templates/pages/person_detail.html:231
 msgid "Exit to Available"
 msgstr "Odchod na Dostupný"
 
-#: templates/pages/person_detail.html:226
+#: templates/pages/person_detail.html:235
 msgid "Exit to Inactive"
 msgstr "Odchod na Neaktívny"
 
 # --- messaging / SMS ---
-#: templates/pages/person_detail.html:234
+#: templates/pages/person_detail.html:243
 msgid "Messaging"
 msgstr "Komunikácia"
 
-#: templates/pages/person_detail.html:235
-#: templates/pages/person_detail.html:249
+#: templates/pages/person_detail.html:244
+#: templates/pages/person_detail.html:258
 msgid "Send SMS"
 msgstr "Poslať SMS"
 
-#: templates/pages/person_detail.html:239
+#: templates/pages/person_detail.html:248
 msgid "Template"
 msgstr "Šablóna"
 
-#: templates/pages/person_detail.html:246
+#: templates/pages/person_detail.html:255
 msgid "Message"
 msgstr "Správa"
 
-#: templates/pages/person_detail.html:247
+#: templates/pages/person_detail.html:256
 msgid "Or type a message"
 msgstr "Alebo napíšte správu"
 
 # --- person card: history + filter ---
-#: templates/pages/person_detail.html:263
+#: templates/pages/person_detail.html:272
 msgid "History"
 msgstr "História"
 
-#: templates/pages/person_detail.html:268
+#: templates/pages/person_detail.html:277
 msgid "No history yet."
 msgstr "Zatiaľ žiadna história."
 

@@ -215,6 +215,42 @@ Verification: ruff clean; **57 unit tests pass** (5 new view tests incl. sensiti
 Next step:
 - Recruiter intake (hard-gated) or trials + the readiness gate (which activates ADR 0018 enforcement).
 
+## 2026-06-29 (later 2)
+
+Phase 3 accommodation pricing + occupancy-cost reporting (Q1 safe default).
+
+What changed:
+- `apps/logistics/models.py`: `Room.monthly_rate` (per-room monthly EUR) and
+  `RoomAssignment.rate_override` (optional per-assignment override) + an
+  `effective_rate` property (override if set, else the room rate). Migration
+  `0005`. This is the Q1 **safe default** — a per-room rate **recorded for
+  reporting only, no payroll deduction** — and the room-rate-plus-override shape
+  stays robust whether Jober's answer is per-room, per-bed, or per-person, so
+  the slice is **not blocked** on the answer.
+- `apps/logistics/services.py`: `set_room_rate`, `set_assignment_rate` (blank
+  clears the override), and `accommodation_cost_report()` — per-accommodation
+  occupancy plus two dynamic figures: `room_cost` (Σ room rates, standing) and
+  `assigned_cost` (Σ effective rate over **active** assignments) + a company
+  total. Reporting only; no deduction is created.
+- `apps/logistics/views.py` + `config/urls.py`: `accommodation_costs` report,
+  `set_room_rate_view`, `set_assignment_rate_view` — all gated **manager-only**
+  (`accommodation.manage`, previously defined but unused). Coordinators still
+  assign/release rooms; only managers see/set cost data.
+- Templates: accommodation detail shows + edits room rates (manager); a cost
+  report page (occupancy + room/assigned cost, with a "reporting only" note);
+  person detail shows the effective rate and a manager override form; list links
+  to the report. Admin + `seed_people` rates (€180/room). i18n SK/HU/UK.
+
+Verification: ruff clean; **184 unit tests pass** (was 177) — rate set,
+effective-rate override-then-room fallback, cost report room/assigned totals,
+released assignments excluded from occupancy/assigned cost (standing room cost
+remains), manager-only RBAC, and the cost view returns 403 to recruiter +
+coordinator, 200 to manager. Migration `0005` builds under pytest.
+
+Next step:
+- Equipment unreturned → manager review queue (Q2 safe default), or the
+  inactive-reasons catalog + exit recycling slice.
+
 ## 2026-06-29 (later)
 
 Phase 4 finance — month lock/reopen and yearly/per-project rollups.

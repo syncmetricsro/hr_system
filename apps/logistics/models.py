@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from decimal import Decimal
+
 from django.conf import settings
 from django.db import models
 from django.db.models import Q
@@ -7,7 +9,16 @@ from django.utils.translation import gettext_lazy as _
 
 
 class Accommodation(models.Model):
-    """A place where workers are housed (plan §11.7, minimal Phase 1: no rates)."""
+    """A place where workers are housed (plan §11.7).
+
+    Cost is tracked as a per-room ``monthly_rate`` with an optional
+    per-assignment override (``RoomAssignment.rate_override``). This is the Q1
+    safe default (docs/product/phase3-4-open-questions.md): a monthly rate per
+    room, **recorded for reporting only — no automatic payroll deduction** —
+    pending Jober's confirmation. The room-rate-plus-override shape stays robust
+    whether the eventual answer is per-room, per-bed, or per-person, so this is
+    not blocked on the answer.
+    """
 
     name = models.CharField(_("name"), max_length=200)
     address = models.CharField(_("address"), max_length=300, blank=True)
@@ -30,6 +41,10 @@ class Room(models.Model):
     )
     label = models.CharField(_("label"), max_length=100)
     capacity = models.PositiveIntegerField(_("capacity"), default=1)
+    # Per-room monthly cost (EUR). Q1 safe default; recorded for reporting only.
+    monthly_rate = models.DecimalField(
+        _("monthly rate"), max_digits=10, decimal_places=2, default=Decimal("0")
+    )
 
     class Meta:
         verbose_name = _("room")
@@ -61,6 +76,10 @@ class RoomAssignment(models.Model):
     status = models.CharField(_("status"), max_length=20, choices=RoomAssignmentStatus.choices, default=RoomAssignmentStatus.ACTIVE)
     start_date = models.DateField(_("start date"), null=True, blank=True)
     end_date = models.DateField(_("end date"), null=True, blank=True)
+    # Optional per-assignment override of the room's monthly rate (Q1).
+    rate_override = models.DecimalField(
+        _("rate override"), max_digits=10, decimal_places=2, null=True, blank=True
+    )
     assigned_by = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True,
         related_name="created_room_assignments", verbose_name=_("assigned by"),
@@ -80,6 +99,12 @@ class RoomAssignment(models.Model):
 
     def __str__(self) -> str:
         return f"{self.person} -> {self.room} ({self.status})"
+
+    @property
+    def effective_rate(self) -> Decimal:
+        """The monthly amount attributed to this assignment: the per-assignment
+        override if set, otherwise the room's rate."""
+        return self.rate_override if self.rate_override is not None else self.room.monthly_rate
 
 
 class EquipmentItem(models.Model):

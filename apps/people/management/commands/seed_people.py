@@ -65,8 +65,14 @@ class Command(BaseCommand):
         accommodation, _ = Accommodation.objects.get_or_create(
             name="Ubytovňa Nitra", defaults={"address": "Nitra 1", "is_active": True}
         )
-        room, _ = Room.objects.get_or_create(accommodation=accommodation, label="101", defaults={"capacity": 2})
-        Room.objects.get_or_create(accommodation=accommodation, label="102", defaults={"capacity": 2})
+        room, _ = Room.objects.get_or_create(
+            accommodation=accommodation, label="101",
+            defaults={"capacity": 2, "monthly_rate": "180.00"},
+        )
+        Room.objects.get_or_create(
+            accommodation=accommodation, label="102",
+            defaults={"capacity": 2, "monthly_rate": "180.00"},
+        )
         working = Person.objects.filter(lifecycle_status=LifecycleStatus.WORKING).first()
         if working and not working.room_assignments.exists():
             assign_room(working, room, actor=coordinator)

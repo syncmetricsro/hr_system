@@ -8,6 +8,7 @@
   <p class="eyebrow">{% trans "Accommodation" %}</p>
   <h1>{{ accommodation.name }}</h1>
   <a class="button button-secondary" href="{% url 'accommodation_list' %}">{% trans "Back" %}</a>
+  {% if can_manage %}<a class="button button-secondary" href="{% url 'accommodation_costs' %}">{% trans "Cost report" %}</a>{% endif %}
 </section>
 
 <section class="field-list" aria-label="{% trans 'Rooms' %}">
@@ -16,7 +17,15 @@
       <div><h3>{{ room.label }}</h3></div>
       <dl>
         <div><dt>{% trans "Occupancy" %}</dt><dd>{{ room.occupancy }}/{{ room.capacity }}</dd></div>
+        <div><dt>{% trans "Monthly rate" %}</dt><dd>{{ room.monthly_rate }}</dd></div>
       </dl>
+      {% if can_manage %}
+        <form class="people-search" method="post" action="{% url 'set_room_rate' room.pk %}">
+          {% csrf_token %}
+          <input type="number" step="0.01" min="0" name="monthly_rate" value="{{ room.monthly_rate }}" aria-label="{% trans 'Monthly rate' %}">
+          <button class="button button-secondary" type="submit">{% trans "Save rate" %}</button>
+        </form>
+      {% endif %}
     </article>
   {% empty %}
     <p>{% trans "No rooms." %}</p>
