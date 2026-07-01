@@ -12,6 +12,7 @@ from apps.finance.services import company_totals
 from apps.logistics.models import Room, RoomAssignment, RoomAssignmentStatus
 from apps.logistics.services import issued_equipment_value
 from apps.people.models import LifecycleStatus, Person
+from apps.people.services import inactive_by_reason
 from apps.projects.models import Project, TrialAssignment, TrialOutcome
 
 
@@ -43,6 +44,7 @@ def reports(request: HttpRequest) -> TemplateResponse:
             "free": max(capacity - occupied, 0),
             "equipment_value": issued_equipment_value(),
             "status_counts": status_counts,
+            "inactive_by_reason": inactive_by_reason(),
             "finance": company_totals() if can_finance else None,
         },
     )

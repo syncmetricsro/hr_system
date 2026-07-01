@@ -1,5 +1,11 @@
 # Test Journal
 
+## 2026-06-29 — Reports: inactive-by-reason
+
+- **Full suite: 202 passed** (up from 198), e2e excluded, on the `jober-test` image against the dev PostgreSQL.
+- New `tests/test_inactive_report.py` (4 tests): counts group by reason most-common-first; null reasons bucket into "No reason" (asserted under `translation.override("en")` since the label is translated and tests run in the `sk` default); archived people excluded by default and included via `include_archived=True`; empty when no inactive people.
+- `ruff check apps config tests` clean. No model change / no migration (read-only aggregation). SK/HU/UK catalogs recompiled.
+
 ## 2026-06-29 — Inactive reasons + exit recycling
 
 - **Full suite: 198 passed** (up from 192), e2e excluded, on the `jober-test` image against the dev PostgreSQL.

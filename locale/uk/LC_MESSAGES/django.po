@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-01 18:32+0200\n"
+"POT-Creation-Date: 2026-07-01 21:14+0200\n"
 "Language: uk\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -284,7 +284,7 @@ msgstr "Фінансові місяці"
 #: apps/finance/models.py:54 templates/pages/finance_month_detail.html:33
 #: templates/pages/finance_summary.html:15
 #: templates/pages/finance_summary.html:39 templates/pages/finance_year.html:15
-#: templates/pages/reports.html:38
+#: templates/pages/reports.html:47
 msgid "Cost"
 msgstr "Витрати"
 
@@ -292,7 +292,7 @@ msgstr "Витрати"
 #: templates/pages/finance_month_detail.html:32
 #: templates/pages/finance_summary.html:14
 #: templates/pages/finance_summary.html:38 templates/pages/finance_year.html:14
-#: templates/pages/reports.html:37
+#: templates/pages/reports.html:46
 msgid "Revenue"
 msgstr "Дохід"
 
@@ -1140,35 +1140,39 @@ msgstr "Пошук за іменем"
 msgid "people"
 msgstr "Люди"
 
-#: apps/people/services.py:34
+#: apps/people/services.py:23
+msgid "No reason"
+msgstr "Без причини"
+
+#: apps/people/services.py:50
 msgid "Trial scheduled"
 msgstr "Пробний день заплановано"
 
-#: apps/people/services.py:38
+#: apps/people/services.py:54
 msgid "Trial outcome"
 msgstr "Результат пробного дня"
 
-#: apps/people/services.py:43
+#: apps/people/services.py:59
 msgid "Assigned to project"
 msgstr "Призначено на проєкт"
 
-#: apps/people/services.py:46
+#: apps/people/services.py:62
 msgid "Room assigned"
 msgstr "Кімнату призначено"
 
-#: apps/people/services.py:49
+#: apps/people/services.py:65
 msgid "Equipment issued"
 msgstr "Спорядження видано"
 
-#: apps/people/services.py:53
+#: apps/people/services.py:69
 msgid "Readiness submitted"
 msgstr "Готовність подано"
 
-#: apps/people/services.py:57
+#: apps/people/services.py:73
 msgid "Intake completed"
 msgstr "Прийом завершено"
 
-#: apps/people/services.py:65
+#: apps/people/services.py:81
 msgid "Status changed"
 msgstr "Статус змінено"
 
@@ -1449,7 +1453,7 @@ msgstr "Перевірки"
 #: templates/pages/finance_month_detail.html:39
 #: templates/pages/finance_summary.html:4
 #: templates/pages/finance_summary.html:9 templates/pages/finance_year.html:4
-#: templates/pages/finance_year.html:8 templates/pages/reports.html:35
+#: templates/pages/finance_year.html:8 templates/pages/reports.html:44
 msgid "Finance"
 msgstr "Фінанси"
 
@@ -1503,7 +1507,7 @@ msgstr "Лише для звітності — з працівників ніч�
 #: templates/pages/finance_summary.html:46
 #: templates/pages/finance_summary.html:58
 #: templates/pages/finance_summary.html:70 templates/pages/finance_year.html:13
-#: templates/pages/reports.html:34 templates/pages/transport_trends.html:14
+#: templates/pages/reports.html:43 templates/pages/transport_trends.html:14
 msgid "Company total"
 msgstr "Загалом по компанії"
 
@@ -1741,7 +1745,7 @@ msgstr "Заблокувати місяць"
 #: templates/pages/finance_summary.html:16
 #: templates/pages/finance_summary.html:24
 #: templates/pages/finance_summary.html:74 templates/pages/finance_year.html:16
-#: templates/pages/finance_year.html:50 templates/pages/reports.html:39
+#: templates/pages/finance_year.html:50 templates/pages/reports.html:48
 msgid "Net"
 msgstr "Чистий"
 
@@ -2189,6 +2193,14 @@ msgstr "Вартість спорядження"
 #: templates/pages/reports.html:24
 msgid "People by status"
 msgstr "Люди за статусом"
+
+#: templates/pages/reports.html:31
+msgid "Inactive by reason"
+msgstr "Неактивні за причиною"
+
+#: templates/pages/reports.html:36
+msgid "No inactive people."
+msgstr "Немає неактивних людей."
 
 # --- transport trends ---
 #: templates/pages/transport_trends.html:4

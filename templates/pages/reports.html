@@ -27,6 +27,15 @@
         <div><dt>{{ label }}</dt><dd>{{ count }}</dd></div>
       {% endfor %}
     </dl>
+
+    <h2>{% trans "Inactive by reason" %}</h2>
+    <dl class="detail-grid">
+      {% for row in inactive_by_reason %}
+        <div><dt>{{ row.label }}</dt><dd>{{ row.count }}</dd></div>
+      {% empty %}
+        <div><dd>{% trans "No inactive people." %}</dd></div>
+      {% endfor %}
+    </dl>
   </div>
 
   {% if finance %}
