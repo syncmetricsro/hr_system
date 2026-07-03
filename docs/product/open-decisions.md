@@ -17,6 +17,6 @@ Phase 0 must not hardcode these into migrations or domain logic.
 | Accommodation | Real list, rooms, capacities, rates, overrides. | Not modeled in Phase 0. |
 | Inventory | Catalog, sizes, opening stock, purchase prices. | Not modeled in Phase 0. |
 | Deduction review | Missing-returnable-item process. | Not modeled in Phase 0. |
-| Finance sign convention | Whether costs are entered negative or stored positive and subtracted. | Phase 4 blocker; needs one filled month. |
+| Finance sign convention | Whether costs are entered negative or stored positive and subtracted. | **Answered 2026-06-29**: **positive convention** — costs/revenues entered positive, system computes `net = revenue − cost`. Matches the existing build; write path + model validators now reject negatives. A real filled month is still useful to reconcile category labels. |
 | Legal/privacy | DPA, EU hosting approval, blacklist legal basis, employee-leasing documents. | Blocks real-data gate, not fictional Phase 0 shell. |
 | Branding terminology | Final HU/SK/UA product wording and assets. | Base language is now English (ADR 0017); Slovak is the default rendering. EN/SK/HU/UK catalogs ship compiled, but HU/UK + revised SK are AI-authored and need a fluent-speaker review before client use. |

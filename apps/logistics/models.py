@@ -3,9 +3,14 @@ from __future__ import annotations
 from decimal import Decimal
 
 from django.conf import settings
+from django.core.validators import MinValueValidator
 from django.db import models
 from django.db.models import Q
 from django.utils.translation import gettext_lazy as _
+
+# Positive sign convention (confirmed with Jober 2026-06-29): rates, prices, and
+# equipment charges are never negative.
+NON_NEGATIVE = [MinValueValidator(Decimal("0"))]
 
 
 class Accommodation(models.Model):
@@ -43,7 +48,7 @@ class Room(models.Model):
     capacity = models.PositiveIntegerField(_("capacity"), default=1)
     # Per-room monthly cost (EUR). Q1 safe default; recorded for reporting only.
     monthly_rate = models.DecimalField(
-        _("monthly rate"), max_digits=10, decimal_places=2, default=Decimal("0")
+        _("monthly rate"), max_digits=10, decimal_places=2, default=Decimal("0"), validators=NON_NEGATIVE
     )
 
     class Meta:
@@ -78,7 +83,7 @@ class RoomAssignment(models.Model):
     end_date = models.DateField(_("end date"), null=True, blank=True)
     # Optional per-assignment override of the room's monthly rate (Q1).
     rate_override = models.DecimalField(
-        _("rate override"), max_digits=10, decimal_places=2, null=True, blank=True
+        _("rate override"), max_digits=10, decimal_places=2, null=True, blank=True, validators=NON_NEGATIVE
     )
     assigned_by = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True,
@@ -114,7 +119,7 @@ class EquipmentItem(models.Model):
     size = models.CharField(_("size"), max_length=50, blank=True)
     # Valuation: latest price at order date, entered manually (round-4 confirmed:
     # no weighted-average). The price *value* is operator data; the method is fixed.
-    unit_price = models.DecimalField(_("unit price"), max_digits=10, decimal_places=2, default=0)
+    unit_price = models.DecimalField(_("unit price"), max_digits=10, decimal_places=2, default=0, validators=NON_NEGATIVE)
     is_active = models.BooleanField(_("active"), default=True)
     created_at = models.DateTimeField(_("created"), auto_now_add=True)
 
@@ -162,7 +167,7 @@ class EquipmentIssue(models.Model):
         choices=DeductionReviewStatus.choices, default=DeductionReviewStatus.NONE,
     )
     charge_amount = models.DecimalField(
-        _("charge amount"), max_digits=12, decimal_places=2, null=True, blank=True
+        _("charge amount"), max_digits=12, decimal_places=2, null=True, blank=True, validators=NON_NEGATIVE
     )
     reviewed_by = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True,

@@ -25,10 +25,19 @@ class DeductionReviewError(Exception):
     """Raised on an invalid unreturned-equipment review transition."""
 
 
+def _non_negative(value) -> Decimal:
+    """Positive sign convention (confirmed with Jober 2026-06-29): rates and
+    charges are never negative."""
+    amount = Decimal(value or 0)
+    if amount < 0:
+        raise ValueError("Amounts use a positive convention; negative values are not allowed.")
+    return amount
+
+
 @transaction.atomic
 def set_room_rate(room, rate, *, actor=None):
     """Set a room's monthly rate (EUR). Recorded for reporting only (Q1)."""
-    room.monthly_rate = Decimal(rate or 0)
+    room.monthly_rate = _non_negative(rate)
     room.save(update_fields=["monthly_rate"])
     record_event(actor, "accommodation.rate_set", target=room, rate=str(room.monthly_rate))
     return room
@@ -37,7 +46,7 @@ def set_room_rate(room, rate, *, actor=None):
 @transaction.atomic
 def set_assignment_rate(assignment, rate, *, actor=None):
     """Set or clear the per-assignment monthly-rate override (blank clears it)."""
-    assignment.rate_override = None if rate in (None, "") else Decimal(rate)
+    assignment.rate_override = None if rate in (None, "") else _non_negative(rate)
     assignment.save(update_fields=["rate_override"])
     record_event(
         actor, "accommodation.assignment_rate_set", target=assignment,

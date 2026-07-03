@@ -1,5 +1,11 @@
 # Test Journal
 
+## 2026-06-30 — Positive sign convention (Q4 confirmed)
+
+- **Full suite: 207 passed** (up from 202), e2e excluded, on the `jober-test` image against the dev PostgreSQL.
+- New `tests/test_positive_convention.py` (5 tests): net = revenue − cost with both stored positive (cost is `12000`, not `-12000`); negatives rejected for finance line items, monthly cost (record_financial_month), room rate, and assignment-rate override.
+- `ruff check apps config tests` clean. Validator-only migrations `finance/0003` + `logistics/0007` build under pytest (MinValueValidator on all money fields; no data change).
+
 ## 2026-06-29 — Browser e2e for the sprint's feature pages
 
 - Added `tests/e2e/test_feature_pages.py` (9 tests) + `scripts/playwright_e2e.sh` (builds the **current** app + Playwright images, seeds demo users + people + questionnaire + finance, serves the app, runs the whole `tests/e2e` suite). **14 passed** (9 feature + 5 existing shell smoke) in the pinned Playwright container.

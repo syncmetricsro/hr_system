@@ -3,18 +3,24 @@ from __future__ import annotations
 from decimal import Decimal
 
 from django.conf import settings
+from django.core.validators import MinValueValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+
+# Positive sign convention (confirmed with Jober 2026-06-29): money fields never
+# go negative; net is computed as revenue - cost.
+NON_NEGATIVE = [MinValueValidator(Decimal("0"))]
 
 
 class FinancialMonth(models.Model):
     """A minimal monthly financial record per project (plan §11.15).
 
-    SIGN CONVENTION ASSUMPTION: net = revenue - cost. Jober must confirm from one
-    filled month whether costs are entered negative or stored positive and
-    subtracted (Phase 4 blocker, docs/product/open-decisions.md). Full line items
-    live in finance_module_spec.md. Totals are always summed dynamically over all
-    projects/months — never hardcoded — to avoid the manager's spreadsheet bugs.
+    SIGN CONVENTION (confirmed with Jober 2026-06-29): costs and revenues are
+    entered as **positive** numbers and the system computes net = revenue - cost.
+    Amounts are never stored negative (enforced in services.positive_amount and by
+    the field validators below). Full line items live in Finance_Specs.md. Totals
+    are always summed dynamically over all projects/months — never hardcoded — to
+    avoid the manager's spreadsheet bugs.
     """
 
     project = models.ForeignKey(
@@ -22,8 +28,8 @@ class FinancialMonth(models.Model):
     )
     year = models.PositiveIntegerField(_("year"))
     month = models.PositiveSmallIntegerField(_("month"))
-    revenue = models.DecimalField(_("revenue"), max_digits=12, decimal_places=2, default=Decimal("0"))
-    cost = models.DecimalField(_("cost"), max_digits=12, decimal_places=2, default=Decimal("0"))
+    revenue = models.DecimalField(_("revenue"), max_digits=12, decimal_places=2, default=Decimal("0"), validators=NON_NEGATIVE)
+    cost = models.DecimalField(_("cost"), max_digits=12, decimal_places=2, default=Decimal("0"), validators=NON_NEGATIVE)
     note = models.CharField(_("note"), max_length=300, blank=True)
     is_locked = models.BooleanField(_("locked"), default=False)
     recorded_by = models.ForeignKey(
@@ -46,7 +52,7 @@ class FinancialMonth(models.Model):
 
     @property
     def net(self) -> Decimal:
-        # Assumption: revenue - cost (see class docstring; confirm in Phase 4).
+        # Positive convention (confirmed 2026-06-29): net = revenue - cost.
         return self.revenue - self.cost
 
 
@@ -72,9 +78,9 @@ class FinanceCategory(models.Model):
     """A finance line-item category (the configurable catalog, Finance_Specs §2).
 
     Amounts are stored positive; the sign comes from ``kind`` (cost vs revenue),
-    so net = revenues - costs regardless of the spreadsheet's sign convention
-    (still to confirm with one filled month). ``group`` powers the manager's
-    transport/accommodation/overhead breakdowns."""
+    so net = revenues - costs. This matches Jober's confirmed positive convention
+    (2026-06-29). ``group`` powers the manager's transport/accommodation/overhead
+    breakdowns."""
 
     label = models.CharField(_("label"), max_length=120)
     kind = models.CharField(_("kind"), max_length=10, choices=FinanceCategoryKind.choices)
@@ -103,7 +109,7 @@ class FinanceLineItem(models.Model):
     category = models.ForeignKey(
         FinanceCategory, on_delete=models.PROTECT, related_name="line_items", verbose_name=_("category")
     )
-    amount = models.DecimalField(_("amount"), max_digits=12, decimal_places=2, default=Decimal("0"))
+    amount = models.DecimalField(_("amount"), max_digits=12, decimal_places=2, default=Decimal("0"), validators=NON_NEGATIVE)
 
     class Meta:
         verbose_name = _("finance line item")

@@ -38,7 +38,17 @@ store the raw ID number?
   use** (DPA / blacklist legality).
 - Safe default: none — needs the legal answer first. (We can build inert
   mechanics, but the legal answer may reshape them.)
-- **Answer:**
+- **Answer:** _Interim (2026-06-29): candidate legal basis identified — workers
+  sign an annual paper (a temporary contract) that includes GDPR / personnel-data
+  clauses. Awaiting a sample to check whether it actually covers a do-not-rehire
+  list. Owner not reachable yet; still needs lawyer confirmation before build.
+  Verify in the sample: (1) purpose — does it name rehire-screening / not-rehire
+  use, not just general HR processing; (2) basis type — consent (fragile,
+  withdrawable) vs legitimate interest (usually sounder for a blacklist);
+  (3) retention period (5y?) stated + justified; (4) identifier retention for
+  post-exit matching (supports our hashed-ID approach); (5) transparency — worker
+  told data may be used against future engagement + who sees it; (6) blacklist
+  reason categories may edge into special-category data (stricter rules)._
 
 ## 4. Finance sign convention (Phase 4)
 In your monthly finance sheet, are **costs entered as negative numbers**, or are
@@ -48,7 +58,16 @@ in the current spreadsheet)?
 - Why it matters: determines how "net" is computed across the finance module;
   **Phase 4 blocker**.
 - Safe default: `net = revenue − cost` (current assumption), to confirm.
-- **Answer:**
+- **Answer (CONFIRMED 2026-06-29): positive convention.** Costs and revenues are
+  entered as **positive** numbers; the system computes **net = revenue − cost**.
+  This matches how the finance module was already built (amounts stored positive,
+  sign derived from the category kind), so the confirmation **validates** the
+  existing implementation rather than unblocking new work. Hardened accordingly:
+  the write path (`finance.services.positive_amount`, `logistics._non_negative`)
+  and model validators now **reject negative** amounts across finance line items,
+  monthly revenue/cost, room rates, equipment unit prices, and unreturned-item
+  charges. Equipment charge = `unit_price × quantity` (positive arithmetic).
+  Still helpful: a real filled month to reconcile the seeded category labels.
 
 ## 5. Inactive reasons (minor)
 What are the allowed reasons for marking a person **Inactive** (e.g. sick, left,
