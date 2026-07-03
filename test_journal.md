@@ -1,5 +1,11 @@
 # Test Journal
 
+## 2026-06-29 — Browser e2e for the sprint's feature pages
+
+- Added `tests/e2e/test_feature_pages.py` (9 tests) + `scripts/playwright_e2e.sh` (builds the **current** app + Playwright images, seeds demo users + people + questionnaire + finance, serves the app, runs the whole `tests/e2e` suite). **14 passed** (9 feature + 5 existing shell smoke) in the pinned Playwright container.
+- Coverage: finance summary → month detail, finance year page, accommodation cost report (+ "reporting only" note), equipment review queue, reports inactive-by-reason; nav gating (manager sees Reviews + Finance tabs; observer sees Finance but **not** Reviews); access gating (recruiter → accommodation costs = 403; coordinator → equipment reviews = 403).
+- Assertions hit the **English URL prefix** (`/en/…`) for deterministic source-string text; the language switcher isn't used in-test because it redirects back to the `/sk/`-prefixed path (locale middleware then forces Slovak). Two first-run failures were test-only bugs (that switcher redirect + "Per-project results" being an eyebrow, not a heading, on the year page), now fixed — no app defects.
+
 ## 2026-06-29 — Reports: inactive-by-reason
 
 - **Full suite: 202 passed** (up from 198), e2e excluded, on the `jober-test` image against the dev PostgreSQL.
