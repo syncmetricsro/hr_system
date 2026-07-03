@@ -18,6 +18,17 @@ class FinanceError(Exception):
     """Raised on an invalid finance operation (e.g. editing a locked month)."""
 
 
+def positive_amount(value) -> Decimal:
+    """Coerce to Decimal and enforce the positive sign convention (confirmed with
+    Jober 2026-06-29: costs and revenues are entered as positive numbers; the
+    system computes net = revenue - cost). Negative input is rejected rather than
+    silently flipped, so bad data can't invert a total."""
+    amount = Decimal(value or 0)
+    if amount < 0:
+        raise FinanceError("Amounts use a positive convention; negative values are not allowed.")
+    return amount
+
+
 @transaction.atomic
 def set_line_item(month, category, amount, *, actor=None):
     """Enter/update one line-item amount (positive) on a month. Does not
@@ -25,7 +36,7 @@ def set_line_item(month, category, amount, *, actor=None):
     if month.is_locked:
         raise FinanceError("This financial month is locked.")
     item, _created = FinanceLineItem.objects.update_or_create(
-        month=month, category=category, defaults={"amount": Decimal(amount or 0)}
+        month=month, category=category, defaults={"amount": positive_amount(amount)}
     )
     record_event(actor, "finance.line_item_set", target=item, category=category.label)
     return item
@@ -137,8 +148,8 @@ def record_financial_month(project, year, month, revenue, cost, *, actor=None, n
     obj, _created = FinancialMonth.objects.update_or_create(
         project=project, year=year, month=month,
         defaults={
-            "revenue": Decimal(revenue or 0),
-            "cost": Decimal(cost or 0),
+            "revenue": positive_amount(revenue),
+            "cost": positive_amount(cost),
             "note": note,
             "recorded_by": actor if getattr(actor, "is_authenticated", False) else None,
         },

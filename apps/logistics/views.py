@@ -108,8 +108,11 @@ def accommodation_costs(request: HttpRequest) -> TemplateResponse:
 @require_action(Action.ACCOMMODATION_MANAGE)
 def set_room_rate_view(request: HttpRequest, pk: int) -> HttpResponse:
     room = get_object_or_404(Room, pk=pk)
-    set_room_rate(room, request.POST.get("monthly_rate") or 0, actor=request.user)
-    messages.success(request, _("Room rate saved."))
+    try:
+        set_room_rate(room, request.POST.get("monthly_rate") or 0, actor=request.user)
+        messages.success(request, _("Room rate saved."))
+    except (ValueError, ArithmeticError) as exc:
+        messages.error(request, str(exc) or _("Invalid amount."))
     return redirect("accommodation_detail", pk=room.accommodation_id)
 
 
@@ -117,8 +120,11 @@ def set_room_rate_view(request: HttpRequest, pk: int) -> HttpResponse:
 @require_action(Action.ACCOMMODATION_MANAGE)
 def set_assignment_rate_view(request: HttpRequest, pk: int) -> HttpResponse:
     assignment = get_object_or_404(RoomAssignment, pk=pk)
-    set_assignment_rate(assignment, request.POST.get("rate_override"), actor=request.user)
-    messages.success(request, _("Rate override saved."))
+    try:
+        set_assignment_rate(assignment, request.POST.get("rate_override"), actor=request.user)
+        messages.success(request, _("Rate override saved."))
+    except (ValueError, ArithmeticError) as exc:
+        messages.error(request, str(exc) or _("Invalid amount."))
     return redirect("person_detail", pk=assignment.person_id)
 
 

@@ -215,6 +215,47 @@ Verification: ruff clean; **57 unit tests pass** (5 new view tests incl. sensiti
 Next step:
 - Recruiter intake (hard-gated) or trials + the readiness gate (which activates ADR 0018 enforcement).
 
+## 2026-06-30
+
+Finance sign convention CONFIRMED (Q4) — positive convention + hardening.
+
+Jober confirmed (2026-06-29): costs and revenues are entered as **positive**
+numbers; the system computes `net = revenue − cost`. This is exactly how the
+finance module was already built (PRs #16–#17: amounts stored positive, sign
+from the category kind), so the confirmation **validates** the existing build
+rather than unblocking new work. This slice enforces the convention so it can't
+be violated, and flips the docs from "assumption" to "confirmed".
+
+What changed:
+- `apps/finance/services.py`: `positive_amount()` guard — `set_line_item` and
+  `record_financial_month` now **reject negative** amounts (raise FinanceError,
+  surfaced by the existing view try/except).
+- `apps/logistics/services.py`: `_non_negative()` guard on `set_room_rate` /
+  `set_assignment_rate` (raise ValueError; the rate views now catch it and show
+  a message instead of 500ing).
+- Model validators (`MinValueValidator(0)`) on every money field for admin/form
+  defence: finance line-item amount, monthly revenue/cost; room monthly_rate +
+  rate_override, equipment unit_price, unreturned-item charge_amount. Migrations
+  `finance/0003` + `logistics/0007` (validator-only; no data change).
+- Docstrings + `docs/product/phase3-4-open-questions.md` Q4 +
+  `docs/product/open-decisions.md`: assumption → **confirmed 2026-06-29**.
+
+Point-by-point vs the request: (1) all cost fields accept/process positives —
+yes, and negatives are now rejected; (2) ledger entries align — the Jober
+finance model is project-month P&L (FinancialMonth + line items), not a
+per-worker cash ledger (that's the CorvinumEU design); it computes
+`net = revenue − cost` on positive inputs; (3) equipment charge =
+`unit_price × quantity`, positive arithmetic, prices/charges validated
+non-negative; (4) no ambiguous calc found — net is unambiguous under positives.
+
+Verification: ruff clean; **207 unit tests pass** (was 202) — positive net =
+revenue − cost, and negatives rejected for line items, monthly cost, room rate,
+and assignment override. Migrations build under pytest.
+
+Next step:
+- Still useful (not blocking): a real filled month to reconcile the seeded
+  category labels. Otherwise finance is done; remaining blocker is Q3 blacklist.
+
 ## 2026-06-29 (later 5)
 
 Reports polish — inactive-by-reason breakdown.
