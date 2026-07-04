@@ -14,6 +14,13 @@
   {% endif %}
 </section>
 
+{% if has_open_blacklist %}
+  <section class="panel" role="alert">
+    <p class="eyebrow">⚠ {% trans "Blacklist" %}</p>
+    <p>{% trans "This person has an unresolved blacklist case. Activation is blocked until a manager resolves it." %}</p>
+  </section>
+{% endif %}
+
 {# --- Workflow action panel (state-driven) --- #}
 {% if is_available %}
   {% can 'intake.assign_trial' as may_assign %}
@@ -292,6 +299,51 @@
         <li>{{ m.created_at|date:"Y-m-d H:i" }} — {{ m.get_status_display }}: {{ m.body|truncatechars:60 }}</li>
       {% endfor %}
     </ul>
+  {% endif %}
+</section>
+{% endif %}
+
+{% can 'blacklist.propose' as may_bl_propose %}
+{% can 'blacklist.decide' as may_bl_decide %}
+{% if blacklist_case or can_propose_blacklist %}
+<section class="panel workflow-panel">
+  <p class="eyebrow">{% trans "Risk" %}</p>
+  <h2>{% trans "Blacklist" %}</h2>
+
+  {% if blacklist_case %}
+    <p>{% trans "Status" %}: {{ blacklist_case.get_status_display }}</p>
+    {% if can_view_blacklist_reason %}
+      {% if blacklist_case.category %}<p>{% trans "Category" %}: {{ blacklist_case.category.label }}</p>{% endif %}
+      <p class="muted">{% trans "Reason" %}: {{ blacklist_case.restricted_reason|default:"—" }}</p>
+    {% else %}
+      <p class="muted">{% trans "Reason is restricted." %}</p>
+    {% endif %}
+
+    {% if blacklist_case.status == 'proposed' and may_bl_decide %}
+      <form class="people-search" method="post" action="{% url 'blacklist_decide' blacklist_case.pk %}">
+        {% csrf_token %}
+        <input type="text" name="reason" aria-label="{% trans 'Reason' %}" placeholder="{% trans 'Reason' %}">
+        <button class="button button-primary" type="submit" name="decision" value="approve">{% trans "Approve" %}</button>
+        <button class="button button-secondary" type="submit" name="decision" value="reject">{% trans "Reject" %}</button>
+      </form>
+    {% elif blacklist_case.status == 'approved' and may_bl_decide %}
+      <form class="people-search" method="post" action="{% url 'blacklist_remove' blacklist_case.pk %}">
+        {% csrf_token %}
+        <input type="text" name="reason" required aria-label="{% trans 'Reason' %}" placeholder="{% trans 'Reason' %}">
+        <button class="button button-secondary" type="submit">{% trans "Remove from blacklist" %}</button>
+      </form>
+    {% endif %}
+  {% elif can_propose_blacklist %}
+    <form class="stack" method="post" action="{% url 'blacklist_propose' person.pk %}">
+      {% csrf_token %}
+      <label><span>{% trans "Category" %}</span>
+        <select name="category">
+          {% for c in blacklist_categories %}<option value="{{ c.pk }}">{{ c.label }}</option>{% endfor %}
+        </select></label>
+      <label><span>{% trans "Reason" %}</span><input type="text" name="reason"></label>
+      <label><span>{% trans "ID number (optional, hashed)" %}</span><input type="text" name="identifier" autocomplete="off"></label>
+      <button class="button button-secondary" type="submit">{% trans "Propose blacklist" %}</button>
+    </form>
   {% endif %}
 </section>
 {% endif %}

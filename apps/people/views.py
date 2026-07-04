@@ -17,6 +17,8 @@ from apps.accounts.permissions import can as user_can
 from apps.people.models import InactiveReason, LifecycleError, LifecycleStatus, Person
 from apps.people.permissions import can_view_sensitive
 from apps.people.services import person_history, recycle_to_available
+from apps.blacklist.models import BlacklistCategory
+from apps.blacklist.services import check_match, has_open_case, propose_case
 from apps.messaging.models import MessageTemplate
 from apps.logistics.models import (
     EquipmentItem,
@@ -61,6 +63,21 @@ def person_create(request: HttpRequest) -> HttpResponse:
             person.save()
             record_event(request.user, "person.created", target=person)
             messages.success(request, _("Person added."))
+            # Blacklist re-entry check (plan §12.13): warn + auto-propose a case
+            # for manager review on a match. Does not block creation; the raw ID
+            # is hashed and discarded.
+            identifier = form.cleaned_data.get("identifier")
+            if identifier and check_match(identifier).exists():
+                propose_case(
+                    person, reason="Auto: intake identifier match",
+                    identifier=identifier,
+                    identifier_type=form.cleaned_data.get("identifier_type") or "national_id",
+                    actor=request.user,
+                )
+                messages.warning(
+                    request,
+                    _("Possible blacklist match — flagged for manager review. Activation is blocked until resolved."),
+                )
             return redirect("person_detail", pk=person.pk)
     else:
         form = PersonForm()
@@ -153,6 +170,13 @@ def person_detail(request: HttpRequest, pk: int) -> TemplateResponse:
                 person.lifecycle_status == LifecycleStatus.INACTIVE
                 and user_can(request.user, Action.PERSON_RECYCLE_AVAILABLE)
             ),
+            "blacklist_case": person.blacklist_cases.select_related("category").first(),
+            "has_open_blacklist": has_open_case(person),
+            "can_view_blacklist_reason": user_can(request.user, Action.BLACKLIST_VIEW_REASON),
+            "can_propose_blacklist": (
+                user_can(request.user, Action.BLACKLIST_PROPOSE) and not has_open_case(person)
+            ),
+            "blacklist_categories": BlacklistCategory.objects.filter(is_active=True),
         },
     )
 

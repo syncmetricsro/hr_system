@@ -35,7 +35,10 @@ def _user(role: Role) -> User:
         (Role.OBSERVER, Action.FINANCE_VIEW_SUMMARY, True),
         (Role.OBSERVER, Action.SMS_SEND, False),
         (Role.MANAGER, Action.BLACKLIST_VIEW_REASON, True),
-        (Role.COORDINATOR, Action.BLACKLIST_VIEW_REASON, False),
+        (Role.COORDINATOR, Action.BLACKLIST_VIEW_REASON, True),
+        (Role.RECRUITER, Action.BLACKLIST_VIEW_REASON, False),
+        (Role.COORDINATOR, Action.BLACKLIST_PROPOSE, True),
+        (Role.COORDINATOR, Action.BLACKLIST_DECIDE, False),
     ],
 )
 def test_can_matches_matrix(role, action, expected):

@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "apps.messaging",
     "apps.compliance",
     "apps.feedback",
+    "apps.blacklist",
     "apps.core",
 ]
 
@@ -140,6 +141,19 @@ COMPLIANCE_ALERT_DAYS = int(os.getenv("COMPLIANCE_ALERT_DAYS", "30"))
 
 # Worker feedback is retained briefly only (plan §11.11 ≈ 1 month).
 FEEDBACK_RETENTION_DAYS = int(os.getenv("FEEDBACK_RETENTION_DAYS", "31"))
+
+# Blacklist & HMAC matching (plan §11.14). Legal basis: legitimate interest
+# (fraud prevention / security vetting / hiring decisions). Real-data execution
+# stays gated on the LIA + lawyer sign-off — until then fictional data only.
+#   - HMAC keys: comma-separated, newest last; the index is the stored key_version
+#     so keys can rotate without re-hashing. Dev falls back to SECRET_KEY.
+#   - MATCHING_ENABLED: the §11.14 "approved before production execution" gate.
+#   - RETENTION_DAYS: fingerprint/case retention (≈5y placeholder, pending approval).
+BLACKLIST_HMAC_KEYS = [
+    k for k in os.getenv("BLACKLIST_HMAC_KEYS", SECRET_KEY).split(",") if k
+]
+BLACKLIST_MATCHING_ENABLED = env_bool("BLACKLIST_MATCHING_ENABLED", True)
+BLACKLIST_RETENTION_DAYS = int(os.getenv("BLACKLIST_RETENTION_DAYS", "1825"))
 
 CSRF_COOKIE_HTTPONLY = True
 SESSION_COOKIE_HTTPONLY = True

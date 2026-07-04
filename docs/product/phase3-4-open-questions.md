@@ -38,17 +38,27 @@ store the raw ID number?
   use** (DPA / blacklist legality).
 - Safe default: none — needs the legal answer first. (We can build inert
   mechanics, but the legal answer may reshape them.)
-- **Answer:** _Interim (2026-06-29): candidate legal basis identified — workers
-  sign an annual paper (a temporary contract) that includes GDPR / personnel-data
-  clauses. Awaiting a sample to check whether it actually covers a do-not-rehire
-  list. Owner not reachable yet; still needs lawyer confirmation before build.
-  Verify in the sample: (1) purpose — does it name rehire-screening / not-rehire
-  use, not just general HR processing; (2) basis type — consent (fragile,
-  withdrawable) vs legitimate interest (usually sounder for a blacklist);
-  (3) retention period (5y?) stated + justified; (4) identifier retention for
-  post-exit matching (supports our hashed-ID approach); (5) transparency — worker
-  told data may be used against future engagement + who sees it; (6) blacklist
-  reason categories may edge into special-category data (stricter rules)._
+- **Answer (partial, 2026-06-30): legal basis = LEGITIMATE INTEREST** (GDPR Art.
+  6(1)(f)), on three grounds stated by the client — **fraud prevention** (protect
+  the business), **security vetting** (protect workforce/clients), and **hiring
+  decisions** (run recruitment). This is the sounder basis for a blacklist (vs
+  consent, which is withdrawable), and it settles the basis-type question.
+  _Still pending:_ the **actual written text** (annual worker contract w/ GDPR
+  clauses) — promised, not yet delivered; plus a documented **Legitimate Interest
+  Assessment (balancing test)** and lawyer/DPO sign-off before real-data use.
+  _Still open (mostly config, not model shape):_ retention period (5y?), who may
+  see the reason (managers only?), whether reason categories touch special-category
+  data. Recommended privacy-safe default regardless: **HMAC-hashed identifier
+  matching** (never store the raw ID number). Any build runs on **fictional data
+  only** until the real-data/legal gate opens._
+  - **Module BUILT 2026-06-30** on this basis (`apps/blacklist/`): BlacklistCase +
+    HMAC MatchFingerprint, propose→manager-decide→remove, intake match warning,
+    activation hard-gate. Visibility per client: flag = recruiter+coordinator+
+    manager; reason = coordinator+manager. Gated by `BLACKLIST_MATCHING_ENABLED`;
+    fictional data only pending the written text + LIA. See
+    `docs/security/blacklist-legal-basis.md`.
+  - _Earlier interim (2026-06-29): candidate basis = annual GDPR contract clauses;
+    awaiting a sample._
 
 ## 4. Finance sign convention (Phase 4)
 In your monthly finance sheet, are **costs entered as negative numbers**, or are

@@ -44,6 +44,7 @@ class Action(str, Enum):
     EQUIPMENT_REVIEW_DEDUCTION = "equipment.review_deduction"
     CATALOG_MANAGE = "catalog.manage"
     USER_MANAGE = "user.manage"
+    BLACKLIST_PROPOSE = "blacklist.propose"
     BLACKLIST_DECIDE = "blacklist.decide"
     SMS_MANAGE_TEMPLATES = "sms.manage_templates"
     FINANCE_MANAGE = "finance.manage"
@@ -81,11 +82,12 @@ ACTION_ROLES: dict[Action, frozenset[Role]] = {
     Action.EQUIPMENT_REVIEW_DEDUCTION: frozenset({_MANAGER}),
     Action.CATALOG_MANAGE: frozenset({_MANAGER}),
     Action.USER_MANAGE: frozenset({_MANAGER}),
+    Action.BLACKLIST_PROPOSE: frozenset({_COORDINATOR, _MANAGER}),
     Action.BLACKLIST_DECIDE: frozenset({_MANAGER}),
     Action.SMS_MANAGE_TEMPLATES: frozenset({_MANAGER}),
     Action.FINANCE_MANAGE: frozenset({_MANAGER}),
     Action.EXPORT_APPROVED: frozenset({_MANAGER, _OBSERVER}),
-    Action.BLACKLIST_VIEW_REASON: frozenset({_MANAGER}),
+    Action.BLACKLIST_VIEW_REASON: frozenset({_COORDINATOR, _MANAGER}),
     Action.FEEDBACK_VIEW: frozenset({_MANAGER}),
     Action.FINANCE_VIEW_SUMMARY: frozenset({_MANAGER, _OBSERVER}),
     Action.AUDIT_VIEW: frozenset({_MANAGER}),

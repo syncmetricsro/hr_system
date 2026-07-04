@@ -1,5 +1,12 @@
 # Test Journal
 
+## 2026-07-04 — Blacklist & HMAC matching
+
+- **Full suite: 224 passed** (up from 202), e2e excluded, on the `jober-test` image against the dev PostgreSQL. Plus **16 e2e** (11 feature + 5 smoke) in the pinned Playwright container.
+- New `tests/test_blacklist.py` (14 tests): fingerprint is deterministic + key-sensitive + format-normalized; **the raw identifier is never persisted** (asserted against every field of the row); `check_match` is company-wide, active/non-expired only, and honours `BLACKLIST_MATCHING_ENABLED`; propose→approve moves the person to BLACKLISTED + activates the fingerprint; reject is a no-op on lifecycle; remove reverts to Available + revokes; deciding a non-proposed case raises; an open case blocks `activate_on_project`; `person_create` with a matching ID creates a proposed case **without blocking creation**; RBAC (decide=manager, propose=coordinator+manager, view_reason=coordinator+manager not recruiter); the queue view is 403 for coordinator; `purge_expired` drops expired; seed categories present.
+- Updated `tests/test_rbac.py` matrix for the widened `blacklist.view_reason` (coordinator now True) + `blacklist.propose`. New e2e: blacklist queue renders, manager sees the Blacklist tab, coordinator → queue 403.
+- `ruff check apps config tests` clean (fixed one unused import + two E702 in the new test). Migrations `blacklist/0001` + `0002` build under pytest. SK/HU/UK catalogs recompiled (de-fuzzed the new strings; set three wrapped long warnings by hand).
+
 ## 2026-06-30 — Positive sign convention (Q4 confirmed)
 
 - **Full suite: 207 passed** (up from 202), e2e excluded, on the `jober-test` image against the dev PostgreSQL.

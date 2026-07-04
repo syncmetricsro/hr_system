@@ -36,6 +36,12 @@ def activate_on_project(person, project, *, actor=None, reason: str = "", start_
     accommodation + transport may be N/A) attaches here once ReadinessRecord
     lands; the CARGO manager override bypasses it. Tracked for the readiness slice.
     """
+    # Hard-gate: an unresolved blacklist case blocks activation (plan §12.13).
+    from apps.blacklist.services import has_open_case
+
+    if has_open_case(person):
+        raise WorkflowError("Blocked by an unresolved blacklist case; a manager must review it first.")
+
     today = timezone.localdate()
     existing = person.assignments.filter(status=AssignmentStatus.ACTIVE)
     for assignment in existing:

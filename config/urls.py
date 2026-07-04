@@ -3,6 +3,7 @@ from django.contrib import admin
 from django.urls import include, path
 
 from apps.accounts import views as account_views
+from apps.blacklist import views as blacklist_views
 from apps.compliance import views as compliance_views
 from apps.core import exports as core_exports
 from apps.feedback import views as feedback_views
@@ -70,6 +71,10 @@ urlpatterns += i18n_patterns(
     path("intake/<int:pk>/", intake_views.intake_panel, name="intake_panel"),
     path("people/<int:person_pk>/sms/", messaging_views.send_sms_view, name="send_sms"),
     path("compliance/", compliance_views.compliance_list, name="compliance_list"),
+    path("blacklist/", blacklist_views.blacklist_queue, name="blacklist_queue"),
+    path("people/<int:person_pk>/blacklist/propose/", blacklist_views.blacklist_propose, name="blacklist_propose"),
+    path("blacklist/<int:pk>/decide/", blacklist_views.blacklist_decide, name="blacklist_decide"),
+    path("blacklist/<int:pk>/remove/", blacklist_views.blacklist_remove, name="blacklist_remove"),
     path("feedback/", feedback_views.feedback_inbox, name="feedback_inbox"),
     path("feedback/links/new/", feedback_views.feedback_link_create, name="feedback_link_create"),
 )

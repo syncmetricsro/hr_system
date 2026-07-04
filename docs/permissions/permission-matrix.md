@@ -42,6 +42,7 @@ Legend: ✅ permitted · — denied
 | `equipment.review_deduction` | — | — | ✅ | — |
 | `catalog.manage` | — | — | ✅ | — |
 | `user.manage` | — | — | ✅ | — |
+| `blacklist.propose` | — | ✅ | ✅ | — |
 | `blacklist.decide` | — | — | ✅ | — |
 | `sms.manage_templates` | — | — | ✅ | — |
 | `finance.manage` | — | — | ✅ | — |
@@ -51,7 +52,7 @@ Legend: ✅ permitted · — denied
 
 | Sensitive read | Recruiter | Coordinator | Manager/Admin | Observer |
 |---|---|---|---|---|
-| `blacklist.view_reason` (reasons; warning *existence* stays broad) | — | — | ✅ | — |
+| `blacklist.view_reason` (reasons; warning *existence* stays broad) | — | ✅ | ✅ | — |
 | `feedback.view` (worker feedback inbox) | — | — | ✅ | — |
 | `finance.view_summary` | — | — | ✅ | ✅ |
 | `audit.view` | — | — | ✅ | — |

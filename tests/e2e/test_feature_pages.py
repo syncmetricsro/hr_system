@@ -68,6 +68,12 @@ def test_equipment_review_queue(page):
     page.get_by_role("heading", name="Equipment reviews").wait_for()
 
 
+def test_blacklist_queue(page):
+    _login(page)
+    page.goto(f"{base_url()}/en/blacklist/")
+    page.get_by_role("heading", name="Blacklist review").wait_for()
+
+
 def test_reports_inactive_by_reason(page):
     _login(page)
     page.goto(f"{base_url()}/en/reports/")
@@ -81,6 +87,13 @@ def test_manager_sees_reviews_tab(page):
     page.goto(f"{base_url()}/en/")
     assert page.get_by_role("link", name="Reviews").count() == 1
     assert page.get_by_role("link", name="Finance").count() == 1
+    assert page.get_by_role("link", name="Blacklist").count() == 1
+
+
+def test_coordinator_blocked_from_blacklist_queue(page):
+    _login(page, COORDINATOR)
+    response = page.goto(f"{base_url()}/en/blacklist/")
+    assert response.status == 403
 
 
 def test_observer_has_finance_but_not_reviews_tab(page):
