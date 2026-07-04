@@ -8,6 +8,12 @@ Docker image plus PostgreSQL and publishes the app at **http://localhost:8000**.
 > turns off HTTPS redirect and secure cookies. Never use those settings on a real
 > deployment. The data is fictional and reset each time you start fresh.
 
+> **Presenting to the customer?** Follow the act-by-act script in
+> [demo-runbook.md](demo-runbook.md). `scripts/dev_app.sh up` now also runs
+> `seed_demo_scenario`, which fills every module screen (finance line items, a
+> flagged equipment review, a blacklisted person + a proposed case, an inactive
+> reason, a compliance alert, and a phone) so nothing starts empty.
+
 ## Prerequisites
 
 - Docker installed and running (`docker --version`).

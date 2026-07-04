@@ -215,6 +215,30 @@ Verification: ruff clean; **57 unit tests pass** (5 new view tests incl. sensiti
 Next step:
 - Recruiter intake (hard-gated) or trials + the readiness gate (which activates ADR 0018 enforcement).
 
+## 2026-07-04 (later)
+
+Customer demo tooling — full-scenario seed + presenter runbook.
+
+What changed:
+- `apps/core/management/commands/seed_demo_scenario.py` — idempotent, fictional
+  orchestration (via the real services) that fills every module screen for the
+  demo: finance line items on DHLBA 2026-05 (+ recompute), two equipment items
+  issued to Olha with one **flagged unreturned** (Reviews queue), Bohdan's
+  **inactive reason**, an expiring **certificate**, a **blacklisted** person
+  ("Ivan Zablokovaný", hashed ID `SK-DEMO-BL-001`) for the live re-entry moment,
+  a **proposed** blacklist case on Diana to decide live, and a phone for Olha.
+  Wired into `scripts/dev_app.sh up` after the other seeds.
+- `docs/deployment/demo-runbook.md` — the ~60-min presenter script (Slovak +
+  a Hungarian switch): prep/go-no-go, logins, cast, 11 acts mapped to the pains
+  and the five answered questions, caveats, and the closing ask. Linked from
+  `docs/deployment/local-demo.md`.
+
+Verification: **226 unit tests pass** (was 224) — `tests/test_demo_scenario.py`
+asserts every module screen is populated (finance net = revenue − cost = 6900,
+pending equipment review, "Sick" inactive bucket, blacklisted person + active
+fingerprint, `check_match("SK-DEMO-BL-001")` hits, a compliance alert, Olha's
+phone) and that re-running the seed is idempotent. ruff clean.
+
 ## 2026-07-04
 
 Blacklist & HMAC matching module (Q3 unblocked) — `apps/blacklist/`.

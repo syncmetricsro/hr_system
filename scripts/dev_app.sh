@@ -102,6 +102,8 @@ cmd_up() {
   manage seed_people >/dev/null
   manage seed_questionnaire >/dev/null
   manage seed_finance >/dev/null
+  echo "Seeding demo scenario (fills every module screen) ..."
+  manage seed_demo_scenario >/dev/null
 
   docker rm -f "$APP" >/dev/null 2>&1 || true
   echo "Starting app on port ${PORT} ..."
