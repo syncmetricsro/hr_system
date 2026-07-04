@@ -9,6 +9,18 @@ from apps.people.models import Person
 class PersonForm(forms.ModelForm):
     """Simplified recruiter intake (the full hard-gated questionnaire is later)."""
 
+    # Optional ID number used only to run the blacklist re-entry check at intake
+    # (plan §12.13). It is HMAC-hashed and **never stored** — see
+    # apps.blacklist.services.check_match / compute_fingerprint.
+    identifier = forms.CharField(
+        label=_("ID number (blacklist check)"), required=False,
+        widget=forms.TextInput(attrs={"autocomplete": "off"}),
+    )
+    identifier_type = forms.ChoiceField(
+        label=_("ID type"), required=False,
+        choices=[("national_id", _("National ID")), ("passport", _("Passport")), ("other", _("Other"))],
+    )
+
     class Meta:
         model = Person
         fields = [

@@ -1,0 +1,36 @@
+{% extends "layouts/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Blacklist" %} · Jober{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <p class="eyebrow">{% trans "Risk" %}</p>
+  <h1>{% trans "Blacklist review" %}</h1>
+</section>
+
+<p class="muted">{% trans "Proposed cases awaiting a decision. Approving moves the person to Blacklisted; no automatic merge occurs." %}</p>
+
+<section class="field-list" aria-label="{% trans 'Blacklist review' %}">
+  {% for case in cases %}
+    <article class="field-card">
+      <div>
+        <h3><a href="{% url 'person_detail' case.person_id %}">{{ case.person }}</a></h3>
+        <p>{% if case.category %}{{ case.category.label }}{% endif %}</p>
+      </div>
+      <dl>
+        <div><dt>{% trans "Proposed by" %}</dt><dd>{{ case.proposed_by|default:"—" }}</dd></div>
+        <div><dt>{% trans "Reason" %}</dt><dd>{{ case.restricted_reason|default:"—" }}</dd></div>
+      </dl>
+      <form class="people-search" method="post" action="{% url 'blacklist_decide' case.pk %}">
+        {% csrf_token %}
+        <input type="text" name="reason" aria-label="{% trans 'Reason' %}" placeholder="{% trans 'Reason' %}">
+        <button class="button button-primary" type="submit" name="decision" value="approve">{% trans "Approve" %}</button>
+        <button class="button button-secondary" type="submit" name="decision" value="reject">{% trans "Reject" %}</button>
+      </form>
+    </article>
+  {% empty %}
+    <p>{% trans "Nothing awaiting review." %}</p>
+  {% endfor %}
+</section>
+{% endblock %}

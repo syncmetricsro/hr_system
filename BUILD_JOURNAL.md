@@ -215,6 +215,53 @@ Verification: ruff clean; **57 unit tests pass** (5 new view tests incl. sensiti
 Next step:
 - Recruiter intake (hard-gated) or trials + the readiness gate (which activates ADR 0018 enforcement).
 
+## 2026-07-04
+
+Blacklist & HMAC matching module (Q3 unblocked) — `apps/blacklist/`.
+
+Jober confirmed the legal basis: **legitimate interest** (fraud prevention /
+security vetting / hiring decisions). The last hard-blocked module is now built,
+on the authoritative Jober spec (`Product_Design.md` §11.14 / §12.13). The written
+contract text + a documented LIA are still pending, so **real-data execution stays
+gated** (`BLACKLIST_MATCHING_ENABLED`); fictional data only until sign-off.
+
+What changed:
+- New `apps/blacklist/`: `BlacklistCategory` (configurable, seeded neutral
+  placeholders), `BlacklistCase` (proposed/approved/rejected/removed), and
+  `MatchFingerprint` (keyed **HMAC-SHA256** of a transiently-entered ID —
+  **raw identifier never stored**; `key_version` allows key rotation). Migrations
+  0001 + 0002 (seed).
+- Services: `compute_fingerprint` (normalized, keyed), `check_match` (company-wide,
+  active/non-expired, honours the enable gate), `propose_case` (no lifecycle
+  change), `decide_case` (approve → BLACKLISTED + activate fingerprint; reject),
+  `remove_case` (→ Available + revoke), `has_open_case`, `purge_expired` + a
+  `purge_blacklist` command.
+- Warning flow (§12.13): optional non-persisted ID on the intake form
+  (`PersonForm`) → on a match, create the person, auto-propose a case, and warn —
+  **no block, no silent merge**. `activate_on_project` now **hard-gates** on an
+  unresolved case.
+- RBAC: new **`blacklist.propose`** (coordinator + manager); **widened
+  `blacklist.view_reason`** to coordinator + manager (client's visibility rule:
+  flag = recruiter + coordinator + manager; reason = coordinator + manager);
+  `blacklist.decide` stays manager-only. Matrix updated.
+- UI: person-detail blacklist panel (flag to all; reason gated; propose/decide/
+  remove), a warning banner, a manager review queue, a manager-only **Blacklist**
+  nav tab. Admin + i18n SK/HU/UK. Settings: `BLACKLIST_HMAC_KEYS`,
+  `BLACKLIST_MATCHING_ENABLED`, `BLACKLIST_RETENTION_DAYS`.
+- Legal: `docs/security/blacklist-legal-basis.md` (legitimate-interest grounds +
+  LIA placeholder + data-handling); Q3 in the open-questions doc marked BUILT.
+
+Verification: ruff clean; **224 unit tests pass** (was 202) + **16 e2e** (blacklist
+queue renders; manager sees the tab; coordinator 403). Covered: keyed/deterministic
+hash, **raw id never persisted**, active/company-wide matching, propose→approve→
+BLACKLISTED + fingerprint active, remove→Available + revoke, reject no-op,
+open-case blocks activation, intake match warns without blocking, RBAC, retention
+purge. Migrations build under pytest.
+
+Next step:
+- On the written text + LIA: confirm retention period + reason-category list, then
+  lift the real-data gate. Q3 is the last blocker; everything else is merged.
+
 ## 2026-06-30
 
 Finance sign convention CONFIRMED (Q4) — positive convention + hardening.
