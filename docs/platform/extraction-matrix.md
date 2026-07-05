@@ -1,16 +1,16 @@
 > **Status: FUTURE-STAGE PLANNING — does not change the current build.**
 > Per [ADR 0001](../adr/0001-jober-only-scope.md) the production app stays
 > **single-client Jober** with no platform abstractions, client switching, or
-> shared-client data models. This matrix is a **post-completion** extraction
-> checklist (Stage B; see [ADR 0020](../adr/0020-white-label-platform-sequencing.md)).
-> It is a DRAFT seeded from design-level entities and **must be completed against
-> the actual Jober repository** before any extraction begins. Nothing here
-> authorises platform work in the current codebase.
+> shared-client data models. This matrix is the **post-completion** extraction
+> checklist (Stage B; see [ADR 0020](../adr/0020-white-label-platform-sequencing.md)
+> and the draft [ADR 0021](../adr/0021-stage-b-extraction.md)). Execution is
+> staged in [extraction-plan.md](extraction-plan.md) and begins only when ADR 0021
+> is activated (Jober demo acceptance + pilot green-light).
 
 # Jober → Platform Extraction Matrix
 
 **Purpose:** label every Jober artifact so the shared-core extraction (Stage B, design doc §12.5) is a checklist, not a guess.
-**Status:** DRAFT — seeded from design-level entities only. **Must be completed against the actual Jober repository**, enumerating real apps, models, views, templates, management commands, and permissions.
+**Status:** **COMPLETED against the actual Jober repository, 2026-07-05** (post-PR #28: 11 apps, 26 models, 26 RBAC actions, 22 page templates, 9 management commands, 226 unit + 16 e2e tests). Supersedes the design-level seed rows.
 
 ---
 
@@ -25,51 +25,205 @@
 | **infra** | Technical infrastructure (deploy, CI, settings, utilities) | `deploy/`, shared config |
 | **obsolete** | Dead, superseded, or removable | delete |
 
-**Assignment rule:** default a thing to the *most client-agnostic* label it can honestly hold. If it contains an `if client/feature`-style branch, split it: the agnostic part → core, the specific part → client-policy or feature. "Already in Jober" never auto-labels as core (see design doc §7.0 reuse audit).
+**Assignment rule:** default a thing to the *most client-agnostic* label it can honestly hold. If it contains an `if client/feature`-style branch, split it: the agnostic part → core, the specific part → client-policy or feature. "Already in Jober" never auto-labels as core (design doc §7.0 reuse audit).
 
 ---
 
-## How to complete
+## Dependency baseline (swept 2026-07-05)
 
-For **every** Jober app, then within each: every model, view/route, template, management command, signal/task, and permission/group — add a row. Aim for one row per real artifact, not per concept.
+Deps must end up **feature → core only**. Current graph:
 
-Columns: **Artifact · Type · Current Jober location · Label · Target location · Depends on · Notes / split required**
+| App | Imports from | Verdict |
+|---|---|---|
+| `audit` | — | ✅ clean core candidate |
+| `accounts` | audit | ✅ clean |
+| `people` | accounts, audit, **blacklist, finance, logistics, messaging, projects** | ⚠️ core candidate importing 4 feature candidates — **split required** (slice B1) |
+| `projects` | accounts, audit, people, **blacklist, logistics** | ⚠️ split required (activation gate, exit reconciliation — B1) |
+| `apps/core` | accounts, **blacklist, compliance, finance, logistics**, people, projects | ⚠️ dashboard/reports aggregate everything — panel registry (B1) |
+| logistics / finance / intake / messaging / compliance / feedback / blacklist | core candidates only | ✅ already point the right way |
+
+The coupling is one-directional and localized to three call sites plus the
+dashboard — see extraction-plan slice **B1** for the hook/registry designs.
 
 ---
 
-## Seed rows (design-level entities — verify and expand against the repo)
+## Per-app artifact rows
+
+### `apps/accounts` → `core/accounts` (+ client-policy)
+
+| Artifact | Type | Label | Target | Notes / split |
+|---|---|---|---|---|
+| `User` (email login), `UserManager` | model | core | `core/accounts` | maps cleanly; **2FA not yet built** — planned core addition (B4), required by CorvinumEU |
+| `Role` enum (4 roles) | model choices | **client-policy** | `clients/jober/policies` | CorvinumEU has 7 roles; core defines the interface, client supplies the enum |
+| `Action` enum + `can()` / `require_action` / `can_read_internal` (`permissions.py`) | authz mechanism | core | `core/accounts` | mechanism is client-agnostic; `BROAD_INTERNAL_READS` switch stays core config |
+| `ACTION_ROLES` matrix (26 actions) | authz data | **client-policy** | `clients/jober/policies` | the role↔action grid is per client, loaded via `CLIENT_POLICIES` |
+| `{% can %}` template tag | template tag | core | `core/accounts` | |
+| `login_page` / `logout_view`, login template | view/UI | core | `core/accounts` + `core/ui` | Slovak URL slugs (`/prihlasenie/`) → client URL config |
+| `seed_demo`, `reset_demo`, `ensure_superuser` | command | infra / client | `clients/jober` (seeds), `core/accounts` (ensure_superuser) | |
+
+### `apps/audit` → `core/audit`
 
 | Artifact | Type | Label | Target | Notes |
 |---|---|---|---|---|
-| User, Role, Permission, 2FA | model/auth | core | `core/accounts` | confirm Jober auth maps cleanly to platform RBAC |
-| Person, PersonIdentifier | model | core | `core/people` | identifiers encrypted; access audited |
-| PartnerCompany, Project, Worksite, Position | model | core | `core/organizations` | "companies are projects" per CorvinumEU interview |
-| Assignment | model | core | `core/assignments` | one worker → one org/project |
-| StatusHistory | model | core | `core/workflow_history` | transitions only; allowed transitions are client-policy |
-| AuditLog | model | core | `core/audit` | immutable |
-| Task, Notification | model | core | `core/tasks` | internal notifications (not worker messaging) |
-| RetentionPolicy | model | core | `core/retention` | GDPR; per-client retention values are config |
-| Shared templates / base layout / components | template | core | `core/ui` | theme hooks; no client branding baked in |
-| Document, DocumentType | model | feature | `features/documents` | on for both clients |
-| ChecklistTemplate, ChecklistItemTemplate, PersonChecklistItem | model | feature | `features/checklists` | on for both clients |
-| DuplicateMatch, BlacklistRecord | model | feature | `features/duplicate_blacklist` | HMAC matching; on for both |
-| IssuedItem (equipment) | model | feature | `features/equipment` | CorvinumEU on; Jober likely on (coordinator handles equipment) |
-| LedgerEntry (advances/deductions) | model | feature | `features/advances` | CorvinumEU; **check overlap with Jober financials** |
-| Accommodation models | model | feature | `features/accommodation` | Jober only |
-| Economic / P&L dashboards | model/view | feature | `features/profitability` | Jober only |
-| SMS (Twilio), Telegram messaging | model/integration | feature | `features/worker_messaging` | Jober only; CorvinumEU off |
-| TestEvent / ScreeningEvent | model | feature | `features/recruitment` (tbd) | optional; confirm whether core or feature |
-| ActivityNote | model | core | `core/people` | person timeline |
-| Status set + allowed transitions (Jober's specific values) | logic | client-policy | `clients/jober/policies` | the *values*; the *mechanism* is core |
-| Activation/approval rules (Jober thresholds) | logic | client-policy | `clients/jober/workflows` | hard-stops differ per client |
-| Jober branding, colours, logo, templates | static/template | theme-ui | `clients/jober/*` | CorvinumEU mirror = corvinum.eu design system |
-| Settings, deploy scripts, CI config | config | infra | `deploy/`, shared | per-client settings module selected at startup |
+| `AuditEvent` (append-only), `record_event()` | model/service | core | `core/audit` | zero deps; move as-is |
+| `audit.view` action | authz | core mechanism / client matrix | — | as with all actions: name core, grant client |
+
+### `apps/people` → `core/people` (+ client-policy, split panels)
+
+| Artifact | Type | Label | Target | Notes / split |
+|---|---|---|---|---|
+| `Person` (identity, lifecycle, archive, search) | model | core | `core/people` | CorvinumEU needs extra intake fields (children/smoking/…) → additive columns or a per-client profile extension model, decided in Stage C |
+| `LifecycleStatus` + `set_status` mechanism | model/service | core | `core/people` | transition *engine* is core |
+| `ALLOWED_TRANSITIONS` values (5-state Jober set) | workflow data | **client-policy** | `clients/jober/policies` | CorvinumEU has a 9-stage pipeline; core validates against the client-supplied map |
+| `InactiveReason` catalog + seed | model | core | `core/people` | both clients need inactive/archive reasons (CorvinumEU §5.3); *seed values* per client |
+| `SENSITIVE_FIELDS` + `can_view_sensitive` (`permissions.py`) | authz rule | **client-policy** | `clients/jober/policies` | visibility rules are Jober's Q4 answer; core defines the hook |
+| `recycle_to_available`, `inactive_by_reason`, `person_history` | service | core | `core/people` | `person_history` currently reads feature models → becomes registry-fed (B1) |
+| `people_list`, `person_create/edit/detail`, `recycle_person` views + `PersonForm` | view/UI | core | `core/people` | `person_detail` context + template compose 5 feature panels → **panel registry** (B1); blacklist-ID field on the form → contributed by `features/duplicate_blacklist` |
+| `person_detail.html`, `person_form.html`, `people_list.html` | template | core + theme-ui | `core/ui` + `clients/jober/templates` | structure core; branding/wording client |
+| `seed_people` | command | client | `clients/jober` | move its finance/logistics/equipment seeding into feature seeds (B1) |
+
+### `apps/projects` → split: `core/organizations` + `core/assignments` + `features/recruitment_trials`
+
+| Artifact | Type | Label | Target | Notes / split |
+|---|---|---|---|---|
+| `Project` (partner, office, coordinators M2M) | model | core | `core/organizations` | "companies are projects" (CorvinumEU interview); CorvinumEU adds PartnerCompany/Worksite/Position as siblings in Stage C |
+| `ProjectAssignment` (one-active rule, snapshots) | model | core | `core/assignments` | |
+| `activate_on_project` / `end_assignment` / `exit_person` | service | core | `core/assignments` | **B1 splits:** blacklist gate → pre-activation policy hook; room/equipment return inside `exit_person` → post-exit hook the features subscribe to |
+| `TrialAssignment`, `ReadinessRecord`, trial/readiness services + ADR 0018 gate | model/service | **feature** | `features/recruitment_trials` | Jober's trial-day workflow; CorvinumEU's `TestEvent` is a sibling design, not shared code |
+| `project_list/detail`, `trials_queue`, `trial_outcome`, `readiness_update`, `activate_person`, `exit_view` views | view | core / feature | per model split above | |
+| `project.assign/manage`, `trial.record_outcome`, `readiness.complete`, `approval.activate`, `exit.reconcile` actions | authz | mechanism core / grants client | — | |
+
+### `apps/logistics` → split three ways
+
+| Artifact | Type | Label | Target | Notes |
+|---|---|---|---|---|
+| `Accommodation`, `Room` (+ `monthly_rate`), `RoomAssignment` (+ `rate_override`, `effective_rate`) | model | **feature** | `features/accommodation` | Jober-only (CorvinumEU excludes housing) |
+| `assign_room`/`release_room`, rate services, `accommodation_cost_report` | service | feature | `features/accommodation` | |
+| accommodation views + 3 templates + `room.assign`/`accommodation.manage` actions | view/UI | feature | `features/accommodation` | |
+| `EquipmentItem` (unit_price), `EquipmentIssue` (+ `DeductionReviewStatus` review fields) | model | **feature** | `features/equipment` | **shared by both clients** (flag resolved below); reconcile pricing: Jober prices the catalog item, CorvinumEU values the issued item (add optional per-issue value in Stage C) |
+| `issue/return_equipment`, `flag_unreturned`, `review_deduction`, `pending_deduction_reviews`, `issued_equipment_value` | service | feature | `features/equipment` | |
+| equipment views, `equipment_reviews.html`, `equipment.issue_return`/`equipment.review_deduction` actions | view/UI | feature | `features/equipment` | |
+| `TransportWeek`, `record_transport_week`, `transport_trends` view/template, `transport.record` action | model/view | **feature** | `features/transport` | Jober-only; CorvinumEU explicitly rejected transport |
+
+### `apps/finance` → `features/profitability` (Jober-only)
+
+| Artifact | Type | Label | Target | Notes |
+|---|---|---|---|---|
+| `FinancialMonth`, `FinanceCategory`, `FinanceLineItem` (positive convention, Q4) | model | feature | `features/profitability` | project-month P&L; **no overlap with CorvinumEU advances** (flag resolved below) |
+| all finance services (line items, recompute, lock/reopen, rollups, `company_totals`) | service | feature | `features/profitability` | |
+| 7 finance views, 3 templates, `finance.manage`/`finance.view_summary` actions, `seed_finance` | view/UI/command | feature | `features/profitability` | category *labels* are Jober data (seed) |
+
+### `apps/intake` → `features/intake`
+
+| Artifact | Type | Label | Target | Notes |
+|---|---|---|---|---|
+| `IntakeQuestionnaireVersion`, `IntakePanel`, `IntakeQuestion`, `RecruitmentIntake`, `IntakeAnswer` | model | feature | `features/intake` | the **engine** (versioned questionnaire, typed-negative gating) is reusable; the *questionnaire content* is seeded per client (`seed_questionnaire` → client seed) |
+| `intake_start`/`intake_panel` views, `intake_panel.html`, `intake.create_edit` action | view/UI | feature | `features/intake` | |
+
+### `apps/messaging` → `features/worker_messaging` (Jober-only)
+
+| Artifact | Type | Label | Target | Notes |
+|---|---|---|---|---|
+| `MessageTemplate`, `OutboundMessage`, `InboundMessage` | model | feature | `features/worker_messaging` | CorvinumEU rejected automated messaging (phone + Messenger) — flag off |
+| `send_sms` (stdlib Twilio), `verify_twilio_signature`, `twilio_inbound` webhook | service/view | feature | `features/worker_messaging` | webhook URL stays un-prefixed infra routing |
+| `sms.send`/`sms.manage_templates` actions, SMS panel on person card | authz/UI | feature | contributed via panel registry (B1) | |
+
+### `apps/compliance` → `features/documents` family (both clients)
+
+| Artifact | Type | Label | Target | Notes |
+|---|---|---|---|---|
+| `Certificate` (dates-only), `compliance_alerts`, `add_months` | model/service | feature | `features/documents` | Jober = dates-only alerts; CorvinumEU extends the same family with files/verification/visibility in Stage C — design the feature so Certificate is the minimal case |
+| `compliance_list` view/template | view/UI | feature | `features/documents` | |
+
+### `apps/feedback` → `features/feedback` (Jober-only)
+
+| Artifact | Type | Label | Target | Notes |
+|---|---|---|---|---|
+| `FeedbackLink` (token), `FeedbackSubmission`, `purge_feedback` | model/command | feature | `features/feedback` | CorvinumEU rejected a worker portal; purge pattern generalizes into `core/retention` (B4) |
+| `feedback_form` (public), `feedback_inbox`, `feedback_link_create`, `feedback.view` action | view | feature | `features/feedback` | |
+
+### `apps/blacklist` → `features/duplicate_blacklist` (both clients)
+
+| Artifact | Type | Label | Target | Notes |
+|---|---|---|---|---|
+| `BlacklistCategory`, `BlacklistCase`, `MatchFingerprint` (HMAC, key rotation) | model | feature | `features/duplicate_blacklist` | confirmed shared; CorvinumEU adds DuplicateMatch review states in Stage C |
+| `compute_fingerprint`, `check_match`, `propose/decide/remove_case`, `has_open_case`, `purge_expired` + `purge_blacklist` | service/command | feature | `features/duplicate_blacklist` | activation gate + intake check delivered via B1 hooks; retention joins `core/retention` (B4) |
+| queue/propose/decide/remove views, `blacklist_queue.html`, 3 blacklist actions | view/UI | feature | `features/duplicate_blacklist` | reason-visibility grant (coordinator+manager) is client-policy data |
+| `BLACKLIST_HMAC_KEYS` / `MATCHING_ENABLED` / `RETENTION_DAYS` settings | config | feature config | client settings | legal gate stays per client |
+
+### `apps/core` → split: `core/ui` + registries + per-feature exports
+
+| Artifact | Type | Label | Target | Notes |
+|---|---|---|---|---|
+| `healthz` | view | infra | `core/ui` | |
+| `dashboard`, `reports` (aggregate all modules) | view | core mechanism | `core/ui` + **panel registry** | features contribute tiles/panels; today's cross-imports dissolve (B1) |
+| `exports.py` (people/projects/finance CSV, `export.approved`) | view | per-feature | each feature ships its export | export *framework* (approved-exports gate) stays core |
+| `seed_demo_scenario` | command | client | `clients/jober` demo assets | with the demo runbook |
+
+### RBAC actions (all 26) — mechanism core, grants client-policy
+
+The `Action` **names** and enforcement live in `core/accounts`; which roles hold
+each grant is the client's `ACTION_ROLES` matrix. Feature-owned actions move with
+their feature; the client matrix only grants what its enabled features register.
+
+| Action | Owner after extraction |
+|---|---|
+| `intake.create_edit`, `intake.assign_trial` | `features/intake` / `features/recruitment_trials` |
+| `person.recycle_available` | `core/people` |
+| `sms.send`, `sms.manage_templates` | `features/worker_messaging` |
+| `project.assign`, `project.manage`, `approval.activate` | `core/organizations` + `core/assignments` |
+| `trial.record_outcome`, `readiness.complete` | `features/recruitment_trials` |
+| `room.assign`, `accommodation.manage` | `features/accommodation` |
+| `equipment.issue_return`, `equipment.review_deduction`, `catalog.manage` | `features/equipment` |
+| `transport.record` | `features/transport` |
+| `exit.reconcile` | `core/assignments` (hooks notify features) |
+| `user.manage` | `core/accounts` |
+| `blacklist.propose`, `blacklist.decide`, `blacklist.view_reason` | `features/duplicate_blacklist` |
+| `finance.manage`, `finance.view_summary` | `features/profitability` |
+| `export.approved` | core export framework (per-feature exports register under it) |
+| `feedback.view` | `features/feedback` |
+| `audit.view` | `core/audit` |
+
+### Templates, static, i18n
+
+| Artifact | Label | Target | Notes |
+|---|---|---|---|
+| `templates/layouts/base.html` (nav, language switch, role badge) | core + theme hooks | `core/ui` | nav tabs become registry-driven; logo/branding blocks overridable per client |
+| 22 `templates/pages/*` | follow their app | per rows above | |
+| `static/` (Tailwind build, vendored htmx/Alpine + checksums) | infra + theme | shared build; tokens per client | CorvinumEU theme = corvinum.eu design system (§7.0 reuse audit gates any component transplant) |
+| `locale/{sk,hu,uk}` catalogs (EN source) | core + per-feature | split per app move | msgids move with their apps; client-specific wording in client catalogs; CorvinumEU = SK/HU dual-field |
+
+### Infra (shared, unchanged by extraction)
+
+| Artifact | Label | Notes |
+|---|---|---|
+| Dockerfiles (digest-pinned), `requirements/*.lock` (hash-pinned), `scripts/*` (dev_app, dev_db, playwright, compile_messages, checks) | infra | settings become layered: `config/settings/base` + `clients/<client>/settings`; one artifact, deployed once per client (§12.4) |
+| `tests/` (226 unit + 16 e2e) | infra | the Stage B safety net; reorganized alongside app moves, assertions unchanged (Stage D bar) |
+
+### Obsolete
+
+| Artifact | Notes |
+|---|---|
+| `demo/` static prototype (already non-authoritative) | stays historical reference; not extracted |
+| — no dead production code identified in the sweep | |
 
 ---
 
-## Open flags surfaced by this matrix
+## Open flags — RESOLVED (2026-07-05, against the repo)
 
-- **Advances vs. Jober financials overlap.** If Jober's financial code already handles per-worker money movement, `features/advances` may reuse it rather than be net-new — this changes the CorvinumEU effort estimate. Resolve early.
-- **Equipment on both clients.** If Jober also issues equipment, `features/equipment` is a shared feature, not CorvinumEU-only.
-- **Auth compatibility.** Confirm Jober's auth/2FA maps onto the platform RBAC before labelling `core/accounts` as clean reuse (design doc §7.0).
-- **Anything labelled core that imports a feature** must be split before extraction — that coupling is the main risk to the Stage B estimate.
+- ~~**Advances vs. Jober financials overlap.**~~ **No overlap.** Jober finance is
+  project-month P&L (`FinancialMonth`/`FinanceLineItem`), not per-worker cash.
+  `features/advances` (CorvinumEU ledger) is **net-new** in Stage C;
+  `features/profitability` is Jober-only. CorvinumEU effort estimate unaffected.
+- ~~**Equipment on both clients.**~~ **Yes — shared.** Jober ships
+  issue/return/deduction-review; `features/equipment` serves both. One model
+  reconciliation for Stage C: per-issue value (CorvinumEU) alongside Jober's
+  catalog `unit_price`.
+- ~~**Auth compatibility.**~~ **Compatible, with one addition.** Email-login
+  `User` + action-gated RBAC transfer cleanly; **2FA must be added to
+  `core/accounts`** (B4) — a genuinely reusable core capability, not a workaround.
+  Role enum + grants matrix become client-policy.
+- ~~**Core importing features.**~~ **Located and bounded:** three call sites
+  (`people` panels/matching, `projects` gate/exit, `apps/core` dashboard) — all
+  dissolved by the B1 hook/registry designs in
+  [extraction-plan.md](extraction-plan.md).
