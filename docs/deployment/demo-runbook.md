@@ -10,18 +10,22 @@ Companion: [local-demo.md](local-demo.md) (how the runner works).
 
 ## Before the demo (prep + go/no-go)
 
-1. **Get the latest code + full demo data:**
+1. **Get the latest code + full demo data — launch WITH Twilio creds** (Act 7 is
+   a live act, not optional):
    ```bash
-   scripts/dev_app.sh rebuild
+   doppler run -- scripts/dev_app.sh rebuild
    ```
-   This builds the current image, starts PostgreSQL, migrates, and seeds
-   `seed_demo` → `seed_people` → `seed_questionnaire` → `seed_finance` →
-   **`seed_demo_scenario`** (fills every module screen). App at
-   **http://localhost:8000**.
-   - Optional live SMS (Act 7): `doppler run -- scripts/dev_app.sh rebuild` so
-     Twilio creds reach the app.
-2. **Go/no-go:** `scripts/playwright_e2e.sh` should be green (16 e2e), then click
-   the three headline screens (Finance, Blacklist queue, Reviews).
+   Doppler (project `hr_system`, config `dev`; run from the repo root) injects
+   the Twilio credentials; the script builds the current image, starts
+   PostgreSQL, migrates, and seeds `seed_demo` → `seed_people` →
+   `seed_questionnaire` → `seed_finance` → **`seed_demo_scenario`**. App at
+   **http://localhost:8000**. *(If you forget Doppler, the SMS panel shows
+   "not configured" — relaunch with `doppler run -- scripts/dev_app.sh up`;
+   the seeded data survives.)*
+2. **Go/no-go:** `scripts/playwright_e2e.sh` green (16 e2e); click the three
+   headline screens (Finance, Blacklist queue, Reviews); **send one test SMS**
+   from Olha's card to the Twilio Virtual Phone and see it Delivered — never
+   let the demo be the first live send of the day.
 3. **Rehearse once** end-to-end and time it.
 
 ### Logins (password `demo-jober-2026` for all)
@@ -89,10 +93,21 @@ automatic payroll deduction *(Q2)*.
 **Compliance** list: Olha's forklift licence expiring in ~15 days, plus
 missing/expiring-medical alerts — the manager's early-warning on papers.
 
-### 7 · Messaging (optional, 4m)
-If launched with Doppler/Twilio: open Olha (she has a phone) → **Send SMS** from an
-approved template → shows Sent/Delivered + the outbound log. Fallback: show the
-templates and message history.
+### 7 · Messaging — live SMS + the Telegram question (6m)
+Open Olha (she has a phone) → **Send SMS** from an approved template → show the
+outbound log go **Sent/Delivered**. Talking points: templates are multilingual;
+coordinators can only message their own project's workers; every send is
+audited. Mention the caveat casually: *"still on the Twilio trial account, so
+messages carry the trial prefix — the account upgrade removes it."*
+
+**Then ask the Telegram question (bring a pen):** in round 4 you told us *no
+Telegram bot* because you already run a **manual Telegram broadcast channel**.
+Now that the messaging module is real — do you want that channel **integrated**?
+Concretely: (a) keep it fully manual as today, (b) system-assisted broadcast
+(compose in Jober with the multilingual templates + audit, post to your channel),
+or (c) the full bot with per-worker opt-in and delivery status (what round 4
+declined). Whatever they answer, write it down — it updates
+`Messaging_Specs.md` and the round-4 record.
 
 ### 8 · Finance (8m) — `manazer`
 **Finance** summary: company totals, per-project results, yearly rollup. Open the
@@ -136,3 +151,6 @@ finance convention *(Q4)*, inactive reasons *(Q5)*. Then the caveats and the ask
 3. **Confirm the finance category labels** (share one filled month).
 4. **Provide staging server/domain/DB names** so we can stand up Dokku.
 5. **Arrange a native-speaker translation review** (SK/HU/UK).
+6. **Decide the Telegram integration level** (from Act 7): manual channel as
+   today / system-assisted broadcast / full bot with opt-in. Also: upgrade the
+   Twilio account so SMS drops the trial prefix.
