@@ -5,6 +5,11 @@
 > This is the CorvinumEU v0.6-draft as supplied; it informs the shared-core
 > extraction and the eventual CorvinumEU thin client only, and authorises no
 > platform/Corvinum code in the current build.
+>
+> **Addendum 2026-07-05 (fuel-money tracking, secondhand — see end of file):**
+> a new requirement relayed via the CorvinumEU secretary, recorded as **pending
+> confirmation** through the interview channel. It does not modify the v0.6-draft
+> body above; see "Addendum A1" after §16.
 
 # CorvinumEU PeopleOps – HR Management Product Design
 
@@ -2657,3 +2662,70 @@ Use this section during discussion.
 ## Proposal notes
 
 - The advance/deduction ledger and equipment cost recovery are the real operational core for CorvinumEU and should anchor the demo.
+
+---
+
+# Addendum A1 — Fuel-money tracking (2026-07-05)
+
+**Source & status:** relayed by the CorvinumEU **secretary** (secondhand,
+2026-07-05), not the interview channel this document's decisions come from.
+Recorded here so it steers Stage C planning, but **pending confirmation** with the
+decision-maker before build. Do not treat as decided.
+
+**Request:** track money spent on fuel, in two distinct cases —
+1. **private cars** — money handed to workers who use their own car to get to
+   work; and
+2. **the bus** — fuel spend for company bus transportation.
+
+## A1.1 Private-car fuel money → already designed (§5.10, `features/advances`)
+
+This is the ledger's own worked example: one `PAY_ADDITION`, category
+`travel_fuel`, `pay_effect = ADD`, positive amount — summarised in the Thursday
+cycle and netted in the 20th-to-20th report like every other entry. **No new
+module or model is needed.** The secretary's request *confirms* this planned
+capability and sharpens it into a recurring commute-allowance use case.
+
+New open decisions this raises (add to the §13.3 back-and-forth):
+- **Calculation basis** — flat weekly/monthly amount per worker, per-km rate, or
+  fuel receipts? (Model impact: none for flat/receipt amounts; a per-km rate
+  would want `distance_km` + rate config on the entry.)
+- **Cadence** — paid with the Friday cash distribution (existing flow), or
+  monthly with the 20th-to-20th cycle?
+- **Eligibility** — who approves that a worker qualifies as a private-car
+  commuter (coordinator flag on the person? office decision?).
+
+## A1.2 Bus fuel → NEW, small, and deliberately narrow (`features/fuel_costs`, tbd)
+
+Bus fuel is a **company operational cost with no person and no payroll effect** —
+it must **not** enter the per-worker ledger (every ledger entry has a person and
+an explicit `pay_effect`; bus fuel has neither). Proposed shape, pending
+confirmation:
+
+- A minimal **fuel-spend log**: `date`, `vehicle_label` (free text or a tiny
+  catalog — e.g. "Bus 1"; no fleet module), `amount` (positive Decimal, EUR),
+  `odometer` (optional), `entered_by`, `note`. Reporting only: weekly/monthly
+  totals, by vehicle label.
+- **Boundary guards (both already decided in this document, and unchanged):**
+  - This does **not** reopen transportation route/vehicle/driver logistics —
+    rejected in the v0.4 interview and still rejected. No routes, no schedules,
+    no driver assignments; just money spent on fuel.
+  - This sits on the **financial boundary** (§3, 13.1): it is operational cost
+    *tracking*, not P&L/accounting. Like the ledger, it needs explicit client
+    sign-off as in-scope operational tracking. If CorvinumEU actually wants
+    cost-vs-revenue analysis around it, that is the (excluded) profitability
+    scope and must be renegotiated, not slipped in.
+
+Open decisions to confirm: single "bus" bucket vs per-vehicle labels; receipts
+kept (photo upload → touches the documents feature) or amount-only; who enters
+it (office/coordinator); does spend need partner-company/project attribution.
+
+## A1.3 Stage C impact
+
+- `features/advances` scope is unchanged (private-car money was already in it);
+  the A1.1 open decisions join the pre-build ledger-rules checklist (§5.10).
+- `features/fuel_costs` is a candidate **new, CorvinumEU-only feature app** —
+  small (one model, one form, one report). Not shared with Jober (Jober tracks
+  transport as weekly headcounts and fuel as a finance line item, which stays in
+  `features/profitability`).
+- Neither item changes the Stage B extraction plan; both are Stage C build items
+  once confirmed.
