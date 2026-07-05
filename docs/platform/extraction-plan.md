@@ -126,7 +126,9 @@ Jober, suite green.
 - Update ADR 0021 Status → Accepted-and-executed note; refresh the platform docs.
 - **Exit artifact:** Stage C (CorvinumEU thin client) can start from
   `clients/corvinum_eu/` + `features/{documents,checklists,advances}` per the
-  design doc — a config + theme + feature exercise, not a rebuild.
+  design doc — a config + theme + feature exercise, not a rebuild. (Plus, if
+  confirmed, the small `features/fuel_costs` bus-fuel log — see design-doc
+  Addendum A1; private-car fuel money is already inside `features/advances`.)
 
 ---
 
