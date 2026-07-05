@@ -215,6 +215,32 @@ Verification: ruff clean; **57 unit tests pass** (5 new view tests incl. sensiti
 Next step:
 - Recruiter intake (hard-gated) or trials + the readiness gate (which activates ADR 0018 enforcement).
 
+## 2026-07-05
+
+Stage B platform extraction — planning completed (docs only, build gated).
+
+What changed (no production code touched; ADR 0001 still governs):
+- `docs/platform/extraction-matrix.md`: DRAFT → **completed against the real
+  repo** (2026-07-05 sweep: 11 apps, 26 models, 26 RBAC actions, 22 page
+  templates, 9 commands). Per-artifact rows for every app; explicit all-26
+  RBAC-actions table; dependency baseline table. All four open flags **resolved
+  with repo evidence** (advances↔finance: no overlap; equipment: shared; auth:
+  compatible + 2FA to add; core→feature coupling: three call sites + dashboard).
+- `docs/platform/extraction-plan.md` (new): staged execution B0–B5 — safety
+  net/flags → decouple (hook + registry designs for the four coupling sites) →
+  in-place `git mv` reshape with **AppConfig.label pinning so no data migration**
+  → `clients/jober/` policy layer → core additions CorvinumEU needs (2FA,
+  retention, tasks) → validation. Risks + per-slice done-criteria; ~2–3 weeks
+  (§12.5 estimate holds given the localized coupling).
+- `docs/adr/0021-stage-b-extraction.md` (new): **Proposed** — activation trigger
+  is Jober demo acceptance + owner go-ahead; on activation it supersedes ADR 0001
+  and the plan's slices may land. Not in force while Proposed.
+- Source register: both new docs registered as non-authoritative until activation.
+
+Verification: docs-only diff; completeness check script confirms every model,
+command, and action appears in the matrix; matrix ↔ plan ↔ ADR cross-references
+consistent.
+
 ## 2026-07-04 (later)
 
 Customer demo tooling — full-scenario seed + presenter runbook.
