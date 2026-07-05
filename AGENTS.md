@@ -2,7 +2,7 @@
 
 Binding instructions for any coding agent working in this repository. If a rule here conflicts with a task, **follow the rule and say why**.
 
-This file governs **scope, security, supply chain, and how to work**. The **what to build** lives in the implementation plan (`jober_coding_agent_product_design_plan_v3_jober_only.md`) and the Jober v0.4 interview delta. When this file and the plan disagree on *security or dependencies*, this file wins.
+This file governs **scope, security, supply chain, and how to work**. The **what to build** lives in the implementation plan (`Product_Design.md`) and the Jober interview deltas. When this file and the plan disagree on *security or dependencies*, this file wins. Session-level onboarding (current commands, workflow, gotchas) lives in `CLAUDE.md`; that file never overrides this one.
 
 ---
 
@@ -10,6 +10,8 @@ This file governs **scope, security, supply chain, and how to work**. The **what
 
 - This repository is the **real Jober production application**, not the old demo. The static vanilla-JS demo was a design reference only; its "install nothing / no backend" rules no longer apply here.
 - Scope is **Jober only**. Do not introduce CorvinumEU, multi-client abstractions, white-label infrastructure, shift scheduling, fleet/vehicles, sick leave, worker portal, or Pohoda. They are out of scope by decision, not by omission.
+  - *(Status note, 2026-07-05: future-stage platform **planning documents** exist under `docs/platform/` and ADR 0021 is drafted **Proposed**. They authorise no code. This scope rule stands for all code until ADR 0021 is activated — see ADR 0020/0021.)*
+- *(Status note, 2026-07-05: Phases 0–4 are built and merged — all modules incl. finance, accommodation pricing, equipment review, and the gated blacklist; 226 unit + 16 e2e tests; demo-ready. The fictional-data rule below still applies: the real-data gate has not opened.)*
 - Stack is **npm-free by decision**: Django + htmx + Alpine.js + Tailwind standalone CLI + Playwright-Python + PostgreSQL + Dokku. There is **no Node.js, no npm, no React, no Vite** anywhere in the repository, build, or runtime.
 
 ---
@@ -103,7 +105,7 @@ These replaced npm packages but are still supply-chain artifacts — treat them 
 - **Audit old + new values** for every sensitive create/change — this is the safety net for the broad-read model. Audit is append-only to ordinary users.
 - **No real worker PII** until the real-data gate passes (signed DPA, approved hosting, reviewed permissions + sensitive-field visibility, documented blacklist/feedback retention, tested backups, passed security review). Use fictional data with Cyrillic / Central-Asian / Vietnamese names until then (also validates Unicode).
 - **Decimal money, never floats.** (The Django spike already found one truthiness/parse bug that silently zeroed amounts — parse with explicit `is not None` checks, not truthiness.)
-- HU/SK/UA via Django localization; **no English UI**. Every user-facing string goes through i18n.
+- Localization via Django i18n; every user-facing string goes through it. *(Superseded detail: the original "no English UI" rule was revised by decision — [ADR 0017](docs/adr/0017-english-base-language-i18n.md): **English is the msgid source language**, UI languages are **EN/SK/HU/UK** with **Slovak as the default**.)*
 
 ---
 
