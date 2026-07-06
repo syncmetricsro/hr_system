@@ -22,7 +22,7 @@
     <h2>{{ year }}</h2>
     <dl class="detail-grid">
       {% for p in project_results %}
-        <div><dt>{{ p.name }}</dt><dd>{{ p.net }}</dd></div>
+        <div><dt>{{ p.name }}</dt><dd class="amount{% if p.net < 0 %} amount-neg{% endif %}">{{ p.net }}</dd></div>
       {% empty %}
         <div><dd>{% trans "No financial months." %}</dd></div>
       {% endfor %}
@@ -34,7 +34,7 @@
     <h2>{{ year }}</h2>
     <dl class="detail-grid">
       {% for g in groups %}
-        <div><dt>{{ g.label }}</dt><dd>{{ g.net }}</dd></div>
+        <div><dt>{{ g.label }}</dt><dd class="amount{% if g.net < 0 %} amount-neg{% else %} amount-pos{% endif %}">{{ g.net }}</dd></div>
       {% empty %}
         <div><dd>{% trans "No line items yet." %}</dd></div>
       {% endfor %}
