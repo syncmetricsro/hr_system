@@ -1715,7 +1715,7 @@ msgstr "Döntésre váró javasolt esetek. A jóváhagyás a személyt feketelis
 
 #: templates/pages/blacklist_queue.html:22
 msgid "Proposed by"
-msgstr ""
+msgstr "Javasolta"
 
 #: templates/pages/blacklist_queue.html:23
 #: templates/pages/blacklist_queue.html:27
@@ -2293,7 +2293,7 @@ msgstr "Vagy írjon üzenetet"
 #: templates/pages/person_detail.html:316
 #: templates/pages/person_detail.html:339
 msgid "Category"
-msgstr ""
+msgstr "Kategória"
 
 #: templates/pages/person_detail.html:319
 msgid "Reason is restricted."
