@@ -2729,3 +2729,18 @@ it (office/coordinator); does spend need partner-company/project attribution.
   `features/profitability`).
 - Neither item changes the Stage B extraction plan; both are Stage C build items
   once confirmed.
+
+
+---
+
+# Addendum A2 — Design prototype exists (2026-07-06)
+
+The §7.0 design-language alignment now has a **clickable static reference**:
+`corvinumeu` repo → `peopleops-prototype/` (branch `peopleops-prototype`).
+Six pages (login+2FA, dashboard, people, person, **ledger** — the anchor screen
+per the Proposal notes — and equipment) rendering the corvinum.eu tokens
+(dark-default glass, `#005bbf`, Hanken Grotesk/Inter/JetBrains Mono, self-hosted
+Material Symbols subset) with a **left slide-out sidebar** shell (a new pattern;
+the public site's admin is modal-based). Fictional data; no network assets;
+provenance recorded in the prototype's `PROVENANCE.md`. It is a design
+reference only — the production thin client remains Stage C, gated by ADR 0021.
