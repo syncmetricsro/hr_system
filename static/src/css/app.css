@@ -1,22 +1,61 @@
+/* Jober design system — "calm industrial" redesign (2026-07-06).
+   One semantic stylesheet compiled by the Tailwind standalone CLI; templates use
+   these class names only (no utilities). Every pre-redesign class name is kept.
+   Palette validated with the dataviz six-checks validator (light surface):
+   accent #2557a7 · success #047857 · warning #b45309 · danger #b3261e — PASS. */
+
 :root {
-  --ink: #111827;
-  --surface: #f7faff;
+  /* Neutrals */
+  --n50: #f8f9fb;
+  --n100: #eef1f5;
+  --n200: #dfe4ec;
+  --n300: #c7d0dc;
+  --n400: #98a5b6;
+  --n500: #5b6b7e;
+  --n700: #364454;
+  --n900: #1b2430;
+
+  --ink: var(--n900);
+  --muted: var(--n500);
+  --surface: #f4f6f9;
   --panel: #ffffff;
-  --line: #d8e2f0;
-  --cobalt: #2557a7;
-  --teal: #009e8e;
-  --magenta: #d43f8d;
-  --yellow: #f5b942;
+  --line: var(--n200);
+
+  /* Brand + status (validated) */
+  --cobalt: #2557a7;            /* legacy alias, kept */
+  --accent: #2557a7;
+  --accent-strong: #1d4685;
+  --accent-soft: #e8effa;
+  --teal: #047857;              /* legacy alias — now the success hue */
+  --success: #047857;
+  --success-soft: #e6f4ee;
+  --warning: #b45309;
+  --warning-soft: #fdf3e7;
   --danger: #b3261e;
+  --danger-soft: #fbeae9;
+  --magenta: #d43f8d;           /* legacy alias, unused accent kept for safety */
+  --yellow: #f5b942;            /* legacy alias */
+
   --font-body: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", Arial, sans-serif;
   --font-mono: ui-monospace, "JetBrains Mono", "SF Mono", "Cascadia Code", "Roboto Mono", Menlo, Consolas, "Liberation Mono", monospace;
+
   --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-3: 0.75rem;
   --space-4: 1rem;
+  --space-5: 1.25rem;
   --space-6: 1.5rem;
   --space-8: 2rem;
+
+  --radius-sm: 0.375rem;
   --radius: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-full: 999px;
+
+  --shadow-xs: 0 1px 2px rgba(16, 24, 40, 0.06);
+  --shadow-sm: 0 1px 3px rgba(16, 24, 40, 0.10), 0 1px 2px rgba(16, 24, 40, 0.06);
+  --shadow-md: 0 4px 12px rgba(16, 24, 40, 0.10);
+
   --tap-target: 2.75rem;
 }
 
@@ -27,18 +66,24 @@
 body {
   margin: 0;
   min-height: 100vh;
-  background:
-    linear-gradient(rgba(37, 87, 167, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(37, 87, 167, 0.05) 1px, transparent 1px),
-    var(--surface);
-  background-size: 28px 28px;
+  background: var(--surface);
   color: var(--ink);
   font-family: var(--font-body);
-  letter-spacing: 0;
+  font-size: 15.5px;
+  line-height: 1.5;
 }
 
 a {
   color: inherit;
+}
+
+::selection {
+  background: var(--accent-soft);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 .skip-link {
@@ -49,11 +94,14 @@ a {
   background: var(--ink);
   color: white;
   padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-sm);
 }
 
 .skip-link:focus {
   top: var(--space-4);
 }
+
+/* ---------------------------------------------------------------- header */
 
 .app-header {
   position: sticky;
@@ -61,80 +109,154 @@ a {
   z-index: 10;
   display: flex;
   align-items: end;
-  justify-content: space-between;
   gap: var(--space-6);
-  padding: var(--space-4) clamp(1rem, 4vw, 3rem) 0;
-  background: rgba(247, 250, 255, 0.94);
+  padding: var(--space-3) clamp(1rem, 3vw, 2.5rem) 0;
+  background: rgba(255, 255, 255, 0.92);
   border-bottom: 1px solid var(--line);
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(10px);
 }
 
 .brand-lockup {
   display: flex;
   align-items: center;
+  align-self: center;
   gap: var(--space-3);
-  min-height: 3.5rem;
+  min-height: 3.25rem;
+  padding-bottom: var(--space-2);
 }
 
 .brand-mark {
   display: grid;
   place-items: center;
-  width: 2.75rem;
-  height: 2.75rem;
-  background: var(--cobalt);
+  width: 2.5rem;
+  height: 2.5rem;
+  background: var(--accent);
   color: white;
   border-radius: var(--radius) var(--radius) 0 var(--radius);
   font-family: var(--font-mono);
-  font-weight: 800;
+  font-weight: 700;
+  font-size: 0.95rem;
 }
 
 .brand-name {
-  font-weight: 900;
+  font-weight: 700;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
+  font-size: 0.95rem;
 }
 
 .folder-tabs {
   display: flex;
   align-items: end;
-  gap: var(--space-2);
+  gap: var(--space-1);
+  flex: 1;
+  min-width: 0;
   overflow-x: auto;
+  scrollbar-width: thin;
 }
 
 .folder-tab {
   display: inline-flex;
   align-items: center;
-  min-height: var(--tap-target);
-  padding: var(--space-3) var(--space-4);
-  border: 1px solid var(--line);
+  white-space: nowrap;
+  min-height: 2.6rem;
+  padding: var(--space-2) 0.65rem;
+  border: 1px solid transparent;
   border-bottom: 0;
   border-radius: var(--radius) var(--radius) 0 0;
-  background: #eaf1fb;
+  color: var(--muted);
+  background: transparent;
   text-decoration: none;
-  font-weight: 800;
+  font-weight: 600;
+  font-size: 0.86rem;
+}
+
+.folder-tab:hover {
+  background: var(--n100);
+  color: var(--ink);
 }
 
 .folder-tab.is-active {
   background: var(--panel);
-  color: var(--cobalt);
+  border-color: var(--line);
+  color: var(--accent);
+  box-shadow: inset 0 3px 0 var(--accent);
+  position: relative;
+  top: 1px;
 }
 
+/* Account cluster (language · role · sign out) — compact, vertically centred. */
+.header-account {
+  display: flex;
+  align-items: center;
+  align-self: center;
+  gap: var(--space-2);
+  padding-bottom: var(--space-2);
+  flex-shrink: 0;
+}
+
+.language-switch select {
+  min-height: 2.4rem;
+  width: auto;
+  padding: 0 var(--space-2);
+  font-size: 0.85rem;
+}
+
+.account-role {
+  display: inline-flex;
+  align-items: center;
+  max-width: 14rem;
+  padding: var(--space-1) var(--space-3);
+  background: var(--n100);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-full);
+  color: var(--n700);
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.logout-form {
+  display: inline-flex;
+}
+
+/* ---------------------------------------------------------------- layout */
+
 .app-shell {
-  width: min(1180px, calc(100% - 2rem));
+  width: min(1320px, calc(100% - 2.5rem));
   margin: 0 auto;
-  padding: var(--space-8) 0;
+  padding: var(--space-6) 0 var(--space-8);
 }
 
 .page-head {
-  max-width: 760px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: var(--space-3);
   padding-bottom: var(--space-6);
 }
 
+.page-head .eyebrow {
+  flex-basis: 100%;
+}
+
+.page-head h1 {
+  flex: 1 1 auto;
+  margin: 0;
+}
+
+.page-head .button {
+  margin-bottom: 0.2rem;
+}
+
 .eyebrow {
-  margin: 0 0 var(--space-2);
-  color: var(--teal);
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
-  font-weight: 800;
+  margin: 0 0 var(--space-1);
+  color: var(--accent);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
@@ -146,15 +268,13 @@ p {
 }
 
 h1 {
-  margin-bottom: var(--space-3);
-  font-size: clamp(2rem, 6vw, 4.25rem);
-  line-height: 0.95;
-  text-transform: uppercase;
+  margin-bottom: var(--space-2);
+  font-size: clamp(1.5rem, 3vw, 1.9rem);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
 }
 
-/* Keep long words (e.g. Hungarian "BEJELENTKEZÉS") inside their container
-   instead of overflowing past panel edges. Wrap at spaces normally; only break
-   a word as a last resort (no auto-hyphenation, so "JOBER" stays intact). */
 h1,
 h2,
 h3 {
@@ -163,31 +283,61 @@ h3 {
 
 h2 {
   margin-bottom: var(--space-4);
-  font-size: 1.35rem;
+  font-size: 1.15rem;
+  font-weight: 650;
+  letter-spacing: -0.01em;
 }
 
+h3 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.muted {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+/* Responsive page grids — panels stop stacking in one lonely column. */
 .dashboard-grid,
-.two-column {
+.two-column,
+.grid-2,
+.grid-3 {
   display: grid;
   gap: var(--space-4);
 }
 
 .dashboard-grid {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   margin-bottom: var(--space-6);
 }
 
 .two-column {
-  grid-template-columns: minmax(0, 1.45fr) minmax(280px, 0.55fr);
+  grid-template-columns: minmax(0, 1.4fr) minmax(300px, 0.6fr);
+  align-items: start;
 }
+
+.grid-2 {
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  align-items: start;
+  margin-bottom: var(--space-4);
+}
+
+.grid-3 {
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  align-items: start;
+  margin-bottom: var(--space-4);
+}
+
+/* ---------------------------------------------------------------- panels */
 
 .panel,
 .metric-card,
 .login-panel {
   background: var(--panel);
   border: 1px solid var(--line);
-  border-radius: var(--radius);
-  box-shadow: 0 14px 34px rgba(17, 24, 39, 0.07);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-xs);
 }
 
 .panel,
@@ -203,27 +353,98 @@ h2 {
   margin-bottom: var(--space-4);
 }
 
-.metric-card {
-  padding: var(--space-4);
+.workflow-panel {
+  margin-bottom: var(--space-4);
 }
 
-.metric-card span,
-dt {
+/* Stat tiles: sentence-case muted label, big ink value (proportional figures —
+   tabular is reserved for aligned columns, per the dataviz spec). */
+.metric-card {
+  padding: var(--space-4) var(--space-5);
+}
+
+.metric-card span {
   display: block;
-  color: #526174;
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
-  font-weight: 800;
-  text-transform: uppercase;
+  color: var(--muted);
+  font-size: 0.83rem;
+  font-weight: 600;
 }
 
 .metric-card strong {
   display: block;
-  margin-top: var(--space-2);
-  color: var(--cobalt);
-  font-family: var(--font-mono);
-  font-size: 2.4rem;
+  margin-top: var(--space-1);
+  color: var(--ink);
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
 }
+
+a.metric-card,
+.person-row {
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 120ms ease, box-shadow 120ms ease;
+}
+
+a.metric-card:hover,
+.person-row:hover {
+  border-color: var(--n300);
+  box-shadow: var(--shadow-sm);
+}
+
+/* ------------------------------------------------------------- key/value */
+
+dt {
+  color: var(--muted);
+  font-size: 0.83rem;
+  font-weight: 500;
+}
+
+dd {
+  margin: 0;
+  font-weight: 600;
+}
+
+/* Label-left, value-right rows; numbers align in a column. */
+.detail-grid {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+}
+
+.detail-grid > div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--n100);
+}
+
+.detail-grid > div:last-child {
+  border-bottom: 0;
+}
+
+.detail-grid dd {
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.amount {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+.amount-neg {
+  color: var(--danger);
+}
+
+.amount-pos {
+  color: var(--success);
+}
+
+/* ---------------------------------------------------------------- lists */
 
 .field-list {
   display: grid;
@@ -234,10 +455,12 @@ dt {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   gap: var(--space-4);
-  padding: var(--space-4);
+  padding: var(--space-4) var(--space-5);
+  background: var(--panel);
   border: 1px solid var(--line);
-  border-left: 5px solid var(--teal);
+  border-left: 4px solid var(--accent);
   border-radius: var(--radius);
+  box-shadow: var(--shadow-xs);
 }
 
 .field-card h3 {
@@ -246,42 +469,21 @@ dt {
 
 .field-card p {
   margin-bottom: 0;
-  color: #526174;
+  color: var(--muted);
 }
 
 .field-card dl {
   display: grid;
-  grid-template-columns: max-content 12rem;
+  grid-template-columns: max-content 10rem;
   column-gap: var(--space-6);
+  row-gap: var(--space-2);
   margin: 0;
-  align-items: start;
+  align-items: baseline;
 }
 
-.people-search {
-  display: flex;
-  gap: var(--space-3);
-  margin-top: var(--space-3);
-}
-
-.people-search input {
-  max-width: 360px;
-}
-
-.person-row,
-a.metric-card {
-  text-decoration: none;
-  color: inherit;
-}
-
-.person-row:hover,
-a.metric-card:hover {
-  border-color: var(--cobalt);
-}
-
-.detail-grid {
-  display: grid;
-  gap: var(--space-4);
-  margin: 0;
+.field-card dl dd {
+  font-variant-numeric: tabular-nums;
+  text-align: right;
 }
 
 .plain-list {
@@ -289,8 +491,33 @@ a.metric-card:hover {
   margin: 0;
   padding: 0;
   display: grid;
-  gap: var(--space-2);
+  gap: var(--space-1);
 }
+
+.plain-list > li {
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--n100);
+}
+
+.plain-list > li:last-child {
+  border-bottom: 0;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 0.1rem var(--space-3);
+  background: var(--warning-soft);
+  border: 1px solid #ecd4b5;
+  border-radius: var(--radius-full);
+  color: var(--warning);
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* -------------------------------------------------------------- messages */
 
 .messages {
   list-style: none;
@@ -301,22 +528,96 @@ a.metric-card:hover {
 }
 
 .message {
-  padding: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: var(--panel);
   border: 1px solid var(--line);
-  border-left-width: 5px;
+  border-left: 4px solid var(--n400);
   border-radius: var(--radius);
+  box-shadow: var(--shadow-xs);
 }
 
 .message-success {
-  border-left-color: var(--teal);
+  border-left-color: var(--success);
+  background: var(--success-soft);
+}
+
+.message-warning {
+  border-left-color: var(--warning);
+  background: var(--warning-soft);
 }
 
 .message-error {
-  border-left-color: #c0392b;
+  border-left-color: var(--danger);
+  background: var(--danger-soft);
 }
 
-.workflow-panel {
-  margin-bottom: var(--space-6);
+/* ----------------------------------------------------------------- forms */
+
+label {
+  display: grid;
+  gap: var(--space-1);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--n700);
+}
+
+input,
+select,
+textarea {
+  min-height: var(--tap-target);
+  width: 100%;
+  background: var(--panel);
+  border: 1px solid var(--n300);
+  border-radius: var(--radius-sm);
+  padding: var(--space-2) var(--space-3);
+  font: inherit;
+  color: var(--ink);
+}
+
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+select {
+  width: auto;
+  min-width: 8rem;
+}
+
+/* Compact labelled fields for inline forms (record month, rates, …). */
+.field-mini {
+  display: grid;
+  gap: var(--space-1);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.field-mini input,
+.field-mini select {
+  min-width: 5.5rem;
+}
+
+.people-search {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: var(--space-3);
+  margin-top: var(--space-3);
+}
+
+.people-search input {
+  max-width: 320px;
+}
+
+.stack {
+  display: grid;
+  gap: var(--space-4);
 }
 
 .action-row {
@@ -337,119 +638,158 @@ a.metric-card:hover {
   margin-left: var(--space-3);
 }
 
-.trend-row {
-  display: grid;
-  grid-template-columns: 6rem 1fr 3rem;
-  align-items: center;
-  gap: var(--space-3);
-  margin-bottom: var(--space-2);
-}
-
-.trend-label {
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
-  color: #526174;
-}
-
-.bar {
-  display: block;
-  height: 14px;
-  background: var(--line);
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-.bar-fill {
-  display: block;
-  height: 100%;
-  background: var(--cobalt);
-  border-radius: 4px;
-}
-
-.trend-value {
-  font-weight: 800;
-  text-align: right;
-}
-
-dd {
-  margin: var(--space-1) 0 0;
-  font-weight: 800;
-}
+/* --------------------------------------------------------------- buttons */
 
 .button,
 .icon-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: var(--space-2);
   min-height: var(--tap-target);
-  padding: var(--space-3) var(--space-4);
+  padding: var(--space-2) var(--space-4);
   border: 1px solid transparent;
-  border-radius: var(--radius);
+  border-radius: var(--radius-sm);
   font: inherit;
-  font-weight: 800;
+  font-size: 0.92rem;
+  font-weight: 600;
   text-decoration: none;
   cursor: pointer;
+  transition: background 120ms ease, border-color 120ms ease, color 120ms ease;
 }
 
-.button-primary,
-.button-secondary {
-  background: var(--cobalt);
+.button-primary {
+  background: var(--accent);
   color: white;
 }
 
+.button-primary:hover {
+  background: var(--accent-strong);
+}
+
+/* Secondary is now quiet — outline, not a second loud solid. */
 .button-secondary {
-  background: var(--teal);
+  background: var(--panel);
+  border-color: var(--n300);
+  color: var(--n700);
+}
+
+.button-secondary:hover {
+  border-color: var(--accent);
+  color: var(--accent);
 }
 
 .icon-button {
-  background: white;
-  border-color: var(--line);
+  background: var(--panel);
+  border-color: var(--n300);
+  color: var(--n700);
+  min-height: 2.4rem;
+  padding: var(--space-1) var(--space-3);
 }
 
-.stack {
-  display: grid;
-  gap: var(--space-4);
+.icon-button:hover {
+  border-color: var(--accent);
+  color: var(--accent);
 }
+
+/* ------------------------------------------------------- trends (charts) */
+
+.trend-row {
+  display: grid;
+  grid-template-columns: 6rem 1fr 3.5rem;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
+}
+
+.trend-label {
+  font-size: 0.8rem;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+/* Single-series bar: accent fill on a lighter step of the same hue. */
+.bar {
+  display: block;
+  height: 12px;
+  background: #dbe7f7;
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.bar-fill {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  border-radius: var(--radius-full);
+}
+
+.trend-value {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+/* ----------------------------------------------------------------- login */
 
 .login-panel {
-  max-width: 460px;
+  max-width: 440px;
   margin: 10vh auto;
 }
 
-/* Smaller than the shell h1 so the heading fits the fixed-width card across
-   languages without overflowing or breaking mid-word. */
 .login-panel h1 {
-  font-size: clamp(1.75rem, 4vw, 2.6rem);
+  font-size: clamp(1.4rem, 4vw, 1.8rem);
 }
 
-label {
-  display: grid;
-  gap: var(--space-2);
-  font-weight: 800;
-}
-
-input {
-  min-height: var(--tap-target);
-  width: 100%;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  padding: var(--space-3);
-  font: inherit;
-}
+/* ------------------------------------------------------------- utilities */
 
 .mobile-only,
 .sr-only {
   display: none;
 }
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Below 1520px the role pill costs more nav room than it tells — the select +
+   sign-out remain, and the manager's 12 tabs must fit without clipping. */
+@media (max-width: 1520px) {
+  .account-role {
+    display: none;
+  }
+}
+
+/* ---------------------------------------------------------------- mobile */
+
 @media (max-width: 760px) {
   .app-header {
     align-items: center;
-    padding-bottom: var(--space-3);
+    justify-content: space-between;
+    flex-wrap: wrap;
+    row-gap: var(--space-1);
+    gap: var(--space-2);
+    padding-bottom: var(--space-2);
+  }
+
+  .language-switch select {
+    min-height: var(--tap-target);
   }
 
   .mobile-only {
     display: inline-flex;
+  }
+
+  .icon-button {
+    min-height: var(--tap-target);
   }
 
   .folder-tabs {
@@ -460,11 +800,11 @@ input {
     display: none;
     align-items: stretch;
     flex-direction: column;
-    padding: var(--space-3);
+    padding: var(--space-2);
     background: var(--panel);
     border: 1px solid var(--line);
-    border-radius: var(--radius);
-    box-shadow: 0 18px 40px rgba(17, 24, 39, 0.14);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
   }
 
   .folder-tabs[data-open="true"] {
@@ -472,12 +812,30 @@ input {
   }
 
   .folder-tab {
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
+    border: 0;
+    border-radius: var(--radius-sm);
+    min-height: var(--tap-target);
+  }
+
+  .folder-tab.is-active {
+    box-shadow: inset 3px 0 0 var(--accent);
+    top: 0;
+  }
+
+  .header-account {
+    padding-bottom: 0;
+    flex-wrap: wrap;
+    justify-content: end;
+  }
+
+  .account-role {
+    display: none;
   }
 
   .dashboard-grid,
   .two-column,
+  .grid-2,
+  .grid-3,
   .field-card {
     grid-template-columns: 1fr;
   }
@@ -488,10 +846,19 @@ input {
 
   .field-card dl {
     grid-template-columns: 1fr;
-    row-gap: var(--space-3);
+    row-gap: var(--space-2);
+  }
+
+  .field-card dl dd {
+    text-align: left;
   }
 
   .button {
     width: 100%;
+  }
+
+  .page-head .button {
+    width: auto;
+    flex: 1 1 auto;
   }
 }

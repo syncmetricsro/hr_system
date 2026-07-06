@@ -61,7 +61,7 @@
     <h2>{% trans "By group" %}</h2>
     <dl class="detail-grid">
       {% for g in groups %}
-        <div><dt>{{ g.label }}</dt><dd>{{ g.net }}</dd></div>
+        <div><dt>{{ g.label }}</dt><dd class="amount{% if g.net < 0 %} amount-neg{% else %} amount-pos{% endif %}">{{ g.net }}</dd></div>
       {% empty %}
         <div><dd>—</dd></div>
       {% endfor %}

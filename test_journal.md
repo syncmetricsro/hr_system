@@ -1,5 +1,11 @@
 # Test Journal
 
+## 2026-07-06 — Nav active-state fix
+
+- **Full suite: 230 passed** (up from 226: +4 nav tests), 16 e2e green.
+- Bug: `base.html` hardcoded `is-active` on the Overview tab, so it stayed highlighted on every page. Fix: `{% nav_active %}` template tag (`apps/core/templatetags/nav.py`) matching `request.resolver_match.url_name` against each tab's url-name set — works under every language prefix. Detail pages map to their tab (person → People, finance month/year → Finance, etc.).
+- New `tests/test_nav_active.py`: correct tab active on dashboard/people/finance-month pages; the old always-on Overview bug asserted dead; exactly one active tab across five pages. Includes an autouse `translation.override("sk")` fixture — the /en/ requests otherwise leak the active language into later Slovak-asserting tests (the known msgmerge/locale gotcha family).
+
 ## 2026-07-04 — Blacklist & HMAC matching
 
 - **Full suite: 224 passed** (up from 202), e2e excluded, on the `jober-test` image against the dev PostgreSQL. Plus **16 e2e** (11 feature + 5 smoke) in the pinned Playwright container.

@@ -1,4 +1,4 @@
-{% load static i18n rbac %}
+{% load static i18n rbac nav %}
 <!doctype html>
 <html lang="{{ LANGUAGE_CODE|default:'sk' }}">
   <head>
@@ -22,23 +22,22 @@
         <span aria-hidden="true">☰</span>
       </button>
       <nav id="primary-nav" class="folder-tabs" x-bind:data-open="open">
-        <a class="folder-tab is-active" href="{% url 'dashboard' %}">{% trans "Overview" %}</a>
-        <a class="folder-tab" href="{% url 'people_list' %}">{% trans "People" %}</a>
-        <a class="folder-tab" href="{% url 'project_list' %}">{% trans "Projects" %}</a>
-        <a class="folder-tab" href="{% url 'trials_queue' %}">{% trans "Field" %}</a>
-        <a class="folder-tab" href="{% url 'compliance_list' %}">{% trans "Compliance" %}</a>
-        <a class="folder-tab" href="{% url 'accommodation_list' %}">{% trans "Accommodation" %}</a>
-        <a class="folder-tab" href="{% url 'transport_trends' %}">{% trans "Transport" %}</a>
-        <a class="folder-tab" href="{% url 'reports' %}">{% trans "Reports" %}</a>
+        <a class="folder-tab {% nav_active 'dashboard' %}" href="{% url 'dashboard' %}">{% trans "Overview" %}</a>
+        <a class="folder-tab {% nav_active 'people_list' 'person_create' 'person_detail' 'person_edit' 'intake_start' 'intake_panel' %}" href="{% url 'people_list' %}">{% trans "People" %}</a>
+        <a class="folder-tab {% nav_active 'project_list' 'project_detail' %}" href="{% url 'project_list' %}">{% trans "Projects" %}</a>
+        <a class="folder-tab {% nav_active 'trials_queue' %}" href="{% url 'trials_queue' %}">{% trans "Field" %}</a>
+        <a class="folder-tab {% nav_active 'compliance_list' %}" href="{% url 'compliance_list' %}">{% trans "Compliance" %}</a>
+        <a class="folder-tab {% nav_active 'accommodation_list' 'accommodation_detail' 'accommodation_costs' %}" href="{% url 'accommodation_list' %}">{% trans "Accommodation" %}</a>
+        <a class="folder-tab {% nav_active 'transport_trends' %}" href="{% url 'transport_trends' %}">{% trans "Transport" %}</a>
+        <a class="folder-tab {% nav_active 'reports' %}" href="{% url 'reports' %}">{% trans "Reports" %}</a>
         {% can 'equipment.review_deduction' as may_equip_review %}
-        {% if may_equip_review %}<a class="folder-tab" href="{% url 'equipment_reviews' %}">{% trans "Reviews" %}</a>{% endif %}
+        {% if may_equip_review %}<a class="folder-tab {% nav_active 'equipment_reviews' %}" href="{% url 'equipment_reviews' %}">{% trans "Reviews" %}</a>{% endif %}
         {% can 'blacklist.decide' as may_blacklist %}
-        {% if may_blacklist %}<a class="folder-tab" href="{% url 'blacklist_queue' %}">{% trans "Blacklist" %}</a>{% endif %}
+        {% if may_blacklist %}<a class="folder-tab {% nav_active 'blacklist_queue' %}" href="{% url 'blacklist_queue' %}">{% trans "Blacklist" %}</a>{% endif %}
         {% can 'finance.view_summary' as may_finance %}
-        {% if may_finance %}<a class="folder-tab" href="{% url 'finance_summary' %}">{% trans "Finance" %}</a>{% endif %}
+        {% if may_finance %}<a class="folder-tab {% nav_active 'finance_summary' 'finance_year' 'finance_month_detail' %}" href="{% url 'finance_summary' %}">{% trans "Finance" %}</a>{% endif %}
         {% can 'feedback.view' as may_feedback %}
-        {% if may_feedback %}<a class="folder-tab" href="{% url 'feedback_inbox' %}">{% trans "Feedback" %}</a>{% endif %}
-        <a class="folder-tab" href="#spravy">{% trans "Messages" %}</a>
+        {% if may_feedback %}<a class="folder-tab {% nav_active 'feedback_inbox' 'feedback_link_create' %}" href="{% url 'feedback_inbox' %}">{% trans "Feedback" %}</a>{% endif %}
       </nav>
       <div class="header-account">
         {% get_current_language as CURRENT_LANGUAGE %}
