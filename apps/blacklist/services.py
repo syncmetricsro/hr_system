@@ -140,6 +140,21 @@ def has_open_case(person) -> bool:
     ).exists()
 
 
+def activation_gate(person) -> None:
+    """Core activation check (registered in BlacklistConfig.ready): an
+    unresolved case blocks activation. Raises the core WorkflowError so the
+    caller's error handling is unchanged. Gated by the feature flag."""
+    from apps.projects.services import WorkflowError
+
+    flags = getattr(settings, "FEATURE_FLAGS", {})
+    if not flags.get("duplicate_blacklist", True):
+        return
+    if has_open_case(person):
+        raise WorkflowError(
+            "Blocked by an unresolved blacklist case; a manager must review it first."
+        )
+
+
 def purge_expired():
     """Retention purge: delete fingerprints past their expiry (raw ids were never
     stored; this drops the hashes). Returns the number deleted."""

@@ -20,6 +20,26 @@ class WorkflowError(Exception):
     """Raised when a workflow step is attempted from an invalid state."""
 
 
+# --- platform hooks (Stage B, ADR 0021) -----------------------------------
+# Core defines the extension points; feature apps register into them from
+# AppConfig.ready(). Dependencies therefore point feature -> core only.
+
+# Callables (person) -> None that raise WorkflowError to block activation.
+activation_checks: list = []
+# Callables (person, *, actor=None) run during exit reconciliation.
+exit_hooks: list = []
+
+
+def register_activation_check(fn) -> None:
+    if fn not in activation_checks:
+        activation_checks.append(fn)
+
+
+def register_exit_hook(fn) -> None:
+    if fn not in exit_hooks:
+        exit_hooks.append(fn)
+
+
 def _coordinator_snapshot(project) -> str:
     emails = project.responsible_coordinators.values_list("email", flat=True)
     return ", ".join(sorted(emails))
@@ -36,11 +56,10 @@ def activate_on_project(person, project, *, actor=None, reason: str = "", start_
     accommodation + transport may be N/A) attaches here once ReadinessRecord
     lands; the CARGO manager override bypasses it. Tracked for the readiness slice.
     """
-    # Hard-gate: an unresolved blacklist case blocks activation (plan §12.13).
-    from apps.blacklist.services import has_open_case
-
-    if has_open_case(person):
-        raise WorkflowError("Blocked by an unresolved blacklist case; a manager must review it first.")
+    # Hard-gates registered by feature apps (e.g. the blacklist's unresolved-case
+    # check, plan §12.13; CorvinumEU's checklist hard-stops later).
+    for check in activation_checks:
+        check(person)
 
     today = timezone.localdate()
     existing = person.assignments.filter(status=AssignmentStatus.ACTIVE)
@@ -167,23 +186,18 @@ def exit_person(person, *, actor=None, reason: str = "", outcome: str = "availab
     release the room, return all issued equipment, and recycle the person to
     Available (default) or mark them Inactive.
 
-    Items already flagged as unreturned (review_status != NONE) are left for the
-    manager deduction-review queue (Q2 safe default) rather than auto-returned.
+    Reconciliation steps owned by feature apps — room release, equipment return
+    (flagged items stay for the deduction-review queue, Q2) — run via the
+    registered ``exit_hooks``, so core carries no feature imports (ADR 0021).
 
     When exiting to Inactive, a structured ``inactive_reason`` (InactiveReason,
     Q5 catalog) and the since-date are recorded on the person.
     """
     from django.utils import timezone
 
-    from apps.logistics.models import DeductionReviewStatus, EquipmentIssueStatus
-    from apps.logistics.services import release_room, return_equipment
-
     end_assignment(person, actor=actor, reason=reason or "exit")
-    release_room(person, actor=actor)
-    for issue in person.equipment_issues.filter(
-        status=EquipmentIssueStatus.ISSUED, review_status=DeductionReviewStatus.NONE
-    ):
-        return_equipment(issue, actor=actor)
+    for hook in exit_hooks:
+        hook(person, actor=actor)
 
     if outcome == "inactive" and person.lifecycle_status == LifecycleStatus.AVAILABLE:
         person.set_status(LifecycleStatus.INACTIVE, actor=actor, reason=reason or "exit")

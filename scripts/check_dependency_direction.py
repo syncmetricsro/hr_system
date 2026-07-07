@@ -31,8 +31,6 @@ ALLOWLIST: set[str] = {
     "people:finance",      # seed_people financial months
     "people:logistics",    # person-card room/equipment context + seed
     "people:messaging",    # person-card SMS panel context
-    "projects:blacklist",  # activation hard-gate
-    "projects:logistics",  # exit reconciliation
 }
 
 IMPORT_RE = re.compile(r"^\s*(?:from|import)\s+(?:apps|core|features)\.([a-z_]+)", re.M)
