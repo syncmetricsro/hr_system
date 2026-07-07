@@ -155,6 +155,28 @@ BLACKLIST_HMAC_KEYS = [
 BLACKLIST_MATCHING_ENABLED = env_bool("BLACKLIST_MATCHING_ENABLED", True)
 BLACKLIST_RETENTION_DAYS = int(os.getenv("BLACKLIST_RETENTION_DAYS", "1825"))
 
+# ---------------------------------------------------------------------------
+# Platform (Stage B, ADR 0021). Feature flags gate which optional modules a
+# client mounts (URLs/nav/panels/registrations consult these); CLIENT_POLICIES
+# names the module supplying client-specific policy data (roles matrix,
+# lifecycle values, sensitive-visibility). Jober = everything on. Sub-features
+# of physically-unsplit apps (accommodation/equipment/transport inside
+# logistics; trials inside projects) get their own keys per the extraction
+# plan's recorded deviation.
+FEATURE_FLAGS = {
+    "accommodation": True,
+    "equipment": True,
+    "transport": True,
+    "recruitment_trials": True,
+    "intake": True,
+    "worker_messaging": True,
+    "documents": True,        # compliance certificates
+    "feedback": True,
+    "duplicate_blacklist": True,
+    "profitability": True,    # finance
+}
+CLIENT_POLICIES = os.getenv("CLIENT_POLICIES", "apps.accounts.permissions")
+
 CSRF_COOKIE_HTTPONLY = True
 SESSION_COOKIE_HTTPONLY = True
 X_FRAME_OPTIONS = "DENY"
