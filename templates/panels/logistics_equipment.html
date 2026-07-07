@@ -1,0 +1,42 @@
+{% load i18n rbac %}
+<section class="panel workflow-panel">
+  <p class="eyebrow">{% trans "Logistics" %}</p>
+  <h2>{% trans "Equipment" %}</h2>
+  {% can 'equipment.issue_return' as may_equip %}
+  {% if panel.issued_equipment %}
+    <p class="eyebrow">{% trans "Value" %}: {{ panel.issued_value }}</p>
+    <ul class="plain-list">
+      {% for issue in panel.issued_equipment %}
+        <li>
+          {{ issue.item }} × {{ issue.quantity }}
+          {% if issue.review_status == 'none' %}
+            {% if may_equip %}
+              <form class="inline-form" method="post" action="{% url 'return_equipment' issue.pk %}">
+                {% csrf_token %}
+                <button class="button button-secondary" type="submit">{% trans "Return" %}</button>
+              </form>
+              <form class="inline-form" method="post" action="{% url 'flag_unreturned' issue.pk %}">
+                {% csrf_token %}
+                <button class="button button-secondary" type="submit">{% trans "Flag unreturned" %}</button>
+              </form>
+            {% endif %}
+          {% else %}
+            <span class="badge">{{ issue.get_review_status_display }}{% if issue.charge_amount %} · {{ issue.charge_amount }}{% endif %}</span>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>—</p>
+  {% endif %}
+  {% if may_equip %}
+    <form class="people-search" method="post" action="{% url 'issue_equipment' panel.person.pk %}">
+      {% csrf_token %}
+      <select name="item" aria-label="{% trans 'Item' %}">
+        {% for item in panel.equipment_items %}<option value="{{ item.pk }}">{{ item }}</option>{% endfor %}
+      </select>
+      <input type="number" name="quantity" value="1" min="1" aria-label="{% trans 'Quantity' %}">
+      <button class="button button-primary" type="submit">{% trans "Issue equipment" %}</button>
+    </form>
+  {% endif %}
+</section>

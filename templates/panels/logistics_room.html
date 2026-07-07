@@ -1,0 +1,36 @@
+{% load i18n rbac %}
+<section class="panel workflow-panel">
+  <p class="eyebrow">{% trans "Logistics" %}</p>
+  <h2>{% trans "Accommodation" %}</h2>
+  {% can 'room.assign' as may_room %}
+  {% can 'accommodation.manage' as may_rate %}
+  {% if panel.current_room %}
+    <p>{{ panel.current_room.room }}</p>
+    <p class="muted">{% trans "Monthly rate" %}: {{ panel.current_room.effective_rate }}</p>
+    {% if may_room %}
+      <form method="post" action="{% url 'release_room' panel.person.pk %}">
+        {% csrf_token %}
+        <button class="button button-secondary" type="submit">{% trans "Release room" %}</button>
+      </form>
+    {% endif %}
+    {% if may_rate %}
+      <form class="people-search" method="post" action="{% url 'set_assignment_rate' panel.current_room.pk %}">
+        {% csrf_token %}
+        <input type="number" step="0.01" min="0" name="rate_override" value="{{ panel.current_room.rate_override|default_if_none:'' }}" placeholder="{% trans 'Rate override' %}" aria-label="{% trans 'Rate override' %}">
+        <button class="button button-secondary" type="submit">{% trans "Save override" %}</button>
+      </form>
+    {% endif %}
+  {% elif may_room %}
+    <form class="people-search" method="post" action="{% url 'assign_room' panel.person.pk %}">
+      {% csrf_token %}
+      <select name="room" aria-label="{% trans 'Room' %}">
+        {% for room in panel.rooms %}
+          <option value="{{ room.pk }}">{{ room }} ({{ room.occupancy }}/{{ room.capacity }})</option>
+        {% endfor %}
+      </select>
+      <button class="button button-primary" type="submit">{% trans "Assign room" %}</button>
+    </form>
+  {% else %}
+    <p>—</p>
+  {% endif %}
+</section>

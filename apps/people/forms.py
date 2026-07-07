@@ -3,23 +3,17 @@ from __future__ import annotations
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
+from apps.core import registry
 from apps.people.models import Person
 
 
 class PersonForm(forms.ModelForm):
-    """Simplified recruiter intake (the full hard-gated questionnaire is later)."""
+    """Simplified recruiter intake (the full hard-gated questionnaire is later).
 
-    # Optional ID number used only to run the blacklist re-entry check at intake
-    # (plan §12.13). It is HMAC-hashed and **never stored** — see
-    # apps.blacklist.services.check_match / compute_fingerprint.
-    identifier = forms.CharField(
-        label=_("ID number (blacklist check)"), required=False,
-        widget=forms.TextInput(attrs={"autocomplete": "off"}),
-    )
-    identifier_type = forms.ChoiceField(
-        label=_("ID type"), required=False,
-        choices=[("national_id", _("National ID")), ("passport", _("Passport")), ("other", _("Other"))],
-    )
+    Feature apps contribute extra, non-persisted fields (e.g. the blacklist's
+    ID-check field) via the core registry's form extensions — the fields are
+    injected here and their post-create handlers run in ``person_create``.
+    """
 
     class Meta:
         model = Person
@@ -41,3 +35,8 @@ class PersonForm(forms.ModelForm):
             "disability_type": _("Disability type"),
         }
         widgets = {"date_of_birth": forms.DateInput(attrs={"type": "date"})}
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for extension in registry.person_form_extensions:
+            self.fields.update(extension.fields())
