@@ -118,6 +118,22 @@ def assign_room(person, room, *, actor=None):
     return assignment
 
 
+def exit_reconcile(person, *, actor=None):
+    """Exit-hook (registered in LogisticsConfig.ready): release the room and
+    return un-flagged issued equipment; items flagged for deduction review stay
+    (Q2). Idempotent — safe if exit runs twice. Sub-feature flags gate each part."""
+    from django.conf import settings
+
+    flags = getattr(settings, "FEATURE_FLAGS", {})
+    if flags.get("accommodation", True):
+        release_room(person, actor=actor)
+    if flags.get("equipment", True):
+        for issue in person.equipment_issues.filter(
+            status=EquipmentIssueStatus.ISSUED, review_status=DeductionReviewStatus.NONE
+        ):
+            return_equipment(issue, actor=actor)
+
+
 @transaction.atomic
 def release_room(person, *, actor=None):
     today = timezone.localdate()
