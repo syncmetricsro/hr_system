@@ -1,6 +1,11 @@
 # ADR 0001: Jober-Only Scope
 
-Status: Accepted
+Status: **Superseded by [ADR 0021](0021-stage-b-extraction.md) (activated 2026-07-07).**
+The single-client rule is replaced by ADR 0021's build discipline: client-agnostic
+`core/`, switchable `features/`, per-client `clients/` layers, dependencies
+pointing feature → core only. Historical text below is unchanged.
+
+Previous status: Accepted
 
 ## Context
 

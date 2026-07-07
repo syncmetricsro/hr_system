@@ -14,9 +14,12 @@ overrides it. Product truth lives in `Product_Design.md` (+ `Finance_Specs.md`,
   negative, net = revenue − cost), inactive reasons + recycling, and the
   **blacklist** (HMAC matching; execution gated on pending LIA/legal text).
 - **Fictional data only** — the real-data gate has not opened. Never real PII.
-- **Platform/white-label work is gated.** `docs/platform/` is planning only;
-  ADR 0021 is *Proposed*. Until it's activated, no client abstractions in code
-  (ADR 0001/0020).
+- **Stage B is ACTIVE (ADR 0021 activated 2026-07-07).** The repo is being
+  restructured to `core/` + `features/` + `clients/` per
+  `docs/platform/extraction-plan.md` (slices B0–B5). Build discipline: deps
+  point **feature → core only**; the core never branches on client identity;
+  moved apps keep their directory basenames (labels/tables untouched). Demo
+  fallback: tag `pre-stage-b`; don't rebuild the demo container mid-extraction.
 - Test baseline: **226 unit + 16 e2e**. Suite counts are tracked in
   `test_journal.md` — update it (and `BUILD_JOURNAL.md`) with every slice.
 

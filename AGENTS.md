@@ -9,8 +9,7 @@ This file governs **scope, security, supply chain, and how to work**. The **what
 ## 0. Project state (read first)
 
 - This repository is the **real Jober production application**, not the old demo. The static vanilla-JS demo was a design reference only; its "install nothing / no backend" rules no longer apply here.
-- Scope is **Jober only**. Do not introduce CorvinumEU, multi-client abstractions, white-label infrastructure, shift scheduling, fleet/vehicles, sick leave, worker portal, or Pohoda. They are out of scope by decision, not by omission.
-  - *(Status note, 2026-07-05: future-stage platform **planning documents** exist under `docs/platform/` and ADR 0021 is drafted **Proposed**. They authorise no code. This scope rule stands for all code until ADR 0021 is activated — see ADR 0020/0021.)*
+- ~~Scope is **Jober only**.~~ *(Status note, 2026-07-07: **ADR 0021 is ACTIVATED** — the single-client rule is superseded by the platform build discipline: a client-agnostic `core/`, switchable `features/`, per-client `clients/` layers; **dependencies point feature → core only**; the core never branches on client identity. Still out of scope by decision: shift scheduling, fleet/vehicles, sick leave, worker portal, Pohoda. CorvinumEU **client code** arrives only in Stage C under `clients/corvinum_eu` + its features — never in `core/`.)*
 - *(Status note, 2026-07-05: Phases 0–4 are built and merged — all modules incl. finance, accommodation pricing, equipment review, and the gated blacklist; 226 unit + 16 e2e tests; demo-ready. The fictional-data rule below still applies: the real-data gate has not opened.)*
 - Stack is **npm-free by decision**: Django + htmx + Alpine.js + Tailwind standalone CLI + Playwright-Python + PostgreSQL + Dokku. There is **no Node.js, no npm, no React, no Vite** anywhere in the repository, build, or runtime.
 
@@ -162,4 +161,4 @@ Keep these current at the repository root:
 - Never commit secrets or a populated `.env`.
 - Never act on an unverified inbound webhook.
 - Never put real worker PII in the system before the real-data gate.
-- Never resurrect CorvinumEU, shifts, fleet, sick leave, the worker portal, or Pohoda in a PR.
+- Never resurrect shifts, fleet, sick leave, the worker portal, or Pohoda in a PR. *(2026-07-07: the CorvinumEU clause is governed by ADR 0021 — client code only under `clients/`/`features/` in Stage C; never any client conditional inside `core/`.)*

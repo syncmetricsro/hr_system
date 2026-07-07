@@ -1,6 +1,6 @@
 # Source Register
 
-Last updated: 2026-07-05
+Last updated: 2026-07-07
 
 | Source | Authority | Phase 0 use |
 |---|---|---|
@@ -14,7 +14,7 @@ Last updated: 2026-07-05
 | `demo/demo_prototype_build_spec.md` | Historical static-demo spec. | Non-authoritative for production. |
 | `docs/platform/extraction-matrix.md` | **Forward-looking planning** for the post-completion shared-core extraction (Stage B). Non-authoritative for the current build; see ADR 0020. | Not used; do not act on in current phases. |
 | `docs/platform/corvinumeu-peopleops-design.md` | **Forward-looking planning** — second-client (CorvinumEU) product design. Non-authoritative for the current single-client Jober build; see ADR 0020. | Not used; do not act on in current phases. |
-| `docs/platform/extraction-plan.md` | **Forward-looking planning** — Stage B staged execution plan (slices B0–B5). Non-authoritative until ADR 0021 is activated. | Not used; do not act on until activation. |
-| `docs/adr/0021-stage-b-extraction.md` | **Proposed ADR** — Stage B scope flip. Explicitly not in force while Proposed; ADR 0001 still governs. | Not used; activation requires Jober acceptance + owner go-ahead. |
+| `docs/platform/extraction-plan.md` | **ACTIVE — Stage B execution blueprint** (ADR 0021 activated 2026-07-07). | Binding for the B0–B5 slices. |
+| `docs/adr/0021-stage-b-extraction.md` | **Accepted (activated 2026-07-07, owner waiver recorded)** — supersedes ADR 0001. | In force; governs the extraction. |
 
 The mixed Jober/Corvinum architecture is historical background only. It must not drive code, data models, navigation, permissions, deployment, or client abstractions in the production app. The `docs/platform/` documents describe a **post-Jober-completion** platform strategy ([ADR 0020](../adr/0020-white-label-platform-sequencing.md)); they are planning inputs only and, per [ADR 0001](../adr/0001-jober-only-scope.md), do not authorise any platform/white-label/Corvinum code in the current build.
