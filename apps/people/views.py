@@ -12,21 +12,11 @@ from django.views.decorators.http import require_POST
 from apps.accounts.permissions import Action, require_action
 from apps.audit.services import record_event
 from apps.people.forms import PersonForm
-from apps.accounts.models import Role
 from apps.accounts.permissions import can as user_can
 from apps.people.models import InactiveReason, LifecycleError, LifecycleStatus, Person
 from apps.people.permissions import can_view_sensitive
 from apps.people.services import person_history, recycle_to_available
-from apps.blacklist.models import BlacklistCategory
-from apps.blacklist.services import check_match, has_open_case, propose_case
-from apps.messaging.models import MessageTemplate
-from apps.logistics.models import (
-    EquipmentItem,
-    EquipmentIssueStatus,
-    Room,
-    RoomAssignmentStatus,
-)
-from apps.logistics.services import issued_equipment_value
+from apps.core import registry
 from apps.projects.models import PillarState, Project, TrialOutcome
 from apps.projects.services import get_or_create_readiness
 
@@ -63,21 +53,10 @@ def person_create(request: HttpRequest) -> HttpResponse:
             person.save()
             record_event(request.user, "person.created", target=person)
             messages.success(request, _("Person added."))
-            # Blacklist re-entry check (plan §12.13): warn + auto-propose a case
-            # for manager review on a match. Does not block creation; the raw ID
-            # is hashed and discarded.
-            identifier = form.cleaned_data.get("identifier")
-            if identifier and check_match(identifier).exists():
-                propose_case(
-                    person, reason="Auto: intake identifier match",
-                    identifier=identifier,
-                    identifier_type=form.cleaned_data.get("identifier_type") or "national_id",
-                    actor=request.user,
-                )
-                messages.warning(
-                    request,
-                    _("Possible blacklist match — flagged for manager review. Activation is blocked until resolved."),
-                )
+            # Feature form-extensions run post-create (e.g. the blacklist
+            # re-entry check, plan §12.13) — registered via the core registry.
+            for extension in registry.person_form_extensions:
+                extension.post_create(request, person, form.cleaned_data)
             return redirect("person_detail", pk=person.pk)
     else:
         form = PersonForm()
@@ -138,31 +117,11 @@ def person_detail(request: HttpRequest, pk: int) -> TemplateResponse:
             "PillarState": PillarState,
             "is_available": person.lifecycle_status == LifecycleStatus.AVAILABLE,
             "active_projects": Project.objects.filter(is_active=True),
-            "current_room": person.room_assignments.filter(
-                status=RoomAssignmentStatus.ACTIVE
-            ).select_related("room__accommodation").first(),
-            "rooms": Room.objects.select_related("accommodation").filter(
-                accommodation__is_active=True
-            ),
-            "issued_equipment": person.equipment_issues.filter(
-                status=EquipmentIssueStatus.ISSUED
-            ).select_related("item"),
-            "equipment_items": EquipmentItem.objects.filter(is_active=True),
-            "issued_value": issued_equipment_value(person),
-            "can_message": (
-                bool(person.phone)
-                and user_can(request.user, Action.SMS_SEND)
-                and (
-                    request.user.role != Role.COORDINATOR
-                    or request.user.pk in person.responsible_coordinator_ids()
-                )
-            ),
-            "message_templates": MessageTemplate.objects.filter(is_active=True),
-            "recent_messages": person.messages.all()[:5],
+            "person_banners": registry.person_banners(request, person),
+            "person_panels": registry.person_panels(request, person),
             "can_exit": user_can(request.user, Action.EXIT_RECONCILE) and (
                 person.lifecycle_status == LifecycleStatus.WORKING
-                or person.room_assignments.filter(status=RoomAssignmentStatus.ACTIVE).exists()
-                or person.equipment_issues.filter(status=EquipmentIssueStatus.ISSUED).exists()
+                or registry.exit_relevant(person)
             ),
             "inactive_reasons": InactiveReason.objects.filter(is_active=True),
             "is_inactive": person.lifecycle_status == LifecycleStatus.INACTIVE,
@@ -170,13 +129,6 @@ def person_detail(request: HttpRequest, pk: int) -> TemplateResponse:
                 person.lifecycle_status == LifecycleStatus.INACTIVE
                 and user_can(request.user, Action.PERSON_RECYCLE_AVAILABLE)
             ),
-            "blacklist_case": person.blacklist_cases.select_related("category").first(),
-            "has_open_blacklist": has_open_case(person),
-            "can_view_blacklist_reason": user_can(request.user, Action.BLACKLIST_VIEW_REASON),
-            "can_propose_blacklist": (
-                user_can(request.user, Action.BLACKLIST_PROPOSE) and not has_open_case(person)
-            ),
-            "blacklist_categories": BlacklistCategory.objects.filter(is_active=True),
         },
     )
 
