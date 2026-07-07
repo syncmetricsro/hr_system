@@ -1,20 +1,34 @@
 # ADR 0021: Stage B shared-core extraction (in-place, sliced)
 
-Status: **Proposed — not to be acted on while Proposed**
-Date drafted: 2026-07-05
+Status: **Accepted — activated 2026-07-07**
+Date drafted: 2026-07-05 · Date activated: 2026-07-07
 
-Will supersede [ADR 0001](0001-jober-only-scope.md) **upon activation**; satisfies
+Supersedes [ADR 0001](0001-jober-only-scope.md) as of activation; satisfies
 the sequencing recorded in [ADR 0020](0020-white-label-platform-sequencing.md).
 
-## Activation trigger
+## Activation trigger (as drafted) and the recorded waiver
 
-This ADR flips from Proposed to Accepted only when **both** hold:
+As drafted, activation required **both**: (1) Jober accepts the demo, and
+(2) the owners confirm starting platform work now.
 
-1. **Jober accepts the demo** and green-lights continuing (the pilot go-ahead);
-2. the owners confirm starting platform work (Stage B) now rather than after the
-   Jober production pilot.
+**Owner decision, 2026-07-07:** condition (2) is confirmed and condition (1) is
+**consciously waived** — Stage B starts before the Jober demo. Safety measures
+adopted with the waiver: the pre-extraction state is tagged **`pre-stage-b`**
+(demo-day fallback: check out the tag and rebuild); the running demo container
+is left on its pre-extraction image until slice B5 validates; every slice keeps
+the full test suite green with **unchanged assertions** (Stage D bar).
 
-Until then, ADR 0001's single-client rule governs and no extraction slice may land.
+## Execution deviations recorded at activation
+
+- Moved apps keep their **directory basenames** so Django's derived app labels
+  (and therefore migrations/FKs/tables) are untouched — e.g. `core/projects`,
+  `features/finance`, not the matrix's cosmetic target names.
+- The physical sub-splits (logistics → accommodation/equipment/transport;
+  trials out of projects) are **deferred to Stage C prep** (they require
+  `SeparateDatabaseAndState` label surgery); until then sub-features are gated
+  by `FEATURE_FLAGS` keys.
+- `core/tasks` is not built (per this plan's own conditional); B4 delivers
+  **retention** and **stdlib TOTP 2FA** (off for Jober by default).
 
 ## Context
 
