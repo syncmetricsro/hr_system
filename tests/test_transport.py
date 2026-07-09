@@ -4,10 +4,10 @@ import datetime as dt
 
 import pytest
 
-from apps.accounts.permissions import Action, can
-from apps.logistics.models import TransportWeek
-from apps.logistics.services import record_transport_week
-from apps.projects.models import Project
+from core.accounts.permissions import Action, can
+from features.logistics.models import TransportWeek
+from features.logistics.services import record_transport_week
+from core.projects.models import Project
 
 pytestmark = pytest.mark.django_db
 

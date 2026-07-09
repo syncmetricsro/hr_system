@@ -5,13 +5,13 @@ from decimal import Decimal
 import pytest
 from django.urls import reverse
 
-from apps.finance.models import (
+from features.finance.models import (
     FinanceCategory,
     FinanceCategoryKind,
     FinanceGroup,
     FinancialMonth,
 )
-from apps.finance.services import (
+from features.finance.services import (
     FinanceError,
     company_totals,
     group_breakdown,
@@ -22,7 +22,7 @@ from apps.finance.services import (
     set_line_item,
     yearly_totals,
 )
-from apps.projects.models import Project
+from core.projects.models import Project
 
 pytestmark = pytest.mark.django_db
 
@@ -144,7 +144,7 @@ def test_lock_then_reopen_requires_reason(setup):
 
 
 def test_reopen_audits_reason(setup, django_user_model):
-    from apps.audit.models import AuditEvent
+    from core.audit.models import AuditEvent
 
     actor, month, *_ = setup
     lock_month(month, actor=actor)

@@ -3,10 +3,10 @@ from __future__ import annotations
 import pytest
 from django.urls import reverse
 
-from apps.accounts.permissions import Action, can
-from apps.people.models import InactiveReason, LifecycleError, LifecycleStatus, Person
-from apps.people.services import recycle_to_available
-from apps.projects.services import exit_person
+from core.accounts.permissions import Action, can
+from core.people.models import InactiveReason, LifecycleError, LifecycleStatus, Person
+from core.people.services import recycle_to_available
+from core.projects.services import exit_person
 
 pytestmark = pytest.mark.django_db
 

@@ -5,10 +5,10 @@ import datetime as dt
 import pytest
 from django.urls import reverse
 
-from apps.compliance.models import Certificate
-from apps.compliance.services import add_months, compliance_alerts
-from apps.people.models import LifecycleStatus, Person
-from apps.projects.models import Project, ReadinessRecord
+from features.compliance.models import Certificate
+from features.compliance.services import add_months, compliance_alerts
+from core.people.models import LifecycleStatus, Person
+from core.projects.models import Project, ReadinessRecord
 
 pytestmark = pytest.mark.django_db
 
@@ -67,7 +67,7 @@ def test_coordinator_sees_only_their_people(django_user_model):
     p2 = Project.objects.create(name="Beta", code="BETA")
     p1.responsible_coordinators.add(coord_a)
     p2.responsible_coordinators.add(coord_b)
-    from apps.projects.services import activate_on_project
+    from core.projects.services import activate_on_project
     alice = Person.objects.create(first_name="Alice", last_name="A")
     bob = Person.objects.create(first_name="Bob", last_name="B")
     activate_on_project(alice, p1, actor=coord_a)  # WORKING, no medical -> alert

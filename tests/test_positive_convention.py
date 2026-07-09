@@ -4,21 +4,21 @@ from decimal import Decimal
 
 import pytest
 
-from apps.finance.models import (
+from features.finance.models import (
     FinanceCategory,
     FinanceCategoryKind,
     FinancialMonth,
 )
-from apps.finance.services import (
+from features.finance.services import (
     FinanceError,
     record_financial_month,
     recompute_month,
     set_line_item,
 )
-from apps.logistics.models import Accommodation, Room
-from apps.logistics.services import set_assignment_rate, set_room_rate, assign_room
-from apps.people.models import Person
-from apps.projects.models import Project
+from features.logistics.models import Accommodation, Room
+from features.logistics.services import set_assignment_rate, set_room_rate, assign_room
+from core.people.models import Person
+from core.projects.models import Project
 
 pytestmark = pytest.mark.django_db
 

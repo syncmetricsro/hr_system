@@ -4,9 +4,9 @@ from decimal import Decimal
 
 import pytest
 
-from apps.logistics.models import EquipmentItem
-from apps.logistics.services import issue_equipment, issued_equipment_value, return_equipment
-from apps.people.models import Person
+from features.logistics.models import EquipmentItem
+from features.logistics.services import issue_equipment, issued_equipment_value, return_equipment
+from core.people.models import Person
 
 pytestmark = pytest.mark.django_db
 

@@ -3,11 +3,11 @@ from __future__ import annotations
 import pytest
 from django.urls import reverse
 
-from apps.logistics.models import Accommodation, EquipmentIssueStatus, EquipmentItem, Room, RoomAssignmentStatus
-from apps.logistics.services import assign_room, issue_equipment
-from apps.people.models import LifecycleStatus, Person
-from apps.projects.models import AssignmentStatus, Project
-from apps.projects.services import activate_on_project, exit_person
+from features.logistics.models import Accommodation, EquipmentIssueStatus, EquipmentItem, Room, RoomAssignmentStatus
+from features.logistics.services import assign_room, issue_equipment
+from core.people.models import LifecycleStatus, Person
+from core.projects.models import AssignmentStatus, Project
+from core.projects.services import activate_on_project, exit_person
 
 pytestmark = pytest.mark.django_db
 

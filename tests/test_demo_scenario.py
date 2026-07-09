@@ -3,13 +3,13 @@ from __future__ import annotations
 import pytest
 from django.core.management import call_command
 
-from apps.blacklist.models import BlacklistCaseStatus, MatchFingerprint
-from apps.blacklist.services import check_match
-from apps.compliance.services import compliance_alerts
-from apps.finance.models import FinancialMonth
-from apps.logistics.models import DeductionReviewStatus, EquipmentIssue
-from apps.people.models import LifecycleStatus, Person
-from apps.people.services import inactive_by_reason
+from features.blacklist.models import BlacklistCaseStatus, MatchFingerprint
+from features.blacklist.services import check_match
+from features.compliance.services import compliance_alerts
+from features.finance.models import FinancialMonth
+from features.logistics.models import DeductionReviewStatus, EquipmentIssue
+from core.people.models import LifecycleStatus, Person
+from core.people.services import inactive_by_reason
 
 pytestmark = pytest.mark.django_db
 
@@ -48,7 +48,7 @@ def test_scenario_populates_every_module():
     assert check_match("SK-DEMO-BL-001").exists()
 
     # A proposed case is waiting in the manager queue.
-    from apps.blacklist.models import BlacklistCase
+    from features.blacklist.models import BlacklistCase
     assert BlacklistCase.objects.filter(status=BlacklistCaseStatus.PROPOSED).exists()
 
     # A compliance alert fires (expiring certificate and/or missing medical).

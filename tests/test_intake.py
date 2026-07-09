@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import pytest
 
-from apps.intake.models import (
+from features.intake.models import (
     IntakePanel,
     IntakeQuestion,
     IntakeQuestionnaireVersion,
@@ -10,8 +10,8 @@ from apps.intake.models import (
     QuestionType,
     RecruitmentIntake,
 )
-from apps.intake.services import save_panel, start_intake
-from apps.people.models import LifecycleStatus
+from features.intake.services import save_panel, start_intake
+from core.people.models import LifecycleStatus
 
 pytestmark = pytest.mark.django_db
 
@@ -91,7 +91,7 @@ def test_full_completion_creates_available_person(questionnaire, recruiter):
 
 
 def test_completed_intake_rejects_further_panels(questionnaire, recruiter):
-    from apps.intake.services import IntakeError
+    from features.intake.services import IntakeError
 
     intake = start_intake(recruiter, questionnaire)
     save_panel(intake, {"first_name": "A", "last_name": "B"}, actor=recruiter)

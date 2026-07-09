@@ -5,8 +5,8 @@ import datetime as dt
 import pytest
 from django.urls import reverse
 
-from apps.logistics.services import record_transport_week
-from apps.projects.models import Project
+from features.logistics.services import record_transport_week
+from core.projects.models import Project
 
 pytestmark = pytest.mark.django_db
 

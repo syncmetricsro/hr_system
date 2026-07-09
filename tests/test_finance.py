@@ -4,10 +4,10 @@ from decimal import Decimal
 
 import pytest
 
-from apps.accounts.permissions import Action, can
-from apps.finance.models import FinancialMonth
-from apps.finance.services import FinanceError, company_totals, record_financial_month
-from apps.projects.models import Project
+from core.accounts.permissions import Action, can
+from features.finance.models import FinancialMonth
+from features.finance.services import FinanceError, company_totals, record_financial_month
+from core.projects.models import Project
 
 pytestmark = pytest.mark.django_db
 

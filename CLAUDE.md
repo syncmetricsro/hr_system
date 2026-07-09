@@ -37,7 +37,7 @@ docker run --rm --network jober-dev-net \
   -e HOME=/tmp -e DJANGO_SETTINGS_MODULE=config.settings.local -e DJANGO_DEBUG=1 \
   -v "$PWD":/app -w /app --user "$(id -u):$(id -g)" \
   jober-test:phase4 python -m pytest -q -p no:cacheprovider --ignore=tests/e2e
-#   …same container for: ruff check --no-cache apps config tests
+#   …same container for: ruff check --no-cache core features clients config tests
 #   …and: python manage.py makemigrations <app>
 
 # Browser e2e (builds current app + Playwright images, seeds, runs tests/e2e)
@@ -77,11 +77,11 @@ scripts/compile_messages.sh --extract   # then compile with no args
 
 ## Conventions
 
-- **Business logic lives in `apps/<app>/services.py`**, is `@transaction.atomic`
+- **Business logic lives in `core|features/<app>/services.py`** (post-B2 layout), is `@transaction.atomic`
   where it mutates, and **audits via `apps.audit.services.record_event`** —
   views stay thin and gate with `@require_action(Action.X)`.
 - **RBAC:** add actions to `Action` + `ACTION_ROLES` in
-  `apps/accounts/permissions.py` and mirror them in
+  `core/accounts/permissions.py` and mirror them in
   `docs/permissions/permission-matrix.md` (tests assert the mapping). Templates
   use `{% can 'action.name' %}`; hidden buttons must have server-side checks.
 - **Money:** `Decimal`, stored **positive** (validators enforce), totals always

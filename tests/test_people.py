@@ -2,12 +2,12 @@ from __future__ import annotations
 
 import pytest
 
-from apps.accounts.permissions import Action, can
-from apps.audit.models import AuditEvent
-from apps.people.models import LifecycleError, LifecycleStatus, Person
-from apps.people.permissions import can_view_sensitive
-from apps.projects.models import AssignmentStatus, Project, ProjectAssignment
-from apps.projects.services import activate_on_project, end_assignment
+from core.accounts.permissions import Action, can
+from core.audit.models import AuditEvent
+from core.people.models import LifecycleError, LifecycleStatus, Person
+from core.people.permissions import can_view_sensitive
+from core.projects.models import AssignmentStatus, Project, ProjectAssignment
+from core.projects.services import activate_on_project, end_assignment
 
 pytestmark = pytest.mark.django_db
 

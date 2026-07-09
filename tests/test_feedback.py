@@ -6,7 +6,7 @@ import pytest
 from django.urls import reverse
 from django.utils import timezone
 
-from apps.feedback.models import FeedbackLink, FeedbackSubmission
+from features.feedback.models import FeedbackLink, FeedbackSubmission
 
 pytestmark = pytest.mark.django_db
 

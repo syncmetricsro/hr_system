@@ -4,10 +4,10 @@ import pytest
 from django.urls import reverse
 from django.utils import translation
 
-from apps.people.models import LifecycleStatus, Person
-from apps.people.services import person_history
-from apps.projects.models import Project, TrialOutcome
-from apps.projects.services import record_trial_outcome, schedule_trial
+from core.people.models import LifecycleStatus, Person
+from core.people.services import person_history
+from core.projects.models import Project, TrialOutcome
+from core.projects.services import record_trial_outcome, schedule_trial
 
 pytestmark = pytest.mark.django_db
 

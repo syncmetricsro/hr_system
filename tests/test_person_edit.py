@@ -3,7 +3,7 @@ from __future__ import annotations
 import pytest
 from django.urls import reverse
 
-from apps.people.models import Person
+from core.people.models import Person
 
 pytestmark = pytest.mark.django_db
 

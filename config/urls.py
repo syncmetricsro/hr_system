@@ -2,19 +2,19 @@ from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
 from django.urls import include, path
 
-from apps.accounts import views as account_views
-from apps.blacklist import views as blacklist_views
-from apps.compliance import views as compliance_views
-from apps.core import exports as core_exports
-from apps.finance import exports as finance_exports
-from apps.feedback import views as feedback_views
-from apps.core import views
-from apps.finance import views as finance_views
-from apps.intake import views as intake_views
-from apps.logistics import views as logistics_views
-from apps.messaging import views as messaging_views
-from apps.people import views as people_views
-from apps.projects import views as project_views
+from core.accounts import views as account_views
+from features.blacklist import views as blacklist_views
+from features.compliance import views as compliance_views
+from core.ui import exports as core_exports
+from features.finance import exports as finance_exports
+from features.feedback import views as feedback_views
+from core.ui import views
+from features.finance import views as finance_views
+from features.intake import views as intake_views
+from features.logistics import views as logistics_views
+from features.messaging import views as messaging_views
+from core.people import views as people_views
+from core.projects import views as project_views
 
 # Routes that must not be language-prefixed.
 urlpatterns = [
