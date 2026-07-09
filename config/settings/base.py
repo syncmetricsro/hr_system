@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "apps.feedback",
     "apps.blacklist",
     "apps.core",
+    "clients.jober.demo",
 ]
 
 AUTH_USER_MODEL = "accounts.User"

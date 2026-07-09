@@ -2,7 +2,10 @@ from __future__ import annotations
 
 from django.core.management.base import BaseCommand
 
+from apps.accounts.models import User
 from apps.finance.models import FinanceCategory, FinanceCategoryKind, FinanceGroup
+from apps.finance.services import record_financial_month
+from apps.projects.models import Project
 
 # Catalog from Finance_Specs.md §2 (English glosses + group tags).
 COST = FinanceCategoryKind.COST
@@ -49,6 +52,13 @@ class Command(BaseCommand):
                 label=label, kind=kind, defaults={"group": group, "order": order}
             )
             created += int(was_created)
+        # Minimal demo financial months (positive convention, Q4-confirmed).
+        coordinator = User.objects.filter(email="koordinator@demo.jober.test").first()
+        for code, month, rev, cost in [("DHLBA", 5, "18000", "12000"), ("WEB", 5, "9000", "7000")]:
+            project = Project.objects.filter(code=code).first()
+            if project:
+                record_financial_month(project, 2026, month, rev, cost, actor=coordinator)
+
         self.stdout.write(self.style.SUCCESS(
             f"Finance categories: {created} created, {FinanceCategory.objects.count()} total."
         ))

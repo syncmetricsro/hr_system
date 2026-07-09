@@ -28,6 +28,10 @@ _person_panels: list[dict] = []
 person_form_extensions: list = []
 # fn(person) -> bool
 exit_relevance_checks: list = []
+# Each: {"context": fn(request) -> dict|None, "order": int} -> {"label","value"}
+_report_tiles: list[dict] = []
+# Each: {"template": str, "context": fn(request) -> dict|None, "order": int}
+_report_panels: list[dict] = []
 
 
 def register_person_banner(template: str, context, order: int = 100) -> None:
@@ -52,6 +56,18 @@ def register_exit_relevance(fn) -> None:
         exit_relevance_checks.append(fn)
 
 
+def register_report_tile(context, order: int = 100) -> None:
+    entry = {"context": context, "order": order}
+    if entry not in _report_tiles:
+        _report_tiles.append(entry)
+
+
+def register_report_panel(template: str, context, order: int = 100) -> None:
+    entry = {"template": template, "context": context, "order": order}
+    if entry not in _report_panels:
+        _report_panels.append(entry)
+
+
 def _render_slot(slot: list[dict], request, person) -> list[dict]:
     rendered = []
     for entry in sorted(slot, key=lambda e: e["order"]):
@@ -72,3 +88,21 @@ def person_panels(request, person) -> list[dict]:
 
 def exit_relevant(person) -> bool:
     return any(check(person) for check in exit_relevance_checks)
+
+
+def report_tiles(request) -> list[dict]:
+    tiles = []
+    for entry in sorted(_report_tiles, key=lambda e: e["order"]):
+        ctx = entry["context"](request)
+        if ctx is not None:
+            tiles.append(ctx)
+    return tiles
+
+
+def report_panels(request) -> list[dict]:
+    rendered = []
+    for entry in sorted(_report_panels, key=lambda e: e["order"]):
+        ctx = entry["context"](request)
+        if ctx is not None:
+            rendered.append({"template": entry["template"], **ctx})
+    return rendered

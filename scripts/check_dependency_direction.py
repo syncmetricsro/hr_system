@@ -22,14 +22,7 @@ FEATURES = {
 }
 
 # Known pre-B1 debt: "owner_app:imported_app". Must shrink to empty by end of B1.
-ALLOWLIST: set[str] = {
-    "core:blacklist",      # dashboard/reports aggregation + seed_demo_scenario
-    "core:compliance",
-    "core:finance",
-    "core:logistics",
-    "people:finance",      # seed_people financial months
-    "people:logistics",    # person-card room/equipment context + seed
-}
+ALLOWLIST: set[str] = set()
 
 IMPORT_RE = re.compile(r"^\s*(?:from|import)\s+(?:apps|core|features)\.([a-z_]+)", re.M)
 
