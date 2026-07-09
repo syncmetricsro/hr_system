@@ -5,12 +5,7 @@ from django.http import HttpRequest, HttpResponse
 from django.template.response import TemplateResponse
 
 from apps.accounts.models import Role
-from apps.accounts.permissions import Action
-from apps.accounts.permissions import can as user_can
-from apps.compliance.services import compliance_alerts
-from apps.finance.services import company_totals
-from apps.logistics.models import Room, RoomAssignment, RoomAssignmentStatus
-from apps.logistics.services import issued_equipment_value
+from apps.core import registry
 from apps.people.models import LifecycleStatus, Person
 from apps.people.services import inactive_by_reason
 from apps.projects.models import Project, TrialAssignment, TrialOutcome
@@ -28,9 +23,6 @@ def reports(request: HttpRequest) -> TemplateResponse:
         (label, people.filter(lifecycle_status=value).count())
         for value, label in LifecycleStatus.choices
     ]
-    capacity = sum(Room.objects.values_list("capacity", flat=True))
-    occupied = RoomAssignment.objects.filter(status=RoomAssignmentStatus.ACTIVE).count()
-    can_finance = user_can(request.user, Action.FINANCE_VIEW_SUMMARY)
     return TemplateResponse(
         request,
         "pages/reports.html",
@@ -38,14 +30,11 @@ def reports(request: HttpRequest) -> TemplateResponse:
             "active_projects": Project.objects.filter(is_active=True).count(),
             "total_people": people.count(),
             "pending_trials": TrialAssignment.objects.filter(outcome=TrialOutcome.PENDING).count(),
-            "compliance_count": len(compliance_alerts(request.user)),
-            "capacity": capacity,
-            "occupied": occupied,
-            "free": max(capacity - occupied, 0),
-            "equipment_value": issued_equipment_value(),
             "status_counts": status_counts,
             "inactive_by_reason": inactive_by_reason(),
-            "finance": company_totals() if can_finance else None,
+            # Feature contributions (registered via the core registry).
+            "report_tiles": registry.report_tiles(request),
+            "report_panels": registry.report_panels(request),
         },
     )
 

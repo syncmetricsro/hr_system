@@ -1,5 +1,63 @@
 # Build Journal
 
+## 2026-07-08 — PROGRESS REPORT (owner-requested snapshot)
+
+**Where we are in one sentence:** the Jober product is feature-complete and
+demo-ready; all five client questions are answered and implemented; the
+platform extraction (Stage B) is activated and ~40% executed, with the
+dependency debt already down from 10 edges to 6.
+
+### Jober product (Phases 0–5)
+- **Phases 0–4: DONE** — foundation/supply-chain, auth/RBAC/i18n/audit, the
+  full workforce core (people, intake, trials, readiness, dashboards, SMS),
+  logistics (rooms+pricing Q1, equipment+deduction review Q2, transport),
+  compliance alerts, feedback, exit/recycle+inactive reasons Q5, the blacklist
+  with HMAC matching Q3 (execution gated on the pending LIA/written text), and
+  finance with the confirmed positive convention Q4 (line items, lock/reopen,
+  rollups).
+- **Quality layer:** full UI redesign ("calm industrial"), nav active-state
+  fix, i18n gap audit (no user-facing gaps), internal security review (no
+  high/medium findings), 16-test browser e2e suite, demo scenario seed +
+  presenter runbook (SMS live; Telegram re-ask scripted).
+- **Phase 5 (pilot): NOT STARTED, by design** — gated on the customer demo →
+  acceptance → real-data/legal gate. External items outstanding: blacklist
+  LIA + written contract text, one filled finance month (label reconciliation),
+  Dokku staging names, Twilio account upgrade, native translation review.
+
+### Platform (core + thin clients, ADR 0021)
+- **ADR 0021 ACTIVATED 2026-07-07** (owner waiver of the demo-acceptance
+  trigger recorded). Safety: tag `pre-stage-b` pushed; the running demo
+  container stays on its pre-extraction image until B5.
+- Slice progress:
+  - **B-1 governance** — merged (PR #36).
+  - **B0 flags + tripwire** — merged (PR #37): FEATURE_FLAGS, CLIENT_POLICIES,
+    dependency-direction check with the debt enumerated (10 edges).
+  - **B1a hooks** — merged (PR #38): activation/exit registries; projects no
+    longer imports blacklist/logistics (debt 10 → 8).
+  - **B1b surface registry** — merged (PR #39): person card composed by
+    feature registration (panels/banners/form-extensions/exit-relevance);
+    people no longer imports blacklist/messaging (debt 8 → 6).
+  - **B1c (in progress):** reports tiles/panels via registry, finance export
+    moved home, seed untangling, `clients/jober/demo` app — target debt 0.
+  - **B2–B5 pending:** repo reshape (git mv, labels preserved), client policy
+    layer + smoke client, retention + stdlib TOTP 2FA, final validation.
+- Throughout: **test assertions unchanged** (Stage D bar); suite currently
+  231 unit + 16 e2e, green at every merged slice.
+
+### CorvinumEU (Stage C inputs, ready and waiting)
+- Design doc v0.6 + Addendum A1 (fuel money, pending confirmation) + A2.
+- Clickable 12-page design prototype (left slide-out sidebar, corvinum.eu
+  design language, dark/light) on the `peopleops-prototype` branch of the
+  corvinumeu repo (unpushed).
+
+### Risks / notes
+- Stage B is mid-flight: main is stable and green at every slice, but the demo
+  should run from the running container or the `pre-stage-b` tag until B5
+  re-validates.
+- 39 PRs merged to date; the ~2–3 week Stage B estimate still holds (the
+  hardest 40% — decoupling — is nearly done).
+
+
 ## 2026-06-29 — Phase 3 (6/n): inventory valuation
 
 The unblocked part of inventory (round-4 confirmed valuation method: latest manual price, no weighted-average). Deduction review for missing items stays deferred (open decision).

@@ -18,6 +18,7 @@ def _seed():
     # The scenario builds on the standard demo seeds.
     call_command("seed_demo")
     call_command("seed_people")
+    call_command("seed_logistics")
     call_command("seed_finance")
     call_command("seed_demo_scenario")
 

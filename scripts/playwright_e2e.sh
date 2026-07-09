@@ -64,6 +64,7 @@ echo "Migrating + seeding ..."
 run_manage migrate --noinput
 run_manage seed_demo
 run_manage seed_people
+run_manage seed_logistics
 run_manage seed_questionnaire
 run_manage seed_finance
 

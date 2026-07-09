@@ -1,12 +1,15 @@
-"""Person-card contributions of the logistics feature (rooms + equipment)."""
+"""Person-card and reports contributions of the logistics feature."""
 
 from __future__ import annotations
+
+from django.utils.translation import gettext as _
 
 from apps.core.registry import flag_enabled
 from apps.logistics.models import (
     EquipmentItem,
     EquipmentIssueStatus,
     Room,
+    RoomAssignment,
     RoomAssignmentStatus,
 )
 from apps.logistics.services import issued_equipment_value
@@ -43,3 +46,17 @@ def holds_resources(person) -> bool:
         person.room_assignments.filter(status=RoomAssignmentStatus.ACTIVE).exists()
         or person.equipment_issues.filter(status=EquipmentIssueStatus.ISSUED).exists()
     )
+
+
+def occupancy_tile(request):
+    if not flag_enabled("accommodation"):
+        return None
+    capacity = sum(Room.objects.values_list("capacity", flat=True))
+    occupied = RoomAssignment.objects.filter(status=RoomAssignmentStatus.ACTIVE).count()
+    return {"label": _("Occupancy"), "value": f"{occupied}/{capacity}"}
+
+
+def equipment_value_tile(request):
+    if not flag_enabled("equipment"):
+        return None
+    return {"label": _("Equipment value"), "value": issued_equipment_value()}

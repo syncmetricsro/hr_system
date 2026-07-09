@@ -6,6 +6,7 @@ from apps.accounts import views as account_views
 from apps.blacklist import views as blacklist_views
 from apps.compliance import views as compliance_views
 from apps.core import exports as core_exports
+from apps.finance import exports as finance_exports
 from apps.feedback import views as feedback_views
 from apps.core import views
 from apps.finance import views as finance_views
@@ -21,7 +22,7 @@ urlpatterns = [
     path("i18n/", include("django.conf.urls.i18n")),
     path("export/people.csv", core_exports.people_csv, name="export_people"),
     path("export/projects.csv", core_exports.projects_csv, name="export_projects"),
-    path("export/finance.csv", core_exports.finance_csv, name="export_finance"),
+    path("export/finance.csv", finance_exports.finance_csv, name="export_finance"),
     path("webhooks/twilio/inbound/", messaging_views.twilio_inbound, name="twilio_inbound"),
     path("feedback/<slug:token>/", feedback_views.feedback_form, name="feedback_form"),
 ]

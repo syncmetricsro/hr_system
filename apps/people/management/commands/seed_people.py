@@ -3,9 +3,6 @@ from __future__ import annotations
 from django.core.management.base import BaseCommand
 
 from apps.accounts.models import User
-from apps.finance.services import record_financial_month
-from apps.logistics.models import Accommodation, EquipmentItem, Room
-from apps.logistics.services import assign_room
 from apps.people.models import LifecycleStatus, Person
 from apps.projects.models import Project
 from apps.projects.services import activate_on_project
@@ -60,29 +57,5 @@ class Command(BaseCommand):
                 activate_on_project(
                     person, projects["DHLBA"], actor=coordinator, reason="demo seed"
                 )
-
-        # Minimal accommodation with rooms; house the first Working person.
-        accommodation, _ = Accommodation.objects.get_or_create(
-            name="Ubytovňa Nitra", defaults={"address": "Nitra 1", "is_active": True}
-        )
-        room, _ = Room.objects.get_or_create(
-            accommodation=accommodation, label="101",
-            defaults={"capacity": 2, "monthly_rate": "180.00"},
-        )
-        Room.objects.get_or_create(
-            accommodation=accommodation, label="102",
-            defaults={"capacity": 2, "monthly_rate": "180.00"},
-        )
-        working = Person.objects.filter(lifecycle_status=LifecycleStatus.WORKING).first()
-        if working and not working.room_assignments.exists():
-            assign_room(working, room, actor=coordinator)
-
-        # Minimal equipment catalog (with manual unit prices for valuation).
-        for name, size, price in [("Pracovná obuv", "42", "45.00"), ("Reflexná vesta", "L", "8.50"), ("Prilba", "", "15.00")]:
-            EquipmentItem.objects.get_or_create(name=name, size=size, defaults={"unit_price": price})
-
-        # Minimal financial months (sign convention: net = revenue - cost, to confirm).
-        for code, month, rev, cost in [("DHLBA", 5, "18000", "12000"), ("WEB", 5, "9000", "7000")]:
-            record_financial_month(projects[code], 2026, month, rev, cost, actor=coordinator)
 
         self.stdout.write(self.style.SUCCESS(f"People seeded: {Person.objects.count()} total"))

@@ -1,5 +1,11 @@
 # Test Journal
 
+## 2026-07-08 — Stage B1c: dependency direction reaches zero
+
+- **231 unit + 16 e2e green; tripwire allowlist EMPTY** — no core→feature imports remain (was 10 edges at B0).
+- Reports page now composes feature tiles (compliance count, occupancy, equipment value) and the finance company-totals panel via the core registry; finance CSV moved to `apps/finance/exports.py` (URL/name unchanged); `seed_people` slimmed to people+projects with new `seed_logistics` + months moved into `seed_finance`; `seed_demo_scenario` relocated to the new `clients/jober/demo` app (client layer may import anything). Dockerfile gains `COPY clients`.
+- Assertions unchanged throughout; the only test edit is the seed-order setup line in `test_demo_scenario`.
+
 ## 2026-07-06 — Nav active-state fix
 
 - **Full suite: 230 passed** (up from 226: +4 nav tests), 16 e2e green.
