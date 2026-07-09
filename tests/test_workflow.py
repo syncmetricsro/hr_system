@@ -2,15 +2,15 @@ from __future__ import annotations
 
 import pytest
 
-from apps.people.models import LifecycleStatus, Person
-from apps.projects.models import (
+from core.people.models import LifecycleStatus, Person
+from core.projects.models import (
     AssignmentStatus,
     PillarState,
     Project,
     TrialOutcome,
     TrialState,
 )
-from apps.projects.services import (
+from core.projects.services import (
     WorkflowError,
     activate_from_readiness,
     get_or_create_readiness,

@@ -7,11 +7,11 @@ import hmac
 import pytest
 from django.urls import reverse
 
-from apps.accounts.permissions import Action, can
-from apps.messaging import services
-from apps.messaging.models import InboundMessage, OutboundMessage
-from apps.people.models import Person
-from apps.projects.models import Project
+from core.accounts.permissions import Action, can
+from features.messaging import services
+from features.messaging.models import InboundMessage, OutboundMessage
+from core.people.models import Person
+from core.projects.models import Project
 
 pytestmark = pytest.mark.django_db
 
@@ -104,7 +104,7 @@ def test_coordinator_can_message_own_project_person(client, make_user, monkeypat
     project = Project.objects.create(name="DHL", code="DHLBA")
     project.responsible_coordinators.add(coord)
     person = Person.objects.create(first_name="A", last_name="B", phone="+421900000000")
-    from apps.projects.services import activate_on_project
+    from core.projects.services import activate_on_project
     activate_on_project(person, project, actor=coord)
     client.force_login(coord)
     resp = client.post(reverse("send_sms", args=[person.pk]), {"body": "hi"})

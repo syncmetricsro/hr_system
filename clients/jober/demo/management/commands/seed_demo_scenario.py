@@ -5,15 +5,15 @@ from datetime import timedelta
 from django.core.management.base import BaseCommand
 from django.utils import timezone
 
-from apps.accounts.models import User
-from apps.blacklist.models import BlacklistCategory
-from apps.blacklist.services import decide_case, propose_case
-from apps.compliance.models import Certificate
-from apps.finance.models import FinanceCategory, FinanceCategoryKind, FinancialMonth
-from apps.finance.services import recompute_month, set_line_item
-from apps.logistics.models import EquipmentItem
-from apps.logistics.services import flag_unreturned, issue_equipment
-from apps.people.models import InactiveReason, LifecycleStatus, Person
+from core.accounts.models import User
+from features.blacklist.models import BlacklistCategory
+from features.blacklist.services import decide_case, propose_case
+from features.compliance.models import Certificate
+from features.finance.models import FinanceCategory, FinanceCategoryKind, FinancialMonth
+from features.finance.services import recompute_month, set_line_item
+from features.logistics.models import EquipmentItem
+from features.logistics.services import flag_unreturned, issue_equipment
+from core.people.models import InactiveReason, LifecycleStatus, Person
 
 DEMO_DOMAIN = "demo.jober.test"
 # Obviously-fictional demo identifier for the live blacklist re-entry moment.

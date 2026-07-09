@@ -5,15 +5,15 @@ from decimal import Decimal
 import pytest
 from django.urls import reverse
 
-from apps.accounts.permissions import Action, can
-from apps.logistics.models import Accommodation, Room
-from apps.logistics.services import (
+from core.accounts.permissions import Action, can
+from features.logistics.models import Accommodation, Room
+from features.logistics.services import (
     accommodation_cost_report,
     assign_room,
     set_assignment_rate,
     set_room_rate,
 )
-from apps.people.models import Person
+from core.people.models import Person
 
 pytestmark = pytest.mark.django_db
 
@@ -75,7 +75,7 @@ def test_cost_report_ignores_released_assignments(setup):
     set_room_rate(room, "180", actor=manager)
     person = Person.objects.create(first_name="A", last_name="B")
     assign_room(person, room, actor=coord)
-    from apps.logistics.services import release_room
+    from features.logistics.services import release_room
     release_room(person, actor=coord)
     report = accommodation_cost_report()
     assert report["company"]["occupancy"] == 0

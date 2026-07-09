@@ -3,8 +3,8 @@ from __future__ import annotations
 import pytest
 from django.contrib.auth.models import AnonymousUser
 
-from apps.audit.models import AuditError, AuditEvent
-from apps.audit.services import record_event
+from core.audit.models import AuditError, AuditEvent
+from core.audit.services import record_event
 
 pytestmark = pytest.mark.django_db
 

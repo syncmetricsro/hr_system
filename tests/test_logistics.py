@@ -2,10 +2,10 @@ from __future__ import annotations
 
 import pytest
 
-from apps.accounts.permissions import Action, can
-from apps.logistics.models import Accommodation, Room, RoomAssignmentStatus
-from apps.logistics.services import CapacityError, assign_room, release_room
-from apps.people.models import Person
+from core.accounts.permissions import Action, can
+from features.logistics.models import Accommodation, Room, RoomAssignmentStatus
+from features.logistics.services import CapacityError, assign_room, release_room
+from core.people.models import Person
 
 pytestmark = pytest.mark.django_db
 

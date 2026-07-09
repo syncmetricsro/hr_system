@@ -57,7 +57,8 @@ RUN python -m pip install \
     && rm -rf /wheels
 
 COPY manage.py /app/manage.py
-COPY apps /app/apps
+COPY core /app/core
+COPY features /app/features
 COPY clients /app/clients
 COPY config /app/config
 COPY locale /app/locale

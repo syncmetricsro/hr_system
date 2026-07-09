@@ -6,8 +6,8 @@ from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse
 from django.test import RequestFactory
 
-from apps.accounts.models import Role, User
-from apps.accounts.permissions import (
+from core.accounts.models import Role, User
+from core.accounts.permissions import (
     ACTION_ROLES,
     ROLE_ACTIONS,
     Action,

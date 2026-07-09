@@ -32,18 +32,18 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "apps.accounts",
-    "apps.audit",
-    "apps.people",
-    "apps.projects",
-    "apps.logistics",
-    "apps.finance",
-    "apps.intake",
-    "apps.messaging",
-    "apps.compliance",
-    "apps.feedback",
-    "apps.blacklist",
-    "apps.core",
+    "core.accounts",
+    "core.audit",
+    "core.people",
+    "core.projects",
+    "features.logistics",
+    "features.finance",
+    "features.intake",
+    "features.messaging",
+    "features.compliance",
+    "features.feedback",
+    "features.blacklist",
+    "core.ui",
     "clients.jober.demo",
 ]
 
@@ -176,7 +176,7 @@ FEATURE_FLAGS = {
     "duplicate_blacklist": True,
     "profitability": True,    # finance
 }
-CLIENT_POLICIES = os.getenv("CLIENT_POLICIES", "apps.accounts.permissions")
+CLIENT_POLICIES = os.getenv("CLIENT_POLICIES", "core.accounts.permissions")
 
 CSRF_COOKIE_HTTPONLY = True
 SESSION_COOKIE_HTTPONLY = True

@@ -2,10 +2,10 @@ from __future__ import annotations
 
 import pytest
 
-from apps.accounts.permissions import Action, can
-from apps.logistics.models import EquipmentIssueStatus, EquipmentItem
-from apps.logistics.services import issue_equipment, return_equipment
-from apps.people.models import Person
+from core.accounts.permissions import Action, can
+from features.logistics.models import EquipmentIssueStatus, EquipmentItem
+from features.logistics.services import issue_equipment, return_equipment
+from core.people.models import Person
 
 pytestmark = pytest.mark.django_db
 

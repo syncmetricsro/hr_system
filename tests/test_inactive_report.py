@@ -3,8 +3,8 @@ from __future__ import annotations
 import pytest
 from django.utils import translation
 
-from apps.people.models import InactiveReason, LifecycleStatus, Person
-from apps.people.services import inactive_by_reason
+from core.people.models import InactiveReason, LifecycleStatus, Person
+from core.people.services import inactive_by_reason
 
 pytestmark = pytest.mark.django_db
 

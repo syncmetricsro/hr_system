@@ -3,9 +3,9 @@ from __future__ import annotations
 import pytest
 from django.urls import reverse
 
-from apps.logistics.models import EquipmentItem, EquipmentIssue
-from apps.people.models import LifecycleStatus, Person
-from apps.projects.models import Project, TrialAssignment
+from features.logistics.models import EquipmentItem, EquipmentIssue
+from core.people.models import LifecycleStatus, Person
+from core.projects.models import Project, TrialAssignment
 
 pytestmark = pytest.mark.django_db
 

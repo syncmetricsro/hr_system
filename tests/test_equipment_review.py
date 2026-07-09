@@ -5,21 +5,21 @@ from decimal import Decimal
 import pytest
 from django.urls import reverse
 
-from apps.accounts.permissions import Action, can
-from apps.logistics.models import (
+from core.accounts.permissions import Action, can
+from features.logistics.models import (
     DeductionReviewStatus,
     EquipmentIssueStatus,
     EquipmentItem,
 )
-from apps.logistics.services import (
+from features.logistics.services import (
     DeductionReviewError,
     flag_unreturned,
     issue_equipment,
     pending_deduction_reviews,
     review_deduction,
 )
-from apps.people.models import Person
-from apps.projects.services import exit_person
+from core.people.models import Person
+from core.projects.services import exit_person
 
 pytestmark = pytest.mark.django_db
 

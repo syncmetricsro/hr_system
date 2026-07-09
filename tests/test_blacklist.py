@@ -3,13 +3,13 @@ from __future__ import annotations
 import pytest
 from django.urls import reverse
 
-from apps.accounts.permissions import Action, can
-from apps.blacklist.models import (
+from core.accounts.permissions import Action, can
+from features.blacklist.models import (
     BlacklistCaseStatus,
     BlacklistCategory,
     MatchFingerprint,
 )
-from apps.blacklist.services import (
+from features.blacklist.services import (
     BlacklistError,
     check_match,
     compute_fingerprint,
@@ -19,9 +19,9 @@ from apps.blacklist.services import (
     purge_expired,
     remove_case,
 )
-from apps.people.models import LifecycleStatus, Person
-from apps.projects.models import Project
-from apps.projects.services import WorkflowError, activate_on_project
+from core.people.models import LifecycleStatus, Person
+from core.projects.models import Project
+from core.projects.services import WorkflowError, activate_on_project
 
 pytestmark = pytest.mark.django_db
 

@@ -13,8 +13,8 @@ python3 -m py_compile \
   config/settings/base.py \
   config/settings/local.py \
   config/settings/production.py \
-  apps/core/apps.py \
-  apps/core/views.py \
+  core/ui/apps.py \
+  core/ui/views.py \
   scripts/check_no_node_artifacts.py \
   scripts/fetch_tailwind.py \
   scripts/verify_vendor_assets.py \

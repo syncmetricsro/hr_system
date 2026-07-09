@@ -4,8 +4,8 @@ import pytest
 from django.core.management import call_command
 from django.core.management.base import CommandError
 
-from apps.accounts.models import Role, User
-from apps.audit.models import AuditEvent
+from core.accounts.models import Role, User
+from core.audit.models import AuditEvent
 
 pytestmark = pytest.mark.django_db
 

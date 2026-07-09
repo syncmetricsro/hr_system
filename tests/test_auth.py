@@ -45,7 +45,7 @@ def test_logout_redirects_to_login(client, make_user):
 
 
 def test_login_writes_audit_event(client, make_user):
-    from apps.audit.models import AuditEvent
+    from core.audit.models import AuditEvent
 
     make_user(role="coordinator")
     client.post(
