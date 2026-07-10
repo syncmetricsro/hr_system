@@ -1,6 +1,6 @@
 # ADR 0021: Stage B shared-core extraction (in-place, sliced)
 
-Status: **Accepted — activated 2026-07-07**
+Status: **Accepted — activated 2026-07-07 · EXECUTED 2026-07-09 (slices B-1…B5, PRs #36–#45)**
 Date drafted: 2026-07-05 · Date activated: 2026-07-07
 
 Supersedes [ADR 0001](0001-jober-only-scope.md) as of activation; satisfies
