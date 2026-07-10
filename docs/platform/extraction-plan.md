@@ -1,4 +1,5 @@
-> **Status: FUTURE-STAGE PLANNING — does not change the current build.**
+> **Status: EXECUTED (2026-07-07 → 2026-07-09, PRs #36–#45).** As-executed
+> deviations are recorded in ADR 0021; this text is kept as the plan of record.
 > This is the staged execution plan for Stage B (shared-core extraction), to be
 > run **only after** [ADR 0021](../adr/0021-stage-b-extraction.md) is activated
 > (Jober demo acceptance + pilot green-light). Companion to the completed

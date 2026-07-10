@@ -1,5 +1,18 @@
 # Test Journal
 
+## 2026-07-09 — Stage B complete (B3–B5)
+
+- **242 unit + 16 e2e green** at close (231 baseline + smoke-client boot test +
+  3 retention + 7 TOTP incl. RFC 6238 Appendix B vectors). Assertions unchanged
+  across the whole extraction (Stage D bar).
+- Gates passed per slice: dependency tripwire empty; `migrate --check` clean vs
+  a live-DB dump (B2); `manage.py check` green under `clients._smoke.settings`
+  (no features, neutral policies); production image builds from the new layout;
+  demo stack rebuilt post-B5 with the scenario data intact (re-entry match,
+  finance months, seeded people).
+- Ops note: the host restart killed the docker stack mid-B3 — restarted the
+  existing `jober-dev-db` container (data preserved) rather than recreating.
+
 ## 2026-07-08 — Stage B1c: dependency direction reaches zero
 
 - **231 unit + 16 e2e green; tripwire allowlist EMPTY** — no core→feature imports remain (was 10 edges at B0).

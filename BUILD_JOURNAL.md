@@ -1,5 +1,32 @@
 # Build Journal
 
+## 2026-07-09 — STAGE B COMPLETE: shared core + thin-client architecture
+
+ADR 0021 executed end-to-end (PRs #36–#45), assertions unchanged throughout.
+
+- **B-1/B0**: governance (owner waiver recorded), `pre-stage-b` tag,
+  FEATURE_FLAGS + CLIENT_POLICIES, dependency tripwire (debt enumerated: 10).
+- **B1 (a–c)**: decoupling — activation/exit hooks, the surface registry
+  (person panels/banners/form-extensions/exit-relevance, report tiles/panels),
+  per-feature exports and seeds, `clients/jober/demo`. **Debt 10 → 0.**
+- **B2**: `git mv` reshape to `core/{accounts,audit,people,projects,ui,retention}`
+  + `features/{7 apps}`; basenames kept ⇒ labels/tables/FKs untouched;
+  `migrate --check` clean against a live-DB dump.
+- **B3**: client policy layer — grants/lifecycle/sensitive-visibility moved
+  verbatim to `clients/jober/policies.py`, neutral deny-by-default core
+  fallbacks, flag-gated URLconf, brand context, `clients/_smoke` proves the
+  core boots with zero features/client.
+- **B4**: `core/retention` (registry + `run_retention`) and **stdlib TOTP 2FA**
+  (RFC 6238 vectors tested; `TWO_FACTOR_REQUIRED_ROLES=[]` for Jober ⇒ zero
+  behavior change). Demo seeds moved fully into `clients/jober/demo`.
+- **B5**: Stage D sweep green — dep direction clean, `core/` free of client
+  conditionals, smoke client passes checks, **242 unit + 16 e2e**, demo stack
+  rebuilt on the extracted architecture with the scenario intact.
+
+Stage C (CorvinumEU thin client) now starts from `clients/corvinum_eu/` +
+feature flags + the design prototype — configuration and theming, not a rebuild.
+
+
 ## 2026-07-08 — PROGRESS REPORT (owner-requested snapshot)
 
 **Where we are in one sentence:** the Jober product is feature-complete and
