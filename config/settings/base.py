@@ -180,6 +180,10 @@ FEATURE_FLAGS = {
 }
 CLIENT_POLICIES = os.getenv("CLIENT_POLICIES", "core.accounts.default_policies")
 
+# Roles that must enroll a TOTP device (Stage B4b). Empty for Jober => zero
+# behavior change; CorvinumEU will require it for HR/admin/manager (§5.12).
+TWO_FACTOR_REQUIRED_ROLES: list[str] = []
+
 CSRF_COOKIE_HTTPONLY = True
 SESSION_COOKIE_HTTPONLY = True
 X_FRAME_OPTIONS = "DENY"
