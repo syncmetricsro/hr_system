@@ -22,7 +22,11 @@ class BlacklistConfig(AppConfig):
         )
         from core.projects.services import register_activation_check
 
+        from core.retention.services import register_retention
+        from features.blacklist.services import purge_expired
+
         register_activation_check(activation_gate)
+        register_retention("blacklist_fingerprints", purge_expired)
         register_person_banner("panels/blacklist_banner.html", open_case_banner, order=10)
         register_person_panel("panels/blacklist_case.html", case_panel, order=40)
         register_person_form_extension(IntakeMatchExtension())
