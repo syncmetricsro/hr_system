@@ -31,6 +31,8 @@ ACTION_ROLES: dict[Action, frozenset[Role]] = {
     # Equipment (§5.8)
     Action.EQUIPMENT_ISSUE_RETURN: frozenset({_COORDINATOR, _MANAGER}),
     Action.EQUIPMENT_REVIEW_DEDUCTION: frozenset({_MANAGER}),
+    # Approval checklists (§5.5)
+    Action.CHECKLIST_TICK: frozenset({_COORDINATOR, _MANAGER}),
     # Duplicate / blacklist (§5.6)
     Action.BLACKLIST_PROPOSE: frozenset({_COORDINATOR, _MANAGER}),
     Action.BLACKLIST_DECIDE: frozenset({_MANAGER}),

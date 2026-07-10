@@ -1,5 +1,16 @@
 # Test Journal
 
+## 2026-07-11 — Stage C1 (checklists)
+
+- **251 passed** (244 + 7: idempotent instantiation, critical-only blocking,
+  audited identity capture, flag-off no-op gate, blocked→allowed activation,
+  toggle view allow/deny), ruff clean. Jober assertions unchanged; e2e rerun
+  with the slice (URLs touched).
+- Gotcha: the checklist activation gate lazily instantiates items *inside*
+  `activate_on_project`'s transaction — a blocked activation rolls those rows
+  back; tests (and flows relying on persistence) must instantiate via the
+  panel/service first.
+
 ## 2026-07-11 — Stage C0 (CorvinumEU scaffold)
 
 - **244 passed** (242 baseline + 2 new: CorvinumEU client boots via

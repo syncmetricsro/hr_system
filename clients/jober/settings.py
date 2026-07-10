@@ -22,6 +22,7 @@ FEATURE_FLAGS = {
     "feedback": True,
     "duplicate_blacklist": True,
     "profitability": True,
+    "checklists": False,   # CorvinumEU feature (ADR 0022) — not in the Jober product
 }
 
 BRAND_NAME = "Jober"

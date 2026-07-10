@@ -144,6 +144,13 @@ if _feature_on("blacklist", "duplicate_blacklist"):
         path("blacklist/<int:pk>/remove/", blacklist_views.blacklist_remove, name="blacklist_remove"),
     ]
 
+if _feature_on("checklists", "checklists"):
+    from features.checklists import views as checklist_views
+
+    app_routes += [
+        path("checklist/<int:item_pk>/toggle/", checklist_views.toggle_item_view, name="checklist_item_toggle"),
+    ]
+
 if _feature_on("feedback", "feedback"):
     from features.feedback import views as feedback_views
 

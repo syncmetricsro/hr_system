@@ -45,6 +45,7 @@ Legend: ✅ permitted · — denied
 | `blacklist.propose` | — | ✅ | ✅ | — |
 | `blacklist.decide` | — | — | ✅ | — |
 | `sms.manage_templates` | — | — | ✅ | — |
+| `checklist.tick` (Jober: feature off — ADR 0022) | — | ✅ | ✅ | — |
 | `finance.manage` | — | — | ✅ | — |
 | `export.approved` | — | — | ✅ | ✅ |
 
