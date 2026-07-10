@@ -1,0 +1,36 @@
+{% load i18n %}
+<section class="panel workflow-panel">
+  <p class="eyebrow">{% trans "Money" %}</p>
+  <h2>{% trans "Advances & deductions" %}</h2>
+
+  <p>{% trans "Open balance against pay" %}: <strong>{{ panel.ledger_open_balance }} €</strong></p>
+
+  {% if panel.ledger_entries %}
+    <ul class="stack">
+      {% for e in panel.ledger_entries %}
+        <li>{{ e.entry_date|date:"Y-m-d" }} — {{ e.get_entry_type_display }} · {{ e.get_category_display }} · {{ e.amount }} € <span class="muted">({{ e.get_settlement_status_display }})</span></li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="muted">{% trans "No ledger entries yet." %}</p>
+  {% endif %}
+
+  {% if panel.can_enter_ledger %}
+    <form class="stack" method="post" action="{% url 'ledger_record' %}">
+      {% csrf_token %}
+      <input type="hidden" name="person" value="{{ panel.person.pk }}">
+      <input type="hidden" name="next" value="{% url 'person_detail' panel.person.pk %}">
+      <label><span>{% trans "Entry type" %}</span>
+        <select name="entry_type">
+          {% for value, label in panel.ledger_entry_types %}<option value="{{ value }}">{{ label }}</option>{% endfor %}
+        </select></label>
+      <label><span>{% trans "Category" %}</span>
+        <select name="category">
+          {% for value, label in panel.ledger_categories %}<option value="{{ value }}">{{ label }}</option>{% endfor %}
+        </select></label>
+      <label><span>{% trans "Amount (EUR)" %}</span><input type="number" name="amount" min="0.01" step="0.01" required></label>
+      <label><span>{% trans "Note" %}</span><input type="text" name="note"></label>
+      <button class="button button-secondary" type="submit">{% trans "Record entry" %}</button>
+    </form>
+  {% endif %}
+</section>

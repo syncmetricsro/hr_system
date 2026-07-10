@@ -151,6 +151,20 @@ if _feature_on("checklists", "checklists"):
         path("checklist/<int:item_pk>/toggle/", checklist_views.toggle_item_view, name="checklist_item_toggle"),
     ]
 
+if _feature_on("advances", "advances"):
+    from features.advances import views as advances_views
+
+    urlpatterns += [
+        path("export/ledger/thursday.csv", advances_views.thursday_csv, name="ledger_thursday_csv"),
+        path("export/ledger/cycle/<int:year>/<int:month>.csv", advances_views.cycle_csv, name="ledger_cycle_csv"),
+    ]
+    app_routes += [
+        path("ledger/", advances_views.ledger_overview, name="ledger_overview"),
+        path("ledger/record/", advances_views.ledger_record, name="ledger_record"),
+        path("ledger/entry/<int:pk>/action/", advances_views.ledger_entry_action, name="ledger_entry_action"),
+        path("ledger/cycle/action/", advances_views.ledger_cycle_action, name="ledger_cycle_action"),
+    ]
+
 if _feature_on("feedback", "feedback"):
     from features.feedback import views as feedback_views
 

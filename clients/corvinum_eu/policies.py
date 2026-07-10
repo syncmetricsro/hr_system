@@ -33,6 +33,9 @@ ACTION_ROLES: dict[Action, frozenset[Role]] = {
     Action.EQUIPMENT_REVIEW_DEDUCTION: frozenset({_MANAGER}),
     # Approval checklists (§5.5)
     Action.CHECKLIST_TICK: frozenset({_COORDINATOR, _MANAGER}),
+    # Advance & deduction ledger (§5.10) — office/HR/management only
+    Action.LEDGER_ENTER: frozenset({_MANAGER}),
+    Action.LEDGER_VIEW: frozenset({_MANAGER, _OBSERVER}),
     # Duplicate / blacklist (§5.6)
     Action.BLACKLIST_PROPOSE: frozenset({_COORDINATOR, _MANAGER}),
     Action.BLACKLIST_DECIDE: frozenset({_MANAGER}),

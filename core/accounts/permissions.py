@@ -48,6 +48,7 @@ class Action(str, Enum):
     BLACKLIST_DECIDE = "blacklist.decide"
     SMS_MANAGE_TEMPLATES = "sms.manage_templates"
     CHECKLIST_TICK = "checklist.tick"
+    LEDGER_ENTER = "ledger.enter"
     FINANCE_MANAGE = "finance.manage"
     EXPORT_APPROVED = "export.approved"
 
@@ -55,6 +56,7 @@ class Action(str, Enum):
     BLACKLIST_VIEW_REASON = "blacklist.view_reason"
     FEEDBACK_VIEW = "feedback.view"
     FINANCE_VIEW_SUMMARY = "finance.view_summary"
+    LEDGER_VIEW = "ledger.view"
     AUDIT_VIEW = "audit.view"
 
 

@@ -42,6 +42,10 @@ ACTION_ROLES: dict[Action, frozenset[Role]] = {
     # Checklists feature is off for Jober (Stage C, ADR 0022); grant mirrors
     # the coordinator/manager pattern should Jober ever enable it.
     Action.CHECKLIST_TICK: frozenset({_COORDINATOR, _MANAGER}),
+    # Advances ledger is off for Jober (Stage C, ADR 0022); grants mirror the
+    # finance pattern should Jober ever enable it.
+    Action.LEDGER_ENTER: frozenset({_MANAGER}),
+    Action.LEDGER_VIEW: frozenset({_MANAGER, _OBSERVER}),
     Action.FINANCE_MANAGE: frozenset({_MANAGER}),
     Action.EXPORT_APPROVED: frozenset({_MANAGER, _OBSERVER}),
     Action.BLACKLIST_VIEW_REASON: frozenset({_COORDINATOR, _MANAGER}),
