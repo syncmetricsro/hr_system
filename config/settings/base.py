@@ -73,6 +73,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "core.ui.context_processors.brand",
             ],
         },
     }
@@ -176,7 +177,7 @@ FEATURE_FLAGS = {
     "duplicate_blacklist": True,
     "profitability": True,    # finance
 }
-CLIENT_POLICIES = os.getenv("CLIENT_POLICIES", "core.accounts.permissions")
+CLIENT_POLICIES = os.getenv("CLIENT_POLICIES", "core.accounts.default_policies")
 
 CSRF_COOKIE_HTTPONLY = True
 SESSION_COOKIE_HTTPONLY = True

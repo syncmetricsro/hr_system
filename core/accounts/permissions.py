@@ -57,41 +57,12 @@ class Action(str, Enum):
     AUDIT_VIEW = "audit.view"
 
 
-# Action -> set of roles permitted to perform it. Manager is listed explicitly
-# (not special-cased) so the mapping stays a literal mirror of the matrix doc.
-_RECRUITER = Role.RECRUITER
-_COORDINATOR = Role.COORDINATOR
-_MANAGER = Role.MANAGER
-_OBSERVER = Role.OBSERVER
+# Role grants are client policy (Stage B3, ADR 0021): resolved from the module
+# named by settings.CLIENT_POLICIES (Jober: clients/jober/policies.py, mirrored
+# by docs/permissions/permission-matrix.md). Core ships deny-by-default.
+from core.accounts.policies import get_policies  # noqa: E402  (after Action)
 
-ACTION_ROLES: dict[Action, frozenset[Role]] = {
-    Action.INTAKE_CREATE_EDIT: frozenset({_RECRUITER, _MANAGER}),
-    Action.INTAKE_ASSIGN_TRIAL: frozenset({_RECRUITER, _MANAGER}),
-    Action.PERSON_RECYCLE_AVAILABLE: frozenset({_RECRUITER, _COORDINATOR, _MANAGER}),
-    Action.SMS_SEND: frozenset({_RECRUITER, _COORDINATOR, _MANAGER}),
-    Action.PROJECT_ASSIGN: frozenset({_COORDINATOR, _MANAGER}),
-    Action.TRIAL_RECORD_OUTCOME: frozenset({_COORDINATOR, _MANAGER}),
-    Action.READINESS_COMPLETE: frozenset({_COORDINATOR, _MANAGER}),
-    Action.ROOM_ASSIGN: frozenset({_COORDINATOR, _MANAGER}),
-    Action.EQUIPMENT_ISSUE_RETURN: frozenset({_COORDINATOR, _MANAGER}),
-    Action.TRANSPORT_RECORD: frozenset({_COORDINATOR, _MANAGER}),
-    Action.EXIT_RECONCILE: frozenset({_COORDINATOR, _MANAGER}),
-    Action.APPROVAL_ACTIVATE: frozenset({_MANAGER}),
-    Action.PROJECT_MANAGE: frozenset({_MANAGER}),
-    Action.ACCOMMODATION_MANAGE: frozenset({_MANAGER}),
-    Action.EQUIPMENT_REVIEW_DEDUCTION: frozenset({_MANAGER}),
-    Action.CATALOG_MANAGE: frozenset({_MANAGER}),
-    Action.USER_MANAGE: frozenset({_MANAGER}),
-    Action.BLACKLIST_PROPOSE: frozenset({_COORDINATOR, _MANAGER}),
-    Action.BLACKLIST_DECIDE: frozenset({_MANAGER}),
-    Action.SMS_MANAGE_TEMPLATES: frozenset({_MANAGER}),
-    Action.FINANCE_MANAGE: frozenset({_MANAGER}),
-    Action.EXPORT_APPROVED: frozenset({_MANAGER, _OBSERVER}),
-    Action.BLACKLIST_VIEW_REASON: frozenset({_COORDINATOR, _MANAGER}),
-    Action.FEEDBACK_VIEW: frozenset({_MANAGER}),
-    Action.FINANCE_VIEW_SUMMARY: frozenset({_MANAGER, _OBSERVER}),
-    Action.AUDIT_VIEW: frozenset({_MANAGER}),
-}
+ACTION_ROLES: dict[Action, frozenset[Role]] = get_policies().ACTION_ROLES
 
 # Inverted view for convenience: role -> set of actions it may perform.
 ROLE_ACTIONS: dict[Role, frozenset[Action]] = {

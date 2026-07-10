@@ -16,35 +16,10 @@ class LifecycleStatus(models.TextChoices):
     BLACKLISTED = "blacklisted", _("Blacklisted")
 
 
-# Allowed lifecycle transitions (plan §9.3, §12). Enforced in Person.set_status.
-# BLACKLISTED is reachable from any state (manager action, Phase 3); removal from
-# the blacklist is manager-only and also lands in Phase 3.
-ALLOWED_TRANSITIONS: dict[str, set[str]] = {
-    LifecycleStatus.AVAILABLE: {
-        LifecycleStatus.TRIAL_DAY,
-        LifecycleStatus.WORKING,      # CARGO manager override / direct activation
-        LifecycleStatus.INACTIVE,
-        LifecycleStatus.BLACKLISTED,
-    },
-    LifecycleStatus.TRIAL_DAY: {
-        LifecycleStatus.AVAILABLE,    # fail / no-show recycling
-        LifecycleStatus.WORKING,      # pass -> readiness -> activation
-        LifecycleStatus.INACTIVE,
-        LifecycleStatus.BLACKLISTED,
-    },
-    LifecycleStatus.WORKING: {
-        LifecycleStatus.AVAILABLE,    # exit / reassignment
-        LifecycleStatus.INACTIVE,
-        LifecycleStatus.BLACKLISTED,
-    },
-    LifecycleStatus.INACTIVE: {
-        LifecycleStatus.AVAILABLE,
-        LifecycleStatus.BLACKLISTED,
-    },
-    LifecycleStatus.BLACKLISTED: {
-        LifecycleStatus.AVAILABLE,    # manager removal (Phase 3)
-    },
-}
+# Allowed lifecycle transitions are client policy (Stage B3, ADR 0021): the
+# transition *values* live in the CLIENT_POLICIES module (Jober:
+# clients/jober/policies.py); the validation mechanism below stays in core.
+# A policy of None means any transition between defined statuses is allowed.
 
 # Fields restricted to: owning recruiter, responsible coordinator, managers,
 # observers (plan §8.1 + phase1-open-questions Q4). See apps.people.permissions.
@@ -146,9 +121,14 @@ class Person(models.Model):
     # --- lifecycle ---------------------------------------------------------
 
     def can_transition_to(self, new_status: str) -> bool:
+        from core.accounts.policies import get_policies
+
         if new_status == self.lifecycle_status:
             return True
-        return new_status in ALLOWED_TRANSITIONS.get(self.lifecycle_status, set())
+        allowed = getattr(get_policies(), "ALLOWED_TRANSITIONS", None)
+        if allowed is None:  # neutral core default: permissive workflow
+            return new_status in LifecycleStatus.values
+        return new_status in allowed.get(self.lifecycle_status, set())
 
     def set_status(self, new_status: str, *, actor=None, reason: str = "") -> None:
         """Validate, apply, and audit a lifecycle transition."""

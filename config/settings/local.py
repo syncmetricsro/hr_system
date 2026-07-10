@@ -1,4 +1,4 @@
-from .base import *  # noqa: F403
+from clients.jober.settings import *  # noqa: F403
 
 DEBUG = True
 
