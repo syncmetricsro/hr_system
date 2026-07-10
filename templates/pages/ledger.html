@@ -1,0 +1,125 @@
+{% extends "layouts/base.html" %}
+{% load i18n rbac %}
+
+{% block title %}{% trans "Advances & deductions" %} · {{ BRAND_NAME }}{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <p class="eyebrow">{% trans "Ledger" %}</p>
+  <h1>{% trans "Advances & deductions" %}</h1>
+</section>
+
+{% can 'ledger.enter' as may_enter %}
+{% can 'export.approved' as may_export %}
+
+{% if may_enter %}
+<section class="panel">
+  <h2>{% trans "Record entry" %}</h2>
+  <form class="stack" method="post" action="{% url 'ledger_record' %}">
+    {% csrf_token %}
+    <label><span>{% trans "Person" %}</span>
+      <select name="person" required>
+        {% for p in people %}<option value="{{ p.pk }}">{{ p }}</option>{% endfor %}
+      </select></label>
+    <label><span>{% trans "Company / project" %}</span>
+      <select name="project">
+        <option value="">—</option>
+        {% for pr in projects %}<option value="{{ pr.pk }}">{{ pr.name }}</option>{% endfor %}
+      </select></label>
+    <label><span>{% trans "Entry type" %}</span>
+      <select name="entry_type">
+        {% for value, label in entry_types %}<option value="{{ value }}">{{ label }}</option>{% endfor %}
+      </select></label>
+    <label><span>{% trans "Category" %}</span>
+      <select name="category">
+        {% for value, label in categories %}<option value="{{ value }}">{{ label }}</option>{% endfor %}
+      </select></label>
+    <label><span>{% trans "Amount (EUR)" %}</span><input type="number" name="amount" min="0.01" step="0.01" required></label>
+    <label><span>{% trans "Note" %}</span><input type="text" name="note"></label>
+    <button class="button button-primary" type="submit">{% trans "Record" %}</button>
+  </form>
+</section>
+{% endif %}
+
+<section class="panel">
+  <h2>{% trans "Thursday summary" %}</h2>
+  <p class="muted">{% blocktrans with cutoff=summary.cutoff|date:"Y-m-d H:i" %}Cut-off {{ cutoff }} — open advances for Friday cash distribution. Later entries roll to next week.{% endblocktrans %}</p>
+  {% if summary.entries %}
+    <table>
+      <thead><tr><th>{% trans "Company" %}</th><th>{% trans "Person" %}</th><th>{% trans "Date" %}</th><th>{% trans "Amount" %}</th></tr></thead>
+      <tbody>
+        {% for e in summary.entries %}
+          <tr><td>{{ e.project.name|default:"—" }}</td><td>{{ e.person }}</td><td>{{ e.entry_date|date:"Y-m-d" }}</td><td>{{ e.amount }} €</td></tr>
+        {% endfor %}
+      </tbody>
+      <tfoot><tr><th colspan="3">{% trans "Total" %}</th><th>{{ summary.total }} €</th></tr></tfoot>
+    </table>
+    {% if may_export %}<a class="button button-secondary" href="{% url 'ledger_thursday_csv' %}">{% trans "Download CSV" %}</a>{% endif %}
+  {% else %}
+    <p class="muted">{% trans "No open advances before this week's cut-off." %}</p>
+  {% endif %}
+</section>
+
+<section class="panel">
+  <h2>{% blocktrans with start=cycle.start|date:"Y-m-d" end=cycle.end|date:"Y-m-d" %}Cycle {{ start }} → {{ end }}{% endblocktrans %}</h2>
+  <form method="get" class="people-search">
+    <input type="number" name="year" value="{{ cycle_year }}" min="2020" max="2100" aria-label="{% trans 'Year' %}">
+    <input type="number" name="month" value="{{ cycle_month }}" min="1" max="12" aria-label="{% trans 'Month' %}">
+    <button class="button button-secondary" type="submit">{% trans "Show" %}</button>
+  </form>
+  {% if cycle.rows %}
+    <table>
+      <thead><tr><th>{% trans "Person" %}</th><th>{% trans "To deduct" %}</th><th>{% trans "To add" %}</th><th>{% trans "Net pay effect" %}</th></tr></thead>
+      <tbody>
+        {% for row in cycle.rows %}
+          <tr><td>{{ row.person }}</td><td>{{ row.deduct }} €</td><td>{{ row.add }} €</td><td>{{ row.net }} €</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% if may_export %}<a class="button button-secondary" href="{% url 'ledger_cycle_csv' cycle_year cycle_month %}">{% trans "Download CSV" %}</a>{% endif %}
+    {% if may_enter %}
+      <form method="post" action="{% url 'ledger_cycle_action' %}" class="people-search">
+        {% csrf_token %}
+        <input type="hidden" name="year" value="{{ cycle_year }}">
+        <input type="hidden" name="month" value="{{ cycle_month }}">
+        <button class="button button-secondary" type="submit" name="action" value="include">{% trans "Include open entries in cycle" %}</button>
+        <button class="button button-secondary" type="submit" name="action" value="deducted">{% trans "Mark cycle settled" %}</button>
+      </form>
+    {% endif %}
+  {% else %}
+    <p class="muted">{% trans "No entries in this cycle window." %}</p>
+  {% endif %}
+
+  {% if cycle.entries %}
+    <h3>{% trans "Entries" %}</h3>
+    <table>
+      <thead><tr><th>{% trans "Person" %}</th><th>{% trans "Date" %}</th><th>{% trans "Type" %}</th><th>{% trans "Category" %}</th><th>{% trans "Amount" %}</th><th>{% trans "Settlement" %}</th><th></th></tr></thead>
+      <tbody>
+        {% for e in cycle.entries %}
+          <tr>
+            <td>{{ e.person }}</td>
+            <td>{{ e.entry_date|date:"Y-m-d" }}</td>
+            <td>{{ e.get_entry_type_display }}</td>
+            <td>{{ e.get_category_display }}</td>
+            <td>{{ e.amount }} €</td>
+            <td>{{ e.get_settlement_status_display }}</td>
+            <td>
+              {% if may_enter %}
+                <form method="post" action="{% url 'ledger_entry_action' e.pk %}" class="people-search">
+                  {% csrf_token %}
+                  <input type="hidden" name="next" value="{% url 'ledger_overview' %}?year={{ cycle_year }}&month={{ cycle_month }}">
+                  {% if e.is_locked %}
+                    <button class="button button-secondary" type="submit" name="action" value="reverse">{% trans "Reverse" %}</button>
+                  {% elif e.settlement_status == "open" %}
+                    <button class="button button-secondary" type="submit" name="action" value="cancel">{% trans "Cancel" %}</button>
+                  {% endif %}
+                </form>
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endif %}
+</section>
+{% endblock %}

@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     "features.compliance",
     "features.blacklist",
     "features.checklists",
+    "features.advances",
     "core.ui",
 ]
 
@@ -43,7 +44,7 @@ FEATURE_FLAGS = {
     "duplicate_blacklist": True,  # §5.6
     "profitability": False,       # no P&L dashboards (§15.6)
     "checklists": True,           # approval checklists (§5.5, Stage C1)
-    "advances": False,            # flips on when features/advances lands (C2)
+    "advances": True,             # advance & deduction ledger (§5.10, Stage C2)
 }
 
 # Bilingual SK/HU (confirmed); SK default pending confirmation (C-Q8).

@@ -1,5 +1,22 @@
 # Build Journal
 
+## 2026-07-11 — Stage C2: features/advances (advance & deduction ledger, §5.10)
+
+CorvinumEU's anchor feature. Explicit-field `LedgerEntry` — positive
+`Decimal` amounts only; meaning lives in `entry_type` (cash_advance /
+pay_deduction / pay_addition), `pay_effect` (deduct/add/none, mapping
+enforced), `settlement_status` (open → included → deducted, or cancelled).
+Money rules per the recorded C-Q2..C-Q5 defaults: Europe/Bratislava
+**Thursday 14:00** cut-off with late entries rolling forward (never
+retro-inserted), **20th-to-20th** cycle keyed by end month (correct across
+Dec→Jan), no hard deletes (admin delete disabled), cancel only while OPEN,
+locked entries corrected via linked reversal entries with the opposite pay
+effect. Ledger page (record/summary/cycle/actions), person-card panel with
+open balance, Thursday + cycle CSV exports (proposed column layout). New
+`ledger.enter`/`ledger.view` actions in both client policies + matrix.
+Flag off for Jober — zero behavior change.
+
+
 ## 2026-07-11 — Stage C1: features/checklists (approval checklists, §5.5)
 
 New feature app (installed for both clients, **flag off for Jober** — zero

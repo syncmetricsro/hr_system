@@ -1,5 +1,12 @@
 # Test Journal
 
+## 2026-07-11 — Stage C2 (advances ledger)
+
+- **261 passed** (251 + 10: pay-effect mapping enforced, positive-amount rule,
+  Thursday-14:00 cut-off + late-entry roll-forward, Dec→Jan cycle bounds,
+  positive-magnitude netting, inclusion locks + settle, cancel-only-open,
+  one-shot linked reversal, open balance), ruff clean; e2e rerun (URLs touched).
+
 ## 2026-07-11 — Stage C1 (checklists)
 
 - **251 passed** (244 + 7: idempotent instantiation, critical-only blocking,
