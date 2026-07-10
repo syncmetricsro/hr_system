@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "features.compliance",
     "features.feedback",
     "features.blacklist",
+    "features.checklists",
     "core.ui",
     "clients.jober.demo",
 ]
@@ -177,6 +178,7 @@ FEATURE_FLAGS = {
     "feedback": True,
     "duplicate_blacklist": True,
     "profitability": True,    # finance
+    "checklists": False,      # CorvinumEU feature (ADR 0022); a client opts in
 }
 CLIENT_POLICIES = os.getenv("CLIENT_POLICIES", "core.accounts.default_policies")
 

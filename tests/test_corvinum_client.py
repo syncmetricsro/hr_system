@@ -17,6 +17,7 @@ reverse("equipment_reviews")
 reverse("blacklist_queue")
 reverse("compliance_list")
 reverse("two_factor_setup")
+reverse("checklist_item_toggle", args=[1])
 # …and must NOT mount finance, SMS, accommodation, transport, or trials.
 for absent in ("finance_summary", "accommodation_list", "transport_trends", "trials_queue"):
     try:

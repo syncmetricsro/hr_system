@@ -1,5 +1,19 @@
 # Build Journal
 
+## 2026-07-11 — Stage C1: features/checklists (approval checklists, §5.5)
+
+New feature app (installed for both clients, **flag off for Jober** — zero
+behavior change): `ChecklistTemplate`/`ChecklistItemTemplate`/
+`PersonChecklistItem` (who approved what, when), idempotent per-person
+instantiation, audited ticking, and an **activation hard-stop** on open
+critical items registered through the Stage B `register_activation_check`
+hook — the mechanism ADR 0021 predicted would carry CorvinumEU's checklist
+gates. Person-card panel via the surface registry; toggle endpoint mounted
+only where the `checklists` flag is on (corvinum_eu). New `checklist.tick`
+action granted in both client policy modules, mirrored in the permission
+matrix.
+
+
 ## 2026-07-11 — Stage C0: CorvinumEU thin-client scaffold (ADR 0022)
 
 Stage C activated by the owner (2026-07-11). ADR 0022 records the scope

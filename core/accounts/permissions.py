@@ -47,6 +47,7 @@ class Action(str, Enum):
     BLACKLIST_PROPOSE = "blacklist.propose"
     BLACKLIST_DECIDE = "blacklist.decide"
     SMS_MANAGE_TEMPLATES = "sms.manage_templates"
+    CHECKLIST_TICK = "checklist.tick"
     FINANCE_MANAGE = "finance.manage"
     EXPORT_APPROVED = "export.approved"
 

@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     "features.intake",
     "features.compliance",
     "features.blacklist",
+    "features.checklists",
     "core.ui",
 ]
 
@@ -41,7 +42,7 @@ FEATURE_FLAGS = {
     "feedback": False,            # worker portal rejected (§16)
     "duplicate_blacklist": True,  # §5.6
     "profitability": False,       # no P&L dashboards (§15.6)
-    "checklists": False,          # flips on when features/checklists lands (C1)
+    "checklists": True,           # approval checklists (§5.5, Stage C1)
     "advances": False,            # flips on when features/advances lands (C2)
 }
 
