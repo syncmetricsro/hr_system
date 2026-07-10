@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     "features.checklists",
     "features.advances",
     "core.ui",
+    "clients.corvinum_eu.demo",
 ]
 
 FEATURE_FLAGS = {

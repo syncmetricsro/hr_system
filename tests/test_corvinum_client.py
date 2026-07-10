@@ -45,6 +45,13 @@ def test_corvinum_client_boots():
     assert result.returncode == 0, result.stdout + result.stderr
 
 
+def test_corvinum_demo_seed_command_is_registered():
+    """The client demo app + its idempotent seed load under corvinum settings
+    (no DB here — `--help` exercises import, registration, and argparse)."""
+    result = _run(sys.executable, str(REPO / "manage.py"), "seed_corvinum_demo", "--help")
+    assert result.returncode == 0, result.stdout + result.stderr
+
+
 def test_corvinum_url_surface_matches_flag_set():
     """Flags decide the URL surface: equipment/blacklist/compliance mounted,
     Jober-only modules (finance, accommodation, transport, trials) absent."""

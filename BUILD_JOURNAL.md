@@ -1,5 +1,18 @@
 # Build Journal
 
+## 2026-07-11 — Stage C3: equipment charge → ledger link + CorvinumEU demo seeds
+
+The §5.8↔§5.10 join: `features/logistics` gains a `deduction_approved_hooks`
+registry (fired once per issue by `review_deduction`'s PENDING guard);
+`features/advances` registers a handler (only when logistics is installed)
+that turns an approved equipment charge into a linked, positive-magnitude
+`PAY_DEDUCTION` (flag-guarded — Jober unchanged). New
+`clients/corvinum_eu/demo` app with an idempotent `seed_corvinum_demo`:
+4 fictional users @demo.corvinum.test (HR Admin = manager, C-Q9), two partner
+companies, the §5.5 global activation checklist, equipment issue → flag →
+approve → ledger deduction, an open Thursday advance, and travel money.
+
+
 ## 2026-07-11 — Stage C2: features/advances (advance & deduction ledger, §5.10)
 
 CorvinumEU's anchor feature. Explicit-field `LedgerEntry` — positive

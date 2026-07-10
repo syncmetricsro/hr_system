@@ -1,5 +1,12 @@
 # Test Journal
 
+## 2026-07-11 — Stage C3 (equipment→ledger link + seeds)
+
+- **265 passed** (261 + 4: approved charge creates the linked PAY_DEDUCTION at
+  unit price × qty, waive creates nothing, advances-flag-off creates nothing,
+  corvinum seed command registers under corvinum settings) + **16 e2e**, ruff
+  clean. Jober assertions unchanged.
+
 ## 2026-07-11 — Stage C2 (advances ledger)
 
 - **261 passed** (251 + 10: pay-effect mapping enforced, positive-amount rule,
