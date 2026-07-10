@@ -167,6 +167,18 @@ def issued_equipment_value(person=None):
     return total or Decimal("0")
 
 
+# Callables (issue, actor=None) run after a deduction charge is APPROVED.
+# Other features (e.g. the advances ledger, ADR 0022 §5.8) register here to
+# turn the approved charge into their own linked record. Handlers must be
+# idempotent per issue; review_deduction's PENDING guard fires them once.
+deduction_approved_hooks: list = []
+
+
+def register_deduction_approved_hook(fn) -> None:
+    if fn not in deduction_approved_hooks:
+        deduction_approved_hooks.append(fn)
+
+
 @transaction.atomic
 def flag_unreturned(issue, *, actor=None):
     """Flag an issued-but-not-returned item for manager review (Q2 safe default).
@@ -203,6 +215,9 @@ def review_deduction(issue, decision, *, actor=None, note: str = ""):
     issue.review_note = note or ""
     issue.save(update_fields=["review_status", "reviewed_by", "reviewed_at", "review_note"])
     record_event(actor, "equipment.deduction_reviewed", target=issue, decision=decision)
+    if issue.review_status == DeductionReviewStatus.APPROVED:
+        for hook in deduction_approved_hooks:
+            hook(issue, actor=actor)
     return issue
 
 
