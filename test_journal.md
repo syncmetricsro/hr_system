@@ -1,5 +1,16 @@
 # Test Journal
 
+## 2026-07-11 — Stage C0 (CorvinumEU scaffold)
+
+- **244 passed** (242 baseline + 2 new: CorvinumEU client boots via
+  `manage.py check`; URL surface matches the flag set — equipment/blacklist/
+  compliance mounted, finance/accommodation/transport/trials absent), ruff
+  clean. Jober assertions untouched.
+- Infra: `jober-test:phase4` rebuilt from scratch (host lost `/var/lib/docker`);
+  dev DB recreated via `dev_db.sh up` — note its env file keys are
+  `POSTGRES_*`, not `DB_*` (a `DB_PASSWORD` grep silently yields an empty
+  password and 217 collection errors).
+
 ## 2026-07-09 — Stage B complete (B3–B5)
 
 - **242 unit + 16 e2e green** at close (231 baseline + smoke-client boot test +
