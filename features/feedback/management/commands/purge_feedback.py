@@ -1,12 +1,9 @@
 from __future__ import annotations
 
-import datetime as dt
-
 from django.conf import settings
 from django.core.management.base import BaseCommand
-from django.utils import timezone
 
-from features.feedback.models import FeedbackSubmission
+from features.feedback.services import purge_feedback
 
 
 class Command(BaseCommand):
@@ -14,6 +11,5 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         days = getattr(settings, "FEEDBACK_RETENTION_DAYS", 31)
-        cutoff = timezone.now() - dt.timedelta(days=days)
-        deleted, _ = FeedbackSubmission.objects.filter(created_at__lt=cutoff).delete()
+        deleted = purge_feedback()
         self.stdout.write(self.style.SUCCESS(f"Purged {deleted} feedback submission(s) older than {days} days."))
