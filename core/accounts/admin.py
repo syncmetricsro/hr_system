@@ -25,3 +25,14 @@ class UserAdmin(BaseUserAdmin):
             "fields": ("email", "role", "password1", "password2"),
         }),
     )
+
+
+from core.accounts.models import TotpDevice  # noqa: E402
+
+
+@admin.register(TotpDevice)
+class TotpDeviceAdmin(admin.ModelAdmin):
+    # The secret is deliberately not displayed or editable.
+    list_display = ("user", "confirmed", "created_at", "confirmed_at")
+    readonly_fields = ("user", "confirmed", "created_at", "confirmed_at")
+    exclude = ("secret",)

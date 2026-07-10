@@ -1,0 +1,28 @@
+{% extends "layouts/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Two-factor setup" %} · {{ BRAND_NAME }}{% endblock %}
+
+{% block content %}
+<section class="panel login-panel">
+  <p class="eyebrow">{% trans "Security" %}</p>
+  <h1>{% trans "Two-factor setup" %}</h1>
+  {% if device.confirmed %}
+    <p>{% trans "Two-factor authentication is enabled for your account." %}</p>
+  {% else %}
+    <p class="muted">{% trans "Add this account to your authenticator app, then confirm with a code." %}</p>
+    <dl class="detail-grid">
+      <div><dt>{% trans "Secret (manual entry)" %}</dt><dd><code>{{ device.secret }}</code></dd></div>
+    </dl>
+    <p class="muted" style="overflow-wrap:anywhere"><code>{{ uri }}</code></p>
+    {% if error %}<ul class="messages"><li class="message message-error">{{ error }}</li></ul>{% endif %}
+    <form class="stack" method="post">
+      {% csrf_token %}
+      <label>{% trans "6-digit code" %}
+        <input name="code" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" autocomplete="one-time-code">
+      </label>
+      <button class="button button-primary" type="submit">{% trans "Confirm" %}</button>
+    </form>
+  {% endif %}
+</section>
+{% endblock %}
