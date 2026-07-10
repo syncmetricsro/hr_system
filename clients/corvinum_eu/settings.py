@@ -59,3 +59,8 @@ TWO_FACTOR_REQUIRED_ROLES = ["manager"]
 
 BRAND_NAME = "CorvinumEU PeopleOps"
 BRAND_MARK = "CE"
+
+# corvinum.eu design language layered over the shared shell (§7.0; C-Q8
+# dark-default pending confirmation). Served from the client static dir.
+STATICFILES_DIRS = STATICFILES_DIRS + [BASE_DIR / "clients" / "corvinum_eu" / "static"]  # noqa: F405
+CLIENT_THEME_CSS = "corvinum/theme.css"

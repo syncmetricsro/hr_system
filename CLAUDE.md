@@ -14,15 +14,19 @@ overrides it. Product truth lives in `Product_Design.md` (+ `Finance_Specs.md`,
   negative, net = revenue − cost), inactive reasons + recycling, and the
   **blacklist** (HMAC matching; execution gated on pending LIA/legal text).
 - **Fictional data only** — the real-data gate has not opened. Never real PII.
-- **Stage B is COMPLETE (ADR 0021 executed 2026-07-09).** The repo is
-  `core/` + `features/` + `clients/{jober,_smoke}`: policies via
+- **Stages B and C are COMPLETE (ADR 0021 executed 2026-07-09; ADR 0022
+  executed 2026-07-11 — deployment pends server names).** The repo is `core/` +
+  `features/` + `clients/{jober,corvinum_eu,_smoke}`: policies via
   `settings.CLIENT_POLICIES`, features flag-gated (`FEATURE_FLAGS`), UI composed
-  through `core/ui/registry.py`, hooks in `core/projects/services.py`. Build
+  through `core/ui/registry.py` (+ per-client `CLIENT_THEME_CSS`), hooks in
+  `core/projects/services.py` and `features/logistics/services.py`. Build
   discipline stands: deps **feature → core only** (`scripts/
-  check_dependency_direction.py` enforces); no client branching in core; new
-  core additions: `core/retention` + stdlib TOTP 2FA (off for Jober). Stage C
-  (CorvinumEU thin client) starts from `clients/corvinum_eu` when green-lit.
-- Test baseline: **242 unit + 16 e2e**. Suite counts are tracked in
+  check_dependency_direction.py`); no client branching in core. CorvinumEU:
+  `features/{checklists,advances}` (off for Jober), equipment/blacklist/
+  compliance/intake reused, 2FA on for managers, seeds in
+  `clients/corvinum_eu/demo` (`seed_corvinum_demo`); open client decisions in
+  `docs/product/corvinum-open-questions.md`.
+- Test baseline: **265 unit + 16 e2e**. Suite counts are tracked in
   `test_journal.md` — update it (and `BUILD_JOURNAL.md`) with every slice.
 
 ## How to run things (no Python on the host — everything in pinned containers)

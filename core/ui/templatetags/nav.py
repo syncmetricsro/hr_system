@@ -18,3 +18,12 @@ def nav_active(context, *url_names: str) -> str:
     if match is None:
         return ""
     return "is-active" if match.url_name in url_names else ""
+
+
+@register.simple_tag
+def flag_on(name: str) -> bool:
+    """True when a feature flag is enabled for the running client (Stage C4:
+    the shared shell must not link URLs a client's flag set never mounts)."""
+    from core.ui.registry import flag_enabled
+
+    return flag_enabled(name)
