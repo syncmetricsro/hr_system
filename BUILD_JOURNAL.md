@@ -1,5 +1,24 @@
 # Build Journal
 
+## 2026-07-11 — Stage C0: CorvinumEU thin-client scaffold (ADR 0022)
+
+Stage C activated by the owner (2026-07-11). ADR 0022 records the scope
+mapping — reuse `features/{logistics(equipment),blacklist,compliance,intake}`;
+build `features/checklists` + `features/advances`; `fuel_costs` NOT built
+(design-doc A1: unconfirmed, secondhand); deployment deferred (no server
+names). `clients/corvinum_eu/` lands: explicit INSTALLED_APPS (no finance/
+messaging/feedback apps), CorvinumEU flag set, SK/HU, 2FA required for
+managers, CE branding, trial-less lifecycle + grants in `policies.py`.
+Unconfirmed client decisions build against recorded defaults —
+`docs/product/corvinum-open-questions.md` (C-Q1…C-Q14).
+
+Ops: the host lost `/var/lib/docker` (external deletion while the daemon ran)
+— all images/volumes destroyed; daemon reset, test image rebuilt from the
+hash-pinned `requirements/test.lock` on the digest-pinned Python base, dev DB
+recreated. The accounting-project Postgres volume was unrecoverable (dead
+before salvage was possible); Jober data was all re-seedable.
+
+
 ## 2026-07-09 — STAGE B COMPLETE: shared core + thin-client architecture
 
 ADR 0021 executed end-to-end (PRs #36–#45), assertions unchanged throughout.
