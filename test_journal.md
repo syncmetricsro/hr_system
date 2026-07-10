@@ -1,5 +1,18 @@
 # Test Journal
 
+## 2026-07-11 — Stage C4 (theme + validation; Stage C close)
+
+- **265 unit + 16 e2e green** under Jober flags (assertions unchanged across
+  all of Stage C); dep-direction check clean; smoke client green.
+- **CorvinumEU live validation** in the test container against a fresh
+  `corvinum` DB: migrate + seed, 2FA-setup redirect for managers on login,
+  six themed pages 200, checklist panel present, open-balance arithmetic
+  correct, finance/accommodation/trials/SMS URLs absent.
+- C4's live drive found (and fixed) the hardcoded feature links in the shared
+  nav/dashboard — a client with a flag off used to 500 on the dashboard.
+  Lesson: template `{% url %}` to a flag-gated route is itself a flag
+  dependency; gate with `{% flag_on %}`.
+
 ## 2026-07-11 — Stage C3 (equipment→ledger link + seeds)
 
 - **265 passed** (261 + 4: approved charge creates the linked PAY_DEDUCTION at

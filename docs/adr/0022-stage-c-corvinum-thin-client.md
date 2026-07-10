@@ -1,6 +1,6 @@
 # ADR 0022: Stage C — CorvinumEU as the first thin client
 
-Status: **Accepted — activated 2026-07-11 (owner green-light)**
+Status: **Accepted — activated 2026-07-11 · EXECUTED 2026-07-11 (slices C0–C4, PRs #46–#50; deployment still pending server names)**
 Date drafted: 2026-07-11
 
 Executes Stage C of the platform roadmap (design doc §12.5; sequencing per

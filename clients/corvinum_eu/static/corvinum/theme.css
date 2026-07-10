@@ -1,0 +1,53 @@
+/* CorvinumEU PeopleOps theme (Stage C4, ADR 0022).
+ *
+ * Token override layered on the shared shell's app.css — values lifted from
+ * the corvinum.eu design language via the peopleops prototype (design doc
+ * §7.0 / Addendum A2): dark-default surfaces, cobalt #005bbf accent,
+ * glass-like panels. Fonts: the prototype's Hanken Grotesk/Inter/JetBrains
+ * Mono are referenced with system fallbacks only — no font binaries are
+ * vendored here (supply-chain rule; revisit with the reuse audit).
+ * Default theme is dark pending client confirmation (C-Q8). */
+
+:root {
+  /* Neutrals flipped to the corvinum dark scale */
+  --n50: #0b1220;
+  --n100: #101a2c;
+  --n200: #1a2740;
+  --n300: #27395a;
+  --n400: #48597a;
+  --n500: #8fa0bd;
+  --n700: #c4cfe2;
+  --n900: #eef3fb;
+
+  --ink: var(--n900);
+  --muted: var(--n500);
+  --surface: #0b1220;
+  --panel: rgba(16, 26, 44, 0.88);
+  --line: var(--n200);
+
+  /* corvinum.eu brand cobalt */
+  --cobalt: #005bbf;
+  --accent: #005bbf;
+  --accent-strong: #2f7fd6;
+
+  --font-body: "Hanken Grotesk", "Inter", system-ui, -apple-system, "Segoe UI",
+    Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+body {
+  background:
+    radial-gradient(1200px 600px at 85% -10%, rgba(0, 91, 191, 0.25), transparent 60%),
+    var(--surface);
+}
+
+.panel,
+.field-card {
+  backdrop-filter: blur(6px);
+  border-color: var(--line);
+}
+
+.brand-mark {
+  background: var(--accent);
+  color: #ffffff;
+}

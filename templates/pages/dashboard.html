@@ -1,5 +1,5 @@
 {% extends "layouts/base.html" %}
-{% load i18n rbac %}
+{% load i18n rbac nav %}
 
 {% block title %}{% trans "Operational overview" %} · Jober{% endblock %}
 
@@ -23,11 +23,15 @@
   <a class="metric-card" href="{% url 'people_list' %}?status=working">
     <span>{% trans "Working" %}</span><strong>{{ metrics.working }}</strong>
   </a>
+  {% flag_on 'recruitment_trials' as has_trials %}
+  {% if has_trials %}
   <a class="metric-card" href="{% url 'trials_queue' %}">
     <span>{% trans "Awaiting outcome" %}</span><strong>{{ metrics.awaiting_outcome }}</strong>
   </a>
+  {% endif %}
 </section>
 
+{% if has_trials %}
 <section class="panel">
   <p class="eyebrow">{% trans "Coordinator" %}</p>
   <h2>{% trans "Trials" %}</h2>
@@ -39,4 +43,5 @@
     {% endfor %}
   </ul>
 </section>
+{% endif %}
 {% endblock %}

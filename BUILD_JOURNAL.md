@@ -1,5 +1,29 @@
 # Build Journal
 
+## 2026-07-11 — Stage C4: corvinum.eu theme + validation — STAGE C COMPLETE
+
+Theme: `CLIENT_THEME_CSS` hook in the shared shell (context processor + one
+line in `base.html`); `clients/corvinum_eu/static/corvinum/theme.css` layers
+the corvinum.eu tokens (dark glass surfaces, cobalt #005bbf, font stacks with
+system fallbacks — no vendored font binaries) per §7.0/Addendum A2.
+
+The C4 live drive caught a real flag bug: the shared nav/dashboard hardcoded
+`trials_queue`/`compliance_list`/`accommodation_list`/`transport_trends`
+links, so any client without those flags 500'd. Fix: `{% flag_on %}` template
+tag; every feature tab now gates on **flag AND permission**, and the Ledger
+tab joins the nav for advances-enabled clients. Jober's rendered nav is
+unchanged (all its flags on).
+
+Validation (Stage D bar, three flag sets): dep-direction clean · 265 unit +
+16 e2e under Jober flags, assertions unchanged · smoke client boots · live
+CorvinumEU drive on a real DB: migrate → `seed_corvinum_demo` → 2FA detour
+enforced for managers → dashboard/people/person/ledger/blacklist/equipment/
+compliance all 200 and themed → checklist on the person card → ledger balance
+arithmetic verified (100 advance + 35 equipment charge − 30 travel = 105) →
+Jober-only URLs absent. **ADR 0022 EXECUTED** — staging/production deployment
+remains gated on CorvinumEU server/domain/DB names (C-Q14).
+
+
 ## 2026-07-11 — Stage C3: equipment charge → ledger link + CorvinumEU demo seeds
 
 The §5.8↔§5.10 join: `features/logistics` gains a `deduction_approved_hooks`
