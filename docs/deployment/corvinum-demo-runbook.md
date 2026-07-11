@@ -1,4 +1,7 @@
-# CorvinumEU PeopleOps — demo runbook
+# CorvinumEU PeopleOps — customer demo runbook
+
+> Thin-client pair: this runbook is **CorvinumEU** (port 8001). The Jober
+> runbook is [jober-demo-runbook.md](jober-demo-runbook.md) (port 8000).
 
 A presenter's script for a **~30-minute demo** of the CorvinumEU thin client.
 Present in **Slovak** (HU switchable live). **Fictional data only** — say this
@@ -34,9 +37,11 @@ products from one platform.
 
 ## Run of show (~30 min)
 
-1. **Login + 2FA (4m)** — log in as `hradmin` → forced TOTP setup → scan the
-   QR-less otpauth secret with the phone app → verify. Talking point: §5.12
-   security baseline; per-role enforcement is client config.
+1. **Login + 2FA (4m)** — log in as `hradmin` → forced TOTP setup → **scan
+   the QR code** with the phone app (manual secret shown as fallback) →
+   verify. Talking point: §5.12 security baseline; per-role enforcement is
+   client config. *(Rehearsed already? `scripts/corvinum_app.sh down && … up`
+   resets the DB so the first-login enrollment can be shown fresh.)*
 2. **Same platform, their brand (2m)** — dark corvinum.eu look, cobalt accent;
    flip SK↔HU. Optionally show Jober on :8000 in another tab: same code, two
    products.
@@ -51,9 +56,10 @@ products from one platform.
    C-Q2, ask them to confirm) → 20th-to-20th cycle report → include cycle →
    locked entries only change via reversal → CSV export.
 6. **Payslip (5m)** — record Marek's 2026-07 net pay → **Send encrypted PDF**
-   → the one-time password appears once (read it out: "this is what you'd tell
-   the worker by phone — it is never emailed") → show the email in the logs
-   terminal → open the PDF attachment, wrong password fails, right one opens.
+   → the one-time password appears once in the flash message (read it out:
+   "this is what you'd tell the worker by phone — it is never emailed") →
+   show the email in the logs terminal → open the PDF attachment, wrong
+   password fails, right one opens.
 7. **Oversight (3m)** — Observer login: read-only; audit trail on Marek shows
    checklist ticks, ledger entries, the payslip send (no password anywhere).
 

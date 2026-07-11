@@ -106,6 +106,6 @@ scripts/compile_messages.sh --extract   # then compile with no args
 - Open/answered client questions: `docs/product/phase3-4-open-questions.md`
   (all five answered; blacklist real-use pends LIA + written text —
   `docs/security/blacklist-legal-basis.md`).
-- Demos: Jober `docs/deployment/demo-runbook.md` (+ `local-demo.md`, port 8000); CorvinumEU `docs/deployment/corvinum-demo-runbook.md` (`scripts/corvinum_app.sh`, port 8001; both stacks run side-by-side).
+- Demos: Jober `docs/deployment/jober-demo-runbook.md` (+ `local-demo.md`, port 8000); CorvinumEU `docs/deployment/corvinum-demo-runbook.md` (`scripts/corvinum_app.sh`, port 8001; both stacks run side-by-side).
 - Platform docs: `docs/platform/{extraction-matrix,extraction-plan,corvinumeu-peopleops-design}.md` — **Stages B+C are built** (ADRs 0021/0022/0023); these are the plans of record, not gates. Still gated: real deployment (server names, C-Q14) and everything behind the real-data/legal gate. CorvinumEU open decisions: `docs/product/corvinum-open-questions.md`.
 - Deployment/ops journals: `deployment_journal.md`, `ENVIRONMENT.md`.

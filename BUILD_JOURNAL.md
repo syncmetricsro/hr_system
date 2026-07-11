@@ -1,5 +1,16 @@
 # Build Journal
 
+## 2026-07-11 — Runbook naming: one per thin client
+
+`docs/deployment/demo-runbook.md` → **`jober-demo-runbook.md`** (git mv);
+**`corvinum-demo-runbook.md`** refreshed to post-C7 reality (2FA act now scans
+the QR; payslip act names the flash message; reset tip for re-rehearsing
+first-login enrollment). Both runbooks open with a pairing note naming the
+other client + port. Cross-references updated (local-demo.md, CLAUDE.md).
+Jober runbook also picked up the seed-chain correction from the earlier docs
+audit (`seed_logistics` was missing from the listed chain).
+
+
 ## 2026-07-11 — Stage C7: 2FA QR codes (ADR 0024) + dark-theme flash messages
 
 Owner demo-testing findings on :8001. (1) **QR enrollment**: `segno==1.6.6`

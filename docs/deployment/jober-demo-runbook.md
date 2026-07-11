@@ -1,4 +1,7 @@
-# Customer demo runbook — Jober
+# Jober — customer demo runbook
+
+> Thin-client pair: this runbook is **Jober** (port 8000). The CorvinumEU
+> runbook is [corvinum-demo-runbook.md](corvinum-demo-runbook.md) (port 8001).
 
 A presenter's script for a **~60-minute, end-to-end live demo** of the complete
 solution. Present in **Slovak** (the default UI) and flip to **Hungarian** once to
@@ -17,7 +20,7 @@ Companion: [local-demo.md](local-demo.md) (how the runner works).
    ```
    Doppler (project `hr_system`, config `dev`; run from the repo root) injects
    the Twilio credentials; the script builds the current image, starts
-   PostgreSQL, migrates, and seeds `seed_demo` → `seed_people` →
+   PostgreSQL, migrates, and seeds `seed_demo` → `seed_people` → `seed_logistics` →
    `seed_questionnaire` → `seed_finance` → **`seed_demo_scenario`**. App at
    **http://localhost:8000**. *(If you forget Doppler, the SMS panel shows
    "not configured" — relaunch with `doppler run -- scripts/dev_app.sh up`;
