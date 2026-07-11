@@ -32,9 +32,9 @@ class Command(BaseCommand):
             assign_room(working, room, actor=coordinator)
 
         for name, size, price in [
-            ("Pracovná obuv", "42", "45.00"),
-            ("Reflexná vesta", "L", "8.50"),
-            ("Prilba", "", "15.00"),
+            ("Work boots", "42", "45.00"),  # canonical English; rendered via db_trans
+            ("High-visibility vest", "L", "8.50"),
+            ("Safety helmet", "", "15.00"),
         ]:
             EquipmentItem.objects.get_or_create(name=name, size=size, defaults={"unit_price": price})
 

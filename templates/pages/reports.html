@@ -1,5 +1,5 @@
 {% extends "layouts/base.html" %}
-{% load i18n %}
+{% load i18n nav %}
 
 {% block title %}{% trans "Reports" %} · Jober{% endblock %}
 
@@ -31,7 +31,7 @@
     <h2>{% trans "Inactive by reason" %}</h2>
     <dl class="detail-grid">
       {% for row in inactive_by_reason %}
-        <div><dt>{{ row.label }}</dt><dd>{{ row.count }}</dd></div>
+        <div><dt>{{ row.label|db_trans }}</dt><dd>{{ row.count }}</dd></div>
       {% empty %}
         <div><dd>{% trans "No inactive people." %}</dd></div>
       {% endfor %}

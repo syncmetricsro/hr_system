@@ -1,5 +1,5 @@
 {% extends "layouts/base.html" %}
-{% load i18n %}
+{% load i18n nav %}
 
 {% block title %}{{ month.project.code }} {{ month.year }}-{{ month.month }} · Jober{% endblock %}
 
@@ -43,7 +43,7 @@
         {% csrf_token %}
         {% for row in rows %}
           <label>
-            <span>{{ row.category.label }} ({{ row.category.get_kind_display }})</span>
+            <span>{{ row.category.label|db_trans }} ({{ row.category.get_kind_display }})</span>
             <input type="number" step="0.01" name="cat_{{ row.category.pk }}" value="{{ row.amount }}">
           </label>
         {% endfor %}
@@ -51,7 +51,7 @@
       </form>
     {% else %}
       <dl class="detail-grid">
-        {% for row in rows %}<div><dt>{{ row.category.label }}</dt><dd>{{ row.amount|default:"—" }}</dd></div>{% endfor %}
+        {% for row in rows %}<div><dt>{{ row.category.label|db_trans }}</dt><dd>{{ row.amount|default:"—" }}</dd></div>{% endfor %}
       </dl>
     {% endif %}
   </div>

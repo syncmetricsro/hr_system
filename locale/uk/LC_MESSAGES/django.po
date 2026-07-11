@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-11 14:38+0200\n"
+"POT-Creation-Date: 2026-07-11 15:19+0200\n"
 "Language: uk\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -13,7 +13,6 @@ msgstr ""
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: clients/corvinum_eu/catalog_i18n.py:12
-
 msgid "Personal data complete"
 msgstr "Особисті дані повні"
 
@@ -26,7 +25,6 @@ msgid "Work/residence permit valid (if applicable)"
 msgstr "Дозвіл на роботу/проживання дійсний (якщо потрібно)"
 
 #: clients/corvinum_eu/catalog_i18n.py:15
-
 msgid "Medical certificate valid"
 msgstr "Медична довідка дійсна"
 
@@ -35,7 +33,6 @@ msgid "Safety training completed"
 msgstr "Інструктаж з безпеки пройдено"
 
 #: clients/corvinum_eu/catalog_i18n.py:17
-
 msgid "Contract signed"
 msgstr "Договір підписано"
 
@@ -44,7 +41,6 @@ msgid "Duplicate check resolved"
 msgstr "Перевірку дублікатів завершено"
 
 #: clients/corvinum_eu/catalog_i18n.py:19
-
 msgid "Blacklist check resolved"
 msgstr "Перевірку чорного списку завершено"
 
@@ -53,7 +49,6 @@ msgid "Welcome call made"
 msgstr "Вітальний дзвінок здійснено"
 
 #: clients/corvinum_eu/catalog_i18n.py:24
-
 msgid "Safety boots"
 msgstr "Захисні черевики"
 
@@ -100,7 +95,8 @@ msgstr "Операції"
 # --- compliance ---
 #: clients/corvinum_eu/templates/layouts/base.html:43
 #: features/compliance/panels.py:14 features/finance/models.py:68
-#: templates/layouts/base.html:32 templates/pages/compliance_list.html:4
+#: features/intake/catalog_i18n.py:12 templates/layouts/base.html:32
+#: templates/pages/compliance_list.html:4
 #: templates/pages/compliance_list.html:9
 #: templates/pages/compliance_list.html:12
 msgid "Compliance"
@@ -284,35 +280,62 @@ msgstr "подія аудиту"
 msgid "audit events"
 msgstr "події аудиту"
 
-#: core/people/forms.py:26
+#: core/people/catalog_i18n.py:10
+msgid "Sick"
+msgstr "Хвороба"
+
+#: core/people/catalog_i18n.py:11
+msgid "Quit / left"
+msgstr "Звільнився / пішов"
+
+#: core/people/catalog_i18n.py:12
+msgid "Suspended"
+msgstr "Відсторонений"
+
+#: core/people/catalog_i18n.py:13
+msgid "Military service"
+msgstr "Військова служба"
+
+#: core/people/catalog_i18n.py:14 features/advances/models.py:40
+#: features/blacklist/catalog_i18n.py:15 features/blacklist/models.py:87
+#: features/blacklist/panels.py:56 features/finance/models.py:74
+msgid "Other"
+msgstr "Інше"
+
+#: core/people/forms.py:26 features/intake/catalog_i18n.py:13
 msgid "First name"
 msgstr "Ім’я"
 
-#: core/people/forms.py:27
+#: core/people/forms.py:27 features/intake/catalog_i18n.py:14
 msgid "Last name"
 msgstr "Прізвище"
 
-#: core/people/forms.py:28 templates/pages/person_detail.html:128
+#: core/people/forms.py:28 features/intake/catalog_i18n.py:17
+#: templates/pages/person_detail.html:128
 msgid "Phone"
 msgstr "Телефон"
 
-#: core/people/forms.py:29 templates/pages/person_detail.html:129
+#: core/people/forms.py:29 features/intake/catalog_i18n.py:18
+#: templates/pages/person_detail.html:129
 msgid "Address"
 msgstr "Адреса"
 
-#: core/people/forms.py:30 templates/pages/person_detail.html:130
+#: core/people/forms.py:30 features/intake/catalog_i18n.py:19
+#: templates/pages/person_detail.html:130
 msgid "Nationality"
 msgstr "Громадянство"
 
-#: core/people/forms.py:31
+#: core/people/forms.py:31 features/intake/catalog_i18n.py:20
 msgid "Preferred language"
 msgstr "Бажана мова"
 
-#: core/people/forms.py:32 templates/pages/person_detail.html:142
+#: core/people/forms.py:32 features/intake/catalog_i18n.py:15
+#: templates/pages/person_detail.html:142
 msgid "Date of birth"
 msgstr "Дата народження"
 
-#: core/people/forms.py:33 templates/pages/person_detail.html:143
+#: core/people/forms.py:33 features/intake/catalog_i18n.py:16
+#: templates/pages/person_detail.html:143
 msgid "Place of birth"
 msgstr "Місце народження"
 
@@ -320,7 +343,7 @@ msgstr "Місце народження"
 msgid "Has disability"
 msgstr "Має інвалідність"
 
-#: core/people/forms.py:35
+#: core/people/forms.py:35 features/intake/catalog_i18n.py:22
 msgid "Disability type"
 msgstr "Тип інвалідності"
 
@@ -812,19 +835,14 @@ msgstr "Взуття"
 msgid "Equipment"
 msgstr "Спорядження"
 
-#: features/advances/models.py:38 templates/pages/person_detail.html:72
+#: features/advances/models.py:38 features/finance/catalog_i18n.py:20
+#: templates/pages/person_detail.html:72
 msgid "Medical"
 msgstr "Медичне"
 
 #: features/advances/models.py:39
 msgid "Travel / fuel"
 msgstr "Проїзд / пальне"
-
-#: features/advances/models.py:40 features/blacklist/catalog_i18n.py:15
-#: features/blacklist/models.py:87 features/blacklist/panels.py:56
-#: features/finance/models.py:74
-msgid "Other"
-msgstr "Інше"
 
 #: features/advances/models.py:65
 msgid "company / project"
@@ -1207,6 +1225,113 @@ msgstr "Посилання для відгуків створено."
 msgid "Label is required."
 msgstr "Назва обов’язкова."
 
+#: features/finance/catalog_i18n.py:11
+msgid "Gross wage"
+msgstr "Валова зарплата"
+
+#: features/finance/catalog_i18n.py:12
+msgid "Sole-trader (SZČO)"
+msgstr "ФОП (SZČO)"
+
+#: features/finance/catalog_i18n.py:13
+msgid "Payroll levies"
+msgstr "Нарахування на зарплату"
+
+#: features/finance/catalog_i18n.py:14
+msgid "Driver"
+msgstr "Водій"
+
+#: features/finance/catalog_i18n.py:15
+
+msgid "Damage (cost)"
+msgstr "Збитки (витрати)"
+
+#: features/finance/catalog_i18n.py:16
+msgid "Forklift training"
+msgstr "Навчання на навантажувач"
+
+#: features/finance/catalog_i18n.py:17
+msgid "Forklift licence"
+msgstr "Посвідчення на навантажувач"
+
+#: features/finance/catalog_i18n.py:18 features/finance/models.py:67
+#: templates/layouts/base.html:34 templates/pages/accommodation_costs.html:8
+#: templates/pages/accommodation_costs.html:21
+#: templates/pages/accommodation_detail.html:8
+#: templates/pages/accommodation_list.html:4
+#: templates/pages/accommodation_list.html:9
+#: templates/pages/accommodation_list.html:14
+#: templates/pages/person_detail.html:84 templates/panels/logistics_room.html:4
+msgid "Accommodation"
+msgstr "Проживання"
+
+# --- finance ---
+#: features/finance/catalog_i18n.py:19
+
+msgid "Insurance"
+msgstr "Страхування"
+
+#: features/finance/catalog_i18n.py:21
+
+msgid "Coordinators"
+msgstr "Координатори"
+
+#: features/finance/catalog_i18n.py:22
+msgid "Leasing"
+msgstr "Лізинг"
+
+#: features/finance/catalog_i18n.py:23
+msgid "Fuel"
+msgstr "Пальне"
+
+#: features/finance/catalog_i18n.py:24
+msgid "Toll"
+msgstr "Плата за дороги"
+
+#: features/finance/catalog_i18n.py:25
+
+msgid "Factoring"
+msgstr "Факторинг"
+
+#: features/finance/catalog_i18n.py:26 templates/pages/project_detail.html:20
+msgid "Office"
+msgstr "Офіс"
+
+#: features/finance/catalog_i18n.py:27
+
+msgid "Recruitment"
+msgstr "Рекрутинг"
+
+#: features/finance/catalog_i18n.py:28
+
+msgid "Clothing/equipment"
+msgstr "Одяг/спорядження"
+
+#: features/finance/catalog_i18n.py:29
+msgid "Other extraordinary costs"
+msgstr "Інші надзвичайні витрати"
+
+#: features/finance/catalog_i18n.py:30
+msgid "Client invoices"
+msgstr "Рахунки клієнтам"
+
+#: features/finance/catalog_i18n.py:31
+msgid "Deductions received from employees"
+msgstr "Утримання, отримані від працівників"
+
+#: features/finance/catalog_i18n.py:32
+msgid "Meals"
+msgstr "Харчування"
+
+#: features/finance/catalog_i18n.py:33
+
+msgid "Accommodation charged"
+msgstr "Житло, виставлене до оплати"
+
+#: features/finance/catalog_i18n.py:34
+msgid "Damage recovered"
+msgstr "Відшкодовані збитки"
+
 #: features/finance/models.py:29
 msgid "year"
 msgstr "рік"
@@ -1263,17 +1388,6 @@ msgstr "Праця"
 msgid "Transport"
 msgstr "Транспорт"
 
-#: features/finance/models.py:67 templates/layouts/base.html:34
-#: templates/pages/accommodation_costs.html:8
-#: templates/pages/accommodation_costs.html:21
-#: templates/pages/accommodation_detail.html:8
-#: templates/pages/accommodation_list.html:4
-#: templates/pages/accommodation_list.html:9
-#: templates/pages/accommodation_list.html:14
-#: templates/pages/person_detail.html:84 templates/panels/logistics_room.html:4
-msgid "Accommodation"
-msgstr "Проживання"
-
 #: features/finance/models.py:69
 msgid "Overhead"
 msgstr "Накладні витрати"
@@ -1325,6 +1439,21 @@ msgstr "Місяць знову відкрито."
 #: features/finance/views.py:131
 msgid "Financial month saved."
 msgstr "Фінансовий місяць збережено."
+
+#: features/intake/catalog_i18n.py:10
+
+msgid "Identity"
+msgstr "Особа"
+
+#: features/intake/catalog_i18n.py:11
+
+msgid "Contact"
+msgstr "Контакт"
+
+#: features/intake/catalog_i18n.py:21
+
+msgid "Disability — type 'nie' if none"
+msgstr "Інвалідність — якщо немає, введіть «nie»"
 
 #: features/intake/models.py:9 features/intake/models.py:90
 msgid "Draft"
@@ -1503,6 +1632,19 @@ msgstr "Введіть значення (або слово немає)."
 #: features/intake/views.py:47
 msgid "Required."
 msgstr "Обов’язково."
+
+#: features/logistics/catalog_i18n.py:10
+msgid "Work boots"
+msgstr "Робоче взуття"
+
+#: features/logistics/catalog_i18n.py:11
+msgid "High-visibility vest"
+msgstr "Світловідбивний жилет"
+
+#: features/logistics/catalog_i18n.py:12
+
+msgid "Safety helmet"
+msgstr "Захисна каска"
 
 #: features/logistics/models.py:36
 msgid "accommodations"
@@ -2653,10 +2795,6 @@ msgstr "Код"
 #: templates/pages/project_detail.html:19
 msgid "Partner"
 msgstr "Партнер"
-
-#: templates/pages/project_detail.html:20
-msgid "Office"
-msgstr "Офіс"
 
 #: templates/pages/project_detail.html:22
 msgid "Responsible coordinators"

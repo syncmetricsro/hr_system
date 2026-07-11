@@ -93,8 +93,11 @@ scripts/compile_messages.sh --extract   # then compile with no args
 - **Money:** `Decimal`, stored **positive** (validators enforce), totals always
   computed dynamically — never hardcode a sum.
 - **i18n:** English msgids in code/templates; SK/HU/UK catalogs under `locale/`.
-- **Seeds are idempotent** management commands using the fictional
-  `demo.jober.test` domain; `seed_demo_scenario` orchestrates the full demo state.
+- **Seeds are idempotent** management commands using fictional domains
+  (`demo.jober.test`, `demo.corvinum.test`); `seed_demo_scenario` /
+  `seed_corvinum_demo` orchestrate demo state. **Seeded catalog labels are
+  canonical English rendered via `|db_trans`** with msgids registered in
+  per-app `catalog_i18n.py` — full pattern: `docs/i18n-seeded-data.md`.
 - **Migrations:** generate in the test container; data migrations get a reverse
   function; never edit an applied migration.
 - **New PyPI deps need an ADR + human approval** (AGENTS.md §3.1 — cooldown,

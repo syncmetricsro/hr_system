@@ -1,5 +1,12 @@
 # Test Journal
 
+## 2026-07-11 — Jober seed i18n
+
+- **273 unit + 16 e2e green**; catalogs 680/680 (sk/hu/uk) via msgfmt.
+- Note: renaming seed labels (equipment → English canon) duplicates rows on
+  in-place reseed (`get_or_create` by label) — demo stacks must be rebuilt
+  with down && up after such changes (documented in i18n-seeded-data.md §7).
+
 ## 2026-07-11 — i18n sweep (catalog data)
 
 - **273 unit + 16 e2e green**; catalogs 649/649 (sk/hu/uk) via msgfmt.

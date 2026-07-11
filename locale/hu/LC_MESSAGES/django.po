@@ -5,14 +5,13 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-11 14:38+0200\n"
+"POT-Creation-Date: 2026-07-11 15:19+0200\n"
 "Language: hu\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: clients/corvinum_eu/catalog_i18n.py:12
-
 msgid "Personal data complete"
 msgstr "Személyes adatok hiánytalanok"
 
@@ -25,7 +24,6 @@ msgid "Work/residence permit valid (if applicable)"
 msgstr "Munkavállalási/tartózkodási engedély érvényes (ha szükséges)"
 
 #: clients/corvinum_eu/catalog_i18n.py:15
-
 msgid "Medical certificate valid"
 msgstr "Orvosi igazolás érvényes"
 
@@ -34,7 +32,6 @@ msgid "Safety training completed"
 msgstr "Munkavédelmi oktatás elvégezve"
 
 #: clients/corvinum_eu/catalog_i18n.py:17
-
 msgid "Contract signed"
 msgstr "Szerződés aláírva"
 
@@ -43,7 +40,6 @@ msgid "Duplicate check resolved"
 msgstr "Duplikátum-ellenőrzés lezárva"
 
 #: clients/corvinum_eu/catalog_i18n.py:19
-
 msgid "Blacklist check resolved"
 msgstr "Tiltólista-ellenőrzés lezárva"
 
@@ -52,7 +48,6 @@ msgid "Welcome call made"
 msgstr "Üdvözlő hívás megtörtént"
 
 #: clients/corvinum_eu/catalog_i18n.py:24
-
 msgid "Safety boots"
 msgstr "Munkavédelmi bakancs"
 
@@ -99,7 +94,8 @@ msgstr "Műveletek"
 # --- compliance ---
 #: clients/corvinum_eu/templates/layouts/base.html:43
 #: features/compliance/panels.py:14 features/finance/models.py:68
-#: templates/layouts/base.html:32 templates/pages/compliance_list.html:4
+#: features/intake/catalog_i18n.py:12 templates/layouts/base.html:32
+#: templates/pages/compliance_list.html:4
 #: templates/pages/compliance_list.html:9
 #: templates/pages/compliance_list.html:12
 msgid "Compliance"
@@ -283,35 +279,62 @@ msgstr "auditesemény"
 msgid "audit events"
 msgstr "auditesemények"
 
-#: core/people/forms.py:26
+#: core/people/catalog_i18n.py:10
+msgid "Sick"
+msgstr "Beteg"
+
+#: core/people/catalog_i18n.py:11
+msgid "Quit / left"
+msgstr "Kilépett / távozott"
+
+#: core/people/catalog_i18n.py:12
+msgid "Suspended"
+msgstr "Felfüggesztve"
+
+#: core/people/catalog_i18n.py:13
+msgid "Military service"
+msgstr "Katonai szolgálat"
+
+#: core/people/catalog_i18n.py:14 features/advances/models.py:40
+#: features/blacklist/catalog_i18n.py:15 features/blacklist/models.py:87
+#: features/blacklist/panels.py:56 features/finance/models.py:74
+msgid "Other"
+msgstr "Egyéb"
+
+#: core/people/forms.py:26 features/intake/catalog_i18n.py:13
 msgid "First name"
 msgstr "Keresztnév"
 
-#: core/people/forms.py:27
+#: core/people/forms.py:27 features/intake/catalog_i18n.py:14
 msgid "Last name"
 msgstr "Vezetéknév"
 
-#: core/people/forms.py:28 templates/pages/person_detail.html:128
+#: core/people/forms.py:28 features/intake/catalog_i18n.py:17
+#: templates/pages/person_detail.html:128
 msgid "Phone"
 msgstr "Telefon"
 
-#: core/people/forms.py:29 templates/pages/person_detail.html:129
+#: core/people/forms.py:29 features/intake/catalog_i18n.py:18
+#: templates/pages/person_detail.html:129
 msgid "Address"
 msgstr "Cím"
 
-#: core/people/forms.py:30 templates/pages/person_detail.html:130
+#: core/people/forms.py:30 features/intake/catalog_i18n.py:19
+#: templates/pages/person_detail.html:130
 msgid "Nationality"
 msgstr "Állampolgárság"
 
-#: core/people/forms.py:31
+#: core/people/forms.py:31 features/intake/catalog_i18n.py:20
 msgid "Preferred language"
 msgstr "Preferált nyelv"
 
-#: core/people/forms.py:32 templates/pages/person_detail.html:142
+#: core/people/forms.py:32 features/intake/catalog_i18n.py:15
+#: templates/pages/person_detail.html:142
 msgid "Date of birth"
 msgstr "Születési dátum"
 
-#: core/people/forms.py:33 templates/pages/person_detail.html:143
+#: core/people/forms.py:33 features/intake/catalog_i18n.py:16
+#: templates/pages/person_detail.html:143
 msgid "Place of birth"
 msgstr "Születési hely"
 
@@ -319,7 +342,7 @@ msgstr "Születési hely"
 msgid "Has disability"
 msgstr "Fogyatékossággal él"
 
-#: core/people/forms.py:35
+#: core/people/forms.py:35 features/intake/catalog_i18n.py:22
 msgid "Disability type"
 msgstr "Fogyatékosság típusa"
 
@@ -811,19 +834,14 @@ msgstr "Lábbeli"
 msgid "Equipment"
 msgstr "Felszerelés"
 
-#: features/advances/models.py:38 templates/pages/person_detail.html:72
+#: features/advances/models.py:38 features/finance/catalog_i18n.py:20
+#: templates/pages/person_detail.html:72
 msgid "Medical"
 msgstr "Orvosi"
 
 #: features/advances/models.py:39
 msgid "Travel / fuel"
 msgstr "Utazás / üzemanyag"
-
-#: features/advances/models.py:40 features/blacklist/catalog_i18n.py:15
-#: features/blacklist/models.py:87 features/blacklist/panels.py:56
-#: features/finance/models.py:74
-msgid "Other"
-msgstr "Egyéb"
 
 #: features/advances/models.py:65
 msgid "company / project"
@@ -1207,6 +1225,113 @@ msgstr "Visszajelzési link létrehozva."
 msgid "Label is required."
 msgstr "A címke kötelező."
 
+#: features/finance/catalog_i18n.py:11
+msgid "Gross wage"
+msgstr "Bruttó bér"
+
+#: features/finance/catalog_i18n.py:12
+msgid "Sole-trader (SZČO)"
+msgstr "Egyéni vállalkozó (SZČO)"
+
+#: features/finance/catalog_i18n.py:13
+msgid "Payroll levies"
+msgstr "Bérjárulékok"
+
+#: features/finance/catalog_i18n.py:14
+msgid "Driver"
+msgstr "Sofőr"
+
+#: features/finance/catalog_i18n.py:15
+
+msgid "Damage (cost)"
+msgstr "Károk (költség)"
+
+#: features/finance/catalog_i18n.py:16
+msgid "Forklift training"
+msgstr "Targoncás képzés"
+
+#: features/finance/catalog_i18n.py:17
+msgid "Forklift licence"
+msgstr "Targoncás jogosítvány"
+
+#: features/finance/catalog_i18n.py:18 features/finance/models.py:67
+#: templates/layouts/base.html:34 templates/pages/accommodation_costs.html:8
+#: templates/pages/accommodation_costs.html:21
+#: templates/pages/accommodation_detail.html:8
+#: templates/pages/accommodation_list.html:4
+#: templates/pages/accommodation_list.html:9
+#: templates/pages/accommodation_list.html:14
+#: templates/pages/person_detail.html:84 templates/panels/logistics_room.html:4
+msgid "Accommodation"
+msgstr "Szállás"
+
+# --- finance ---
+#: features/finance/catalog_i18n.py:19
+
+msgid "Insurance"
+msgstr "Biztosítás"
+
+#: features/finance/catalog_i18n.py:21
+
+msgid "Coordinators"
+msgstr "Koordinátorok"
+
+#: features/finance/catalog_i18n.py:22
+msgid "Leasing"
+msgstr "Lízing"
+
+#: features/finance/catalog_i18n.py:23
+msgid "Fuel"
+msgstr "Üzemanyag"
+
+#: features/finance/catalog_i18n.py:24
+msgid "Toll"
+msgstr "Útdíj"
+
+#: features/finance/catalog_i18n.py:25
+
+msgid "Factoring"
+msgstr "Faktoring"
+
+#: features/finance/catalog_i18n.py:26 templates/pages/project_detail.html:20
+msgid "Office"
+msgstr "Iroda"
+
+#: features/finance/catalog_i18n.py:27
+
+msgid "Recruitment"
+msgstr "Toborzás"
+
+#: features/finance/catalog_i18n.py:28
+
+msgid "Clothing/equipment"
+msgstr "Ruházat/felszerelés"
+
+#: features/finance/catalog_i18n.py:29
+msgid "Other extraordinary costs"
+msgstr "Egyéb rendkívüli költségek"
+
+#: features/finance/catalog_i18n.py:30
+msgid "Client invoices"
+msgstr "Ügyfélszámlák"
+
+#: features/finance/catalog_i18n.py:31
+msgid "Deductions received from employees"
+msgstr "Munkavállalóktól levont összegek"
+
+#: features/finance/catalog_i18n.py:32
+msgid "Meals"
+msgstr "Étkezés"
+
+#: features/finance/catalog_i18n.py:33
+
+msgid "Accommodation charged"
+msgstr "Kiszámlázott szállás"
+
+#: features/finance/catalog_i18n.py:34
+msgid "Damage recovered"
+msgstr "Megtérült károk"
+
 #: features/finance/models.py:29
 msgid "year"
 msgstr "év"
@@ -1263,17 +1388,6 @@ msgstr "Munka"
 msgid "Transport"
 msgstr "Szállítás"
 
-#: features/finance/models.py:67 templates/layouts/base.html:34
-#: templates/pages/accommodation_costs.html:8
-#: templates/pages/accommodation_costs.html:21
-#: templates/pages/accommodation_detail.html:8
-#: templates/pages/accommodation_list.html:4
-#: templates/pages/accommodation_list.html:9
-#: templates/pages/accommodation_list.html:14
-#: templates/pages/person_detail.html:84 templates/panels/logistics_room.html:4
-msgid "Accommodation"
-msgstr "Szállás"
-
 #: features/finance/models.py:69
 msgid "Overhead"
 msgstr "Általános költség"
@@ -1325,6 +1439,21 @@ msgstr "A hónap újranyitva."
 #: features/finance/views.py:131
 msgid "Financial month saved."
 msgstr "Pénzügyi hónap elmentve."
+
+#: features/intake/catalog_i18n.py:10
+
+msgid "Identity"
+msgstr "Személyazonosság"
+
+#: features/intake/catalog_i18n.py:11
+
+msgid "Contact"
+msgstr "Kapcsolat"
+
+#: features/intake/catalog_i18n.py:21
+
+msgid "Disability — type 'nie' if none"
+msgstr "Fogyatékosság — ha nincs, írja be: „nie”"
 
 #: features/intake/models.py:9 features/intake/models.py:90
 msgid "Draft"
@@ -1503,6 +1632,19 @@ msgstr "Adjon meg értéket (vagy a nincs szót)."
 #: features/intake/views.py:47
 msgid "Required."
 msgstr "Kötelező."
+
+#: features/logistics/catalog_i18n.py:10
+msgid "Work boots"
+msgstr "Munkavédelmi bakancs"
+
+#: features/logistics/catalog_i18n.py:11
+msgid "High-visibility vest"
+msgstr "Láthatósági mellény"
+
+#: features/logistics/catalog_i18n.py:12
+
+msgid "Safety helmet"
+msgstr "Védősisak"
 
 #: features/logistics/models.py:36
 msgid "accommodations"
@@ -2654,10 +2796,6 @@ msgstr "Kód"
 #: templates/pages/project_detail.html:19
 msgid "Partner"
 msgstr "Partner"
-
-#: templates/pages/project_detail.html:20
-msgid "Office"
-msgstr "Iroda"
 
 #: templates/pages/project_detail.html:22
 msgid "Responsible coordinators"

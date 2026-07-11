@@ -5,14 +5,13 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-11 14:38+0200\n"
+"POT-Creation-Date: 2026-07-11 15:19+0200\n"
 "Language: sk\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n>=2 && n<=4 ? 1 : 2);\n"
 
 #: clients/corvinum_eu/catalog_i18n.py:12
-
 msgid "Personal data complete"
 msgstr "Osobné údaje kompletné"
 
@@ -25,7 +24,6 @@ msgid "Work/residence permit valid (if applicable)"
 msgstr "Pracovné/pobytové povolenie platné (ak je potrebné)"
 
 #: clients/corvinum_eu/catalog_i18n.py:15
-
 msgid "Medical certificate valid"
 msgstr "Lekárske potvrdenie platné"
 
@@ -34,7 +32,6 @@ msgid "Safety training completed"
 msgstr "Školenie BOZP absolvované"
 
 #: clients/corvinum_eu/catalog_i18n.py:17
-
 msgid "Contract signed"
 msgstr "Zmluva podpísaná"
 
@@ -43,7 +40,6 @@ msgid "Duplicate check resolved"
 msgstr "Kontrola duplicity vyriešená"
 
 #: clients/corvinum_eu/catalog_i18n.py:19
-
 msgid "Blacklist check resolved"
 msgstr "Kontrola čiernej listiny vyriešená"
 
@@ -52,7 +48,6 @@ msgid "Welcome call made"
 msgstr "Uvítací telefonát uskutočnený"
 
 #: clients/corvinum_eu/catalog_i18n.py:24
-
 msgid "Safety boots"
 msgstr "Bezpečnostná obuv"
 
@@ -99,7 +94,8 @@ msgstr "Prevádzka"
 # --- compliance ---
 #: clients/corvinum_eu/templates/layouts/base.html:43
 #: features/compliance/panels.py:14 features/finance/models.py:68
-#: templates/layouts/base.html:32 templates/pages/compliance_list.html:4
+#: features/intake/catalog_i18n.py:12 templates/layouts/base.html:32
+#: templates/pages/compliance_list.html:4
 #: templates/pages/compliance_list.html:9
 #: templates/pages/compliance_list.html:12
 msgid "Compliance"
@@ -283,35 +279,62 @@ msgstr "auditná udalosť"
 msgid "audit events"
 msgstr "auditné udalosti"
 
-#: core/people/forms.py:26
+#: core/people/catalog_i18n.py:10
+msgid "Sick"
+msgstr "Choroba"
+
+#: core/people/catalog_i18n.py:11
+msgid "Quit / left"
+msgstr "Odišiel / skončil"
+
+#: core/people/catalog_i18n.py:12
+msgid "Suspended"
+msgstr "Pozastavený"
+
+#: core/people/catalog_i18n.py:13
+msgid "Military service"
+msgstr "Vojenská služba"
+
+#: core/people/catalog_i18n.py:14 features/advances/models.py:40
+#: features/blacklist/catalog_i18n.py:15 features/blacklist/models.py:87
+#: features/blacklist/panels.py:56 features/finance/models.py:74
+msgid "Other"
+msgstr "Ostatné"
+
+#: core/people/forms.py:26 features/intake/catalog_i18n.py:13
 msgid "First name"
 msgstr "Meno"
 
-#: core/people/forms.py:27
+#: core/people/forms.py:27 features/intake/catalog_i18n.py:14
 msgid "Last name"
 msgstr "Priezvisko"
 
-#: core/people/forms.py:28 templates/pages/person_detail.html:128
+#: core/people/forms.py:28 features/intake/catalog_i18n.py:17
+#: templates/pages/person_detail.html:128
 msgid "Phone"
 msgstr "Telefón"
 
-#: core/people/forms.py:29 templates/pages/person_detail.html:129
+#: core/people/forms.py:29 features/intake/catalog_i18n.py:18
+#: templates/pages/person_detail.html:129
 msgid "Address"
 msgstr "Adresa"
 
-#: core/people/forms.py:30 templates/pages/person_detail.html:130
+#: core/people/forms.py:30 features/intake/catalog_i18n.py:19
+#: templates/pages/person_detail.html:130
 msgid "Nationality"
 msgstr "Národnosť"
 
-#: core/people/forms.py:31
+#: core/people/forms.py:31 features/intake/catalog_i18n.py:20
 msgid "Preferred language"
 msgstr "Preferovaný jazyk"
 
-#: core/people/forms.py:32 templates/pages/person_detail.html:142
+#: core/people/forms.py:32 features/intake/catalog_i18n.py:15
+#: templates/pages/person_detail.html:142
 msgid "Date of birth"
 msgstr "Dátum narodenia"
 
-#: core/people/forms.py:33 templates/pages/person_detail.html:143
+#: core/people/forms.py:33 features/intake/catalog_i18n.py:16
+#: templates/pages/person_detail.html:143
 msgid "Place of birth"
 msgstr "Miesto narodenia"
 
@@ -319,7 +342,7 @@ msgstr "Miesto narodenia"
 msgid "Has disability"
 msgstr "Má zdravotné postihnutie"
 
-#: core/people/forms.py:35
+#: core/people/forms.py:35 features/intake/catalog_i18n.py:22
 msgid "Disability type"
 msgstr "Typ postihnutia"
 
@@ -811,19 +834,14 @@ msgstr "Obuv"
 msgid "Equipment"
 msgstr "Vybavenie"
 
-#: features/advances/models.py:38 templates/pages/person_detail.html:72
+#: features/advances/models.py:38 features/finance/catalog_i18n.py:20
+#: templates/pages/person_detail.html:72
 msgid "Medical"
 msgstr "Lekárska"
 
 #: features/advances/models.py:39
 msgid "Travel / fuel"
 msgstr "Cestovné / palivo"
-
-#: features/advances/models.py:40 features/blacklist/catalog_i18n.py:15
-#: features/blacklist/models.py:87 features/blacklist/panels.py:56
-#: features/finance/models.py:74
-msgid "Other"
-msgstr "Ostatné"
 
 #: features/advances/models.py:65
 msgid "company / project"
@@ -1206,6 +1224,113 @@ msgstr "Odkaz na spätnú väzbu vytvorený."
 msgid "Label is required."
 msgstr "Označenie je povinné."
 
+#: features/finance/catalog_i18n.py:11
+msgid "Gross wage"
+msgstr "Hrubá mzda"
+
+#: features/finance/catalog_i18n.py:12
+msgid "Sole-trader (SZČO)"
+msgstr "Živnostník (SZČO)"
+
+#: features/finance/catalog_i18n.py:13
+msgid "Payroll levies"
+msgstr "Odvody zo mzdy"
+
+#: features/finance/catalog_i18n.py:14
+msgid "Driver"
+msgstr "Vodič"
+
+#: features/finance/catalog_i18n.py:15
+
+msgid "Damage (cost)"
+msgstr "Škody (náklad)"
+
+#: features/finance/catalog_i18n.py:16
+msgid "Forklift training"
+msgstr "Školenie na VZV"
+
+#: features/finance/catalog_i18n.py:17
+msgid "Forklift licence"
+msgstr "Preukaz na VZV"
+
+#: features/finance/catalog_i18n.py:18 features/finance/models.py:67
+#: templates/layouts/base.html:34 templates/pages/accommodation_costs.html:8
+#: templates/pages/accommodation_costs.html:21
+#: templates/pages/accommodation_detail.html:8
+#: templates/pages/accommodation_list.html:4
+#: templates/pages/accommodation_list.html:9
+#: templates/pages/accommodation_list.html:14
+#: templates/pages/person_detail.html:84 templates/panels/logistics_room.html:4
+msgid "Accommodation"
+msgstr "Ubytovanie"
+
+# --- finance ---
+#: features/finance/catalog_i18n.py:19
+
+msgid "Insurance"
+msgstr "Poistenie"
+
+#: features/finance/catalog_i18n.py:21
+
+msgid "Coordinators"
+msgstr "Koordinátori"
+
+#: features/finance/catalog_i18n.py:22
+msgid "Leasing"
+msgstr "Lízing"
+
+#: features/finance/catalog_i18n.py:23
+msgid "Fuel"
+msgstr "Palivo"
+
+#: features/finance/catalog_i18n.py:24
+msgid "Toll"
+msgstr "Mýto"
+
+#: features/finance/catalog_i18n.py:25
+
+msgid "Factoring"
+msgstr "Faktoring"
+
+#: features/finance/catalog_i18n.py:26 templates/pages/project_detail.html:20
+msgid "Office"
+msgstr "Pobočka"
+
+#: features/finance/catalog_i18n.py:27
+
+msgid "Recruitment"
+msgstr "Nábor"
+
+#: features/finance/catalog_i18n.py:28
+
+msgid "Clothing/equipment"
+msgstr "Oblečenie/výbava"
+
+#: features/finance/catalog_i18n.py:29
+msgid "Other extraordinary costs"
+msgstr "Iné mimoriadne náklady"
+
+#: features/finance/catalog_i18n.py:30
+msgid "Client invoices"
+msgstr "Faktúry klientom"
+
+#: features/finance/catalog_i18n.py:31
+msgid "Deductions received from employees"
+msgstr "Zrážky prijaté od zamestnancov"
+
+#: features/finance/catalog_i18n.py:32
+msgid "Meals"
+msgstr "Strava"
+
+#: features/finance/catalog_i18n.py:33
+
+msgid "Accommodation charged"
+msgstr "Ubytovanie fakturované"
+
+#: features/finance/catalog_i18n.py:34
+msgid "Damage recovered"
+msgstr "Vymožené škody"
+
 #: features/finance/models.py:29
 msgid "year"
 msgstr "rok"
@@ -1262,17 +1387,6 @@ msgstr "Práca"
 msgid "Transport"
 msgstr "Doprava"
 
-#: features/finance/models.py:67 templates/layouts/base.html:34
-#: templates/pages/accommodation_costs.html:8
-#: templates/pages/accommodation_costs.html:21
-#: templates/pages/accommodation_detail.html:8
-#: templates/pages/accommodation_list.html:4
-#: templates/pages/accommodation_list.html:9
-#: templates/pages/accommodation_list.html:14
-#: templates/pages/person_detail.html:84 templates/panels/logistics_room.html:4
-msgid "Accommodation"
-msgstr "Ubytovanie"
-
 #: features/finance/models.py:69
 msgid "Overhead"
 msgstr "Réžia"
@@ -1324,6 +1438,21 @@ msgstr "Mesiac znovu otvorený."
 #: features/finance/views.py:131
 msgid "Financial month saved."
 msgstr "Finančný mesiac uložený."
+
+#: features/intake/catalog_i18n.py:10
+
+msgid "Identity"
+msgstr "Totožnosť"
+
+#: features/intake/catalog_i18n.py:11
+
+msgid "Contact"
+msgstr "Kontakt"
+
+#: features/intake/catalog_i18n.py:21
+
+msgid "Disability — type 'nie' if none"
+msgstr "Zdravotné postihnutie — ak žiadne, napíšte „nie“"
 
 #: features/intake/models.py:9 features/intake/models.py:90
 msgid "Draft"
@@ -1502,6 +1631,19 @@ msgstr "Zadajte hodnotu (alebo slovo pre žiadne)."
 #: features/intake/views.py:47
 msgid "Required."
 msgstr "Povinné."
+
+#: features/logistics/catalog_i18n.py:10
+msgid "Work boots"
+msgstr "Pracovná obuv"
+
+#: features/logistics/catalog_i18n.py:11
+msgid "High-visibility vest"
+msgstr "Reflexná vesta"
+
+#: features/logistics/catalog_i18n.py:12
+
+msgid "Safety helmet"
+msgstr "Ochranná prilba"
 
 #: features/logistics/models.py:36
 msgid "accommodations"
@@ -2650,10 +2792,6 @@ msgstr "Kód"
 #: templates/pages/project_detail.html:19
 msgid "Partner"
 msgstr "Partner"
-
-#: templates/pages/project_detail.html:20
-msgid "Office"
-msgstr "Pobočka"
 
 #: templates/pages/project_detail.html:22
 msgid "Responsible coordinators"
