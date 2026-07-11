@@ -1,0 +1,57 @@
+from __future__ import annotations
+
+from django.contrib import messages
+from django.core.exceptions import ValidationError
+from django.shortcuts import get_object_or_404, redirect, render
+from django.utils.translation import gettext as _
+
+from core.accounts.permissions import Action, require_action
+from core.people.models import Person
+from features.payslips.models import Payslip
+from features.payslips.services import PayslipError, send_payslip
+
+
+@require_action(Action.PAYSLIP_MANAGE)
+def payslip_list(request):
+    if request.method == "POST":
+        person = get_object_or_404(Person, pk=request.POST.get("person"))
+        payslip = Payslip(
+            person=person,
+            period=request.POST.get("period", "").strip(),
+            net_amount=request.POST.get("net_amount") or None,
+            note=request.POST.get("note", "").strip(),
+            created_by=request.user,
+        )
+        try:
+            payslip.full_clean()
+            payslip.save()
+            messages.success(request, _("Payslip recorded."))
+        except ValidationError as exc:
+            messages.error(request, "; ".join(exc.messages))
+        return redirect("payslip_list")
+
+    return render(request, "pages/payslips.html", {
+        "payslips": Payslip.objects.select_related("person")[:100],
+        "people": Person.objects.order_by("last_name", "first_name"),
+    })
+
+
+@require_action(Action.PAYSLIP_MANAGE)
+def payslip_send(request, pk: int):
+    if request.method != "POST":
+        return redirect("payslip_list")
+    payslip = get_object_or_404(Payslip.objects.select_related("person"), pk=pk)
+    try:
+        password = send_payslip(payslip, actor=request.user)
+    except PayslipError as exc:
+        messages.error(request, str(exc))
+    else:
+        # One-time display for out-of-band delivery (ADR 0023): the password
+        # exists only in this flash message, nowhere else.
+        messages.success(
+            request,
+            _("Payslip emailed to %(to)s. One-time password (tell the worker by "
+              "phone/Messenger, NOT email): %(pw)s")
+            % {"to": payslip.sent_to, "pw": password},
+        )
+    return redirect("payslip_list")

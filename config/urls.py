@@ -165,6 +165,14 @@ if _feature_on("advances", "advances"):
         path("ledger/cycle/action/", advances_views.ledger_cycle_action, name="ledger_cycle_action"),
     ]
 
+if _feature_on("payslips", "payslips"):
+    from features.payslips import views as payslip_views
+
+    app_routes += [
+        path("payslips/", payslip_views.payslip_list, name="payslip_list"),
+        path("payslips/<int:pk>/send/", payslip_views.payslip_send, name="payslip_send"),
+    ]
+
 if _feature_on("feedback", "feedback"):
     from features.feedback import views as feedback_views
 

@@ -1,5 +1,7 @@
+cryptography==49.0.0
 Django==6.0.6
 gunicorn==26.0.0
-psycopg==3.3.4
 psycopg-binary==3.3.4
+psycopg==3.3.4
+pypdf==6.14.2
 whitenoise==6.12.0

@@ -57,6 +57,9 @@ class Person(models.Model):
     date_of_birth = models.DateField(_("date of birth"), null=True, blank=True)
     place_of_birth = models.CharField(_("place of birth"), max_length=200, blank=True)
     phone = models.CharField(_("phone"), max_length=40, blank=True)
+    # Optional contact email (ADR 0023: payslip delivery; generic contact
+    # attribute, deliberately absent from intake forms for now).
+    email = models.EmailField(_("email"), blank=True)
     address = models.CharField(_("address"), max_length=300, blank=True)
     nationality = models.CharField(_("nationality"), max_length=100, blank=True)
     preferred_language = models.CharField(

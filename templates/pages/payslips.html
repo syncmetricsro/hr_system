@@ -1,0 +1,54 @@
+{% extends "layouts/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Payslips" %} · {{ BRAND_NAME }}{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <p class="eyebrow">{% trans "Pay" %}</p>
+  <h1>{% trans "Payslips" %}</h1>
+  <p class="muted">{% trans "Encrypted PDF by email; the one-time password is shown here once and must be given to the worker by phone or Messenger — never by email." %}</p>
+</section>
+
+<section class="panel">
+  <h2>{% trans "Record payslip" %}</h2>
+  <form class="stack" method="post" action="{% url 'payslip_list' %}">
+    {% csrf_token %}
+    <label><span>{% trans "Person" %}</span>
+      <select name="person" required>
+        {% for p in people %}<option value="{{ p.pk }}">{{ p }}{% if not p.email %} — {% trans "no email!" %}{% endif %}</option>{% endfor %}
+      </select></label>
+    <label><span>{% trans "Period (YYYY-MM)" %}</span><input type="text" name="period" pattern="\d{4}-\d{2}" placeholder="2026-07" required></label>
+    <label><span>{% trans "Net amount (EUR)" %}</span><input type="number" name="net_amount" min="0.01" step="0.01" required></label>
+    <label><span>{% trans "Note" %}</span><input type="text" name="note"></label>
+    <button class="button button-primary" type="submit">{% trans "Record" %}</button>
+  </form>
+</section>
+
+<section class="panel">
+  <h2>{% trans "Recorded payslips" %}</h2>
+  <table>
+    <thead><tr><th>{% trans "Person" %}</th><th>{% trans "Period" %}</th><th>{% trans "Net amount" %}</th><th>{% trans "Sent" %}</th><th></th></tr></thead>
+    <tbody>
+      {% for slip in payslips %}
+        <tr>
+          <td>{{ slip.person }}</td>
+          <td>{{ slip.period }}</td>
+          <td>{{ slip.net_amount }} {{ slip.currency }}</td>
+          <td>{% if slip.sent_at %}{{ slip.sent_at|date:"Y-m-d H:i" }} → {{ slip.sent_to }}{% else %}—{% endif %}</td>
+          <td>
+            <form method="post" action="{% url 'payslip_send' slip.pk %}">
+              {% csrf_token %}
+              <button class="button button-secondary" type="submit">
+                {% if slip.sent_at %}{% trans "Resend (new password)" %}{% else %}{% trans "Send encrypted PDF" %}{% endif %}
+              </button>
+            </form>
+          </td>
+        </tr>
+      {% empty %}
+        <tr><td colspan="5" class="muted">{% trans "No payslips recorded." %}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}

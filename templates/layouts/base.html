@@ -47,6 +47,9 @@
         {% flag_on 'advances' as has_advances %}
         {% can 'ledger.view' as may_ledger %}
         {% if may_ledger and has_advances %}<a class="folder-tab {% nav_active 'ledger_overview' %}" href="{% url 'ledger_overview' %}">{% trans "Ledger" %}</a>{% endif %}
+        {% flag_on 'payslips' as has_payslips %}
+        {% can 'payslip.manage' as may_payslips %}
+        {% if may_payslips and has_payslips %}<a class="folder-tab {% nav_active 'payslip_list' %}" href="{% url 'payslip_list' %}">{% trans "Payslips" %}</a>{% endif %}
         {% can 'feedback.view' as may_feedback %}
         {% flag_on 'feedback' as has_feedback %}
         {% if may_feedback and has_feedback %}<a class="folder-tab {% nav_active 'feedback_inbox' 'feedback_link_create' %}" href="{% url 'feedback_inbox' %}">{% trans "Feedback" %}</a>{% endif %}

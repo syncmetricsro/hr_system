@@ -1,5 +1,16 @@
 # Test Journal
 
+## 2026-07-11 — Stage C5 (payslips)
+
+- **270 passed** (265 + 5: password format/alphabet/uniqueness sample,
+  AES round-trip — unreadable without password, wrong password fails, right
+  password extracts amount+period, email carries PDF but never the password
+  (body, subject, audit all checked), send requires email on file, per-person
+  period uniqueness) + **16 e2e**, ruff clean.
+- Live corvinum drive: migrate → real send through locmem backend → payslips
+  page renders with the sent row.
+- Test image rebuilt from the updated hash-pinned test.lock (new deps).
+
 ## 2026-07-11 — Stage C4 (theme + validation; Stage C close)
 
 - **265 unit + 16 e2e green** under Jober flags (assertions unchanged across
