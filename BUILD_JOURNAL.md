@@ -1,5 +1,16 @@
 # Build Journal
 
+## 2026-07-12 — Deploy smoke + backup/restore drill scripts (§2 complete)
+
+`scripts/deploy_smoke.sh` (post-deploy gate, fails closed) and
+`scripts/backup_restore_drill.sh` (dump → scratch restore → exact row-count
+proof) — both verified live against both stacks; wired into
+deployment-plan.md's release step and backup section. With error logging,
+the audit page, and the corvinum test lane, every §2 production-readiness
+item that needed no external input is done. Staging now waits only on owner
+asks D1–D4.
+
+
 ## 2026-07-12 — Corvinum-flags test lane (closes the last audit finding)
 
 Stage D says the suite passes under **each** client's flag set; until now only

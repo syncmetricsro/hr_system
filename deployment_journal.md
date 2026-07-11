@@ -1,5 +1,13 @@
 # Deployment Journal
 
+## 2026-07-12
+
+Release tooling landed (production-readiness §2 complete).
+
+- **`scripts/deploy_smoke.sh <url> [--https]`** — post-deploy gate: healthz, login+CSRF, fingerprinted static with immutable caching, X-Frame-Options; with `--https` also HSTS + Secure cookies. Passed against both local stacks.
+- **`scripts/backup_restore_drill.sh`** — dump → scratch restore → exact per-table row-count comparison. First drills PASSED: jober (47 tables/395 rows), corvinum (39 tables/298 rows). Dumps kept under `backups/` (gitignored); off-site copy pends D6.
+- Also landed this cycle: console error logging (`django.request` → container logs), the corvinum-flags test lane (`scripts/test_corvinum.sh`). Remaining before staging: owner asks D1–D4.
+
 ## 2026-07-11
 
 Deployment architecture decided and documented.
