@@ -50,6 +50,11 @@ Release step (every deploy): `dokku run <app> python manage.py migrate --noinput
 (or `app.json` predeploy); first deploy also `createsuperuser` (real email
 user; **never** `seed_demo`/`seed_corvinum_demo` on production).
 
+Session policy: 30-day rolling sessions by default
+(`DJANGO_SESSION_COOKIE_AGE` overrides, seconds); cookie names are per-client
+(`jober_sessionid` / `corvinum_sessionid`) so apps never evict each other's
+logins on a shared host.
+
 Client-specific env:
 - **Jober**: `TWILIO_*` (from Doppler); inbound webhook
   `https://<domain>/webhooks/twilio/inbound/` configured at Twilio once

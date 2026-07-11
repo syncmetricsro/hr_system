@@ -20,6 +20,9 @@ reverse("two_factor_setup")
 reverse("checklist_item_toggle", args=[1])
 reverse("ledger_overview")
 reverse("payslip_list")
+from django.conf import settings as s
+assert s.SESSION_COOKIE_NAME == "corvinum_sessionid", s.SESSION_COOKIE_NAME
+assert s.CSRF_COOKIE_NAME == "corvinum_csrftoken"
 # …and must NOT mount finance, SMS, accommodation, transport, or trials.
 for absent in ("finance_summary", "accommodation_list", "transport_trends", "trials_queue"):
     try:

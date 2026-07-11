@@ -1,5 +1,15 @@
 # Test Journal
 
+## 2026-07-12 — Session longevity
+
+- **279 unit + 21 e2e green** (3 new: 30d rolling policy, per-client cookie
+  names, login sets `jober_sessionid` with max-age == SESSION_COOKIE_AGE;
+  corvinum subprocess check asserts its names). One user-written corvinum e2e
+  assertion updated from `csrftoken` → `corvinum_csrftoken` (the rename IS
+  the intended change).
+- Live proof: single cookie jar, logins on :8000 and :8001 — both sessions
+  authenticated simultaneously; jober cookie max-age ≈ 30.0 days.
+
 ## 2026-07-11 — Corvinum shell, section rhythm + checklist regression
 
 - **276 unit + 21 e2e green** (three new Corvinum browser regressions; the

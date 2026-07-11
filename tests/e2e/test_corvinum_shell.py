@@ -111,7 +111,7 @@ def test_corvinum_coordinator_can_tick_checklist_with_csrf(page):
 
     form = page.locator("form[action*='/checklist/'][action$='/toggle/']").first
     assert form.locator("input[name='csrfmiddlewaretoken']").count() == 1
-    assert any(cookie["name"] == "csrftoken" for cookie in page.context.cookies())
+    assert any(cookie["name"] == "corvinum_csrftoken" for cookie in page.context.cookies())  # per-client cookie names (session slice)
     form.locator("button[type='submit']").click()
     page.wait_for_load_state("networkidle")
 
