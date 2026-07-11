@@ -8,7 +8,8 @@ from django.urls import reverse
 from features.logistics.services import record_transport_week
 from core.projects.models import Project
 
-pytestmark = pytest.mark.django_db
+# Jober-specific URLs/policies/languages — excluded from the corvinum lane.
+pytestmark = [pytest.mark.django_db, pytest.mark.jober_only]
 
 
 def test_transport_trends_requires_login(client):

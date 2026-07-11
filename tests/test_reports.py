@@ -43,6 +43,7 @@ def test_finance_section_hidden_from_recruiter(client, make_user):
     assert "Celkový súčet firmy" not in body
 
 
+@pytest.mark.jober_only  # Jober grants/lifecycle/features
 def test_finance_section_visible_to_observer(client, make_user):
     client.force_login(make_user("observer"))
     with translation.override("sk"):

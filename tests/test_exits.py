@@ -10,7 +10,8 @@ from core.people.models import LifecycleStatus, Person
 from core.projects.models import AssignmentStatus, Project
 from core.projects.services import activate_on_project, exit_person
 
-pytestmark = pytest.mark.django_db
+# Jober-specific URLs/policies/languages — excluded from the corvinum lane.
+pytestmark = [pytest.mark.django_db, pytest.mark.jober_only]
 
 
 @pytest.fixture

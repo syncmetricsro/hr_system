@@ -16,6 +16,7 @@ def make_user(django_user_model):
     return _make
 
 
+@pytest.mark.jober_only  # Jober grants/lifecycle/features
 def test_login_success(client, make_user):
     make_user(role="manager")
     response = client.post(

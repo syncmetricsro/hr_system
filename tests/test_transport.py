@@ -9,7 +9,8 @@ from features.logistics.models import TransportWeek
 from features.logistics.services import record_transport_week
 from core.projects.models import Project
 
-pytestmark = pytest.mark.django_db
+# Jober-specific URLs/policies/languages — excluded from the corvinum lane.
+pytestmark = [pytest.mark.django_db, pytest.mark.jober_only]
 
 WEEK = dt.date(2026, 6, 22)
 

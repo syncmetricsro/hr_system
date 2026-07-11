@@ -1,5 +1,12 @@
 from __future__ import annotations
 
+import pytest
+from django.apps import apps as django_apps
+
+if not django_apps.is_installed("features.messaging"):
+    pytest.skip("features.messaging is not installed for this client", allow_module_level=True)
+
+
 import base64
 import hashlib
 import hmac

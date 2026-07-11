@@ -4,7 +4,8 @@ import pytest
 from django.conf import settings
 from django.urls import reverse
 
-pytestmark = pytest.mark.django_db
+# Jober-specific URLs/policies/languages — excluded from the corvinum lane.
+pytestmark = [pytest.mark.django_db, pytest.mark.jober_only]
 
 
 def test_session_policy_is_30_day_rolling():

@@ -7,7 +7,8 @@ from core.people.models import Person
 from core.projects.models import Project
 from core.projects.services import schedule_trial
 
-pytestmark = pytest.mark.django_db
+# Jober-specific URLs/policies/languages — excluded from the corvinum lane.
+pytestmark = [pytest.mark.django_db, pytest.mark.jober_only]
 
 
 @pytest.fixture

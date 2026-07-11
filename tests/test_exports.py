@@ -6,7 +6,8 @@ from django.urls import reverse
 from core.people.models import Person
 from core.projects.models import Project
 
-pytestmark = pytest.mark.django_db
+# Jober-specific URLs/policies/languages — excluded from the corvinum lane.
+pytestmark = [pytest.mark.django_db, pytest.mark.jober_only]
 
 
 @pytest.fixture

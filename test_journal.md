@@ -1,5 +1,16 @@
 # Test Journal
 
+## 2026-07-12 — Corvinum test lane
+
+- **Jober lane 283 · corvinum lane 143 (7 skipped, 100 deselected) · e2e 21**
+  — all green; ruff clean.
+- Marker discipline: `jober_only` = asserts Jober URLs/policies/seeds/
+  languages; modules importing not-installed feature models guard with
+  `pytest.skip(allow_module_level=True)` (marker can't stop collection
+  imports).
+- Real fix: order-dependent translation leak (thread-local active language)
+  — global autouse locale-pin fixture in tests/conftest.py.
+
 ## 2026-07-12 — Observability slice
 
 - **283 unit + 21 e2e green** (4 new: manager+observer see /audit/,

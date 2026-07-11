@@ -84,7 +84,10 @@ scripts/compile_messages.sh --extract   # then compile with no args
 ## Workflow (established, follow it)
 
 1. One slice per branch: `git checkout -b <slice-name>` off `main`.
-2. Build with tests; run **ruff + full unit suite** in the container; e2e if UI/URLs changed.
+2. Build with tests; run **ruff + full unit suite** in the container, plus
+   **`scripts/test_corvinum.sh`** (the corvinum-flags lane — Stage D requires
+   both flag sets green; mark genuinely Jober-specific tests `@pytest.mark.jober_only`);
+   e2e if UI/URLs changed.
 3. Update `BUILD_JOURNAL.md` + `test_journal.md` (newest-first entries).
 4. Commit (imperative subject; end body with the `Co-Authored-By: Claude …` trailer),
    push, `gh pr create`, then `gh pr merge --merge --delete-branch`, and

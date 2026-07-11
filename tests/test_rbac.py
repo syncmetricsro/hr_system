@@ -15,6 +15,9 @@ from core.accounts.permissions import (
     require_action,
 )
 
+# Jober-specific URLs/policies/languages — excluded from the corvinum lane.
+pytestmark = pytest.mark.jober_only
+
 
 def _user(role: Role) -> User:
     # Unsaved instance is enough: can() only reads .is_authenticated and .role.
