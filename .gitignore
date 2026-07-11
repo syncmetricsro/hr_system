@@ -25,3 +25,4 @@ npm-shrinkwrap.json
 vite.config.*
 
 test-artifacts/
+backups/

@@ -47,6 +47,9 @@ dokku checks:enable <app>        # zero-downtime check against /healthz/
 ```
 
 Release step (every deploy): `dokku run <app> python manage.py migrate --noinput`
+followed by **`scripts/deploy_smoke.sh https://<domain> --https`** (healthz,
+CSRF, fingerprinted static with immutable caching, X-Frame-Options, HSTS,
+Secure cookies — fails closed)
 (or `app.json` predeploy); first deploy also `createsuperuser` (real email
 user; **never** `seed_demo`/`seed_corvinum_demo` on production).
 
@@ -69,9 +72,10 @@ Client-specific env:
 - `dokku postgres:backup-auth` + `backup-schedule` daily per DB to the
   approved off-site target (owner to name one: S3-compatible bucket or
   rsync target — see asks).
-- Monthly restore drill: restore latest dump into a scratch service, run
-  `manage.py check` + row counts against it. Document each drill in
-  `deployment_journal.md`.
+- Monthly restore drill: **`scripts/backup_restore_drill.sh`** — dumps,
+  restores into a scratch DB, and fails unless per-table row counts are
+  identical (proven against both demo DBs 2026-07-12). Document each run in
+  `deployment_journal.md`; copy the kept dump off-site (D6).
 
 ## Security posture (already in the image/settings)
 
