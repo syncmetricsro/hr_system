@@ -120,7 +120,9 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
-STATICFILES_DIRS = [BASE_DIR / "static"]
+# One artifact serves every client (§12.4), so collectstatic must gather all
+# client static dirs regardless of which client settings module built it.
+STATICFILES_DIRS = [BASE_DIR / "static"] + sorted((BASE_DIR / "clients").glob("*/static"))
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
@@ -185,6 +187,17 @@ FEATURE_FLAGS = {
     "payslips": False,        # CorvinumEU feature (ADR 0023); a client opts in
 }
 CLIENT_POLICIES = os.getenv("CLIENT_POLICIES", "core.accounts.default_policies")
+
+# Email delivery (ADR 0023 payslips). Default is Django's SMTP backend —
+# real deployments configure the SMTP host via env/Doppler; the local demo
+# scripts point this at the console backend instead.
+EMAIL_BACKEND = os.getenv("DJANGO_EMAIL_BACKEND", "django.core.mail.backends.smtp.EmailBackend")
+EMAIL_HOST = os.getenv("DJANGO_EMAIL_HOST", "localhost")
+EMAIL_PORT = int(os.getenv("DJANGO_EMAIL_PORT", "587"))
+EMAIL_HOST_USER = os.getenv("DJANGO_EMAIL_HOST_USER", "")
+EMAIL_HOST_PASSWORD = os.getenv("DJANGO_EMAIL_HOST_PASSWORD", "")
+EMAIL_USE_TLS = os.getenv("DJANGO_EMAIL_USE_TLS", "1") == "1"
+DEFAULT_FROM_EMAIL = os.getenv("DJANGO_DEFAULT_FROM_EMAIL", "noreply@localhost")
 
 # Roles that must enroll a TOTP device (Stage B4b). Empty for Jober => zero
 # behavior change; CorvinumEU will require it for HR/admin/manager (§5.12).

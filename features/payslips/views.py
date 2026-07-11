@@ -8,23 +8,21 @@ from django.utils.translation import gettext as _
 from core.accounts.permissions import Action, require_action
 from core.people.models import Person
 from features.payslips.models import Payslip
-from features.payslips.services import PayslipError, send_payslip
+from features.payslips.services import PayslipError, record_payslip, send_payslip
 
 
 @require_action(Action.PAYSLIP_MANAGE)
 def payslip_list(request):
     if request.method == "POST":
         person = get_object_or_404(Person, pk=request.POST.get("person"))
-        payslip = Payslip(
-            person=person,
-            period=request.POST.get("period", "").strip(),
-            net_amount=request.POST.get("net_amount") or None,
-            note=request.POST.get("note", "").strip(),
-            created_by=request.user,
-        )
         try:
-            payslip.full_clean()
-            payslip.save()
+            record_payslip(
+                person,
+                period=request.POST.get("period", "").strip(),
+                net_amount=request.POST.get("net_amount"),
+                note=request.POST.get("note", "").strip(),
+                actor=request.user,
+            )
             messages.success(request, _("Payslip recorded."))
         except ValidationError as exc:
             messages.error(request, "; ".join(exc.messages))

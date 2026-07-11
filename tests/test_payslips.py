@@ -93,6 +93,16 @@ def test_send_requires_email_on_file(settings, manager):
     assert mail.outbox == []
 
 
+def test_record_payslip_is_audited(manager):
+    from features.payslips.services import record_payslip
+
+    person = Person.objects.create(first_name="Audit", last_name="Trail")
+    slip = record_payslip(person, period="2026-07", net_amount="900.00", actor=manager)
+    event = AuditEvent.objects.get(action="payslip.recorded")
+    assert "2026-07" in event.reason and "900.00" in event.reason
+    assert slip.created_by == manager
+
+
 def test_period_uniqueness_per_person(payslip):
     from django.db import IntegrityError
 
