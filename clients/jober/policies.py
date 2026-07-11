@@ -52,7 +52,7 @@ ACTION_ROLES: dict[Action, frozenset[Role]] = {
     Action.BLACKLIST_VIEW_REASON: frozenset({_COORDINATOR, _MANAGER}),
     Action.FEEDBACK_VIEW: frozenset({_MANAGER}),
     Action.FINANCE_VIEW_SUMMARY: frozenset({_MANAGER, _OBSERVER}),
-    Action.AUDIT_VIEW: frozenset({_MANAGER}),
+    Action.AUDIT_VIEW: frozenset({_MANAGER, _OBSERVER}),
 }
 
 ALLOWED_TRANSITIONS: dict[str, set[str]] = {

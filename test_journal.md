@@ -1,5 +1,14 @@
 # Test Journal
 
+## 2026-07-12 — Observability slice
+
+- **283 unit + 21 e2e green** (4 new: manager+observer see /audit/,
+  coordinator 403, actor/action/target filters — asserted via row-only
+  reason strings since the action dropdown always lists every known action —
+  and the LOGGING config contract).
+- Live: observer logins on both stacks render the audit page (SK/HU titles),
+  39 event rows on the Jober demo; container confirms console logging.
+
 ## 2026-07-12 — Session longevity
 
 - **279 unit + 21 e2e green** (3 new: 30d rolling policy, per-client cookie

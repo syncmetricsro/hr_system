@@ -5,6 +5,7 @@ from django.contrib import admin
 from django.urls import include, path
 
 from core.accounts import views as account_views
+from core.audit import views as audit_views
 from core.people import views as people_views
 from core.projects import views as project_views
 from core.ui import exports as core_exports
@@ -31,6 +32,7 @@ app_routes = [
     path("admin/", admin.site.urls),
     path("", views.dashboard, name="dashboard"),
     path("reports/", views.reports, name="reports"),
+    path("audit/", audit_views.audit_log, name="audit_log"),
     path("prihlasenie/", account_views.login_page, name="login"),
     path("odhlasenie/", account_views.logout_view, name="logout"),
     path("2fa/verify/", account_views.two_factor_verify, name="two_factor_verify"),

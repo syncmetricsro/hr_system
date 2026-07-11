@@ -1,0 +1,68 @@
+{% extends "layouts/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Audit log" %} · {{ BRAND_NAME }}{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <p class="eyebrow">{% trans "Oversight" %}</p>
+  <h1>{% trans "Audit log" %}</h1>
+  <p class="muted">{% trans "Append-only record of every sensitive action: who did what, to whom, when, and why. Entries cannot be edited or deleted." %}</p>
+</section>
+
+<section class="panel">
+  <form method="get" class="stack">
+    <div class="action-row">
+      <label><span>{% trans "Actor (email contains)" %}</span><input type="text" name="actor" value="{{ filters.actor }}"></label>
+      <label><span>{% trans "Action" %}</span>
+        <select name="action">
+          <option value="">{% trans "All actions" %}</option>
+          {% for a in known_actions %}<option value="{{ a }}"{% if a == filters.action %} selected{% endif %}>{{ a }}</option>{% endfor %}
+        </select></label>
+      <label><span>{% trans "Record type" %}</span>
+        <select name="target">
+          <option value="">{% trans "All records" %}</option>
+          {% for t in known_targets %}<option value="{{ t }}"{% if t == filters.target %} selected{% endif %}>{{ t }}</option>{% endfor %}
+        </select></label>
+      <label><span>{% trans "From" %}</span><input type="date" name="from" value="{{ filters.from }}"></label>
+      <label><span>{% trans "To" %}</span><input type="date" name="to" value="{{ filters.to }}"></label>
+      <button class="button button-secondary" type="submit">{% trans "Filter" %}</button>
+    </div>
+  </form>
+</section>
+
+<section class="panel">
+  <table>
+    <thead>
+      <tr>
+        <th>{% trans "When" %}</th>
+        <th>{% trans "Actor" %}</th>
+        <th>{% trans "Action" %}</th>
+        <th>{% trans "Record" %}</th>
+        <th>{% trans "Reason" %}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for event in page %}
+        <tr>
+          <td>{{ event.created_at|date:"Y-m-d H:i:s" }}</td>
+          <td>{% if event.actor %}{{ event.actor.email }}{% else %}<span class="muted">{% trans "system" %}</span>{% endif %}</td>
+          <td><code>{{ event.action }}</code></td>
+          <td>{% if event.target_type %}{{ event.target_type }} #{{ event.target_id }}{% else %}—{% endif %}</td>
+          <td class="muted">{{ event.reason|default:"—"|truncatechars:80 }}</td>
+        </tr>
+      {% empty %}
+        <tr><td colspan="5" class="muted">{% trans "No audit events match the filter." %}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {% if page.has_other_pages %}
+    <div class="action-row">
+      {% if page.has_previous %}<a class="button button-secondary" href="?actor={{ filters.actor|urlencode }}&action={{ filters.action|urlencode }}&target={{ filters.target|urlencode }}&from={{ filters.from }}&to={{ filters.to }}&page={{ page.previous_page_number }}">{% trans "Newer" %}</a>{% endif %}
+      <span class="muted">{% blocktrans with n=page.number total=page.paginator.num_pages %}Page {{ n }} of {{ total }}{% endblocktrans %}</span>
+      {% if page.has_next %}<a class="button button-secondary" href="?actor={{ filters.actor|urlencode }}&action={{ filters.action|urlencode }}&target={{ filters.target|urlencode }}&from={{ filters.from }}&to={{ filters.to }}&page={{ page.next_page_number }}">{% trans "Older" %}</a>{% endif %}
+    </div>
+  {% endif %}
+</section>
+{% endblock %}

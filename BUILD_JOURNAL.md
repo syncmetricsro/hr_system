@@ -1,5 +1,23 @@
 # Build Journal
 
+## 2026-07-12 — Observability: error logging + audit-log page (production readiness §2)
+
+- **Error visibility**: explicit `LOGGING` in base — `django.request` ERRORs
+  and `django.security` warnings stream to stdout/stderr (formatted with
+  timestamp/level/logger), root at `DJANGO_LOG_LEVEL` (default WARNING).
+  Production 500s now show tracebacks in `dokku logs`/`docker logs` — the
+  silent-500 class that slowed Stage C4 debugging is closed.
+- **Who-did-what UI**: new `/audit/` page (core/audit/views.audit_log) over
+  the existing append-only `AuditEvent` stream — filters for actor, action,
+  record type, and date range; paginated 50/page; distinct-value dropdowns.
+  Gated by `audit.view`, which now includes **observers** in both clients
+  (owner request; matrices updated). Nav: folder tab (Jober) + sidebar item
+  (CorvinumEU, `verified_user` icon). 18 msgids translated SK/HU/UK
+  (715/715 clean after de-fuzzing the usual msgmerge mispair).
+- Live-verified on both stacks: observer accounts render the page (SK and HU),
+  demo data shows real event rows; LOGGING active in the running container.
+
+
 ## 2026-07-12 — Session longevity: cookie collision fixed + 30-day rolling sessions
 
 Owner: "I need to log in too often." Two causes, both fixed:

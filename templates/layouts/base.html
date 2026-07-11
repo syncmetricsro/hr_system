@@ -35,6 +35,8 @@
         {% flag_on 'transport' as has_transport %}
         {% if has_transport %}<a class="folder-tab {% nav_active 'transport_trends' %}" href="{% url 'transport_trends' %}">{% trans "Transport" %}</a>{% endif %}
         <a class="folder-tab {% nav_active 'reports' %}" href="{% url 'reports' %}">{% trans "Reports" %}</a>
+        {% can 'audit.view' as may_audit %}
+        {% if may_audit %}<a class="folder-tab {% nav_active 'audit_log' %}" href="{% url 'audit_log' %}">{% trans "Audit" %}</a>{% endif %}
         {% can 'equipment.review_deduction' as may_equip_review %}
         {% flag_on 'equipment' as has_equipment %}
         {% if may_equip_review and has_equipment %}<a class="folder-tab {% nav_active 'equipment_reviews' %}" href="{% url 'equipment_reviews' %}">{% trans "Reviews" %}</a>{% endif %}
