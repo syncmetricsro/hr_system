@@ -48,6 +48,7 @@ Legend: ✅ permitted · — denied
 | `checklist.tick` (Jober: feature off — ADR 0022) | — | ✅ | ✅ | — |
 | `ledger.enter` (Jober: feature off — ADR 0022) | — | — | ✅ | — |
 | `ledger.view` (Jober: feature off — ADR 0022) | — | — | ✅ | ✅ |
+| `payslip.manage` (Jober: feature off — ADR 0023) | — | — | ✅ | — |
 | `finance.manage` | — | — | ✅ | — |
 | `export.approved` | — | — | ✅ | ✅ |
 

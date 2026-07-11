@@ -24,6 +24,7 @@ FEATURE_FLAGS = {
     "profitability": True,
     "checklists": False,   # CorvinumEU feature (ADR 0022) — not in the Jober product
     "advances": False,     # CorvinumEU feature (ADR 0022) — not in the Jober product
+    "payslips": False,     # CorvinumEU feature (ADR 0023) — not in the Jober product
 }
 
 BRAND_NAME = "Jober"

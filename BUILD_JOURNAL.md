@@ -1,5 +1,23 @@
 # Build Journal
 
+## 2026-07-11 — Stage C5: payslips — encrypted PDF pay statements (ADR 0023)
+
+Client-requested **scope change recorded**: CorvinumEU now stores net pay
+amounts and emails each worker an **AES-256 (PDF 2.0 R6) encrypted payslip**.
+Design: SSN-as-password rejected; per-send **12-char truly random password**
+(`secrets`, no-lookalike alphabet, shown `XXXX-XXXX-XXXX`, ~70 bits — PDFs are
+offline-brute-forceable, so length is the security). The password is shown
+**once** to the office user for phone/Messenger delivery — never stored,
+never logged, never emailed; the PDF itself isn't stored either (regenerated
+per send, fresh password on resend). PDF content built by a minimal stdlib
+writer; **first new PyPI deps since the npm purge**, owner-approved per
+AGENTS §3.1: pypdf 6.14.2 + cryptography 49.0.0 (+cffi/pycparser), cooldown
+verified, wheels hash-pinned into both locks. `core/people.Person` gains an
+optional contact `email`. New `payslip.manage` action (manager), Payslips
+page + nav tab, flag off for Jober. Open questions: C-Q15 (password delivery
+channel), C-Q16 (pay-data retention); C-Q6 boundary note updated.
+
+
 ## 2026-07-11 — Stage C4: corvinum.eu theme + validation — STAGE C COMPLETE
 
 Theme: `CLIENT_THEME_CSS` hook in the shared shell (context processor + one

@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     "features.blacklist",
     "features.checklists",
     "features.advances",
+    "features.payslips",
     "core.ui",
     "clients.corvinum_eu.demo",
 ]
@@ -46,6 +47,7 @@ FEATURE_FLAGS = {
     "profitability": False,       # no P&L dashboards (§15.6)
     "checklists": True,           # approval checklists (§5.5, Stage C1)
     "advances": True,             # advance & deduction ledger (§5.10, Stage C2)
+    "payslips": True,             # encrypted payslip email (ADR 0023, Stage C5)
 }
 
 # Bilingual SK/HU (confirmed); SK default pending confirmation (C-Q8).

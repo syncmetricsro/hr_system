@@ -26,7 +26,7 @@ overrides it. Product truth lives in `Product_Design.md` (+ `Finance_Specs.md`,
   compliance/intake reused, 2FA on for managers, seeds in
   `clients/corvinum_eu/demo` (`seed_corvinum_demo`); open client decisions in
   `docs/product/corvinum-open-questions.md`.
-- Test baseline: **265 unit + 16 e2e**. Suite counts are tracked in
+- Test baseline: **270 unit + 16 e2e**. Suite counts are tracked in
   `test_journal.md` — update it (and `BUILD_JOURNAL.md`) with every slice.
 
 ## How to run things (no Python on the host — everything in pinned containers)

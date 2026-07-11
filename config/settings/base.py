@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "features.blacklist",
     "features.checklists",
     "features.advances",
+    "features.payslips",
     "core.ui",
     "clients.jober.demo",
 ]
@@ -181,6 +182,7 @@ FEATURE_FLAGS = {
     "profitability": True,    # finance
     "checklists": False,      # CorvinumEU feature (ADR 0022); a client opts in
     "advances": False,        # CorvinumEU feature (ADR 0022); a client opts in
+    "payslips": False,        # CorvinumEU feature (ADR 0023); a client opts in
 }
 CLIENT_POLICIES = os.getenv("CLIENT_POLICIES", "core.accounts.default_policies")
 

@@ -49,6 +49,7 @@ class Action(str, Enum):
     SMS_MANAGE_TEMPLATES = "sms.manage_templates"
     CHECKLIST_TICK = "checklist.tick"
     LEDGER_ENTER = "ledger.enter"
+    PAYSLIP_MANAGE = "payslip.manage"
     FINANCE_MANAGE = "finance.manage"
     EXPORT_APPROVED = "export.approved"
 
