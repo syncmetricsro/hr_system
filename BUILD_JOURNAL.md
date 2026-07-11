@@ -1,5 +1,24 @@
 # Build Journal
 
+## 2026-07-12 — Session longevity: cookie collision fixed + 30-day rolling sessions
+
+Owner: "I need to log in too often." Two causes, both fixed:
+
+- **Cookie collision** (the real culprit during dual-demo testing): browsers
+  scope cookies by host and ignore ports, so Jober (:8000) and CorvinumEU
+  (:8001) both writing Django's default `sessionid` evicted each other's
+  login on every switch. Cookie names are now client policy:
+  `jober_sessionid`/`jober_csrftoken` and `corvinum_sessionid`/
+  `corvinum_csrftoken` — verified live: one cookie jar holds all four,
+  both sessions authenticated simultaneously.
+- **Session policy** (owner decision): **30-day rolling** sessions —
+  `SESSION_COOKIE_AGE` env-overridable (`DJANGO_SESSION_COOKIE_AGE`),
+  `SESSION_SAVE_EVERY_REQUEST=True` so activity refreshes expiry and only
+  inactivity logs out. Costs one session-row write per request (fine at this
+  scale). Everyone logs in once more after this deploys (cookie renamed).
+- Stack resets (`down && up`) still wipe sessions — inherent, documented.
+
+
 ## 2026-07-11 — Corvinum shell brand fit + centered content
 
 Adjusted the Corvinum-only theme without changing the shared Jober shell. The

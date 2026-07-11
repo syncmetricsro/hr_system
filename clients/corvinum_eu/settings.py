@@ -74,3 +74,7 @@ TEMPLATES[0]["DIRS"] = [  # noqa: F405
     BASE_DIR / "clients" / "corvinum_eu" / "templates",  # noqa: F405
     BASE_DIR / "templates",  # noqa: F405
 ]
+
+# Distinct cookie names per client (see clients/jober/settings.py).
+SESSION_COOKIE_NAME = "corvinum_sessionid"
+CSRF_COOKIE_NAME = "corvinum_csrftoken"

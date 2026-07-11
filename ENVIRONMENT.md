@@ -1,5 +1,7 @@
 # Environment
 
+- `DJANGO_SESSION_COOKIE_AGE` (seconds, default 2592000 = 30 days): rolling session lifetime — every request refreshes expiry (`SESSION_SAVE_EVERY_REQUEST`); only inactivity logs out. Per-client cookie names (`jober_sessionid`/`corvinum_sessionid`, same for csrftoken) prevent the two apps evicting each other's sessions on a shared host.
+
 Last updated: 2026-07-11
 
 ## Secrets during human and automated testing

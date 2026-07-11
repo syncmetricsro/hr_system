@@ -205,4 +205,11 @@ TWO_FACTOR_REQUIRED_ROLES: list[str] = []
 
 CSRF_COOKIE_HTTPONLY = True
 SESSION_COOKIE_HTTPONLY = True
+
+# Session policy (owner decision 2026-07-12): 30-day ROLLING sessions —
+# every request refreshes the expiry, so active staff stay signed in and only
+# inactivity logs out. Override per deployment in seconds. (Rolling implies a
+# session-row write per request — fine at this user count.)
+SESSION_COOKIE_AGE = int(os.getenv("DJANGO_SESSION_COOKIE_AGE", str(30 * 24 * 3600)))
+SESSION_SAVE_EVERY_REQUEST = True
 X_FRAME_OPTIONS = "DENY"
