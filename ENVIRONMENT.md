@@ -1,6 +1,21 @@
 # Environment
 
-Last updated: 2026-06-21
+Last updated: 2026-07-11
+
+## Secrets during human and automated testing
+
+- Doppler project `hr_system`, config `dev`, is the local source for Twilio and
+  other external-provider test credentials; `doppler.yaml` selects it without
+  storing secret values.
+- Any human session or automated integration check that exercises a real/test
+  provider must run through `doppler run -- <committed-runner>`. That runner
+  forwards only the required variables into the runtime/test container; secrets
+  must never enter Docker build stages, logs, screenshots, or test artifacts.
+- Example for a Twilio-enabled Jober session:
+  `doppler run -- scripts/dev_app.sh up` (or `rebuild`).
+- The standard pytest and Playwright suites do **not** require Doppler. They
+  remain deterministic and secret-free, use mocks/fakes where applicable, and
+  cover fail-closed behavior when provider credentials are absent.
 
 Phase 1 additions:
 - New runtime dependency: `whitenoise==6.12.0`, serving collected static files under gunicorn (production settings only; ADR 0016). Hash-pinned in `runtime.lock` and `test.lock`.

@@ -28,8 +28,8 @@
       <form class="people-search" method="post" action="{% url 'review_deduction' issue.pk %}">
         {% csrf_token %}
         <input type="text" name="note" aria-label="{% trans 'Review note' %}" placeholder="{% trans 'Review note' %}">
-        <button class="button button-primary" type="submit" name="decision" value="approve">{% trans "Approve charge" %}</button>
-        <button class="button button-secondary" type="submit" name="decision" value="waive">{% trans "Waive" %}</button>
+        <button class="button button-primary" type="submit" name="decision" value="approve" data-confirm="{% trans 'This approves charging the item value to the worker (recorded for recovery; no automatic payroll deduction).' %}">{% trans "Approve charge" %}</button>
+        <button class="button button-secondary" type="submit" name="decision" value="waive" data-confirm="{% trans 'This waives the charge; the worker will not be charged for the item.' %}">{% trans "Waive" %}</button>
       </form>
     </article>
   {% empty %}

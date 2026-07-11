@@ -26,14 +26,23 @@ overrides it. Product truth lives in `Jober_Product_Design.md` (+ `Jober_Finance
   compliance/intake reused, 2FA on for managers, seeds in
   `clients/corvinum_eu/demo` (`seed_corvinum_demo`); open client decisions in
   `docs/product/corvinum-open-questions.md`.
-- Test baseline: **273 unit + 16 e2e**. Suite counts are tracked in
+- Test baseline: **276 unit + 21 e2e**. Suite counts are tracked in
   `test_journal.md` — update it (and `BUILD_JOURNAL.md`) with every slice.
 
 ## How to run things (no Python on the host — everything in pinned containers)
 
+Provider-backed testing is opt-in and requires Doppler. Human demos or
+automated integration checks that actually call Twilio/SMTP must be launched as
+`doppler run -- <committed-runner>`; the runner must forward only the required
+variables into the runtime/test container. Never expose provider secrets to a
+Docker build stage. The normal unit and Playwright suites are intentionally
+secret-free and use mocks/fakes or the app's fail-closed unconfigured path.
+
 ```bash
 # Demo/dev app stack (production image + Postgres) at http://localhost:8000
 scripts/dev_app.sh up|down|rebuild|status|logs     # seeds demo users + full scenario
+# Twilio-enabled human session:
+doppler run -- scripts/dev_app.sh up
 # Logins: {manazer,naborar,koordinator,pozorovatel}@demo.jober.test / demo-jober-2026
 
 # Unit tests + lint (test image built from requirements/test.lock; needs a dev DB)
@@ -46,7 +55,7 @@ docker run --rm --network jober-dev-net \
 #   …same container for: ruff check --no-cache core features clients config tests
 #   …and: python manage.py makemigrations <app>
 
-# Browser e2e (builds current app + Playwright images, seeds, runs tests/e2e)
+# Browser e2e (builds current app + Playwright image, seeds both clients, runs tests/e2e)
 scripts/playwright_e2e.sh
 
 # i18n (gettext is NOT in the runtime/test images — this script apt-installs it)

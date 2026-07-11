@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-11 15:19+0200\n"
+"POT-Creation-Date: 2026-07-11 15:31+0200\n"
 "Language: sk\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1241,7 +1241,6 @@ msgid "Driver"
 msgstr "Vodič"
 
 #: features/finance/catalog_i18n.py:15
-
 msgid "Damage (cost)"
 msgstr "Škody (náklad)"
 
@@ -1266,12 +1265,10 @@ msgstr "Ubytovanie"
 
 # --- finance ---
 #: features/finance/catalog_i18n.py:19
-
 msgid "Insurance"
 msgstr "Poistenie"
 
 #: features/finance/catalog_i18n.py:21
-
 msgid "Coordinators"
 msgstr "Koordinátori"
 
@@ -1288,7 +1285,6 @@ msgid "Toll"
 msgstr "Mýto"
 
 #: features/finance/catalog_i18n.py:25
-
 msgid "Factoring"
 msgstr "Faktoring"
 
@@ -1297,12 +1293,10 @@ msgid "Office"
 msgstr "Pobočka"
 
 #: features/finance/catalog_i18n.py:27
-
 msgid "Recruitment"
 msgstr "Nábor"
 
 #: features/finance/catalog_i18n.py:28
-
 msgid "Clothing/equipment"
 msgstr "Oblečenie/výbava"
 
@@ -1323,7 +1317,6 @@ msgid "Meals"
 msgstr "Strava"
 
 #: features/finance/catalog_i18n.py:33
-
 msgid "Accommodation charged"
 msgstr "Ubytovanie fakturované"
 
@@ -1440,17 +1433,14 @@ msgid "Financial month saved."
 msgstr "Finančný mesiac uložený."
 
 #: features/intake/catalog_i18n.py:10
-
 msgid "Identity"
 msgstr "Totožnosť"
 
 #: features/intake/catalog_i18n.py:11
-
 msgid "Contact"
 msgstr "Kontakt"
 
 #: features/intake/catalog_i18n.py:21
-
 msgid "Disability — type 'nie' if none"
 msgstr "Zdravotné postihnutie — ak žiadne, napíšte „nie“"
 
@@ -1641,7 +1631,6 @@ msgid "High-visibility vest"
 msgstr "Reflexná vesta"
 
 #: features/logistics/catalog_i18n.py:12
-
 msgid "Safety helmet"
 msgstr "Ochranná prilba"
 
@@ -2120,8 +2109,20 @@ msgstr "Dôvod"
 
 #: templates/pages/blacklist_queue.html:28
 #: templates/panels/blacklist_case.html:20
+msgid ""
+"This approves the blacklist case: the person becomes Blacklisted and future "
+"re-entry attempts will be flagged."
+msgstr "Schváli prípad čiernej listiny: osoba bude Na čiernej listine a budúce pokusy o návrat budú označené."
+
+#: templates/pages/blacklist_queue.html:28
+#: templates/panels/blacklist_case.html:20
 msgid "Approve"
 msgstr "Schváliť"
+
+#: templates/pages/blacklist_queue.html:29
+#: templates/panels/blacklist_case.html:21
+msgid "This rejects the proposed blacklist case and closes it."
+msgstr "Zamietne navrhovaný prípad čiernej listiny a uzavrie ho."
 
 #: templates/pages/blacklist_queue.html:29
 #: templates/panels/blacklist_case.html:21
@@ -2220,8 +2221,18 @@ msgid "Review note"
 msgstr "Poznámka ku kontrole"
 
 #: templates/pages/equipment_reviews.html:31
+msgid ""
+"This approves charging the item value to the worker (recorded for recovery; "
+"no automatic payroll deduction)."
+msgstr "Schváli účtovanie hodnoty položky pracovníkovi (evidované na vymáhanie; žiadna automatická zrážka zo mzdy)."
+
+#: templates/pages/equipment_reviews.html:31
 msgid "Approve charge"
 msgstr "Schváliť zrážku"
+
+#: templates/pages/equipment_reviews.html:32
+msgid "This waives the charge; the worker will not be charged for the item."
+msgstr "Odpustí úhradu; pracovníkovi sa položka nebude účtovať."
 
 #: templates/pages/equipment_reviews.html:32
 msgid "Waive"
@@ -2292,6 +2303,17 @@ msgstr "Uzamknuté"
 #: templates/pages/finance_month_detail.html:20
 msgid "Reopen month"
 msgstr "Znovu otvoriť mesiac"
+
+#: templates/pages/finance_month_detail.html:17
+msgid ""
+"This reopens the locked month for editing; the reopening is audited with "
+"your reason."
+msgstr "Znovu otvorí uzamknutý mesiac na úpravy; opätovné otvorenie sa audituje s vaším dôvodom."
+
+#: templates/pages/finance_month_detail.html:23
+msgid ""
+"This locks the month; line items become read-only until a manager reopens it."
+msgstr "Uzamkne mesiac; položky budú len na čítanie, kým ho manažér znovu neotvorí."
 
 #: templates/pages/finance_month_detail.html:25
 msgid "Lock month"
@@ -2493,8 +2515,18 @@ msgid "Net pay effect"
 msgstr "Čistý vplyv na mzdu"
 
 #: templates/pages/ledger.html:85
+msgid ""
+"This locks every open entry of the window into the cycle; locked entries can "
+"only be corrected by reversal."
+msgstr "Uzamkne všetky otvorené záznamy okna do cyklu; uzamknuté záznamy možno opraviť len stornom."
+
+#: templates/pages/ledger.html:85
 msgid "Include open entries in cycle"
 msgstr "Zahrnúť otvorené záznamy do cyklu"
+
+#: templates/pages/ledger.html:86
+msgid "This marks the whole cycle as settled with pay."
+msgstr "Označí celý cyklus ako vysporiadaný so mzdou."
 
 #: templates/pages/ledger.html:86
 msgid "Mark cycle settled"
@@ -2517,11 +2549,22 @@ msgid "Settlement"
 msgstr "Vysporiadanie"
 
 #: templates/pages/ledger.html:112
+msgid ""
+"This records a reversal entry with the opposite pay effect; the original "
+"stays in the ledger."
+msgstr "Zaznamená storno záznam s opačným vplyvom na mzdu; pôvodný záznam ostáva v knihe."
+
+#: templates/pages/ledger.html:112
 msgid "Reverse"
 msgstr "Stornovať"
 
-# --- compliance ---
 #: templates/pages/ledger.html:114
+msgid ""
+"This cancels the open ledger entry; it will no longer count against pay."
+msgstr "Zruší otvorený záznam v knihe; už sa nebude započítavať voči mzde."
+
+# --- compliance ---
+#: templates/pages/ledger.html:114 templates/partials/confirm_dialog.html:10
 msgid "Cancel"
 msgstr "Zrušiť"
 
@@ -2740,9 +2783,23 @@ msgid ""
 "Ends the project assignment, releases the room, and returns issued equipment."
 msgstr "Ukončí pridelenie na projekt, uvoľní izbu a vráti vydané vybavenie."
 
+#: templates/pages/person_detail.html:164
+
+msgid ""
+"This ends the active assignment, releases the room, returns issued "
+"equipment, and sets the person to Available."
+msgstr "Ukončí aktívne priradenie, uvoľní izbu, vráti vydanú výbavu a nastaví osobu na Dostupný."
+
 #: templates/pages/person_detail.html:166
 msgid "Exit to Available"
 msgstr "Odchod na Dostupný"
+
+#: templates/pages/person_detail.html:168
+
+msgid ""
+"This ends the active assignment, releases the room, returns issued "
+"equipment, and sets the person to Inactive with the chosen reason."
+msgstr "Ukončí aktívne priradenie, uvoľní izbu, vráti vydanú výbavu a nastaví osobu na Neaktívny so zvoleným dôvodom."
 
 #: templates/pages/person_detail.html:170
 msgid "Inactive reason"
@@ -2926,6 +2983,12 @@ msgid "Reason is restricted."
 msgstr "Dôvod je obmedzený."
 
 #: templates/panels/blacklist_case.html:27
+msgid ""
+"This removes the person from the blacklist; re-entry checks will no longer "
+"match them."
+msgstr "Odstráni osobu z čiernej listiny; kontroly návratu ju už nebudú zachytávať."
+
+#: templates/panels/blacklist_case.html:27
 msgid "Remove from blacklist"
 msgstr "Odstrániť z čiernej listiny"
 
@@ -2964,6 +3027,12 @@ msgstr "Hodnota"
 #: templates/panels/logistics_equipment.html:16
 msgid "Return"
 msgstr "Vrátiť"
+
+#: templates/panels/logistics_equipment.html:20
+msgid ""
+"This flags the item as unreturned and opens a manager charge review at its "
+"current value."
+msgstr "Označí položku ako nevrátenú a otvorí manažérsku kontrolu úhrady v jej aktuálnej hodnote."
 
 #: templates/panels/logistics_equipment.html:20
 msgid "Flag unreturned"
@@ -3021,6 +3090,19 @@ msgstr "Správa"
 #: templates/panels/messaging_sms.html:16
 msgid "Or type a message"
 msgstr "Alebo napíšte správu"
+
+#: templates/partials/confirm_dialog.html:6
+
+msgid "Please confirm"
+msgstr "Prosím, potvrďte"
+
+#: templates/partials/confirm_dialog.html:8
+msgid "Do you really want to do this?"
+msgstr "Naozaj to chcete urobiť?"
+
+#: templates/partials/confirm_dialog.html:11
+msgid "Yes, proceed"
+msgstr "Áno, pokračovať"
 
 #~ msgid "Jober"
 #~ msgstr "Jober"

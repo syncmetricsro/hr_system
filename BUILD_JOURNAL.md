@@ -1,5 +1,82 @@
 # Build Journal
 
+## 2026-07-11 — Corvinum shell brand fit + centered content
+
+Adjusted the Corvinum-only theme without changing the shared Jober shell. The
+full `CorvinumEU PeopleOps` brand now fits inside the existing 280px sidebar;
+the main column is centered in the viewport space remaining beside the full
+sidebar or 72px collapsed rail, and returns to full-width at the mobile
+breakpoint. No horizontal overflow at 375px.
+
+The official Playwright workflow now boots and seeds both Jober and CorvinumEU
+on the same internal E2E network. New Corvinum browser coverage measures brand
+containment and main-column centering at 1650px, repeats centering with the
+collapsed rail, and checks the 375px viewport. While extending the runner, its
+health probe was fixed to pass the inline Python program through stdin; before
+this, `docker run ... python -` received no program and could report success
+without probing the app.
+
+Verification: **19/19 e2e green**; live screenshot reviewed; desktop geometry
+sidebar `0–280`, main `325–1605`, shared center `965`; rail and mobile checks
+green. No dependency, model, migration, permission, or business-rule change.
+
+Follow-up visual review added a Corvinum-only 16px vertical rhythm between
+adjacent top-level content sections. The page header keeps its existing spacing
+and top-level workflow-panel margins are normalized to avoid a doubled gap.
+Playwright measures the project-detail overview→logistics separation at exactly
+16px. Updated browser baseline: **20/20 e2e green**.
+
+Checklist control investigation: a manually opened/stale form after a local
+rebuild produced Django's expected CSRF rejection. The live, rendered form
+already carries `{% csrf_token %}` and posts correctly; no protection was
+weakened. Added a Corvinum coordinator browser regression that checks the token
+and cookie then performs a real checklist toggle. Updated browser baseline:
+**21/21 e2e green**.
+
+## 2026-07-11 — Controlled build/test artifact policy
+
+Owner-approved clarification to `AGENTS.md` §7: agents may run committed,
+isolated build and E2E workflows that fetch repository-pinned artifacts when
+integrity is verified before execution and restricted tooling stays out of the
+runtime image. This resolves the conflict between the former blanket
+binary-fetch prohibition and the required Tailwind/Playwright Docker workflows.
+Ad-hoc or unverified downloads, host-package installation, and agent retrieval
+of media/fonts/images/credentials remain prohibited.
+
+The same owner decision clarifies secret-bearing tests: human sessions or
+automated integration checks that exercise external providers must be launched
+through Doppler (or the approved production equivalent) and inject credentials
+only into the runtime/test process. Standard unit and Playwright suites remain
+secret-free and deterministic.
+
+## 2026-07-11 — Destructive-action confirmation dialog
+
+Completed the owner-requested confirmation layer for high-impact workflow
+actions. A shared, dependency-free native `<dialog>` is included by both the
+Jober and CorvinumEU shells; forms or individual submit buttons opt in with a
+translated `data-confirm` description. Sixteen controls/forms now describe
+the consequence before worker exit, blacklist decisions/removal, equipment
+charge review, finance lock/reopen, and ledger inclusion/settlement/correction.
+
+The delegated JavaScript preserves native form validation and the exact
+clicked submitter, defaults focus to Cancel, clears pending state on
+Cancel/Escape/close, and uses `window.confirm` as a fail-safe where native
+dialog support is unavailable. The confirmation action has danger semantics,
+44px targets, and phone-width stacking. This is a UI safety layer only: all
+existing server-side RBAC, service validation, audit, and idempotency behavior
+is unchanged. No dependency, model, migration, permission, or workflow-rule
+change.
+
+Manual review caught internal notes rendering on both shells: first the shared
+dialog note, then CorvinumEU's font-preload note. Django's `{# ... #}` comment
+form does not span lines. Both now use `{% comment %}...{% endcomment %}`; a
+repository-wide template scan rejects any future multiline short comment, and
+the shared-shell response test rejects leaked dialog prose.
+
+Verification: 276 unit + 18 e2e green; ruff, dependency-direction, no-Node,
+vendor checksum, migration-consistency, and diff checks green. SK/HU/UK
+translations and compiled catalogs are included.
+
 ## 2026-07-11 — Jober seeded catalogs localized + the pattern documented
 
 Same db_trans treatment for Jober (owner request): **inactive reasons**

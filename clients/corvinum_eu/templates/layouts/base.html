@@ -8,9 +8,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}{{ BRAND_NAME }}{% endblock %}</title>
-    {# Preload the fonts the shell needs first (all self-hosted — the icon
-       font renders the nav; without preload it starts downloading only after
-       CSS parse and raw ligature names flash as text). #}
+    {% comment %}
+    Preload the fonts the shell needs first. All are self-hosted; without the
+    icon-font preload, raw ligature names can flash before the CSS is parsed.
+    {% endcomment %}
     <link rel="preload" as="font" type="font/woff2" crossorigin href="{% static 'corvinum/fonts/material-symbols-outlined-subset.woff2' %}">
     <link rel="preload" as="font" type="font/woff2" crossorigin href="{% static 'corvinum/fonts/hanken-grotesk-latin.woff2' %}">
     <link rel="preload" as="font" type="font/woff2" crossorigin href="{% static 'corvinum/fonts/inter-latin.woff2' %}">
@@ -107,5 +108,6 @@
         {% block content %}{% endblock %}
       </main>
     </div>
+    {% include "partials/confirm_dialog.html" %}
   </body>
 </html>

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import pytest
 from django.urls import reverse
+from django.utils import translation
 
 from features.logistics.models import Accommodation, EquipmentIssueStatus, EquipmentItem, Room, RoomAssignmentStatus
 from features.logistics.services import assign_room, issue_equipment
@@ -55,3 +56,16 @@ def test_exit_view_works_for_coordinator(client, staffed):
     assert resp.status_code == 302
     person.refresh_from_db()
     assert person.lifecycle_status == LifecycleStatus.AVAILABLE
+
+
+def test_exit_actions_describe_their_effect_before_submit(client, staffed):
+    coord, person = staffed
+    client.force_login(coord)
+    with translation.override("en"):
+        exit_url = reverse("exit_person", args=[person.pk])
+        body = client.get(reverse("person_detail", args=[person.pk])).content.decode("utf-8")
+
+    assert body.count(f'action="{exit_url}"') == 2
+    assert "data-confirm=" in body
+    assert "sets the person to Available" in body
+    assert "sets the person to Inactive with the chosen reason" in body

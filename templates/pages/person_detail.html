@@ -161,11 +161,11 @@
   <h2>{% trans "Exit & reconcile" %}</h2>
   <p>{% trans "Ends the project assignment, releases the room, and returns issued equipment." %}</p>
   <div class="action-row">
-    <form method="post" action="{% url 'exit_person' person.pk %}">
+    <form method="post" action="{% url 'exit_person' person.pk %}" data-confirm="{% trans 'This ends the active assignment, releases the room, returns issued equipment, and sets the person to Available.' %}">
       {% csrf_token %}<input type="hidden" name="outcome" value="available">
       <button class="button button-secondary" type="submit">{% trans "Exit to Available" %}</button>
     </form>
-    <form method="post" action="{% url 'exit_person' person.pk %}">
+    <form method="post" action="{% url 'exit_person' person.pk %}" data-confirm="{% trans 'This ends the active assignment, releases the room, returns issued equipment, and sets the person to Inactive with the chosen reason.' %}">
       {% csrf_token %}<input type="hidden" name="outcome" value="inactive">
       <select name="inactive_reason" aria-label="{% trans 'Inactive reason' %}">
         <option value="">{% trans "Reason…" %}</option>

@@ -17,7 +17,7 @@
               </form>
               <form class="inline-form" method="post" action="{% url 'flag_unreturned' issue.pk %}">
                 {% csrf_token %}
-                <button class="button button-secondary" type="submit">{% trans "Flag unreturned" %}</button>
+                <button class="button button-secondary" type="submit" data-confirm="{% trans 'This flags the item as unreturned and opens a manager charge review at its current value.' %}">{% trans "Flag unreturned" %}</button>
               </form>
             {% endif %}
           {% else %}

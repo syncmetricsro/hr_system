@@ -82,8 +82,8 @@
         {% csrf_token %}
         <input type="hidden" name="year" value="{{ cycle_year }}">
         <input type="hidden" name="month" value="{{ cycle_month }}">
-        <button class="button button-secondary" type="submit" name="action" value="include">{% trans "Include open entries in cycle" %}</button>
-        <button class="button button-secondary" type="submit" name="action" value="deducted">{% trans "Mark cycle settled" %}</button>
+        <button class="button button-secondary" type="submit" name="action" value="include" data-confirm="{% trans 'This locks every open entry of the window into the cycle; locked entries can only be corrected by reversal.' %}">{% trans "Include open entries in cycle" %}</button>
+        <button class="button button-secondary" type="submit" name="action" value="deducted" data-confirm="{% trans 'This marks the whole cycle as settled with pay.' %}">{% trans "Mark cycle settled" %}</button>
       </form>
     {% endif %}
   {% else %}
@@ -109,9 +109,9 @@
                   {% csrf_token %}
                   <input type="hidden" name="next" value="{% url 'ledger_overview' %}?year={{ cycle_year }}&month={{ cycle_month }}">
                   {% if e.is_locked %}
-                    <button class="button button-secondary" type="submit" name="action" value="reverse">{% trans "Reverse" %}</button>
+                    <button class="button button-secondary" type="submit" name="action" value="reverse" data-confirm="{% trans 'This records a reversal entry with the opposite pay effect; the original stays in the ledger.' %}">{% trans "Reverse" %}</button>
                   {% elif e.settlement_status == "open" %}
-                    <button class="button button-secondary" type="submit" name="action" value="cancel">{% trans "Cancel" %}</button>
+                    <button class="button button-secondary" type="submit" name="action" value="cancel" data-confirm="{% trans 'This cancels the open ledger entry; it will no longer count against pay.' %}">{% trans "Cancel" %}</button>
                   {% endif %}
                 </form>
               {% endif %}

@@ -30,6 +30,24 @@ for absent in ("finance_summary", "accommodation_list", "transport_trends", "tri
 print("ok")
 """
 
+TEMPLATE_SCRIPT = """
+import django
+django.setup()
+from django.template.loader import get_template
+
+base = get_template("layouts/base.html")
+assert base.origin.name.endswith("clients/corvinum_eu/templates/layouts/base.html")
+source = base.origin.loader.get_contents(base.origin)
+assert '{% include "partials/confirm_dialog.html" %}' in source
+
+dialog = get_template("partials/confirm_dialog.html")
+dialog_source = dialog.origin.loader.get_contents(dialog.origin)
+assert 'id="confirm-dialog"' in dialog_source
+assert "data-confirm-cancel" in dialog_source
+assert "data-confirm-agree" in dialog_source
+print("ok")
+"""
+
 
 def _run(*argv: str) -> subprocess.CompletedProcess:
     env = dict(os.environ)
@@ -57,5 +75,11 @@ def test_corvinum_url_surface_matches_flag_set():
     """Flags decide the URL surface: equipment/blacklist/compliance mounted,
     Jober-only modules (finance, accommodation, transport, trials) absent."""
     result = _run(sys.executable, "-c", URL_SCRIPT)
+    assert result.returncode == 0, result.stdout + result.stderr
+    assert "ok" in result.stdout
+
+
+def test_corvinum_shell_includes_shared_confirmation_dialog():
+    result = _run(sys.executable, "-c", TEMPLATE_SCRIPT)
     assert result.returncode == 0, result.stdout + result.stderr
     assert "ok" in result.stdout
