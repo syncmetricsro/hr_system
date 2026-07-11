@@ -7,7 +7,7 @@ A presenter's script for a **~60-minute, end-to-end live demo** of the complete
 solution. Present in **Slovak** (the default UI) and flip to **Hungarian** once to
 show the live language switch. **Fictional data only** — say this up front.
 
-Companion: [local-demo.md](local-demo.md) (how the runner works).
+Companion: [jober-local-demo.md](jober-local-demo.md) (how the runner works).
 
 ---
 
@@ -110,7 +110,7 @@ Concretely: (a) keep it fully manual as today, (b) system-assisted broadcast
 (compose in Jober with the multilingual templates + audit, post to your channel),
 or (c) the full bot with per-worker opt-in and delivery status (what round 4
 declined). Whatever they answer, write it down — it updates
-`Messaging_Specs.md` and the round-4 record.
+`Jober_Messaging_Specs.md` and the round-4 record.
 
 ### 8 · Finance (8m) — `manazer`
 **Finance** summary: company totals, per-project results, yearly rollup. Open the

@@ -12,10 +12,10 @@ Last updated: 2026-06-29
 |---|---|---|
 | Static files served in production | ✅ Ready (2026-06-21) | WhiteNoise under gunicorn (ADR 0016). Regression test `test_static_css_is_served`. Found because Phase 0 smoke never requested an asset. |
 | HTTPS + secure cookies on real host | ⚠️ Open | `SECURE_SSL_REDIRECT`/`SESSION_COOKIE_SECURE`/`CSRF_COOKIE_SECURE` default secure; **must not** set the `DJANGO_*_=0` overrides on staging/prod (those exist only for the HTTP smoke network). Verify once Dokku TLS is live. |
-| Dokku staging deploy | ⚠️ Open | Blocked on external staging app/domain/PostgreSQL service names. Runbook: `docs/deployment/dokku-staging.md`. |
+| Dokku staging deploy | ⚠️ Open | Blocked on external staging app/domain/PostgreSQL service names. Runbook: `docs/deployment/jober-dokku-staging.md`. |
 | DB migrations on deploy | ✅ Ready | `accounts`/`audit` initial migrations run cleanly on pinned PostgreSQL 17. |
-| Initial admin user | ✅ Ready (2026-06-21) | `manage.py ensure_superuser` — idempotent, env-driven (`DJANGO_SUPERUSER_EMAIL`/`_PASSWORD`), audited; wired into the Dokku release steps (`docs/deployment/dokku-staging.md`). `seed_demo` remains fictional/staging only — never against a real-data DB. |
-| Secret management | 🟡 Partial (2026-06-29) | **Doppler** is the secrets source (project `hr_system`, config `dev`); `doppler run -- scripts/dev_app.sh up` injects env locally (`doppler.yaml`, `docs/deployment/twilio-setup.md`). Still to confirm: prod Doppler config + Dokku wiring (sync or service token) and `DJANGO_SECRET_KEY`/DB-cred rotation. |
+| Initial admin user | ✅ Ready (2026-06-21) | `manage.py ensure_superuser` — idempotent, env-driven (`DJANGO_SUPERUSER_EMAIL`/`_PASSWORD`), audited; wired into the Dokku release steps (`docs/deployment/jober-dokku-staging.md`). `seed_demo` remains fictional/staging only — never against a real-data DB. |
+| Secret management | 🟡 Partial (2026-06-29) | **Doppler** is the secrets source (project `hr_system`, config `dev`); `doppler run -- scripts/dev_app.sh up` injects env locally (`doppler.yaml`, `docs/deployment/jober-twilio-setup.md`). Still to confirm: prod Doppler config + Dokku wiring (sync or service token) and `DJANGO_SECRET_KEY`/DB-cred rotation. |
 | DB backups / restore | ⚠️ Open | Not yet defined for the Dokku PostgreSQL service. |
 
 ## Integrations
@@ -37,6 +37,6 @@ Last updated: 2026-06-29
 
 | Gate | State | Notes |
 |---|---|---|
-| Action-gated RBAC with broad reads | ✅ Ready | `apps/accounts/permissions.py`, mirrored by `docs/permissions/permission-matrix.md` (ADR 0008/0015). |
+| Action-gated RBAC with broad reads | ✅ Ready | `apps/accounts/permissions.py`, mirrored by `docs/permissions/jober-permission-matrix.md` (ADR 0008/0015). |
 | Append-only audit | ✅ Ready | `apps/audit` immutable `AuditEvent`; wired into login/logout. Extend `record_event` to every sensitive action as modules land. |
 | Recruiter/coordinator read-scope (GDPR) | ⚠️ Open | Held configurable behind `BROAD_INTERNAL_READS`; do not hardcode a split until Jober confirms. |

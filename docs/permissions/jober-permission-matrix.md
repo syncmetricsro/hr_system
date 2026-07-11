@@ -1,9 +1,9 @@
-# Permission Matrix
+# Permission Matrix — Jober
 
 Last updated: 2026-06-20
 
-This document is the human-readable mirror of `apps/accounts/permissions.py`
-(`ACTION_ROLES`). When you change one, change the other in the same commit.
+This document is the human-readable mirror of `clients/jober/policies.py`
+(`ACTION_ROLES`; the `Action` enum lives in `core/accounts/permissions.py`). When you change one, change the other in the same commit.
 
 ## Model
 
@@ -13,7 +13,7 @@ This document is the human-readable mirror of `apps/accounts/permissions.py`
   This is governed by the single switch `BROAD_INTERNAL_READS`
   (env `JOBER_BROAD_INTERNAL_READS`, default on) so the still-open GDPR
   recruiter/coordinator read-scope decision can be narrowed later without a
-  hardcoded split (`docs/product/open-decisions.md`).
+  hardcoded split (`docs/product/jober-open-decisions.md`).
 - **Roles restrict actions** (writes) and **sensitive reads**. Those are the
   rows below. A superuser passes every check.
 - Every gated view uses `require_action(...)`; every gated button uses the

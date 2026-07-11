@@ -2,7 +2,7 @@
 
 Binding instructions for any coding agent working in this repository. If a rule here conflicts with a task, **follow the rule and say why**.
 
-This file governs **scope, security, supply chain, and how to work**. The **what to build** lives in the implementation plan (`Product_Design.md`) and the Jober interview deltas. When this file and the plan disagree on *security or dependencies*, this file wins. Session-level onboarding (current commands, workflow, gotchas) lives in `CLAUDE.md`; that file never overrides this one.
+This file governs **scope, security, supply chain, and how to work**. The **what to build** lives in the implementation plan (`Jober_Product_Design.md`) and the Jober interview deltas. When this file and the plan disagree on *security or dependencies*, this file wins. Session-level onboarding (current commands, workflow, gotchas) lives in `CLAUDE.md`; that file never overrides this one.
 
 ---
 

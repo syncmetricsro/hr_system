@@ -19,7 +19,7 @@ class Action(str, Enum):
     read visibility, so any authenticated internal role may read ordinary
     operational records. Only the actions below are restricted, and the
     ``ROLE_ACTIONS`` map below is the single source mirrored by
-    docs/permissions/permission-matrix.md.
+    docs/permissions/jober-permission-matrix.md.
     """
 
     # Recruiter intake / candidate routing
@@ -63,7 +63,7 @@ class Action(str, Enum):
 
 # Role grants are client policy (Stage B3, ADR 0021): resolved from the module
 # named by settings.CLIENT_POLICIES (Jober: clients/jober/policies.py, mirrored
-# by docs/permissions/permission-matrix.md). Core ships deny-by-default.
+# by docs/permissions/jober-permission-matrix.md). Core ships deny-by-default.
 from core.accounts.policies import get_policies  # noqa: E402  (after Action)
 
 ACTION_ROLES: dict[Action, frozenset[Role]] = get_policies().ACTION_ROLES
@@ -94,7 +94,7 @@ def can_read_internal(user) -> bool:
     Defaults to allowing any authenticated internal role to read ordinary
     operational records (plan §8.1 / ADR 0008). Kept behind a single config
     switch so the still-open GDPR recruiter/coordinator read-scope decision can
-    be narrowed later WITHOUT hardcoding a split now (open-decisions.md).
+    be narrowed later WITHOUT hardcoding a split now (jober-open-decisions.md).
     """
     if user is None or not user.is_authenticated:
         return False

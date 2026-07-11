@@ -29,7 +29,7 @@ The login surface designed in Phase 0 (`templates/pages/login.html`) collects an
 
 - Login matches the existing email-based template; no throwaway username field.
 - A single `role` field keeps the matrix legible and testable, and mirrors
-  `docs/permissions/permission-matrix.md` one-to-one.
+  `docs/permissions/jober-permission-matrix.md` one-to-one.
 - Django admin uses a custom `UserAdmin` because the user is email-based.
 - Future fine-grained needs (e.g. the open GDPR read-scope split) are handled by
   configuration/policy in `permissions.py`, not by reshaping the user model.

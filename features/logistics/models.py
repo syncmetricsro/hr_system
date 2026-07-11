@@ -18,7 +18,7 @@ class Accommodation(models.Model):
 
     Cost is tracked as a per-room ``monthly_rate`` with an optional
     per-assignment override (``RoomAssignment.rate_override``). This is the Q1
-    safe default (docs/product/phase3-4-open-questions.md): a monthly rate per
+    safe default (docs/product/jober-phase3-4-open-questions.md): a monthly rate per
     room, **recorded for reporting only — no automatic payroll deduction** —
     pending Jober's confirmation. The room-rate-plus-override shape stays robust
     whether the eventual answer is per-room, per-bed, or per-person, so this is

@@ -3,7 +3,7 @@
 Created: 2026-06-24 · Answers recorded: 2026-06-28 (all four answered)
 
 Decisions needed from Jober before (or early in) the Phase 1 business build.
-Most of Phase 1 is already specified in `Product_Design.md`; only the four below
+Most of Phase 1 is already specified in `Jober_Product_Design.md`; only the four below
 genuinely shape the data model or workflow logic. Each has a safe default we will
 use (flagged as an assumption) if no answer arrives, so the build is not blocked.
 

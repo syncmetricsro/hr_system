@@ -430,11 +430,11 @@ The demo remains the visual reference but not the architecture or complete workf
 
 Create:
 
-- `docs/product/source-register.md`;
-- `docs/product/demo-inventory.md`;
-- `docs/product/demo-to-django-map.md`;
+- `docs/product/jober-source-register.md`;
+- `docs/product/jober-demo-inventory.md`;
+- `docs/product/jober-demo-to-django-map.md`;
 - `docs/product/removed-demo-features.md`;
-- `docs/product/open-decisions.md`.
+- `docs/product/jober-open-decisions.md`.
 
 The source register must explicitly mark the mixed Jober/Corvinum architecture as historical and non-authoritative.
 
@@ -547,7 +547,7 @@ Cannot perform operational or financial writes.
 
 ## 8.6 Permission deliverable
 
-Create `docs/permissions/permission-matrix.md` listing:
+Create `docs/permissions/jober-permission-matrix.md` listing:
 
 - every page;
 - every command/action;
@@ -2297,11 +2297,11 @@ Complete Phase 0 without implementing broad business features.
 ## Tasks
 
 1. Read this plan and the Jober v0.4 delta.
-2. Create `docs/product/source-register.md`.
+2. Create `docs/product/jober-source-register.md`.
 3. Mark the mixed Jober/Corvinum architecture historical/non-authoritative.
 4. Inventory every demo route/component.
 5. Identify and document screens to remove.
-6. Produce `demo-to-django-map.md`.
+6. Produce `jober-demo-to-django-map.md`.
 7. Create Django modular-monolith skeleton.
 8. Configure PostgreSQL.
 9. Vendor htmx and Alpine with licenses/checksums.
