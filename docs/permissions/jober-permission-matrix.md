@@ -59,7 +59,7 @@ Legend: ✅ permitted · — denied
 | `blacklist.view_reason` (reasons; warning *existence* stays broad) | — | ✅ | ✅ | — |
 | `feedback.view` (worker feedback inbox) | — | — | ✅ | — |
 | `finance.view_summary` | — | — | ✅ | ✅ |
-| `audit.view` | — | — | ✅ | — |
+| `audit.view` | — | — | ✅ | ✅ |
 
 ## Person sensitive fields (per-object rule)
 

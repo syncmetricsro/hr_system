@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-11 15:31+0200\n"
+"POT-Creation-Date: 2026-07-11 23:34+0200\n"
 "Language: uk\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -52,48 +52,48 @@ msgstr "Вітальний дзвінок здійснено"
 msgid "Safety boots"
 msgstr "Захисні черевики"
 
-#: clients/corvinum_eu/templates/layouts/base.html:25
+#: clients/corvinum_eu/templates/layouts/base.html:27
 #: templates/layouts/base.html:15
 msgid "Skip to content"
 msgstr "Перейти до вмісту"
 
-#: clients/corvinum_eu/templates/layouts/base.html:35
+#: clients/corvinum_eu/templates/layouts/base.html:37
 msgid "Main navigation"
 msgstr "Головна навігація"
 
 # --- people list / detail ---
-#: clients/corvinum_eu/templates/layouts/base.html:36
+#: clients/corvinum_eu/templates/layouts/base.html:38
 #: templates/pages/people_list.html:8 templates/pages/reports.html:23
 msgid "Workforce"
 msgstr "Робоча сила"
 
-#: clients/corvinum_eu/templates/layouts/base.html:37
+#: clients/corvinum_eu/templates/layouts/base.html:39
 #: templates/layouts/base.html:26
 msgid "Overview"
 msgstr "Огляд"
 
-#: clients/corvinum_eu/templates/layouts/base.html:38
+#: clients/corvinum_eu/templates/layouts/base.html:40
 #: templates/layouts/base.html:27 templates/pages/people_list.html:4
 #: templates/pages/people_list.html:9 templates/pages/people_list.html:30
 #: templates/pages/reports.html:14
 msgid "People"
 msgstr "Люди"
 
-#: clients/corvinum_eu/templates/layouts/base.html:39
+#: clients/corvinum_eu/templates/layouts/base.html:41
 #: templates/layouts/base.html:28 templates/pages/project_list.html:4
 #: templates/pages/project_list.html:9 templates/pages/project_list.html:16
 msgid "Projects"
 msgstr "Проєкти"
 
 # --- projects UI ---
-#: clients/corvinum_eu/templates/layouts/base.html:41
+#: clients/corvinum_eu/templates/layouts/base.html:43
 #: templates/pages/dashboard.html:8 templates/pages/project_list.html:8
 #: templates/pages/reports.html:8
 msgid "Operations"
 msgstr "Операції"
 
 # --- compliance ---
-#: clients/corvinum_eu/templates/layouts/base.html:43
+#: clients/corvinum_eu/templates/layouts/base.html:45
 #: features/compliance/panels.py:14 features/finance/models.py:68
 #: features/intake/catalog_i18n.py:12 templates/layouts/base.html:32
 #: templates/pages/compliance_list.html:4
@@ -102,51 +102,56 @@ msgstr "Операції"
 msgid "Compliance"
 msgstr "Відповідність"
 
-#: clients/corvinum_eu/templates/layouts/base.html:46
-#: templates/layouts/base.html:49 templates/pages/ledger.html:8
+#: clients/corvinum_eu/templates/layouts/base.html:48
+#: templates/layouts/base.html:51 templates/pages/ledger.html:8
 msgid "Ledger"
 msgstr "Книга"
 
-#: clients/corvinum_eu/templates/layouts/base.html:49
-#: templates/layouts/base.html:52 templates/pages/payslips.html:4
+#: clients/corvinum_eu/templates/layouts/base.html:51
+#: templates/layouts/base.html:54 templates/pages/payslips.html:4
 #: templates/pages/payslips.html:9
 msgid "Payslips"
 msgstr "Розрахункові листи"
 
-#: clients/corvinum_eu/templates/layouts/base.html:52
-#: templates/layouts/base.html:40
+#: clients/corvinum_eu/templates/layouts/base.html:54
+#: templates/layouts/base.html:42
 msgid "Reviews"
 msgstr "Перевірки"
 
-#: clients/corvinum_eu/templates/layouts/base.html:55
-#: templates/layouts/base.html:43 templates/pages/blacklist_queue.html:4
+#: clients/corvinum_eu/templates/layouts/base.html:57
+#: templates/layouts/base.html:45 templates/pages/blacklist_queue.html:4
 #: templates/panels/blacklist_banner.html:3
 #: templates/panels/blacklist_case.html:5
 msgid "Blacklist"
 msgstr "Чорний список"
 
-#: clients/corvinum_eu/templates/layouts/base.html:57
+#: clients/corvinum_eu/templates/layouts/base.html:59
 msgid "System"
 msgstr "Система"
 
-#: clients/corvinum_eu/templates/layouts/base.html:58
+#: clients/corvinum_eu/templates/layouts/base.html:60
 #: templates/layouts/base.html:37 templates/pages/finance_summary.html:8
 #: templates/pages/reports.html:4 templates/pages/reports.html:9
 #: templates/pages/reports.html:12
 msgid "Reports"
 msgstr "Звіти"
 
-#: clients/corvinum_eu/templates/layouts/base.html:73
-#: templates/layouts/base.html:62
+#: clients/corvinum_eu/templates/layouts/base.html:62
+#: templates/layouts/base.html:39
+msgid "Audit"
+msgstr "Аудит"
+
+#: clients/corvinum_eu/templates/layouts/base.html:77
+#: templates/layouts/base.html:64
 msgid "Language"
 msgstr "Мова"
 
-#: clients/corvinum_eu/templates/layouts/base.html:83
-#: templates/layouts/base.html:74
+#: clients/corvinum_eu/templates/layouts/base.html:87
+#: templates/layouts/base.html:76
 msgid "Sign out"
 msgstr "Вийти"
 
-#: clients/corvinum_eu/templates/layouts/base.html:94
+#: clients/corvinum_eu/templates/layouts/base.html:98
 #: templates/layouts/base.html:22
 msgid "Open navigation"
 msgstr "Відкрити навігацію"
@@ -1978,7 +1983,7 @@ msgid "Field"
 msgstr "Поле"
 
 # --- finance ---
-#: templates/layouts/base.html:46 templates/pages/finance_month_detail.html:8
+#: templates/layouts/base.html:48 templates/pages/finance_month_detail.html:8
 #: templates/pages/finance_month_detail.html:39
 #: templates/pages/finance_summary.html:4
 #: templates/pages/finance_summary.html:9 templates/pages/finance_year.html:4
@@ -1988,12 +1993,12 @@ msgid "Finance"
 msgstr "Фінанси"
 
 # --- feedback ---
-#: templates/layouts/base.html:55 templates/pages/feedback_form.html:7
+#: templates/layouts/base.html:57 templates/pages/feedback_form.html:7
 #: templates/pages/feedback_form.html:14
 msgid "Feedback"
 msgstr "Зворотний зв’язок"
 
-#: templates/layouts/base.html:71
+#: templates/layouts/base.html:73
 msgid "Role"
 msgstr "Роль"
 
@@ -2075,6 +2080,105 @@ msgstr "Немає кімнат."
 msgid "Logistics"
 msgstr "Логістика"
 
+#: templates/pages/audit_log.html:4 templates/pages/audit_log.html:9
+msgid "Audit log"
+msgstr "Журнал аудиту"
+
+#: templates/pages/audit_log.html:8
+
+msgid "Oversight"
+msgstr "Нагляд"
+
+#: templates/pages/audit_log.html:10
+msgid ""
+"Append-only record of every sensitive action: who did what, to whom, when, "
+"and why. Entries cannot be edited or deleted."
+msgstr "Незмінний запис кожної чутливої дії: хто, що, кому, коли і чому. Записи не можна редагувати чи видаляти."
+
+#: templates/pages/audit_log.html:16
+msgid "Actor (email contains)"
+msgstr "Виконавець (ел. пошта містить)"
+
+# --- projects UI ---
+#: templates/pages/audit_log.html:17 templates/pages/audit_log.html:40
+msgid "Action"
+msgstr "Дія"
+
+# --- projects UI ---
+#: templates/pages/audit_log.html:19
+
+msgid "All actions"
+msgstr "Усі дії"
+
+#: templates/pages/audit_log.html:22
+
+msgid "Record type"
+msgstr "Тип запису"
+
+#: templates/pages/audit_log.html:24
+msgid "All records"
+msgstr "Усі записи"
+
+#: templates/pages/audit_log.html:27
+msgid "From"
+msgstr "Від"
+
+#: templates/pages/audit_log.html:28
+
+msgid "To"
+msgstr "До"
+
+#: templates/pages/audit_log.html:29
+msgid "Filter"
+msgstr "Фільтрувати"
+
+#: templates/pages/audit_log.html:38
+msgid "When"
+msgstr "Коли"
+
+#: templates/pages/audit_log.html:39
+
+msgid "Actor"
+msgstr "Виконавець"
+
+#: templates/pages/audit_log.html:41 templates/pages/ledger.html:39
+#: templates/pages/payslips.html:24
+msgid "Record"
+msgstr "Записати"
+
+#: templates/pages/audit_log.html:42 templates/pages/blacklist_queue.html:23
+#: templates/pages/blacklist_queue.html:27
+#: templates/pages/finance_month_detail.html:19
+#: templates/pages/person_detail.html:185
+#: templates/panels/blacklist_case.html:11
+#: templates/panels/blacklist_case.html:19
+#: templates/panels/blacklist_case.html:26
+#: templates/panels/blacklist_case.html:37
+msgid "Reason"
+msgstr "Причина"
+
+#: templates/pages/audit_log.html:49
+
+msgid "system"
+msgstr "система"
+
+#: templates/pages/audit_log.html:55
+msgid "No audit events match the filter."
+msgstr "Жодна подія аудиту не відповідає фільтру."
+
+#: templates/pages/audit_log.html:62
+msgid "Newer"
+msgstr "Новіші"
+
+#: templates/pages/audit_log.html:63
+#, python-format
+msgid "Page %(n)s of %(total)s"
+msgstr "Сторінка %(n)s з %(total)s"
+
+#: templates/pages/audit_log.html:64
+msgid "Older"
+msgstr "Старіші"
+
 #: templates/pages/blacklist_queue.html:8
 #: templates/panels/blacklist_case.html:4
 msgid "Risk"
@@ -2097,23 +2201,14 @@ msgstr ""
 msgid "Proposed by"
 msgstr "Запропонував/-ла"
 
-#: templates/pages/blacklist_queue.html:23
-#: templates/pages/blacklist_queue.html:27
-#: templates/pages/finance_month_detail.html:19
-#: templates/pages/person_detail.html:185
-#: templates/panels/blacklist_case.html:11
-#: templates/panels/blacklist_case.html:19
-#: templates/panels/blacklist_case.html:26
-#: templates/panels/blacklist_case.html:37
-msgid "Reason"
-msgstr "Причина"
-
 #: templates/pages/blacklist_queue.html:28
 #: templates/panels/blacklist_case.html:20
 msgid ""
 "This approves the blacklist case: the person becomes Blacklisted and future "
 "re-entry attempts will be flagged."
-msgstr "Схвалює справу чорного списку: особа потрапляє до Чорного списку, і майбутні спроби повернення будуть позначені."
+msgstr ""
+"Схвалює справу чорного списку: особа потрапляє до Чорного списку, і майбутні "
+"спроби повернення будуть позначені."
 
 #: templates/pages/blacklist_queue.html:28
 #: templates/panels/blacklist_case.html:20
@@ -2225,7 +2320,9 @@ msgstr "Примітка до перевірки"
 msgid ""
 "This approves charging the item value to the worker (recorded for recovery; "
 "no automatic payroll deduction)."
-msgstr "Схвалює нарахування вартості предмета працівнику (зафіксовано для відшкодування; без автоматичного утримання із зарплати)."
+msgstr ""
+"Схвалює нарахування вартості предмета працівнику (зафіксовано для "
+"відшкодування; без автоматичного утримання із зарплати)."
 
 #: templates/pages/equipment_reviews.html:31
 msgid "Approve charge"
@@ -2309,12 +2406,16 @@ msgstr "Відкрити місяць знову"
 msgid ""
 "This reopens the locked month for editing; the reopening is audited with "
 "your reason."
-msgstr "Повторно відкриває заблокований місяць для редагування; відкриття фіксується в аудиті з вашою причиною."
+msgstr ""
+"Повторно відкриває заблокований місяць для редагування; відкриття фіксується "
+"в аудиті з вашою причиною."
 
 #: templates/pages/finance_month_detail.html:23
 msgid ""
 "This locks the month; line items become read-only until a manager reopens it."
-msgstr "Блокує місяць; позиції стають лише для читання, доки менеджер не відкриє його знову."
+msgstr ""
+"Блокує місяць; позиції стають лише для читання, доки менеджер не відкриє "
+"його знову."
 
 #: templates/pages/finance_month_detail.html:25
 msgid "Lock month"
@@ -2456,10 +2557,6 @@ msgstr "Сума (EUR)"
 msgid "Note"
 msgstr "Нотатка"
 
-#: templates/pages/ledger.html:39 templates/pages/payslips.html:24
-msgid "Record"
-msgstr "Записати"
-
 #: templates/pages/ledger.html:45
 msgid "Thursday summary"
 msgstr "Четверговий підсумок"
@@ -2519,7 +2616,9 @@ msgstr "Чистий вплив на зарплату"
 msgid ""
 "This locks every open entry of the window into the cycle; locked entries can "
 "only be corrected by reversal."
-msgstr "Блокує всі відкриті записи вікна в цикл; заблоковані записи можна виправити лише сторно."
+msgstr ""
+"Блокує всі відкриті записи вікна в цикл; заблоковані записи можна виправити "
+"лише сторно."
 
 #: templates/pages/ledger.html:85
 msgid "Include open entries in cycle"
@@ -2553,7 +2652,9 @@ msgstr "Розрахунок"
 msgid ""
 "This records a reversal entry with the opposite pay effect; the original "
 "stays in the ledger."
-msgstr "Записує сторно-запис із протилежним впливом на зарплату; оригінал залишається в книзі."
+msgstr ""
+"Записує сторно-запис із протилежним впливом на зарплату; оригінал "
+"залишається в книзі."
 
 #: templates/pages/ledger.html:112
 msgid "Reverse"
@@ -2562,10 +2663,12 @@ msgstr "Сторнувати"
 #: templates/pages/ledger.html:114
 msgid ""
 "This cancels the open ledger entry; it will no longer count against pay."
-msgstr "Скасовує відкритий запис у книзі; він більше не враховуватиметься щодо зарплати."
+msgstr ""
+"Скасовує відкритий запис у книзі; він більше не враховуватиметься щодо "
+"зарплати."
 
 # --- compliance ---
-#: templates/pages/ledger.html:114 templates/partials/confirm_dialog.html:10
+#: templates/pages/ledger.html:114 templates/partials/confirm_dialog.html:12
 msgid "Cancel"
 msgstr "Скасувати"
 
@@ -2787,22 +2890,24 @@ msgstr ""
 "спорядження."
 
 #: templates/pages/person_detail.html:164
-
 msgid ""
 "This ends the active assignment, releases the room, returns issued "
 "equipment, and sets the person to Available."
-msgstr "Завершує активне призначення, звільняє кімнату, повертає видане спорядження та переводить особу в статус Доступний."
+msgstr ""
+"Завершує активне призначення, звільняє кімнату, повертає видане спорядження "
+"та переводить особу в статус Доступний."
 
 #: templates/pages/person_detail.html:166
 msgid "Exit to Available"
 msgstr "Вихід до Доступний"
 
 #: templates/pages/person_detail.html:168
-
 msgid ""
 "This ends the active assignment, releases the room, returns issued "
 "equipment, and sets the person to Inactive with the chosen reason."
-msgstr "Завершує активне призначення, звільняє кімнату, повертає видане спорядження та переводить особу в статус Неактивний з обраною причиною."
+msgstr ""
+"Завершує активне призначення, звільняє кімнату, повертає видане спорядження "
+"та переводить особу в статус Неактивний з обраною причиною."
 
 #: templates/pages/person_detail.html:170
 msgid "Inactive reason"
@@ -2992,7 +3097,9 @@ msgstr "Причина обмежена."
 msgid ""
 "This removes the person from the blacklist; re-entry checks will no longer "
 "match them."
-msgstr "Видаляє особу з чорного списку; перевірки повернення її більше не виявлятимуть."
+msgstr ""
+"Видаляє особу з чорного списку; перевірки повернення її більше не "
+"виявлятимуть."
 
 #: templates/panels/blacklist_case.html:27
 msgid "Remove from blacklist"
@@ -3038,7 +3145,9 @@ msgstr "Повернути"
 msgid ""
 "This flags the item as unreturned and opens a manager charge review at its "
 "current value."
-msgstr "Позначає предмет як неповернений і відкриває менеджерську перевірку нарахування за його поточною вартістю."
+msgstr ""
+"Позначає предмет як неповернений і відкриває менеджерську перевірку "
+"нарахування за його поточною вартістю."
 
 #: templates/panels/logistics_equipment.html:20
 msgid "Flag unreturned"
@@ -3097,16 +3206,15 @@ msgstr "Повідомлення"
 msgid "Or type a message"
 msgstr "Або введіть повідомлення"
 
-#: templates/partials/confirm_dialog.html:6
-
+#: templates/partials/confirm_dialog.html:8
 msgid "Please confirm"
 msgstr "Будь ласка, підтвердьте"
 
-#: templates/partials/confirm_dialog.html:8
+#: templates/partials/confirm_dialog.html:10
 msgid "Do you really want to do this?"
 msgstr "Ви справді хочете це зробити?"
 
-#: templates/partials/confirm_dialog.html:11
+#: templates/partials/confirm_dialog.html:13
 msgid "Yes, proceed"
 msgstr "Так, продовжити"
 

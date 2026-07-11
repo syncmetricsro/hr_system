@@ -57,6 +57,8 @@
 
         <p class="sb-section">{% trans "System" %}</p>
         <a class="sb-item {% nav_active 'reports' %}" href="{% url 'reports' %}"><span class="material-symbols-outlined" aria-hidden="true">trending_up</span><span class="sb-text">{% trans "Reports" %}</span></a>
+        {% can 'audit.view' as may_audit %}
+        {% if may_audit %}<a class="sb-item {% nav_active 'audit_log' %}" href="{% url 'audit_log' %}"><span class="material-symbols-outlined" aria-hidden="true">verified_user</span><span class="sb-text">{% trans "Audit" %}</span></a>{% endif %}
       </nav>
       <div class="sb-foot">
         <div class="sb-user">

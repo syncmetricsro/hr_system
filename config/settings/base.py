@@ -203,6 +203,25 @@ DEFAULT_FROM_EMAIL = os.getenv("DJANGO_DEFAULT_FROM_EMAIL", "noreply@localhost")
 # behavior change; CorvinumEU will require it for HR/admin/manager (§5.12).
 TWO_FACTOR_REQUIRED_ROLES: list[str] = []
 
+# Error visibility (production-readiness, 2026-07-12): request failures and
+# security warnings must reach stdout/stderr so `dokku logs` / `docker logs`
+# show real tracebacks — a silent 500 cost us debugging time in Stage C4.
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "console": {"format": "%(asctime)s %(levelname)s %(name)s %(message)s"},
+    },
+    "handlers": {
+        "console": {"class": "logging.StreamHandler", "formatter": "console"},
+    },
+    "root": {"handlers": ["console"], "level": os.getenv("DJANGO_LOG_LEVEL", "WARNING")},
+    "loggers": {
+        "django.request": {"handlers": ["console"], "level": "ERROR", "propagate": False},
+        "django.security": {"handlers": ["console"], "level": "WARNING", "propagate": False},
+    },
+}
+
 CSRF_COOKIE_HTTPONLY = True
 SESSION_COOKIE_HTTPONLY = True
 

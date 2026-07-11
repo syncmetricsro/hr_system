@@ -39,7 +39,7 @@ Legend: ✅ permitted · — denied
 | `catalog.manage` | — | — | ✅ | — |
 | `user.manage` | — | — | ✅ | — |
 | `export.approved` | — | — | ✅ | ✅ |
-| `audit.view` | — | — | ✅ | — |
+| `audit.view` | — | — | ✅ | ✅ |
 
 ## Lifecycle transitions (trial-less, C-Q1 default)
 

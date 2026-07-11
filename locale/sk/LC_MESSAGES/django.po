@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-11 15:31+0200\n"
+"POT-Creation-Date: 2026-07-11 23:34+0200\n"
 "Language: sk\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -51,48 +51,48 @@ msgstr "Uvítací telefonát uskutočnený"
 msgid "Safety boots"
 msgstr "Bezpečnostná obuv"
 
-#: clients/corvinum_eu/templates/layouts/base.html:25
+#: clients/corvinum_eu/templates/layouts/base.html:27
 #: templates/layouts/base.html:15
 msgid "Skip to content"
 msgstr "Preskočiť na obsah"
 
-#: clients/corvinum_eu/templates/layouts/base.html:35
+#: clients/corvinum_eu/templates/layouts/base.html:37
 msgid "Main navigation"
 msgstr "Hlavná navigácia"
 
 # --- people list / detail ---
-#: clients/corvinum_eu/templates/layouts/base.html:36
+#: clients/corvinum_eu/templates/layouts/base.html:38
 #: templates/pages/people_list.html:8 templates/pages/reports.html:23
 msgid "Workforce"
 msgstr "Pracovná sila"
 
-#: clients/corvinum_eu/templates/layouts/base.html:37
+#: clients/corvinum_eu/templates/layouts/base.html:39
 #: templates/layouts/base.html:26
 msgid "Overview"
 msgstr "Prehľad"
 
-#: clients/corvinum_eu/templates/layouts/base.html:38
+#: clients/corvinum_eu/templates/layouts/base.html:40
 #: templates/layouts/base.html:27 templates/pages/people_list.html:4
 #: templates/pages/people_list.html:9 templates/pages/people_list.html:30
 #: templates/pages/reports.html:14
 msgid "People"
 msgstr "Ľudia"
 
-#: clients/corvinum_eu/templates/layouts/base.html:39
+#: clients/corvinum_eu/templates/layouts/base.html:41
 #: templates/layouts/base.html:28 templates/pages/project_list.html:4
 #: templates/pages/project_list.html:9 templates/pages/project_list.html:16
 msgid "Projects"
 msgstr "Projekty"
 
 # --- projects UI ---
-#: clients/corvinum_eu/templates/layouts/base.html:41
+#: clients/corvinum_eu/templates/layouts/base.html:43
 #: templates/pages/dashboard.html:8 templates/pages/project_list.html:8
 #: templates/pages/reports.html:8
 msgid "Operations"
 msgstr "Prevádzka"
 
 # --- compliance ---
-#: clients/corvinum_eu/templates/layouts/base.html:43
+#: clients/corvinum_eu/templates/layouts/base.html:45
 #: features/compliance/panels.py:14 features/finance/models.py:68
 #: features/intake/catalog_i18n.py:12 templates/layouts/base.html:32
 #: templates/pages/compliance_list.html:4
@@ -101,51 +101,56 @@ msgstr "Prevádzka"
 msgid "Compliance"
 msgstr "Súlad"
 
-#: clients/corvinum_eu/templates/layouts/base.html:46
-#: templates/layouts/base.html:49 templates/pages/ledger.html:8
+#: clients/corvinum_eu/templates/layouts/base.html:48
+#: templates/layouts/base.html:51 templates/pages/ledger.html:8
 msgid "Ledger"
 msgstr "Kniha záloh"
 
-#: clients/corvinum_eu/templates/layouts/base.html:49
-#: templates/layouts/base.html:52 templates/pages/payslips.html:4
+#: clients/corvinum_eu/templates/layouts/base.html:51
+#: templates/layouts/base.html:54 templates/pages/payslips.html:4
 #: templates/pages/payslips.html:9
 msgid "Payslips"
 msgstr "Výplatné pásky"
 
-#: clients/corvinum_eu/templates/layouts/base.html:52
-#: templates/layouts/base.html:40
+#: clients/corvinum_eu/templates/layouts/base.html:54
+#: templates/layouts/base.html:42
 msgid "Reviews"
 msgstr "Kontroly"
 
-#: clients/corvinum_eu/templates/layouts/base.html:55
-#: templates/layouts/base.html:43 templates/pages/blacklist_queue.html:4
+#: clients/corvinum_eu/templates/layouts/base.html:57
+#: templates/layouts/base.html:45 templates/pages/blacklist_queue.html:4
 #: templates/panels/blacklist_banner.html:3
 #: templates/panels/blacklist_case.html:5
 msgid "Blacklist"
 msgstr "Čierna listina"
 
-#: clients/corvinum_eu/templates/layouts/base.html:57
+#: clients/corvinum_eu/templates/layouts/base.html:59
 msgid "System"
 msgstr "Systém"
 
-#: clients/corvinum_eu/templates/layouts/base.html:58
+#: clients/corvinum_eu/templates/layouts/base.html:60
 #: templates/layouts/base.html:37 templates/pages/finance_summary.html:8
 #: templates/pages/reports.html:4 templates/pages/reports.html:9
 #: templates/pages/reports.html:12
 msgid "Reports"
 msgstr "Reporty"
 
-#: clients/corvinum_eu/templates/layouts/base.html:73
-#: templates/layouts/base.html:62
+#: clients/corvinum_eu/templates/layouts/base.html:62
+#: templates/layouts/base.html:39
+msgid "Audit"
+msgstr "Audit"
+
+#: clients/corvinum_eu/templates/layouts/base.html:77
+#: templates/layouts/base.html:64
 msgid "Language"
 msgstr "Jazyk"
 
-#: clients/corvinum_eu/templates/layouts/base.html:83
-#: templates/layouts/base.html:74
+#: clients/corvinum_eu/templates/layouts/base.html:87
+#: templates/layouts/base.html:76
 msgid "Sign out"
 msgstr "Odhlásiť sa"
 
-#: clients/corvinum_eu/templates/layouts/base.html:94
+#: clients/corvinum_eu/templates/layouts/base.html:98
 #: templates/layouts/base.html:22
 msgid "Open navigation"
 msgstr "Otvoriť navigáciu"
@@ -1977,7 +1982,7 @@ msgid "Field"
 msgstr "Terén"
 
 # --- finance ---
-#: templates/layouts/base.html:46 templates/pages/finance_month_detail.html:8
+#: templates/layouts/base.html:48 templates/pages/finance_month_detail.html:8
 #: templates/pages/finance_month_detail.html:39
 #: templates/pages/finance_summary.html:4
 #: templates/pages/finance_summary.html:9 templates/pages/finance_year.html:4
@@ -1987,12 +1992,12 @@ msgid "Finance"
 msgstr "Financie"
 
 # --- feedback ---
-#: templates/layouts/base.html:55 templates/pages/feedback_form.html:7
+#: templates/layouts/base.html:57 templates/pages/feedback_form.html:7
 #: templates/pages/feedback_form.html:14
 msgid "Feedback"
 msgstr "Spätná väzba"
 
-#: templates/layouts/base.html:71
+#: templates/layouts/base.html:73
 msgid "Role"
 msgstr "Rola"
 
@@ -2074,6 +2079,105 @@ msgstr "Žiadne izby."
 msgid "Logistics"
 msgstr "Logistika"
 
+#: templates/pages/audit_log.html:4 templates/pages/audit_log.html:9
+msgid "Audit log"
+msgstr "Auditný denník"
+
+#: templates/pages/audit_log.html:8
+
+msgid "Oversight"
+msgstr "Dohľad"
+
+#: templates/pages/audit_log.html:10
+msgid ""
+"Append-only record of every sensitive action: who did what, to whom, when, "
+"and why. Entries cannot be edited or deleted."
+msgstr "Nemenný záznam každej citlivej akcie: kto, čo, komu, kedy a prečo. Záznamy nemožno upravovať ani mazať."
+
+#: templates/pages/audit_log.html:16
+msgid "Actor (email contains)"
+msgstr "Aktér (e-mail obsahuje)"
+
+# --- projects UI ---
+#: templates/pages/audit_log.html:17 templates/pages/audit_log.html:40
+msgid "Action"
+msgstr "Akcia"
+
+# --- projects UI ---
+#: templates/pages/audit_log.html:19
+
+msgid "All actions"
+msgstr "Všetky akcie"
+
+#: templates/pages/audit_log.html:22
+
+msgid "Record type"
+msgstr "Typ záznamu"
+
+#: templates/pages/audit_log.html:24
+msgid "All records"
+msgstr "Všetky záznamy"
+
+#: templates/pages/audit_log.html:27
+msgid "From"
+msgstr "Od"
+
+#: templates/pages/audit_log.html:28
+
+msgid "To"
+msgstr "Do"
+
+#: templates/pages/audit_log.html:29
+msgid "Filter"
+msgstr "Filtrovať"
+
+#: templates/pages/audit_log.html:38
+msgid "When"
+msgstr "Kedy"
+
+#: templates/pages/audit_log.html:39
+
+msgid "Actor"
+msgstr "Aktér"
+
+#: templates/pages/audit_log.html:41 templates/pages/ledger.html:39
+#: templates/pages/payslips.html:24
+msgid "Record"
+msgstr "Uložiť"
+
+#: templates/pages/audit_log.html:42 templates/pages/blacklist_queue.html:23
+#: templates/pages/blacklist_queue.html:27
+#: templates/pages/finance_month_detail.html:19
+#: templates/pages/person_detail.html:185
+#: templates/panels/blacklist_case.html:11
+#: templates/panels/blacklist_case.html:19
+#: templates/panels/blacklist_case.html:26
+#: templates/panels/blacklist_case.html:37
+msgid "Reason"
+msgstr "Dôvod"
+
+#: templates/pages/audit_log.html:49
+
+msgid "system"
+msgstr "systém"
+
+#: templates/pages/audit_log.html:55
+msgid "No audit events match the filter."
+msgstr "Filtru nezodpovedajú žiadne auditné udalosti."
+
+#: templates/pages/audit_log.html:62
+msgid "Newer"
+msgstr "Novšie"
+
+#: templates/pages/audit_log.html:63
+#, python-format
+msgid "Page %(n)s of %(total)s"
+msgstr "Strana %(n)s z %(total)s"
+
+#: templates/pages/audit_log.html:64
+msgid "Older"
+msgstr "Staršie"
+
 #: templates/pages/blacklist_queue.html:8
 #: templates/panels/blacklist_case.html:4
 msgid "Risk"
@@ -2096,23 +2200,14 @@ msgstr ""
 msgid "Proposed by"
 msgstr "Navrhol/-la"
 
-#: templates/pages/blacklist_queue.html:23
-#: templates/pages/blacklist_queue.html:27
-#: templates/pages/finance_month_detail.html:19
-#: templates/pages/person_detail.html:185
-#: templates/panels/blacklist_case.html:11
-#: templates/panels/blacklist_case.html:19
-#: templates/panels/blacklist_case.html:26
-#: templates/panels/blacklist_case.html:37
-msgid "Reason"
-msgstr "Dôvod"
-
 #: templates/pages/blacklist_queue.html:28
 #: templates/panels/blacklist_case.html:20
 msgid ""
 "This approves the blacklist case: the person becomes Blacklisted and future "
 "re-entry attempts will be flagged."
-msgstr "Schváli prípad čiernej listiny: osoba bude Na čiernej listine a budúce pokusy o návrat budú označené."
+msgstr ""
+"Schváli prípad čiernej listiny: osoba bude Na čiernej listine a budúce "
+"pokusy o návrat budú označené."
 
 #: templates/pages/blacklist_queue.html:28
 #: templates/panels/blacklist_case.html:20
@@ -2224,7 +2319,9 @@ msgstr "Poznámka ku kontrole"
 msgid ""
 "This approves charging the item value to the worker (recorded for recovery; "
 "no automatic payroll deduction)."
-msgstr "Schváli účtovanie hodnoty položky pracovníkovi (evidované na vymáhanie; žiadna automatická zrážka zo mzdy)."
+msgstr ""
+"Schváli účtovanie hodnoty položky pracovníkovi (evidované na vymáhanie; "
+"žiadna automatická zrážka zo mzdy)."
 
 #: templates/pages/equipment_reviews.html:31
 msgid "Approve charge"
@@ -2308,12 +2405,15 @@ msgstr "Znovu otvoriť mesiac"
 msgid ""
 "This reopens the locked month for editing; the reopening is audited with "
 "your reason."
-msgstr "Znovu otvorí uzamknutý mesiac na úpravy; opätovné otvorenie sa audituje s vaším dôvodom."
+msgstr ""
+"Znovu otvorí uzamknutý mesiac na úpravy; opätovné otvorenie sa audituje s "
+"vaším dôvodom."
 
 #: templates/pages/finance_month_detail.html:23
 msgid ""
 "This locks the month; line items become read-only until a manager reopens it."
-msgstr "Uzamkne mesiac; položky budú len na čítanie, kým ho manažér znovu neotvorí."
+msgstr ""
+"Uzamkne mesiac; položky budú len na čítanie, kým ho manažér znovu neotvorí."
 
 #: templates/pages/finance_month_detail.html:25
 msgid "Lock month"
@@ -2455,10 +2555,6 @@ msgstr "Suma (EUR)"
 msgid "Note"
 msgstr "Poznámka"
 
-#: templates/pages/ledger.html:39 templates/pages/payslips.html:24
-msgid "Record"
-msgstr "Uložiť"
-
 #: templates/pages/ledger.html:45
 msgid "Thursday summary"
 msgstr "Štvrtkový súhrn"
@@ -2518,7 +2614,9 @@ msgstr "Čistý vplyv na mzdu"
 msgid ""
 "This locks every open entry of the window into the cycle; locked entries can "
 "only be corrected by reversal."
-msgstr "Uzamkne všetky otvorené záznamy okna do cyklu; uzamknuté záznamy možno opraviť len stornom."
+msgstr ""
+"Uzamkne všetky otvorené záznamy okna do cyklu; uzamknuté záznamy možno "
+"opraviť len stornom."
 
 #: templates/pages/ledger.html:85
 msgid "Include open entries in cycle"
@@ -2552,7 +2650,9 @@ msgstr "Vysporiadanie"
 msgid ""
 "This records a reversal entry with the opposite pay effect; the original "
 "stays in the ledger."
-msgstr "Zaznamená storno záznam s opačným vplyvom na mzdu; pôvodný záznam ostáva v knihe."
+msgstr ""
+"Zaznamená storno záznam s opačným vplyvom na mzdu; pôvodný záznam ostáva v "
+"knihe."
 
 #: templates/pages/ledger.html:112
 msgid "Reverse"
@@ -2564,7 +2664,7 @@ msgid ""
 msgstr "Zruší otvorený záznam v knihe; už sa nebude započítavať voči mzde."
 
 # --- compliance ---
-#: templates/pages/ledger.html:114 templates/partials/confirm_dialog.html:10
+#: templates/pages/ledger.html:114 templates/partials/confirm_dialog.html:12
 msgid "Cancel"
 msgstr "Zrušiť"
 
@@ -2784,22 +2884,24 @@ msgid ""
 msgstr "Ukončí pridelenie na projekt, uvoľní izbu a vráti vydané vybavenie."
 
 #: templates/pages/person_detail.html:164
-
 msgid ""
 "This ends the active assignment, releases the room, returns issued "
 "equipment, and sets the person to Available."
-msgstr "Ukončí aktívne priradenie, uvoľní izbu, vráti vydanú výbavu a nastaví osobu na Dostupný."
+msgstr ""
+"Ukončí aktívne priradenie, uvoľní izbu, vráti vydanú výbavu a nastaví osobu "
+"na Dostupný."
 
 #: templates/pages/person_detail.html:166
 msgid "Exit to Available"
 msgstr "Odchod na Dostupný"
 
 #: templates/pages/person_detail.html:168
-
 msgid ""
 "This ends the active assignment, releases the room, returns issued "
 "equipment, and sets the person to Inactive with the chosen reason."
-msgstr "Ukončí aktívne priradenie, uvoľní izbu, vráti vydanú výbavu a nastaví osobu na Neaktívny so zvoleným dôvodom."
+msgstr ""
+"Ukončí aktívne priradenie, uvoľní izbu, vráti vydanú výbavu a nastaví osobu "
+"na Neaktívny so zvoleným dôvodom."
 
 #: templates/pages/person_detail.html:170
 msgid "Inactive reason"
@@ -2986,7 +3088,8 @@ msgstr "Dôvod je obmedzený."
 msgid ""
 "This removes the person from the blacklist; re-entry checks will no longer "
 "match them."
-msgstr "Odstráni osobu z čiernej listiny; kontroly návratu ju už nebudú zachytávať."
+msgstr ""
+"Odstráni osobu z čiernej listiny; kontroly návratu ju už nebudú zachytávať."
 
 #: templates/panels/blacklist_case.html:27
 msgid "Remove from blacklist"
@@ -3032,7 +3135,9 @@ msgstr "Vrátiť"
 msgid ""
 "This flags the item as unreturned and opens a manager charge review at its "
 "current value."
-msgstr "Označí položku ako nevrátenú a otvorí manažérsku kontrolu úhrady v jej aktuálnej hodnote."
+msgstr ""
+"Označí položku ako nevrátenú a otvorí manažérsku kontrolu úhrady v jej "
+"aktuálnej hodnote."
 
 #: templates/panels/logistics_equipment.html:20
 msgid "Flag unreturned"
@@ -3091,16 +3196,15 @@ msgstr "Správa"
 msgid "Or type a message"
 msgstr "Alebo napíšte správu"
 
-#: templates/partials/confirm_dialog.html:6
-
+#: templates/partials/confirm_dialog.html:8
 msgid "Please confirm"
 msgstr "Prosím, potvrďte"
 
-#: templates/partials/confirm_dialog.html:8
+#: templates/partials/confirm_dialog.html:10
 msgid "Do you really want to do this?"
 msgstr "Naozaj to chcete urobiť?"
 
-#: templates/partials/confirm_dialog.html:11
+#: templates/partials/confirm_dialog.html:13
 msgid "Yes, proceed"
 msgstr "Áno, pokračovať"
 

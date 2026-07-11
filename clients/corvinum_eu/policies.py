@@ -46,7 +46,7 @@ ACTION_ROLES: dict[Action, frozenset[Role]] = {
     Action.CATALOG_MANAGE: frozenset({_MANAGER}),
     Action.USER_MANAGE: frozenset({_MANAGER}),
     Action.EXPORT_APPROVED: frozenset({_MANAGER, _OBSERVER}),
-    Action.AUDIT_VIEW: frozenset({_MANAGER}),
+    Action.AUDIT_VIEW: frozenset({_MANAGER, _OBSERVER}),
 }
 
 # Core lifecycle minus TRIAL_DAY (recruitment_trials off; C-Q1 default).
