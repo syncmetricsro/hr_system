@@ -6,6 +6,8 @@ from __future__ import annotations
 
 from decimal import Decimal
 
+from django.utils.translation import gettext as _
+
 from core.ui.registry import flag_enabled
 from features.advances.models import EntryType, LedgerCategory
 from features.advances.services import record_entry
@@ -28,5 +30,5 @@ def equipment_charge_to_ledger(issue, *, actor=None) -> None:
         amount=amount,
         actor=actor,
         project=project,
-        note=f"equipment charge: {issue.item.name} ×{issue.quantity} (issue #{issue.pk})",
+        note=_("equipment charge: %(item)s ×%(qty)s (issue #%(id)s)") % {"item": _(issue.item.name), "qty": issue.quantity, "id": issue.pk},
     )

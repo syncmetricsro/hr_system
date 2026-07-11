@@ -27,3 +27,14 @@ def flag_on(name: str) -> bool:
     from core.ui.registry import flag_enabled
 
     return flag_enabled(name)
+
+
+@register.filter
+def db_trans(value):
+    """Runtime-translate seeded catalog labels (blacklist categories,
+    checklist items, …): the DB stores the canonical English string; if the
+    active catalog has it as a msgid it renders localized, otherwise the
+    operator-entered text falls through unchanged."""
+    from django.utils.translation import gettext
+
+    return gettext(str(value)) if value else value

@@ -5,54 +5,99 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-11 13:52+0200\n"
+"POT-Creation-Date: 2026-07-11 14:38+0200\n"
 "Language: sk\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n>=2 && n<=4 ? 1 : 2);\n"
 
-#: clients/corvinum_eu/templates/layouts/base.html:19
+#: clients/corvinum_eu/catalog_i18n.py:12
+
+msgid "Personal data complete"
+msgstr "Osobné údaje kompletné"
+
+#: clients/corvinum_eu/catalog_i18n.py:13
+msgid "Identity document verified"
+msgstr "Doklad totožnosti overený"
+
+#: clients/corvinum_eu/catalog_i18n.py:14
+msgid "Work/residence permit valid (if applicable)"
+msgstr "Pracovné/pobytové povolenie platné (ak je potrebné)"
+
+#: clients/corvinum_eu/catalog_i18n.py:15
+
+msgid "Medical certificate valid"
+msgstr "Lekárske potvrdenie platné"
+
+#: clients/corvinum_eu/catalog_i18n.py:16
+msgid "Safety training completed"
+msgstr "Školenie BOZP absolvované"
+
+#: clients/corvinum_eu/catalog_i18n.py:17
+
+msgid "Contract signed"
+msgstr "Zmluva podpísaná"
+
+#: clients/corvinum_eu/catalog_i18n.py:18
+msgid "Duplicate check resolved"
+msgstr "Kontrola duplicity vyriešená"
+
+#: clients/corvinum_eu/catalog_i18n.py:19
+
+msgid "Blacklist check resolved"
+msgstr "Kontrola čiernej listiny vyriešená"
+
+#: clients/corvinum_eu/catalog_i18n.py:20
+msgid "Welcome call made"
+msgstr "Uvítací telefonát uskutočnený"
+
+#: clients/corvinum_eu/catalog_i18n.py:24
+
+msgid "Safety boots"
+msgstr "Bezpečnostná obuv"
+
+#: clients/corvinum_eu/templates/layouts/base.html:25
 #: templates/layouts/base.html:15
 msgid "Skip to content"
 msgstr "Preskočiť na obsah"
 
-#: clients/corvinum_eu/templates/layouts/base.html:29
+#: clients/corvinum_eu/templates/layouts/base.html:35
 msgid "Main navigation"
 msgstr "Hlavná navigácia"
 
 # --- people list / detail ---
-#: clients/corvinum_eu/templates/layouts/base.html:30
+#: clients/corvinum_eu/templates/layouts/base.html:36
 #: templates/pages/people_list.html:8 templates/pages/reports.html:23
 msgid "Workforce"
 msgstr "Pracovná sila"
 
-#: clients/corvinum_eu/templates/layouts/base.html:31
+#: clients/corvinum_eu/templates/layouts/base.html:37
 #: templates/layouts/base.html:26
 msgid "Overview"
 msgstr "Prehľad"
 
-#: clients/corvinum_eu/templates/layouts/base.html:32
+#: clients/corvinum_eu/templates/layouts/base.html:38
 #: templates/layouts/base.html:27 templates/pages/people_list.html:4
 #: templates/pages/people_list.html:9 templates/pages/people_list.html:30
 #: templates/pages/reports.html:14
 msgid "People"
 msgstr "Ľudia"
 
-#: clients/corvinum_eu/templates/layouts/base.html:33
+#: clients/corvinum_eu/templates/layouts/base.html:39
 #: templates/layouts/base.html:28 templates/pages/project_list.html:4
 #: templates/pages/project_list.html:9 templates/pages/project_list.html:16
 msgid "Projects"
 msgstr "Projekty"
 
 # --- projects UI ---
-#: clients/corvinum_eu/templates/layouts/base.html:35
+#: clients/corvinum_eu/templates/layouts/base.html:41
 #: templates/pages/dashboard.html:8 templates/pages/project_list.html:8
 #: templates/pages/reports.html:8
 msgid "Operations"
 msgstr "Prevádzka"
 
 # --- compliance ---
-#: clients/corvinum_eu/templates/layouts/base.html:37
+#: clients/corvinum_eu/templates/layouts/base.html:43
 #: features/compliance/panels.py:14 features/finance/models.py:68
 #: templates/layouts/base.html:32 templates/pages/compliance_list.html:4
 #: templates/pages/compliance_list.html:9
@@ -60,51 +105,51 @@ msgstr "Prevádzka"
 msgid "Compliance"
 msgstr "Súlad"
 
-#: clients/corvinum_eu/templates/layouts/base.html:40
+#: clients/corvinum_eu/templates/layouts/base.html:46
 #: templates/layouts/base.html:49 templates/pages/ledger.html:8
 msgid "Ledger"
 msgstr "Kniha záloh"
 
-#: clients/corvinum_eu/templates/layouts/base.html:43
+#: clients/corvinum_eu/templates/layouts/base.html:49
 #: templates/layouts/base.html:52 templates/pages/payslips.html:4
 #: templates/pages/payslips.html:9
 msgid "Payslips"
 msgstr "Výplatné pásky"
 
-#: clients/corvinum_eu/templates/layouts/base.html:46
+#: clients/corvinum_eu/templates/layouts/base.html:52
 #: templates/layouts/base.html:40
 msgid "Reviews"
 msgstr "Kontroly"
 
-#: clients/corvinum_eu/templates/layouts/base.html:49
+#: clients/corvinum_eu/templates/layouts/base.html:55
 #: templates/layouts/base.html:43 templates/pages/blacklist_queue.html:4
 #: templates/panels/blacklist_banner.html:3
 #: templates/panels/blacklist_case.html:5
 msgid "Blacklist"
 msgstr "Čierna listina"
 
-#: clients/corvinum_eu/templates/layouts/base.html:51
+#: clients/corvinum_eu/templates/layouts/base.html:57
 msgid "System"
 msgstr "Systém"
 
-#: clients/corvinum_eu/templates/layouts/base.html:52
+#: clients/corvinum_eu/templates/layouts/base.html:58
 #: templates/layouts/base.html:37 templates/pages/finance_summary.html:8
 #: templates/pages/reports.html:4 templates/pages/reports.html:9
 #: templates/pages/reports.html:12
 msgid "Reports"
 msgstr "Reporty"
 
-#: clients/corvinum_eu/templates/layouts/base.html:67
+#: clients/corvinum_eu/templates/layouts/base.html:73
 #: templates/layouts/base.html:62
 msgid "Language"
 msgstr "Jazyk"
 
-#: clients/corvinum_eu/templates/layouts/base.html:77
+#: clients/corvinum_eu/templates/layouts/base.html:83
 #: templates/layouts/base.html:74
 msgid "Sign out"
 msgstr "Odhlásiť sa"
 
-#: clients/corvinum_eu/templates/layouts/base.html:88
+#: clients/corvinum_eu/templates/layouts/base.html:94
 #: templates/layouts/base.html:22
 msgid "Open navigation"
 msgstr "Otvoriť navigáciu"
@@ -710,6 +755,11 @@ msgstr "Odchod dokončený."
 msgid "Activated — now Working."
 msgstr "Aktivované — teraz Pracuje."
 
+#: features/advances/hooks.py:33
+#, python-format
+msgid "equipment charge: %(item)s ×%(qty)s (issue #%(id)s)"
+msgstr "úhrada za výbavu: %(item)s ×%(qty)s (výdaj č. %(id)s)"
+
 #: features/advances/models.py:15 features/advances/models.py:34
 msgid "Cash advance"
 msgstr "Hotovostná záloha"
@@ -769,8 +819,9 @@ msgstr "Lekárska"
 msgid "Travel / fuel"
 msgstr "Cestovné / palivo"
 
-#: features/advances/models.py:40 features/blacklist/models.py:87
-#: features/blacklist/panels.py:56 features/finance/models.py:74
+#: features/advances/models.py:40 features/blacklist/catalog_i18n.py:15
+#: features/blacklist/models.py:87 features/blacklist/panels.py:56
+#: features/finance/models.py:74
 msgid "Other"
 msgstr "Ostatné"
 
@@ -893,6 +944,22 @@ msgstr "Do cyklu bolo zahrnutých %(n)s záznamov."
 #, python-format
 msgid "%(n)s entries marked settled."
 msgstr "%(n)s záznamov označených ako vysporiadané."
+
+#: features/blacklist/catalog_i18n.py:11
+msgid "Fraud / dishonesty"
+msgstr "Podvod / nepoctivosť"
+
+#: features/blacklist/catalog_i18n.py:12
+msgid "Safety violation"
+msgstr "Porušenie bezpečnosti"
+
+#: features/blacklist/catalog_i18n.py:13
+msgid "Repeated no-show"
+msgstr "Opakovaná neúčasť"
+
+#: features/blacklist/catalog_i18n.py:14
+msgid "Serious misconduct"
+msgstr "Závažné pochybenie"
 
 #: features/blacklist/models.py:21
 msgid "blacklist category"
@@ -1076,7 +1143,7 @@ msgstr "položka kontrolného zoznamu osoby"
 msgid "person checklist items"
 msgstr "položky kontrolného zoznamu osoby"
 
-#: features/checklists/services.py:70
+#: features/checklists/services.py:72
 #, python-format
 msgid "Activation blocked by open checklist items: %(items)s"
 msgstr ""

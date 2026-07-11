@@ -1,5 +1,16 @@
 # Test Journal
 
+## 2026-07-11 — i18n sweep (catalog data)
+
+- **273 unit + 16 e2e green**; catalogs 649/649 (sk/hu/uk) via msgfmt.
+- Live HU drive on :8001: checklist labels, blacklist category, and the
+  seeded equipment name all render Hungarian; SK equivalents via the same
+  msgids. Jober SK UI gains the same translations for the shared seeded
+  blacklist categories (previously English there too).
+- Locale gotcha again: the new gettext calls translated strings that three
+  tests asserted in English under the SK default — fixed with the
+  established `translation.override("en")` pattern, assertions unchanged.
+
 ## 2026-07-11 — Stage C8 (corvinum shell port)
 
 - **273 unit + 16 e2e green** (no Jober-facing change; client template layer

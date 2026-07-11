@@ -1,5 +1,25 @@
 # Build Journal
 
+## 2026-07-11 — i18n sweep: seeded catalog data now localizes (db_trans)
+
+Owner-reported gaps (HU UI showing English checklist items, blacklist
+categories, equipment names) were **DB content, not msgids** — gettext never
+touches rows. New pattern: seeds store the **canonical English string**;
+rendering passes it through a `db_trans` template filter (`core/ui`
+templatetags — runtime gettext; operator-entered text falls through
+unchanged); the strings are registered as msgids in dedicated
+`catalog_i18n.py` files (`features/blacklist`, `clients/corvinum_eu`) because
+applied migrations must not be edited and makemessages ignores `demo` paths.
+Applied to: blacklist category labels (panel + queue), checklist item labels
+(panel + the activation-blocked error), equipment item names (panel + issue
+rows), the equipment-charge ledger note (now created via gettext in the
+actor's locale), and the feedback form's hardcoded "Jober" → BRAND_NAME.
+15 new msgids translated SK/HU/UK — catalogs **649/649** per msgfmt.
+Template-literal audit found no other untranslated text nodes. Bonus PR #60
+earlier: font preloads kill the icon-ligature flash (all assets self-hosted —
+verified zero external URLs in page + CSS).
+
+
 ## 2026-07-11 — Stage C8: the real CorvinumEU shell (peopleops prototype port)
 
 Owner escalation: the :8001 client was the **Jober shell in corvinum colors**

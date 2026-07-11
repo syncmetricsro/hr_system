@@ -27,16 +27,18 @@ DEMO_USERS = [
     ("observer", Role.OBSERVER, "Observer", "Demo"),
 ]
 
+# Labels are canonical English; msgids registered in clients/corvinum_eu/
+# catalog_i18n.py (makemessages ignores demo paths). Rendered via db_trans.
 ACTIVATION_ITEMS = [
-    ("Personal data complete", True),
-    ("Identity document verified", True),
-    ("Work/residence permit valid (if applicable)", True),
-    ("Medical certificate valid", True),
-    ("Safety training completed", True),
-    ("Contract signed", True),
-    ("Duplicate check resolved", True),
-    ("Blacklist check resolved", True),
-    ("Welcome call made", False),
+    (("Personal data complete"), True),
+    (("Identity document verified"), True),
+    (("Work/residence permit valid (if applicable)"), True),
+    (("Medical certificate valid"), True),
+    (("Safety training completed"), True),
+    (("Contract signed"), True),
+    (("Duplicate check resolved"), True),
+    (("Blacklist check resolved"), True),
+    (("Welcome call made"), False),
 ]
 
 

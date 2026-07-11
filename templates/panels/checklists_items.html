@@ -1,4 +1,4 @@
-{% load i18n %}
+{% load i18n nav %}
 <section class="panel workflow-panel">
   <p class="eyebrow">{% trans "Approvals" %}</p>
   <h2>{% trans "Activation checklist" %}</h2>
@@ -18,12 +18,12 @@
             <button class="button button-secondary" type="submit">
               {% if item.done %}✓{% else %}○{% endif %}
             </button>
-            <span>{{ item.item_template.label }}</span>
+            <span>{{ item.item_template.label|db_trans }}</span>
             {% if item.item_template.critical %}<span class="muted">({% trans "critical" %})</span>{% endif %}
             {% if item.done and item.done_by %}<span class="muted">— {{ item.done_by.email }}</span>{% endif %}
           </form>
         {% else %}
-          <span>{% if item.done %}✓{% else %}○{% endif %} {{ item.item_template.label }}</span>
+          <span>{% if item.done %}✓{% else %}○{% endif %} {{ item.item_template.label|db_trans }}</span>
           {% if item.item_template.critical %}<span class="muted">({% trans "critical" %})</span>{% endif %}
         {% endif %}
       </li>

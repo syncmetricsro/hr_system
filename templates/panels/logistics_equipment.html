@@ -1,4 +1,4 @@
-{% load i18n rbac %}
+{% load i18n rbac nav %}
 <section class="panel workflow-panel">
   <p class="eyebrow">{% trans "Logistics" %}</p>
   <h2>{% trans "Equipment" %}</h2>
@@ -8,7 +8,7 @@
     <ul class="plain-list">
       {% for issue in panel.issued_equipment %}
         <li>
-          {{ issue.item }} × {{ issue.quantity }}
+          {{ issue.item.name|db_trans }} {{ issue.item.size }} × {{ issue.quantity }}
           {% if issue.review_status == 'none' %}
             {% if may_equip %}
               <form class="inline-form" method="post" action="{% url 'return_equipment' issue.pk %}">
@@ -33,7 +33,7 @@
     <form class="people-search" method="post" action="{% url 'issue_equipment' panel.person.pk %}">
       {% csrf_token %}
       <select name="item" aria-label="{% trans 'Item' %}">
-        {% for item in panel.equipment_items %}<option value="{{ item.pk }}">{{ item }}</option>{% endfor %}
+        {% for item in panel.equipment_items %}<option value="{{ item.pk }}">{{ item.name|db_trans }} {{ item.size }}</option>{% endfor %}
       </select>
       <input type="number" name="quantity" value="1" min="1" aria-label="{% trans 'Quantity' %}">
       <button class="button button-primary" type="submit">{% trans "Issue equipment" %}</button>
