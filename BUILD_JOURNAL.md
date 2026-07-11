@@ -1,5 +1,20 @@
 # Build Journal
 
+## 2026-07-11 — Jober seeded catalogs localized + the pattern documented
+
+Same db_trans treatment for Jober (owner request): **inactive reasons**
+(person page + reports), **finance categories** (month detail), **intake
+questionnaire** (panel titles + question labels), and the **equipment seeds
+converted to canonical English** ("Work boots", "High-visibility vest",
+"Safety helmet" — scenario lookups updated; SK renders the old Slovak names
+via translation, HU/UK now localize too). New `catalog_i18n.py` registries in
+core/people, features/{finance,intake,logistics}. 31 msgids translated
+SK/HU/UK — catalogs **680/680** per msgfmt. The whole pattern is now written
+down in **`docs/i18n-seeded-data.md`** (canonical-English seeds → db_trans →
+catalog_i18n → extract/translate/verify → reseed via down&&up), linked from
+CLAUDE.md conventions and the docs index.
+
+
 ## 2026-07-11 — i18n sweep: seeded catalog data now localizes (db_trans)
 
 Owner-reported gaps (HU UI showing English checklist items, blacklist

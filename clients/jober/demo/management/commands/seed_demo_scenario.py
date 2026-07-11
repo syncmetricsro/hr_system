@@ -53,8 +53,8 @@ class Command(BaseCommand):
         # --- Equipment: issue two items to the Working worker, flag one ---------
         olha = Person.objects.filter(first_name="Olha", last_name="Kovalenko").first()
         if olha and not olha.equipment_issues.exists():
-            boots = EquipmentItem.objects.filter(name="Pracovná obuv").first()
-            vest = EquipmentItem.objects.filter(name="Reflexná vesta").first()
+            boots = EquipmentItem.objects.filter(name="Work boots").first()
+            vest = EquipmentItem.objects.filter(name="High-visibility vest").first()
             if boots:
                 issue_equipment(olha, boots, 1, actor=coordinator)
             if vest:

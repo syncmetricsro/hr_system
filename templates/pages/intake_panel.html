@@ -1,12 +1,12 @@
 {% extends "layouts/base.html" %}
-{% load i18n %}
+{% load i18n nav %}
 
 {% block title %}{% trans "Intake" %} · Jober{% endblock %}
 
 {% block content %}
 <section class="page-head">
   <p class="eyebrow">{% trans "Intake" %} · {% trans "Step" %} {{ step }} / {{ total }}</p>
-  <h1>{{ panel.title }}</h1>
+  <h1>{{ panel.title|db_trans }}</h1>
   {% if panel.help_text %}<p>{{ panel.help_text }}</p>{% endif %}
 </section>
 
@@ -15,7 +15,7 @@
     {% csrf_token %}
     {% for item in questions %}
       <label>
-        <span>{{ item.q.label }}{% if item.q.required %} *{% endif %}</span>
+        <span>{{ item.q.label|db_trans }}{% if item.q.required %} *{% endif %}</span>
         {% if item.q.type == "textarea" %}
           <textarea name="{{ item.q.stable_key }}">{{ item.value }}</textarea>
         {% elif item.q.type == "bool" %}

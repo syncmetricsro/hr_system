@@ -1,5 +1,5 @@
 {% extends "layouts/base.html" %}
-{% load i18n rbac %}
+{% load i18n rbac nav %}
 
 {% block title %}{{ person }} · Jober{% endblock %}
 
@@ -169,7 +169,7 @@
       {% csrf_token %}<input type="hidden" name="outcome" value="inactive">
       <select name="inactive_reason" aria-label="{% trans 'Inactive reason' %}">
         <option value="">{% trans "Reason…" %}</option>
-        {% for r in inactive_reasons %}<option value="{{ r.pk }}">{{ r.label }}</option>{% endfor %}
+        {% for r in inactive_reasons %}<option value="{{ r.pk }}">{{ r.label|db_trans }}</option>{% endfor %}
       </select>
       <button class="button button-secondary" type="submit">{% trans "Exit to Inactive" %}</button>
     </form>
@@ -182,7 +182,7 @@
   <p class="eyebrow">{% trans "Lifecycle" %}</p>
   <h2>{% trans "Inactive" %}</h2>
   <p class="muted">
-    {% trans "Reason" %}: {{ person.inactive_reason.label|default:"—" }}
+    {% trans "Reason" %}: {{ person.inactive_reason.label|db_trans|default:"—" }}
     {% if person.inactive_since %} · {% trans "Since" %} {{ person.inactive_since }}{% endif %}
   </p>
   {% if can_recycle %}

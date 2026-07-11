@@ -16,6 +16,11 @@ they are never renamed or renumbered per client.
 | `../ENVIRONMENT.md`, `../Handoff.md`, `../README.md` | Platform | Environment/runtime notes, handoff, repo intro |
 | `../BUILD_JOURNAL.md`, `../test_journal.md`, `../deployment_journal.md` | Platform | Newest-first journals (historical record; old doc names are kept as written) |
 
+## docs/ root
+| Doc | Owner | Purpose |
+|---|---|---|
+| `i18n-seeded-data.md` | Platform | How seeded catalog data stays localized (db_trans + catalog_i18n) |
+
 ## docs/adr/ — Platform (shared decision log, 0001–0024)
 Highlights: 0008 RBAC model · 0016 whitenoise · 0019 Twilio-via-stdlib ·
 0020 white-label sequencing · 0021 Stage B extraction (EXECUTED) ·
