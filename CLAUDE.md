@@ -111,4 +111,4 @@ scripts/compile_messages.sh --extract   # then compile with no args
   `docs/security/jober-blacklist-legal-basis.md`).
 - Demos: Jober `docs/deployment/jober-demo-runbook.md` (+ `jober-local-demo.md`, port 8000); CorvinumEU `docs/deployment/corvinum-demo-runbook.md` (`scripts/corvinum_app.sh`, port 8001; both stacks run side-by-side).
 - Platform docs: `docs/platform/{extraction-matrix,extraction-plan,corvinumeu-peopleops-design}.md` — **Stages B+C are built** (ADRs 0021/0022/0023); these are the plans of record, not gates. Still gated: real deployment (server names, C-Q14) and everything behind the real-data/legal gate. CorvinumEU open decisions: `docs/product/corvinum-open-questions.md`.
-- Deployment/ops journals: `deployment_journal.md`, `ENVIRONMENT.md`.
+- Deployment: `docs/deployment/deployment-plan.md` (Dokku/VPS, both clients, asks D1–D8); journals `deployment_journal.md`, `ENVIRONMENT.md`.

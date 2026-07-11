@@ -1,5 +1,13 @@
 # Deployment Journal
 
+## 2026-07-11
+
+Deployment architecture decided and documented.
+
+- **Owner decision:** Dokku on the existing VPS; four apps (`jober[-staging]`, `corvinum[-staging]`) from the **same image tag**, `DJANGO_SETTINGS_MODULE` selects the client; per-app Postgres/domain/Let's Encrypt/secrets/backups. Full plan + one-time setup commands + rollout order: `docs/deployment/deployment-plan.md`.
+- **Execution blocked on asks D1–D8** (SSH/hostname, four domains, Doppler tokens, SMTP for payslips, backup target, Twilio upgrade, legal gates). Staging is one working session once D1–D4 land.
+- Guardrails restated: production never runs demo seeds; fictional data only until each client's legal gate; secrets Doppler → `dokku config:set`, never git.
+
 ## 2026-06-29
 
 Secrets + Twilio SMS go-live readiness.
