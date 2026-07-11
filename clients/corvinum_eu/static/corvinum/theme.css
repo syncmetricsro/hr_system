@@ -30,6 +30,15 @@
   --accent: #005bbf;
   --accent-strong: #2f7fd6;
 
+  /* Status colors brightened for dark panels; the -soft message backgrounds
+     become translucent tints so flash text (near-white --ink) stays readable. */
+  --success: #34d399;
+  --success-soft: rgba(4, 120, 87, 0.25);
+  --warning: #fbbf24;
+  --warning-soft: rgba(180, 83, 9, 0.25);
+  --danger: #f87171;
+  --danger-soft: rgba(179, 38, 30, 0.28);
+
   --font-body: "Hanken Grotesk", "Inter", system-ui, -apple-system, "Segoe UI",
     Roboto, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;

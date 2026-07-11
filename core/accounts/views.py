@@ -122,5 +122,13 @@ def two_factor_setup(request: HttpRequest) -> HttpResponse:
     return TemplateResponse(
         request,
         "pages/two_factor_setup.html",
-        {"device": device, "uri": uri, "error": error},
+        {"device": device, "uri": uri, "qr_svg": _qr_svg(uri), "error": error},
     )
+
+
+def _qr_svg(uri: str) -> str:
+    """Inline SVG QR of the provisioning URI (ADR 0024): rendered server-side,
+    embedded in the page — the secret makes no extra network trip."""
+    import segno
+
+    return segno.make(uri, error="m").svg_inline(scale=4, dark="#111111")

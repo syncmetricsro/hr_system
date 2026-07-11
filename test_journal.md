@@ -1,5 +1,14 @@
 # Test Journal
 
+## 2026-07-11 — Stage C7 (QR + flash theming)
+
+- **273 passed** (271 + 2: setup page embeds an inline `<svg` in `.qr-plate`
+  with no external URLs; `_qr_svg` deterministic per URI, distinct across
+  URIs) + **16 e2e**, ruff clean; catalogs recompiled, zero fuzzies.
+- Live on :8001: login as hradmin → `/sk/2fa/setup/` with QR present; wrong
+  code → readable `message-error`; served fingerprinted theme.css carries the
+  new `-soft` tokens. Owner still to phone-scan the QR as final confirmation.
+
 ## 2026-07-11 — Stage C6 (conformance + demos)
 
 - **271 passed** (270 + payslip-creation audit test) + **16 e2e**, ruff clean;

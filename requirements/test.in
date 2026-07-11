@@ -9,6 +9,7 @@ pytest-django==4.12.0
 pytest-playwright==0.8.0
 pytest==9.1.0
 ruff==0.15.17
+segno==1.6.6
 whitenoise==6.12.0
 # Transitive pins held at their vetted versions so adding whitenoise does not
 # silently pull cooldown-window point releases (AGENTS.md §3.1).

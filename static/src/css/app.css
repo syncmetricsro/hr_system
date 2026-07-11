@@ -551,6 +551,16 @@ dd {
   background: var(--danger-soft);
 }
 
+.qr-plate {
+  /* QR must stay dark-on-light to scan, whatever the client theme (ADR 0024). */
+  display: inline-block;
+  background: #ffffff;
+  padding: var(--space-3);
+  border-radius: var(--radius);
+  margin: var(--space-3) 0;
+  line-height: 0;
+}
+
 /* ----------------------------------------------------------------- forms */
 
 label {

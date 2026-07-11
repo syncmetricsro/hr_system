@@ -1,5 +1,21 @@
 # Build Journal
 
+## 2026-07-11 — Stage C7: 2FA QR codes (ADR 0024) + dark-theme flash messages
+
+Owner demo-testing findings on :8001. (1) **QR enrollment**: `segno==1.6.6`
+(pure Python, zero deps, BSD; cooldown satisfied by >1 year) renders the
+otpauth URI as **inline SVG** server-side — no external request, no JS; shown
+on a white `.qr-plate` so scanners work on dark themes; manual secret + URI
+stay as fallback. ADR 0024 records the decision (hand-rolled Reed–Solomon and
+vendored-JS alternatives rejected). (2) **Flash messages were unreadable** on
+the corvinum theme (near-white `--ink` over the shell's hardcoded light
+pastel `--*-soft` backgrounds — the payslip one-time-password message among
+them): the corvinum theme now overrides the `-soft` tokens with translucent
+dark tints and brightens `--success/--warning/--danger`. Setup-page msgid
+updated + translated (SK/HU/UK). Both demo stacks rebuilt; live drive:
+login → 2FA setup shows the QR, wrong code renders a readable error flash.
+
+
 ## 2026-07-11 — Stage C6: conformance fixes + dual demo stacks
 
 Closes the 2026-07-11 conformance audit findings (owner-directed):

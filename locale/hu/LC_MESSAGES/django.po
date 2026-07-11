@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-11 09:09+0200\n"
+"POT-Creation-Date: 2026-07-11 11:32+0200\n"
 "Language: hu\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -717,7 +717,9 @@ msgstr "ciklus"
 msgid ""
 "20th-to-20th cycle the entry settles in, keyed by the end month (e.g. "
 "2026-07)."
-msgstr "A 20-ától 20-áig tartó ciklus, amelyben a tétel elszámolásra kerül; kulcsa a záró hónap (pl. 2026-07)."
+msgstr ""
+"A 20-ától 20-áig tartó ciklus, amelyben a tétel elszámolásra kerül; kulcsa a "
+"záró hónap (pl. 2026-07)."
 
 #: features/advances/models.py:86
 msgid "reversal of"
@@ -737,7 +739,8 @@ msgstr "főkönyvi tételek"
 
 #: features/advances/services.py:57
 msgid "Amount must be positive — meaning lives in the entry type."
-msgstr "Az összegnek pozitívnak kell lennie — a jelentést a tétel típusa hordozza."
+msgstr ""
+"Az összegnek pozitívnak kell lennie — a jelentést a tétel típusa hordozza."
 
 #: features/advances/services.py:62
 #, python-format
@@ -942,7 +945,8 @@ msgstr "kritikus"
 
 #: features/checklists/models.py:39
 msgid "Critical items block activation; others only warn."
-msgstr "A kritikus tételek blokkolják az aktiválást; a többi csak figyelmeztet."
+msgstr ""
+"A kritikus tételek blokkolják az aktiválást; a többi csak figyelmeztet."
 
 #: features/checklists/models.py:44
 msgid "checklist item template"
@@ -1672,7 +1676,9 @@ msgstr "Bérjegyzék rögzítve."
 msgid ""
 "Payslip emailed to %(to)s. One-time password (tell the worker by phone/"
 "Messenger, NOT email): %(pw)s"
-msgstr "Bérjegyzék elküldve: %(to)s. Egyszeri jelszó (telefonon/Messengeren közölje a munkavállalóval, NE e-mailben): %(pw)s"
+msgstr ""
+"Bérjegyzék elküldve: %(to)s. Egyszeri jelszó (telefonon/Messengeren közölje "
+"a munkavállalóval, NE e-mailben): %(pw)s"
 
 # --- shell / navigation ---
 #: templates/layouts/base.html:7
@@ -2205,7 +2211,9 @@ msgstr "Csütörtöki összesítő"
 msgid ""
 "Cut-off %(cutoff)s — open advances for Friday cash distribution. Later "
 "entries roll to next week."
-msgstr "Zárás: %(cutoff)s — nyitott előlegek a pénteki készpénzosztáshoz. A későbbi tételek a következő hétre kerülnek."
+msgstr ""
+"Zárás: %(cutoff)s — nyitott előlegek a pénteki készpénzosztáshoz. A későbbi "
+"tételek a következő hétre kerülnek."
 
 # --- compliance ---
 #: templates/pages/ledger.html:49
@@ -2315,7 +2323,10 @@ msgstr "Bér"
 msgid ""
 "Encrypted PDF by email; the one-time password is shown here once and must be "
 "given to the worker by phone or Messenger — never by email."
-msgstr "Titkosított PDF e-mailben; az egyszeri jelszó itt csak egyszer jelenik meg, és telefonon vagy Messengeren kell közölni a munkavállalóval — e-mailben soha."
+msgstr ""
+"Titkosított PDF e-mailben; az egyszeri jelszó itt csak egyszer jelenik meg, "
+"és telefonon vagy Messengeren kell közölni a munkavállalóval — e-mailben "
+"soha."
 
 #: templates/pages/payslips.html:14
 msgid "Record payslip"
@@ -2641,21 +2652,21 @@ msgid "Two-factor authentication is enabled for your account."
 msgstr "A kétlépcsős azonosítás be van kapcsolva a fiókodhoz."
 
 #: templates/pages/two_factor_setup.html:13
-msgid "Add this account to your authenticator app, then confirm with a code."
-msgstr ""
+msgid "Scan the QR code with your authenticator app, then confirm with a code."
+msgstr "Olvassa be a QR-kódot a hitelesítő alkalmazással, majd erősítse meg egy kóddal."
 "Add hozzá ezt a fiókot a hitelesítő alkalmazáshoz, majd erősítsd meg egy "
 "kóddal."
 
-#: templates/pages/two_factor_setup.html:15
+#: templates/pages/two_factor_setup.html:16
 msgid "Secret (manual entry)"
 msgstr "Titkos kulcs (kézi bevitel)"
 
-#: templates/pages/two_factor_setup.html:21
+#: templates/pages/two_factor_setup.html:22
 #: templates/pages/two_factor_verify.html:13
 msgid "6-digit code"
 msgstr "6 számjegyű kód"
 
-#: templates/pages/two_factor_setup.html:24
+#: templates/pages/two_factor_setup.html:25
 msgid "Confirm"
 msgstr "Megerősítés"
 
