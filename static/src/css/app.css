@@ -562,6 +562,25 @@ dd {
   line-height: 0;
 }
 
+.confirm-dialog {
+  background: var(--panel);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: var(--space-5);
+  width: min(26rem, calc(100% - 2rem));
+  max-width: none;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+}
+.confirm-dialog::backdrop { background: rgba(0, 0, 0, 0.55); backdrop-filter: blur(3px); }
+.confirm-dialog h2 { margin-top: 0; }
+.confirm-dialog-actions { display: flex; gap: var(--space-3); justify-content: flex-end; margin-top: var(--space-4); }
+
+@media (max-width: 30rem) {
+  .confirm-dialog-actions { flex-direction: column-reverse; }
+  .confirm-dialog-actions .button { width: 100%; }
+}
+
 /* ----------------------------------------------------------------- forms */
 
 label {
@@ -676,6 +695,15 @@ select {
 
 .button-primary:hover {
   background: var(--accent-strong);
+}
+
+.button-danger {
+  background: var(--danger);
+  color: white;
+}
+
+.button-danger:hover {
+  background: color-mix(in srgb, var(--danger) 85%, black);
 }
 
 /* Secondary is now quiet — outline, not a second loud solid. */

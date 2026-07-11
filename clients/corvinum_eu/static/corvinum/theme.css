@@ -126,7 +126,12 @@ h1, h2, h3 { font-family: var(--font-display); }
 
 /* ------------------------------------------------- shell (C8, prototype) */
 
-.cv-shell { display: flex; min-height: 100vh; }
+.cv-shell {
+  display: flex;
+  min-height: 100vh;
+  padding-left: var(--sidebar-w);
+  transition: padding-left 380ms var(--spring);
+}
 
 .sidebar {
   position: fixed;
@@ -144,15 +149,26 @@ h1, h2, h3 { font-family: var(--font-display); }
 
 .cv-main {
   flex: 1;
+  width: 100%;
   min-width: 0;
-  margin-left: var(--sidebar-w);
-  transition: margin-left 380ms var(--spring);
+  margin-inline: auto;
   padding: 1.5rem clamp(1rem, 3vw, 2.5rem) 3rem;
   max-width: 1280px;
 }
 
+/* Shared templates intentionally leave vertical rhythm to their client shell.
+   Keep top-level operational sections distinct instead of letting adjacent
+   panel borders visually merge. The page header already supplies its own
+   bottom spacing, so it is excluded. */
+.cv-main > :is(section, aside, article):not(.page-head)
+  + :is(section, aside, article) {
+  margin-top: var(--space-4);
+}
+
+.cv-main > .workflow-panel { margin-bottom: 0; }
+
 body.rail .sidebar { width: var(--rail-w); }
-body.rail .cv-main { margin-left: var(--rail-w); }
+body.rail .cv-shell { padding-left: var(--rail-w); }
 body.rail .sb-text,
 body.rail .sb-section,
 body.rail .sb-user,
@@ -169,13 +185,13 @@ body.rail .sb-brand { justify-content: center; padding-inline: 0; }
   min-height: 4.25rem;
 }
 
-.sb-brand img { width: 28px; height: auto; filter: brightness(2); }
+.sb-brand img { width: 26px; height: auto; flex-shrink: 0; filter: brightness(2); }
 
 .brand-word {
   font-family: var(--font-display);
   font-weight: 900;
-  font-size: 0.95rem;
-  letter-spacing: 0.22em;
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: #ffffff;
   white-space: nowrap;
@@ -294,12 +310,12 @@ body.nav-open .scrim { opacity: 1; pointer-events: auto; }
 @media (max-width: 1023px) {
   .sidebar { transform: translateX(-100%); }
   body.nav-open .sidebar { transform: translateX(0); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6); }
-  .cv-main { margin-left: 0; }
+  .cv-shell { padding-left: 0; }
   body.rail .sidebar { width: var(--sidebar-w); }
-  body.rail .cv-main { margin-left: 0; }
+  body.rail .cv-shell { padding-left: 0; }
   body.rail .sb-text, body.rail .sb-section, body.rail .sb-user, body.rail .brand-word { display: revert; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .sidebar, .cv-main, .scrim { transition: none; }
+  .sidebar, .cv-shell, .scrim { transition: none; }
 }

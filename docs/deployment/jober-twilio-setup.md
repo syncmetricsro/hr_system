@@ -67,8 +67,27 @@ Run locally with secrets injected (replaces the manual `export`s):
 doppler run -- scripts/dev_app.sh up
 ```
 `doppler run` sets `TWILIO_ACCOUNT_SID/AUTH_TOKEN/FROM_NUMBER` in the shell;
-`dev_app.sh` forwards them into the container. Verify with
-`docker exec jober-dev-app env | grep TWILIO`.
+`dev_app.sh` forwards them into the container. Verify presence without printing
+the values:
+
+```bash
+docker exec jober-dev-app python -c 'import os; keys=("TWILIO_ACCOUNT_SID","TWILIO_AUTH_TOKEN","TWILIO_FROM_NUMBER"); print(all(os.getenv(key) for key in keys))'
+```
+
+### Human and automated test rule
+
+Any human test or automated integration test that actually calls Twilio must
+be opt-in and launched through Doppler:
+
+```bash
+doppler run -- <committed-provider-test-runner>
+```
+
+The runner must pass only the required `TWILIO_*` variables to the test/runtime
+container, use the separate test credentials, and keep secrets out of build
+stages, command output, screenshots, and artifacts. The default unit and
+Playwright suites do not call Twilio and must remain green without Doppler;
+they use mocks or verify the fail-closed unconfigured path instead.
 
 For staging/prod, either sync Doppler → Dokku config, or run the dyno under a
 Doppler service token (`doppler run -- gunicorn …`). See the Dokku section below.

@@ -14,13 +14,13 @@
   <section class="panel">
     {% if month.is_locked %}
       <p class="eyebrow">{% trans "Reopen month" %}</p>
-      <form class="people-search" method="post" action="{% url 'finance_month_reopen' month.pk %}">
+      <form class="people-search" method="post" action="{% url 'finance_month_reopen' month.pk %}" data-confirm="{% trans 'This reopens the locked month for editing; the reopening is audited with your reason.' %}">
         {% csrf_token %}
         <input type="text" name="reason" required aria-label="{% trans 'Reason' %}" placeholder="{% trans 'Reason' %}">
         <button class="button button-secondary" type="submit">{% trans "Reopen month" %}</button>
       </form>
     {% else %}
-      <form method="post" action="{% url 'finance_month_lock' month.pk %}">
+      <form method="post" action="{% url 'finance_month_lock' month.pk %}" data-confirm="{% trans 'This locks the month; line items become read-only until a manager reopens it.' %}">
         {% csrf_token %}
         <button class="button button-secondary" type="submit">{% trans "Lock month" %}</button>
       </form>

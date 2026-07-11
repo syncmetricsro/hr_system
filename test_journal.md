@@ -1,5 +1,46 @@
 # Test Journal
 
+## 2026-07-11 — Corvinum shell, section rhythm + checklist regression
+
+- **276 unit + 21 e2e green** (three new Corvinum browser regressions; the
+  official E2E runner now serves both clients).
+- At 1650px: sidebar is 280px; the complete `CorvinumEU PeopleOps` wordmark
+  ends at x=247.94 inside it; the 1280px main column spans x=325–1605 and is
+  centered at x=965 in the remaining viewport; horizontal overflow is zero.
+- The same test collapses the sidebar to its 72px rail and verifies the main
+  column re-centers, then switches to 375×667 and verifies full-width content
+  with zero horizontal overflow.
+- Project detail verifies a **16px** vertical gap from the top-level overview
+  grid to the following logistics panel, preventing adjacent borders from
+  visually merging.
+- A coordinator opens the seeded person's checklist, verifies both the
+  `csrfmiddlewaretoken` input and CSRF cookie, toggles an item through the
+  rendered POST form, and confirms redirect back to the person page with no
+  CSRF failure.
+- `scripts/playwright_e2e.sh` now boots an isolated Corvinum DB/app alongside
+  Jober, waits for both real health endpoints, and passes both base URLs to the
+  test image. Added `-i` to the inline health-probe container so Python actually
+  receives the probe script over stdin.
+
+## 2026-07-11 — Destructive-action confirmation dialog
+
+- **276 unit + 18 e2e green** (273/16 baseline + 3 unit + 2 browser).
+- Unit coverage verifies the accessible shared dialog in the Jober shell,
+  CorvinumEU template resolution/inclusion, and consequence text on both exit
+  actions. The shell assertion also prevents the multi-line component comment
+  from leaking into rendered page text. A production-template scan covers both
+  shells and rejects multiline `{# ... #}` comments repository-wide.
+- Browser coverage verifies Cancel and Escape leave server state untouched;
+  Agree performs the real exit/reconciliation; native required-field
+  validation runs before the modal; button-specific descriptions and the
+  exact clicked submitter survive resubmission; phone actions stack and Cancel
+  receives initial focus.
+- Full gates: ruff clean; core→feature dependency check, no-Node artifact
+  check, vendored-asset SHA-256 verification, `makemigrations --check`, and
+  `git diff --check` pass.
+- Browser suite ran from the current source tree with existing pinned local
+  images and an internal ephemeral network; no external artifact was fetched.
+
 ## 2026-07-11 — Jober seed i18n
 
 - **273 unit + 16 e2e green**; catalogs 680/680 (sk/hu/uk) via msgfmt.

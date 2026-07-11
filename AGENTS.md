@@ -22,7 +22,7 @@ This file governs **scope, security, supply chain, and how to work**. The **what
 3. **Installs and builds run inside the container/CI, never against host secrets.** No build step ever has access to production credentials, SSH keys, or the deploy token.
 4. **Minimal dependencies.** Adding any new PyPI package requires an ADR and human approval. Default to the standard library and Django's batteries before reaching for a package.
 5. **No secrets in Git.** Provider credentials (Twilio, Telegram, SMTP, database) come from environment / a secret manager, never committed.
-6. **The agent does not fetch media or secrets.** It writes an asset/secret *request* and a runbook; a human supplies binaries, fonts, images, and credentials (see §7).
+6. **No ad-hoc artifact, media, or secret fetching.** The agent may fetch pinned, integrity-verified build/test artifacts only through committed isolated workflows under §7. A human still supplies media, fonts, images, and credentials.
 7. **When a business decision is missing, stop and write a decision note.** Do not fossilize a guess into a migration and make humans excavate it later.
 8. **Small, reviewable PRs**, tests with every business-critical change, permissions + audit treated as part of each feature.
 
@@ -82,6 +82,13 @@ These replaced npm packages but are still supply-chain artifacts — treat them 
 ### 3.5 Secrets & messaging providers (Twilio, Telegram, SMTP, DB)
 
 - All credentials via environment / approved secret manager. **No committed `.env`** with real values (`.env.example` with placeholders only).
+- **Provider-backed human or automated testing uses Doppler.** Any test or demo
+  that exercises Twilio, SMTP, or another external provider must be launched
+  through `doppler run -- ...` (or the approved production secret-manager
+  equivalent), use separate test credentials, and inject secrets only into the
+  runtime/test process that needs them — never a build stage. Ordinary unit and
+  browser suites remain secret-free and use mocks/fakes or assert fail-closed
+  unconfigured behavior.
 - **Verify inbound webhooks.** Twilio: validate the `X-Twilio-Signature`. Telegram: set and check a secret webhook token (and restrict to Telegram's IP ranges where feasible). Reject unverified callbacks.
 - **Least privilege** provider tokens; separate test vs production credentials; rotate on exposure.
 - Prefer calling provider **REST APIs through one pinned HTTP client** over adding large vendor SDKs (see the messaging spec). Any SDK adopted goes through §3.1's approval + hash-pin + cooldown.
@@ -116,13 +123,33 @@ These replaced npm packages but are still supply-chain artifacts — treat them 
 
 ---
 
-## 7. Media & secret request rule
+## 7. Media, secrets & controlled build artifacts
 
-The agent **never fetches binaries, fonts, images, or credentials, and never signs up for provider accounts.** Instead it writes:
-- an **asset/secret request** listing exactly what's needed (filename/binary + version + SHA-256 to verify, or which env var + which provider), and
-- a **runbook** describing where the human places it and how the build consumes and verifies it.
+The agent may fetch **build and test artifacts only through committed
+container/CI workflows** when all of the following hold:
+- the version and source are pinned in the repository;
+- integrity is verified before execution (SHA-256, hash-pinned lockfile, or
+  digest-pinned image as applicable) and the workflow fails closed;
+- the build/test runs in an isolated environment without host or production
+  secrets; and
+- artifacts excluded from production by policy (for example Playwright
+  browsers and the Tailwind CLI) do not enter the runtime image.
 
-A human supplies the artifact; the agent then verifies it (checksum / presence) before use. This keeps every externally-sourced byte under human control.
+This exception authorizes the agent to run the repository's committed build and
+test workflows, including `scripts/playwright_e2e.sh` and Docker image rebuilds.
+It does **not** authorize ad-hoc downloads, unpinned/unverified binaries, or
+installing host packages.
+
+The agent still **never fetches media, fonts, images, or credentials, and never
+signs up for provider accounts.** For those, it writes:
+- an **asset/secret request** listing exactly what's needed (filename + license
+  and expected checksum where applicable, or which env var + which provider);
+  and
+- a **runbook** describing where the human places it and how the build consumes
+  and verifies it.
+
+A human supplies those media/font/image/secret artifacts; the agent then
+verifies checksum/presence before use.
 
 Design references: the demo for visual language, plus `frontend-design/SKILL.md` and `typography_and_fonts.md`.
 

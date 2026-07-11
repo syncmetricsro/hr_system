@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-11 15:19+0200\n"
+"POT-Creation-Date: 2026-07-11 15:31+0200\n"
 "Language: hu\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1242,7 +1242,6 @@ msgid "Driver"
 msgstr "Sofőr"
 
 #: features/finance/catalog_i18n.py:15
-
 msgid "Damage (cost)"
 msgstr "Károk (költség)"
 
@@ -1267,12 +1266,10 @@ msgstr "Szállás"
 
 # --- finance ---
 #: features/finance/catalog_i18n.py:19
-
 msgid "Insurance"
 msgstr "Biztosítás"
 
 #: features/finance/catalog_i18n.py:21
-
 msgid "Coordinators"
 msgstr "Koordinátorok"
 
@@ -1289,7 +1286,6 @@ msgid "Toll"
 msgstr "Útdíj"
 
 #: features/finance/catalog_i18n.py:25
-
 msgid "Factoring"
 msgstr "Faktoring"
 
@@ -1298,12 +1294,10 @@ msgid "Office"
 msgstr "Iroda"
 
 #: features/finance/catalog_i18n.py:27
-
 msgid "Recruitment"
 msgstr "Toborzás"
 
 #: features/finance/catalog_i18n.py:28
-
 msgid "Clothing/equipment"
 msgstr "Ruházat/felszerelés"
 
@@ -1324,7 +1318,6 @@ msgid "Meals"
 msgstr "Étkezés"
 
 #: features/finance/catalog_i18n.py:33
-
 msgid "Accommodation charged"
 msgstr "Kiszámlázott szállás"
 
@@ -1441,17 +1434,14 @@ msgid "Financial month saved."
 msgstr "Pénzügyi hónap elmentve."
 
 #: features/intake/catalog_i18n.py:10
-
 msgid "Identity"
 msgstr "Személyazonosság"
 
 #: features/intake/catalog_i18n.py:11
-
 msgid "Contact"
 msgstr "Kapcsolat"
 
 #: features/intake/catalog_i18n.py:21
-
 msgid "Disability — type 'nie' if none"
 msgstr "Fogyatékosság — ha nincs, írja be: „nie”"
 
@@ -1642,7 +1632,6 @@ msgid "High-visibility vest"
 msgstr "Láthatósági mellény"
 
 #: features/logistics/catalog_i18n.py:12
-
 msgid "Safety helmet"
 msgstr "Védősisak"
 
@@ -2121,8 +2110,20 @@ msgstr "Indok"
 
 #: templates/pages/blacklist_queue.html:28
 #: templates/panels/blacklist_case.html:20
+msgid ""
+"This approves the blacklist case: the person becomes Blacklisted and future "
+"re-entry attempts will be flagged."
+msgstr "Jóváhagyja a tiltólista-ügyet: a személy Tiltólistára kerül, és a jövőbeli visszatérési kísérletek jelölve lesznek."
+
+#: templates/pages/blacklist_queue.html:28
+#: templates/panels/blacklist_case.html:20
 msgid "Approve"
 msgstr "Jóváhagyás"
+
+#: templates/pages/blacklist_queue.html:29
+#: templates/panels/blacklist_case.html:21
+msgid "This rejects the proposed blacklist case and closes it."
+msgstr "Elutasítja a javasolt tiltólista-ügyet és lezárja azt."
 
 #: templates/pages/blacklist_queue.html:29
 #: templates/panels/blacklist_case.html:21
@@ -2222,8 +2223,18 @@ msgid "Review note"
 msgstr "Ellenőrzési megjegyzés"
 
 #: templates/pages/equipment_reviews.html:31
+msgid ""
+"This approves charging the item value to the worker (recorded for recovery; "
+"no automatic payroll deduction)."
+msgstr "Jóváhagyja a tétel értékének a munkavállalóra terhelését (behajtásra rögzítve; nincs automatikus bérlevonás)."
+
+#: templates/pages/equipment_reviews.html:31
 msgid "Approve charge"
 msgstr "Levonás jóváhagyása"
+
+#: templates/pages/equipment_reviews.html:32
+msgid "This waives the charge; the worker will not be charged for the item."
+msgstr "Elengedi a terhelést; a munkavállalónak nem kell fizetnie a tételért."
 
 #: templates/pages/equipment_reviews.html:32
 msgid "Waive"
@@ -2294,6 +2305,17 @@ msgstr "Zárolva"
 #: templates/pages/finance_month_detail.html:20
 msgid "Reopen month"
 msgstr "Hónap újranyitása"
+
+#: templates/pages/finance_month_detail.html:17
+msgid ""
+"This reopens the locked month for editing; the reopening is audited with "
+"your reason."
+msgstr "Újranyitja a zárolt hónapot szerkesztésre; az újranyitás az indokával együtt auditálva lesz."
+
+#: templates/pages/finance_month_detail.html:23
+msgid ""
+"This locks the month; line items become read-only until a manager reopens it."
+msgstr "Zárolja a hónapot; a tételsorok csak olvashatók, amíg egy menedzser újra nem nyitja."
 
 #: templates/pages/finance_month_detail.html:25
 msgid "Lock month"
@@ -2495,8 +2517,18 @@ msgid "Net pay effect"
 msgstr "Nettó bérhatás"
 
 #: templates/pages/ledger.html:85
+msgid ""
+"This locks every open entry of the window into the cycle; locked entries can "
+"only be corrected by reversal."
+msgstr "A ciklusba zárja az ablak összes nyitott tételét; a zárolt tételek csak sztornóval javíthatók."
+
+#: templates/pages/ledger.html:85
 msgid "Include open entries in cycle"
 msgstr "Nyitott tételek ciklusba sorolása"
+
+#: templates/pages/ledger.html:86
+msgid "This marks the whole cycle as settled with pay."
+msgstr "Az egész ciklust bérrel rendezettként jelöli."
 
 #: templates/pages/ledger.html:86
 msgid "Mark cycle settled"
@@ -2519,11 +2551,22 @@ msgid "Settlement"
 msgstr "Elszámolás"
 
 #: templates/pages/ledger.html:112
+msgid ""
+"This records a reversal entry with the opposite pay effect; the original "
+"stays in the ledger."
+msgstr "Sztornótételt rögzít ellentétes bérhatással; az eredeti tétel a főkönyvben marad."
+
+#: templates/pages/ledger.html:112
 msgid "Reverse"
 msgstr "Sztornó"
 
-# --- compliance ---
 #: templates/pages/ledger.html:114
+msgid ""
+"This cancels the open ledger entry; it will no longer count against pay."
+msgstr "Törli a nyitott főkönyvi tételt; többé nem számít bele a bérbe."
+
+# --- compliance ---
+#: templates/pages/ledger.html:114 templates/partials/confirm_dialog.html:10
 msgid "Cancel"
 msgstr "Törlés"
 
@@ -2744,9 +2787,23 @@ msgstr ""
 "Lezárja a projekt-hozzárendelést, felszabadítja a szobát és visszaveszi a "
 "kiadott felszerelést."
 
+#: templates/pages/person_detail.html:164
+
+msgid ""
+"This ends the active assignment, releases the room, returns issued "
+"equipment, and sets the person to Available."
+msgstr "Lezárja az aktív kihelyezést, felszabadítja a szobát, visszaveszi a kiadott felszerelést, és a személyt Elérhető állapotba teszi."
+
 #: templates/pages/person_detail.html:166
 msgid "Exit to Available"
 msgstr "Kilépés Elérhető állapotba"
+
+#: templates/pages/person_detail.html:168
+
+msgid ""
+"This ends the active assignment, releases the room, returns issued "
+"equipment, and sets the person to Inactive with the chosen reason."
+msgstr "Lezárja az aktív kihelyezést, felszabadítja a szobát, visszaveszi a kiadott felszerelést, és a személyt Inaktív állapotba teszi a kiválasztott indokkal."
 
 #: templates/pages/person_detail.html:170
 msgid "Inactive reason"
@@ -2933,6 +2990,12 @@ msgid "Reason is restricted."
 msgstr "Az indok korlátozott."
 
 #: templates/panels/blacklist_case.html:27
+msgid ""
+"This removes the person from the blacklist; re-entry checks will no longer "
+"match them."
+msgstr "Eltávolítja a személyt a tiltólistáról; a visszatérés-ellenőrzések többé nem jelzik."
+
+#: templates/panels/blacklist_case.html:27
 msgid "Remove from blacklist"
 msgstr "Eltávolítás a feketelistáról"
 
@@ -2970,6 +3033,12 @@ msgstr "Érték"
 #: templates/panels/logistics_equipment.html:16
 msgid "Return"
 msgstr "Visszavétel"
+
+#: templates/panels/logistics_equipment.html:20
+msgid ""
+"This flags the item as unreturned and opens a manager charge review at its "
+"current value."
+msgstr "Vissza nem adottként jelöli a tételt, és menedzseri terhelés-felülvizsgálatot nyit az aktuális értékén."
 
 #: templates/panels/logistics_equipment.html:20
 msgid "Flag unreturned"
@@ -3027,6 +3096,19 @@ msgstr "Üzenet"
 #: templates/panels/messaging_sms.html:16
 msgid "Or type a message"
 msgstr "Vagy írjon üzenetet"
+
+#: templates/partials/confirm_dialog.html:6
+
+msgid "Please confirm"
+msgstr "Kérjük, erősítse meg"
+
+#: templates/partials/confirm_dialog.html:8
+msgid "Do you really want to do this?"
+msgstr "Biztosan meg akarja tenni?"
+
+#: templates/partials/confirm_dialog.html:11
+msgid "Yes, proceed"
+msgstr "Igen, folytatás"
 
 #~ msgid "Jober"
 #~ msgstr "Jober"
