@@ -19,6 +19,7 @@ def coordinator(django_user_model):
     )
 
 
+@pytest.mark.jober_only  # Jober grants/lifecycle/features
 def test_history_is_newest_first_and_covers_events(coordinator):
     person = Person.objects.create(first_name="Olha", last_name="Kovalenko")
     project = Project.objects.create(name="DHL", code="DHLBA")

@@ -145,6 +145,7 @@ def test_person_create_flags_match_without_blocking(client, setup, settings):
 
 # --- RBAC ----------------------------------------------------------------------
 
+@pytest.mark.jober_only  # Jober grants/lifecycle/features
 def test_rbac(setup, django_user_model):
     manager, coord, _p = setup
     recruiter = django_user_model.objects.create_user(email="r2@demo.jober.test", password="x", role="recruiter")

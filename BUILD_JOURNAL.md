@@ -1,5 +1,21 @@
 # Build Journal
 
+## 2026-07-12 — Corvinum-flags test lane (closes the last audit finding)
+
+Stage D says the suite passes under **each** client's flag set; until now only
+Jober's lane ran. New `scripts/test_corvinum.sh` runs the shared/portable unit
+tests under `clients.corvinum_eu.settings` against a dedicated `corvinum` DB:
+**143 passed** (100 Jober-specific tests deselected via the new
+`@pytest.mark.jober_only` marker — URLs/policies/languages that are Jober by
+design; 7 modules importing not-installed feature models self-skip at
+collection). Triage found **zero cross-client bugs** — every failure was a
+legitimate client difference — plus one real test-hygiene bug: the active
+language is thread-local and leaked across tests depending on execution
+order; a global autouse fixture now pins each test to the settings default
+(`tests/conftest.py`). Jober lane unchanged (283) and e2e 21 green. The lane
+joins the per-slice workflow (CLAUDE.md).
+
+
 ## 2026-07-12 — Observability: error logging + audit-log page (production readiness §2)
 
 - **Error visibility**: explicit `LOGGING` in base — `django.request` ERRORs

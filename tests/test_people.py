@@ -46,6 +46,7 @@ def test_search_name_is_normalized(person):
     assert person.search_name == "olha kovalenko"
 
 
+@pytest.mark.jober_only  # Jober grants/lifecycle/features
 def test_valid_transition_is_audited(person, users):
     person.set_status(LifecycleStatus.TRIAL_DAY, actor=users["recruiter"], reason="trial")
     person.refresh_from_db()

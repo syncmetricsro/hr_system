@@ -57,6 +57,7 @@ def test_release_room(setup):
     assert room.occupancy() == 0
 
 
+@pytest.mark.jober_only  # Jober grants/lifecycle/features
 def test_room_assign_rbac(django_user_model):
     coord = django_user_model.objects.create_user(email="c2@demo.jober.test", password="x", role="coordinator")
     observer = django_user_model.objects.create_user(email="o@demo.jober.test", password="x", role="observer")

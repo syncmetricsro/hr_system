@@ -7,7 +7,8 @@ from features.logistics.models import EquipmentItem, EquipmentIssue
 from core.people.models import LifecycleStatus, Person
 from core.projects.models import Project, TrialAssignment
 
-pytestmark = pytest.mark.django_db
+# Jober-specific URLs/policies/languages — excluded from the corvinum lane.
+pytestmark = [pytest.mark.django_db, pytest.mark.jober_only]
 
 
 @pytest.fixture

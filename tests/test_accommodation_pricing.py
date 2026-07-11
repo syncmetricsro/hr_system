@@ -15,7 +15,8 @@ from features.logistics.services import (
 )
 from core.people.models import Person
 
-pytestmark = pytest.mark.django_db
+# Jober-specific URLs/policies/languages — excluded from the corvinum lane.
+pytestmark = [pytest.mark.django_db, pytest.mark.jober_only]
 
 
 @pytest.fixture

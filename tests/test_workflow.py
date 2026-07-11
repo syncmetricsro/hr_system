@@ -19,7 +19,8 @@ from core.projects.services import (
     update_readiness,
 )
 
-pytestmark = pytest.mark.django_db
+# Jober-specific URLs/policies/languages — excluded from the corvinum lane.
+pytestmark = [pytest.mark.django_db, pytest.mark.jober_only]
 
 
 @pytest.fixture

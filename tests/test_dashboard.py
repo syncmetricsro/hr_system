@@ -11,6 +11,7 @@ from core.projects.services import schedule_trial
 pytestmark = pytest.mark.django_db
 
 
+@pytest.mark.jober_only  # Jober grants/lifecycle/features
 def test_dashboard_shows_real_metrics(client, django_user_model):
     Project.objects.create(name="DHL", code="DHLBA", is_active=True)
     Person.objects.create(first_name="Ava", last_name="A", lifecycle_status=LifecycleStatus.AVAILABLE)

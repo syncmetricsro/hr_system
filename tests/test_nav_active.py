@@ -3,7 +3,8 @@ from __future__ import annotations
 import pytest
 from django.utils import translation
 
-pytestmark = pytest.mark.django_db
+# Jober-specific URLs/policies/languages — excluded from the corvinum lane.
+pytestmark = [pytest.mark.django_db, pytest.mark.jober_only]
 
 
 @pytest.fixture(autouse=True)
