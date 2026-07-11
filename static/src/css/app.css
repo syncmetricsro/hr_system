@@ -553,11 +553,12 @@ dd {
 
 .qr-plate {
   /* QR must stay dark-on-light to scan, whatever the client theme (ADR 0024). */
-  display: inline-block;
+  display: block;
+  width: fit-content;
   background: #ffffff;
   padding: var(--space-3);
   border-radius: var(--radius);
-  margin: var(--space-3) 0;
+  margin: var(--space-3) auto;
   line-height: 0;
 }
 
