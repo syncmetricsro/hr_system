@@ -1,5 +1,18 @@
 # Test Journal
 
+## 2026-07-11 — Stage C6 (conformance + demos)
+
+- **271 passed** (270 + payslip-creation audit test) + **16 e2e**, ruff clean;
+  SK/HU/UK catalogs compile with zero fuzzies/empties.
+- Both demo stacks verified live simultaneously: Jober :8000 healthz ok;
+  CorvinumEU :8001 healthz ok, SK login page 200 with brand + fingerprinted
+  `corvinum/theme.css`.
+- Gotchas: (1) `re.sub` replacement strings interpret `\n` — po msgstr
+  patching must escape or use string ops (three catalogs briefly broke with
+  raw newlines inside strings); (2) manifest static storage 500s on a static
+  referenced by a client whose dir wasn't collected — client static must be
+  in base's STATICFILES_DIRS, not per-client settings.
+
 ## 2026-07-11 — Stage C5 (payslips)
 
 - **270 passed** (265 + 5: password format/alphabet/uniqueness sample,

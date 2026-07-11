@@ -63,6 +63,6 @@ BRAND_NAME = "CorvinumEU PeopleOps"
 BRAND_MARK = "CE"
 
 # corvinum.eu design language layered over the shared shell (§7.0; C-Q8
-# dark-default pending confirmation). Served from the client static dir.
-STATICFILES_DIRS = STATICFILES_DIRS + [BASE_DIR / "clients" / "corvinum_eu" / "static"]  # noqa: F405
+# dark-default pending confirmation). The client static dir is collected by
+# base's STATICFILES_DIRS glob — one artifact carries every client's theme.
 CLIENT_THEME_CSS = "corvinum/theme.css"

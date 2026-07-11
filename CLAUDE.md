@@ -26,7 +26,7 @@ overrides it. Product truth lives in `Product_Design.md` (+ `Finance_Specs.md`,
   compliance/intake reused, 2FA on for managers, seeds in
   `clients/corvinum_eu/demo` (`seed_corvinum_demo`); open client decisions in
   `docs/product/corvinum-open-questions.md`.
-- Test baseline: **270 unit + 16 e2e**. Suite counts are tracked in
+- Test baseline: **271 unit + 16 e2e**. Suite counts are tracked in
   `test_journal.md` — update it (and `BUILD_JOURNAL.md`) with every slice.
 
 ## How to run things (no Python on the host — everything in pinned containers)
@@ -106,6 +106,6 @@ scripts/compile_messages.sh --extract   # then compile with no args
 - Open/answered client questions: `docs/product/phase3-4-open-questions.md`
   (all five answered; blacklist real-use pends LIA + written text —
   `docs/security/blacklist-legal-basis.md`).
-- Demo: `docs/deployment/demo-runbook.md` (+ `local-demo.md`).
-- Platform future: `docs/platform/{extraction-matrix,extraction-plan,corvinumeu-peopleops-design}.md` — **gated, do not build**.
+- Demos: Jober `docs/deployment/demo-runbook.md` (+ `local-demo.md`, port 8000); CorvinumEU `docs/deployment/corvinum-demo-runbook.md` (`scripts/corvinum_app.sh`, port 8001; both stacks run side-by-side).
+- Platform docs: `docs/platform/{extraction-matrix,extraction-plan,corvinumeu-peopleops-design}.md` — **Stages B+C are built** (ADRs 0021/0022/0023); these are the plans of record, not gates. Still gated: real deployment (server names, C-Q14) and everything behind the real-data/legal gate. CorvinumEU open decisions: `docs/product/corvinum-open-questions.md`.
 - Deployment/ops journals: `deployment_journal.md`, `ENVIRONMENT.md`.

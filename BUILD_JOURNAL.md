@@ -1,5 +1,35 @@
 # Build Journal
 
+## 2026-07-11 — Stage C6: conformance fixes + dual demo stacks
+
+Closes the 2026-07-11 conformance audit findings (owner-directed):
+
+- **i18n (finding 1):** full extraction pass; **332 msgids** (Stage C strings
+  + a long-standing backlog of model verbose names) translated in **SK/HU/UK**
+  and all 132 msgmerge fuzzies reviewed/replaced (the known wrong-pairing
+  behavior). Catalogs compile clean. Translations are AI-drafted — the
+  **native-review ask stands** and now covers both products.
+- **Payslip audit (finding 2):** creation moved into
+  `features/payslips/services.record_payslip` — atomic, `full_clean`, and a
+  `payslip.recorded` audit event; a pay amount can no longer appear without a
+  trail.
+- **CLAUDE.md (finding 3):** the stale "gated, do not build" platform line
+  replaced with the executed-stages reality + pointers to both demo runbooks.
+- **Dual demos (owner request):** `scripts/corvinum_app.sh` runs the CorvinumEU
+  thin client on **:8001** (own DB/network, console email backend so payslip
+  sends are visible in logs) side-by-side with Jober on :8000 — same image,
+  different `DJANGO_SETTINGS_MODULE`, which is itself the platform pitch.
+  New `clients/corvinum_eu/production.py` (whitenoise hardening layer) +
+  `docs/deployment/corvinum-demo-runbook.md` (~30-min script, TOTP act,
+  human-prep list). Base gains env-driven EMAIL settings (ADR 0023 delivery).
+- **Fix found by the demo boot:** collectstatic ran under one client's settings
+  but the artifact serves every client (§12.4) — a client theme missing from
+  the manifest 500'd the page. Base now globs `clients/*/static`.
+
+Not addressed (recorded): finding 4 — full pytest under corvinum flags in the
+standard gate, and corvinum e2e coverage. Candidate next slice.
+
+
 ## 2026-07-11 — Stage C5: payslips — encrypted PDF pay statements (ADR 0023)
 
 Client-requested **scope change recorded**: CorvinumEU now stores net pay

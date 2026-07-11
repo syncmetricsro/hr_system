@@ -27,6 +27,30 @@ class PayslipError(Exception):
     pass
 
 
+def record_payslip(person, *, period: str, net_amount, note: str = "", actor=None):
+    """Create a payslip record (audited — a pay amount must never appear
+    without an audit trail; conformance finding 2026-07-11)."""
+    from django.db import transaction
+
+    from features.payslips.models import Payslip
+
+    with transaction.atomic():
+        payslip = Payslip(
+            person=person,
+            period=period,
+            net_amount=net_amount or None,
+            note=note,
+            created_by=actor if getattr(actor, "is_authenticated", False) else None,
+        )
+        payslip.full_clean()
+        payslip.save()
+        record_event(
+            actor, "payslip.recorded", target=person,
+            reason=f"{period} {payslip.net_amount} {payslip.currency}",
+        )
+    return payslip
+
+
 def generate_password() -> str:
     groups = (
         "".join(secrets.choice(PASSWORD_ALPHABET) for _ in range(PASSWORD_GROUP_LEN))
