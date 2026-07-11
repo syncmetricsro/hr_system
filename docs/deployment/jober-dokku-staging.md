@@ -1,4 +1,7 @@
-# Dokku Staging Skeleton
+# Dokku Staging Skeleton — Jober
+
+> Platform-wide deployment architecture (both clients, topology, asks):
+> [deployment-plan.md](deployment-plan.md).
 
 Last updated: 2026-06-17
 
