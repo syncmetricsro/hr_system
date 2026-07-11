@@ -8,6 +8,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}{{ BRAND_NAME }}{% endblock %}</title>
+    {# Preload the fonts the shell needs first (all self-hosted — the icon
+       font renders the nav; without preload it starts downloading only after
+       CSS parse and raw ligature names flash as text). #}
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="{% static 'corvinum/fonts/material-symbols-outlined-subset.woff2' %}">
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="{% static 'corvinum/fonts/hanken-grotesk-latin.woff2' %}">
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="{% static 'corvinum/fonts/inter-latin.woff2' %}">
     <link rel="stylesheet" href="{% static 'dist/css/app.css' %}">
     <link rel="stylesheet" href="{% static 'corvinum/theme.css' %}">
     <script defer src="{% static 'vendor/htmx.min.js' %}"></script>
