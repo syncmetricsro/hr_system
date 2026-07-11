@@ -13,7 +13,7 @@ bespoke per-client systems. Jober is the first client; **CorvinumEU** is the sec
 
 [ADR 0001](0001-jober-only-scope.md) mandates that the current production app be
 **single-client Jober** with no client switching, no Corvinum references, no
-white-label abstractions, and no shared-client data models. `Product_Design.md`
+white-label abstractions, and no shared-client data models. `Jober_Product_Design.md`
 §3.3 reinforces this and marks the mixed Jober/Corvinum "shared platform" material
 as historical, non-authoritative background.
 
@@ -36,7 +36,7 @@ as the first thin client. Two forward-looking planning documents now live under
   Jober is complete**. It is out of scope for every current phase.
 - The `docs/platform/` documents are **planning inputs for that later stage** and
   are **non-authoritative for current code**. They are registered as such in
-  `docs/product/source-register.md`.
+  `docs/product/jober-source-register.md`.
 - When the extraction stage actually starts, a **follow-up ADR will flip the
   scope** (superseding ADR 0001). Until that ADR is Accepted, ADR 0001 governs.
 

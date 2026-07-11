@@ -5,7 +5,7 @@ Date: 2026-06-23
 
 Supersedes the Phase 0 i18n stance (Slovak-authored source strings, catalogs
 deferred — see the earlier "conservative Slovak shell labels" note in
-`docs/product/open-decisions.md` and the catalog-deferral in the build journals).
+`docs/product/jober-open-decisions.md` and the catalog-deferral in the build journals).
 
 ## Context
 

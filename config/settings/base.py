@@ -132,7 +132,7 @@ LOGOUT_REDIRECT_URL = "login"
 
 # Single switch for the still-open GDPR recruiter/coordinator read-scope
 # decision. Defaults to broad internal reads (plan §8.1 / ADR 0008); do not
-# hardcode a narrower split until Jober confirms (docs/product/open-decisions.md).
+# hardcode a narrower split until Jober confirms (docs/product/jober-open-decisions.md).
 BROAD_INTERNAL_READS = env_bool("JOBER_BROAD_INTERNAL_READS", True)
 
 # Twilio SMS — credentials come from the environment only, never the repo.

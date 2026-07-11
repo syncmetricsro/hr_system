@@ -1,6 +1,6 @@
 """Jober client policies (Stage B3, ADR 0021).
 
-The role grants (mirrored by docs/permissions/permission-matrix.md), the
+The role grants (mirrored by docs/permissions/jober-permission-matrix.md), the
 lifecycle transition values (plan §9.3/§12), and the sensitive-field visibility
 rule (phase1-open-questions Q4) — moved verbatim from core. The mechanisms
 (``Action``, ``can()``, ``set_status``, panels) stay in core and resolve this

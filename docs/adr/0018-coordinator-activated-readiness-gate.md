@@ -3,14 +3,14 @@
 Status: Accepted
 Date: 2026-06-28
 
-Modifies the activation model in `Product_Design.md` §11.6 / §12.4.
+Modifies the activation model in `Jober_Product_Design.md` §11.6 / §12.4.
 
 ## Context
 
 The plan made the **manager** the approver who moves a worker to `WORKING`: a
 four-pillar readiness checklist plus an `ActivationApproval` (pending/approved/
 rejected) decided by a manager. During Phase 1 requirements review (2026-06-28,
-`docs/product/phase1-open-questions.md`), Jober said the **coordinator** places
+`docs/product/jober-phase1-open-questions.md`), Jober said the **coordinator** places
 workers and the **manager does not confirm each action**; the manager instead
 wants an **alert system** for missing/expiring papers.
 
@@ -42,5 +42,5 @@ The RBAC action `project.assign` is granted to coordinator + manager.
 
 - Faster day-to-day flow (no approval bottleneck), integrity preserved by the
   system gate rather than a person.
-- `permission-matrix.md` and the open-decisions/phase1-open-questions registers
+- `jober-permission-matrix.md` and the open-decisions/phase1-open-questions registers
   reflect this; the manager's role shifts from gatekeeper to alert-driven oversight.

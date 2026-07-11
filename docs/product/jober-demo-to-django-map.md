@@ -13,5 +13,5 @@ Last updated: 2026-06-17
 | Approval story | Later readiness and manager activation workflow. |
 | Shift/SMS/sick/certificate story screens | Do not migrate as-is; map only confirmed concepts such as SMS and entry-medical dates. |
 | Accommodation and equipment | Later logistics modules with real models and audit. |
-| Pohoda/accounting mock | Remove; later manual finance oversight per `Finance_Specs.md`. |
+| Pohoda/accounting mock | Remove; later manual finance oversight per `Jober_Finance_Specs.md`. |
 | In-memory state | Replace with PostgreSQL, forms, services, and audited state transitions. |

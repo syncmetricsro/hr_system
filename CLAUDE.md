@@ -2,8 +2,8 @@
 
 Session onboarding for coding agents. **`AGENTS.md` is the binding authority**
 (scope, security, supply chain, never-do list) — read it first; this file never
-overrides it. Product truth lives in `Product_Design.md` (+ `Finance_Specs.md`,
-`Messaging_Specs.md`); decisions in `docs/adr/` and `docs/product/`.
+overrides it. Product truth lives in `Jober_Product_Design.md` (+ `Jober_Finance_Specs.md`,
+`Jober_Messaging_Specs.md`); decisions in `docs/adr/` and `docs/product/`.
 
 ## State of the project (2026-07-05)
 
@@ -86,9 +86,9 @@ scripts/compile_messages.sh --extract   # then compile with no args
 - **Business logic lives in `core|features/<app>/services.py`** (post-B2 layout), is `@transaction.atomic`
   where it mutates, and **audits via `apps.audit.services.record_event`** —
   views stay thin and gate with `@require_action(Action.X)`.
-- **RBAC:** add actions to `Action` + `ACTION_ROLES` in
-  `core/accounts/permissions.py` and mirror them in
-  `docs/permissions/permission-matrix.md` (tests assert the mapping). Templates
+- **RBAC:** add actions to `Action` in `core/accounts/permissions.py`, grant
+  them in each client's `policies.py`, and mirror them in that client's matrix
+  (`docs/permissions/{jober,corvinum}-permission-matrix.md`). Templates
   use `{% can 'action.name' %}`; hidden buttons must have server-side checks.
 - **Money:** `Decimal`, stored **positive** (validators enforce), totals always
   computed dynamically — never hardcode a sum.
@@ -103,9 +103,12 @@ scripts/compile_messages.sh --extract   # then compile with no args
 
 ## Where answers live
 
-- Open/answered client questions: `docs/product/phase3-4-open-questions.md`
+- **Docs index (per-client naming convention): `docs/README.md`** — unprefixed
+  = platform-shared; `jober-`/`corvinum-` prefixes mark client ownership.
+
+- Open/answered client questions: `docs/product/jober-phase3-4-open-questions.md`
   (all five answered; blacklist real-use pends LIA + written text —
-  `docs/security/blacklist-legal-basis.md`).
-- Demos: Jober `docs/deployment/jober-demo-runbook.md` (+ `local-demo.md`, port 8000); CorvinumEU `docs/deployment/corvinum-demo-runbook.md` (`scripts/corvinum_app.sh`, port 8001; both stacks run side-by-side).
+  `docs/security/jober-blacklist-legal-basis.md`).
+- Demos: Jober `docs/deployment/jober-demo-runbook.md` (+ `jober-local-demo.md`, port 8000); CorvinumEU `docs/deployment/corvinum-demo-runbook.md` (`scripts/corvinum_app.sh`, port 8001; both stacks run side-by-side).
 - Platform docs: `docs/platform/{extraction-matrix,extraction-plan,corvinumeu-peopleops-design}.md` — **Stages B+C are built** (ADRs 0021/0022/0023); these are the plans of record, not gates. Still gated: real deployment (server names, C-Q14) and everything behind the real-data/legal gate. CorvinumEU open decisions: `docs/product/corvinum-open-questions.md`.
 - Deployment/ops journals: `deployment_journal.md`, `ENVIRONMENT.md`.

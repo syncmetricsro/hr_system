@@ -1,5 +1,20 @@
 # Build Journal
 
+## 2026-07-11 — Docs separated per client + docs index
+
+Extends the runbook convention repo-wide: **unprefixed = platform-shared**,
+client docs carry `jober-`/`corvinum-` prefixes. Renamed (git mv): root specs
+→ `Jober_{Product_Design,Finance_Specs,Messaging_Specs}.md`; deployment
+`{local-demo,twilio-setup,dokku-staging}` → `jober-*`; all eight Jober-era
+product docs → `jober-*`; `blacklist-legal-basis` → `jober-*`;
+`permission-matrix` → `jober-permission-matrix` **plus a new
+`corvinum-permission-matrix.md`** mirroring `clients/corvinum_eu/policies.py`
+(deny-by-default note for unmounted Jober actions; trial-less lifecycle).
+ADRs stay one chronological log. New **`docs/README.md`** index maps every
+doc → owner → purpose. All living references updated (AGENTS, CLAUDE, ADRs,
+code docstrings); journal history intentionally untouched.
+
+
 ## 2026-07-11 — Runbook naming: one per thin client
 
 `docs/deployment/demo-runbook.md` → **`jober-demo-runbook.md`** (git mv);

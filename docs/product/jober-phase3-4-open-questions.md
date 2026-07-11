@@ -56,7 +56,7 @@ store the raw ID number?
     activation hard-gate. Visibility per client: flag = recruiter+coordinator+
     manager; reason = coordinator+manager. Gated by `BLACKLIST_MATCHING_ENABLED`;
     fictional data only pending the written text + LIA. See
-    `docs/security/blacklist-legal-basis.md`.
+    `docs/security/jober-blacklist-legal-basis.md`.
   - _Earlier interim (2026-06-29): candidate basis = annual GDPR contract clauses;
     awaiting a sample._
 

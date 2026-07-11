@@ -7,7 +7,7 @@ from features.finance.models import FinanceCategory, FinanceCategoryKind, Financ
 from features.finance.services import record_financial_month
 from core.projects.models import Project
 
-# Catalog from Finance_Specs.md §2 (English glosses + group tags).
+# Catalog from Jober_Finance_Specs.md §2 (English glosses + group tags).
 COST = FinanceCategoryKind.COST
 REV = FinanceCategoryKind.REVENUE
 G = FinanceGroup
@@ -43,7 +43,7 @@ CATEGORIES = [
 
 
 class Command(BaseCommand):
-    help = "Seed the finance category catalog from Finance_Specs.md (idempotent)."
+    help = "Seed the finance category catalog from Jober_Finance_Specs.md (idempotent)."
 
     def handle(self, *args, **options):
         created = 0

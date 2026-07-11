@@ -18,7 +18,7 @@ class FinancialMonth(models.Model):
     SIGN CONVENTION (confirmed with Jober 2026-06-29): costs and revenues are
     entered as **positive** numbers and the system computes net = revenue - cost.
     Amounts are never stored negative (enforced in services.positive_amount and by
-    the field validators below). Full line items live in Finance_Specs.md. Totals
+    the field validators below). Full line items live in Jober_Finance_Specs.md. Totals
     are always summed dynamically over all projects/months — never hardcoded — to
     avoid the manager's spreadsheet bugs.
     """
