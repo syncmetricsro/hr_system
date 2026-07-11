@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-11 09:09+0200\n"
+"POT-Creation-Date: 2026-07-11 11:32+0200\n"
 "Language: uk\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -718,7 +718,9 @@ msgstr "цикл"
 msgid ""
 "20th-to-20th cycle the entry settles in, keyed by the end month (e.g. "
 "2026-07)."
-msgstr "Цикл з 20-го по 20-те, у якому запис погашається; ключ — кінцевий місяць (напр. 2026-07)."
+msgstr ""
+"Цикл з 20-го по 20-те, у якому запис погашається; ключ — кінцевий місяць "
+"(напр. 2026-07)."
 
 #: features/advances/models.py:86
 msgid "reversal of"
@@ -980,7 +982,8 @@ msgstr "пункти контрольного списку особи"
 #: features/checklists/services.py:70
 #, python-format
 msgid "Activation blocked by open checklist items: %(items)s"
-msgstr "Активацію заблоковано відкритими пунктами контрольного списку: %(items)s"
+msgstr ""
+"Активацію заблоковано відкритими пунктами контрольного списку: %(items)s"
 
 #: features/compliance/models.py:15
 msgid "issue date"
@@ -1673,7 +1676,9 @@ msgstr "Розрахунковий лист збережено."
 msgid ""
 "Payslip emailed to %(to)s. One-time password (tell the worker by phone/"
 "Messenger, NOT email): %(pw)s"
-msgstr "Розрахунковий лист надіслано на %(to)s. Одноразовий пароль (повідомте працівнику телефоном/через Messenger, НЕ електронною поштою): %(pw)s"
+msgstr ""
+"Розрахунковий лист надіслано на %(to)s. Одноразовий пароль (повідомте "
+"працівнику телефоном/через Messenger, НЕ електронною поштою): %(pw)s"
 
 # --- shell / navigation ---
 #: templates/layouts/base.html:7
@@ -2205,7 +2210,9 @@ msgstr "Четверговий підсумок"
 msgid ""
 "Cut-off %(cutoff)s — open advances for Friday cash distribution. Later "
 "entries roll to next week."
-msgstr "Відсічення %(cutoff)s — відкриті аванси для видачі готівки в п’ятницю. Пізніші записи переносяться на наступний тиждень."
+msgstr ""
+"Відсічення %(cutoff)s — відкриті аванси для видачі готівки в п’ятницю. "
+"Пізніші записи переносяться на наступний тиждень."
 
 # --- compliance ---
 #: templates/pages/ledger.html:49
@@ -2315,7 +2322,10 @@ msgstr "Оплата"
 msgid ""
 "Encrypted PDF by email; the one-time password is shown here once and must be "
 "given to the worker by phone or Messenger — never by email."
-msgstr "Зашифрований PDF електронною поштою; одноразовий пароль показується тут лише раз і його слід повідомити працівнику телефоном або в Messenger — ніколи електронною поштою."
+msgstr ""
+"Зашифрований PDF електронною поштою; одноразовий пароль показується тут лише "
+"раз і його слід повідомити працівнику телефоном або в Messenger — ніколи "
+"електронною поштою."
 
 #: templates/pages/payslips.html:14
 msgid "Record payslip"
@@ -2641,20 +2651,20 @@ msgid "Two-factor authentication is enabled for your account."
 msgstr "Двофакторну автентифікацію ввімкнено для вашого облікового запису."
 
 #: templates/pages/two_factor_setup.html:13
-msgid "Add this account to your authenticator app, then confirm with a code."
-msgstr ""
+msgid "Scan the QR code with your authenticator app, then confirm with a code."
+msgstr "Відскануйте QR-код застосунком-автентифікатором, а потім підтвердьте кодом."
 "Додайте цей обліковий запис у застосунок-автентифікатор і підтвердьте кодом."
 
-#: templates/pages/two_factor_setup.html:15
+#: templates/pages/two_factor_setup.html:16
 msgid "Secret (manual entry)"
 msgstr "Секретний ключ (ручне введення)"
 
-#: templates/pages/two_factor_setup.html:21
+#: templates/pages/two_factor_setup.html:22
 #: templates/pages/two_factor_verify.html:13
 msgid "6-digit code"
 msgstr "6-значний код"
 
-#: templates/pages/two_factor_setup.html:24
+#: templates/pages/two_factor_setup.html:25
 msgid "Confirm"
 msgstr "Підтвердити"
 

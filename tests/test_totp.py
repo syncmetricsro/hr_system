@@ -73,6 +73,26 @@ def test_role_requirement_redirects_to_setup(client, user, settings):
     assert reverse("two_factor_setup") in resp["Location"]
 
 
+def test_setup_page_embeds_qr_svg(client, user):
+    """ADR 0024: the setup page carries an inline SVG QR of the otpauth URI —
+    no external requests, no JS."""
+    client.force_login(user)
+    resp = client.get(reverse("two_factor_setup"))
+    html = resp.content.decode()
+    assert "<svg" in html and 'class="qr-plate"' in html
+    svg = html[html.index("<svg"):html.index("</svg>")]
+    assert "http://" not in svg and "https://" not in svg
+
+
+def test_qr_svg_helper_is_deterministic_per_uri():
+    from core.accounts.views import _qr_svg
+
+    svg = _qr_svg("otpauth://totp/X:a@b?secret=ABC&issuer=X")
+    assert svg.startswith("<svg") and "</svg>" in svg
+    assert svg == _qr_svg("otpauth://totp/X:a@b?secret=ABC&issuer=X")
+    assert svg != _qr_svg("otpauth://totp/X:a@b?secret=DIFFERENT&issuer=X")
+
+
 def test_setup_confirm_flow(client, user):
     client.force_login(user)
     resp = client.get(reverse("two_factor_setup"))

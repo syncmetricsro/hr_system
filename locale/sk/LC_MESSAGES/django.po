@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-11 09:09+0200\n"
+"POT-Creation-Date: 2026-07-11 11:32+0200\n"
 "Language: sk\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -717,7 +717,9 @@ msgstr "cyklus"
 msgid ""
 "20th-to-20th cycle the entry settles in, keyed by the end month (e.g. "
 "2026-07)."
-msgstr "Cyklus od 20. do 20., v ktorom sa záznam vysporiada; kľúčom je koncový mesiac (napr. 2026-07)."
+msgstr ""
+"Cyklus od 20. do 20., v ktorom sa záznam vysporiada; kľúčom je koncový "
+"mesiac (napr. 2026-07)."
 
 #: features/advances/models.py:86
 msgid "reversal of"
@@ -979,7 +981,8 @@ msgstr "položky kontrolného zoznamu osoby"
 #: features/checklists/services.py:70
 #, python-format
 msgid "Activation blocked by open checklist items: %(items)s"
-msgstr "Aktivácia je zablokovaná otvorenými položkami kontrolného zoznamu: %(items)s"
+msgstr ""
+"Aktivácia je zablokovaná otvorenými položkami kontrolného zoznamu: %(items)s"
 
 #: features/compliance/models.py:15
 msgid "issue date"
@@ -1672,7 +1675,9 @@ msgstr "Výplatná páska uložená."
 msgid ""
 "Payslip emailed to %(to)s. One-time password (tell the worker by phone/"
 "Messenger, NOT email): %(pw)s"
-msgstr "Výplatná páska odoslaná na %(to)s. Jednorazové heslo (oznámte pracovníkovi telefonicky/cez Messenger, NIE e-mailom): %(pw)s"
+msgstr ""
+"Výplatná páska odoslaná na %(to)s. Jednorazové heslo (oznámte pracovníkovi "
+"telefonicky/cez Messenger, NIE e-mailom): %(pw)s"
 
 # --- shell / navigation ---
 #: templates/layouts/base.html:7
@@ -2204,7 +2209,9 @@ msgstr "Štvrtkový súhrn"
 msgid ""
 "Cut-off %(cutoff)s — open advances for Friday cash distribution. Later "
 "entries roll to next week."
-msgstr "Uzávierka %(cutoff)s — otvorené zálohy na piatkovú výplatu hotovosti. Neskoršie záznamy sa presúvajú na ďalší týždeň."
+msgstr ""
+"Uzávierka %(cutoff)s — otvorené zálohy na piatkovú výplatu hotovosti. "
+"Neskoršie záznamy sa presúvajú na ďalší týždeň."
 
 # --- compliance ---
 #: templates/pages/ledger.html:49
@@ -2314,7 +2321,10 @@ msgstr "Mzdy"
 msgid ""
 "Encrypted PDF by email; the one-time password is shown here once and must be "
 "given to the worker by phone or Messenger — never by email."
-msgstr "Šifrované PDF e-mailom; jednorazové heslo sa tu zobrazí iba raz a pracovníkovi ho treba oznámiť telefonicky alebo cez Messenger — nikdy e-mailom."
+msgstr ""
+"Šifrované PDF e-mailom; jednorazové heslo sa tu zobrazí iba raz a "
+"pracovníkovi ho treba oznámiť telefonicky alebo cez Messenger — nikdy e-"
+"mailom."
 
 #: templates/pages/payslips.html:14
 msgid "Record payslip"
@@ -2638,19 +2648,19 @@ msgid "Two-factor authentication is enabled for your account."
 msgstr "Dvojfaktorové overenie je pre váš účet zapnuté."
 
 #: templates/pages/two_factor_setup.html:13
-msgid "Add this account to your authenticator app, then confirm with a code."
-msgstr "Pridajte tento účet do autentifikačnej aplikácie a potvrďte kódom."
+msgid "Scan the QR code with your authenticator app, then confirm with a code."
+msgstr "Naskenujte QR kód autentifikačnou aplikáciou a potom potvrďte kódom."
 
-#: templates/pages/two_factor_setup.html:15
+#: templates/pages/two_factor_setup.html:16
 msgid "Secret (manual entry)"
 msgstr "Tajný kľúč (ručné zadanie)"
 
-#: templates/pages/two_factor_setup.html:21
+#: templates/pages/two_factor_setup.html:22
 #: templates/pages/two_factor_verify.html:13
 msgid "6-digit code"
 msgstr "6-miestny kód"
 
-#: templates/pages/two_factor_setup.html:24
+#: templates/pages/two_factor_setup.html:25
 msgid "Confirm"
 msgstr "Potvrdiť"
 

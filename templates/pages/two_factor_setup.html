@@ -10,7 +10,8 @@
   {% if device.confirmed %}
     <p>{% trans "Two-factor authentication is enabled for your account." %}</p>
   {% else %}
-    <p class="muted">{% trans "Add this account to your authenticator app, then confirm with a code." %}</p>
+    <p class="muted">{% trans "Scan the QR code with your authenticator app, then confirm with a code." %}</p>
+    <div class="qr-plate">{{ qr_svg|safe }}</div>
     <dl class="detail-grid">
       <div><dt>{% trans "Secret (manual entry)" %}</dt><dd><code>{{ device.secret }}</code></dd></div>
     </dl>
