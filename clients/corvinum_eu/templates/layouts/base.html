@@ -1,0 +1,105 @@
+{% load static i18n rbac nav %}
+{# CorvinumEU shell (Stage C8, ADR 0022): left slide-out sidebar per the #}
+{# peopleops prototype. Same blocks/URLs/gating as the shared shell — pages #}
+{# render unchanged inside it. Dark-only pending C-Q8. #}
+<!doctype html>
+<html lang="{{ LANGUAGE_CODE|default:'sk' }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{{ BRAND_NAME }}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'dist/css/app.css' %}">
+    <link rel="stylesheet" href="{% static 'corvinum/theme.css' %}">
+    <script defer src="{% static 'vendor/htmx.min.js' %}"></script>
+    <script defer src="{% static 'vendor/alpine.min.js' %}"></script>
+    <script defer src="{% static 'src/js/app.js' %}"></script>
+    <script defer src="{% static 'corvinum/shell.js' %}"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#obsah">{% trans "Skip to content" %}</a>
+
+    {% if user.is_authenticated %}
+    <div class="scrim"></div>
+
+    <aside class="sidebar">
+      <div class="sb-brand">
+        <img src="{% static 'corvinum/brand/corvinum-logo-v1.webp' %}" alt="">
+        <span class="brand-word">{{ BRAND_NAME }}</span>
+      </div>
+      <nav class="sb-nav" aria-label="{% trans 'Main navigation' %}">
+        <p class="sb-section">{% trans "Workforce" %}</p>
+        <a class="sb-item {% nav_active 'dashboard' %}" href="{% url 'dashboard' %}"><span class="material-symbols-outlined" aria-hidden="true">home</span><span class="sb-text">{% trans "Overview" %}</span></a>
+        <a class="sb-item {% nav_active 'people_list' 'person_create' 'person_detail' 'person_edit' 'intake_start' 'intake_panel' %}" href="{% url 'people_list' %}"><span class="material-symbols-outlined" aria-hidden="true">groups</span><span class="sb-text">{% trans "People" %}</span></a>
+        <a class="sb-item {% nav_active 'project_list' 'project_detail' %}" href="{% url 'project_list' %}"><span class="material-symbols-outlined" aria-hidden="true">engineering</span><span class="sb-text">{% trans "Projects" %}</span></a>
+
+        <p class="sb-section">{% trans "Operations" %}</p>
+        {% flag_on 'documents' as has_documents %}
+        {% if has_documents %}<a class="sb-item {% nav_active 'compliance_list' %}" href="{% url 'compliance_list' %}"><span class="material-symbols-outlined" aria-hidden="true">task_alt</span><span class="sb-text">{% trans "Compliance" %}</span></a>{% endif %}
+        {% flag_on 'advances' as has_advances %}
+        {% can 'ledger.view' as may_ledger %}
+        {% if may_ledger and has_advances %}<a class="sb-item {% nav_active 'ledger_overview' %}" href="{% url 'ledger_overview' %}"><span class="material-symbols-outlined" aria-hidden="true">payments</span><span class="sb-text">{% trans "Ledger" %}</span></a>{% endif %}
+        {% flag_on 'payslips' as has_payslips %}
+        {% can 'payslip.manage' as may_payslips %}
+        {% if may_payslips and has_payslips %}<a class="sb-item {% nav_active 'payslip_list' %}" href="{% url 'payslip_list' %}"><span class="material-symbols-outlined" aria-hidden="true">paid</span><span class="sb-text">{% trans "Payslips" %}</span></a>{% endif %}
+        {% can 'equipment.review_deduction' as may_equip_review %}
+        {% flag_on 'equipment' as has_equipment %}
+        {% if may_equip_review and has_equipment %}<a class="sb-item {% nav_active 'equipment_reviews' %}" href="{% url 'equipment_reviews' %}"><span class="material-symbols-outlined" aria-hidden="true">precision_manufacturing</span><span class="sb-text">{% trans "Reviews" %}</span></a>{% endif %}
+        {% can 'blacklist.decide' as may_blacklist %}
+        {% flag_on 'duplicate_blacklist' as has_blacklist %}
+        {% if may_blacklist and has_blacklist %}<a class="sb-item {% nav_active 'blacklist_queue' %}" href="{% url 'blacklist_queue' %}"><span class="material-symbols-outlined" aria-hidden="true">gavel</span><span class="sb-text">{% trans "Blacklist" %}</span></a>{% endif %}
+
+        <p class="sb-section">{% trans "System" %}</p>
+        <a class="sb-item {% nav_active 'reports' %}" href="{% url 'reports' %}"><span class="material-symbols-outlined" aria-hidden="true">trending_up</span><span class="sb-text">{% trans "Reports" %}</span></a>
+      </nav>
+      <div class="sb-foot">
+        <div class="sb-user">
+          <span class="sb-avatar" aria-hidden="true">{{ user.first_name|slice:":1" }}{{ user.last_name|slice:":1" }}</span>
+          <span>
+            <span class="sb-user-name">{{ user.get_full_name|default:user.email }}</span><br>
+            <span class="sb-user-role">{{ user.get_role_display }}</span>
+          </span>
+        </div>
+        <div class="sb-actions">
+          {% get_current_language as CURRENT_LANGUAGE %}
+          <form class="language-switch" action="{% url 'set_language' %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ request.path }}">
+            <label class="sr-only" for="language-select">{% trans "Language" %}</label>
+            <select id="language-select" name="language" onchange="this.form.submit()">
+              {% get_available_languages as LANGUAGES %}
+              {% for code, name in LANGUAGES %}
+                <option value="{{ code }}"{% if code == CURRENT_LANGUAGE %} selected{% endif %}>{{ name }}</option>
+              {% endfor %}
+            </select>
+          </form>
+          <form class="logout-form" action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button class="button button-secondary" type="submit">{% trans "Sign out" %}</button>
+          </form>
+        </div>
+      </div>
+    </aside>
+    {% endif %}
+
+    <div class="{% if user.is_authenticated %}cv-shell{% endif %}">
+      <main id="obsah" class="{% if user.is_authenticated %}cv-main{% else %}cv-anon{% endif %}">
+        {% if user.is_authenticated %}
+        <div class="cv-topbar">
+          <button class="hamburger" type="button" data-nav-toggle aria-label="{% trans 'Open navigation' %}">
+            <span></span><span></span><span></span>
+          </button>
+          {% get_current_language as CURRENT_LANGUAGE %}
+        </div>
+        {% endif %}
+        {% if messages %}
+          <ul class="messages" role="status">
+            {% for message in messages %}
+              <li class="message message-{{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+        {% block content %}{% endblock %}
+      </main>
+    </div>
+  </body>
+</html>

@@ -5,12 +5,110 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-11 11:32+0200\n"
+"POT-Creation-Date: 2026-07-11 13:52+0200\n"
 "Language: uk\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#: clients/corvinum_eu/templates/layouts/base.html:19
+#: templates/layouts/base.html:15
+msgid "Skip to content"
+msgstr "Перейти до вмісту"
+
+#: clients/corvinum_eu/templates/layouts/base.html:29
+msgid "Main navigation"
+msgstr "Головна навігація"
+
+# --- people list / detail ---
+#: clients/corvinum_eu/templates/layouts/base.html:30
+#: templates/pages/people_list.html:8 templates/pages/reports.html:23
+msgid "Workforce"
+msgstr "Робоча сила"
+
+#: clients/corvinum_eu/templates/layouts/base.html:31
+#: templates/layouts/base.html:26
+msgid "Overview"
+msgstr "Огляд"
+
+#: clients/corvinum_eu/templates/layouts/base.html:32
+#: templates/layouts/base.html:27 templates/pages/people_list.html:4
+#: templates/pages/people_list.html:9 templates/pages/people_list.html:30
+#: templates/pages/reports.html:14
+msgid "People"
+msgstr "Люди"
+
+#: clients/corvinum_eu/templates/layouts/base.html:33
+#: templates/layouts/base.html:28 templates/pages/project_list.html:4
+#: templates/pages/project_list.html:9 templates/pages/project_list.html:16
+msgid "Projects"
+msgstr "Проєкти"
+
+# --- projects UI ---
+#: clients/corvinum_eu/templates/layouts/base.html:35
+#: templates/pages/dashboard.html:8 templates/pages/project_list.html:8
+#: templates/pages/reports.html:8
+msgid "Operations"
+msgstr "Операції"
+
+# --- compliance ---
+#: clients/corvinum_eu/templates/layouts/base.html:37
+#: features/compliance/panels.py:14 features/finance/models.py:68
+#: templates/layouts/base.html:32 templates/pages/compliance_list.html:4
+#: templates/pages/compliance_list.html:9
+#: templates/pages/compliance_list.html:12
+msgid "Compliance"
+msgstr "Відповідність"
+
+#: clients/corvinum_eu/templates/layouts/base.html:40
+#: templates/layouts/base.html:49 templates/pages/ledger.html:8
+msgid "Ledger"
+msgstr "Книга"
+
+#: clients/corvinum_eu/templates/layouts/base.html:43
+#: templates/layouts/base.html:52 templates/pages/payslips.html:4
+#: templates/pages/payslips.html:9
+msgid "Payslips"
+msgstr "Розрахункові листи"
+
+#: clients/corvinum_eu/templates/layouts/base.html:46
+#: templates/layouts/base.html:40
+msgid "Reviews"
+msgstr "Перевірки"
+
+#: clients/corvinum_eu/templates/layouts/base.html:49
+#: templates/layouts/base.html:43 templates/pages/blacklist_queue.html:4
+#: templates/panels/blacklist_banner.html:3
+#: templates/panels/blacklist_case.html:5
+msgid "Blacklist"
+msgstr "Чорний список"
+
+#: clients/corvinum_eu/templates/layouts/base.html:51
+msgid "System"
+msgstr "Система"
+
+#: clients/corvinum_eu/templates/layouts/base.html:52
+#: templates/layouts/base.html:37 templates/pages/finance_summary.html:8
+#: templates/pages/reports.html:4 templates/pages/reports.html:9
+#: templates/pages/reports.html:12
+msgid "Reports"
+msgstr "Звіти"
+
+#: clients/corvinum_eu/templates/layouts/base.html:67
+#: templates/layouts/base.html:62
+msgid "Language"
+msgstr "Мова"
+
+#: clients/corvinum_eu/templates/layouts/base.html:77
+#: templates/layouts/base.html:74
+msgid "Sign out"
+msgstr "Вийти"
+
+#: clients/corvinum_eu/templates/layouts/base.html:88
+#: templates/layouts/base.html:22
+msgid "Open navigation"
+msgstr "Відкрити навігацію"
 
 # --- accounts / admin ---
 #: core/accounts/admin.py:18
@@ -997,14 +1095,6 @@ msgstr "сертифікат"
 msgid "certificates"
 msgstr "сертифікати"
 
-# --- compliance ---
-#: features/compliance/panels.py:14 features/finance/models.py:68
-#: templates/layouts/base.html:32 templates/pages/compliance_list.html:4
-#: templates/pages/compliance_list.html:9
-#: templates/pages/compliance_list.html:12
-msgid "Compliance"
-msgstr "Відповідність"
-
 #: features/feedback/models.py:19
 msgid "token"
 msgstr "токен"
@@ -1685,48 +1775,9 @@ msgstr ""
 msgid "Jober operations"
 msgstr "Операції Jober"
 
-#: templates/layouts/base.html:15
-msgid "Skip to content"
-msgstr "Перейти до вмісту"
-
-#: templates/layouts/base.html:22
-msgid "Open navigation"
-msgstr "Відкрити навігацію"
-
-#: templates/layouts/base.html:26
-msgid "Overview"
-msgstr "Огляд"
-
-#: templates/layouts/base.html:27 templates/pages/people_list.html:4
-#: templates/pages/people_list.html:9 templates/pages/people_list.html:30
-#: templates/pages/reports.html:14
-msgid "People"
-msgstr "Люди"
-
-#: templates/layouts/base.html:28 templates/pages/project_list.html:4
-#: templates/pages/project_list.html:9 templates/pages/project_list.html:16
-msgid "Projects"
-msgstr "Проєкти"
-
 #: templates/layouts/base.html:30 templates/pages/trials_queue.html:4
 msgid "Field"
 msgstr "Поле"
-
-#: templates/layouts/base.html:37 templates/pages/finance_summary.html:8
-#: templates/pages/reports.html:4 templates/pages/reports.html:9
-#: templates/pages/reports.html:12
-msgid "Reports"
-msgstr "Звіти"
-
-#: templates/layouts/base.html:40
-msgid "Reviews"
-msgstr "Перевірки"
-
-#: templates/layouts/base.html:43 templates/pages/blacklist_queue.html:4
-#: templates/panels/blacklist_banner.html:3
-#: templates/panels/blacklist_case.html:5
-msgid "Blacklist"
-msgstr "Чорний список"
 
 # --- finance ---
 #: templates/layouts/base.html:46 templates/pages/finance_month_detail.html:8
@@ -1738,32 +1789,15 @@ msgstr "Чорний список"
 msgid "Finance"
 msgstr "Фінанси"
 
-#: templates/layouts/base.html:49 templates/pages/ledger.html:8
-msgid "Ledger"
-msgstr "Книга"
-
-#: templates/layouts/base.html:52 templates/pages/payslips.html:4
-#: templates/pages/payslips.html:9
-msgid "Payslips"
-msgstr "Розрахункові листи"
-
 # --- feedback ---
 #: templates/layouts/base.html:55 templates/pages/feedback_form.html:7
 #: templates/pages/feedback_form.html:14
 msgid "Feedback"
 msgstr "Зворотний зв’язок"
 
-#: templates/layouts/base.html:62
-msgid "Language"
-msgstr "Мова"
-
 #: templates/layouts/base.html:71
 msgid "Role"
 msgstr "Роль"
-
-#: templates/layouts/base.html:74
-msgid "Sign out"
-msgstr "Вийти"
 
 #: templates/pages/accommodation_costs.html:4
 msgid "Accommodation costs"
@@ -1925,12 +1959,6 @@ msgstr "Немає сповіщень відповідності."
 #: templates/pages/dashboard.html:4 templates/pages/dashboard.html:9
 msgid "Operational overview"
 msgstr "Операційний огляд"
-
-# --- projects UI ---
-#: templates/pages/dashboard.html:8 templates/pages/project_list.html:8
-#: templates/pages/reports.html:8
-msgid "Operations"
-msgstr "Операції"
 
 #: templates/pages/dashboard.html:12
 msgid "Manage projects"
@@ -2367,11 +2395,6 @@ msgstr "Надіслати зашифрований PDF"
 msgid "No payslips recorded."
 msgstr "Немає збережених розрахункових листів."
 
-# --- people list / detail ---
-#: templates/pages/people_list.html:8 templates/pages/reports.html:23
-msgid "Workforce"
-msgstr "Робоча сила"
-
 #: templates/pages/people_list.html:19
 msgid "Search by name"
 msgstr "Пошук за іменем"
@@ -2652,8 +2675,10 @@ msgstr "Двофакторну автентифікацію ввімкнено �
 
 #: templates/pages/two_factor_setup.html:13
 msgid "Scan the QR code with your authenticator app, then confirm with a code."
-msgstr "Відскануйте QR-код застосунком-автентифікатором, а потім підтвердьте кодом."
-"Додайте цей обліковий запис у застосунок-автентифікатор і підтвердьте кодом."
+msgstr ""
+"Відскануйте QR-код застосунком-автентифікатором, а потім підтвердьте "
+"кодом.Додайте цей обліковий запис у застосунок-автентифікатор і підтвердьте "
+"кодом."
 
 #: templates/pages/two_factor_setup.html:16
 msgid "Secret (manual entry)"

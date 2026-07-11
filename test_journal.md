@@ -1,5 +1,16 @@
 # Test Journal
 
+## 2026-07-11 — Stage C8 (corvinum shell port)
+
+- **273 unit + 16 e2e green** (no Jober-facing change; client template layer
+  only). Live :8001 drive asserts: authenticated pages carry the sidebar
+  shell (aside.sidebar, scrim, data-nav-toggle, icon glyphs), recruiter's
+  sidebar hides manager-only items, anonymous login uses the centered
+  cv-anon layout, and the vendored woff2s serve fingerprinted through the
+  whitenoise manifest (relative url() in theme.css correctly rewritten).
+- Catalog health check upgraded: `msgfmt --statistics` is the authoritative
+  count (regex checks false-positive on wrapped msgstrs) — 634/634 in SK/HU/UK.
+
 ## 2026-07-11 — Stage C7 (QR + flash theming)
 
 - **273 passed** (271 + 2: setup page embeds an inline `<svg` in `.qr-plate`

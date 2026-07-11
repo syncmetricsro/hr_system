@@ -1,5 +1,34 @@
 # Build Journal
 
+## 2026-07-11 — Stage C8: the real CorvinumEU shell (peopleops prototype port)
+
+Owner escalation: the :8001 client was the **Jober shell in corvinum colors**
+— C4 had only lifted tokens, never the prototype's design. Fixed by porting
+the peopleops prototype (corvinumeu repo, Addendum A2) properly:
+
+- **Client template layer**: corvinum settings prepend
+  `clients/corvinum_eu/templates` to TEMPLATES dirs; a client
+  `layouts/base.html` override replaces the shell — **left slide-out
+  sidebar** (desktop collapse-to-rail persisted, mobile off-canvas + scrim),
+  grouped nav (Workforce/Operations/System) with Material Symbols icons,
+  user card + language + sign-out in the sidebar foot, hamburger topbar.
+  Same blocks, URLs, `{% flag_on %}`/`{% can %}` gating as the shared shell —
+  every page renders unchanged inside it; anonymous pages (login/2FA) get a
+  centered no-sidebar layout.
+- **Vendored assets (§3.2)**: Hanken Grotesk / Inter / JetBrains Mono +
+  Material Symbols subset woff2 + brand logo copied from the prototype
+  (provenance chain corvinum.eu site → prototype → here) with SHA-256s in
+  `clients/corvinum_eu/static/corvinum/VENDOR-MANIFEST.md`. `shell.js` +
+  `theme.css` are first-party ports (no new third-party code).
+- **theme.css** rewritten to the prototype's exact dark palette
+  (#050b14 bg, #0a1526 sidebar, cobalt #005bbf / #1a73e8) + full shell CSS;
+  dark-only pending C-Q8. Sidebar nav msgids translated (SK/HU/UK); catalogs
+  verified **634/634 translated** per language via msgfmt --statistics.
+- Jober untouched: shared base.html unchanged; 273 unit + 16 e2e green.
+  Live drive on :8001: sidebar + icons + gating (recruiter sees no
+  Payslips/Ledger), anon login centered, fonts served fingerprinted.
+
+
 ## 2026-07-11 — Docs separated per client + docs index
 
 Extends the runbook convention repo-wide: **unprefixed = platform-shared**,
