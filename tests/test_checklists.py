@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import pytest
+from django.utils import translation
 from django.core.exceptions import PermissionDenied
 from django.test import RequestFactory
 
@@ -62,7 +63,8 @@ def test_ensure_checklist_is_idempotent(person, template):
 
 
 def test_missing_critical_only_counts_critical(person, template):
-    assert missing_critical_labels(person) == ["Identity document verified"]
+    with translation.override("en"):  # labels localize via the db_trans pattern
+        assert missing_critical_labels(person) == ["Identity document verified"]
     item = PersonChecklistItem.objects.get(person=person, item_template__critical=True)
     set_item_state(item, done=True)
     assert missing_critical_labels(person) == []
@@ -88,7 +90,7 @@ def test_activation_blocked_then_allowed(settings, person, template, manager):
     # page's panel does this); the blocked activation must not roll them away.
     ensure_person_checklist(person)
 
-    with pytest.raises(WorkflowError, match="Identity document verified"):
+    with translation.override("en"), pytest.raises(WorkflowError, match="Identity document verified"):
         activate_on_project(person, project, actor=manager)
 
     item = PersonChecklistItem.objects.get(person=person, item_template__critical=True)

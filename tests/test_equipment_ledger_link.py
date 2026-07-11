@@ -3,6 +3,7 @@ from __future__ import annotations
 from decimal import Decimal
 
 import pytest
+from django.utils import translation
 
 from core.people.models import Person
 from features.advances.models import EntryType, LedgerEntry, PayEffect
@@ -29,7 +30,8 @@ def flagged_issue(manager):
 
 def test_approved_charge_creates_linked_ledger_entry(settings, manager, flagged_issue):
     settings.FEATURE_FLAGS = {**settings.FEATURE_FLAGS, "advances": True}
-    review_deduction(flagged_issue, "approve", actor=manager)
+    with translation.override("en"):  # note text is created in the actor's locale
+        review_deduction(flagged_issue, "approve", actor=manager)
     entry = LedgerEntry.objects.get(person=flagged_issue.person)
     assert entry.entry_type == EntryType.PAY_DEDUCTION
     assert entry.pay_effect == PayEffect.DEDUCT

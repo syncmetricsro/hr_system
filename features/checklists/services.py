@@ -53,9 +53,11 @@ def set_item_state(item: PersonChecklistItem, *, done: bool, actor=None, note: s
 
 def missing_critical_labels(person) -> list[str]:
     """Labels of unticked critical activation items (instantiating the
-    checklist on first use so a fresh person is checked against the template)."""
+    checklist on first use so a fresh person is checked against the template).
+    Labels pass through gettext so seeded catalog items localize (db_trans
+    pattern); operator-entered labels fall through unchanged."""
     items = ensure_person_checklist(person, ChecklistKind.ACTIVATION)
-    return [i.item_template.label for i in items if i.item_template.critical and not i.done]
+    return [_(i.item_template.label) for i in items if i.item_template.critical and not i.done]
 
 
 def activation_gate(person) -> None:

@@ -5,54 +5,99 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-11 13:52+0200\n"
+"POT-Creation-Date: 2026-07-11 14:38+0200\n"
 "Language: hu\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: clients/corvinum_eu/templates/layouts/base.html:19
+#: clients/corvinum_eu/catalog_i18n.py:12
+
+msgid "Personal data complete"
+msgstr "Személyes adatok hiánytalanok"
+
+#: clients/corvinum_eu/catalog_i18n.py:13
+msgid "Identity document verified"
+msgstr "Személyazonosító okmány ellenőrizve"
+
+#: clients/corvinum_eu/catalog_i18n.py:14
+msgid "Work/residence permit valid (if applicable)"
+msgstr "Munkavállalási/tartózkodási engedély érvényes (ha szükséges)"
+
+#: clients/corvinum_eu/catalog_i18n.py:15
+
+msgid "Medical certificate valid"
+msgstr "Orvosi igazolás érvényes"
+
+#: clients/corvinum_eu/catalog_i18n.py:16
+msgid "Safety training completed"
+msgstr "Munkavédelmi oktatás elvégezve"
+
+#: clients/corvinum_eu/catalog_i18n.py:17
+
+msgid "Contract signed"
+msgstr "Szerződés aláírva"
+
+#: clients/corvinum_eu/catalog_i18n.py:18
+msgid "Duplicate check resolved"
+msgstr "Duplikátum-ellenőrzés lezárva"
+
+#: clients/corvinum_eu/catalog_i18n.py:19
+
+msgid "Blacklist check resolved"
+msgstr "Tiltólista-ellenőrzés lezárva"
+
+#: clients/corvinum_eu/catalog_i18n.py:20
+msgid "Welcome call made"
+msgstr "Üdvözlő hívás megtörtént"
+
+#: clients/corvinum_eu/catalog_i18n.py:24
+
+msgid "Safety boots"
+msgstr "Munkavédelmi bakancs"
+
+#: clients/corvinum_eu/templates/layouts/base.html:25
 #: templates/layouts/base.html:15
 msgid "Skip to content"
 msgstr "Ugrás a tartalomra"
 
-#: clients/corvinum_eu/templates/layouts/base.html:29
+#: clients/corvinum_eu/templates/layouts/base.html:35
 msgid "Main navigation"
 msgstr "Fő navigáció"
 
 # --- people list / detail ---
-#: clients/corvinum_eu/templates/layouts/base.html:30
+#: clients/corvinum_eu/templates/layouts/base.html:36
 #: templates/pages/people_list.html:8 templates/pages/reports.html:23
 msgid "Workforce"
 msgstr "Munkaerő"
 
-#: clients/corvinum_eu/templates/layouts/base.html:31
+#: clients/corvinum_eu/templates/layouts/base.html:37
 #: templates/layouts/base.html:26
 msgid "Overview"
 msgstr "Áttekintés"
 
-#: clients/corvinum_eu/templates/layouts/base.html:32
+#: clients/corvinum_eu/templates/layouts/base.html:38
 #: templates/layouts/base.html:27 templates/pages/people_list.html:4
 #: templates/pages/people_list.html:9 templates/pages/people_list.html:30
 #: templates/pages/reports.html:14
 msgid "People"
 msgstr "Emberek"
 
-#: clients/corvinum_eu/templates/layouts/base.html:33
+#: clients/corvinum_eu/templates/layouts/base.html:39
 #: templates/layouts/base.html:28 templates/pages/project_list.html:4
 #: templates/pages/project_list.html:9 templates/pages/project_list.html:16
 msgid "Projects"
 msgstr "Projektek"
 
 # --- projects UI ---
-#: clients/corvinum_eu/templates/layouts/base.html:35
+#: clients/corvinum_eu/templates/layouts/base.html:41
 #: templates/pages/dashboard.html:8 templates/pages/project_list.html:8
 #: templates/pages/reports.html:8
 msgid "Operations"
 msgstr "Műveletek"
 
 # --- compliance ---
-#: clients/corvinum_eu/templates/layouts/base.html:37
+#: clients/corvinum_eu/templates/layouts/base.html:43
 #: features/compliance/panels.py:14 features/finance/models.py:68
 #: templates/layouts/base.html:32 templates/pages/compliance_list.html:4
 #: templates/pages/compliance_list.html:9
@@ -60,51 +105,51 @@ msgstr "Műveletek"
 msgid "Compliance"
 msgstr "Megfelelőség"
 
-#: clients/corvinum_eu/templates/layouts/base.html:40
+#: clients/corvinum_eu/templates/layouts/base.html:46
 #: templates/layouts/base.html:49 templates/pages/ledger.html:8
 msgid "Ledger"
 msgstr "Főkönyv"
 
-#: clients/corvinum_eu/templates/layouts/base.html:43
+#: clients/corvinum_eu/templates/layouts/base.html:49
 #: templates/layouts/base.html:52 templates/pages/payslips.html:4
 #: templates/pages/payslips.html:9
 msgid "Payslips"
 msgstr "Bérjegyzékek"
 
-#: clients/corvinum_eu/templates/layouts/base.html:46
+#: clients/corvinum_eu/templates/layouts/base.html:52
 #: templates/layouts/base.html:40
 msgid "Reviews"
 msgstr "Ellenőrzések"
 
-#: clients/corvinum_eu/templates/layouts/base.html:49
+#: clients/corvinum_eu/templates/layouts/base.html:55
 #: templates/layouts/base.html:43 templates/pages/blacklist_queue.html:4
 #: templates/panels/blacklist_banner.html:3
 #: templates/panels/blacklist_case.html:5
 msgid "Blacklist"
 msgstr "Feketelista"
 
-#: clients/corvinum_eu/templates/layouts/base.html:51
+#: clients/corvinum_eu/templates/layouts/base.html:57
 msgid "System"
 msgstr "Rendszer"
 
-#: clients/corvinum_eu/templates/layouts/base.html:52
+#: clients/corvinum_eu/templates/layouts/base.html:58
 #: templates/layouts/base.html:37 templates/pages/finance_summary.html:8
 #: templates/pages/reports.html:4 templates/pages/reports.html:9
 #: templates/pages/reports.html:12
 msgid "Reports"
 msgstr "Jelentések"
 
-#: clients/corvinum_eu/templates/layouts/base.html:67
+#: clients/corvinum_eu/templates/layouts/base.html:73
 #: templates/layouts/base.html:62
 msgid "Language"
 msgstr "Nyelv"
 
-#: clients/corvinum_eu/templates/layouts/base.html:77
+#: clients/corvinum_eu/templates/layouts/base.html:83
 #: templates/layouts/base.html:74
 msgid "Sign out"
 msgstr "Kijelentkezés"
 
-#: clients/corvinum_eu/templates/layouts/base.html:88
+#: clients/corvinum_eu/templates/layouts/base.html:94
 #: templates/layouts/base.html:22
 msgid "Open navigation"
 msgstr "Navigáció megnyitása"
@@ -710,6 +755,11 @@ msgstr "Kilépés befejezve."
 msgid "Activated — now Working."
 msgstr "Aktiválva — most Dolgozik."
 
+#: features/advances/hooks.py:33
+#, python-format
+msgid "equipment charge: %(item)s ×%(qty)s (issue #%(id)s)"
+msgstr "felszerelés-terhelés: %(item)s ×%(qty)s (kiadás #%(id)s)"
+
 #: features/advances/models.py:15 features/advances/models.py:34
 msgid "Cash advance"
 msgstr "Készpénzelőleg"
@@ -769,8 +819,9 @@ msgstr "Orvosi"
 msgid "Travel / fuel"
 msgstr "Utazás / üzemanyag"
 
-#: features/advances/models.py:40 features/blacklist/models.py:87
-#: features/blacklist/panels.py:56 features/finance/models.py:74
+#: features/advances/models.py:40 features/blacklist/catalog_i18n.py:15
+#: features/blacklist/models.py:87 features/blacklist/panels.py:56
+#: features/finance/models.py:74
 msgid "Other"
 msgstr "Egyéb"
 
@@ -894,6 +945,22 @@ msgstr "%(n)s tétel ciklusba sorolva."
 #, python-format
 msgid "%(n)s entries marked settled."
 msgstr "%(n)s tétel rendezettként megjelölve."
+
+#: features/blacklist/catalog_i18n.py:11
+msgid "Fraud / dishonesty"
+msgstr "Csalás / tisztességtelenség"
+
+#: features/blacklist/catalog_i18n.py:12
+msgid "Safety violation"
+msgstr "Biztonsági szabálysértés"
+
+#: features/blacklist/catalog_i18n.py:13
+msgid "Repeated no-show"
+msgstr "Ismételt meg nem jelenés"
+
+#: features/blacklist/catalog_i18n.py:14
+msgid "Serious misconduct"
+msgstr "Súlyos kötelességszegés"
 
 #: features/blacklist/models.py:21
 msgid "blacklist category"
@@ -1078,7 +1145,7 @@ msgstr "személy ellenőrzőlista-tétele"
 msgid "person checklist items"
 msgstr "személy ellenőrzőlista-tételei"
 
-#: features/checklists/services.py:70
+#: features/checklists/services.py:72
 #, python-format
 msgid "Activation blocked by open checklist items: %(items)s"
 msgstr "Az aktiválást nyitott ellenőrzőlista-tételek blokkolják: %(items)s"

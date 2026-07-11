@@ -1,5 +1,5 @@
 {% extends "layouts/base.html" %}
-{% load i18n %}
+{% load i18n nav %}
 
 {% block title %}{% trans "Blacklist" %} · Jober{% endblock %}
 
@@ -16,7 +16,7 @@
     <article class="field-card">
       <div>
         <h3><a href="{% url 'person_detail' case.person_id %}">{{ case.person }}</a></h3>
-        <p>{% if case.category %}{{ case.category.label }}{% endif %}</p>
+        <p>{% if case.category %}{{ case.category.label|db_trans }}{% endif %}</p>
       </div>
       <dl>
         <div><dt>{% trans "Proposed by" %}</dt><dd>{{ case.proposed_by|default:"—" }}</dd></div>

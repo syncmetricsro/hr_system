@@ -1,4 +1,4 @@
-{% load i18n rbac %}
+{% load i18n rbac nav %}
 {% can 'blacklist.decide' as may_bl_decide %}
 <section class="panel workflow-panel">
   <p class="eyebrow">{% trans "Risk" %}</p>
@@ -7,7 +7,7 @@
   {% if panel.blacklist_case %}
     <p>{% trans "Status" %}: {{ panel.blacklist_case.get_status_display }}</p>
     {% if panel.can_view_blacklist_reason %}
-      {% if panel.blacklist_case.category %}<p>{% trans "Category" %}: {{ panel.blacklist_case.category.label }}</p>{% endif %}
+      {% if panel.blacklist_case.category %}<p>{% trans "Category" %}: {{ panel.blacklist_case.category.label|db_trans }}</p>{% endif %}
       <p class="muted">{% trans "Reason" %}: {{ panel.blacklist_case.restricted_reason|default:"—" }}</p>
     {% else %}
       <p class="muted">{% trans "Reason is restricted." %}</p>
@@ -32,7 +32,7 @@
       {% csrf_token %}
       <label><span>{% trans "Category" %}</span>
         <select name="category">
-          {% for c in panel.blacklist_categories %}<option value="{{ c.pk }}">{{ c.label }}</option>{% endfor %}
+          {% for c in panel.blacklist_categories %}<option value="{{ c.pk }}">{{ c.label|db_trans }}</option>{% endfor %}
         </select></label>
       <label><span>{% trans "Reason" %}</span><input type="text" name="reason"></label>
       <label><span>{% trans "ID number (optional, hashed)" %}</span><input type="text" name="identifier" autocomplete="off"></label>
