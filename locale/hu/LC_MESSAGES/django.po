@@ -5,11 +5,109 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-11 11:32+0200\n"
+"POT-Creation-Date: 2026-07-11 13:52+0200\n"
 "Language: hu\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: clients/corvinum_eu/templates/layouts/base.html:19
+#: templates/layouts/base.html:15
+msgid "Skip to content"
+msgstr "Ugrás a tartalomra"
+
+#: clients/corvinum_eu/templates/layouts/base.html:29
+msgid "Main navigation"
+msgstr "Fő navigáció"
+
+# --- people list / detail ---
+#: clients/corvinum_eu/templates/layouts/base.html:30
+#: templates/pages/people_list.html:8 templates/pages/reports.html:23
+msgid "Workforce"
+msgstr "Munkaerő"
+
+#: clients/corvinum_eu/templates/layouts/base.html:31
+#: templates/layouts/base.html:26
+msgid "Overview"
+msgstr "Áttekintés"
+
+#: clients/corvinum_eu/templates/layouts/base.html:32
+#: templates/layouts/base.html:27 templates/pages/people_list.html:4
+#: templates/pages/people_list.html:9 templates/pages/people_list.html:30
+#: templates/pages/reports.html:14
+msgid "People"
+msgstr "Emberek"
+
+#: clients/corvinum_eu/templates/layouts/base.html:33
+#: templates/layouts/base.html:28 templates/pages/project_list.html:4
+#: templates/pages/project_list.html:9 templates/pages/project_list.html:16
+msgid "Projects"
+msgstr "Projektek"
+
+# --- projects UI ---
+#: clients/corvinum_eu/templates/layouts/base.html:35
+#: templates/pages/dashboard.html:8 templates/pages/project_list.html:8
+#: templates/pages/reports.html:8
+msgid "Operations"
+msgstr "Műveletek"
+
+# --- compliance ---
+#: clients/corvinum_eu/templates/layouts/base.html:37
+#: features/compliance/panels.py:14 features/finance/models.py:68
+#: templates/layouts/base.html:32 templates/pages/compliance_list.html:4
+#: templates/pages/compliance_list.html:9
+#: templates/pages/compliance_list.html:12
+msgid "Compliance"
+msgstr "Megfelelőség"
+
+#: clients/corvinum_eu/templates/layouts/base.html:40
+#: templates/layouts/base.html:49 templates/pages/ledger.html:8
+msgid "Ledger"
+msgstr "Főkönyv"
+
+#: clients/corvinum_eu/templates/layouts/base.html:43
+#: templates/layouts/base.html:52 templates/pages/payslips.html:4
+#: templates/pages/payslips.html:9
+msgid "Payslips"
+msgstr "Bérjegyzékek"
+
+#: clients/corvinum_eu/templates/layouts/base.html:46
+#: templates/layouts/base.html:40
+msgid "Reviews"
+msgstr "Ellenőrzések"
+
+#: clients/corvinum_eu/templates/layouts/base.html:49
+#: templates/layouts/base.html:43 templates/pages/blacklist_queue.html:4
+#: templates/panels/blacklist_banner.html:3
+#: templates/panels/blacklist_case.html:5
+msgid "Blacklist"
+msgstr "Feketelista"
+
+#: clients/corvinum_eu/templates/layouts/base.html:51
+msgid "System"
+msgstr "Rendszer"
+
+#: clients/corvinum_eu/templates/layouts/base.html:52
+#: templates/layouts/base.html:37 templates/pages/finance_summary.html:8
+#: templates/pages/reports.html:4 templates/pages/reports.html:9
+#: templates/pages/reports.html:12
+msgid "Reports"
+msgstr "Jelentések"
+
+#: clients/corvinum_eu/templates/layouts/base.html:67
+#: templates/layouts/base.html:62
+msgid "Language"
+msgstr "Nyelv"
+
+#: clients/corvinum_eu/templates/layouts/base.html:77
+#: templates/layouts/base.html:74
+msgid "Sign out"
+msgstr "Kijelentkezés"
+
+#: clients/corvinum_eu/templates/layouts/base.html:88
+#: templates/layouts/base.html:22
+msgid "Open navigation"
+msgstr "Navigáció megnyitása"
 
 # --- accounts / admin ---
 #: core/accounts/admin.py:18
@@ -997,14 +1095,6 @@ msgstr "tanúsítvány"
 msgid "certificates"
 msgstr "tanúsítványok"
 
-# --- compliance ---
-#: features/compliance/panels.py:14 features/finance/models.py:68
-#: templates/layouts/base.html:32 templates/pages/compliance_list.html:4
-#: templates/pages/compliance_list.html:9
-#: templates/pages/compliance_list.html:12
-msgid "Compliance"
-msgstr "Megfelelőség"
-
 #: features/feedback/models.py:19
 msgid "token"
 msgstr "token"
@@ -1685,48 +1775,9 @@ msgstr ""
 msgid "Jober operations"
 msgstr "Jober üzemeltetés"
 
-#: templates/layouts/base.html:15
-msgid "Skip to content"
-msgstr "Ugrás a tartalomra"
-
-#: templates/layouts/base.html:22
-msgid "Open navigation"
-msgstr "Navigáció megnyitása"
-
-#: templates/layouts/base.html:26
-msgid "Overview"
-msgstr "Áttekintés"
-
-#: templates/layouts/base.html:27 templates/pages/people_list.html:4
-#: templates/pages/people_list.html:9 templates/pages/people_list.html:30
-#: templates/pages/reports.html:14
-msgid "People"
-msgstr "Emberek"
-
-#: templates/layouts/base.html:28 templates/pages/project_list.html:4
-#: templates/pages/project_list.html:9 templates/pages/project_list.html:16
-msgid "Projects"
-msgstr "Projektek"
-
 #: templates/layouts/base.html:30 templates/pages/trials_queue.html:4
 msgid "Field"
 msgstr "Terep"
-
-#: templates/layouts/base.html:37 templates/pages/finance_summary.html:8
-#: templates/pages/reports.html:4 templates/pages/reports.html:9
-#: templates/pages/reports.html:12
-msgid "Reports"
-msgstr "Jelentések"
-
-#: templates/layouts/base.html:40
-msgid "Reviews"
-msgstr "Ellenőrzések"
-
-#: templates/layouts/base.html:43 templates/pages/blacklist_queue.html:4
-#: templates/panels/blacklist_banner.html:3
-#: templates/panels/blacklist_case.html:5
-msgid "Blacklist"
-msgstr "Feketelista"
 
 # --- finance ---
 #: templates/layouts/base.html:46 templates/pages/finance_month_detail.html:8
@@ -1738,32 +1789,15 @@ msgstr "Feketelista"
 msgid "Finance"
 msgstr "Pénzügyek"
 
-#: templates/layouts/base.html:49 templates/pages/ledger.html:8
-msgid "Ledger"
-msgstr "Főkönyv"
-
-#: templates/layouts/base.html:52 templates/pages/payslips.html:4
-#: templates/pages/payslips.html:9
-msgid "Payslips"
-msgstr "Bérjegyzékek"
-
 # --- feedback ---
 #: templates/layouts/base.html:55 templates/pages/feedback_form.html:7
 #: templates/pages/feedback_form.html:14
 msgid "Feedback"
 msgstr "Visszajelzés"
 
-#: templates/layouts/base.html:62
-msgid "Language"
-msgstr "Nyelv"
-
 #: templates/layouts/base.html:71
 msgid "Role"
 msgstr "Szerepkör"
-
-#: templates/layouts/base.html:74
-msgid "Sign out"
-msgstr "Kijelentkezés"
 
 #: templates/pages/accommodation_costs.html:4
 msgid "Accommodation costs"
@@ -1925,12 +1959,6 @@ msgstr "Nincs megfelelőségi figyelmeztetés."
 #: templates/pages/dashboard.html:4 templates/pages/dashboard.html:9
 msgid "Operational overview"
 msgstr "Üzemeltetési áttekintés"
-
-# --- projects UI ---
-#: templates/pages/dashboard.html:8 templates/pages/project_list.html:8
-#: templates/pages/reports.html:8
-msgid "Operations"
-msgstr "Műveletek"
 
 #: templates/pages/dashboard.html:12
 msgid "Manage projects"
@@ -2368,11 +2396,6 @@ msgstr "Titkosított PDF küldése"
 msgid "No payslips recorded."
 msgstr "Nincs rögzített bérjegyzék."
 
-# --- people list / detail ---
-#: templates/pages/people_list.html:8 templates/pages/reports.html:23
-msgid "Workforce"
-msgstr "Munkaerő"
-
 #: templates/pages/people_list.html:19
 msgid "Search by name"
 msgstr "Keresés név szerint"
@@ -2653,9 +2676,10 @@ msgstr "A kétlépcsős azonosítás be van kapcsolva a fiókodhoz."
 
 #: templates/pages/two_factor_setup.html:13
 msgid "Scan the QR code with your authenticator app, then confirm with a code."
-msgstr "Olvassa be a QR-kódot a hitelesítő alkalmazással, majd erősítse meg egy kóddal."
-"Add hozzá ezt a fiókot a hitelesítő alkalmazáshoz, majd erősítsd meg egy "
-"kóddal."
+msgstr ""
+"Olvassa be a QR-kódot a hitelesítő alkalmazással, majd erősítse meg egy "
+"kóddal.Add hozzá ezt a fiókot a hitelesítő alkalmazáshoz, majd erősítsd meg "
+"egy kóddal."
 
 #: templates/pages/two_factor_setup.html:16
 msgid "Secret (manual entry)"

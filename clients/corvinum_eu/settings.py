@@ -66,3 +66,11 @@ BRAND_MARK = "CE"
 # dark-default pending confirmation). The client static dir is collected by
 # base's STATICFILES_DIRS glob — one artifact carries every client's theme.
 CLIENT_THEME_CSS = "corvinum/theme.css"
+
+# Client template layer (Stage C8): the corvinum shell overrides
+# layouts/base.html (left slide-out sidebar per the peopleops prototype);
+# every other template falls through to the shared tree.
+TEMPLATES[0]["DIRS"] = [  # noqa: F405
+    BASE_DIR / "clients" / "corvinum_eu" / "templates",  # noqa: F405
+    BASE_DIR / "templates",  # noqa: F405
+]
