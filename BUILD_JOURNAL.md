@@ -97,6 +97,14 @@ weakened. Added a Corvinum coordinator browser regression that checks the token
 and cookie then performs a real checklist toggle. Updated browser baseline:
 **21/21 e2e green**.
 
+Corvinum ledger layout pass: added labelled compact cycle controls, grouped
+cycle actions, bounded summary output, and aligned ledger columns/actions. The
+shared ledger template receives semantic classes only; all visual treatment is
+Corvinum-only. Phone layouts keep the page viewport-width while the cycle
+summary and detailed entries tables independently scroll when dense. A new
+browser regression measures the desktop controls/tables and confirms zero
+page-level overflow at 375px. Updated browser baseline: **22/22 e2e green**.
+
 ## 2026-07-11 — Controlled build/test artifact policy
 
 Owner-approved clarification to `AGENTS.md` §7: agents may run committed,

@@ -581,6 +581,10 @@ dd {
   .confirm-dialog-actions .button { width: 100%; }
 }
 
+/* The brand lockup is a link back to the overview page. */
+a.brand-lockup { text-decoration: none; color: inherit; }
+a.brand-lockup:hover .brand-name { color: var(--accent); }
+
 /* ----------------------------------------------------------------- forms */
 
 label {

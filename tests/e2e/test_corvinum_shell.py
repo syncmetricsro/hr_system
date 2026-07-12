@@ -117,3 +117,47 @@ def test_corvinum_coordinator_can_tick_checklist_with_csrf(page):
 
     assert "/people/" in page.url
     assert "CSRF verification failed" not in page.content()
+
+
+def test_corvinum_ledger_groups_controls_and_keeps_tables_aligned(page):
+    page.set_viewport_size({"width": 1470, "height": 900})
+    _login(page, "observer")
+    page.goto(f"{base_url()}/hu/ledger/?year=2026&month=7")
+    page.wait_for_load_state("networkidle")
+
+    desktop = page.evaluate("""
+      () => {
+        const filter = document.querySelector('.ledger-cycle-filter');
+        const inputs = [...filter.querySelectorAll('input')].map((input) => input.getBoundingClientRect());
+        const button = filter.querySelector('button').getBoundingClientRect();
+        const summary = document.querySelector('.ledger-cycle-summary').getBoundingClientRect();
+        const entries = document.querySelector('.ledger-entries .ledger-table').getBoundingClientRect();
+        return {
+          display: getComputedStyle(filter).display,
+          labels: filter.querySelectorAll('.field-mini').length,
+          inputWidths: inputs.map((input) => input.width),
+          aligned: inputs.every((input) => Math.abs(input.bottom - button.bottom) <= 1),
+          summaryWidth: summary.width,
+          entriesWidth: entries.width,
+          overflow: document.documentElement.scrollWidth - innerWidth,
+        };
+      }
+    """)
+    assert desktop["display"] == "grid"
+    assert desktop["labels"] == 2
+    assert desktop["inputWidths"] == [192, 160]
+    assert desktop["aligned"]
+    assert desktop["summaryWidth"] == 832
+    assert desktop["entriesWidth"] > desktop["summaryWidth"]
+    assert desktop["overflow"] == 0
+
+    page.set_viewport_size({"width": 375, "height": 667})
+    page.reload()
+    page.wait_for_load_state("networkidle")
+    mobile = page.evaluate("""
+      () => ({
+        pageOverflow: document.documentElement.scrollWidth - innerWidth,
+        entryScrolls: document.querySelector('.ledger-entries').scrollWidth > document.querySelector('.ledger-entries').clientWidth,
+      })
+    """)
+    assert mobile == {"pageOverflow": 0, "entryScrolls": True}

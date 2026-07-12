@@ -30,9 +30,9 @@
 - Live proof: single cookie jar, logins on :8000 and :8001 — both sessions
   authenticated simultaneously; jober cookie max-age ≈ 30.0 days.
 
-## 2026-07-11 — Corvinum shell, section rhythm + checklist regression
+## 2026-07-12 — Corvinum shell, section rhythm, checklist + ledger regression
 
-- **276 unit + 21 e2e green** (three new Corvinum browser regressions; the
+- **276 unit + 22 e2e green** (four new Corvinum browser regressions; the
   official E2E runner now serves both clients).
 - At 1650px: sidebar is 280px; the complete `CorvinumEU PeopleOps` wordmark
   ends at x=247.94 inside it; the 1280px main column spans x=325–1605 and is
@@ -47,6 +47,10 @@
   `csrfmiddlewaretoken` input and CSRF cookie, toggles an item through the
   rendered POST form, and confirms redirect back to the person page with no
   CSRF failure.
+- Ledger coverage verifies compact labelled year/month controls, aligned action
+  baseline, a 832px bounded desktop cycle summary, and a wider entries table.
+  At 375px the summary and entries tables scroll locally while page-level
+  horizontal overflow remains zero.
 - `scripts/playwright_e2e.sh` now boots an isolated Corvinum DB/app alongside
   Jober, waits for both real health endpoints, and passes both base URLs to the
   test image. Added `-i` to the inline health-probe container so Python actually

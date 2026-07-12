@@ -14,10 +14,10 @@
   <body>
     <a class="skip-link" href="#obsah">{% trans "Skip to content" %}</a>
     <header class="app-header" x-data="{ open: false }">
-      <div class="brand-lockup" aria-label="{{ BRAND_NAME }}">
+      <a class="brand-lockup" href="{% url 'dashboard' %}" aria-label="{{ BRAND_NAME }} — {% trans 'Overview' %}">
         <span class="brand-mark">{{ BRAND_MARK }}</span>
         <span class="brand-name">{{ BRAND_NAME }}</span>
-      </div>
+      </a>
       <button class="icon-button mobile-only" type="button" x-on:click="open = !open" aria-controls="primary-nav" x-bind:aria-expanded="open.toString()">
         <span class="sr-only">{% trans "Open navigation" %}</span>
         <span aria-hidden="true">☰</span>

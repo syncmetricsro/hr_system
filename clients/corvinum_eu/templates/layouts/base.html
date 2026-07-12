@@ -29,10 +29,10 @@
     <div class="scrim"></div>
 
     <aside class="sidebar">
-      <div class="sb-brand">
+      <a class="sb-brand" href="{% url 'dashboard' %}" aria-label="{{ BRAND_NAME }} — {% trans 'Overview' %}">
         <img src="{% static 'corvinum/brand/corvinum-logo-v1.webp' %}" alt="">
         <span class="brand-word">{{ BRAND_NAME }}</span>
-      </div>
+      </a>
       <nav class="sb-nav" aria-label="{% trans 'Main navigation' %}">
         <p class="sb-section">{% trans "Workforce" %}</p>
         <a class="sb-item {% nav_active 'dashboard' %}" href="{% url 'dashboard' %}"><span class="material-symbols-outlined" aria-hidden="true">home</span><span class="sb-text">{% trans "Overview" %}</span></a>
