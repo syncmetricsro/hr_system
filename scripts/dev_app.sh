@@ -63,7 +63,7 @@ wait_for_app() {
 }
 
 manage() {
-  docker run --rm --network "$NET" -e DJANGO_SECRET_KEY=dev-secret "${DB_ENV[@]}" "$IMAGE" python manage.py "$@"
+  docker run --rm --network "$NET" -e DJANGO_SECRET_KEY=dev-secret -e DEMO_SMS_PHONE="${DEMO_SMS_PHONE:-}" "${DB_ENV[@]}" "$IMAGE" python manage.py "$@"
 }
 
 print_access() {

@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import os
+
 from datetime import timedelta
 
 from django.core.management.base import BaseCommand
@@ -62,7 +64,14 @@ class Command(BaseCommand):
                 flag_unreturned(issue, actor=coordinator)  # -> manager Reviews queue (Q2)
 
         # --- Phone for the optional live SMS demo ------------------------------
-        if olha and not olha.phone:
+        # DEMO_SMS_PHONE (Doppler) points at a number whose inbox the presenter
+        # can actually show (Twilio Virtual Phone) — the live SMS act lands
+        # visibly. Unset -> keep the fictional placeholder.
+        demo_phone = os.environ.get("DEMO_SMS_PHONE", "").strip()
+        if olha and demo_phone and olha.phone != demo_phone:
+            olha.phone = demo_phone
+            olha.save(update_fields=["phone", "updated_at"])
+        elif olha and not olha.phone:
             olha.phone = "+421900000000"
             olha.save(update_fields=["phone", "updated_at"])
 

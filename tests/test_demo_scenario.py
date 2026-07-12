@@ -73,3 +73,18 @@ def test_scenario_is_idempotent():
     assert Person.objects.filter(first_name="Ivan", last_name="Zablokovaný").count() == 1
     assert MatchFingerprint.objects.filter(is_active=True).count() == 1
     assert EquipmentIssue.objects.filter(review_status=DeductionReviewStatus.PENDING).count() == 1
+
+
+def test_demo_sms_phone_env_overrides_olha(monkeypatch, django_user_model):
+    """DEMO_SMS_PHONE (Doppler) points Olha at the presenter-visible Twilio
+    number; the seed is idempotent and re-applies on change."""
+    from django.core.management import call_command
+
+    monkeypatch.setenv("DEMO_SMS_PHONE", "+15005550006")
+    call_command("seed_demo")
+    call_command("seed_people")
+    call_command("seed_demo_scenario")
+    from core.people.models import Person
+
+    olha = Person.objects.get(first_name="Olha", last_name="Kovalenko")
+    assert olha.phone == "+15005550006"
