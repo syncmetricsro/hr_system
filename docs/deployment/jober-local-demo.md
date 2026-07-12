@@ -64,7 +64,7 @@ not persisted, the next `up` starts clean and re-seeds the demo users.
 ## Notes
 
 - Default port is 8000. To use another: `PORT=9000 scripts/dev_app.sh up`.
-- To demo a specific built image: `APP_IMAGE=jober-platform:phase1 scripts/dev_app.sh up`.
-- Languages: the SK/HU/UK switch changes the URL prefix; non-Slovak text falls
-  back to Slovak until translation catalogs are compiled (see the production
-  readiness journal).
+- To demo a specific built image tag: `APP_IMAGE=<image:tag> scripts/dev_app.sh up` (default `jober-platform:phase1`, rebuilt from the current tree by `rebuild`).
+- Languages: the SK/HU/UK switch changes the URL prefix; catalogs are compiled
+  into the image (AI-drafted — native review pending). Seeded catalog labels
+  localize too (docs/i18n-seeded-data.md).
