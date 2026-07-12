@@ -1,6 +1,6 @@
 # Permission Matrix — Jober
 
-Last updated: 2026-06-20
+Last updated: 2026-07-12
 
 This document is the human-readable mirror of `clients/jober/policies.py`
 (`ACTION_ROLES`; the `Action` enum lives in `core/accounts/permissions.py`). When you change one, change the other in the same commit.
@@ -26,7 +26,7 @@ Legend: ✅ permitted · — denied
 | Action | Recruiter | Coordinator | Manager/Admin | Observer |
 |---|---|---|---|---|
 | `intake.create_edit` | ✅ | — | ✅ | — |
-| `intake.assign_trial` | ✅ | — | ✅ | — |
+| `intake.assign_trial` | ✅ | ✅ | ✅ | — |
 | `person.recycle_available` | ✅ | ✅ | ✅ | — |
 | `project.assign` (place/reassign a person on a project) | — | ✅ | ✅ | — |
 | `sms.send` | ✅ | ✅ | ✅ | — |
@@ -75,8 +75,9 @@ responsible coordinator(s)**; hidden from unconnected recruiters/coordinators.
   days; recycles Available people; sends approved SMS; sees that a blacklist
   warning exists but not the restricted reason. Cannot record trial outcomes,
   complete readiness, approve Working, or manage projects/catalogs/users/finance.
-- **Coordinator** — field operations: trial outcomes, readiness data, rooms,
-  equipment, transport headcounts, exit reconciliation; sends approved SMS.
+- **Coordinator** — schedules and records project trials, then handles
+  readiness data, rooms, equipment, transport headcounts, and exit
+  reconciliation; sends approved SMS.
   Cannot approve Working, manage users, decide blacklist, or view feedback.
 - **Manager/Administrator** — all permitted reads plus every management action,
   including finance, users, blacklist decisions, audit, and exports.

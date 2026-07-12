@@ -62,7 +62,12 @@ def person_history(person) -> list[dict]:
         events.append({"when": room.created_at, "label": _("Room assigned"), "detail": str(room.room)})
 
     for issue in person.equipment_issues.select_related("item"):
-        events.append({"when": issue.issued_at, "label": _("Equipment issued"), "detail": str(issue.item)})
+        item_name = _(issue.item.name)
+        events.append({
+            "when": issue.issued_at,
+            "label": _("Equipment issued"),
+            "detail": f"{item_name} {issue.item.size}".strip(),
+        })
 
     for readiness in person.readiness_records.select_related("project"):
         if readiness.submitted_at:
@@ -79,8 +84,19 @@ def person_history(person) -> list[dict]:
         events.append({
             "when": event.created_at,
             "label": _("Status changed"),
-            "detail": f"{event.metadata.get('from_status', '')} → {event.metadata.get('to_status', '')}",
+            "detail": "%(from_status)s → %(to_status)s" % {
+                "from_status": _lifecycle_status_label(event.metadata.get("from_status")),
+                "to_status": _lifecycle_status_label(event.metadata.get("to_status")),
+            },
         })
 
     events.sort(key=lambda e: e["when"], reverse=True)
     return events
+
+
+def _lifecycle_status_label(value: object) -> str:
+    """Return a translated lifecycle label while tolerating historic data."""
+    try:
+        return str(LifecycleStatus(value).label)
+    except ValueError:
+        return str(value or "")

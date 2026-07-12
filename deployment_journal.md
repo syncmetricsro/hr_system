@@ -1,5 +1,13 @@
 # Deployment Journal
 
+## 2026-07-12 (later)
+
+Staging deploy target chosen and runbook written.
+
+- **Target: syncmetric-prime** — fresh VPS, Dokku to be installed. Scope: **staging only, both clients** on fictional data (`jober-staging`, `corvinum-staging`) under **per-client subdomains of one parent domain**. Execution: owner runs commands, I guide.
+- **`docs/deployment/syncmetric-prime-staging.md`** written — concrete phased command sequence (assess/DNS → pinned no-pipe-to-shell Dokku install → build+`docker save|ssh load` transfer → per-app create/config/TLS → migrate+seed → `deploy_smoke.sh --https` verify → backups). Honors AGENTS §3.4 (download+checksum+review the Dokku bootstrap, never `wget|bash`).
+- Asks updated: D1 names the box; D2/D3 record the subdomain choice. Production apps + real PII remain gated on D8.
+
 ## 2026-07-12
 
 Release tooling landed (production-readiness §2 complete).

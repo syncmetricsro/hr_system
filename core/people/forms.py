@@ -40,3 +40,15 @@ class PersonForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         for extension in registry.person_form_extensions:
             self.fields.update(extension.fields())
+        # Alpine only controls this local presentation state.  The clean()
+        # method below remains the server-side authority for the data.
+        self.fields["has_disability"].widget.attrs["x-model"] = "hasDisability"
+        self.fields["disability_type"].widget.attrs["x-bind:disabled"] = "!hasDisability"
+
+    def clean(self):
+        cleaned_data = super().clean()
+        # Do not retain sensitive disability-detail data after the operator
+        # explicitly says that the person does not have a disability.
+        if not cleaned_data.get("has_disability"):
+            cleaned_data["disability_type"] = ""
+        return cleaned_data

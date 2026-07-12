@@ -40,3 +40,24 @@ def test_observer_cannot_edit(client, make_user):
     person = Person.objects.create(first_name="A", last_name="B")
     client.force_login(make_user("observer"))
     assert client.get(reverse("person_edit", args=[person.pk])).status_code == 403
+
+
+def test_disability_type_is_disabled_and_cleared_when_not_applicable(client, make_user):
+    person = Person.objects.create(
+        first_name="Olha", last_name="Kovalenko", has_disability=True,
+        disability_type="Mobility impairment",
+    )
+    client.force_login(make_user("manager"))
+
+    body = client.get(reverse("person_edit", args=[person.pk])).content.decode()
+    assert 'x-data="{ hasDisability: true }"' in body
+    assert 'x-bind:disabled="!hasDisability"' in body
+
+    response = client.post(
+        reverse("person_edit", args=[person.pk]),
+        {"first_name": "Olha", "last_name": "Kovalenko", "has_disability": ""},
+    )
+    assert response.status_code == 302
+    person.refresh_from_db()
+    assert person.has_disability is False
+    assert person.disability_type == ""

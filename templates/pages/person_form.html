@@ -11,7 +11,7 @@
 </section>
 
 <section class="panel">
-  <form class="stack" method="post" action="{{ form_action }}">
+  <form class="stack" method="post" action="{{ form_action }}" x-data="{ hasDisability: {{ form.has_disability.value|yesno:'true,false' }} }">
     {% csrf_token %}
     {{ form.as_p }}
     <button class="button button-primary" type="submit">{% trans "Save" %}</button>

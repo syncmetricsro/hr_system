@@ -17,7 +17,7 @@
       <label><span>{% trans "Action" %}</span>
         <select name="action">
           <option value="">{% trans "All actions" %}</option>
-          {% for a in known_actions %}<option value="{{ a }}"{% if a == filters.action %} selected{% endif %}>{{ a }}</option>{% endfor %}
+          {% for a in known_actions %}<option value="{{ a.value }}"{% if a.value == filters.action %} selected{% endif %}>{{ a.label }}</option>{% endfor %}
         </select></label>
       <label><span>{% trans "Record type" %}</span>
         <select name="target">
@@ -47,7 +47,7 @@
         <tr>
           <td>{{ event.created_at|date:"Y-m-d H:i:s" }}</td>
           <td>{% if event.actor %}{{ event.actor.email }}{% else %}<span class="muted">{% trans "system" %}</span>{% endif %}</td>
-          <td><code>{{ event.action }}</code></td>
+          <td>{{ event.action_label }}</td>
           <td>{% if event.target_type %}{{ event.target_type }} #{{ event.target_id }}{% else %}—{% endif %}</td>
           <td class="muted">{{ event.reason|default:"—"|truncatechars:80 }}</td>
         </tr>

@@ -28,6 +28,33 @@ def test_production_templates_do_not_use_multiline_short_comments():
     assert offenders == [], "multiline {# ... #} comments: " + ", ".join(offenders)
 
 
+def test_flash_notifications_are_timed_and_shared_by_both_client_shells():
+    for template in (
+        REPO / "templates/layouts/base.html",
+        REPO / "clients/corvinum_eu/templates/layouts/base.html",
+    ):
+        source = template.read_text(encoding="utf-8")
+        assert 'class="messages flash-stack"' in source
+        assert "setTimeout(() => visible = false, 3000)" in source
+        assert "x-transition.opacity.duration.200ms" in source
+
+
+def test_trial_outcome_actions_are_neutral_until_chosen():
+    source = (REPO / "templates/pages/person_detail.html").read_text(encoding="utf-8")
+    assert 'name="scheduled_for" required' in source
+    assert 'name="outcome" value="pass">\n          <button class="button button-secondary"' in source
+    assert "Trial destination" in source
+    assert "Arrival time" in source
+
+
+def test_readiness_form_marks_incomplete_or_invalid_fields_for_attention():
+    source = (REPO / "templates/pages/person_detail.html").read_text(encoding="utf-8")
+    assert "readiness-attention" in source
+    assert "readiness-field-error" in source
+    assert "x-show=\"accommodation === 'not_applicable'\"" in source
+    assert "x-show=\"transport === 'not_applicable'\"" in source
+
+
 def test_healthz(client):
     response = client.get("/healthz/")
     assert response.status_code == 200
@@ -49,7 +76,7 @@ def test_dashboard_shell_for_authenticated_user(client, django_user_model):
     response = client.get(reverse("dashboard"))
     assert response.status_code == 200
     body = response.content.decode("utf-8")
-    assert "Prevádzkový prehľad" in body
+    assert "Reporty" in body
     assert body.count('id="confirm-dialog"') == 1
     assert 'aria-labelledby="confirm-dialog-title"' in body
     assert 'aria-describedby="confirm-dialog-message confirm-dialog-prompt"' in body

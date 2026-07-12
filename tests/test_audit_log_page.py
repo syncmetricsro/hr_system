@@ -2,8 +2,10 @@ from __future__ import annotations
 
 import pytest
 from django.urls import reverse
+from django.utils import translation
 
 from core.audit.services import record_event
+from core.audit.presentation import audit_action_label
 from core.people.models import Person
 
 pytestmark = pytest.mark.django_db
@@ -56,6 +58,29 @@ def test_filters_by_actor_and_action(client, users, events):
     body = resp.content.decode()
     assert "test A" in body and "test B" not in body
 
+
+@pytest.mark.parametrize(
+    ("language", "expected"),
+    [
+        ("en", "Room assigned"),
+        ("sk", "Izba pridelená"),
+        ("hu", "Szoba hozzárendelve"),
+        ("uk", "Кімнату призначено"),
+    ],
+)
+def test_audit_action_labels_cover_all_ui_languages(language, expected):
+    with translation.override(language):
+        assert audit_action_label("room.assigned") == expected
+
+
+def test_audit_filter_keeps_machine_code_and_displays_translated_label(client, users):
+    record_event(users["manager"], "room.assigned")
+    client.force_login(users["manager"])
+    with translation.override("uk"):
+        body = client.get("/uk/audit/").content.decode()
+
+    assert '<option value="room.assigned">Кімнату призначено</option>' in body
+    assert "<td>Кімнату призначено</td>" in body
 
 def test_request_errors_reach_console_logging(settings):
     """Production-readiness: 500s must surface in container logs."""

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from django.db import transaction
 from django.utils import timezone
+from django.utils.translation import gettext as _
 
 from core.audit.services import record_event
 from core.people.models import LifecycleStatus
@@ -86,14 +87,19 @@ def activate_on_project(person, project, *, actor=None, reason: str = "", start_
 
 
 @transaction.atomic
-def schedule_trial(person, project, *, actor=None, scheduled_date=None, note: str = ""):
-    """Recruiter sends an Available person to a project trial (handoff §12.2)."""
+def schedule_trial(person, project, *, actor=None, scheduled_for=None, scheduled_date=None, note: str = ""):
+    """Send an Available person to a project trial at a recorded appointment."""
     if person.lifecycle_status != LifecycleStatus.AVAILABLE:
         raise WorkflowError("Only an Available person can be sent to a trial.")
     trial = TrialAssignment.objects.create(
         person=person,
         project=project,
-        scheduled_date=scheduled_date or timezone.localdate(),
+        # Keep the date column populated for old reports/records while new UI
+        # displays the precise, timezone-aware appointment.
+        scheduled_date=scheduled_date or (
+            timezone.localdate(scheduled_for) if scheduled_for else timezone.localdate()
+        ),
+        scheduled_for=scheduled_for or timezone.now(),
         note=note,
         assigned_by=actor if getattr(actor, "is_authenticated", False) else None,
     )
@@ -133,6 +139,35 @@ def get_or_create_readiness(person, project) -> ReadinessRecord:
     return readiness
 
 
+def readiness_blockers(readiness: ReadinessRecord) -> list[dict[str, str]]:
+    """Return the concrete operational reasons activation is blocked.
+
+    This is deliberately shared by the readiness UI and the activation gate so
+    staff see the same explanation before and after attempting activation.
+    """
+    blockers = []
+    checks = (
+        ("medical", _("Medical"), _("Medical clearance is incomplete.")),
+        ("gear", _("Gear"), _("Required equipment is incomplete.")),
+        ("accommodation", _("Accommodation"), _("Accommodation is incomplete.")),
+        ("transport", _("Transport"), _("Transport is incomplete.")),
+    )
+    for pillar, label, incomplete_message in checks:
+        state = getattr(readiness, f"{pillar}_state")
+        if state == PillarState.INCOMPLETE:
+            blockers.append({"field": pillar, "label": label, "message": incomplete_message})
+        elif (
+            state == PillarState.NOT_APPLICABLE
+            and not getattr(readiness, f"{pillar}_na_reason", "").strip()
+        ):
+            blockers.append({
+                "field": f"{pillar}_reason",
+                "label": label,
+                "message": _("A reason is required when this is not applicable."),
+            })
+    return blockers
+
+
 @transaction.atomic
 def update_readiness(readiness, *, actor=None, states: dict, na_reasons: dict | None = None, entry_medical_date=None):
     """Set the four pillar states (§11.6). Medical and gear cannot be N/A;
@@ -160,9 +195,14 @@ def update_readiness(readiness, *, actor=None, states: dict, na_reasons: dict | 
                 setattr(readiness, f"{pillar}_na_reason", "")
 
     if entry_medical_date is not None:
-        readiness.entry_medical_date = (
+        parsed_medical_date = (
             parse_date(entry_medical_date) if isinstance(entry_medical_date, str) else entry_medical_date
         )
+        if parsed_medical_date is None:
+            raise WorkflowError(_("Entry medical date is invalid."))
+        if parsed_medical_date > timezone.localdate():
+            raise WorkflowError(_("Entry medical date cannot be in the future."))
+        readiness.entry_medical_date = parsed_medical_date
     readiness.submitted_by = actor if getattr(actor, "is_authenticated", False) else None
     readiness.submitted_at = timezone.now()
     readiness.save()
@@ -174,8 +214,15 @@ def update_readiness(readiness, *, actor=None, states: dict, na_reasons: dict | 
 def activate_from_readiness(person, project, *, actor=None):
     """Coordinator activation with the system-enforced four-pillar gate (ADR 0018)."""
     readiness = ReadinessRecord.objects.filter(person=person, project=project).first()
-    if readiness is None or not readiness.is_ready():
-        raise WorkflowError("Readiness is not complete; cannot activate.")
+    if readiness is None:
+        raise WorkflowError(_("Cannot activate this worker because no readiness record has been completed."))
+    blockers = readiness_blockers(readiness)
+    if blockers:
+        raise WorkflowError(
+            _("Cannot activate this worker until: %(items)s") % {
+                "items": "; ".join(str(blocker["message"]) for blocker in blockers),
+            }
+        )
     return activate_on_project(person, project, actor=actor, reason="readiness met")
 
 

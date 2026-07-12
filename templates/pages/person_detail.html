@@ -30,7 +30,10 @@
             <option value="{{ project.pk }}">{{ project.name }}</option>
           {% endfor %}
         </select>
-        <button class="button button-primary" type="submit">{% trans "Schedule trial" %}</button>
+        <label>{% trans "Arrival time" %}
+          <input type="datetime-local" name="scheduled_for" required>
+        </label>
+        <button class="button button-secondary" type="submit">{% trans "Schedule trial" %}</button>
       </form>
     </section>
   {% endif %}
@@ -38,12 +41,16 @@
   <section class="panel workflow-panel">
     <p class="eyebrow">{% trans "Trial day" %} · {{ pending_trial.project.name }}</p>
     <h2>{% trans "Record trial outcome" %}</h2>
+    <dl class="detail-grid trial-details">
+      <div><dt>{% trans "Trial destination" %}</dt><dd>{{ pending_trial.project.name }}{% if pending_trial.project.office %} · {{ pending_trial.project.office }}{% endif %}</dd></div>
+      <div><dt>{% trans "Arrival time" %}</dt><dd>{% if pending_trial.scheduled_for %}{{ pending_trial.scheduled_for|date:"Y-m-d H:i" }}{% elif pending_trial.scheduled_date %}{{ pending_trial.scheduled_date }}{% else %}—{% endif %}</dd></div>
+    </dl>
     {% can 'trial.record_outcome' as may_record %}
     {% if may_record %}
       <div class="action-row">
         <form method="post" action="{% url 'trial_outcome' pending_trial.pk %}">
           {% csrf_token %}<input type="hidden" name="outcome" value="pass">
-          <button class="button button-primary" type="submit">{% trans "Pass" %}</button>
+          <button class="button button-secondary" type="submit">{% trans "Pass" %}</button>
         </form>
         <form method="post" action="{% url 'trial_outcome' pending_trial.pk %}">
           {% csrf_token %}<input type="hidden" name="outcome" value="fail">
@@ -66,42 +73,50 @@
     <h2>{% trans "Four-pillar readiness" %}</h2>
     {% can 'readiness.complete' as may_ready %}
     {% if may_ready %}
-      <form class="stack" method="post" action="{% url 'readiness_update' person.pk %}">
+      {% if readiness_issues %}
+        <aside class="readiness-attention" role="status">
+          <strong>{% trans "Needs attention before activation" %}</strong>
+          <ul>
+            {% for issue in readiness_issues %}<li>{{ issue.label }} — {{ issue.message }}</li>{% endfor %}
+          </ul>
+        </aside>
+      {% endif %}
+      <form class="stack" method="post" action="{% url 'readiness_update' person.pk %}" x-data="{ medical: '{{ readiness.medical_state }}', gear: '{{ readiness.gear_state }}', accommodation: '{{ readiness.accommodation_state }}', transport: '{{ readiness.transport_state }}' }">
         {% csrf_token %}
         <input type="hidden" name="project" value="{{ passed_trial.project.pk }}">
-        <label>{% trans "Medical" %}
-          <select name="medical">
+        <label{% if readiness.medical_state == "incomplete" %} class="readiness-field-error"{% endif %} x-bind:class="{ 'readiness-field-error': medical === 'incomplete' }">{% trans "Medical" %}
+          <select name="medical" x-model="medical">
             <option value="incomplete" {% if readiness.medical_state == "incomplete" %}selected{% endif %}>{% trans "Incomplete" %}</option>
             <option value="complete" {% if readiness.medical_state == "complete" %}selected{% endif %}>{% trans "Complete" %}</option>
           </select>
         </label>
-        <label>{% trans "Gear" %}
-          <select name="gear">
+        <label{% if readiness.gear_state == "incomplete" %} class="readiness-field-error"{% endif %} x-bind:class="{ 'readiness-field-error': gear === 'incomplete' }">{% trans "Gear" %}
+          <select name="gear" x-model="gear">
             <option value="incomplete" {% if readiness.gear_state == "incomplete" %}selected{% endif %}>{% trans "Incomplete" %}</option>
             <option value="complete" {% if readiness.gear_state == "complete" %}selected{% endif %}>{% trans "Complete" %}</option>
           </select>
         </label>
-        <label>{% trans "Accommodation" %}
-          <select name="accommodation">
+        <label{% if readiness.accommodation_state == "incomplete" %} class="readiness-field-error"{% endif %} x-bind:class="{ 'readiness-field-error': accommodation === 'incomplete' }">{% trans "Accommodation" %}
+          <select name="accommodation" x-model="accommodation">
             <option value="incomplete" {% if readiness.accommodation_state == "incomplete" %}selected{% endif %}>{% trans "Incomplete" %}</option>
             <option value="complete" {% if readiness.accommodation_state == "complete" %}selected{% endif %}>{% trans "Complete" %}</option>
             <option value="not_applicable" {% if readiness.accommodation_state == "not_applicable" %}selected{% endif %}>{% trans "Not applicable" %}</option>
           </select>
         </label>
-        <label>{% trans "Reason if not applicable" %}
-          <input type="text" name="accommodation_na_reason" value="{{ readiness.accommodation_na_reason }}">
+        <label{% if readiness.accommodation_state == "not_applicable" and not readiness.accommodation_na_reason %} class="readiness-field-error"{% endif %} x-show="accommodation === 'not_applicable'" x-transition>{% trans "Reason if not applicable" %}
+          <input type="text" name="accommodation_na_reason" value="{{ readiness.accommodation_na_reason }}" x-bind:required="accommodation === 'not_applicable'">
         </label>
-        <label>{% trans "Transport" %}
-          <select name="transport">
+        <label{% if readiness.transport_state == "incomplete" %} class="readiness-field-error"{% endif %} x-bind:class="{ 'readiness-field-error': transport === 'incomplete' }">{% trans "Transport" %}
+          <select name="transport" x-model="transport">
             <option value="incomplete" {% if readiness.transport_state == "incomplete" %}selected{% endif %}>{% trans "Incomplete" %}</option>
             <option value="complete" {% if readiness.transport_state == "complete" %}selected{% endif %}>{% trans "Complete" %}</option>
             <option value="not_applicable" {% if readiness.transport_state == "not_applicable" %}selected{% endif %}>{% trans "Not applicable" %}</option>
           </select>
         </label>
-        <label>{% trans "Reason if not applicable" %}
-          <input type="text" name="transport_na_reason" value="{{ readiness.transport_na_reason }}">
+        <label{% if readiness.transport_state == "not_applicable" and not readiness.transport_na_reason %} class="readiness-field-error"{% endif %} x-show="transport === 'not_applicable'" x-transition>{% trans "Reason if not applicable" %}
+          <input type="text" name="transport_na_reason" value="{{ readiness.transport_na_reason }}" x-bind:required="transport === 'not_applicable'">
         </label>
-        <label>{% trans "Entry medical date" %}
+        <label{% if readiness_future_medical_date %} class="readiness-field-error"{% endif %}>{% trans "Entry medical date" %}
           <input type="date" name="entry_medical_date" value="{{ readiness.entry_medical_date|date:'Y-m-d' }}">
         </label>
         <button class="button button-secondary" type="submit">{% trans "Save readiness" %}</button>

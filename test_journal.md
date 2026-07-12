@@ -1,5 +1,50 @@
 # Test Journal
 
+## 2026-07-12 — Specific activation blockers
+
+- **16 workflow tests green** in isolated PostgreSQL. Activation failures now
+  list the concrete missing requirement and Hungarian localization is asserted;
+  an N/A state without its reason cannot pass readiness.
+
+## 2026-07-12 — Readiness attention guidance
+
+- **14 workflow tests green** in isolated PostgreSQL, including rejection of a
+  future entry-medical date. The readiness form's visual attention contract is
+  covered by a shell regression; SK/HU/UK catalogs compile cleanly.
+
+## 2026-07-12 — Localized audit actions
+
+- **14 audit tests green** in isolated PostgreSQL. They prove the immutable
+  machine code remains the filter value while the action dropdown and table
+  render the translated label in EN/SK/HU/UK. Catalogs compile cleanly.
+
+## 2026-07-12 — Consolidated reports and EUR presentation
+
+- **31 focused PostgreSQL tests green** across dashboard/reports navigation,
+  report drill-down links, role-sensitive links, accommodation pricing, and
+  deduction-review workflows. Ruff and migration consistency are clean.
+
+## 2026-07-12 — Trial appointment and scheduling-role refinement
+
+- Isolated PostgreSQL regression run is green for the trial workflow, action
+  permission gates, and shared shell checks. It covers a persisted trial
+  appointment, recruiter/coordinator scheduling access, manager denial, and
+  the neutral outcome-action contract.
+- `makemigrations projects --check --dry-run`, translation compilation
+  (SK/HU/UK), Ruff, and `git diff --check` are clean.
+
+## 2026-07-12 — Pricing, localized history, sensitive-field and toast refinement
+
+- Added focused regressions for localized lifecycle/equipment history, clearing
+  a disability type when the flag is unset, and the shared three-second flash
+  notification contract. Translation catalogs compile cleanly for SK/HU/UK;
+  Ruff is clean for the changed Python and tests.
+- Full browser rerun is pending: the local development PostgreSQL volume no
+  longer matches its local-only `.env.dev-db` credential, so it cannot create
+  the temporary pytest database. The isolated E2E runner rebuilt both current
+  images and reached the dual-database migration/seed stage before this session
+  was interrupted; it needs one fresh uninterrupted rerun before release.
+
 ## 2026-07-12 — Corvinum test lane
 
 - **Jober lane 283 · corvinum lane 143 (7 skipped, 100 deselected) · e2e 21**

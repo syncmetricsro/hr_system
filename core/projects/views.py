@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from django import forms
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, HttpResponse
@@ -74,10 +75,15 @@ def trials_queue(request: HttpRequest) -> TemplateResponse:
 def assign_trial(request: HttpRequest, person_pk: int) -> HttpResponse:
     person = get_object_or_404(Person, pk=person_pk)
     project = get_object_or_404(Project, pk=request.POST.get("project"))
+    schedule_form = forms.DateTimeField(input_formats=["%Y-%m-%dT%H:%M"])
     try:
-        schedule_trial(person, project, actor=request.user, note=request.POST.get("note", ""))
+        scheduled_for = schedule_form.clean(request.POST.get("scheduled_for", ""))
+        schedule_trial(
+            person, project, actor=request.user, scheduled_for=scheduled_for,
+            note=request.POST.get("note", ""),
+        )
         messages.success(request, _("Trial scheduled."))
-    except WorkflowError as exc:
+    except (forms.ValidationError, WorkflowError) as exc:
         messages.error(request, str(exc))
     return redirect("person_detail", pk=person.pk)
 

@@ -29,9 +29,9 @@
 {% endif %}
 
 <section class="dashboard-grid">
-  <article class="metric-card"><span>{% trans "Revenue" %}</span><strong>{{ month.revenue }}</strong></article>
-  <article class="metric-card"><span>{% trans "Cost" %}</span><strong>{{ month.cost }}</strong></article>
-  <article class="metric-card"><span>{% trans "Net" %}</span><strong>{{ month.net }}</strong></article>
+  <article class="metric-card"><span>{% trans "Revenue" %}</span><strong>{{ month.revenue }} EUR</strong></article>
+  <article class="metric-card"><span>{% trans "Cost" %}</span><strong>{{ month.cost }} EUR</strong></article>
+  <article class="metric-card"><span>{% trans "Net" %}</span><strong>{{ month.net }} EUR</strong></article>
 </section>
 
 <section class="two-column">
@@ -51,7 +51,7 @@
       </form>
     {% else %}
       <dl class="detail-grid">
-        {% for row in rows %}<div><dt>{{ row.category.label|db_trans }}</dt><dd>{{ row.amount|default:"—" }}</dd></div>{% endfor %}
+        {% for row in rows %}<div><dt>{{ row.category.label|db_trans }}</dt><dd>{% if row.amount != "" %}{{ row.amount }} EUR{% else %}—{% endif %}</dd></div>{% endfor %}
       </dl>
     {% endif %}
   </div>
@@ -61,7 +61,7 @@
     <h2>{% trans "By group" %}</h2>
     <dl class="detail-grid">
       {% for g in groups %}
-        <div><dt>{{ g.label }}</dt><dd class="amount{% if g.net < 0 %} amount-neg{% else %} amount-pos{% endif %}">{{ g.net }}</dd></div>
+        <div><dt>{{ g.label }}</dt><dd class="amount{% if g.net < 0 %} amount-neg{% else %} amount-pos{% endif %}">{{ g.net }} EUR</dd></div>
       {% empty %}
         <div><dd>—</dd></div>
       {% endfor %}

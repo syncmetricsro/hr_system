@@ -345,6 +345,17 @@ h3 {
   padding: var(--space-6);
 }
 
+.panel-link {
+  display: block;
+  text-decoration: none;
+  transition: border-color 120ms ease, box-shadow 120ms ease;
+}
+
+.panel-link:hover {
+  border-color: var(--n300);
+  box-shadow: var(--shadow-sm);
+}
+
 .panel-head {
   display: flex;
   align-items: start;
@@ -413,7 +424,7 @@ dd {
   margin: 0;
 }
 
-.detail-grid > div {
+.detail-grid > :is(div, a) {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
@@ -422,8 +433,12 @@ dd {
   border-bottom: 1px solid var(--n100);
 }
 
-.detail-grid > div:last-child {
+.detail-grid > :is(div, a):last-child {
   border-bottom: 0;
+}
+
+.detail-grid > a:hover {
+  color: var(--accent);
 }
 
 .detail-grid dd {
@@ -527,6 +542,17 @@ dd {
   gap: var(--space-2);
 }
 
+.flash-stack {
+  position: fixed;
+  z-index: 60;
+  bottom: var(--space-6);
+  left: 50%;
+  width: min(32rem, calc(100vw - 2 * var(--space-4)));
+  margin: 0;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
 .message {
   padding: var(--space-3) var(--space-4);
   background: var(--panel);
@@ -534,6 +560,7 @@ dd {
   border-left: 4px solid var(--n400);
   border-radius: var(--radius);
   box-shadow: var(--shadow-xs);
+  pointer-events: auto;
 }
 
 .message-success {
@@ -549,6 +576,19 @@ dd {
 .message-error {
   border-left-color: var(--danger);
   background: var(--danger-soft);
+}
+
+input:disabled,
+select:disabled,
+textarea:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.equipment-unit-price {
+  color: var(--muted);
+  font-size: 0.875em;
+  white-space: nowrap;
 }
 
 .qr-plate {
@@ -652,6 +692,28 @@ select {
 .stack {
   display: grid;
   gap: var(--space-4);
+}
+
+.readiness-attention {
+  margin: 0 0 var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--danger);
+  border-left-width: 4px;
+  border-radius: var(--radius);
+  background: var(--danger-soft);
+}
+
+.readiness-attention strong { display: block; }
+.readiness-attention ul { margin: var(--space-2) 0 0; padding-left: 1.25rem; }
+
+.readiness-field-error {
+  color: var(--danger);
+}
+
+.readiness-field-error input,
+.readiness-field-error select {
+  border-color: var(--danger);
+  background: var(--danger-soft);
 }
 
 .action-row {

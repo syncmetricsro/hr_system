@@ -387,6 +387,11 @@ body.nav-open .scrim { opacity: 1; pointer-events: auto; }
 /* Anonymous pages (login, 2FA verify): no sidebar, centered column. */
 .cv-anon { max-width: 560px; margin: 0 auto; padding: 3rem 1rem; }
 
+/* Fixed notifications are centered in the usable content area, not across
+   the persistent client navigation. */
+.flash-stack { left: calc(var(--sidebar-w) + (100vw - var(--sidebar-w)) / 2); }
+body.rail .flash-stack { left: calc(var(--rail-w) + (100vw - var(--rail-w)) / 2); }
+
 @media (max-width: 1023px) {
   .sidebar { transform: translateX(-100%); }
   body.nav-open .sidebar { transform: translateX(0); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6); }
@@ -394,6 +399,7 @@ body.nav-open .scrim { opacity: 1; pointer-events: auto; }
   body.rail .sidebar { width: var(--sidebar-w); }
   body.rail .cv-shell { padding-left: 0; }
   body.rail .sb-text, body.rail .sb-section, body.rail .sb-user, body.rail .brand-word { display: revert; }
+  .flash-stack, body.rail .flash-stack { left: 50%; }
 }
 
 @media (max-width: 640px) {

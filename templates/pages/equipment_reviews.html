@@ -12,7 +12,7 @@
 <p class="muted">{% trans "Unreturned items awaiting a charge decision. Approving records the charge for recovery — no amount is deducted automatically." %}</p>
 
 <section class="dashboard-grid" aria-label="{% trans 'Company total' %}">
-  <article class="metric-card"><span>{% trans "Outstanding" %}</span><strong>{{ total }}</strong></article>
+  <article class="metric-card"><span>{% trans "Outstanding" %}</span><strong>{{ total }} EUR</strong></article>
 </section>
 
 <section class="field-list" aria-label="{% trans 'Equipment reviews' %}">
@@ -23,7 +23,7 @@
         <p>{{ issue.item }} × {{ issue.quantity }}</p>
       </div>
       <dl>
-        <div><dt>{% trans "Charge amount" %}</dt><dd>{{ issue.charge_amount }}</dd></div>
+        <div><dt>{% trans "Charge amount" %}</dt><dd>{{ issue.charge_amount }} EUR</dd></div>
       </dl>
       <form class="people-search" method="post" action="{% url 'review_deduction' issue.pk %}">
         {% csrf_token %}

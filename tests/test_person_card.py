@@ -46,3 +46,20 @@ def test_people_list_status_filter(client, django_user_model):
     body = client.get(reverse("people_list"), {"status": "inactive"}).content.decode("utf-8")
     assert "Inactive" in body
     assert "Available</h3>" not in body  # the Available person's name is filtered out
+
+
+def test_history_translates_lifecycle_values_and_seeded_equipment(coordinator):
+    from features.logistics.models import EquipmentItem
+    from features.logistics.services import issue_equipment
+
+    person = Person.objects.create(first_name="Olha", last_name="Kovalenko")
+    boots = EquipmentItem.objects.create(name="Work boots", size="42")
+    issue_equipment(person, boots, 1, actor=coordinator)
+    person.set_status(LifecycleStatus.WORKING, actor=coordinator)
+
+    with translation.override("hu"):
+        history = person_history(person)
+
+    details = [event["detail"] for event in history]
+    assert "Elérhető → Dolgozik" in details
+    assert "Munkavédelmi bakancs 42" in details

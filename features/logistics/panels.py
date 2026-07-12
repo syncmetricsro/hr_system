@@ -2,8 +2,11 @@
 
 from __future__ import annotations
 
+from django.urls import reverse
 from django.utils.translation import gettext as _
 
+from core.accounts.permissions import Action
+from core.accounts.permissions import can as user_can
 from core.ui.registry import flag_enabled
 from features.logistics.models import (
     EquipmentItem,
@@ -53,10 +56,16 @@ def occupancy_tile(request):
         return None
     capacity = sum(Room.objects.values_list("capacity", flat=True))
     occupied = RoomAssignment.objects.filter(status=RoomAssignmentStatus.ACTIVE).count()
-    return {"label": _("Occupancy"), "value": f"{occupied}/{capacity}"}
+    tile = {"label": _("Occupancy"), "value": f"{occupied}/{capacity}"}
+    if user_can(request.user, Action.ACCOMMODATION_MANAGE):
+        tile["url"] = reverse("accommodation_costs")
+    return tile
 
 
 def equipment_value_tile(request):
     if not flag_enabled("equipment"):
         return None
-    return {"label": _("Equipment value"), "value": issued_equipment_value()}
+    tile = {"label": _("Equipment value"), "value": f"{issued_equipment_value()} EUR"}
+    if user_can(request.user, Action.EQUIPMENT_REVIEW_DEDUCTION):
+        tile["url"] = reverse("equipment_reviews")
+    return tile
