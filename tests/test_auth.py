@@ -60,13 +60,13 @@ def test_manager_sees_gated_button_observer_does_not(client, make_user):
     manager = make_user(role="manager")
     client.force_login(manager)
     body = client.get(reverse("dashboard")).content.decode("utf-8")
-    assert "Spravovať projekty" in body
+    assert 'href="/sk/equipment/reviews/"' in body
 
     client.logout()
     observer = make_user(role="observer")
     client.force_login(observer)
     body = client.get(reverse("dashboard")).content.decode("utf-8")
-    assert "Spravovať projekty" not in body
+    assert 'href="/sk/equipment/reviews/"' not in body
 
 
 def test_language_switch_changes_active_language(client, make_user):

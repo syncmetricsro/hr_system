@@ -6,7 +6,7 @@
   {% can 'accommodation.manage' as may_rate %}
   {% if panel.current_room %}
     <p>{{ panel.current_room.room }}</p>
-    <p class="muted">{% trans "Monthly rate" %}: {{ panel.current_room.effective_rate }}</p>
+    <p class="muted">{% trans "Monthly rate" %}: {{ panel.current_room.effective_rate }} EUR</p>
     {% if may_room %}
       <form method="post" action="{% url 'release_room' panel.person.pk %}">
         {% csrf_token %}

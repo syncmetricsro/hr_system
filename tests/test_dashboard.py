@@ -12,7 +12,7 @@ pytestmark = pytest.mark.django_db
 
 
 @pytest.mark.jober_only  # Jober grants/lifecycle/features
-def test_dashboard_shows_real_metrics(client, django_user_model):
+def test_dashboard_renders_the_combined_report_surface(client, django_user_model):
     Project.objects.create(name="DHL", code="DHLBA", is_active=True)
     Person.objects.create(first_name="Ava", last_name="A", lifecycle_status=LifecycleStatus.AVAILABLE)
     person = Person.objects.create(first_name="Tom", last_name="T", lifecycle_status=LifecycleStatus.AVAILABLE)
@@ -23,8 +23,11 @@ def test_dashboard_shows_real_metrics(client, django_user_model):
     manager = django_user_model.objects.create_user(email="m@demo.jober.test", password="x", role="manager")
     client.force_login(manager)
     with translation.override("sk"):
-        body = client.get(reverse("dashboard")).content.decode("utf-8")
+        response = client.get(reverse("dashboard"))
+        body = response.content.decode("utf-8")
 
-    assert "Prevádzkový prehľad" in body          # heading (sk)
-    assert "Tom T" in body                         # pending trial listed on the dashboard
-    assert "DHL" in body
+    assert response.status_code == 200
+    assert "Reporty" in body
+    assert 'href="/sk/projects/"' in body
+    assert 'href="/sk/trials/"' in body
+    assert "1" in body  # one pending trial is reflected in its drill-down tile

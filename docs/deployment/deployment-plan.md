@@ -97,14 +97,17 @@ Client-specific env:
 
 | # | Ask | Blocks |
 |---|---|---|
-| D1 | SSH access to the VPS + hostname; confirm Dokku installed (or approve install) | everything |
-| D2 | Jober staging+prod domain names (DNS A records to the VPS) | Jober apps, Twilio webhook |
-| D3 | CorvinumEU staging+prod domain names | Corvinum apps (closes C-Q14) |
+| D1 | SSH access to **syncmetric-prime** (named 2026-07-12; fresh, Dokku to be installed per runbook) | everything |
+| D2 | Parent domain + `jober-staging.<parent>` A record (subdomains chosen 2026-07-12) | Jober app, Twilio webhook |
+| D3 | `corvinum-staging.<parent>` A record (same parent) | Corvinum app |
 | D4 | Doppler service tokens (per app/config) | secrets sync |
 | D5 | SMTP account for CorvinumEU payslips | payslip email beyond demo |
 | D6 | Off-site backup target (bucket or host) | backup schedule |
 | D7 | Twilio account upgrade decision | Jober SMS without trial prefix |
 | D8 | Legal gates: Jober LIA/contract text; CorvinumEU C-Q6/13/16 | real data on production |
 
-When D1–D4 land, staging deployment is one working session; this file plus
-`jober-dokku-staging.md` are the runbook.
+When D1–D4 land, staging deployment is one working session. The concrete,
+value-filled runbook for the named box is
+[syncmetric-prime-staging.md](syncmetric-prime-staging.md) (owner decision
+2026-07-12: fresh VPS **syncmetric-prime**, per-client subdomains under one
+parent, staging-only both clients, owner-runs-I-guide).

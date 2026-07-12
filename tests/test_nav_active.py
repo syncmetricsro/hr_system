@@ -30,9 +30,9 @@ def _active_hrefs(html: str) -> list[str]:
     return re.findall(r'class="folder-tab is-active"\s+href="([^"]+)"', html)
 
 
-def test_dashboard_tab_active_on_dashboard(manager_client):
+def test_reports_tab_is_active_on_the_legacy_dashboard_route(manager_client):
     html = manager_client.get("/en/").content.decode()
-    assert _active_hrefs(html) == ["/en/"]
+    assert _active_hrefs(html) == ["/en/reports/"]
 
 
 def test_people_tab_active_on_people_pages(manager_client):

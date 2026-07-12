@@ -33,6 +33,18 @@ def test_reports_shows_counts(client, make_user):
         body = client.get(reverse("reports")).content.decode("utf-8")
     assert "Reporty" in body                    # heading (sk)
     assert "Ľudia podľa stavu" in body          # people-by-status section
+    assert 'href="/sk/projects/"' in body
+    assert 'href="/sk/people/?status=available"' in body
+
+
+@pytest.mark.jober_only
+def test_manager_report_tiles_link_to_their_operational_drill_downs(client, make_user):
+    client.force_login(make_user("manager"))
+    body = client.get(reverse("reports")).content.decode("utf-8")
+
+    assert f'href="{reverse("accommodation_costs")}"' in body
+    assert f'href="{reverse("equipment_reviews")}"' in body
+    assert f'href="{reverse("compliance_list")}"' in body
 
 
 def test_finance_section_hidden_from_recruiter(client, make_user):

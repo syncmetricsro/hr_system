@@ -1,5 +1,63 @@
 # Build Journal
 
+## 2026-07-12 — Specific activation-blocker messages
+
+The activation gate now explains the concrete incomplete requirement(s), rather
+than returning a generic readiness failure. The message and each blocker use
+the active EN/SK/HU/UK locale, and incomplete legacy N/A records are blocked
+until they include their required reason.
+
+## 2026-07-12 — Readiness form attention states
+
+The four-pillar readiness form now surfaces an attention summary and highlights
+incomplete requirements, missing N/A reasons, and an already-stored future
+medical date. N/A reason fields appear only when relevant and are required in
+that state. Future medical dates are rejected on save.
+
+## 2026-07-12 — Audit action localization
+
+Audit action codes remain stable in storage and query strings, but the audit
+screen now renders human-readable labels for every current action in EN/SK/HU/
+UK. This covers the filter options as well as event rows, with a readable
+fallback for any future unknown code.
+
+## 2026-07-12 — One operational Reports surface with actionable metrics
+
+- Overview and Reports are now one reporting surface: the legacy overview URL
+  renders the same page, while navigation and brand links expose only Reports.
+  This removes duplicate navigation without breaking existing bookmarks.
+- Summary and status metrics drill into the corresponding projects, people,
+  trials, compliance, accommodation, equipment-review, or finance workflow.
+  Restricted operational targets stay inert for roles that cannot open them.
+- Monetary values on accommodation, equipment-review, logistics, and finance
+  reporting surfaces explicitly state **EUR**.
+
+## 2026-07-12 — Trial appointments and scheduling authority
+
+- A trial now records a timezone-aware arrival appointment (`scheduled_for`)
+  alongside its legacy date. The person card and field queue clearly show the
+  trial destination (project and office) and arrival time.
+- Recruiters, Coordinators, and Managers can schedule trials. The permission
+  matrix is kept in sync.
+- Trial results are deliberately all neutral secondary buttons until an
+  operator chooses an outcome, avoiding a misleading preselected blue action.
+
+## 2026-07-12 — Equipment clarity, localized history and safer person forms
+
+- Equipment cards now state both their aggregate value and every catalog item's
+  unit price explicitly in **EUR**, including the amount under a deduction
+  review. The issue selector also shows the unit price before an operator
+  issues an item.
+- Person timeline events translate canonical lifecycle values and seeded
+  equipment names at render time, while preserving unknown historic values as
+  a safe fallback.
+- The disability-type input follows the disability checkbox locally and is
+  visibly disabled when irrelevant. The form also clears that sensitive detail
+  server-side whenever the checkbox is not selected.
+- Shared flash messages are fixed, readable bottom-center toasts, automatically
+  dismissing after three seconds. Corvinum centers them in its usable main area
+  rather than across the sidebar.
+
 ## 2026-07-12 — Deploy smoke + backup/restore drill scripts (§2 complete)
 
 `scripts/deploy_smoke.sh` (post-deploy gate, fails closed) and

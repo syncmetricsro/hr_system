@@ -29,13 +29,12 @@
     <div class="scrim"></div>
 
     <aside class="sidebar">
-      <a class="sb-brand" href="{% url 'dashboard' %}" aria-label="{{ BRAND_NAME }} — {% trans 'Overview' %}">
+      <a class="sb-brand" href="{% url 'reports' %}" aria-label="{{ BRAND_NAME }} — {% trans 'Reports' %}">
         <img src="{% static 'corvinum/brand/corvinum-logo-v1.webp' %}" alt="">
         <span class="brand-word">{{ BRAND_NAME }}</span>
       </a>
       <nav class="sb-nav" aria-label="{% trans 'Main navigation' %}">
         <p class="sb-section">{% trans "Workforce" %}</p>
-        <a class="sb-item {% nav_active 'dashboard' %}" href="{% url 'dashboard' %}"><span class="material-symbols-outlined" aria-hidden="true">home</span><span class="sb-text">{% trans "Overview" %}</span></a>
         <a class="sb-item {% nav_active 'people_list' 'person_create' 'person_detail' 'person_edit' 'intake_start' 'intake_panel' %}" href="{% url 'people_list' %}"><span class="material-symbols-outlined" aria-hidden="true">groups</span><span class="sb-text">{% trans "People" %}</span></a>
         <a class="sb-item {% nav_active 'project_list' 'project_detail' %}" href="{% url 'project_list' %}"><span class="material-symbols-outlined" aria-hidden="true">engineering</span><span class="sb-text">{% trans "Projects" %}</span></a>
 
@@ -56,7 +55,7 @@
         {% if may_blacklist and has_blacklist %}<a class="sb-item {% nav_active 'blacklist_queue' %}" href="{% url 'blacklist_queue' %}"><span class="material-symbols-outlined" aria-hidden="true">gavel</span><span class="sb-text">{% trans "Blacklist" %}</span></a>{% endif %}
 
         <p class="sb-section">{% trans "System" %}</p>
-        <a class="sb-item {% nav_active 'reports' %}" href="{% url 'reports' %}"><span class="material-symbols-outlined" aria-hidden="true">trending_up</span><span class="sb-text">{% trans "Reports" %}</span></a>
+        <a class="sb-item {% nav_active 'dashboard' 'reports' %}" href="{% url 'reports' %}"><span class="material-symbols-outlined" aria-hidden="true">trending_up</span><span class="sb-text">{% trans "Reports" %}</span></a>
         {% can 'audit.view' as may_audit %}
         {% if may_audit %}<a class="sb-item {% nav_active 'audit_log' %}" href="{% url 'audit_log' %}"><span class="material-symbols-outlined" aria-hidden="true">verified_user</span><span class="sb-text">{% trans "Audit" %}</span></a>{% endif %}
       </nav>
@@ -101,9 +100,9 @@
         </div>
         {% endif %}
         {% if messages %}
-          <ul class="messages" role="status">
+          <ul class="messages flash-stack" aria-live="polite" aria-atomic="true">
             {% for message in messages %}
-              <li class="message message-{{ message.tags }}">{{ message }}</li>
+              <li class="message message-{{ message.tags }}" x-data="{ visible: true }" x-init="setTimeout(() => visible = false, 3000)" x-show="visible" x-transition.opacity.duration.200ms>{{ message }}</li>
             {% endfor %}
           </ul>
         {% endif %}

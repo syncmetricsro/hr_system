@@ -7,6 +7,7 @@ from django.shortcuts import get_object_or_404, redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.translation import gettext as _
+from django.utils import timezone
 from django.views.decorators.http import require_POST
 
 from core.accounts.permissions import Action, require_action
@@ -18,7 +19,7 @@ from core.people.permissions import can_view_sensitive
 from core.people.services import person_history, recycle_to_available
 from core.ui import registry
 from core.projects.models import PillarState, Project, TrialOutcome
-from core.projects.services import get_or_create_readiness
+from core.projects.services import get_or_create_readiness, readiness_blockers
 
 
 @login_required
@@ -99,8 +100,12 @@ def person_detail(request: HttpRequest, pk: int) -> TemplateResponse:
         and passed_trial is not None
     )
     readiness = None
+    readiness_issues = []
     if in_readiness:
         readiness = get_or_create_readiness(person, passed_trial.project)
+        readiness_issues = readiness_blockers(readiness)
+        if readiness.entry_medical_date and readiness.entry_medical_date > timezone.localdate():
+            readiness_issues.append({"field": "entry_medical_date", "label": _("Entry medical date"), "message": _("Review this future date.")})
     return TemplateResponse(
         request,
         "pages/person_detail.html",
@@ -113,6 +118,10 @@ def person_detail(request: HttpRequest, pk: int) -> TemplateResponse:
             "passed_trial": passed_trial,
             "in_readiness": in_readiness,
             "readiness": readiness,
+            "readiness_issues": readiness_issues,
+            "readiness_future_medical_date": bool(
+                readiness and readiness.entry_medical_date and readiness.entry_medical_date > timezone.localdate()
+            ),
             "is_ready": readiness.is_ready() if readiness else False,
             "PillarState": PillarState,
             "is_available": person.lifecycle_status == LifecycleStatus.AVAILABLE,

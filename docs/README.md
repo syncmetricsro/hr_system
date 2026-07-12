@@ -37,6 +37,8 @@ Highlights: 0008 RBAC model · 0016 whitenoise · 0019 Twilio-via-stdlib ·
 | Doc | Owner | Purpose |
 |---|---|---|
 | `deployment-plan.md` | Platform | Dokku/VPS deployment architecture for both clients |
+| `deployment-plan.md` | Platform | Dokku/VPS architecture, both clients, asks D1–D8 |
+| `syncmetric-prime-staging.md` | Platform | Concrete staging runbook for the syncmetric-prime VPS |
 | `production-readiness.md` | Platform | Static serving, gunicorn, image checks |
 | `local-dev-db.md` | Platform | Dev Postgres container |
 | `jober-local-demo.md` | Jober | Local demo runner (port 8000) |

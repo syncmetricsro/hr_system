@@ -1,10 +1,10 @@
 {% load i18n %}
-<aside class="panel">
+<a class="panel panel-link" href="{% url 'finance_summary' %}">
   <p class="eyebrow">{% trans "Company total" %}</p>
   <h2>{% trans "Finance" %}</h2>
   <dl class="detail-grid">
-    <div><dt>{% trans "Revenue" %}</dt><dd>{{ panel.finance.revenue }}</dd></div>
-    <div><dt>{% trans "Cost" %}</dt><dd>{{ panel.finance.cost }}</dd></div>
-    <div><dt>{% trans "Net" %}</dt><dd>{{ panel.finance.net }}</dd></div>
+    <div><dt>{% trans "Revenue" %}</dt><dd>{{ panel.finance.revenue }} EUR</dd></div>
+    <div><dt>{% trans "Cost" %}</dt><dd>{{ panel.finance.cost }} EUR</dd></div>
+    <div><dt>{% trans "Net" %}</dt><dd>{{ panel.finance.net }} EUR</dd></div>
   </dl>
-</aside>
+</a>

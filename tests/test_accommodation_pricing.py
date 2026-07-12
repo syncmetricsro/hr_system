@@ -102,7 +102,10 @@ def test_costs_view_gated_to_manager(client, setup, django_user_model):
     client.force_login(coord)
     assert client.get(url).status_code == 403
     client.force_login(manager)
-    assert client.get(url).status_code == 200
+    response = client.get(url)
+    assert response.status_code == 200
+    body = response.content.decode("utf-8")
+    assert "0 EUR" in body
 
 
 def test_set_room_rate_view_persists(client, setup):

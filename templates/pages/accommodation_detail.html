@@ -17,7 +17,7 @@
       <div><h3>{{ room.label }}</h3></div>
       <dl>
         <div><dt>{% trans "Occupancy" %}</dt><dd>{{ room.occupancy }}/{{ room.capacity }}</dd></div>
-        <div><dt>{% trans "Monthly rate" %}</dt><dd>{{ room.monthly_rate }}</dd></div>
+        <div><dt>{% trans "Monthly rate" %}</dt><dd>{{ room.monthly_rate }} EUR</dd></div>
       </dl>
       {% if can_manage %}
         <form class="people-search" method="post" action="{% url 'set_room_rate' room.pk %}">

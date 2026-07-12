@@ -18,10 +18,10 @@ def client_logged_in(client, django_user_model):
 @pytest.mark.parametrize(
     "prefix,expected",
     [
-        ("en", "Operational overview"),       # English source / fallback
-        ("sk", "Prevádzkový prehľad"),         # default language
-        ("hu", "Üzemeltetési áttekintés"),     # compiled catalog
-        ("uk", "Операційний огляд"),           # compiled catalog
+        ("en", "Reports"),
+        ("sk", "Reporty"),
+        ("hu", "Jelentések"),
+        ("uk", "Звіти"),
     ],
 )
 def test_dashboard_renders_in_each_language(client_logged_in, prefix, expected):

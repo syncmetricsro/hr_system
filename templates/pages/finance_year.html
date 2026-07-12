@@ -11,9 +11,9 @@
 </section>
 
 <section class="dashboard-grid" aria-label="{% trans 'Company total' %}">
-  <article class="metric-card"><span>{% trans "Revenue" %}</span><strong>{{ totals.revenue }}</strong></article>
-  <article class="metric-card"><span>{% trans "Cost" %}</span><strong>{{ totals.cost }}</strong></article>
-  <article class="metric-card"><span>{% trans "Net" %}</span><strong>{{ totals.net }}</strong></article>
+  <article class="metric-card"><span>{% trans "Revenue" %}</span><strong>{{ totals.revenue }} EUR</strong></article>
+  <article class="metric-card"><span>{% trans "Cost" %}</span><strong>{{ totals.cost }} EUR</strong></article>
+  <article class="metric-card"><span>{% trans "Net" %}</span><strong>{{ totals.net }} EUR</strong></article>
 </section>
 
 <section class="two-column">
@@ -22,7 +22,7 @@
     <h2>{{ year }}</h2>
     <dl class="detail-grid">
       {% for p in project_results %}
-        <div><dt>{{ p.name }}</dt><dd class="amount{% if p.net < 0 %} amount-neg{% endif %}">{{ p.net }}</dd></div>
+        <div><dt>{{ p.name }}</dt><dd class="amount{% if p.net < 0 %} amount-neg{% endif %}">{{ p.net }} EUR</dd></div>
       {% empty %}
         <div><dd>{% trans "No financial months." %}</dd></div>
       {% endfor %}
@@ -34,7 +34,7 @@
     <h2>{{ year }}</h2>
     <dl class="detail-grid">
       {% for g in groups %}
-        <div><dt>{{ g.label }}</dt><dd class="amount{% if g.net < 0 %} amount-neg{% else %} amount-pos{% endif %}">{{ g.net }}</dd></div>
+        <div><dt>{{ g.label }}</dt><dd class="amount{% if g.net < 0 %} amount-neg{% else %} amount-pos{% endif %}">{{ g.net }} EUR</dd></div>
       {% empty %}
         <div><dd>{% trans "No line items yet." %}</dd></div>
       {% endfor %}
@@ -47,7 +47,7 @@
   <h2>{{ year }}</h2>
   <ul class="plain-list">
     {% for m in months %}
-      <li><a href="{% url 'finance_month_detail' m.pk %}">{{ m.project.name }} · {{ m.year }}-{{ m.month }}</a> — {% trans "Net" %}: {{ m.net }}{% if m.is_locked %} · {% trans "Locked" %}{% endif %}</li>
+      <li><a href="{% url 'finance_month_detail' m.pk %}">{{ m.project.name }} · {{ m.year }}-{{ m.month }}</a> — {% trans "Net" %}: {{ m.net }} EUR{% if m.is_locked %} · {% trans "Locked" %}{% endif %}</li>
     {% empty %}
       <li>{% trans "No financial months." %}</li>
     {% endfor %}

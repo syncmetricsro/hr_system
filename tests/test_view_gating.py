@@ -60,3 +60,19 @@ def test_anonymous_is_redirected(client, objs, url_name, kwargs_fn, method, deni
     response = getattr(client, method)(url)
     assert response.status_code == 302
     assert reverse("login") in response.headers["Location"]
+
+
+@pytest.mark.parametrize("role", ("recruiter", "coordinator", "manager"))
+def test_authorized_roles_can_schedule_a_trial(client, users, role):
+    person = Person.objects.create(first_name="Available", last_name="Person")
+    project = Project.objects.create(name="DHL", code=f"DHL-{role}")
+    client.force_login(users[role])
+
+    response = client.post(
+        reverse("assign_trial", args=[person.pk]),
+        {"project": project.pk, "scheduled_for": "2026-07-13T08:30"},
+    )
+
+    assert response.status_code == 302
+    trial = TrialAssignment.objects.get(person=person)
+    assert trial.scheduled_for is not None

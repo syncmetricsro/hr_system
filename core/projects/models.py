@@ -126,6 +126,9 @@ class TrialAssignment(models.Model):
         Project, on_delete=models.PROTECT, related_name="trials", verbose_name=_("project")
     )
     scheduled_date = models.DateField(_("scheduled date"), null=True, blank=True)
+    # The legacy date is retained for historic records. New trial scheduling
+    # records the actual arrival appointment with timezone support.
+    scheduled_for = models.DateTimeField(_("scheduled for"), null=True, blank=True)
     state = models.CharField(_("state"), max_length=20, choices=TrialState.choices, default=TrialState.SCHEDULED)
     outcome = models.CharField(_("outcome"), max_length=20, choices=TrialOutcome.choices, default=TrialOutcome.PENDING)
     note = models.CharField(_("note"), max_length=300, blank=True)
@@ -200,7 +203,16 @@ class ReadinessRecord(models.Model):
             and self.gear_state == PillarState.COMPLETE
         )
         optional_ok = (
-            self.accommodation_state in {PillarState.COMPLETE, PillarState.NOT_APPLICABLE}
-            and self.transport_state in {PillarState.COMPLETE, PillarState.NOT_APPLICABLE}
+            self.accommodation_state == PillarState.COMPLETE
+            or (
+                self.accommodation_state == PillarState.NOT_APPLICABLE
+                and bool(self.accommodation_na_reason.strip())
+            )
+        ) and (
+            self.transport_state == PillarState.COMPLETE
+            or (
+                self.transport_state == PillarState.NOT_APPLICABLE
+                and bool(self.transport_na_reason.strip())
+            )
         )
         return required_ok and optional_ok
