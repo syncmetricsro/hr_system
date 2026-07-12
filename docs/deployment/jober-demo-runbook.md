@@ -24,7 +24,10 @@ Companion: [jober-local-demo.md](jober-local-demo.md) (how the runner works).
    `seed_questionnaire` → `seed_finance` → **`seed_demo_scenario`**. App at
    **http://localhost:8000**. *(If you forget Doppler, the SMS panel shows
    "not configured" — relaunch with `doppler run -- scripts/dev_app.sh up`;
-   the seeded data survives.)*
+   the seeded data survives.)* **One-time smoothness setup:** put the phone
+   number you can read in the Twilio console (Virtual Phone) into Doppler —
+   `doppler secrets set DEMO_SMS_PHONE "+1..."` — and the seed gives that
+   number to **Olha**, so the Act-7 SMS arrives where the audience can see it.
 2. **Go/no-go:** `scripts/playwright_e2e.sh` green (21 e2e); click the three
    headline screens (Finance, Blacklist queue, Reviews); **send one test SMS**
    from Olha's card to the Twilio Virtual Phone and see it Delivered — never
