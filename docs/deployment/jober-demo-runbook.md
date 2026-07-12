@@ -25,11 +25,18 @@ Companion: [jober-local-demo.md](jober-local-demo.md) (how the runner works).
    **http://localhost:8000**. *(If you forget Doppler, the SMS panel shows
    "not configured" — relaunch with `doppler run -- scripts/dev_app.sh up`;
    the seeded data survives.)*
-2. **Go/no-go:** `scripts/playwright_e2e.sh` green (16 e2e); click the three
+2. **Go/no-go:** `scripts/playwright_e2e.sh` green (21 e2e); click the three
    headline screens (Finance, Blacklist queue, Reviews); **send one test SMS**
    from Olha's card to the Twilio Virtual Phone and see it Delivered — never
    let the demo be the first live send of the day.
 3. **Rehearse once** end-to-end and time it.
+4. **Know the confirmation modals:** every destructive step in the script
+   (blacklist Approve/Reject, charge Approve/Waive, month Lock/Reopen, Exit)
+   pops a modal describing the action with Cancel/Agree. Don't fumble it —
+   *sell* it: "the system never lets you destroy something by mis-click."
+5. Both demos can run **side by side** (Jober :8000, CorvinumEU :8001) —
+   per-client session cookies mean they no longer log each other out, and
+   sessions are 30-day rolling, so you stay signed in across the demo.
 
 ### Logins (password `demo-jober-2026` for all)
 | Role | Email | Used in |
@@ -44,7 +51,7 @@ Companion: [jober-local-demo.md](jober-local-demo.md) (how the runner works).
   phone, and an expiring certificate.
 - **Farrukh Tashkentov** — Trial day (record the outcome live in Act 4).
 - **Tran Van Minh** — Available. **Diana Horvathova** — Available, has a **proposed
-  blacklist case** to decide live. **Bohdan Melnyk** — Inactive (reason: Sick).
+  blacklist case** to decide live. **Bohdan Melnyk** — Inactive (reason: Sick — shows as „Choroba“ in the SK UI).
 - **Ivan Zablokovaný** — already **Blacklisted**; his hashed ID is
   **`SK-DEMO-BL-001`** — type it in Act 3 to trigger the re-entry match.
 
@@ -125,10 +132,14 @@ Bohdan → back to **Available**. **Reports → Inactive by reason** shows the n
 breakdown.
 
 ### 10 · Oversight & RBAC (5m)
-**Reports** + **CSV exports** (people/projects/finance). A person's **append-only
-audit trail**. Then log in as `pozorovatel` (**Observer**): read-only — sees the
-finance summary but **not** the Reviews queue or blacklist reasons. *"Hidden
-buttons are backed by real server-side checks."*
+**Reports** + **CSV exports** (people/projects/finance). Then the **Audit** tab —
+the append-only log of every sensitive action (who, what, whom, when, why),
+filterable by actor/action/record/date; show the day's own demo actions in it
+(the blacklist decision from Act 3, the month lock from Act 8). Log in as
+`pozorovatel` (**Observer**): read-only — sees the finance summary **and the
+Audit log** (oversight by design), but **not** the Reviews queue or blacklist
+reasons. *"Hidden buttons are backed by real server-side checks; nothing in
+the audit log can be edited or deleted."*
 
 ### 11 · Close (3m)
 Recap: **all five of your questions are implemented** — accommodation cost *(Q1)*,

@@ -20,6 +20,11 @@ products from one platform.
    an obstacle. *(Human prep: install the app beforehand; any TOTP app works.)*
 3. Keep a second terminal on `scripts/corvinum_app.sh logs` — the payslip act
    shows the email arriving in the console backend.
+4. **Know the confirmation modals:** destructive steps (blacklist decisions,
+   ledger cancel/reverse, cycle include/settle) pop a Cancel/Agree modal
+   describing the action — present it as a safety feature.
+5. Runs **side by side** with the Jober demo without logging each other out
+   (per-client session cookies; 30-day rolling sessions).
 
 ### Logins (password `demo-corvinum-2026`)
 | Role | Email |
@@ -60,8 +65,10 @@ products from one platform.
    "this is what you'd tell the worker by phone — it is never emailed") →
    show the email in the logs terminal → open the PDF attachment, wrong
    password fails, right one opens.
-7. **Oversight (3m)** — Observer login: read-only; audit trail on Marek shows
-   checklist ticks, ledger entries, the payslip send (no password anywhere).
+7. **Oversight (3m)** — Observer login: read-only, but with the **Audit**
+   sidebar page (shield icon): filter by Marek's actor or by action to show
+   checklist ticks, ledger entries, and the payslip send — with **no password
+   anywhere in the log**. Append-only: nothing can be edited or deleted.
 
 ## Caveats to state plainly
 - Fictional data; the real-data/legal gate is not open. Translations are
