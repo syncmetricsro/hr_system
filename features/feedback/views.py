@@ -10,6 +10,7 @@ from django.views.decorators.http import require_POST
 from core.accounts.permissions import Action, require_action
 from features.feedback.models import FeedbackLink, FeedbackSubmission
 from core.projects.models import Project
+from core.audit.services import record_event
 
 
 def feedback_form(request: HttpRequest, token: str) -> HttpResponse:
@@ -21,9 +22,10 @@ def feedback_form(request: HttpRequest, token: str) -> HttpResponse:
         message = (request.POST.get("message") or "").strip()
         rating = request.POST.get("rating") or ""
         if message:
-            FeedbackSubmission.objects.create(
+            submission = FeedbackSubmission.objects.create(
                 link=link, message=message, rating=int(rating) if rating.isdigit() else None
             )
+            record_event(None, "feedback.received", target=submission)
             submitted = True
         else:
             error = _("Message is required.")

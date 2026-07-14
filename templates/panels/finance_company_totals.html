@@ -1,5 +1,5 @@
 {% load i18n %}
-<a class="panel panel-link" href="{% url 'finance_summary' %}">
+<a class="panel panel-link" href="{% url 'finance_summary' %}" data-tooltip="{% trans 'Details' %}">
   <p class="eyebrow">{% trans "Company total" %}</p>
   <h2>{% trans "Finance" %}</h2>
   <dl class="detail-grid">

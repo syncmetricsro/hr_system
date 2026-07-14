@@ -14,18 +14,18 @@
 </section>
 
 <section class="dashboard-grid" aria-label="{% trans 'Operational summaries' %}">
-  <a class="metric-card" href="{% url 'project_list' %}">
+  <a class="metric-card" href="{% url 'project_list' %}" data-tooltip="{% trans 'Details' %}">
     <span>{% trans "Active projects" %}</span><strong>{{ metrics.active_projects }}</strong>
   </a>
-  <a class="metric-card" href="{% url 'people_list' %}?status=available">
+  <a class="metric-card" href="{% url 'people_list' %}?status=available" data-tooltip="{% trans 'Details' %}">
     <span>{% trans "Available" %}</span><strong>{{ metrics.available }}</strong>
   </a>
-  <a class="metric-card" href="{% url 'people_list' %}?status=working">
+  <a class="metric-card" href="{% url 'people_list' %}?status=working" data-tooltip="{% trans 'Details' %}">
     <span>{% trans "Working" %}</span><strong>{{ metrics.working }}</strong>
   </a>
   {% flag_on 'recruitment_trials' as has_trials %}
   {% if has_trials %}
-  <a class="metric-card" href="{% url 'trials_queue' %}">
+  <a class="metric-card" href="{% url 'trials_queue' %}" data-tooltip="{% trans 'Details' %}">
     <span>{% trans "Awaiting outcome" %}</span><strong>{{ metrics.awaiting_outcome }}</strong>
   </a>
   {% endif %}

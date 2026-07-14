@@ -82,6 +82,54 @@ def test_corvinum_brand_and_content_use_available_viewport(page):
     assert mobile == {"left": 0, "right": 375, "overflow": 0}
 
 
+def test_corvinum_language_switch_uses_its_own_cookie_and_translates_the_url(page):
+    _login_recruiter(page)
+    page.goto(f"{base_url()}/sk/people/")
+    page.select_option(".sb-actions select[name='language']", "hu")
+    page.wait_for_url("**/hu/people/")
+
+    assert page.locator("html").get_attribute("lang") == "hu"
+    cookies = {cookie["name"]: cookie["value"] for cookie in page.context.cookies()}
+    assert cookies["corvinum_language"] == "hu"
+
+
+def test_corvinum_reports_are_the_interactive_overview(page):
+    _login_recruiter(page)
+    page.goto(f"{base_url()}/sk/reports/")
+    page.wait_for_load_state("networkidle")
+
+    assert "Prehľad" not in page.locator(".sb-nav .sb-text").all_text_contents()
+    assert page.locator("a.metric-card[href*='/projects/']").count() == 1
+    assert page.locator("a.metric-card[href*='/people/']").count() == 1
+    assert page.locator(".detail-grid a[href*='/people/?status=available']").count() == 1
+
+    page.locator("a.metric-card[href*='/people/']").click()
+    page.wait_for_url("**/sk/people/")
+
+
+def test_corvinum_person_edit_includes_email(page):
+    _login_recruiter(page)
+    page.goto(f"{base_url()}/sk/people/")
+    page.locator("main a[href*='/people/']").first.click()
+    page.locator("a[href$='/edit/']").click()
+    page.locator("input[name='email']").wait_for()
+
+
+def test_corvinum_notification_center_uses_shared_responsive_panel(page):
+    page.set_viewport_size({"width": 375, "height": 667})
+    _login(page, "coordinator")
+    center = page.locator("#notification-center")
+    center.wait_for()
+    center.locator(".notification-toggle").click()
+    popover = center.locator(".notification-popover")
+    assert popover.is_visible()
+    box = popover.bounding_box()
+    assert box is not None
+    assert box["x"] >= 0
+    assert box["x"] + box["width"] <= 375
+    assert page.evaluate("document.documentElement.scrollWidth") == 375
+
+
 def test_corvinum_top_level_sections_have_vertical_rhythm(page):
     page.set_viewport_size({"width": 1650, "height": 900})
     _login_recruiter(page)

@@ -11,7 +11,7 @@
 
 <section class="field-list" aria-label="{% trans 'Trials' %}">
   {% for trial in trials %}
-    <a class="field-card person-row" href="{% url 'person_detail' trial.person.pk %}">
+    <a class="field-card person-row" href="{% url 'person_detail' trial.person.pk %}" data-tooltip="{% trans 'Details' %}">
       <div>
         <h3>{{ trial.person }}</h3>
         <p>{{ trial.project.name }}{% if trial.project.office %} · {{ trial.project.office }}{% endif %}{% if trial.scheduled_for %} · {{ trial.scheduled_for|date:"Y-m-d H:i" }}{% elif trial.scheduled_date %} · {{ trial.scheduled_date }}{% endif %}</p>

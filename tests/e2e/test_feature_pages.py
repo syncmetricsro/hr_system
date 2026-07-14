@@ -26,9 +26,7 @@ def _login(page, local_part: str = MANAGER) -> None:
 
 
 # Assertions use the English URL prefix (/en/...) so the app renders the English
-# source strings — deterministic, vs the sk/hu/uk catalog wording. (The language
-# switcher can't be used here: it redirects back to the /sk/-prefixed path, which
-# the locale middleware then forces back to Slovak.)
+# source strings deterministically rather than depending on translated wording.
 
 
 # --- rendering: the pages shipped this sprint actually load in a browser -------
@@ -85,9 +83,10 @@ def test_reports_inactive_by_reason(page):
 def test_manager_sees_reviews_tab(page):
     _login(page, MANAGER)
     page.goto(f"{base_url()}/en/")
-    assert page.get_by_role("link", name="Reviews").count() == 1
-    assert page.get_by_role("link", name="Finance").count() == 1
-    assert page.get_by_role("link", name="Blacklist").count() == 1
+    navigation = page.locator(".folder-tabs")
+    assert navigation.get_by_role("link", name="Reviews").count() == 1
+    assert navigation.get_by_role("link", name="Finance").count() == 1
+    assert navigation.get_by_role("link", name="Blacklist").count() == 1
 
 
 def test_coordinator_blocked_from_blacklist_queue(page):
@@ -100,8 +99,9 @@ def test_observer_has_finance_but_not_reviews_tab(page):
     _login(page, OBSERVER)
     page.goto(f"{base_url()}/en/")
     # Observer can view finance summaries but not the equipment review queue.
-    assert page.get_by_role("link", name="Finance").count() == 1
-    assert page.get_by_role("link", name="Reviews").count() == 0
+    navigation = page.locator(".folder-tabs")
+    assert navigation.get_by_role("link", name="Finance").count() == 1
+    assert navigation.get_by_role("link", name="Reviews").count() == 0
 
 
 # --- access gating: direct hits return 403 for unauthorized roles --------------

@@ -16,6 +16,7 @@ from django.utils import timezone
 
 from core.accounts import totp as totp_lib
 from core.audit.services import record_event
+from core.notifications.services import start_notification_session
 
 
 def _requires_second_factor(user) -> bool:
@@ -45,7 +46,8 @@ def login_page(request: HttpRequest) -> HttpResponse:
                 request.session["pending_2fa_user"] = user.pk
                 return HttpResponseRedirect(reverse("two_factor_verify"))
             auth_login(request, user)
-            record_event(user, "auth.login")
+            login_event = record_event(user, "auth.login")
+            start_notification_session(request, login_event)
             if _role_requires_totp(user):
                 messages.warning(request, _("Your role requires two-factor authentication — set it up now."))
                 return HttpResponseRedirect(reverse("two_factor_setup"))
@@ -82,7 +84,8 @@ def two_factor_verify(request: HttpRequest) -> HttpResponse:
         if totp_lib.verify(device.secret, request.POST.get("code", "")):
             request.session.pop("pending_2fa_user", None)
             auth_login(request, user)
-            record_event(user, "auth.login", second_factor="totp")
+            login_event = record_event(user, "auth.login", second_factor="totp")
+            start_notification_session(request, login_event)
             return HttpResponseRedirect(reverse("dashboard"))
         error = _("Invalid code.")
         record_event(user, "auth.totp_failed")

@@ -18,13 +18,14 @@ class PersonForm(forms.ModelForm):
     class Meta:
         model = Person
         fields = [
-            "first_name", "last_name", "phone", "address", "nationality",
+            "first_name", "last_name", "email", "phone", "address", "nationality",
             "preferred_language", "date_of_birth", "place_of_birth",
             "has_disability", "disability_type",
         ]
         labels = {
             "first_name": _("First name"),
             "last_name": _("Last name"),
+            "email": _("Email"),
             "phone": _("Phone"),
             "address": _("Address"),
             "nationality": _("Nationality"),

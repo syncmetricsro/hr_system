@@ -29,6 +29,18 @@ def test_manager_can_edit_phone(client, make_user):
     assert person.phone == "+18777804236"
 
 
+def test_manager_can_edit_person_email(client, make_user):
+    person = Person.objects.create(first_name="Olha", last_name="Kovalenko")
+    client.force_login(make_user("manager"))
+    response = client.post(
+        reverse("person_edit", args=[person.pk]),
+        {"first_name": "Olha", "last_name": "Kovalenko", "email": "olha@example.test"},
+    )
+    assert response.status_code == 302
+    person.refresh_from_db()
+    assert person.email == "olha@example.test"
+
+
 def test_edit_requires_login(client):
     person = Person.objects.create(first_name="A", last_name="B")
     resp = client.get(reverse("person_edit", args=[person.pk]))

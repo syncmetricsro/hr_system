@@ -1,5 +1,13 @@
 # Deployment plan — Dokku on one VPS, both thin clients
 
+Contextual tooltips are shipped in the existing CSS, JavaScript, and templates.
+They require no deployment setting, migration, service, or network endpoint.
+
+The floating notification center uses ordinary Django requests only. It does
+not require a worker process, message broker, WebSocket proxying, or additional
+Dokku configuration. Realtime SSE/WebSocket delivery is explicitly deferred to
+a future ADR and must not be enabled by changing proxy timeouts alone.
+
 Owner decision 2026-07-11: **Dokku on the existing VPS**. One versioned
 application artifact; one Dokku app per client; per-client database, domain,
 TLS, secrets, backups (design doc §12.4 — GDPR isolation is structural, no
@@ -82,6 +90,8 @@ Client-specific env:
 - HTTPS-only: HSTS, secure cookies, SSL redirect are default-on in both
   production modules; the `=0` overrides are for the local HTTP demo only.
 - Static via whitenoise manifest storage (all client themes collected).
+- Light/Dark/System selection is delivered by the existing static bundle and
+  localStorage; it requires no deployment variable, migration, or service.
 - No secrets in git; Doppler is canonical; `dokku config` holds runtime copies.
 - Fictional-data rule holds until each client's legal gate opens.
 

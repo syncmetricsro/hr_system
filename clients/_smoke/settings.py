@@ -20,6 +20,7 @@ INSTALLED_APPS = [
     "core.people",
     "core.projects",
     "core.retention",
+    "core.notifications",
     "core.ui",
 ]
 

@@ -20,6 +20,7 @@ def test_client_cookie_names_do_not_collide():
     client must use its own session/CSRF cookie names."""
     assert settings.SESSION_COOKIE_NAME == "jober_sessionid"
     assert settings.CSRF_COOKIE_NAME == "jober_csrftoken"
+    assert settings.LANGUAGE_COOKIE_NAME == "jober_language"
 
 
 def test_login_sets_rolling_cookie_with_configured_age(client, django_user_model):

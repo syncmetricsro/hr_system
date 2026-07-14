@@ -1,10 +1,12 @@
 {% load static i18n rbac nav %}
+{% get_current_language as DOCUMENT_LANGUAGE %}
 <!doctype html>
-<html lang="{{ LANGUAGE_CODE|default:'sk' }}">
+<html class="theme-{{ CLIENT_DEFAULT_THEME }}" lang="{{ DOCUMENT_LANGUAGE|default:'sk' }}" data-theme-default="{{ CLIENT_DEFAULT_THEME }}" data-theme-storage-key="{{ CLIENT_THEME_STORAGE_KEY }}">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}{% trans "Jober operations" %}{% endblock %}</title>
+    <script src="{% static 'src/js/theme.js' %}"></script>
     <link rel="stylesheet" href="{% static 'dist/css/app.css' %}">
     {% if CLIENT_THEME_CSS %}<link rel="stylesheet" href="{% static CLIENT_THEME_CSS %}">{% endif %}
     <script defer src="{% static 'vendor/htmx.min.js' %}"></script>
@@ -13,49 +15,55 @@
   </head>
   <body>
     <a class="skip-link" href="#obsah">{% trans "Skip to content" %}</a>
+    {% include "partials/jober_nav_icons.html" %}
     <header class="app-header" x-data="{ open: false }">
       <a class="brand-lockup" href="{% url 'reports' %}" aria-label="{{ BRAND_NAME }} — {% trans 'Reports' %}">
-        <span class="brand-mark">{{ BRAND_MARK }}</span>
-        <span class="brand-name">{{ BRAND_NAME }}</span>
+        {% if BRAND_LOGO %}
+          <img class="brand-logo" src="{% static BRAND_LOGO %}" alt="">
+        {% else %}
+          <span class="brand-mark">{{ BRAND_MARK }}</span>
+          <span class="brand-name">{{ BRAND_NAME }}</span>
+        {% endif %}
       </a>
-      <button class="icon-button mobile-only" type="button" x-on:click="open = !open" aria-controls="primary-nav" x-bind:aria-expanded="open.toString()">
+      <button class="icon-button mobile-only" type="button" x-on:click="open = !open" aria-controls="primary-nav" x-bind:aria-expanded="open.toString()" data-tooltip="{% trans 'Open navigation' %}">
         <span class="sr-only">{% trans "Open navigation" %}</span>
         <span aria-hidden="true">☰</span>
       </button>
       <nav id="primary-nav" class="folder-tabs" x-bind:data-open="open">
-        <a class="folder-tab {% nav_active 'people_list' 'person_create' 'person_detail' 'person_edit' 'intake_start' 'intake_panel' %}" href="{% url 'people_list' %}">{% trans "People" %}</a>
-        <a class="folder-tab {% nav_active 'project_list' 'project_detail' %}" href="{% url 'project_list' %}">{% trans "Projects" %}</a>
+        <a class="folder-tab {% nav_active 'people_list' 'person_create' 'person_detail' 'person_edit' 'intake_start' 'intake_panel' %}" href="{% url 'people_list' %}" data-tooltip="{% trans 'People' %}"><svg class="nav-icon" aria-hidden="true"><use href="#nav-icon-people"></use></svg><span>{% trans "People" %}</span></a>
+        <a class="folder-tab {% nav_active 'project_list' 'project_detail' %}" href="{% url 'project_list' %}" data-tooltip="{% trans 'Projects' %}"><svg class="nav-icon" aria-hidden="true"><use href="#nav-icon-projects"></use></svg><span>{% trans "Projects" %}</span></a>
         {% flag_on 'recruitment_trials' as has_trials %}
-        {% if has_trials %}<a class="folder-tab {% nav_active 'trials_queue' %}" href="{% url 'trials_queue' %}">{% trans "Field" %}</a>{% endif %}
+        {% if has_trials %}<a class="folder-tab {% nav_active 'trials_queue' %}" href="{% url 'trials_queue' %}" data-tooltip="{% trans 'Field' %}"><svg class="nav-icon" aria-hidden="true"><use href="#nav-icon-field"></use></svg><span>{% trans "Field" %}</span></a>{% endif %}
         {% flag_on 'documents' as has_documents %}
-        {% if has_documents %}<a class="folder-tab {% nav_active 'compliance_list' %}" href="{% url 'compliance_list' %}">{% trans "Compliance" %}</a>{% endif %}
+        {% if has_documents %}<a class="folder-tab {% nav_active 'compliance_list' %}" href="{% url 'compliance_list' %}" data-tooltip="{% trans 'Compliance' %}"><svg class="nav-icon" aria-hidden="true"><use href="#nav-icon-compliance"></use></svg><span>{% trans "Compliance" %}</span></a>{% endif %}
         {% flag_on 'accommodation' as has_accommodation %}
-        {% if has_accommodation %}<a class="folder-tab {% nav_active 'accommodation_list' 'accommodation_detail' 'accommodation_costs' %}" href="{% url 'accommodation_list' %}">{% trans "Accommodation" %}</a>{% endif %}
+        {% if has_accommodation %}<a class="folder-tab {% nav_active 'accommodation_list' 'accommodation_detail' 'accommodation_costs' %}" href="{% url 'accommodation_list' %}" data-tooltip="{% trans 'Accommodation' %}"><svg class="nav-icon" aria-hidden="true"><use href="#nav-icon-accommodation"></use></svg><span>{% trans "Accommodation" %}</span></a>{% endif %}
         {% flag_on 'transport' as has_transport %}
-        {% if has_transport %}<a class="folder-tab {% nav_active 'transport_trends' %}" href="{% url 'transport_trends' %}">{% trans "Transport" %}</a>{% endif %}
-        <a class="folder-tab {% nav_active 'dashboard' 'reports' %}" href="{% url 'reports' %}">{% trans "Reports" %}</a>
+        {% if has_transport %}<a class="folder-tab {% nav_active 'transport_trends' %}" href="{% url 'transport_trends' %}" data-tooltip="{% trans 'Transport' %}"><svg class="nav-icon" aria-hidden="true"><use href="#nav-icon-transport"></use></svg><span>{% trans "Transport" %}</span></a>{% endif %}
+        <a class="folder-tab {% nav_active 'dashboard' 'reports' %}" href="{% url 'reports' %}" data-tooltip="{% trans 'Reports' %}"><svg class="nav-icon" aria-hidden="true"><use href="#nav-icon-reports"></use></svg><span>{% trans "Reports" %}</span></a>
         {% can 'audit.view' as may_audit %}
-        {% if may_audit %}<a class="folder-tab {% nav_active 'audit_log' %}" href="{% url 'audit_log' %}">{% trans "Audit" %}</a>{% endif %}
+        {% if may_audit %}<a class="folder-tab {% nav_active 'audit_log' %}" href="{% url 'audit_log' %}" data-tooltip="{% trans 'Audit' %}"><svg class="nav-icon" aria-hidden="true"><use href="#nav-icon-audit"></use></svg><span>{% trans "Audit" %}</span></a>{% endif %}
         {% can 'equipment.review_deduction' as may_equip_review %}
         {% flag_on 'equipment' as has_equipment %}
-        {% if may_equip_review and has_equipment %}<a class="folder-tab {% nav_active 'equipment_reviews' %}" href="{% url 'equipment_reviews' %}">{% trans "Reviews" %}</a>{% endif %}
+        {% if may_equip_review and has_equipment %}<a class="folder-tab {% nav_active 'equipment_reviews' %}" href="{% url 'equipment_reviews' %}" data-tooltip="{% trans 'Reviews' %}"><svg class="nav-icon" aria-hidden="true"><use href="#nav-icon-reviews"></use></svg><span>{% trans "Reviews" %}</span></a>{% endif %}
         {% can 'blacklist.decide' as may_blacklist %}
         {% flag_on 'duplicate_blacklist' as has_blacklist %}
-        {% if may_blacklist and has_blacklist %}<a class="folder-tab {% nav_active 'blacklist_queue' %}" href="{% url 'blacklist_queue' %}">{% trans "Blacklist" %}</a>{% endif %}
+        {% if may_blacklist and has_blacklist %}<a class="folder-tab {% nav_active 'blacklist_queue' %}" href="{% url 'blacklist_queue' %}" data-tooltip="{% trans 'Blacklist' %}"><svg class="nav-icon" aria-hidden="true"><use href="#nav-icon-blacklist"></use></svg><span>{% trans "Blacklist" %}</span></a>{% endif %}
         {% can 'finance.view_summary' as may_finance %}
         {% flag_on 'profitability' as has_finance %}
-        {% if may_finance and has_finance %}<a class="folder-tab {% nav_active 'finance_summary' 'finance_year' 'finance_month_detail' %}" href="{% url 'finance_summary' %}">{% trans "Finance" %}</a>{% endif %}
+        {% if may_finance and has_finance %}<a class="folder-tab {% nav_active 'finance_summary' 'finance_year' 'finance_month_detail' %}" href="{% url 'finance_summary' %}" data-tooltip="{% trans 'Finance' %}"><svg class="nav-icon" aria-hidden="true"><use href="#nav-icon-finance"></use></svg><span>{% trans "Finance" %}</span></a>{% endif %}
         {% flag_on 'advances' as has_advances %}
         {% can 'ledger.view' as may_ledger %}
-        {% if may_ledger and has_advances %}<a class="folder-tab {% nav_active 'ledger_overview' %}" href="{% url 'ledger_overview' %}">{% trans "Ledger" %}</a>{% endif %}
+        {% if may_ledger and has_advances %}<a class="folder-tab {% nav_active 'ledger_overview' %}" href="{% url 'ledger_overview' %}" data-tooltip="{% trans 'Ledger' %}"><svg class="nav-icon" aria-hidden="true"><use href="#nav-icon-ledger"></use></svg><span>{% trans "Ledger" %}</span></a>{% endif %}
         {% flag_on 'payslips' as has_payslips %}
         {% can 'payslip.manage' as may_payslips %}
-        {% if may_payslips and has_payslips %}<a class="folder-tab {% nav_active 'payslip_list' %}" href="{% url 'payslip_list' %}">{% trans "Payslips" %}</a>{% endif %}
+        {% if may_payslips and has_payslips %}<a class="folder-tab {% nav_active 'payslip_list' %}" href="{% url 'payslip_list' %}" data-tooltip="{% trans 'Payslips' %}"><svg class="nav-icon" aria-hidden="true"><use href="#nav-icon-payslips"></use></svg><span>{% trans "Payslips" %}</span></a>{% endif %}
         {% can 'feedback.view' as may_feedback %}
         {% flag_on 'feedback' as has_feedback %}
-        {% if may_feedback and has_feedback %}<a class="folder-tab {% nav_active 'feedback_inbox' 'feedback_link_create' %}" href="{% url 'feedback_inbox' %}">{% trans "Feedback" %}</a>{% endif %}
+        {% if may_feedback and has_feedback %}<a class="folder-tab {% nav_active 'feedback_inbox' 'feedback_link_create' %}" href="{% url 'feedback_inbox' %}" data-tooltip="{% trans 'Feedback' %}"><svg class="nav-icon" aria-hidden="true"><use href="#nav-icon-feedback"></use></svg><span>{% trans "Feedback" %}</span></a>{% endif %}
       </nav>
       <div class="header-account">
+        {% include "partials/theme_picker.html" %}
         {% get_current_language as CURRENT_LANGUAGE %}
         <form class="language-switch" action="{% url 'set_language' %}" method="post">
           {% csrf_token %}
@@ -87,6 +95,8 @@
       {% endif %}
       {% block content %}{% endblock %}
     </main>
+    {% if user.is_authenticated %}{% include "notifications/panel.html" %}{% endif %}
+    {% include "partials/tooltip.html" %}
     {% include "partials/confirm_dialog.html" %}
   </body>
 </html>

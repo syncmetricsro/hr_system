@@ -34,6 +34,7 @@ AUDIT_ACTION_LABELS = {
     "finance.month_recorded": _("Financial month recorded"),
     "finance.recomputed": _("Finance recalculated"),
     "finance.reopened": _("Financial month reopened"),
+    "feedback.received": _("Worker feedback received"),
     "intake.completed": _("Intake completed"),
     "ledger.cycle_deducted": _("Ledger cycle marked settled"),
     "ledger.cycle_included": _("Ledger entries included in cycle"),

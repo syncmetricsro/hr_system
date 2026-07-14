@@ -1,8 +1,25 @@
 # Environment
 
-- `DJANGO_SESSION_COOKIE_AGE` (seconds, default 2592000 = 30 days): rolling session lifetime — every request refreshes expiry (`SESSION_SAVE_EVERY_REQUEST`); only inactivity logs out. Per-client cookie names (`jober_sessionid`/`corvinum_sessionid`, same for csrftoken) prevent the two apps evicting each other's sessions on a shared host.
+Appearance themes are entirely browser-side. Jober defaults to Light and uses
+`jober-theme`; CorvinumEU defaults to Dark and uses `corvinum-theme`. Values are
+`light`, `dark`, or `system` in localStorage. No environment variable, secret,
+backend service, or build dependency is required.
 
-Last updated: 2026-07-11
+Contextual tooltips are also entirely browser-side. They use the shared
+`static/src/js/app.js`, translated template attributes, and client theme tokens;
+there is no package, service, endpoint, cookie, or build dependency.
+
+Notification delivery is interaction-driven: full page responses render the
+current feed and htmx mutations trigger a fragment refresh. No polling,
+WebSocket, SSE, broker, or additional runtime dependency is used.
+
+- `DJANGO_SESSION_COOKIE_AGE` (seconds, default 2592000 = 30 days): rolling session lifetime — every request refreshes expiry (`SESSION_SAVE_EVERY_REQUEST`); only inactivity logs out. Per-client session, CSRF, and language cookie names (`jober_*` / `corvinum_*`) prevent the two apps evicting each other's state on a shared host.
+- Language selection updates both the client-specific language cookie and the
+  language-prefixed URL. The shared endpoint treats the current URL prefix as
+  the source language when a stale or missing cookie disagrees with it; no new
+  environment setting is required.
+
+Last updated: 2026-07-13
 
 ## Secrets during human and automated testing
 
@@ -24,7 +41,7 @@ Phase 1 additions:
 - Custom user model (`AUTH_USER_MODEL = accounts.User`); deploys must run `accounts`/`audit` migrations.
 - Deploy-time env vars: `JOBER_BROAD_INTERNAL_READS` (default on); `DJANGO_SESSION_COOKIE_SECURE` / `DJANGO_CSRF_COOKIE_SECURE` (default secure — only set to `0` on the HTTP-only smoke network, never on staging/production).
 - Local manual testing runs the production image over HTTP with those two flags + `DJANGO_SECURE_SSL_REDIRECT` set to `0`, app published on `:8000`, against a Postgres container on a shared (non-internal) Docker network. Seed with `manage.py seed_demo` (fictional `@demo.jober.test` users). The simplest path is `scripts/dev_app.sh up` / `down`.
-- i18n: English is the base language, Slovak the visible default; EN/SK/HU/UK offered (ADR 0017). gettext is not on the host or in the images — regenerate catalogs with `scripts/compile_messages.sh` (runs the app image with gettext apt-installed). `.po` (source) and `.mo` (compiled) are committed under `locale/`.
+- i18n: English is the base language, Slovak the visible default; EN/SK/HU/UK offered (ADR 0017). gettext is not on the host or in the images — regenerate catalogs with `scripts/compile_messages.sh` (runs the app image with gettext apt-installed). `.po` (source) and `.mo` (compiled) are committed under `locale/`. **Do not invoke the host `/usr/bin/pybabel` for these catalogs:** Babel defaults to the `messages` domain rather than Django's `django` domain, is not the repository's pinned toolchain, and a missing-domain invocation caused an Ubuntu Apport crash report on 2026-07-13.
 
 System:
 - OS: Ubuntu 24.04.4 LTS in VirtualBox, Linux kernel `6.17.0-35-generic`.

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-12 19:28+0200\n"
+"POT-Creation-Date: 2026-07-13 01:45+0200\n"
 "Language: uk\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -492,40 +492,44 @@ msgstr "Ім’я"
 msgid "Last name"
 msgstr "Прізвище"
 
-#: core/people/forms.py:28 features/intake/catalog_i18n.py:17
+#: core/people/forms.py:28 templates/pages/login.html:16
+msgid "Email"
+msgstr "Електронна пошта"
+
+#: core/people/forms.py:29 features/intake/catalog_i18n.py:17
 #: templates/pages/person_detail.html:143
 msgid "Phone"
 msgstr "Телефон"
 
-#: core/people/forms.py:29 features/intake/catalog_i18n.py:18
+#: core/people/forms.py:30 features/intake/catalog_i18n.py:18
 #: templates/pages/person_detail.html:144
 msgid "Address"
 msgstr "Адреса"
 
-#: core/people/forms.py:30 features/intake/catalog_i18n.py:19
+#: core/people/forms.py:31 features/intake/catalog_i18n.py:19
 #: templates/pages/person_detail.html:145
 msgid "Nationality"
 msgstr "Громадянство"
 
-#: core/people/forms.py:31 features/intake/catalog_i18n.py:20
+#: core/people/forms.py:32 features/intake/catalog_i18n.py:20
 msgid "Preferred language"
 msgstr "Бажана мова"
 
-#: core/people/forms.py:32 features/intake/catalog_i18n.py:15
+#: core/people/forms.py:33 features/intake/catalog_i18n.py:15
 #: templates/pages/person_detail.html:157
 msgid "Date of birth"
 msgstr "Дата народження"
 
-#: core/people/forms.py:33 features/intake/catalog_i18n.py:16
+#: core/people/forms.py:34 features/intake/catalog_i18n.py:16
 #: templates/pages/person_detail.html:158
 msgid "Place of birth"
 msgstr "Місце народження"
 
-#: core/people/forms.py:34
+#: core/people/forms.py:35
 msgid "Has disability"
 msgstr "Має інвалідність"
 
-#: core/people/forms.py:35 features/intake/catalog_i18n.py:22
+#: core/people/forms.py:36 features/intake/catalog_i18n.py:22
 msgid "Disability type"
 msgstr "Тип інвалідності"
 
@@ -959,7 +963,6 @@ msgid "Accommodation"
 msgstr "Проживання"
 
 #: core/projects/services.py:152
-#| msgid "Accommodation costs"
 msgid "Accommodation is incomplete."
 msgstr "Проживання не забезпечено."
 
@@ -969,7 +972,6 @@ msgid "Transport"
 msgstr "Транспорт"
 
 #: core/projects/services.py:153
-#| msgid "Transport week recorded."
 msgid "Transport is incomplete."
 msgstr "Транспорт не забезпечено."
 
@@ -988,7 +990,8 @@ msgstr "Дата вступного медогляду не може бути в
 #: core/projects/services.py:218
 msgid ""
 "Cannot activate this worker because no readiness record has been completed."
-msgstr "Працівника неможливо активувати, оскільки запис готовності не заповнено."
+msgstr ""
+"Працівника неможливо активувати, оскільки запис готовності не заповнено."
 
 #: core/projects/services.py:222
 #, python-format
@@ -2891,10 +2894,6 @@ msgstr "Внутрішня система"
 msgid "Sign in to the Jober team"
 msgstr "Вхід до команди Jober"
 
-#: templates/pages/login.html:16
-msgid "Email"
-msgstr "Електронна пошта"
-
 #: templates/pages/login.html:20
 msgid "Password"
 msgstr "Пароль"
@@ -3481,3 +3480,103 @@ msgstr "Так, продовжити"
 
 #~ msgid "Responsible"
 #~ msgstr "Відповідальний"
+# --- floating notification center (2026-07-13) ---
+msgid "Notifications"
+msgstr "Сповіщення"
+
+msgid "Session activity"
+msgstr "Активність сеансу"
+
+msgid "Refresh notifications"
+msgstr "Оновити сповіщення"
+
+msgid "Close notifications"
+msgstr "Закрити сповіщення"
+
+#, python-format
+msgid "%(counter)s problem"
+msgid_plural "%(counter)s problems"
+msgstr[0] "%(counter)s проблема"
+msgstr[1] "%(counter)s проблеми"
+msgstr[2] "%(counter)s проблем"
+
+#, python-format
+msgid "%(counter)s update"
+msgid_plural "%(counter)s updates"
+msgstr[0] "%(counter)s оновлення"
+msgstr[1] "%(counter)s оновлення"
+msgstr[2] "%(counter)s оновлень"
+
+msgid "Problems"
+msgstr "Проблеми"
+
+msgid "Updates"
+msgstr "Оновлення"
+
+msgid "Dismiss notification"
+msgstr "Приховати сповіщення"
+
+msgid "Nothing needs your attention right now."
+msgstr "Наразі ніщо не потребує вашої уваги."
+
+msgid "Notification is not available."
+msgstr "Сповіщення недоступне."
+
+msgid "Operational record"
+msgstr "Операційний запис"
+
+#, python-format
+msgid "%(actor)s · %(subject)s"
+msgstr "%(actor)s · %(subject)s"
+
+msgid "Trial outcome is waiting"
+msgstr "Очікується результат пробного дня"
+
+msgid "Readiness needs attention"
+msgstr "Готовність потребує уваги"
+
+msgid "Compliance problems need attention"
+msgstr "Проблеми відповідності потребують уваги"
+
+#, python-format
+msgid "%(count)s open document or medical alerts"
+msgstr "%(count)s відкритих сповіщень щодо документів або медогляду"
+
+msgid "Equipment reviews are waiting"
+msgstr "Очікують перевірки обладнання"
+
+#, python-format
+msgid "%(count)s unreturned equipment reviews"
+msgstr "%(count)s перевірок неповерненого обладнання"
+
+msgid "Blacklist decisions are waiting"
+msgstr "Очікують рішення щодо чорного списку"
+
+#, python-format
+msgid "%(count)s proposed cases require a decision"
+msgstr "%(count)s запропонованих справ потребують рішення"
+
+msgid "Worker feedback is available"
+msgstr "Доступний відгук працівника"
+
+#, python-format
+msgid "%(count)s feedback submissions in the inbox"
+msgstr "%(count)s відгуків у вхідних"
+
+msgid "Activation checklist is incomplete"
+msgstr "Контрольний список активації не заповнений"
+
+#, python-format
+msgid "%(person)s · %(count)s critical items"
+msgstr "%(person)s · %(count)s критичних пунктів"
+
+msgid "Worker feedback received"
+msgstr "Отримано відгук працівника"
+msgid "Theme"
+msgstr "Тема"
+
+msgid "Light"
+msgstr "Світла"
+
+msgid "Dark"
+msgstr "Темна"

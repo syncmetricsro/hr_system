@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-12 19:28+0200\n"
+"POT-Creation-Date: 2026-07-13 01:45+0200\n"
 "Language: hu\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -491,40 +491,44 @@ msgstr "Keresztnév"
 msgid "Last name"
 msgstr "Vezetéknév"
 
-#: core/people/forms.py:28 features/intake/catalog_i18n.py:17
+#: core/people/forms.py:28 templates/pages/login.html:16
+msgid "Email"
+msgstr "E-mail"
+
+#: core/people/forms.py:29 features/intake/catalog_i18n.py:17
 #: templates/pages/person_detail.html:143
 msgid "Phone"
 msgstr "Telefon"
 
-#: core/people/forms.py:29 features/intake/catalog_i18n.py:18
+#: core/people/forms.py:30 features/intake/catalog_i18n.py:18
 #: templates/pages/person_detail.html:144
 msgid "Address"
 msgstr "Cím"
 
-#: core/people/forms.py:30 features/intake/catalog_i18n.py:19
+#: core/people/forms.py:31 features/intake/catalog_i18n.py:19
 #: templates/pages/person_detail.html:145
 msgid "Nationality"
 msgstr "Állampolgárság"
 
-#: core/people/forms.py:31 features/intake/catalog_i18n.py:20
+#: core/people/forms.py:32 features/intake/catalog_i18n.py:20
 msgid "Preferred language"
 msgstr "Preferált nyelv"
 
-#: core/people/forms.py:32 features/intake/catalog_i18n.py:15
+#: core/people/forms.py:33 features/intake/catalog_i18n.py:15
 #: templates/pages/person_detail.html:157
 msgid "Date of birth"
 msgstr "Születési dátum"
 
-#: core/people/forms.py:33 features/intake/catalog_i18n.py:16
+#: core/people/forms.py:34 features/intake/catalog_i18n.py:16
 #: templates/pages/person_detail.html:158
 msgid "Place of birth"
 msgstr "Születési hely"
 
-#: core/people/forms.py:34
+#: core/people/forms.py:35
 msgid "Has disability"
 msgstr "Fogyatékossággal él"
 
-#: core/people/forms.py:35 features/intake/catalog_i18n.py:22
+#: core/people/forms.py:36 features/intake/catalog_i18n.py:22
 msgid "Disability type"
 msgstr "Fogyatékosság típusa"
 
@@ -958,7 +962,6 @@ msgid "Accommodation"
 msgstr "Szállás"
 
 #: core/projects/services.py:152
-#| msgid "Accommodation costs"
 msgid "Accommodation is incomplete."
 msgstr "A szállás nincs rendezve."
 
@@ -968,7 +971,6 @@ msgid "Transport"
 msgstr "Szállítás"
 
 #: core/projects/services.py:153
-#| msgid "Transport week recorded."
 msgid "Transport is incomplete."
 msgstr "A szállítás nincs rendezve."
 
@@ -987,7 +989,8 @@ msgstr "Belépő orvosi dátuma nem lehet jövőbeli."
 #: core/projects/services.py:218
 msgid ""
 "Cannot activate this worker because no readiness record has been completed."
-msgstr "A munkavállaló nem aktiválható, mert nincs kitöltött készenléti adatlapja."
+msgstr ""
+"A munkavállaló nem aktiválható, mert nincs kitöltött készenléti adatlapja."
 
 #: core/projects/services.py:222
 #, python-format
@@ -2890,10 +2893,6 @@ msgstr "Belső rendszer"
 msgid "Sign in to the Jober team"
 msgstr "Bejelentkezés a Jober csapatba"
 
-#: templates/pages/login.html:16
-msgid "Email"
-msgstr "E-mail"
-
 #: templates/pages/login.html:20
 msgid "Password"
 msgstr "Jelszó"
@@ -3480,3 +3479,101 @@ msgstr "Igen, folytatás"
 
 #~ msgid "Responsible"
 #~ msgstr "Felelős"
+# --- floating notification center (2026-07-13) ---
+msgid "Notifications"
+msgstr "Értesítések"
+
+msgid "Session activity"
+msgstr "Munkamenet-tevékenység"
+
+msgid "Refresh notifications"
+msgstr "Értesítések frissítése"
+
+msgid "Close notifications"
+msgstr "Értesítések bezárása"
+
+#, python-format
+msgid "%(counter)s problem"
+msgid_plural "%(counter)s problems"
+msgstr[0] "%(counter)s probléma"
+msgstr[1] "%(counter)s probléma"
+
+#, python-format
+msgid "%(counter)s update"
+msgid_plural "%(counter)s updates"
+msgstr[0] "%(counter)s frissítés"
+msgstr[1] "%(counter)s frissítés"
+
+msgid "Problems"
+msgstr "Problémák"
+
+msgid "Updates"
+msgstr "Frissítések"
+
+msgid "Dismiss notification"
+msgstr "Értesítés elrejtése"
+
+msgid "Nothing needs your attention right now."
+msgstr "Jelenleg semmi sem igényel figyelmet."
+
+msgid "Notification is not available."
+msgstr "Az értesítés nem érhető el."
+
+msgid "Operational record"
+msgstr "Működési bejegyzés"
+
+#, python-format
+msgid "%(actor)s · %(subject)s"
+msgstr "%(actor)s · %(subject)s"
+
+msgid "Trial outcome is waiting"
+msgstr "A próbanap eredménye rögzítésre vár"
+
+msgid "Readiness needs attention"
+msgstr "A készenlét figyelmet igényel"
+
+msgid "Compliance problems need attention"
+msgstr "A megfelelőségi problémák figyelmet igényelnek"
+
+#, python-format
+msgid "%(count)s open document or medical alerts"
+msgstr "%(count)s nyitott dokumentum- vagy orvosi figyelmeztetés"
+
+msgid "Equipment reviews are waiting"
+msgstr "Felszerelési ellenőrzések várakoznak"
+
+#, python-format
+msgid "%(count)s unreturned equipment reviews"
+msgstr "%(count)s vissza nem adott felszerelés ellenőrzése"
+
+msgid "Blacklist decisions are waiting"
+msgstr "Feketelista-döntések várakoznak"
+
+#, python-format
+msgid "%(count)s proposed cases require a decision"
+msgstr "%(count)s javasolt eset döntést igényel"
+
+msgid "Worker feedback is available"
+msgstr "Dolgozói visszajelzés érkezett"
+
+#, python-format
+msgid "%(count)s feedback submissions in the inbox"
+msgstr "%(count)s visszajelzés található a beérkező üzenetek között"
+
+msgid "Activation checklist is incomplete"
+msgstr "Az aktiválási ellenőrzőlista hiányos"
+
+#, python-format
+msgid "%(person)s · %(count)s critical items"
+msgstr "%(person)s · %(count)s kritikus tétel"
+
+msgid "Worker feedback received"
+msgstr "Dolgozói visszajelzés érkezett"
+msgid "Theme"
+msgstr "Téma"
+
+msgid "Light"
+msgstr "Világos"
+
+msgid "Dark"
+msgstr "Sötét"

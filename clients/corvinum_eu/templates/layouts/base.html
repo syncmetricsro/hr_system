@@ -1,13 +1,15 @@
 {% load static i18n rbac nav %}
+{% get_current_language as DOCUMENT_LANGUAGE %}
 {# CorvinumEU shell (Stage C8, ADR 0022): left slide-out sidebar per the #}
 {# peopleops prototype. Same blocks/URLs/gating as the shared shell — pages #}
-{# render unchanged inside it. Dark-only pending C-Q8. #}
+{# render unchanged inside it. #}
 <!doctype html>
-<html lang="{{ LANGUAGE_CODE|default:'sk' }}">
+<html class="theme-{{ CLIENT_DEFAULT_THEME }}" lang="{{ DOCUMENT_LANGUAGE|default:'sk' }}" data-theme-default="{{ CLIENT_DEFAULT_THEME }}" data-theme-storage-key="{{ CLIENT_THEME_STORAGE_KEY }}">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}{{ BRAND_NAME }}{% endblock %}</title>
+    <script src="{% static 'src/js/theme.js' %}"></script>
     {% comment %}
     Preload the fonts the shell needs first. All are self-hosted; without the
     icon-font preload, raw ligature names can flash before the CSS is parsed.
@@ -25,6 +27,10 @@
   <body>
     <a class="skip-link" href="#obsah">{% trans "Skip to content" %}</a>
 
+    {% if not user.is_authenticated %}
+      <div class="anonymous-theme-picker">{% include "partials/theme_picker.html" %}</div>
+    {% endif %}
+
     {% if user.is_authenticated %}
     <div class="scrim"></div>
 
@@ -35,29 +41,29 @@
       </a>
       <nav class="sb-nav" aria-label="{% trans 'Main navigation' %}">
         <p class="sb-section">{% trans "Workforce" %}</p>
-        <a class="sb-item {% nav_active 'people_list' 'person_create' 'person_detail' 'person_edit' 'intake_start' 'intake_panel' %}" href="{% url 'people_list' %}"><span class="material-symbols-outlined" aria-hidden="true">groups</span><span class="sb-text">{% trans "People" %}</span></a>
-        <a class="sb-item {% nav_active 'project_list' 'project_detail' %}" href="{% url 'project_list' %}"><span class="material-symbols-outlined" aria-hidden="true">engineering</span><span class="sb-text">{% trans "Projects" %}</span></a>
+        <a class="sb-item {% nav_active 'people_list' 'person_create' 'person_detail' 'person_edit' 'intake_start' 'intake_panel' %}" href="{% url 'people_list' %}" data-tooltip="{% trans 'People' %}"><span class="material-symbols-outlined" aria-hidden="true">groups</span><span class="sb-text">{% trans "People" %}</span></a>
+        <a class="sb-item {% nav_active 'project_list' 'project_detail' %}" href="{% url 'project_list' %}" data-tooltip="{% trans 'Projects' %}"><span class="material-symbols-outlined" aria-hidden="true">engineering</span><span class="sb-text">{% trans "Projects" %}</span></a>
 
         <p class="sb-section">{% trans "Operations" %}</p>
         {% flag_on 'documents' as has_documents %}
-        {% if has_documents %}<a class="sb-item {% nav_active 'compliance_list' %}" href="{% url 'compliance_list' %}"><span class="material-symbols-outlined" aria-hidden="true">task_alt</span><span class="sb-text">{% trans "Compliance" %}</span></a>{% endif %}
+        {% if has_documents %}<a class="sb-item {% nav_active 'compliance_list' %}" href="{% url 'compliance_list' %}" data-tooltip="{% trans 'Compliance' %}"><span class="material-symbols-outlined" aria-hidden="true">task_alt</span><span class="sb-text">{% trans "Compliance" %}</span></a>{% endif %}
         {% flag_on 'advances' as has_advances %}
         {% can 'ledger.view' as may_ledger %}
-        {% if may_ledger and has_advances %}<a class="sb-item {% nav_active 'ledger_overview' %}" href="{% url 'ledger_overview' %}"><span class="material-symbols-outlined" aria-hidden="true">payments</span><span class="sb-text">{% trans "Ledger" %}</span></a>{% endif %}
+        {% if may_ledger and has_advances %}<a class="sb-item {% nav_active 'ledger_overview' %}" href="{% url 'ledger_overview' %}" data-tooltip="{% trans 'Ledger' %}"><span class="material-symbols-outlined" aria-hidden="true">payments</span><span class="sb-text">{% trans "Ledger" %}</span></a>{% endif %}
         {% flag_on 'payslips' as has_payslips %}
         {% can 'payslip.manage' as may_payslips %}
-        {% if may_payslips and has_payslips %}<a class="sb-item {% nav_active 'payslip_list' %}" href="{% url 'payslip_list' %}"><span class="material-symbols-outlined" aria-hidden="true">paid</span><span class="sb-text">{% trans "Payslips" %}</span></a>{% endif %}
+        {% if may_payslips and has_payslips %}<a class="sb-item {% nav_active 'payslip_list' %}" href="{% url 'payslip_list' %}" data-tooltip="{% trans 'Payslips' %}"><span class="material-symbols-outlined" aria-hidden="true">paid</span><span class="sb-text">{% trans "Payslips" %}</span></a>{% endif %}
         {% can 'equipment.review_deduction' as may_equip_review %}
         {% flag_on 'equipment' as has_equipment %}
-        {% if may_equip_review and has_equipment %}<a class="sb-item {% nav_active 'equipment_reviews' %}" href="{% url 'equipment_reviews' %}"><span class="material-symbols-outlined" aria-hidden="true">precision_manufacturing</span><span class="sb-text">{% trans "Reviews" %}</span></a>{% endif %}
+        {% if may_equip_review and has_equipment %}<a class="sb-item {% nav_active 'equipment_reviews' %}" href="{% url 'equipment_reviews' %}" data-tooltip="{% trans 'Reviews' %}"><span class="material-symbols-outlined" aria-hidden="true">precision_manufacturing</span><span class="sb-text">{% trans "Reviews" %}</span></a>{% endif %}
         {% can 'blacklist.decide' as may_blacklist %}
         {% flag_on 'duplicate_blacklist' as has_blacklist %}
-        {% if may_blacklist and has_blacklist %}<a class="sb-item {% nav_active 'blacklist_queue' %}" href="{% url 'blacklist_queue' %}"><span class="material-symbols-outlined" aria-hidden="true">gavel</span><span class="sb-text">{% trans "Blacklist" %}</span></a>{% endif %}
+        {% if may_blacklist and has_blacklist %}<a class="sb-item {% nav_active 'blacklist_queue' %}" href="{% url 'blacklist_queue' %}" data-tooltip="{% trans 'Blacklist' %}"><span class="material-symbols-outlined" aria-hidden="true">gavel</span><span class="sb-text">{% trans "Blacklist" %}</span></a>{% endif %}
 
         <p class="sb-section">{% trans "System" %}</p>
-        <a class="sb-item {% nav_active 'dashboard' 'reports' %}" href="{% url 'reports' %}"><span class="material-symbols-outlined" aria-hidden="true">trending_up</span><span class="sb-text">{% trans "Reports" %}</span></a>
+        <a class="sb-item {% nav_active 'dashboard' 'reports' %}" href="{% url 'reports' %}" data-tooltip="{% trans 'Reports' %}"><span class="material-symbols-outlined" aria-hidden="true">trending_up</span><span class="sb-text">{% trans "Reports" %}</span></a>
         {% can 'audit.view' as may_audit %}
-        {% if may_audit %}<a class="sb-item {% nav_active 'audit_log' %}" href="{% url 'audit_log' %}"><span class="material-symbols-outlined" aria-hidden="true">verified_user</span><span class="sb-text">{% trans "Audit" %}</span></a>{% endif %}
+        {% if may_audit %}<a class="sb-item {% nav_active 'audit_log' %}" href="{% url 'audit_log' %}" data-tooltip="{% trans 'Audit' %}"><span class="material-symbols-outlined" aria-hidden="true">verified_user</span><span class="sb-text">{% trans "Audit" %}</span></a>{% endif %}
       </nav>
       <div class="sb-foot">
         <div class="sb-user">
@@ -68,6 +74,7 @@
           </span>
         </div>
         <div class="sb-actions">
+          {% include "partials/theme_picker.html" %}
           {% get_current_language as CURRENT_LANGUAGE %}
           <form class="language-switch" action="{% url 'set_language' %}" method="post">
             {% csrf_token %}
@@ -93,7 +100,7 @@
       <main id="obsah" class="{% if user.is_authenticated %}cv-main{% else %}cv-anon{% endif %}">
         {% if user.is_authenticated %}
         <div class="cv-topbar">
-          <button class="hamburger" type="button" data-nav-toggle aria-label="{% trans 'Open navigation' %}">
+          <button class="hamburger" type="button" data-nav-toggle aria-label="{% trans 'Open navigation' %}" data-tooltip="{% trans 'Open navigation' %}">
             <span></span><span></span><span></span>
           </button>
           {% get_current_language as CURRENT_LANGUAGE %}
@@ -109,6 +116,8 @@
         {% block content %}{% endblock %}
       </main>
     </div>
+    {% if user.is_authenticated %}{% include "notifications/panel.html" %}{% endif %}
+    {% include "partials/tooltip.html" %}
     {% include "partials/confirm_dialog.html" %}
   </body>
 </html>

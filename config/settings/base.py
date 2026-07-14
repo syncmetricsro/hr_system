@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "core.people",
     "core.projects",
     "core.retention",
+    "core.notifications",
     "features.logistics",
     "features.finance",
     "features.intake",
@@ -61,6 +62,7 @@ MIDDLEWARE = [
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
+    "core.notifications.middleware.NotificationRefreshMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
@@ -78,6 +80,7 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "core.ui.context_processors.brand",
+                "core.notifications.context_processors.notification_center",
             ],
         },
     }

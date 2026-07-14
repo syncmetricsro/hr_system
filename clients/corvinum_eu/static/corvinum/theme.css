@@ -6,7 +6,8 @@
  * Fonts + icon subset are vendored — see VENDOR-MANIFEST.md (AGENTS §3.2).
  * Layered over the shared shell's app.css: tokens are overridden here, and
  * the sidebar/topbar shell classes below are used only by this client's
- * layouts/base.html override. */
+ * layouts/base.html override. Light and dark palettes follow the reference
+ * prototype; the operational sidebar remains dark in both modes. */
 
 /* ------------------------------------------------------------------ fonts */
 
@@ -66,34 +67,43 @@
 /* ----------------------------------------------------------------- tokens */
 
 :root {
-  /* Shared-shell tokens remapped to the corvinum.eu dark palette. */
-  --n50: #050b14;
-  --n100: #0a1526;
-  --n200: rgba(255, 255, 255, 0.10);
-  --n300: #27395a;
-  --n400: #48597a;
-  --n500: #94a3b8;
-  --n700: #cbd5e1;
-  --n900: #e2e8f0;
+  /* corvinum.eu light theme from the supplied PeopleOps prototype. */
+  --n50: #f3faff;
+  --n100: #dbf1fe;
+  --n200: #c1c6d6;
+  --n300: #aab3c5;
+  --n400: #718096;
+  --n500: #596675;
+  --n700: #243746;
+  --n800: #142d38;
+  --n900: #071e27;
 
   --ink: var(--n900);
   --muted: var(--n500);
-  --surface: #050b14;
-  --panel: rgba(15, 23, 42, 0.6);
-  --line: rgba(255, 255, 255, 0.10);
+  --surface: #f3faff;
+  --panel: rgba(255, 255, 255, 0.90);
+  --line: #c1c6d6;
+  --body-background:
+    radial-gradient(1100px 560px at 85% -10%, rgba(0, 91, 191, 0.13), transparent 62%),
+    var(--surface);
 
   --cobalt: #005bbf;
   --accent: #005bbf;
   --accent-strong: #1a73e8;
 
-  /* Status colors brightened for dark panels; the -soft message backgrounds
-     are translucent tints so flash text (near-white --ink) stays readable. */
-  --success: #00bb7f;
-  --success-soft: rgba(0, 187, 127, 0.18);
-  --warning: #fdbc13;
-  --warning-soft: rgba(253, 188, 19, 0.16);
-  --danger: #fb2c36;
-  --danger-soft: rgba(251, 44, 54, 0.18);
+  --accent-soft: rgba(0, 91, 191, 0.14);
+  --success: #007a58;
+  --success-soft: rgba(0, 187, 127, 0.14);
+  --warning: #805b00;
+  --warning-soft: rgba(253, 188, 19, 0.17);
+  --danger: #ba1a1a;
+  --danger-soft: rgba(186, 26, 26, 0.11);
+  --badge-line: rgba(128, 91, 0, 0.32);
+  --bar-track: #d5ecf8;
+  --tooltip-bg: rgba(255, 255, 255, 0.98);
+  --tooltip-ink: #071e27;
+  --tooltip-line: rgba(0, 91, 191, 0.32);
+  --tooltip-shadow: 0 14px 34px rgba(20, 51, 77, 0.20);
 
   --font-display: "Hanken Grotesk", system-ui, sans-serif;
   --font-body: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
@@ -109,10 +119,46 @@
   --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-body {
-  background:
+.theme-dark {
+  --n50: #050b14;
+  --n100: #0a1526;
+  --n200: rgba(255, 255, 255, 0.10);
+  --n300: #27395a;
+  --n400: #48597a;
+  --n500: #94a3b8;
+  --n700: #cbd5e1;
+  --n800: #d6deea;
+  --n900: #e2e8f0;
+
+  --ink: var(--n900);
+  --muted: var(--n500);
+  --surface: #050b14;
+  --panel: rgba(15, 23, 42, 0.60);
+  --line: rgba(255, 255, 255, 0.10);
+  --body-background:
     radial-gradient(1200px 600px at 85% -10%, rgba(0, 91, 191, 0.22), transparent 60%),
     var(--surface);
+
+  --cobalt: #005bbf;
+  --accent: #4d9cff;
+  --accent-strong: #6aabff;
+  --accent-soft: rgba(26, 115, 232, 0.18);
+  --success: #00d091;
+  --success-soft: rgba(0, 187, 127, 0.18);
+  --warning: #fdbc13;
+  --warning-soft: rgba(253, 188, 19, 0.16);
+  --danger: #fb5b63;
+  --danger-soft: rgba(251, 44, 54, 0.18);
+  --badge-line: rgba(253, 188, 19, 0.34);
+  --bar-track: #27395a;
+  --tooltip-bg: rgba(15, 25, 42, 0.98);
+  --tooltip-ink: #e2e8f0;
+  --tooltip-line: rgba(77, 156, 255, 0.42);
+  --tooltip-shadow: 0 16px 38px rgba(0, 0, 0, 0.55);
+}
+
+body {
+  background: var(--body-background);
 }
 
 h1, h2, h3 { font-family: var(--font-display); }
@@ -196,6 +242,11 @@ h1, h2, h3 { font-family: var(--font-display); }
   width: min(100%, 52rem);
 }
 
+.ledger-summary-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
 .ledger-cycle-actions {
   display: flex;
   flex-wrap: wrap;
@@ -249,6 +300,7 @@ body.rail .cv-shell { padding-left: var(--rail-w); }
 body.rail .sb-text,
 body.rail .sb-section,
 body.rail .sb-user,
+body.rail .theme-picker,
 body.rail .brand-word { display: none; }
 body.rail .sb-item { justify-content: center; padding-inline: 0; }
 body.rail .sb-brand { justify-content: center; padding-inline: 0; }
@@ -350,6 +402,13 @@ a.sb-brand:hover .brand-word { color: var(--sidebar-active); }
   border-radius: 8px;
   padding: 0.3rem 0.5rem;
 }
+.sb-actions .theme-picker select {
+  min-width: 6.5rem;
+  background: transparent;
+  color: var(--sidebar-text);
+  border-color: var(--sidebar-border);
+}
+.sb-actions select option { background: var(--sidebar-bg); color: var(--sidebar-text); }
 .sb-actions .button { min-height: 34px; padding: 0.3rem 0.8rem; font-size: 0.72rem; }
 
 .scrim {
@@ -392,6 +451,16 @@ body.nav-open .scrim { opacity: 1; pointer-events: auto; }
 .flash-stack { left: calc(var(--sidebar-w) + (100vw - var(--sidebar-w)) / 2); }
 body.rail .flash-stack { left: calc(var(--rail-w) + (100vw - var(--rail-w)) / 2); }
 
+.notification-center { top: 1rem; right: 1.5rem; }
+.notification-toggle,
+.notification-popover,
+.notification-item { background: var(--panel); border-color: var(--line); color: var(--n800); }
+.notification-count-update,
+.notification-icon-action:hover,
+.notification-icon-action:focus-visible,
+.notification-item form button:hover,
+.notification-item form button:focus-visible { background: var(--n100); }
+
 @media (max-width: 1023px) {
   .sidebar { transform: translateX(-100%); }
   body.nav-open .sidebar { transform: translateX(0); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6); }
@@ -400,6 +469,7 @@ body.rail .flash-stack { left: calc(var(--rail-w) + (100vw - var(--rail-w)) / 2)
   body.rail .cv-shell { padding-left: 0; }
   body.rail .sb-text, body.rail .sb-section, body.rail .sb-user, body.rail .brand-word { display: revert; }
   .flash-stack, body.rail .flash-stack { left: 50%; }
+  .notification-center { top: 1rem; right: 1rem; }
 }
 
 @media (max-width: 640px) {

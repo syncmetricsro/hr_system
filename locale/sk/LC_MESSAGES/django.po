@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-12 19:28+0200\n"
+"POT-Creation-Date: 2026-07-13 01:45+0200\n"
 "Language: sk\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -491,40 +491,44 @@ msgstr "Meno"
 msgid "Last name"
 msgstr "Priezvisko"
 
-#: core/people/forms.py:28 features/intake/catalog_i18n.py:17
+#: core/people/forms.py:28 templates/pages/login.html:16
+msgid "Email"
+msgstr "E-mail"
+
+#: core/people/forms.py:29 features/intake/catalog_i18n.py:17
 #: templates/pages/person_detail.html:143
 msgid "Phone"
 msgstr "Telefón"
 
-#: core/people/forms.py:29 features/intake/catalog_i18n.py:18
+#: core/people/forms.py:30 features/intake/catalog_i18n.py:18
 #: templates/pages/person_detail.html:144
 msgid "Address"
 msgstr "Adresa"
 
-#: core/people/forms.py:30 features/intake/catalog_i18n.py:19
+#: core/people/forms.py:31 features/intake/catalog_i18n.py:19
 #: templates/pages/person_detail.html:145
 msgid "Nationality"
 msgstr "Národnosť"
 
-#: core/people/forms.py:31 features/intake/catalog_i18n.py:20
+#: core/people/forms.py:32 features/intake/catalog_i18n.py:20
 msgid "Preferred language"
 msgstr "Preferovaný jazyk"
 
-#: core/people/forms.py:32 features/intake/catalog_i18n.py:15
+#: core/people/forms.py:33 features/intake/catalog_i18n.py:15
 #: templates/pages/person_detail.html:157
 msgid "Date of birth"
 msgstr "Dátum narodenia"
 
-#: core/people/forms.py:33 features/intake/catalog_i18n.py:16
+#: core/people/forms.py:34 features/intake/catalog_i18n.py:16
 #: templates/pages/person_detail.html:158
 msgid "Place of birth"
 msgstr "Miesto narodenia"
 
-#: core/people/forms.py:34
+#: core/people/forms.py:35
 msgid "Has disability"
 msgstr "Má zdravotné postihnutie"
 
-#: core/people/forms.py:35 features/intake/catalog_i18n.py:22
+#: core/people/forms.py:36 features/intake/catalog_i18n.py:22
 msgid "Disability type"
 msgstr "Typ postihnutia"
 
@@ -958,7 +962,6 @@ msgid "Accommodation"
 msgstr "Ubytovanie"
 
 #: core/projects/services.py:152
-#| msgid "Accommodation costs"
 msgid "Accommodation is incomplete."
 msgstr "Ubytovanie nie je zabezpečené."
 
@@ -968,7 +971,6 @@ msgid "Transport"
 msgstr "Doprava"
 
 #: core/projects/services.py:153
-#| msgid "Transport week recorded."
 msgid "Transport is incomplete."
 msgstr "Doprava nie je zabezpečená."
 
@@ -987,7 +989,8 @@ msgstr "Dátum vstupnej lekárskej prehliadky nemôže byť v budúcnosti."
 #: core/projects/services.py:218
 msgid ""
 "Cannot activate this worker because no readiness record has been completed."
-msgstr "Pracovníka nemožno aktivovať, pretože nie je vyplnený záznam pripravenosti."
+msgstr ""
+"Pracovníka nemožno aktivovať, pretože nie je vyplnený záznam pripravenosti."
 
 #: core/projects/services.py:222
 #, python-format
@@ -2887,10 +2890,6 @@ msgstr "Interný systém"
 msgid "Sign in to the Jober team"
 msgstr "Prihlásenie tímu Jober"
 
-#: templates/pages/login.html:16
-msgid "Email"
-msgstr "E-mail"
-
 #: templates/pages/login.html:20
 msgid "Password"
 msgstr "Heslo"
@@ -3471,3 +3470,103 @@ msgstr "Áno, pokračovať"
 
 #~ msgid "Responsible"
 #~ msgstr "Zodpovedný"
+# --- floating notification center (2026-07-13) ---
+msgid "Notifications"
+msgstr "Upozornenia"
+
+msgid "Session activity"
+msgstr "Aktivita relácie"
+
+msgid "Refresh notifications"
+msgstr "Obnoviť upozornenia"
+
+msgid "Close notifications"
+msgstr "Zavrieť upozornenia"
+
+#, python-format
+msgid "%(counter)s problem"
+msgid_plural "%(counter)s problems"
+msgstr[0] "%(counter)s problém"
+msgstr[1] "%(counter)s problémy"
+msgstr[2] "%(counter)s problémov"
+
+#, python-format
+msgid "%(counter)s update"
+msgid_plural "%(counter)s updates"
+msgstr[0] "%(counter)s aktualizácia"
+msgstr[1] "%(counter)s aktualizácie"
+msgstr[2] "%(counter)s aktualizácií"
+
+msgid "Problems"
+msgstr "Problémy"
+
+msgid "Updates"
+msgstr "Aktualizácie"
+
+msgid "Dismiss notification"
+msgstr "Skryť upozornenie"
+
+msgid "Nothing needs your attention right now."
+msgstr "Momentálne nič nevyžaduje vašu pozornosť."
+
+msgid "Notification is not available."
+msgstr "Upozornenie nie je dostupné."
+
+msgid "Operational record"
+msgstr "Prevádzkový záznam"
+
+#, python-format
+msgid "%(actor)s · %(subject)s"
+msgstr "%(actor)s · %(subject)s"
+
+msgid "Trial outcome is waiting"
+msgstr "Čaká sa na výsledok skúšobného dňa"
+
+msgid "Readiness needs attention"
+msgstr "Pripravenosť vyžaduje pozornosť"
+
+msgid "Compliance problems need attention"
+msgstr "Problémy s dodržiavaním predpisov vyžadujú pozornosť"
+
+#, python-format
+msgid "%(count)s open document or medical alerts"
+msgstr "%(count)s otvorených upozornení na doklady alebo lekársku prehliadku"
+
+msgid "Equipment reviews are waiting"
+msgstr "Čakajú kontroly vybavenia"
+
+#, python-format
+msgid "%(count)s unreturned equipment reviews"
+msgstr "%(count)s kontrol nevráteného vybavenia"
+
+msgid "Blacklist decisions are waiting"
+msgstr "Čakajú rozhodnutia o čiernej listine"
+
+#, python-format
+msgid "%(count)s proposed cases require a decision"
+msgstr "%(count)s navrhnutých prípadov vyžaduje rozhodnutie"
+
+msgid "Worker feedback is available"
+msgstr "K dispozícii je spätná väzba od pracovníkov"
+
+#, python-format
+msgid "%(count)s feedback submissions in the inbox"
+msgstr "%(count)s podnetov v schránke spätnej väzby"
+
+msgid "Activation checklist is incomplete"
+msgstr "Aktivačný kontrolný zoznam nie je dokončený"
+
+#, python-format
+msgid "%(person)s · %(count)s critical items"
+msgstr "%(person)s · %(count)s kritických položiek"
+
+msgid "Worker feedback received"
+msgstr "Prijatá spätná väzba od pracovníka"
+msgid "Theme"
+msgstr "Téma"
+
+msgid "Light"
+msgstr "Svetlá"
+
+msgid "Dark"
+msgstr "Tmavá"

@@ -1,5 +1,111 @@
 # Test Journal
 
+## 2026-07-13 — Language-prefix switching regression
+
+- Full verification is green: **337 Jober tests**, **169 CorvinumEU tests**
+  (**7 skipped, 127 deselected**), and **34 Chromium Playwright scenarios**.
+- Added unit coverage for stale/missing language-cookie disagreement, all four
+  Jober language prefixes, both Corvinum prefixes, preserved query strings,
+  client-specific cookies, and rejection of a forged external `next` URL.
+- The browser regression starts on a Hungarian URL without a matching cookie,
+  selects English, and verifies the URL, document language, selector state, and
+  `jober_language` cookie all agree. The Jober and Corvinum switch scenarios
+  also pass in a targeted **2-test Firefox run**.
+- Ruff is clean for the touched Python files. Both production-style local
+  client images rebuilt and remain available on ports 8000 and 8001.
+
+## 2026-07-13 — Shared contextual tooltips
+
+- Full verification is green: **333 Jober tests**, **168 CorvinumEU tests**
+  (**7 skipped, 124 deselected**), and **33 Playwright E2E scenarios** across
+  both client shells.
+- Browser coverage verifies hover delay, keyboard association and Escape,
+  tooltip hover persistence, viewport clamping/flipping at 375×667, dynamically
+  inserted content, confirmation-dialog compatibility, touch actions without a
+  first-tap delay, and Corvinum light/dark computed colors.
+- Unit coverage verifies both shells, contextual surface declarations, removal
+  of migrated native titles, EN/SK/HU/UK detail labels, reduced motion, and WCAG
+  AA contrast for all four client/mode tooltip pairs.
+- Visually reviewed Jober Dark and Corvinum Dark with the sidebar collapsed.
+  Ruff, Django checks, migration consistency, dependency direction,
+  forbidden-Node, vendored-asset checksum, and whitespace checks are clean.
+
+## 2026-07-13 — Theme-aware Jober logo color
+
+- Added a contract for the dark-mode hue/saturation treatment and reran the
+  focused theme/navigation lane: **9 tests pass**.
+- Rebuilt and visually reviewed the anonymous dark header at 1440px. The SVG
+  artwork renders periwinkle with a white inset, retains its natural aspect
+  ratio, and Light mode continues to use the original blue rendering.
+
+## 2026-07-13 — Jober after-hours dark palette
+
+- Updated the dark-token WCAG contract for the graphite/aubergine panel,
+  periwinkle interaction, mint success, amber warning, and coral danger pairs;
+  all primary combinations remain at or above AA contrast.
+- Focused theme/navigation lane passes **9 tests**. Rebuilt and visually
+  reviewed the authenticated 1440×900 dashboard with the notification control
+  and SVG navigation icons; the document has no horizontal page overflow.
+
+## 2026-07-13 — Jober navigation icons
+
+- Added a shell contract covering all fourteen client-owned SVG symbols,
+  decorative accessibility semantics, and the absence of Corvinum's icon-font
+  dependency. The focused theme/navigation lane passes **9 tests**.
+- Rebuilt the production-style Jober image and visually reviewed desktop and
+  375×667 mobile navigation. The mobile menu exposes 44px rows and introduces
+  no horizontal page overflow.
+
+## 2026-07-13 — Client appearance themes
+
+- Test-tooling incident: an initial host `pybabel compile` command omitted
+  Django's `django` catalog domain. Babel looked for non-existent
+  `locale/<language>/LC_MESSAGES/messages.po` files and Ubuntu Apport reported
+  its unhandled `FileNotFoundError`. No application process crashed and no
+  catalog source was lost. Host Babel is now explicitly documented as outside
+  the project workflow; catalog compilation belongs to the repository's
+  containerized Django helper.
+- Added contracts for client defaults, the supplied Jober SVG, semantic palette
+  definitions, storage failure handling, and EN/SK/HU/UK theme labels.
+- Added browser scenarios for persistence, login-to-app continuity, live System
+  preference changes, cross-tab synchronization, client defaults, and mobile
+  logo/overflow behavior.
+- Full verification is green: **322 Jober tests**, **159 CorvinumEU tests**
+  (**7 skipped, 122 deselected**), and **31 Playwright E2E scenarios** across
+  both client shells. The focused theme lane adds **9 passing tests**, including
+  WCAG AA contrast checks for the key semantic color pairs.
+- Visually reviewed settled Jober light/dark and CorvinumEU light/dark pages at
+  desktop and mobile sizes. Ruff, migration consistency, dependency direction,
+  forbidden-Node, vendored-asset checksum, and whitespace checks are clean.
+
+## 2026-07-13 — Floating notification center
+
+- Full verification is green: **315 Jober tests**, **153 CorvinumEU tests**
+  (**7 skipped, 121 deselected**), and **28 Playwright E2E scenarios** across
+  both client shells.
+- Added unit coverage for login baselines, other-user session updates, own-event
+  exclusion, role/project scoping, observer exclusion, dismissal validation,
+  state-version reappearance, CSRF, and htmx refresh headers.
+- Added provider coverage for compliance, equipment reviews, blacklist cases,
+  feedback, and activation checklists, including destination URLs and resolved
+  state disappearance.
+- Added browser coverage for Jober desktop/mobile and CorvinumEU mobile layout,
+  panel interaction, dismissal, links, normal/manual refresh, and absence of
+  idle polling. The browser suite also caught and now covers Corvinum's active
+  document language and mobile ledger overflow regressions.
+- Added translation assertions for EN/SK/HU/UK.
+- Ruff, migration consistency, dependency direction, forbidden-artifact,
+  vendored-asset checksum, and whitespace checks are clean.
+
+## 2026-07-13 — Corvinum language, personnel email and Reports parity
+
+- Corvinum client contract tests pass: its language selector writes the
+  `corvinum_language` cookie and redirects `/sk/...` to `/hu/...`; its person
+  form includes email. The shared person-edit regression is green (**5 tests**).
+- Added browser coverage for the Corvinum language switch, interactive merged
+  Reports page, and email input; the official E2E image rebuild/migration run
+  was started, but needs its final uninterrupted browser execution.
+
 ## 2026-07-12 — Specific activation blockers
 
 - **16 workflow tests green** in isolated PostgreSQL. Activation failures now

@@ -29,7 +29,7 @@
 
 <section class="field-list" aria-label="{% trans 'People' %}">
   {% for person in people %}
-    <a class="field-card person-row" href="{% url 'person_detail' person.pk %}">
+    <a class="field-card person-row" href="{% url 'person_detail' person.pk %}" data-tooltip="{% trans 'Details' %}">
       <div>
         <h3>{{ person }}</h3>
         <p>{% trans "Status" %}: {{ person.get_lifecycle_status_display }}</p>

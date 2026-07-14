@@ -76,3 +76,41 @@ def test_language_switch_changes_active_language(client, make_user):
     # The dashboard should now resolve under the Hungarian prefix.
     response = client.get("/hu/")
     assert response.status_code == 200
+
+
+@pytest.mark.parametrize(
+    ("cookie_language", "next_url", "target_language", "expected"),
+    [
+        ("sk", "/hu/", "en", "/en/"),
+        ("en", "/hu/people/?status=working", "uk", "/uk/people/?status=working"),
+        ("uk", "/en/reports/", "hu", "/hu/reports/"),
+    ],
+)
+@pytest.mark.jober_only
+def test_language_switch_translates_url_when_cookie_and_prefix_disagree(
+    client,
+    settings,
+    cookie_language,
+    next_url,
+    target_language,
+    expected,
+):
+    client.cookies[settings.LANGUAGE_COOKIE_NAME] = cookie_language
+    response = client.post(
+        reverse("set_language"),
+        {"language": target_language, "next": next_url},
+    )
+
+    assert response.status_code == 302
+    assert response.headers["Location"] == expected
+    assert response.cookies[settings.LANGUAGE_COOKIE_NAME].value == target_language
+
+
+def test_language_switch_keeps_django_safe_redirect_fallback(client):
+    response = client.post(
+        reverse("set_language"),
+        {"language": "en", "next": "https://attacker.example/steal"},
+    )
+
+    assert response.status_code == 302
+    assert response.headers["Location"] == "/"
