@@ -73,6 +73,7 @@ def test_audit_action_labels_cover_all_ui_languages(language, expected):
         assert audit_action_label("room.assigned") == expected
 
 
+@pytest.mark.jober_only
 def test_audit_filter_keeps_machine_code_and_displays_translated_label(client, users):
     record_event(users["manager"], "room.assigned")
     client.force_login(users["manager"])

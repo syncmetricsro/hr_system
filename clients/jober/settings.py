@@ -29,9 +29,13 @@ FEATURE_FLAGS = {
 
 BRAND_NAME = "Jober"
 BRAND_MARK = "JB"
+BRAND_LOGO = "jober/brand/jober-logo.svg"
+CLIENT_DEFAULT_THEME = "light"
+CLIENT_THEME_STORAGE_KEY = "jober-theme"
 
 # Distinct cookie names per client: both demo apps live on one host
 # (localhost:8000/:8001) and browsers scope cookies by host, ignoring ports —
 # default names made each login evict the other client's session.
 SESSION_COOKIE_NAME = "jober_sessionid"
 CSRF_COOKIE_NAME = "jober_csrftoken"
+LANGUAGE_COOKIE_NAME = "jober_language"

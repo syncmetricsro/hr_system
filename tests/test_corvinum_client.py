@@ -11,6 +11,7 @@ URL_SCRIPT = """
 import django
 django.setup()
 from django.urls import NoReverseMatch, reverse
+from django.conf import settings as s
 
 # CorvinumEU mounts equipment + blacklist + compliance…
 reverse("equipment_reviews")
@@ -20,9 +21,27 @@ reverse("two_factor_setup")
 reverse("checklist_item_toggle", args=[1])
 reverse("ledger_overview")
 reverse("payslip_list")
-from django.conf import settings as s
+reverse("notification_panel")
+reverse("notification_dismiss")
+if "testserver" not in s.ALLOWED_HOSTS:
+    s.ALLOWED_HOSTS.append("testserver")
+from django.test import Client
+from core.people.forms import PersonForm
 assert s.SESSION_COOKIE_NAME == "corvinum_sessionid", s.SESSION_COOKIE_NAME
 assert s.CSRF_COOKIE_NAME == "corvinum_csrftoken"
+assert s.LANGUAGE_COOKIE_NAME == "corvinum_language"
+assert s.CLIENT_DEFAULT_THEME == "dark"
+assert s.CLIENT_THEME_STORAGE_KEY == "corvinum-theme"
+client = Client()
+response = client.post(reverse("set_language"), {"language": "hu", "next": "/sk/people/"})
+assert response["Location"] == "/hu/people/"
+assert response.cookies["corvinum_language"].value == "hu"
+client.cookies["corvinum_language"] = "sk"
+response = client.post(reverse("set_language"), {"language": "sk", "next": "/hu/people/"})
+assert response["Location"] == "/sk/people/"
+assert response.cookies["corvinum_language"].value == "sk"
+assert "email" in PersonForm.base_fields
+assert "core.notifications" in s.INSTALLED_APPS
 # …and must NOT mount finance, SMS, accommodation, transport, or trials.
 for absent in ("finance_summary", "accommodation_list", "transport_trends", "trials_queue"):
     try:
@@ -42,6 +61,9 @@ base = get_template("layouts/base.html")
 assert base.origin.name.endswith("clients/corvinum_eu/templates/layouts/base.html")
 source = base.origin.loader.get_contents(base.origin)
 assert '{% include "partials/confirm_dialog.html" %}' in source
+assert '{% include "notifications/panel.html" %}' in source
+assert source.count('{% include "partials/theme_picker.html" %}') == 2
+assert 'data-theme-default="{{ CLIENT_DEFAULT_THEME }}"' in source
 
 dialog = get_template("partials/confirm_dialog.html")
 dialog_source = dialog.origin.loader.get_contents(dialog.origin)

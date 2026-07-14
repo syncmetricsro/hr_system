@@ -17,3 +17,7 @@ class ChecklistsConfig(AppConfig):
 
         register_activation_check(activation_gate)
         register_person_panel("panels/checklists_items.html", checklist_panel, order=35)
+        from core.notifications.registry import register_alert_provider
+        from features.checklists.notifications import checklist_notification_provider
+
+        register_alert_provider(checklist_notification_provider)

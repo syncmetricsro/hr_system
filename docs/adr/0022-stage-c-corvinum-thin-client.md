@@ -60,3 +60,7 @@ reusable; Jober's tests pass with assertions unchanged**.
 - The peopleops prototype (`corvinumeu` repo, Addendum A2) is the visual
   reference for the theme slice; production markup stays server-rendered
   Django/htmx.
+- CorvinumEU keeps the prototype's dark appearance as its first-visit default
+  and also exposes its pale workspace palette as an explicit Light mode. The
+  shared presentation-only controller additionally offers System mode; the
+  browser-local choice never changes client policy or persisted business data.

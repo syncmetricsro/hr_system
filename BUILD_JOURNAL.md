@@ -1,5 +1,91 @@
 # Build Journal
 
+## 2026-07-13 — Reliable language-prefix switching
+
+- Replaced Django's stock language endpoint with a thin shared wrapper that
+  preserves its CSRF, cookie, language-validation, and safe-redirect behavior.
+- When the active language cookie disagrees with the current URL prefix, the
+  wrapper now translates from the prefix explicitly. Selecting a language can
+  no longer write the new cookie while redirecting back to the old-language
+  page.
+- Added Jober EN/SK/HU/UK and CorvinumEU SK/HU regressions, including query
+  strings, client-specific cookies, hostile redirect rejection, and a real
+  browser interaction.
+
+## 2026-07-13 — Shared contextual tooltips
+
+- Added one delegated, dependency-free tooltip controller shared by Jober and
+  CorvinumEU. It supports delayed mouse hover, immediate keyboard focus,
+  Escape dismissal, hover persistence, viewport-aware placement, restored
+  `aria-describedby`, htmx-swapped content, and touch-focus suppression.
+- Added contextual coverage to both navigation systems, notification icon
+  controls, linked metrics/cards/rows, and confirmation-backed actions. Visible
+  routine buttons remain uncluttered; existing localized confirmation text is
+  reused instead of duplicated.
+- Added client- and mode-specific semantic tooltip tokens, reduced-motion
+  handling, and a 22rem responsive maximum width. No dependency, endpoint,
+  model, cookie, service, or external asset was introduced.
+
+## 2026-07-13 — Theme-aware Jober logo
+
+- Added a dark-mode-only color treatment to the supplied SVG. Hue, saturation,
+  and brightness move the blue artwork toward the night palette's periwinkle
+  accent while preserving the white inset; Light mode and the source vector are
+  unchanged, so no duplicate brand asset is required.
+
+## 2026-07-13 — Jober night palette revision
+
+- Replaced the blue-heavy midnight palette with a warmer “after-hours control
+  room” treatment: graphite/aubergine surfaces, periwinkle interaction color,
+  amber attention states, and mint success signals.
+
+## 2026-07-13 — Jober navigation iconography
+
+- Added a first-party set of fourteen restrained outline SVG symbols for the
+  Jober folder tabs. Icons cover people, projects, field work, compliance,
+  accommodation, transport, reports, audit, reviews, blacklist, finance,
+  ledger, payslips, and feedback.
+- Kept labels as the accessible link names and marked the icons decorative.
+  The strokes inherit light/dark, hover, focus, and active-state colors without
+  a font, package, external asset, CDN request, or cross-client dependency.
+
+## 2026-07-13 — Client light, dark and system themes
+
+- Gotcha: do not compile Django catalogs with the host `pybabel` command. Its
+  default domain is `messages`, not `django`; the mistaken invocation generated
+  an Ubuntu Apport crash report for a missing file. Use the repository's
+  containerized Django catalog workflow.
+- Added a shared first-paint-safe Light/Dark/System controller with browser-local,
+  client-specific persistence and live operating-system preference updates.
+- Jober keeps its calm industrial light mode and gains a navy “midnight
+  operations” palette. Its supplied SVG replaces the temporary text badge.
+- Corvinum keeps its dark-default glass treatment and gains the light palette
+  from its PeopleOps reference; its sidebar remains dark in both modes.
+- Theme selection is available before and after authentication and adds no
+  endpoint, cookie, model, dependency, or background request.
+
+## 2026-07-13 — Floating session notification center
+
+- Added the client-neutral `core.notifications` domain and a dismissal migration
+  that stores only user/key/version state, never copied notification content.
+- Added role-scoped routine updates from the audit log and current actionable
+  alerts for trials, readiness, compliance, equipment review, blacklist,
+  feedback, and enabled checklists.
+- Added the shared top-right bell/popover to Jober and CorvinumEU with deep links,
+  manual refresh/dismissal, responsive controls, and htmx refresh events.
+- Kept delivery interaction-driven. True idle-browser realtime delivery remains
+  deferred pending an ASGI/SSE or WebSocket ADR.
+- Added EN/SK/HU/UK interface strings and feature-alert wording.
+
+## 2026-07-13 — Corvinum selector, personnel email and interactive Reports
+
+CorvinumEU now uses a client-specific language cookie, so the Jober demo on
+the same localhost host cannot overwrite its SK/HU preference. The shared
+person form includes the worker email (needed for payslips). Corvinum inherits
+the consolidated Reports overview: its metric/status cards are drill-down
+links, the old Overview navigation item is gone, and the Reports title uses
+the active client brand.
+
 ## 2026-07-12 — Specific activation-blocker messages
 
 The activation gate now explains the concrete incomplete requirement(s), rather

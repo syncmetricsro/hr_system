@@ -1,0 +1,118 @@
+{% load i18n %}
+{% if notification_center.enabled %}
+<section
+  id="notification-center"
+  class="notification-center"
+  x-data="{ open: false }"
+  hx-get="{% url 'notification_panel' %}"
+  hx-trigger="notificationsChanged from:body"
+  hx-swap="outerHTML"
+  aria-label="{% trans 'Notifications' %}"
+>
+  <button
+    class="notification-toggle"
+    type="button"
+    x-on:click="open = !open; if (open) $nextTick(() => $refs.close.focus())"
+    x-bind:aria-expanded="open.toString()"
+    aria-controls="notification-popover"
+    data-tooltip="{% trans 'Notifications' %}"
+  >
+    <span class="notification-bell" aria-hidden="true">
+      <svg viewBox="0 0 24 24" focusable="false"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M9.7 20h4.6a2.5 2.5 0 0 1-4.6 0"/></svg>
+    </span>
+    <span>{% trans "Notifications" %}</span>
+    {% if notification_center.alert_count %}<span class="notification-count notification-count-alert" aria-label="{% blocktrans count counter=notification_center.alert_count %}{{ counter }} problem{% plural %}{{ counter }} problems{% endblocktrans %}">{{ notification_center.alert_count }}</span>{% endif %}
+    {% if notification_center.update_count %}<span class="notification-count notification-count-update" aria-label="{% blocktrans count counter=notification_center.update_count %}{{ counter }} update{% plural %}{{ counter }} updates{% endblocktrans %}">{{ notification_center.update_count }}</span>{% endif %}
+  </button>
+
+  <div
+    id="notification-popover"
+    class="notification-popover"
+    x-cloak
+    x-show="open"
+    x-on:click.outside="open = false"
+    x-on:keydown.escape.window="open = false"
+    x-transition.opacity.duration.150ms
+  >
+    <header class="notification-head">
+      <div>
+        <p class="eyebrow">{% trans "Session activity" %}</p>
+        <h2>{% trans "Notifications" %}</h2>
+      </div>
+      <div class="notification-head-actions">
+        <a
+          class="notification-icon-action"
+          href="{{ request.get_full_path }}"
+          hx-get="{% url 'notification_panel' %}"
+          hx-target="#notification-center"
+          hx-swap="outerHTML"
+          aria-label="{% trans 'Refresh notifications' %}"
+          data-tooltip="{% trans 'Refresh notifications' %}"
+        >↻</a>
+        <button
+          class="notification-icon-action"
+          type="button"
+          x-ref="close"
+          x-on:click="open = false"
+          aria-label="{% trans 'Close notifications' %}"
+          data-tooltip="{% trans 'Close notifications' %}"
+        >×</button>
+      </div>
+    </header>
+
+    <div class="notification-list" aria-live="polite">
+      {% if notification_center.alerts %}
+        <section class="notification-group" aria-labelledby="notification-problems-title">
+          <h3 id="notification-problems-title">{% trans "Problems" %} <span>{{ notification_center.alert_count }}</span></h3>
+          <ul>
+            {% for item in notification_center.alerts %}
+              <li class="notification-item notification-item-{{ item.severity }}">
+                <a class="notification-link" href="{{ item.url }}">
+                  <strong>{{ item.title }}</strong>
+                  <span>{{ item.detail }}</span>
+                  {% if item.created_at %}<time datetime="{{ item.created_at|date:'c' }}">{{ item.created_at|date:"SHORT_DATETIME_FORMAT" }}</time>{% endif %}
+                </a>
+                <form method="post" action="{% url 'notification_dismiss' %}" hx-post="{% url 'notification_dismiss' %}" hx-target="#notification-center" hx-swap="outerHTML">
+                  {% csrf_token %}
+                  <input type="hidden" name="key" value="{{ item.key }}">
+                  <input type="hidden" name="version" value="{{ item.version }}">
+                  <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                  <button type="submit" aria-label="{% trans 'Dismiss notification' %}" data-tooltip="{% trans 'Dismiss notification' %}">×</button>
+                </form>
+              </li>
+            {% endfor %}
+          </ul>
+        </section>
+      {% endif %}
+
+      {% if notification_center.updates %}
+        <section class="notification-group" aria-labelledby="notification-updates-title">
+          <h3 id="notification-updates-title">{% trans "Updates" %} <span>{{ notification_center.update_count }}</span></h3>
+          <ul>
+            {% for item in notification_center.updates %}
+              <li class="notification-item notification-item-info">
+                <a class="notification-link" href="{{ item.url }}">
+                  <strong>{{ item.title }}</strong>
+                  <span>{{ item.detail }}</span>
+                  {% if item.created_at %}<time datetime="{{ item.created_at|date:'c' }}">{{ item.created_at|date:"SHORT_DATETIME_FORMAT" }}</time>{% endif %}
+                </a>
+                <form method="post" action="{% url 'notification_dismiss' %}" hx-post="{% url 'notification_dismiss' %}" hx-target="#notification-center" hx-swap="outerHTML">
+                  {% csrf_token %}
+                  <input type="hidden" name="key" value="{{ item.key }}">
+                  <input type="hidden" name="version" value="{{ item.version }}">
+                  <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                  <button type="submit" aria-label="{% trans 'Dismiss notification' %}" data-tooltip="{% trans 'Dismiss notification' %}">×</button>
+                </form>
+              </li>
+            {% endfor %}
+          </ul>
+        </section>
+      {% endif %}
+
+      {% if not notification_center.total_count %}
+        <p class="notification-empty">{% trans "Nothing needs your attention right now." %}</p>
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% endif %}

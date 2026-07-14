@@ -29,3 +29,7 @@ class LogisticsConfig(AppConfig):
         register_exit_relevance(holds_resources)
         register_report_tile(occupancy_tile, order=20)
         register_report_tile(equipment_value_tile, order=30)
+        from core.notifications.registry import register_alert_provider
+        from features.logistics.notifications import logistics_notification_provider
+
+        register_alert_provider(logistics_notification_provider)

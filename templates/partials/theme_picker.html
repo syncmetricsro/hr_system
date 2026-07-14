@@ -1,0 +1,9 @@
+{% load i18n %}
+<div class="theme-picker">
+  <label class="sr-only" for="theme-select">{% trans "Theme" %}</label>
+  <select id="theme-select" data-theme-select aria-label="{% trans 'Theme' %}">
+    <option value="light">{% trans "Light" %}</option>
+    <option value="dark">{% trans "Dark" %}</option>
+    <option value="system">{% trans "System" %}</option>
+  </select>
+</div>

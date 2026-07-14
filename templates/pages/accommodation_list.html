@@ -13,7 +13,7 @@
 
 <section class="field-list" aria-label="{% trans 'Accommodation' %}">
   {% for acc in accommodations %}
-    <a class="field-card person-row" href="{% url 'accommodation_detail' acc.pk %}">
+    <a class="field-card person-row" href="{% url 'accommodation_detail' acc.pk %}" data-tooltip="{% trans 'Details' %}">
       <div>
         <h3>{{ acc.name }}</h3>
         <p>{{ acc.address }}</p>

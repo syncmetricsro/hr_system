@@ -30,3 +30,7 @@ class BlacklistConfig(AppConfig):
         register_person_banner("panels/blacklist_banner.html", open_case_banner, order=10)
         register_person_panel("panels/blacklist_case.html", case_panel, order=40)
         register_person_form_extension(IntakeMatchExtension())
+        from core.notifications.registry import register_alert_provider
+        from features.blacklist.notifications import blacklist_notification_provider
+
+        register_alert_provider(blacklist_notification_provider)

@@ -57,6 +57,9 @@ Highlights: 0008 RBAC model · 0016 whitenoise · 0019 Twilio-via-stdlib ·
 | Doc | Owner | Purpose |
 |---|---|---|
 | `playwright-test-environment-note.md` | Platform | e2e environment notes |
+| `notification-center.md` | Platform | Floating alerts/updates behavior, privacy, refresh, and extension contract |
+| `client-themes.md` | Platform | Light/Dark/System behavior, client defaults, persistence, and palette ownership |
+| `contextual-tooltips.md` | Platform | Hover/focus help, coverage, touch behavior, and content safety |
 | `jober-phase1-open-questions.md`, `jober-phase3-4-open-questions.md` | Jober | Client Q&A rounds (answered) |
 | `jober-open-decisions.md`, `jober-risk-blockers.md` | Jober | Open decisions / blockers |
 | `jober-demo-inventory.md`, `jober-demo-to-django-map.md`, `jober-removed-feature-inventory.md`, `jober-source-register.md` | Jober | Build-era inventories and source register |

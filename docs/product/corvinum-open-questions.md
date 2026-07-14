@@ -14,7 +14,7 @@ Sources: design doc §5.10/§12.6/§13, Addendum A1.
 | C-Q5 | Correction/immutability | No hard deletes; pre-inclusion edits audited; post-inclusion only reversal entries (opposite `pay_effect`) | Client sign-off |
 | C-Q6 | Financial boundary sign-off (§13.1) — **scope changed 2026-07-11**: client asked to store pay amounts + email encrypted payslips (ADR 0023); payroll *calculation* still out of scope | Payslips feature built; written confirmation still wanted | Client (written) |
 | C-Q7 | Mandatory document types + which expire (§13.2) | Compliance certificates seeded with the §5.4 type list; nothing enforced as mandatory yet | Client |
-| C-Q8 | Default UI language (SK or HU) + default theme (light/dark) | **SK default**, HU switchable; dark-default theme per the prototype | Client |
+| C-Q8 | Default UI language (SK or HU) + default theme (light/dark) | **SK default**, HU switchable; **Dark default**, with Light and System selectable per browser | Client |
 | C-Q9 | "HR Admin" as a distinct role vs. core `manager` | Mapped to `manager` for MVP | Client |
 | C-Q10 | Private-car fuel money basis/cadence/eligibility (A1.1) | Flat manual `PAY_ADDITION`, category `travel_fuel`, entered per worker | Client |
 | C-Q11 | Bus fuel log `features/fuel_costs` (A1.2 — secondhand request) | **Not built** pending decision-maker confirmation | Decision-maker |

@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     "core.people",
     "core.projects",
     "core.retention",
+    "core.notifications",
     "features.logistics",     # equipment only — see FEATURE_FLAGS
     "features.intake",
     "features.compliance",
@@ -61,6 +62,8 @@ TWO_FACTOR_REQUIRED_ROLES = ["manager"]
 
 BRAND_NAME = "CorvinumEU PeopleOps"
 BRAND_MARK = "CE"
+CLIENT_DEFAULT_THEME = "dark"
+CLIENT_THEME_STORAGE_KEY = "corvinum-theme"
 
 # corvinum.eu design language layered over the shared shell (§7.0; C-Q8
 # dark-default pending confirmation). The client static dir is collected by
@@ -78,3 +81,4 @@ TEMPLATES[0]["DIRS"] = [  # noqa: F405
 # Distinct cookie names per client (see clients/jober/settings.py).
 SESSION_COOKIE_NAME = "corvinum_sessionid"
 CSRF_COOKIE_NAME = "corvinum_csrftoken"
+LANGUAGE_COOKIE_NAME = "corvinum_language"

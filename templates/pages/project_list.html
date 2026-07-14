@@ -15,7 +15,7 @@
 
 <section class="field-list" aria-label="{% trans 'Projects' %}">
   {% for project in projects %}
-    <a class="field-card person-row" href="{% url 'project_detail' project.pk %}">
+    <a class="field-card person-row" href="{% url 'project_detail' project.pk %}" data-tooltip="{% trans 'Details' %}">
       <div>
         <h3>{{ project.name }}</h3>
         <p>{% trans "Code" %}: {{ project.code }}{% if project.office %} · {{ project.office }}{% endif %}</p>

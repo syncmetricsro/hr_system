@@ -11,7 +11,7 @@
 
 <section class="field-list" aria-label="{% trans 'Compliance' %}">
   {% for a in alerts %}
-    <a class="field-card person-row" href="{% url 'person_detail' a.person.pk %}">
+    <a class="field-card person-row" href="{% url 'person_detail' a.person.pk %}" data-tooltip="{% trans 'Details' %}">
       <div>
         <h3>{{ a.person }}</h3>
         <p>{{ a.item }}</p>

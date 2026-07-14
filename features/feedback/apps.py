@@ -12,3 +12,7 @@ class FeedbackConfig(AppConfig):
         from features.feedback.services import purge_feedback
 
         register_retention("feedback", purge_feedback)
+        from core.notifications.registry import register_alert_provider
+        from features.feedback.notifications import feedback_notification_provider
+
+        register_alert_provider(feedback_notification_provider)
