@@ -15,6 +15,7 @@ Slots:
 from __future__ import annotations
 
 from django.conf import settings
+from django.core.exceptions import ImproperlyConfigured
 
 
 def flag_enabled(name: str) -> bool:
@@ -95,6 +96,12 @@ def report_tiles(request) -> list[dict]:
     for entry in sorted(_report_tiles, key=lambda e: e["order"]):
         ctx = entry["context"](request)
         if ctx is not None:
+            if ctx.get("url") and not all(
+                ctx.get(key) for key in ("tooltip_heading", "tooltip_body")
+            ):
+                raise ImproperlyConfigured(
+                    "Linked report tiles require tooltip_heading and tooltip_body."
+                )
             tiles.append(ctx)
     return tiles
 

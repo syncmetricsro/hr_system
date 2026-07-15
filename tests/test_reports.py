@@ -33,8 +33,29 @@ def test_reports_shows_counts(client, make_user):
         body = client.get(reverse("reports")).content.decode("utf-8")
     assert "Reporty" in body                    # heading (sk)
     assert "Ľudia podľa stavu" in body          # people-by-status section
-    assert 'href="/sk/projects/"' in body
+    assert 'href="/sk/projects/?status=active"' in body
     assert 'href="/sk/people/?status=available"' in body
+
+
+def test_reports_use_action_oriented_structured_tooltips(client, make_user, settings):
+    client.force_login(make_user("recruiter"))
+    language = "en" if "en" in dict(settings.LANGUAGES) else "sk"
+    expected = {
+        "en": (
+            "Review active projects",
+            "Open active projects to review their coordinators and assignments.",
+        ),
+        "sk": (
+            "Skontrolovať aktívne projekty",
+            "Otvorte aktívne projekty a skontrolujte ich koordinátorov a priradenia.",
+        ),
+    }[language]
+    with translation.override(language):
+        body = client.get(reverse("reports")).content.decode()
+
+    assert f'data-tooltip-heading="{expected[0]}"' in body
+    assert f'data-tooltip="{expected[1]}"' in body
+    assert 'data-tooltip="Details"' not in body
 
 
 @pytest.mark.jober_only

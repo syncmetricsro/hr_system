@@ -3570,3 +3570,230 @@ msgstr "Svetlá"
 
 msgid "Dark"
 msgstr "Tmavá"
+
+msgid "Review active projects"
+msgstr "Skontrolovať aktívne projekty"
+
+msgid "Open active projects to review their coordinators and assignments."
+msgstr "Otvorte aktívne projekty a skontrolujte ich koordinátorov a priradenia."
+
+msgid "Browse people"
+msgstr "Prehľadávať ľudí"
+
+msgid "Open the full People list to search and filter workers."
+msgstr "Otvorte úplný zoznam ľudí, v ktorom môžete pracovníkov vyhľadávať a filtrovať."
+
+msgid "Resolve pending trial outcomes"
+msgstr "Vyriešiť čakajúce výsledky skúšobných dní"
+
+msgid "Open trials that still require an outcome."
+msgstr "Otvorte skúšobné dni, pri ktorých je ešte potrebné zaznamenať výsledok."
+
+msgid "Review compliance issues"
+msgstr "Skontrolovať problémy súladu"
+
+msgid "Open workers with document or medical requirements that need attention."
+msgstr "Otvorte pracovníkov s dokumentmi alebo zdravotnými požiadavkami, ktoré vyžadujú pozornosť."
+
+msgid "Review accommodation occupancy"
+msgstr "Skontrolovať obsadenosť ubytovania"
+
+msgid "Open accommodation costs, occupied places, and assigned costs."
+msgstr "Otvorte náklady na ubytovanie, obsadené miesta a priradené náklady."
+
+msgid "Review equipment exceptions"
+msgstr "Skontrolovať nezrovnalosti vo vybavení"
+
+msgid "Open issued equipment awaiting return or a deduction decision."
+msgstr "Otvorte vydané vybavenie čakajúce na vrátenie alebo rozhodnutie o zrážke."
+
+#, python-format
+msgid "View %(status)s people"
+msgstr "Zobraziť ľudí so stavom %(status)s"
+
+msgid "Open People filtered to this lifecycle status."
+msgstr "Otvorte zoznam ľudí filtrovaný podľa tohto stavu životného cyklu."
+
+#, python-format
+msgid "View inactive people: %(reason)s"
+msgstr "Zobraziť neaktívnych ľudí: %(reason)s"
+
+msgid "Open People filtered to this inactive reason."
+msgstr "Otvorte zoznam ľudí filtrovaný podľa tohto dôvodu neaktivity."
+
+msgid "Review company finances"
+msgstr "Skontrolovať financie spoločnosti"
+
+msgid "Open the finance summary for revenue, costs, and net results."
+msgstr "Otvorte finančný súhrn príjmov, nákladov a čistého výsledku."
+
+msgid "Project status"
+msgstr "Stav projektu"
+
+msgid "All project statuses"
+msgstr "Všetky stavy projektov"
+
+msgid "All inactive reasons"
+msgstr "Všetky dôvody neaktivity"
+
+msgid "View available people"
+msgstr "Zobraziť dostupných ľudí"
+
+msgid "View working people"
+msgstr "Zobraziť pracujúcich ľudí"
+
+msgid "A transport record already exists for this project and week."
+msgstr "Pre tento projekt a týždeň už existuje záznam dopravy."
+
+msgid "Accommodation created. Add rooms to make it assignable."
+msgstr "Ubytovanie bolo vytvorené. Pridajte izby, aby ho bolo možné prideľovať."
+
+msgid "Accommodation management"
+msgstr "Správa ubytovania"
+
+msgid "Accommodation updated."
+msgstr "Ubytovanie bolo aktualizované."
+
+msgid "Add room"
+msgstr "Pridať izbu"
+
+msgid "All"
+msgstr "Všetky"
+
+msgid "All projects"
+msgstr "Všetky projekty"
+
+msgid "Amounts use a positive convention; negative values are not allowed."
+msgstr "Sumy používajú kladnú konvenciu; záporné hodnoty nie sú povolené."
+
+msgid "Candidate"
+msgstr "Uchádzač"
+
+msgid "Candidate name"
+msgstr "Meno uchádzača"
+
+msgid "Cannot activate this worker because no readiness record has been completed."
+msgstr "Pracovníka nemožno aktivovať, pretože nebol vyplnený záznam pripravenosti."
+
+msgid "Capacity cannot be lower than current occupancy."
+msgstr "Kapacita nemôže byť nižšia ako aktuálna obsadenosť."
+
+msgid "Create location"
+msgstr "Vytvoriť ubytovanie"
+
+msgid "Edit location"
+msgstr "Upraviť ubytovanie"
+
+msgid "Edit pending trial"
+msgstr "Upraviť čakajúci skúšobný deň"
+
+msgid "Edit room"
+msgstr "Upraviť izbu"
+
+msgid "Edit transport record"
+msgstr "Upraviť záznam dopravy"
+
+msgid "From date"
+msgstr "Dátum od"
+
+msgid "From week"
+msgstr "Týždeň od"
+
+msgid "Lookup"
+msgstr "Vyhľadávanie"
+
+msgid "Name or address"
+msgstr "Názov alebo adresa"
+
+msgid "New transport record"
+msgstr "Nový záznam dopravy"
+
+msgid "New trial"
+msgstr "Nový skúšobný deň"
+
+msgid "No active room with free capacity is available."
+msgstr "Nie je dostupná žiadna aktívna izba s voľnou kapacitou."
+
+msgid "No transport data. Record a project week to start the trend."
+msgstr "Žiadne údaje o doprave. Zaznamenajte týždeň projektu a vytvorte trend."
+
+msgid "No transport records match these filters."
+msgstr "Týmto filtrom nezodpovedajú žiadne záznamy dopravy."
+
+msgid "Only active rooms in active locations can be assigned."
+msgstr "Prideľovať možno iba aktívne izby v aktívnych ubytovaniach."
+
+msgid "Only available candidates can be scheduled."
+msgstr "Naplánovať možno iba dostupných uchádzačov."
+
+msgid "Only pending trials can be edited."
+msgstr "Upravovať možno iba čakajúce skúšobné dni."
+
+msgid "Operational note"
+msgstr "Prevádzková poznámka"
+
+msgid "Record transport week"
+msgstr "Zaznamenať týždeň dopravy"
+
+msgid "Records"
+msgstr "Záznamy"
+
+msgid "Release all occupants before deactivating this location."
+msgstr "Pred deaktiváciou tohto ubytovania uvoľnite všetkých ubytovaných."
+
+msgid "Release all occupants before deactivating this room."
+msgstr "Pred deaktiváciou tejto izby uvoľnite všetkých ubytovaných."
+
+msgid "Review the transport details and try again."
+msgstr "Skontrolujte údaje o doprave a skúste to znova."
+
+msgid "Review the trial details and try again."
+msgstr "Skontrolujte údaje skúšobného dňa a skúste to znova."
+
+msgid "Room created."
+msgstr "Izba bola vytvorená."
+
+msgid "Room is at full capacity."
+msgstr "Izba je plne obsadená."
+
+msgid "Room updated."
+msgstr "Izba bola aktualizovaná."
+
+msgid "Save location"
+msgstr "Uložiť ubytovanie"
+
+msgid "Save room"
+msgstr "Uložiť izbu"
+
+msgid "Save transport record"
+msgstr "Uložiť záznam dopravy"
+
+msgid "Save trial"
+msgstr "Uložiť skúšobný deň"
+
+msgid "Schedule a candidate"
+msgstr "Naplánovať uchádzača"
+
+msgid "This location is inactive and cannot receive new assignments."
+msgstr "Toto ubytovanie je neaktívne a nemožno doň pridávať nové pridelenia."
+
+msgid "To date"
+msgstr "Dátum do"
+
+msgid "To week"
+msgstr "Týždeň do"
+
+msgid "Transport record updated."
+msgstr "Záznam dopravy bol aktualizovaný."
+
+msgid "Transport weeks"
+msgstr "Týždne dopravy"
+
+msgid "Trial updated."
+msgstr "Skúšobný deň bol aktualizovaný."
+
+msgid "Trials can only be scheduled for active projects."
+msgstr "Skúšobné dni možno plánovať iba pre aktívne projekty."
+
+msgid "Weekly transported headcount"
+msgstr "Týždenný počet prepravených osôb"

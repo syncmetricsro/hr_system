@@ -1,5 +1,93 @@
 # Test Journal
 
+## 2026-07-15 — Corvinum Basic deployment-script contracts
+
+- Added structural tests that require encrypted off-site PostgreSQL exports,
+  prohibit Dokku-config export, lock 35-daily/12-monthly retention, enforce
+  the 26-hour/60% backup-health defaults, and keep staging operations explicit
+  (`start`, `stop`, `status`).
+- Focused Corvinum deployment-script tests pass: **3 passed**. Shell syntax,
+  Ruff for the new test, Django’s Corvinum settings check, and whitespace
+  validation are clean.
+- The scripts still require a real deployment host, registered SSH host key,
+  imported public GPG recipient, and provider-owned infrastructure for a live
+  transfer/restore drill; those checks cannot be truthfully run locally.
+
+## 2026-07-15 — Corvinum SMTP runner boundary
+
+- Added a regression contract proving the Corvinum demo runner keeps
+  migrations/seeds on console email and supplies provider variables only to the
+  long-running web container.
+- Verification passed: `bash -n scripts/corvinum_app.sh`; focused Corvinum
+  client suite **6 passed**; Ruff passed; the seven required variables were
+  present in `hr_system/dev_corvinum_demo`; non-secret SMTP transport settings
+  matched FORPSI; application health returned `ok`; and an authentication-only
+  SMTP connection opened successfully. No email was sent by the connection
+  check and no secret value was printed.
+
+## 2026-07-15 — Authentication client-identity isolation
+
+- Seven focused template/client tests pass, covering configured Corvinum name
+  and logo rendering, absence of Jober from the rendered login response,
+  hard-coded identity exclusion across shared pages, and shared branding on
+  login plus both TOTP screens.
+- The production-style Corvinum image rebuilt successfully. A live response
+  check confirms the Corvinum login contains its own name and fingerprinted
+  logo and no Jober text; the targeted Chromium identity scenario passes.
+- Ruff and whitespace checks are clean for the changed tests. Full-suite totals
+  were not rerun for this focused pre-demo correction.
+
+## 2026-07-15 — Corvinum personnel-intake bootstrap
+
+- Added a bootstrap-order regression requiring `seed_questionnaire` before
+  `seed_corvinum_demo`, preventing a clean database from rendering an Add
+  person button that cannot start intake.
+- Verified the running clean Corvinum database contains the published
+  questionnaire and that its authenticated intake start redirects into the
+  first questionnaire panel. Full-suite totals were not rerun for this
+  bootstrap-only correction.
+
+## 2026-07-14 — Operations data-entry workspaces
+
+- Full verification is green: **358 Jober unit tests**, **179 CorvinumEU tests**
+  (**7 skipped, 135 deselected**), and **38 Chromium Playwright scenarios**.
+- New coverage exercises central trial scheduling/editing, coordinator project
+  scope, transport create/edit/duplicate handling, manager-only location and
+  room management, occupancy safety, audit old/new values, invalid filters,
+  mobile form fit, and SK/HU/UK catalogue loading.
+- The idempotent fictional seed now creates a real pending trial, five transport
+  weeks across multiple projects, existing room occupancy, and equipment data.
+- Ruff, Django checks, migration consistency, dependency direction,
+  forbidden-Node, vendor integrity, production-image contents, and whitespace
+  checks are clean. The browser suite applies the new migration from an empty
+  database for both clients.
+
+## 2026-07-14 — Jober panel clearance
+
+- Added a shell contract test ensuring adjacent operational sections receive
+  the shared spacing token instead of relying on feature-panel margins.
+- Full Chromium verification passes **36 scenarios**. The browser regression
+  measures at least 16px between the person-detail grid and its following panel
+  in Jober Light, Jober Dark, and at the 375px mobile viewport.
+
+## 2026-07-14 — Action-oriented dashboard tooltips
+
+- Full verification is green: **346 Jober tests**, **178 CorvinumEU tests**
+  (**7 skipped, 127 deselected**), and **35 Chromium Playwright scenarios**.
+- Browser coverage verifies structured heading/body content, active-project and
+  inactive-reason click-through filters, Jober Light/Dark tooltip surfaces,
+  mobile hover/touch behavior, and the existing Corvinum theme treatments.
+- A targeted **2-test Firefox run** passes for the complete structured dashboard
+  flow and the shared hover/keyboard/touch contract. Firefox exposed and now
+  covers focus-induced scrolling: keyboard tooltips remain visible and are
+  repositioned while pointer-only tooltips still dismiss on scroll.
+- Focused filter/tooltip coverage passes **35 tests**; the final shared tooltip
+  contract passes **14 tests**. SK/HU/UK compiled catalogs contain every new
+  dashboard heading, description, and filter label.
+- Ruff, Django checks, migration consistency, dependency direction,
+  forbidden-Node, vendored-asset checksum, and whitespace checks are clean.
+  Both production-style clients were rebuilt and left running locally.
+
 ## 2026-07-13 — Language-prefix switching regression
 
 - Full verification is green: **337 Jober tests**, **169 CorvinumEU tests**

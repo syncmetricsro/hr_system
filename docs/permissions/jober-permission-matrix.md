@@ -78,9 +78,13 @@ responsible coordinator(s)**; hidden from unconnected recruiters/coordinators.
 - **Coordinator** — schedules and records project trials, then handles
   readiness data, rooms, equipment, transport headcounts, and exit
   reconciliation; sends approved SMS.
+  Coordinators may assign existing rooms but cannot create or edit accommodation
+  locations or room catalogue records.
   Cannot approve Working, manage users, decide blacklist, or view feedback.
 - **Manager/Administrator** — all permitted reads plus every management action,
   including finance, users, blacklist decisions, audit, and exports.
+  Accommodation management includes creating, editing, and deactivating
+  locations and rooms; occupied catalogue records cannot be deactivated.
 - **Observer** — read-only: approved dashboards/lists, approved financial
   summaries, exports only where explicitly allowed. No operational/financial
   writes.

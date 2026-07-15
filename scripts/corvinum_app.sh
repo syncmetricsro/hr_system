@@ -5,8 +5,8 @@
 # Same production image as Jober — DJANGO_SETTINGS_MODULE selects the client.
 # Publishes http://localhost:8001 with its own PostgreSQL and network, so the
 # Jober demo (scripts/dev_app.sh, port 8000) can run at the same time.
-# Payslip emails go to the console backend: `scripts/corvinum_app.sh logs`
-# shows the sent mail during the demo.
+# Payslip emails use the console backend unless a complete, supported SMTP
+# configuration is injected into this process (normally through Doppler).
 #
 # Usage: scripts/corvinum_app.sh up|down|status|logs|rebuild
 set -euo pipefail
@@ -21,12 +21,60 @@ POSTGRES_IMAGE="postgres@sha256:2203e6282d9e7de7c24d7da234e2a744fb325df366a3fd8e
 SETTINGS_ENV=(
   -e DJANGO_SETTINGS_MODULE=clients.corvinum_eu.production
   -e DJANGO_SECRET_KEY=dev-secret
-  -e DJANGO_EMAIL_BACKEND=django.core.mail.backends.console.EmailBackend
 )
+CONSOLE_EMAIL_ENV=(-e DJANGO_EMAIL_BACKEND=django.core.mail.backends.console.EmailBackend)
+APP_EMAIL_ENV=()
+EMAIL_DELIVERY=console
 DB_ENV=(
   -e DB_NAME=corvinum -e DB_USER=corvinum -e DB_PASSWORD=corvinum-pass
   -e DB_HOST="$DB" -e DB_PORT=5432
 )
+
+configure_app_email() {
+  if [ -z "${DJANGO_EMAIL_BACKEND:-}" ]; then
+    APP_EMAIL_ENV=("${CONSOLE_EMAIL_ENV[@]}")
+    EMAIL_DELIVERY=console
+    return
+  fi
+
+  if [ "$DJANGO_EMAIL_BACKEND" != "django.core.mail.backends.smtp.EmailBackend" ]; then
+    echo "Unsupported DJANGO_EMAIL_BACKEND for the Corvinum demo runner." >&2
+    echo "Use Django's SMTP backend, or unset it for console delivery." >&2
+    exit 1
+  fi
+
+  local required
+  for required in \
+    DJANGO_EMAIL_HOST \
+    DJANGO_EMAIL_PORT \
+    DJANGO_EMAIL_HOST_USER \
+    DJANGO_EMAIL_HOST_PASSWORD \
+    DJANGO_EMAIL_USE_TLS \
+    DJANGO_DEFAULT_FROM_EMAIL; do
+    if [ -z "${!required:-}" ]; then
+      echo "SMTP delivery requested, but ${required} is missing." >&2
+      exit 1
+    fi
+  done
+
+  if [ "$DJANGO_EMAIL_USE_TLS" != "1" ]; then
+    echo "The Corvinum demo runner requires STARTTLS (DJANGO_EMAIL_USE_TLS=1)." >&2
+    exit 1
+  fi
+
+  # Docker reads values from this process's environment. Keep secret values out
+  # of the command line and forward them only to the long-running web container.
+  APP_EMAIL_ENV=(
+    -e DJANGO_EMAIL_BACKEND
+    -e DJANGO_EMAIL_HOST
+    -e DJANGO_EMAIL_PORT
+    -e DJANGO_EMAIL_HOST_USER
+    -e DJANGO_EMAIL_HOST_PASSWORD
+    -e DJANGO_EMAIL_USE_TLS
+    -e DJANGO_DEFAULT_FROM_EMAIL
+  )
+  EMAIL_DELIVERY=smtp
+}
 
 build_image() { echo "Building $IMAGE ..."; docker build -t "$IMAGE" .; }
 ensure_image() { docker image inspect "$IMAGE" >/dev/null 2>&1 || build_image; }
@@ -48,7 +96,8 @@ wait_for_app() {
 }
 
 manage() {
-  docker run --rm --network "$NET" "${SETTINGS_ENV[@]}" "${DB_ENV[@]}" "$IMAGE" python manage.py "$@"
+  docker run --rm --network "$NET" "${SETTINGS_ENV[@]}" "${CONSOLE_EMAIL_ENV[@]}" \
+    "${DB_ENV[@]}" "$IMAGE" python manage.py "$@"
 }
 
 print_access() {
@@ -62,12 +111,14 @@ print_access() {
     Coordinator         coordinator@demo.corvinum.test
     Observer            observer@demo.corvinum.test
 
-  Payslip emails print to the app log: scripts/corvinum_app.sh logs
+  Payslip email delivery: ${EMAIL_DELIVERY}
+  $([ "$EMAIL_DELIVERY" = "console" ] && printf '%s' 'View sent email with: scripts/corvinum_app.sh logs' || printf '%s' 'SMTP credentials were injected into the web runtime only.')
   Stop with: scripts/corvinum_app.sh down
 EOF
 }
 
 cmd_up() {
+  configure_app_email
   ensure_image
   docker network inspect "$NET" >/dev/null 2>&1 || docker network create "$NET" >/dev/null
   if ! docker ps --format '{{.Names}}' | grep -q "^${DB}$"; then
@@ -80,12 +131,15 @@ cmd_up() {
   fi
   echo "Applying migrations ..."
   manage migrate --noinput >/dev/null
+  echo "Seeding the published personnel-intake questionnaire ..."
+  manage seed_questionnaire >/dev/null
   echo "Seeding the fictional CorvinumEU scenario ..."
   manage seed_corvinum_demo >/dev/null
   docker rm -f "$APP" >/dev/null 2>&1 || true
   echo "Starting app on port ${PORT} ..."
   docker run -d --name "$APP" --network "$NET" -p "${PORT}:8000" \
     "${SETTINGS_ENV[@]}" \
+    "${APP_EMAIL_ENV[@]}" \
     -e DJANGO_ALLOWED_HOSTS="localhost,127.0.0.1,${APP}" \
     -e DJANGO_SECURE_SSL_REDIRECT=0 \
     -e DJANGO_SESSION_COOKIE_SECURE=0 \

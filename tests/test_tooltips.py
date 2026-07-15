@@ -3,6 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 
 import pytest
+from django.core.exceptions import ImproperlyConfigured
 from django.urls import reverse
 from django.utils import translation
 from django.utils.translation import gettext
@@ -34,6 +35,12 @@ def test_tooltip_controller_contract_covers_accessibility_touch_and_htmx():
     assert "window.innerWidth - tooltipBox.width" in source
     assert "}, 450)" not in source  # the delay stays centralized at the call site
     assert "scheduleShow(target, 450)" in source
+    assert "target.dataset.tooltipHeading" in source
+    assert "tooltipHeading.textContent = heading" in source
+    assert "tooltipBody.textContent = message" in source
+    assert "if (!focusTarget && !pointerOverTooltip) hide(false);" in source
+    assert "if (activeTarget === focusTarget) positionTooltip();" in source
+    assert "innerHTML" not in source
 
 
 def test_contextual_surfaces_and_native_title_migration_are_declared():
@@ -45,10 +52,24 @@ def test_contextual_surfaces_and_native_title_migration_are_declared():
     ).read_text(encoding="utf-8")
 
     assert reports.count("data-tooltip") >= 6
+    assert reports.count("data-tooltip-heading") >= 6
+    assert "{% trans 'Details' %}" not in reports
     assert 'person-row" href=' in people and "data-tooltip" in people
     assert 'title="{% trans' not in notifications
     assert notifications.count("data-tooltip") >= 5
     assert corvinum.count("data-tooltip") >= 9
+
+
+def test_linked_report_tile_requires_structured_tooltip_copy(monkeypatch):
+    from core.ui import registry
+
+    monkeypatch.setattr(
+        registry,
+        "_report_tiles",
+        [{"context": lambda _request: {"label": "Broken", "value": 1, "url": "/"}, "order": 1}],
+    )
+    with pytest.raises(ImproperlyConfigured, match="tooltip_heading and tooltip_body"):
+        registry.report_tiles(object())
 
 
 @pytest.mark.parametrize(
@@ -63,6 +84,40 @@ def test_contextual_surfaces_and_native_title_migration_are_declared():
 def test_tooltip_detail_label_is_translated(language, expected):
     with translation.override(language):
         assert gettext("Details") == expected
+
+
+@pytest.mark.parametrize(
+    ("language", "heading", "body"),
+    [
+        (
+            "en",
+            "Review active projects",
+            "Open active projects to review their coordinators and assignments.",
+        ),
+        (
+            "sk",
+            "Skontrolovať aktívne projekty",
+            "Otvorte aktívne projekty a skontrolujte ich koordinátorov a priradenia.",
+        ),
+        (
+            "hu",
+            "Aktív projektek áttekintése",
+            "Nyissa meg az aktív projekteket a koordinátorok és hozzárendelések áttekintéséhez.",
+        ),
+        (
+            "uk",
+            "Переглянути активні проєкти",
+            "Відкрийте активні проєкти, щоб переглянути їхніх координаторів і призначення.",
+        ),
+    ],
+)
+def test_action_oriented_dashboard_tooltip_is_translated(language, heading, body):
+    with translation.override(language):
+        assert gettext("Review active projects") == heading
+        assert (
+            gettext("Open active projects to review their coordinators and assignments.")
+            == body
+        )
 
 
 def test_tooltip_palettes_are_client_and_mode_specific():

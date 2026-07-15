@@ -24,6 +24,9 @@ def test_jober_theme_contract_and_logo_are_rendered_on_login(client):
     assert 'data-theme-storage-key="jober-theme"' in body
     assert 'src="/static/src/js/theme.js"' in body
     assert 'src="/static/jober/brand/jober-logo.svg"' in body
+    assert 'data-client-brand="Jober"' in body
+    assert 'class="auth-brand-logo"' in body
+    assert "CorvinumEU" not in body
     assert 'class="brand-mark"' not in body
     assert body.count('data-theme-select') == 1
 

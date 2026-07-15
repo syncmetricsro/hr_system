@@ -74,6 +74,9 @@ window.JoberShell = {
 (function () {
   var tooltip = document.getElementById("app-tooltip");
   if (!tooltip) return;
+  var tooltipHeading = tooltip.querySelector("[data-tooltip-heading]");
+  var tooltipBody = tooltip.querySelector("[data-tooltip-body]");
+  if (!tooltipHeading || !tooltipBody) return;
 
   var showTimer = null;
   var hideTimer = null;
@@ -107,6 +110,11 @@ window.JoberShell = {
       (target.form && target.form.dataset.confirm) ||
       ""
     ).trim();
+  }
+
+  function tooltipHeadingMessage(target) {
+    if (!target) return "";
+    return (target.dataset.tooltipHeading || "").trim();
   }
 
   function restoreDescription() {
@@ -155,10 +163,13 @@ window.JoberShell = {
   function show(target) {
     var message = tooltipMessage(target);
     if (!message || !target.isConnected) return;
+    var heading = tooltipHeadingMessage(target);
     window.clearTimeout(hideTimer);
     if (activeTarget !== target) restoreDescription();
     activeTarget = target;
-    tooltip.textContent = message;
+    tooltipHeading.textContent = heading;
+    tooltipHeading.hidden = !heading;
+    tooltipBody.textContent = message;
     tooltip.hidden = false;
     describe(target);
     positionTooltip();
@@ -178,7 +189,9 @@ window.JoberShell = {
     var finish = function () {
       if (!activeTarget && closingTarget !== activeTarget) {
         tooltip.hidden = true;
-        tooltip.textContent = "";
+        tooltipHeading.textContent = "";
+        tooltipHeading.hidden = true;
+        tooltipBody.textContent = "";
       }
     };
     if (immediate) finish();
@@ -220,7 +233,7 @@ window.JoberShell = {
       return;
     }
     window.clearTimeout(showTimer);
-    if (focusTarget !== target && !pointerOverTooltip) hide(false);
+    if (!focusTarget && !pointerOverTooltip) hide(false);
   });
 
   document.addEventListener("focusin", function (event) {
@@ -241,6 +254,16 @@ window.JoberShell = {
   });
   document.addEventListener("click", function () { hide(true); }, true);
   document.addEventListener("htmx:beforeSwap", function () { hide(true); });
-  window.addEventListener("scroll", function () { hide(true); }, true);
+  window.addEventListener("scroll", function () {
+    if (!focusTarget) {
+      hide(true);
+      return;
+    }
+    window.requestAnimationFrame(function () {
+      if (!focusTarget) return;
+      if (activeTarget === focusTarget) positionTooltip();
+      else show(focusTarget);
+    });
+  }, true);
   window.addEventListener("resize", function () { hide(true); });
 })();

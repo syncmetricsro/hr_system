@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, HttpResponse
 from django.template.response import TemplateResponse
 from django.urls import translate_url
+from django.utils.translation import gettext as _
 from django.utils.translation import override
 from django.views.i18n import LANGUAGE_QUERY_PARAMETER
 from django.views.i18n import set_language as django_set_language
@@ -66,9 +67,18 @@ def reports(request: HttpRequest) -> TemplateResponse:
             "value": value,
             "label": label,
             "count": people.filter(lifecycle_status=value).count(),
+            "tooltip_heading": _("View %(status)s people") % {"status": label},
+            "tooltip_body": _("Open People filtered to this lifecycle status."),
         }
         for value, label in LifecycleStatus.choices
     ]
+    inactive_reason_counts = inactive_by_reason()
+    for row in inactive_reason_counts:
+        translated_reason = _(str(row["label"]))
+        row["tooltip_heading"] = _("View inactive people: %(reason)s") % {
+            "reason": translated_reason
+        }
+        row["tooltip_body"] = _("Open People filtered to this inactive reason.")
     return TemplateResponse(
         request,
         "pages/reports.html",
@@ -78,7 +88,7 @@ def reports(request: HttpRequest) -> TemplateResponse:
             "pending_trials": pending_trials.count(),
             "has_trials": has_trials,
             "status_counts": status_counts,
-            "inactive_by_reason": inactive_by_reason(),
+            "inactive_by_reason": inactive_reason_counts,
             # Feature contributions (registered via the core registry).
             "report_tiles": registry.report_tiles(request),
             "report_panels": registry.report_panels(request),

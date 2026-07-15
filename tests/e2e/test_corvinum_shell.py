@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import os
 
+from playwright.sync_api import expect
+
 
 def base_url() -> str:
     value = os.environ.get("CORVINUM_BASE_URL")
@@ -20,6 +22,18 @@ def _login(page, local_part: str) -> None:
 
 def _login_recruiter(page) -> None:
     _login(page, "recruiter")
+
+
+def test_corvinum_anonymous_authentication_is_client_branded(page):
+    page.goto(f"{base_url()}/sk/prihlasenie/")
+
+    expect(page.get_by_role("heading", name="Prihlásenie — CorvinumEU PeopleOps")).to_be_visible()
+    logo_src = page.locator(".auth-brand-logo").get_attribute("src")
+    assert logo_src is not None
+    assert "/static/corvinum/brand/corvinum-logo-v1." in logo_src
+    assert logo_src.endswith(".webp")
+    assert "jober" not in page.content().lower()
+    assert "Jober" not in page.title()
 
 
 def test_corvinum_brand_and_content_use_available_viewport(page):
@@ -122,7 +136,7 @@ def test_corvinum_notification_center_uses_shared_responsive_panel(page):
     center.wait_for()
     center.locator(".notification-toggle").click()
     popover = center.locator(".notification-popover")
-    assert popover.is_visible()
+    expect(popover).to_be_visible()
     box = popover.bounding_box()
     assert box is not None
     assert box["x"] >= 0

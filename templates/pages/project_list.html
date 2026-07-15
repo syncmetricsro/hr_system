@@ -1,7 +1,7 @@
 {% extends "layouts/base.html" %}
 {% load i18n rbac %}
 
-{% block title %}{% trans "Projects" %} · Jober{% endblock %}
+{% block title %}{% trans "Projects" %} · {{ BRAND_NAME }}{% endblock %}
 
 {% block content %}
 <section class="page-head">
@@ -11,6 +11,15 @@
   {% if may_export %}
     <a class="button button-secondary" href="{% url 'export_projects' %}">{% trans "Export" %}</a>
   {% endif %}
+  <form class="people-search" method="get" action="{% url 'project_list' %}">
+    <label class="sr-only" for="project-status-filter">{% trans "Project status" %}</label>
+    <select id="project-status-filter" name="status">
+      <option value=""{% if not project_status %} selected{% endif %}>{% trans "All project statuses" %}</option>
+      <option value="active"{% if project_status == "active" %} selected{% endif %}>{% trans "Active" %}</option>
+      <option value="inactive"{% if project_status == "inactive" %} selected{% endif %}>{% trans "Inactive" %}</option>
+    </select>
+    <button class="button button-secondary" type="submit">{% trans "Filter" %}</button>
+  </form>
 </section>
 
 <section class="field-list" aria-label="{% trans 'Projects' %}">

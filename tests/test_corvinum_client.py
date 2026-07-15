@@ -32,7 +32,14 @@ assert s.CSRF_COOKIE_NAME == "corvinum_csrftoken"
 assert s.LANGUAGE_COOKIE_NAME == "corvinum_language"
 assert s.CLIENT_DEFAULT_THEME == "dark"
 assert s.CLIENT_THEME_STORAGE_KEY == "corvinum-theme"
+assert s.BRAND_NAME == "CorvinumEU PeopleOps"
+assert s.BRAND_LOGO == "corvinum/brand/corvinum-logo-v1.webp"
 client = Client()
+login = client.get(reverse("login"))
+login_body = login.content.decode("utf-8")
+assert 'data-client-brand="CorvinumEU PeopleOps"' in login_body
+assert '/static/corvinum/brand/corvinum-logo-v1.webp' in login_body
+assert "Jober" not in login_body
 response = client.post(reverse("set_language"), {"language": "hu", "next": "/sk/people/"})
 assert response["Location"] == "/hu/people/"
 assert response.cookies["corvinum_language"].value == "hu"
@@ -94,6 +101,28 @@ def test_corvinum_demo_seed_command_is_registered():
     (no DB here — `--help` exercises import, registration, and argparse)."""
     result = _run(sys.executable, str(REPO / "manage.py"), "seed_corvinum_demo", "--help")
     assert result.returncode == 0, result.stdout + result.stderr
+
+
+def test_corvinum_demo_bootstrap_seeds_intake_before_people_scenario():
+    """A clean local demo must support Add person without a manual command."""
+    source = (REPO / "scripts" / "corvinum_app.sh").read_text(encoding="utf-8")
+    questionnaire = "manage seed_questionnaire"
+    scenario = "manage seed_corvinum_demo"
+    assert questionnaire in source
+    assert source.index(questionnaire) < source.index(scenario)
+
+
+def test_corvinum_demo_runner_keeps_smtp_secrets_in_web_runtime_only():
+    """Provider credentials are opt-in and never enter migrations or seeds."""
+    source = (REPO / "scripts" / "corvinum_app.sh").read_text(encoding="utf-8")
+    manage_body = source.split("manage() {", 1)[1].split("print_access() {", 1)[0]
+    app_run = source.split('docker run -d --name "$APP"', 1)[1]
+
+    assert 'CONSOLE_EMAIL_ENV=(-e DJANGO_EMAIL_BACKEND=' in source
+    assert '"${CONSOLE_EMAIL_ENV[@]}"' in manage_body
+    assert '"${APP_EMAIL_ENV[@]}"' in app_run
+    assert "-e DJANGO_EMAIL_HOST_PASSWORD" in source
+    assert "SMTP delivery requested" in source
 
 
 def test_corvinum_url_surface_matches_flag_set():

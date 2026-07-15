@@ -1,11 +1,14 @@
 from __future__ import annotations
 
+from datetime import timedelta
+
 from django.core.management.base import BaseCommand
+from django.utils import timezone
 
 from core.accounts.models import User
 from core.people.models import LifecycleStatus, Person
 from core.projects.models import Project
-from core.projects.services import activate_on_project
+from core.projects.services import activate_on_project, schedule_trial
 
 # Fictional data only — no real worker PII before the legal gate.
 DEMO_DOMAIN = "demo.jober.test"
@@ -19,7 +22,7 @@ PROJECTS = [
 # (first, last, status, has_disability)
 PEOPLE = [
     ("Olha", "Kovalenko", LifecycleStatus.WORKING, False),
-    ("Farrukh", "Tashkentov", LifecycleStatus.TRIAL_DAY, False),
+    ("Farrukh", "Tashkentov", LifecycleStatus.AVAILABLE, False),
     ("Tran", "Van Minh", LifecycleStatus.AVAILABLE, False),
     ("Diana", "Horvathova", LifecycleStatus.AVAILABLE, True),
     ("Bohdan", "Melnyk", LifecycleStatus.INACTIVE, False),
@@ -57,5 +60,20 @@ class Command(BaseCommand):
                 activate_on_project(
                     person, projects["DHLBA"], actor=coordinator, reason="demo seed"
                 )
+
+        # A lifecycle label alone does not populate the operational queue. Keep
+        # one real pending TrialAssignment so the demo exercises the same UI and
+        # service path staff use.
+        farrukh = Person.objects.filter(first_name="Farrukh", last_name="Tashkentov").first()
+        if farrukh and not farrukh.trials.exists():
+            if farrukh.lifecycle_status == LifecycleStatus.TRIAL_DAY:
+                # Repair databases created by the older incomplete seed.
+                farrukh.lifecycle_status = LifecycleStatus.AVAILABLE
+                farrukh.save(update_fields=["lifecycle_status", "updated_at"])
+            schedule_trial(
+                farrukh, projects["WEB"], actor=coordinator,
+                scheduled_for=timezone.now() + timedelta(days=2),
+                note="Demo arrival at the main gate",
+            )
 
         self.stdout.write(self.style.SUCCESS(f"People seeded: {Person.objects.count()} total"))

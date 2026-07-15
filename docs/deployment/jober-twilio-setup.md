@@ -64,7 +64,7 @@ doppler setup          # picks up doppler.yaml -> hr_system / dev
 
 Run locally with secrets injected (replaces the manual `export`s):
 ```bash
-doppler run -- scripts/dev_app.sh up
+doppler run --project hr_system --config dev -- scripts/dev_app.sh up
 ```
 `doppler run` sets `TWILIO_ACCOUNT_SID/AUTH_TOKEN/FROM_NUMBER` in the shell;
 `dev_app.sh` forwards them into the container. Verify presence without printing

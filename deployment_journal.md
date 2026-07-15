@@ -1,5 +1,54 @@
 # Deployment Journal
 
+## 2026-07-15 — CorvinumEU cost-conscious production operating model
+
+- Recorded the owner decision for a low-traffic **FORPSI Basic** production
+  VPS (2 vCPU / 4 GB / 40 GB NVMe), with `corvinum-staging` stopped except for
+  rehearsals, deployment checks, and restore drills. Standard is the defined
+  upgrade path for continuous staging, resource pressure/OOMs, recurring swap,
+  or a restore that exceeds four business hours.
+- Added `docs/deployment/corvinum-basic-production.md`: provider choices,
+  external DPA and data-location gates, encrypted off-site retention, disk
+  thresholds, website Supabase backup boundary, and a restricted monthly
+  restore procedure.
+- Added deployment-host scripts for an encrypted PostgreSQL/release-manifest
+  backup, backup-age/capacity monitoring, and explicit staging start/stop.
+  The scripts retain 35 daily and 12 monthly archives, fail at 26-hour backup
+  age or 60% target use, and intentionally never export Doppler/Dokku config.
+- Still owner-controlled and not claimed complete: VPS orders, DPA signatures,
+  SSH/firewall/DNS setup, GPG recovery-key custody, monitoring delivery, and
+  least-privilege Supabase database/private-bucket export automation.
+
+## 2026-07-15 — Corvinum intake seed correction
+
+- Corvinum local and fictional staging bootstrap instructions now seed the
+  published personnel-intake questionnaire before the client scenario. Clean
+  resets no longer leave the visible **Add person** action without a usable
+  questionnaire.
+- Production remains unaffected: demo seeds must never run against a real-data
+  environment.
+
+## 2026-07-15 — Corvinum client-demo rehearsal runbook
+
+- Refreshed `docs/deployment/corvinum-demo-runbook.md` into a rehearsal-safe
+  20–25 minute walkthrough with a ten-minute fallback route, exact demo
+  accounts, presenter checkpoints, recovery steps, and a clean disposable-DB
+  reset between practice and the client call.
+- Corrected the demonstrated scope to match Corvinum's active feature flags:
+  recruitment trials, accommodation, transport, profitability, messaging, and
+  feedback are not mounted in this thin client.
+- Corrected the local payslip demonstration: the console backend proves the
+  fictional recipient and attachment output but is not a clickable mailbox;
+  real provider-backed testing remains Doppler-injected.
+
+## 2026-07-14 — Operations workspace migration
+
+- Deploy includes logistics migration `0008_room_is_active_and_unique_label`.
+  It adds an active flag to rooms and enforces unique room labels within each
+  accommodation. Existing rooms default active; no record is deleted.
+- Run the normal migration step before serving the new accommodation forms.
+  The production image remains npm-free and contains no new runtime dependency.
+
 ## 2026-07-12 (later)
 
 Staging deploy target chosen and runbook written.

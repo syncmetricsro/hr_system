@@ -1,12 +1,13 @@
 {% extends "layouts/base.html" %}
 {% load i18n %}
 
-{% block title %}{% trans "Sign in" %} · Jober{% endblock %}
+{% block title %}{% trans "Sign in" %} · {{ BRAND_NAME }}{% endblock %}
 
 {% block content %}
-<section class="login-panel">
-  <p class="eyebrow">{% trans "Internal system" %}</p>
-  <h1>{% trans "Sign in to the Jober team" %}</h1>
+<section class="login-panel" data-client-brand="{{ BRAND_NAME }}">
+  {% include "partials/auth_brand.html" %}
+  <p class="eyebrow">{{ BRAND_NAME }} · {% trans "Internal system" %}</p>
+  <h1>{% trans "Sign in" %} — {{ BRAND_NAME }}</h1>
   {% if error %}
     <p class="form-error" role="alert">{{ error }}</p>
   {% endif %}

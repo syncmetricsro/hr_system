@@ -120,6 +120,7 @@ for c in seed_demo seed_people seed_logistics seed_questionnaire seed_finance se
   dokku run jober-staging python manage.py "$c"
 done
 # corvinum-staging
+dokku run corvinum-staging python manage.py seed_questionnaire
 dokku run corvinum-staging python manage.py seed_corvinum_demo
 ```
 *(Never run these on a real-data production app.)*

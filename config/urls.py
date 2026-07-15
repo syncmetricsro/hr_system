@@ -54,6 +54,8 @@ app_routes = [
 if getattr(settings, "FEATURE_FLAGS", {}).get("recruitment_trials", True):
     app_routes += [
         path("trials/", project_views.trials_queue, name="trials_queue"),
+        path("trials/create/", project_views.trial_create, name="trial_create"),
+        path("trials/<int:trial_pk>/edit/", project_views.trial_edit, name="trial_edit"),
         path("trials/<int:trial_pk>/outcome/", project_views.trial_outcome, name="trial_outcome"),
         path("people/<int:person_pk>/assign-trial/", project_views.assign_trial, name="assign_trial"),
         path("people/<int:person_pk>/readiness/", project_views.readiness_update, name="readiness_update"),
@@ -70,8 +72,12 @@ if _feature_on("logistics", "accommodation"):
 
     app_routes += [
         path("accommodation/", logistics_views.accommodation_list, name="accommodation_list"),
+        path("accommodation/new/", logistics_views.accommodation_create, name="accommodation_create"),
         path("accommodation/costs/", logistics_views.accommodation_costs, name="accommodation_costs"),
         path("accommodation/<int:pk>/", logistics_views.accommodation_detail, name="accommodation_detail"),
+        path("accommodation/<int:pk>/edit/", logistics_views.accommodation_edit, name="accommodation_edit"),
+        path("accommodation/<int:accommodation_pk>/rooms/new/", logistics_views.room_create, name="room_create"),
+        path("rooms/<int:pk>/edit/", logistics_views.room_edit, name="room_edit"),
         path("rooms/<int:pk>/rate/", logistics_views.set_room_rate_view, name="set_room_rate"),
         path("room-assignments/<int:pk>/rate/", logistics_views.set_assignment_rate_view, name="set_assignment_rate"),
         path("people/<int:person_pk>/assign-room/", logistics_views.assign_room_view, name="assign_room"),
@@ -95,6 +101,8 @@ if _feature_on("logistics", "transport"):
     app_routes += [
         path("projects/<int:project_pk>/transport/", logistics_views.record_transport_view, name="record_transport"),
         path("transport/", logistics_views.transport_trends, name="transport_trends"),
+        path("transport/create/", logistics_views.transport_create, name="transport_create"),
+        path("transport/<int:pk>/edit/", logistics_views.transport_edit, name="transport_edit"),
     ]
 
 if _feature_on("finance", "profitability"):

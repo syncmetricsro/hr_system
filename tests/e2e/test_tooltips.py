@@ -13,6 +13,14 @@ def corvinum_url() -> str:
     return os.environ["CORVINUM_BASE_URL"].rstrip("/")
 
 
+def _login_jober(page) -> None:
+    page.goto(f"{jober_url()}/prihlasenie/")
+    page.fill("input[name='email']", "manazer@demo.jober.test")
+    page.fill("input[name='password']", "demo-jober-2026")
+    page.click("form button[type='submit']")
+    page.wait_for_load_state("networkidle")
+
+
 def test_shared_tooltip_hover_keyboard_dynamic_confirmation_and_touch(page):
     page.set_viewport_size({"width": 375, "height": 667})
     page.goto(f"{jober_url()}/prihlasenie/")
@@ -143,3 +151,53 @@ def test_corvinum_tooltip_colors_follow_light_and_dark_modes(page):
     )
     assert light["backgroundColor"] == "rgba(255, 255, 255, 0.98)"
     assert light["color"] == "rgb(7, 30, 39)"
+
+
+def test_dashboard_tooltips_explain_and_open_filtered_drill_downs(page):
+    _login_jober(page)
+    page.goto(f"{jober_url()}/en/reports/")
+    page.select_option("[data-theme-select]", "dark")
+
+    active_projects = page.locator("a.metric-card", has_text="Active projects")
+    active_projects.hover()
+    tooltip = page.locator("#app-tooltip")
+    expect(tooltip.locator("[data-tooltip-heading]")).to_have_text(
+        "Review active projects"
+    )
+    expect(tooltip.locator("[data-tooltip-body]")).to_have_text(
+        "Open active projects to review their coordinators and assignments."
+    )
+    dark_background = tooltip.evaluate(
+        "element => getComputedStyle(element).backgroundColor"
+    )
+    assert dark_background == "rgb(41, 36, 53)"
+
+    page.mouse.move(1, 1)
+    expect(tooltip).to_be_hidden()
+    page.select_option("[data-theme-select]", "light")
+    active_projects.hover()
+    expect(tooltip).to_be_visible(timeout=1_200)
+    light_background = tooltip.evaluate(
+        "element => getComputedStyle(element).backgroundColor"
+    )
+    assert light_background == "rgb(27, 36, 48)"
+
+    active_projects.click()
+    page.wait_for_url("**/en/projects/?status=active")
+    expect(page.locator("select[name='status']")).to_have_value("active")
+
+    page.goto(f"{jober_url()}/en/reports/")
+    page.mouse.move(1, 1)
+    reason = page.locator("a[href*='inactive_reason=']").first
+    reason.focus()
+    expect(tooltip.locator("[data-tooltip-heading]")).to_contain_text(
+        "View inactive people:"
+    )
+    expect(tooltip.locator("[data-tooltip-body]")).to_have_text(
+        "Open People filtered to this inactive reason."
+    )
+    href = reason.get_attribute("href")
+    reason.click()
+    page.wait_for_url(f"**{href}")
+    expect(page.locator("select[name='status']")).to_have_value("inactive")
+    expect(page.locator("select[name='inactive_reason']")).not_to_have_value("")

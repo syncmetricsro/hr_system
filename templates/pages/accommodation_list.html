@@ -1,7 +1,7 @@
 {% extends "layouts/base.html" %}
 {% load i18n rbac %}
 
-{% block title %}{% trans "Accommodation" %} · Jober{% endblock %}
+{% block title %}{% trans "Accommodation" %} · {{ BRAND_NAME }}{% endblock %}
 
 {% block content %}
 <section class="page-head">
@@ -9,6 +9,19 @@
   <h1>{% trans "Accommodation" %}</h1>
   {% can 'accommodation.manage' as may_costs %}
   {% if may_costs %}<a class="button button-secondary" href="{% url 'accommodation_costs' %}">{% trans "Cost report" %}</a>{% endif %}
+  {% if can_manage %}<a class="button button-primary" href="{% url 'accommodation_create' %}">{% trans "Create location" %}</a>{% endif %}
+</section>
+
+<section class="panel workflow-panel">
+  <form class="people-search" method="get">
+    <input type="search" name="q" value="{{ query }}" placeholder="{% trans 'Name or address' %}" aria-label="{% trans 'Name or address' %}">
+    <select name="status" aria-label="{% trans 'Status' %}">
+      <option value="active"{% if status_filter == 'active' %} selected{% endif %}>{% trans "Active" %}</option>
+      <option value="inactive"{% if status_filter == 'inactive' %} selected{% endif %}>{% trans "Inactive" %}</option>
+      <option value="all"{% if status_filter == 'all' %} selected{% endif %}>{% trans "All" %}</option>
+    </select>
+    <button class="button button-secondary" type="submit">{% trans "Filter" %}</button>
+  </form>
 </section>
 
 <section class="field-list" aria-label="{% trans 'Accommodation' %}">
@@ -17,6 +30,7 @@
       <div>
         <h3>{{ acc.name }}</h3>
         <p>{{ acc.address }}</p>
+        {% if not acc.is_active %}<span class="badge">{% trans "Inactive" %}</span>{% endif %}
       </div>
       <dl>
         <div><dt>{% trans "Rooms" %}</dt><dd>{{ acc.rooms.count }}</dd></div>

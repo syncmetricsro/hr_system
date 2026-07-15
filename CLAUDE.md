@@ -42,7 +42,7 @@ secret-free and use mocks/fakes or the app's fail-closed unconfigured path.
 # Demo/dev app stack (production image + Postgres) at http://localhost:8000
 scripts/dev_app.sh up|down|rebuild|status|logs     # seeds demo users + full scenario
 # Twilio-enabled human session:
-doppler run -- scripts/dev_app.sh up
+doppler run --project hr_system --config dev -- scripts/dev_app.sh up
 # Logins: {manazer,naborar,koordinator,pozorovatel}@demo.jober.test / demo-jober-2026
 
 # Unit tests + lint (test image built from requirements/test.lock; needs a dev DB)

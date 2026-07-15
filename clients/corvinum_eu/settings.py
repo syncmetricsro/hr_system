@@ -62,6 +62,7 @@ TWO_FACTOR_REQUIRED_ROLES = ["manager"]
 
 BRAND_NAME = "CorvinumEU PeopleOps"
 BRAND_MARK = "CE"
+BRAND_LOGO = "corvinum/brand/corvinum-logo-v1.webp"
 CLIENT_DEFAULT_THEME = "dark"
 CLIENT_THEME_STORAGE_KEY = "corvinum-theme"
 

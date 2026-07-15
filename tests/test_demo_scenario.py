@@ -14,7 +14,8 @@ from features.blacklist.models import BlacklistCaseStatus, MatchFingerprint
 from features.blacklist.services import check_match
 from features.compliance.services import compliance_alerts
 from features.finance.models import FinancialMonth
-from features.logistics.models import DeductionReviewStatus, EquipmentIssue
+from features.logistics.models import DeductionReviewStatus, EquipmentIssue, TransportWeek
+from core.projects.models import TrialAssignment, TrialOutcome
 from core.people.models import LifecycleStatus, Person
 from core.people.services import inactive_by_reason
 
@@ -63,6 +64,11 @@ def test_scenario_populates_every_module():
 
     # Olha has a phone (SMS panel).
     assert Person.objects.get(first_name="Olha", last_name="Kovalenko").phone
+
+    # Operational workspaces contain records produced by their real services.
+    assert TrialAssignment.objects.filter(outcome=TrialOutcome.PENDING).exists()
+    assert TransportWeek.objects.values("week_start").distinct().count() >= 5
+    assert TransportWeek.objects.values("project").distinct().count() >= 2
 
 
 def test_scenario_is_idempotent():

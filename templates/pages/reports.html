@@ -10,11 +10,11 @@
 </section>
 
 <section class="dashboard-grid" aria-label="{% trans 'Reports' %}">
-  <a class="metric-card" href="{% url 'project_list' %}" data-tooltip="{% trans 'Details' %}"><span>{% trans "Active projects" %}</span><strong>{{ active_projects }}</strong></a>
-  <a class="metric-card" href="{% url 'people_list' %}" data-tooltip="{% trans 'Details' %}"><span>{% trans "People" %}</span><strong>{{ total_people }}</strong></a>
-  {% if has_trials %}<a class="metric-card" href="{% url 'trials_queue' %}" data-tooltip="{% trans 'Details' %}"><span>{% trans "Awaiting outcome" %}</span><strong>{{ pending_trials }}</strong></a>{% endif %}
+  <a class="metric-card" href="{% url 'project_list' %}?status=active" data-tooltip-heading="{% trans 'Review active projects' %}" data-tooltip="{% trans 'Open active projects to review their coordinators and assignments.' %}"><span>{% trans "Active projects" %}</span><strong>{{ active_projects }}</strong></a>
+  <a class="metric-card" href="{% url 'people_list' %}" data-tooltip-heading="{% trans 'Browse people' %}" data-tooltip="{% trans 'Open the full People list to search and filter workers.' %}"><span>{% trans "People" %}</span><strong>{{ total_people }}</strong></a>
+  {% if has_trials %}<a class="metric-card" href="{% url 'trials_queue' %}" data-tooltip-heading="{% trans 'Resolve pending trial outcomes' %}" data-tooltip="{% trans 'Open trials that still require an outcome.' %}"><span>{% trans "Awaiting outcome" %}</span><strong>{{ pending_trials }}</strong></a>{% endif %}
   {% for tile in report_tiles %}
-    {% if tile.url %}<a class="metric-card" href="{{ tile.url }}" data-tooltip="{% trans 'Details' %}"><span>{{ tile.label }}</span><strong>{{ tile.value }}</strong></a>{% else %}<article class="metric-card"><span>{{ tile.label }}</span><strong>{{ tile.value }}</strong></article>{% endif %}
+    {% if tile.url %}<a class="metric-card" href="{{ tile.url }}" data-tooltip-heading="{{ tile.tooltip_heading }}" data-tooltip="{{ tile.tooltip_body }}"><span>{{ tile.label }}</span><strong>{{ tile.value }}</strong></a>{% else %}<article class="metric-card"><span>{{ tile.label }}</span><strong>{{ tile.value }}</strong></article>{% endif %}
   {% endfor %}
 </section>
 
@@ -24,14 +24,14 @@
     <h2>{% trans "People by status" %}</h2>
     <dl class="detail-grid">
       {% for row in status_counts %}
-        <a href="{% url 'people_list' %}?status={{ row.value }}" data-tooltip="{% trans 'Details' %}"><dt>{{ row.label }}</dt><dd>{{ row.count }}</dd></a>
+        <a href="{% url 'people_list' %}?status={{ row.value }}" data-tooltip-heading="{{ row.tooltip_heading }}" data-tooltip="{{ row.tooltip_body }}"><dt>{{ row.label }}</dt><dd>{{ row.count }}</dd></a>
       {% endfor %}
     </dl>
 
     <h2>{% trans "Inactive by reason" %}</h2>
     <dl class="detail-grid">
       {% for row in inactive_by_reason %}
-        <a href="{% url 'people_list' %}?status=inactive" data-tooltip="{% trans 'Details' %}"><dt>{{ row.label|db_trans }}</dt><dd>{{ row.count }}</dd></a>
+        <a href="{% url 'people_list' %}?status=inactive&amp;inactive_reason={{ row.value }}" data-tooltip-heading="{{ row.tooltip_heading }}" data-tooltip="{{ row.tooltip_body }}"><dt>{{ row.label|db_trans }}</dt><dd>{{ row.count }}</dd></a>
       {% empty %}
         <div><dd>{% trans "No inactive people." %}</dd></div>
       {% endfor %}

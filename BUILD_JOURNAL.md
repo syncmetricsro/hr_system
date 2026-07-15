@@ -1,5 +1,89 @@
 # Build Journal
 
+## 2026-07-15 — Corvinum Basic production backup operations
+
+- Added dependency-free, deployment-host-only scripts for encrypted off-site
+  PostgreSQL/release-manifest backups, backup health enforcement, and explicit
+  on-demand Corvinum staging control. They use existing Dokku, OpenPGP, and
+  OpenSSH tooling; no runtime dependency, migration, model, endpoint, or
+  client code was added.
+- The backup workflow has a hard boundary against `dokku config:export` so
+  Doppler-synchronised secrets cannot enter a backup archive. Future ERP media
+  is opt-in through an explicit absolute directory.
+
+## 2026-07-15 — Isolated Corvinum demo SMTP runtime
+
+- Updated `scripts/corvinum_app.sh` to accept a complete Django SMTP
+  configuration injected by Doppler while retaining console email as its
+  secret-free default.
+- SMTP configuration is validated fail-closed and forwarded only to the web
+  container. Migration and seed containers remain on console email and never
+  receive the SMTP password.
+- Documented the dedicated `hr_system/dev_corvinum_demo` configuration and the
+  deliverable, non-personal test-recipient requirement.
+
+## 2026-07-15 — Strict client identity on authentication screens
+
+- Removed the hard-coded Jober heading from the shared login template and all
+  remaining hard-coded Jober browser titles from shared pages. Titles and
+  visible identity now come from the active client's `BRAND_NAME` setting.
+- Added a shared authentication lockup to login, TOTP enrollment, and TOTP
+  verification. Corvinum now supplies its client-owned logo through
+  `BRAND_LOGO`; Jober continues to supply its own SVG.
+- Added source, rendered-template, and browser boundaries that fail if a shared
+  page hard-codes either client or if Corvinum authentication renders Jober
+  identity. No dependency, migration, endpoint, or external asset was added.
+
+## 2026-07-15 — Corvinum personnel-intake demo bootstrap
+
+- Corvinum's clean local bootstrap now seeds the published, versioned intake
+  questionnaire before its fictional client scenario. **Add person** therefore
+  opens the three-step guided intake after every disposable-database reset.
+- The staging seed order and client walkthrough now match the executable
+  bootstrap. The walkthrough includes a fictional `Olena Demo` intake act and
+  carries that record into checklist and notification demonstrations.
+- No dependency, migration, endpoint, external asset, or real PII was added.
+
+## 2026-07-14 — Operations data-entry workspaces
+
+- Trials now supports lookup, central scheduling from Available candidates, and
+  audited pending-trial edits. Coordinator writes are scoped to responsible
+  projects; existing recruiter and manager scheduling access is preserved.
+- Transport now combines filtered records, create/edit panels, and trend charts.
+  Central duplicate project/week creation fails clearly, while project quick
+  entry remains idempotent.
+- Managers can create/edit/deactivate accommodation locations and rooms.
+  Coordinators retain assignment-only access. Occupancy protects capacity and
+  deactivation; inactive/full rooms are excluded from new assignments.
+- Added the `Room.is_active` field and per-location unique room-label constraint.
+  No dependency, external asset, or frontend toolchain change was introduced.
+
+## 2026-07-14 — Consistent Jober panel clearance
+
+- Added shell-level vertical rhythm between adjacent operational sections in
+  Jober, matching the established CorvinumEU behavior. This closes the
+  grid-to-feature-panel seam on person details and prevents independently
+  contributed panels from visually touching.
+- Existing grid gaps, page-header spacing, responsive stacking, and both theme
+  palettes remain unchanged. No dependency, model, migration, or asset added.
+
+## 2026-07-14 — Action-oriented dashboard tooltips
+
+- Replaced generic dashboard “Details” help with a localized action heading
+  and a concise destination/filter description. Structured content is assigned
+  as text nodes, while existing single-message navigation, confirmation, and
+  notification tooltips remain backward compatible.
+- Made linked report-tile providers supply their own meaningful tooltip copy;
+  missing heading/body data now fails closed during report composition.
+- Aligned dashboard promises with their drill-downs: Active projects opens an
+  active-only project list, lifecycle rows retain their status filters, and
+  inactive-reason rows filter People by the selected reason or “No reason”.
+- Improved keyboard behavior found during Firefox verification: focused
+  tooltips survive focus-induced scrolling and reposition instead of being
+  immediately dismissed. Pointer-only tooltips still dismiss on scroll.
+- Added EN/SK/HU/UK copy and kept the feature dependency-free, client-neutral,
+  and free of models, migrations, cookies, endpoints, or external assets.
+
 ## 2026-07-13 — Reliable language-prefix switching
 
 - Replaced Django's stock language endpoint with a thin shared wrapper that

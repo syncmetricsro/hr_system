@@ -3580,3 +3580,230 @@ msgstr "Світла"
 
 msgid "Dark"
 msgstr "Темна"
+
+msgid "Review active projects"
+msgstr "Переглянути активні проєкти"
+
+msgid "Open active projects to review their coordinators and assignments."
+msgstr "Відкрийте активні проєкти, щоб переглянути їхніх координаторів і призначення."
+
+msgid "Browse people"
+msgstr "Переглянути людей"
+
+msgid "Open the full People list to search and filter workers."
+msgstr "Відкрийте повний список людей для пошуку та фільтрування працівників."
+
+msgid "Resolve pending trial outcomes"
+msgstr "Опрацювати результати пробних днів"
+
+msgid "Open trials that still require an outcome."
+msgstr "Відкрийте пробні дні, для яких ще потрібно зафіксувати результат."
+
+msgid "Review compliance issues"
+msgstr "Переглянути проблеми відповідності"
+
+msgid "Open workers with document or medical requirements that need attention."
+msgstr "Відкрийте працівників із документами або медичними вимогами, що потребують уваги."
+
+msgid "Review accommodation occupancy"
+msgstr "Переглянути заповненість житла"
+
+msgid "Open accommodation costs, occupied places, and assigned costs."
+msgstr "Відкрийте витрати на житло, зайняті місця та призначені витрати."
+
+msgid "Review equipment exceptions"
+msgstr "Переглянути винятки щодо спорядження"
+
+msgid "Open issued equipment awaiting return or a deduction decision."
+msgstr "Відкрийте видане спорядження, що очікує повернення або рішення щодо відрахування."
+
+#, python-format
+msgid "View %(status)s people"
+msgstr "Переглянути людей зі статусом %(status)s"
+
+msgid "Open People filtered to this lifecycle status."
+msgstr "Відкрийте список людей, відфільтрований за цим статусом життєвого циклу."
+
+#, python-format
+msgid "View inactive people: %(reason)s"
+msgstr "Переглянути неактивних людей: %(reason)s"
+
+msgid "Open People filtered to this inactive reason."
+msgstr "Відкрийте список людей, відфільтрований за цією причиною неактивності."
+
+msgid "Review company finances"
+msgstr "Переглянути фінанси компанії"
+
+msgid "Open the finance summary for revenue, costs, and net results."
+msgstr "Відкрийте фінансовий підсумок доходів, витрат і чистого результату."
+
+msgid "Project status"
+msgstr "Статус проєкту"
+
+msgid "All project statuses"
+msgstr "Усі статуси проєктів"
+
+msgid "All inactive reasons"
+msgstr "Усі причини неактивності"
+
+msgid "View available people"
+msgstr "Переглянути доступних людей"
+
+msgid "View working people"
+msgstr "Переглянути працюючих людей"
+
+msgid "A transport record already exists for this project and week."
+msgstr "Для цього проєкту й тижня вже існує запис транспорту."
+
+msgid "Accommodation created. Add rooms to make it assignable."
+msgstr "Місце проживання створено. Додайте кімнати, щоб його можна було призначати."
+
+msgid "Accommodation management"
+msgstr "Керування проживанням"
+
+msgid "Accommodation updated."
+msgstr "Місце проживання оновлено."
+
+msgid "Add room"
+msgstr "Додати кімнату"
+
+msgid "All"
+msgstr "Усі"
+
+msgid "All projects"
+msgstr "Усі проєкти"
+
+msgid "Amounts use a positive convention; negative values are not allowed."
+msgstr "Суми мають бути додатними; від’ємні значення не дозволені."
+
+msgid "Candidate"
+msgstr "Кандидат"
+
+msgid "Candidate name"
+msgstr "Ім’я кандидата"
+
+msgid "Cannot activate this worker because no readiness record has been completed."
+msgstr "Працівника неможливо активувати, оскільки запис готовності не заповнено."
+
+msgid "Capacity cannot be lower than current occupancy."
+msgstr "Місткість не може бути меншою за поточну зайнятість."
+
+msgid "Create location"
+msgstr "Створити місце проживання"
+
+msgid "Edit location"
+msgstr "Редагувати місце проживання"
+
+msgid "Edit pending trial"
+msgstr "Редагувати очікуваний пробний день"
+
+msgid "Edit room"
+msgstr "Редагувати кімнату"
+
+msgid "Edit transport record"
+msgstr "Редагувати запис транспорту"
+
+msgid "From date"
+msgstr "Дата від"
+
+msgid "From week"
+msgstr "Тиждень від"
+
+msgid "Lookup"
+msgstr "Пошук"
+
+msgid "Name or address"
+msgstr "Назва або адреса"
+
+msgid "New transport record"
+msgstr "Новий запис транспорту"
+
+msgid "New trial"
+msgstr "Новий пробний день"
+
+msgid "No active room with free capacity is available."
+msgstr "Немає активної кімнати з вільними місцями."
+
+msgid "No transport data. Record a project week to start the trend."
+msgstr "Немає даних транспорту. Запишіть тиждень проєкту, щоб почати графік."
+
+msgid "No transport records match these filters."
+msgstr "Жоден запис транспорту не відповідає цим фільтрам."
+
+msgid "Only active rooms in active locations can be assigned."
+msgstr "Можна призначати лише активні кімнати в активних місцях проживання."
+
+msgid "Only available candidates can be scheduled."
+msgstr "Можна планувати лише доступних кандидатів."
+
+msgid "Only pending trials can be edited."
+msgstr "Редагувати можна лише очікувані пробні дні."
+
+msgid "Operational note"
+msgstr "Операційна примітка"
+
+msgid "Record transport week"
+msgstr "Записати тиждень транспорту"
+
+msgid "Records"
+msgstr "Записи"
+
+msgid "Release all occupants before deactivating this location."
+msgstr "Перед деактивацією цього місця проживання виселіть усіх мешканців."
+
+msgid "Release all occupants before deactivating this room."
+msgstr "Перед деактивацією цієї кімнати виселіть усіх мешканців."
+
+msgid "Review the transport details and try again."
+msgstr "Перевірте дані транспорту та спробуйте ще раз."
+
+msgid "Review the trial details and try again."
+msgstr "Перевірте дані пробного дня та спробуйте ще раз."
+
+msgid "Room created."
+msgstr "Кімнату створено."
+
+msgid "Room is at full capacity."
+msgstr "Кімната повністю зайнята."
+
+msgid "Room updated."
+msgstr "Кімнату оновлено."
+
+msgid "Save location"
+msgstr "Зберегти місце проживання"
+
+msgid "Save room"
+msgstr "Зберегти кімнату"
+
+msgid "Save transport record"
+msgstr "Зберегти запис транспорту"
+
+msgid "Save trial"
+msgstr "Зберегти пробний день"
+
+msgid "Schedule a candidate"
+msgstr "Запланувати кандидата"
+
+msgid "This location is inactive and cannot receive new assignments."
+msgstr "Це місце проживання неактивне й не може отримувати нові призначення."
+
+msgid "To date"
+msgstr "Дата до"
+
+msgid "To week"
+msgstr "Тиждень до"
+
+msgid "Transport record updated."
+msgstr "Запис транспорту оновлено."
+
+msgid "Transport weeks"
+msgstr "Тижні транспорту"
+
+msgid "Trial updated."
+msgstr "Пробний день оновлено."
+
+msgid "Trials can only be scheduled for active projects."
+msgstr "Пробні дні можна планувати лише для активних проєктів."
+
+msgid "Weekly transported headcount"
+msgstr "Щотижнева кількість перевезених людей"

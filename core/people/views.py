@@ -27,11 +27,26 @@ def people_list(request: HttpRequest) -> TemplateResponse:
     # Broad internal read: any authenticated role may see the operational list.
     query = (request.GET.get("q") or "").strip()
     status = (request.GET.get("status") or "").strip()
+    inactive_reason = (request.GET.get("inactive_reason") or "").strip()
+    inactive_reasons = InactiveReason.objects.all()
     people = Person.objects.filter(is_archived=False)
     if query:
         people = people.filter(search_name__contains=query.lower())
     if status in LifecycleStatus.values:
         people = people.filter(lifecycle_status=status)
+    else:
+        status = ""
+    if status == LifecycleStatus.INACTIVE:
+        if inactive_reason == "none":
+            people = people.filter(inactive_reason__isnull=True)
+        elif inactive_reason.isdecimal() and inactive_reasons.filter(
+            pk=int(inactive_reason)
+        ).exists():
+            people = people.filter(inactive_reason_id=int(inactive_reason))
+        else:
+            inactive_reason = ""
+    else:
+        inactive_reason = ""
     return TemplateResponse(
         request,
         "pages/people_list.html",
@@ -40,6 +55,8 @@ def people_list(request: HttpRequest) -> TemplateResponse:
             "query": query,
             "status": status,
             "statuses": LifecycleStatus.choices,
+            "inactive_reason": inactive_reason,
+            "inactive_reasons": inactive_reasons,
         },
     )
 

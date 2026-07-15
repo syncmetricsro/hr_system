@@ -28,6 +28,24 @@ def test_production_templates_do_not_use_multiline_short_comments():
     assert offenders == [], "multiline {# ... #} comments: " + ", ".join(offenders)
 
 
+def test_shared_page_templates_never_hardcode_a_client_identity():
+    """Shared pages must receive identity from BRAND_NAME, never name a tenant."""
+    offenders = []
+    for path in (REPO / "templates/pages").rglob("*.html"):
+        source = path.read_text(encoding="utf-8").lower()
+        if "jober" in source or "corvinum" in source:
+            offenders.append(str(path.relative_to(REPO)))
+
+    assert offenders == [], "client identity leaked into shared templates: " + ", ".join(offenders)
+
+
+def test_every_authentication_screen_uses_the_shared_brand_lockup():
+    for name in ("login.html", "two_factor_setup.html", "two_factor_verify.html"):
+        source = (REPO / "templates/pages" / name).read_text(encoding="utf-8")
+        assert '{% include "partials/auth_brand.html" %}' in source
+        assert "{{ BRAND_NAME }}" in source
+
+
 def test_flash_notifications_are_timed_and_shared_by_both_client_shells():
     for template in (
         REPO / "templates/layouts/base.html",
@@ -37,6 +55,14 @@ def test_flash_notifications_are_timed_and_shared_by_both_client_shells():
         assert 'class="messages flash-stack"' in source
         assert "setTimeout(() => visible = false, 3000)" in source
         assert "x-transition.opacity.duration.200ms" in source
+
+
+def test_jober_shell_separates_adjacent_operational_sections():
+    """Feature-contributed panels must not touch a preceding page grid."""
+    source = (REPO / "static/src/css/app.css").read_text(encoding="utf-8")
+    assert ".app-shell > :is(section, aside, article):not(.page-head)" in source
+    assert "+ :is(section, aside, article)" in source
+    assert "margin-top: var(--space-4);" in source
 
 
 def test_trial_outcome_actions_are_neutral_until_chosen():

@@ -46,7 +46,7 @@ def test_jober_notification_center_opens_links_dismisses_and_does_not_poll(page)
     popover.wait_for(state="visible")
     first_item = popover.locator(".notification-item").filter(
         has=page.locator("input[name='key'][value^='trial-outcome:']")
-    )
+    ).first
     assert first_item.locator("a.notification-link").get_attribute("href")
 
     # Manual refresh preserves a still-current notification.
@@ -58,7 +58,7 @@ def test_jober_notification_center_opens_links_dismisses_and_does_not_poll(page)
     popover.wait_for(state="visible")
     first_item = popover.locator(".notification-item").filter(
         has=page.locator("input[name='key'][value^='trial-outcome:']")
-    )
+    ).first
 
     key = first_item.locator("input[name='key']").get_attribute("value")
     with page.expect_response(lambda response: "/notifications/dismiss/" in response.url):

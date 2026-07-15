@@ -6,12 +6,17 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, redirect
+from django.db.models import Q
 from django.template.response import TemplateResponse
 from django.utils.translation import gettext as _
+from django.utils.dateparse import parse_date
 from django.views.decorators.http import require_POST
 
 from core.accounts.permissions import Action, require_action
 from core.accounts.permissions import can as user_can
+from features.logistics.forms import (
+    AccommodationForm, RoomForm, TransportWeekForm, transport_projects,
+)
 from features.logistics.models import (
     Accommodation,
     EquipmentIssue,
@@ -23,8 +28,10 @@ from features.logistics.models import (
 from features.logistics.services import (
     CapacityError,
     DeductionReviewError,
+    LogisticsWorkflowError,
     accommodation_cost_report,
     assign_room,
+    create_transport_week,
     flag_unreturned,
     issue_equipment,
     pending_deduction_reviews,
@@ -34,13 +41,23 @@ from features.logistics.services import (
     review_deduction,
     set_assignment_rate,
     set_room_rate,
+    save_accommodation,
+    save_room,
+    update_transport_week,
 )
 from core.people.models import Person
 from core.projects.models import Project
 
 
+def _valid_date(value: str) -> bool:
+    try:
+        return bool(parse_date(value))
+    except ValueError:
+        return False
+
+
 @login_required
-def transport_trends(request: HttpRequest) -> TemplateResponse:
+def _transport_context(request, *, form=None, editing=None):
     """Weekly transport headcount trends per project + company total (plan §11.10).
 
     Rendered as dependency-free CSS bars (no JS charting library)."""
@@ -69,16 +86,67 @@ def transport_trends(request: HttpRequest) -> TemplateResponse:
             ],
         })
     company = [{"week": w, "total": totals[w], "pct": pct(totals[w], max_total)} for w in weeks]
+    records = TransportWeek.objects.select_related("project")
+    project_filter = (request.GET.get("project") or "").strip()
+    week_from = (request.GET.get("week_from") or "").strip()
+    week_to = (request.GET.get("week_to") or "").strip()
+    if project_filter.isdigit():
+        records = records.filter(project_id=project_filter)
+    else:
+        project_filter = ""
+    if week_from and _valid_date(week_from):
+        records = records.filter(week_start__gte=week_from)
+    else:
+        week_from = ""
+    if week_to and _valid_date(week_to):
+        records = records.filter(week_start__lte=week_to)
+    else:
+        week_to = ""
+    may_record = user_can(request.user, Action.TRANSPORT_RECORD)
+    return {
+        "series": series, "company": company, "records": records[:100],
+        "projects": transport_projects(request.user) if may_record else Project.objects.filter(is_active=True),
+        "project_filter": project_filter, "week_from": week_from, "week_to": week_to,
+        "may_record": may_record, "form": form, "editing": editing,
+    }
+
+
+@login_required
+def transport_trends(request: HttpRequest) -> TemplateResponse:
+    form = None
+    editing = None
+    if request.GET.get("create") == "1" and user_can(request.user, Action.TRANSPORT_RECORD):
+        form = TransportWeekForm(user=request.user)
+    edit_value = (request.GET.get("edit") or "").strip()
+    if edit_value.isdigit() and user_can(request.user, Action.TRANSPORT_RECORD):
+        editing = get_object_or_404(
+            TransportWeek, pk=edit_value, project__in=transport_projects(request.user)
+        )
+        form = TransportWeekForm(user=request.user, instance=editing)
     return TemplateResponse(
-        request, "pages/transport_trends.html", {"series": series, "company": company},
+        request, "pages/transport_trends.html",
+        _transport_context(request, form=form, editing=editing),
     )
 
 
 @login_required
 def accommodation_list(request: HttpRequest) -> TemplateResponse:
     accommodations = Accommodation.objects.prefetch_related("rooms")
+    query = (request.GET.get("q") or "").strip()
+    status = (request.GET.get("status") or "active").strip()
+    if query:
+        accommodations = accommodations.filter(Q(name__icontains=query) | Q(address__icontains=query))
+    if status == "active":
+        accommodations = accommodations.filter(is_active=True)
+    elif status == "inactive":
+        accommodations = accommodations.filter(is_active=False)
+    else:
+        status = "all"
     return TemplateResponse(
-        request, "pages/accommodation_list.html", {"accommodations": accommodations}
+        request, "pages/accommodation_list.html", {
+            "accommodations": accommodations, "query": query, "status_filter": status,
+            "can_manage": user_can(request.user, Action.ACCOMMODATION_MANAGE),
+        }
     )
 
 
@@ -93,6 +161,71 @@ def accommodation_detail(request: HttpRequest, pk: int) -> TemplateResponse:
             "rooms": accommodation.rooms.all(),
             "can_manage": user_can(request.user, Action.ACCOMMODATION_MANAGE),
         },
+    )
+
+
+def _model_values(instance, fields):
+    values = {}
+    for field in fields:
+        value = getattr(instance, field)
+        values[field] = value if value is None or isinstance(value, (str, int, float, bool)) else str(value)
+    return values
+
+
+@require_action(Action.ACCOMMODATION_MANAGE)
+def accommodation_create(request: HttpRequest) -> HttpResponse:
+    form = AccommodationForm(request.POST or None)
+    if request.method == "POST" and form.is_valid():
+        accommodation = form.save(commit=False)
+        save_accommodation(accommodation, actor=request.user)
+        messages.success(request, _("Accommodation created. Add rooms to make it assignable."))
+        return redirect("accommodation_detail", pk=accommodation.pk)
+    return TemplateResponse(request, "pages/accommodation_form.html", {"form": form})
+
+
+@require_action(Action.ACCOMMODATION_MANAGE)
+def accommodation_edit(request: HttpRequest, pk: int) -> HttpResponse:
+    accommodation = get_object_or_404(Accommodation, pk=pk)
+    old = _model_values(accommodation, ("name", "address", "notes", "is_active"))
+    form = AccommodationForm(request.POST or None, instance=accommodation)
+    if request.method == "POST" and form.is_valid():
+        save_accommodation(form.save(commit=False), actor=request.user, old=old)
+        messages.success(request, _("Accommodation updated."))
+        return redirect("accommodation_detail", pk=accommodation.pk)
+    return TemplateResponse(
+        request, "pages/accommodation_form.html",
+        {"form": form, "accommodation": accommodation},
+    )
+
+
+@require_action(Action.ACCOMMODATION_MANAGE)
+def room_create(request: HttpRequest, accommodation_pk: int) -> HttpResponse:
+    accommodation = get_object_or_404(Accommodation, pk=accommodation_pk)
+    form = RoomForm(request.POST or None)
+    form.instance.accommodation = accommodation
+    if request.method == "POST" and form.is_valid():
+        room = form.save(commit=False)
+        room.accommodation = accommodation
+        save_room(room, actor=request.user)
+        messages.success(request, _("Room created."))
+        return redirect("accommodation_detail", pk=accommodation.pk)
+    return TemplateResponse(
+        request, "pages/room_form.html", {"form": form, "accommodation": accommodation},
+    )
+
+
+@require_action(Action.ACCOMMODATION_MANAGE)
+def room_edit(request: HttpRequest, pk: int) -> HttpResponse:
+    room = get_object_or_404(Room.objects.select_related("accommodation"), pk=pk)
+    old = _model_values(room, ("label", "capacity", "monthly_rate", "is_active"))
+    form = RoomForm(request.POST or None, instance=room)
+    if request.method == "POST" and form.is_valid():
+        save_room(form.save(commit=False), actor=request.user, old=old)
+        messages.success(request, _("Room updated."))
+        return redirect("accommodation_detail", pk=room.accommodation_id)
+    return TemplateResponse(
+        request, "pages/room_form.html",
+        {"form": form, "accommodation": room.accommodation, "room": room},
     )
 
 
@@ -207,14 +340,57 @@ def review_deduction_view(request: HttpRequest, issue_pk: int) -> HttpResponse:
 @require_POST
 @require_action(Action.TRANSPORT_RECORD)
 def record_transport_view(request: HttpRequest, project_pk: int) -> HttpResponse:
-    project = get_object_or_404(Project, pk=project_pk)
-    week_start = request.POST.get("week_start")
-    if week_start:
+    project = get_object_or_404(transport_projects(request.user), pk=project_pk)
+    form = TransportWeekForm({**request.POST.dict(), "project": project.pk}, user=request.user)
+    if form.is_valid():
         record_transport_week(
-            project, week_start, request.POST.get("headcount", 0),
-            actor=request.user, note=request.POST.get("note", ""),
+            project, form.cleaned_data["week_start"], form.cleaned_data["headcount"],
+            actor=request.user, note=form.cleaned_data["note"],
         )
         messages.success(request, _("Transport week recorded."))
     else:
-        messages.error(request, _("Week start is required."))
+        messages.error(request, _("Review the transport details and try again."))
     return redirect("project_detail", pk=project.pk)
+
+
+@require_POST
+@require_action(Action.TRANSPORT_RECORD)
+def transport_create(request: HttpRequest) -> HttpResponse:
+    form = TransportWeekForm(request.POST, user=request.user)
+    if form.is_valid():
+        try:
+            create_transport_week(
+                project=form.cleaned_data["project"], week_start=form.cleaned_data["week_start"],
+                headcount=form.cleaned_data["headcount"], note=form.cleaned_data["note"], actor=request.user,
+            )
+            messages.success(request, _("Transport week recorded."))
+            return redirect("transport_trends")
+        except LogisticsWorkflowError as exc:
+            form.add_error(None, exc)
+    return TemplateResponse(
+        request, "pages/transport_trends.html", _transport_context(request, form=form), status=400,
+    )
+
+
+@require_POST
+@require_action(Action.TRANSPORT_RECORD)
+def transport_edit(request: HttpRequest, pk: int) -> HttpResponse:
+    week = get_object_or_404(TransportWeek, pk=pk, project__in=transport_projects(request.user))
+    form = TransportWeekForm(request.POST, user=request.user, instance=week)
+    if form.is_valid():
+        try:
+            # ModelForm validation assigns cleaned values to its instance; reload
+            # so the service can audit the persisted old values accurately.
+            week.refresh_from_db()
+            update_transport_week(
+                week, project=form.cleaned_data["project"], week_start=form.cleaned_data["week_start"],
+                headcount=form.cleaned_data["headcount"], note=form.cleaned_data["note"], actor=request.user,
+            )
+            messages.success(request, _("Transport record updated."))
+            return redirect("transport_trends")
+        except LogisticsWorkflowError as exc:
+            form.add_error(None, exc)
+    return TemplateResponse(
+        request, "pages/transport_trends.html",
+        _transport_context(request, form=form, editing=week), status=400,
+    )

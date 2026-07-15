@@ -3577,3 +3577,230 @@ msgstr "Világos"
 
 msgid "Dark"
 msgstr "Sötét"
+
+msgid "Review active projects"
+msgstr "Aktív projektek áttekintése"
+
+msgid "Open active projects to review their coordinators and assignments."
+msgstr "Nyissa meg az aktív projekteket a koordinátorok és hozzárendelések áttekintéséhez."
+
+msgid "Browse people"
+msgstr "Személyek böngészése"
+
+msgid "Open the full People list to search and filter workers."
+msgstr "Nyissa meg a teljes személylistát a munkavállalók kereséséhez és szűréséhez."
+
+msgid "Resolve pending trial outcomes"
+msgstr "Függőben lévő próbanaperedmények kezelése"
+
+msgid "Open trials that still require an outcome."
+msgstr "Nyissa meg azokat a próbanapokat, amelyeknél még rögzíteni kell az eredményt."
+
+msgid "Review compliance issues"
+msgstr "Megfelelőségi problémák áttekintése"
+
+msgid "Open workers with document or medical requirements that need attention."
+msgstr "Nyissa meg a figyelmet igénylő dokumentum- vagy orvosi követelményekkel rendelkező munkavállalókat."
+
+msgid "Review accommodation occupancy"
+msgstr "Szálláskihasználtság áttekintése"
+
+msgid "Open accommodation costs, occupied places, and assigned costs."
+msgstr "Nyissa meg a szállásköltségeket, a foglalt helyeket és a hozzárendelt költségeket."
+
+msgid "Review equipment exceptions"
+msgstr "Felszerelési kivételek áttekintése"
+
+msgid "Open issued equipment awaiting return or a deduction decision."
+msgstr "Nyissa meg a visszaadásra vagy levonási döntésre váró kiadott felszereléseket."
+
+#, python-format
+msgid "View %(status)s people"
+msgstr "%(status)s állapotú személyek megtekintése"
+
+msgid "Open People filtered to this lifecycle status."
+msgstr "Nyissa meg a személylistát erre az életciklus-állapotra szűrve."
+
+#, python-format
+msgid "View inactive people: %(reason)s"
+msgstr "Inaktív személyek megtekintése: %(reason)s"
+
+msgid "Open People filtered to this inactive reason."
+msgstr "Nyissa meg a személylistát erre az inaktivitási okra szűrve."
+
+msgid "Review company finances"
+msgstr "Vállalati pénzügyek áttekintése"
+
+msgid "Open the finance summary for revenue, costs, and net results."
+msgstr "Nyissa meg a bevételek, költségek és nettó eredmény pénzügyi összesítését."
+
+msgid "Project status"
+msgstr "Projekt állapota"
+
+msgid "All project statuses"
+msgstr "Minden projektállapot"
+
+msgid "All inactive reasons"
+msgstr "Minden inaktivitási ok"
+
+msgid "View available people"
+msgstr "Elérhető személyek megtekintése"
+
+msgid "View working people"
+msgstr "Dolgozó személyek megtekintése"
+
+msgid "A transport record already exists for this project and week."
+msgstr "Ehhez a projekthez és héthez már létezik szállítási bejegyzés."
+
+msgid "Accommodation created. Add rooms to make it assignable."
+msgstr "A szállás létrejött. A hozzárendeléshez adjon hozzá szobákat."
+
+msgid "Accommodation management"
+msgstr "Szálláskezelés"
+
+msgid "Accommodation updated."
+msgstr "A szállás frissítve."
+
+msgid "Add room"
+msgstr "Szoba hozzáadása"
+
+msgid "All"
+msgstr "Összes"
+
+msgid "All projects"
+msgstr "Minden projekt"
+
+msgid "Amounts use a positive convention; negative values are not allowed."
+msgstr "Az összegek pozitív előjelet használnak; negatív érték nem engedélyezett."
+
+msgid "Candidate"
+msgstr "Jelölt"
+
+msgid "Candidate name"
+msgstr "Jelölt neve"
+
+msgid "Cannot activate this worker because no readiness record has been completed."
+msgstr "A dolgozó nem aktiválható, mert nincs kitöltött készenléti bejegyzés."
+
+msgid "Capacity cannot be lower than current occupancy."
+msgstr "A kapacitás nem lehet kisebb a jelenlegi kihasználtságnál."
+
+msgid "Create location"
+msgstr "Szállás létrehozása"
+
+msgid "Edit location"
+msgstr "Szállás szerkesztése"
+
+msgid "Edit pending trial"
+msgstr "Függő próbanap szerkesztése"
+
+msgid "Edit room"
+msgstr "Szoba szerkesztése"
+
+msgid "Edit transport record"
+msgstr "Szállítási bejegyzés szerkesztése"
+
+msgid "From date"
+msgstr "Kezdő dátum"
+
+msgid "From week"
+msgstr "Kezdő hét"
+
+msgid "Lookup"
+msgstr "Keresés"
+
+msgid "Name or address"
+msgstr "Név vagy cím"
+
+msgid "New transport record"
+msgstr "Új szállítási bejegyzés"
+
+msgid "New trial"
+msgstr "Új próbanap"
+
+msgid "No active room with free capacity is available."
+msgstr "Nincs szabad férőhellyel rendelkező aktív szoba."
+
+msgid "No transport data. Record a project week to start the trend."
+msgstr "Nincs szállítási adat. A trendhez rögzítsen egy projekthetet."
+
+msgid "No transport records match these filters."
+msgstr "Ezeknek a szűrőknek egyetlen szállítási bejegyzés sem felel meg."
+
+msgid "Only active rooms in active locations can be assigned."
+msgstr "Csak aktív szállás aktív szobája rendelhető hozzá."
+
+msgid "Only available candidates can be scheduled."
+msgstr "Csak elérhető jelöltek ütemezhetők."
+
+msgid "Only pending trials can be edited."
+msgstr "Csak függő próbanapok szerkeszthetők."
+
+msgid "Operational note"
+msgstr "Működési megjegyzés"
+
+msgid "Record transport week"
+msgstr "Szállítási hét rögzítése"
+
+msgid "Records"
+msgstr "Bejegyzések"
+
+msgid "Release all occupants before deactivating this location."
+msgstr "A szállás kikapcsolása előtt költöztessen ki minden lakót."
+
+msgid "Release all occupants before deactivating this room."
+msgstr "A szoba kikapcsolása előtt költöztessen ki minden lakót."
+
+msgid "Review the transport details and try again."
+msgstr "Ellenőrizze a szállítás adatait, majd próbálja újra."
+
+msgid "Review the trial details and try again."
+msgstr "Ellenőrizze a próbanap adatait, majd próbálja újra."
+
+msgid "Room created."
+msgstr "A szoba létrejött."
+
+msgid "Room is at full capacity."
+msgstr "A szoba megtelt."
+
+msgid "Room updated."
+msgstr "A szoba frissítve."
+
+msgid "Save location"
+msgstr "Szállás mentése"
+
+msgid "Save room"
+msgstr "Szoba mentése"
+
+msgid "Save transport record"
+msgstr "Szállítási bejegyzés mentése"
+
+msgid "Save trial"
+msgstr "Próbanap mentése"
+
+msgid "Schedule a candidate"
+msgstr "Jelölt ütemezése"
+
+msgid "This location is inactive and cannot receive new assignments."
+msgstr "Ez a szállás inaktív, ezért nem kaphat új hozzárendelést."
+
+msgid "To date"
+msgstr "Záró dátum"
+
+msgid "To week"
+msgstr "Záró hét"
+
+msgid "Transport record updated."
+msgstr "A szállítási bejegyzés frissítve."
+
+msgid "Transport weeks"
+msgstr "Szállítási hetek"
+
+msgid "Trial updated."
+msgstr "A próbanap frissítve."
+
+msgid "Trials can only be scheduled for active projects."
+msgstr "Próbanap csak aktív projekthez ütemezhető."
+
+msgid "Weekly transported headcount"
+msgstr "Heti szállított létszám"

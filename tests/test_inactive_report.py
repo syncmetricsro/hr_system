@@ -26,8 +26,8 @@ def test_counts_group_by_reason_desc():
     Person.objects.create(first_name="avail", last_name="X")  # AVAILABLE, excluded
 
     rows = inactive_by_reason()
-    assert rows[0] == {"label": "Sick (t)", "count": 2}  # most common first
-    assert {"label": "Left (t)", "count": 1} in rows
+    assert rows[0] == {"value": sick.pk, "label": "Sick (t)", "count": 2}
+    assert {"value": left.pk, "label": "Left (t)", "count": 1} in rows
     assert sum(r["count"] for r in rows) == 3
 
 
@@ -35,14 +35,16 @@ def test_null_reason_bucketed():
     _inactive("noreason")  # inactive, no reason
     with translation.override("en"):
         rows = inactive_by_reason()
-    assert rows == [{"label": "No reason", "count": 1}]
+    assert rows == [{"value": "none", "label": "No reason", "count": 1}]
 
 
 def test_archived_excluded_by_default():
     reason = InactiveReason.objects.create(label="Suspended (t)")
     _inactive("live", reason)
     _inactive("gone", reason, archived=True)
-    assert inactive_by_reason() == [{"label": "Suspended (t)", "count": 1}]
+    assert inactive_by_reason() == [
+        {"value": reason.pk, "label": "Suspended (t)", "count": 1}
+    ]
     assert inactive_by_reason(include_archived=True)[0]["count"] == 2
 
 

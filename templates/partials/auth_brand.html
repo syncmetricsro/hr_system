@@ -1,0 +1,8 @@
+{% load static %}
+<div class="auth-brand" aria-hidden="true">
+  {% if BRAND_LOGO %}
+    <img class="auth-brand-logo" src="{% static BRAND_LOGO %}" alt="">
+  {% else %}
+    <span class="auth-brand-mark">{{ BRAND_MARK }}</span>
+  {% endif %}
+</div>
