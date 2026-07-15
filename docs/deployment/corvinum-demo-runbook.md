@@ -5,6 +5,18 @@
 > [jober-demo-runbook.md](jober-demo-runbook.md) and runs independently on
 > port 8000.
 
+## Public staging presenter URL
+
+The current fictional-data client demo is also deployed to
+<https://corvinum-staging.80.211.210.46.sslip.io/sk/prihlasenie/> on
+**syncmetric-prime**. Use this URL for the client presentation; use the local
+`localhost:8001` stack for practice and disposable resets.
+
+The staging app contains only the published Recruiter intake v3 and fictional
+CorvinumEU seed scenario. Its separately scoped Doppler staging configuration
+has successfully delivered one encrypted fictional payslip PDF to a controlled
+test inbox. Never use a real worker address for either environment.
+
 Use this as the source of truth for the client demonstration. The extended
 walkthrough takes **25–30 minutes**; a ten-minute route is included below.
 Present in Slovak and switch to Hungarian briefly. State at the start that all
@@ -73,8 +85,8 @@ opening act.
 
 ### Presenter setup before the call
 
-- Open <http://localhost:8001> in a fresh private browser window at desktop
-  width. A private window avoids an old browser-local theme choice.
+- Open the public staging URL above in a fresh private browser window at
+  desktop width. A private window avoids an old browser-local theme choice.
 - Before sharing the screen, confirm the login card shows the Corvinum logo,
   **CorvinumEU PeopleOps** heading, and no Jober name or artwork.
 - Have a phone with Aegis, Google Authenticator, FreeOTP, or another TOTP app.

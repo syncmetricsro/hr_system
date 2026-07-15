@@ -1,5 +1,18 @@
 # Test Journal
 
+## 2026-07-15 — CorvinumEU public staging smoke verification
+
+- Verified the fictional `corvinum-staging` deployment on syncmetric-prime:
+  Gunicorn running on port 8000; HTTPS `/sk/` unauthenticated redirect to the
+  Slovak login; HTTPS login `200`; secure Corvinum CSRF cookie; and static CSS
+  `200 text/css`.
+- Applied migrations and seeded published Recruiter intake v3 plus the
+  fictional CorvinumEU scenario.
+- Provider-backed staging acceptance also passed: the read-only,
+  config-scoped Doppler SMTP runtime configuration delivered an encrypted
+  fictional payslip PDF to the controlled test inbox. No provider credential,
+  recipient, service-token value, or one-time PDF password was logged.
+
 ## 2026-07-15 — Payslip resend recipient and SMTP-error handling
 
 - Added coverage for resending to the prior successful recipient after a
@@ -554,10 +567,26 @@ Manual end-to-end check of the messaging slice against real Twilio, secrets via 
 
 - **Auth isolation:** `doppler run -- curl … Messages.json` returned **401** with a mismatched SID/token pair, then **201** after correcting the pair in Doppler — confirming the failure was credentials, not the app.
 - **In-app, Test credentials + magic number** (`+15005550006`): Send SMS recorded **Sent** (fail-closed when unconfigured was also observed first — correct behaviour).
-- **In-app, Live credentials + trial number** (`+1928…`) → Twilio **Virtual Phone** (`+18777804236`): message **Delivered** (Twilio Messaging Logs) and visible in the Virtual Phone simulator.
+- **In-app, Live credentials + approved trial recipient** → Twilio **Virtual
+  Phone**: message **Delivered** (Twilio Messaging Logs) and visible in the
+  Virtual Phone simulator. Phone values are intentionally not recorded.
 - Verified the gated **Send SMS** panel (phone-gated, `sms.send`, coordinator-scoped) and the new **Edit-person** form used to set the recipient phone.
 
 Conclusion: messaging works end-to-end in production form. Outstanding items are operational only (account upgrade to drop the trial prefix; public inbound webhook URL).
+
+## 2026-07-16 — Jober staging Twilio configuration boundary (manual)
+
+- Verified the public `jober-staging` app remained healthy after synchronizing
+  only the four approved Twilio runtime keys from its separate read-only
+  Doppler scope.
+- A failed controlled send produced Twilio error **21266**: the selected
+  recipient and configured sender were the same. This confirms the provider
+  request reached Twilio; it is not an application, deployment, or CSRF
+  failure.
+- Acceptance prerequisite: `DEMO_SMS_PHONE` must be a distinct approved test
+  recipient, and a harmless outbound SMS must be confirmed in Twilio before
+  the client demonstration. No phone value, credential, or service-token value
+  is recorded.
 
 ## 2026-06-28 (later) — Per-view RBAC gating
 

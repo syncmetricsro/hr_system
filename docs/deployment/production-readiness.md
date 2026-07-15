@@ -22,7 +22,7 @@ Last updated: 2026-06-29
 
 | Gate | State | Notes |
 |---|---|---|
-| Twilio SMS | 🟡 Verified live (2026-06-29) | End-to-end delivery confirmed through the app: live creds (via Doppler) → trial number `+1928…` → Twilio Virtual Phone, **Delivered** in Messaging Logs. Code: stdlib client, signature-verified webhook (ADR 0019). **Remaining (ops, not code):** upgrade the Twilio account (drops the trial prefix; allows non-verified recipients) and point the inbound webhook at a public `/webhooks/twilio/inbound/` once staging/TLS exists. Real worker numbers stay behind the real-data gate. |
+| Twilio SMS | 🟡 Verified live (2026-06-29) | End-to-end delivery confirmed through the app using live credentials via Doppler and a controlled Twilio Virtual Phone recipient; no phone values are recorded here. Code: stdlib client, signature-verified webhook (ADR 0019). **Remaining (ops, not code):** use a recipient distinct from the configured sender (Twilio rejects same-number attempts with `21266`), upgrade the account to allow non-verified recipients, and point the inbound webhook at public staging/TLS. Real worker numbers stay behind the real-data gate. |
 
 ## Product / legal gates (block real data, not code)
 

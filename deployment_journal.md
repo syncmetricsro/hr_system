@@ -1,5 +1,70 @@
 # Deployment Journal
 
+## 2026-07-16 — Jober public fictional-data staging and Twilio configuration
+
+- Deployed the committed release **`12d0735`** to the isolated Dokku app
+  **`jober-staging`** on **syncmetric-prime**, with its separate
+  `pg-jober-staging` PostgreSQL service, Jober settings module, temporary
+  HTTPS hostname, and fictional-only seed data. Django checks and migrations
+  completed cleanly; the public health endpoint returned `ok` after restart.
+- Created the separate read-only Doppler scope `hr_system/stg_jober-staging`
+  and synchronized exactly the four approved Jober SMS runtime keys:
+  `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN`, `TWILIO_FROM_NUMBER`, and
+  `DEMO_SMS_PHONE`. Jober email remains intentionally deferred for this demo.
+  No Doppler token, provider credential, sender, or recipient value is
+  recorded here.
+- Initial SMS troubleshooting confirmed that Twilio error **21266** means the
+  configured recipient matched the configured sender. This is a provider
+  safety rule, not a Dokku, CSRF, or application error. The controlled demo
+  recipient must be a distinct, approved SMS-capable/verified number; do not
+  use `TWILIO_FROM_NUMBER` as `DEMO_SMS_PHONE`.
+- Before presenting SMS, send one harmless controlled test message and confirm
+  delivery in Twilio. Configure and test the signed inbound webhook only after
+  that outbound check succeeds.
+
+## 2026-07-15 — CorvinumEU public fictional-data staging demo deployed
+
+- Deployed the committed release **`12d0735`** (`jober-platform:corvinum-demo-12d0735`)
+  to the isolated Dokku app **`corvinum-staging`** on
+  **syncmetric-prime** (Dokku 0.38.23). The public temporary demo URL is
+  `https://corvinum-staging.80.211.210.46.sslip.io/sk/prihlasenie/`; it is not
+  a production CorvinumEU domain.
+- The app uses `clients.corvinum_eu.production`, the separate linked PostgreSQL
+  service `pg-corvinum-staging`, and the existing explicit `http:80:8000` port
+  mapping. The image was built locally without secrets and streamed directly to
+  Dokku with `git:load-image`; no source checkout or application build ran on
+  the VPS.
+- Applied migrations and seeded only the published **Recruiter intake v3** and
+  the fictional CorvinumEU scenario. The four `@demo.corvinum.test` accounts,
+  projects, checklist, equipment/ledger records, and questionnaire are staging
+  demonstration data only.
+- Verified externally: HTTPS login route returns 200 with a Secure Corvinum
+  CSRF cookie; `/sk/` correctly redirects unauthenticated visitors to login;
+  CSS returns `200 text/css`; and Gunicorn is running on port 8000 without
+  application errors in the Dokku log.
+- Created a Doppler **read-only, config-scoped service token**, synchronized
+  only the seven `DJANGO_EMAIL_*` values into this Dokku app, and completed one
+  controlled fictional payslip-email test successfully. The encrypted PDF
+  reached the controlled test inbox; no recipient address, SMTP credential,
+  one-time PDF password, or token value is recorded here. No real recipient or
+  real personal data is authorized.
+- The Dokku default-bridge-network deprecation warning is recorded as post-demo
+  host maintenance; it did not affect this deployment. Revoke or replace the
+  staging service token after the demo according to the retention decision.
+- Documented the repeatable image-stream release and rollback procedure for
+  `corvinum-staging`, plus the planned isolated `jober-staging` app/database,
+  hostname, provider boundary, fictional seeding, and acceptance checks on the
+  same Dokku host. Jober has not yet been created or deployed there.
+- Clarified the Jober-specific staging sheet: `config.settings.production`
+  selects Jober, while a separately scoped `TWILIO_*` configuration enables
+  only its controlled SMS demonstration. Corvinum's SMTP configuration and
+  service token must not be reused.
+- Documented Jober's exact staging release boundary: derive explicit `DB_*`
+  values from the linked service without recording them, run migrations and
+  `ensure_superuser` after an image deployment, and use the repository's real
+  fictional seed sequence only for a deliberate reset. Same-origin HTTPS does
+  not require an unused `DJANGO_CSRF_TRUSTED_ORIGINS` setting in this codebase.
+
 ## 2026-07-15 — CorvinumEU recruitment trials enabled
 
 - Enabled the shared recruitment-trial feature for CorvinumEU’s demo. Recruiters,

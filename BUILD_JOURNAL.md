@@ -1,5 +1,15 @@
 # Build Journal
 
+## 2026-07-15 — CorvinumEU public staging release
+
+- Built the committed Corvinum demo release `12d0735` locally without runtime
+  credentials and deployed that image to the isolated `corvinum-staging` Dokku
+  app on syncmetric-prime with Dokku's image-streaming deployment path.
+- The public staging app uses the Corvinum production settings layer and its
+  own PostgreSQL service, but seeds only fictional demo data. SMTP delivery is
+  intentionally a separately pending runtime configuration step; Doppler is
+  never included in the image or build stage.
+
 ## 2026-07-15 — Safe payslip resend and SMTP failures
 
 - Payslip resend now uses the last successful recipient address, rather than a
