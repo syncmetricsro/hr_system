@@ -15,7 +15,8 @@ from django.views.decorators.http import require_POST
 from core.accounts.permissions import Action, require_action
 from core.accounts.permissions import can as user_can
 from features.logistics.forms import (
-    AccommodationForm, RoomForm, TransportWeekForm, transport_projects,
+    AccommodationForm, EquipmentItemForm, RoomForm, TransportWeekForm,
+    transport_projects,
 )
 from features.logistics.models import (
     Accommodation,
@@ -39,6 +40,7 @@ from features.logistics.services import (
     release_room,
     return_equipment,
     review_deduction,
+    save_equipment_item,
     set_assignment_rate,
     set_room_rate,
     save_accommodation,
@@ -283,11 +285,61 @@ def release_room_view(request: HttpRequest, person_pk: int) -> HttpResponse:
     return redirect("person_detail", pk=person.pk)
 
 
+@require_action(Action.CATALOG_MANAGE)
+def equipment_catalog(request: HttpRequest) -> TemplateResponse:
+    """Manager-only master-data page; inactive entries remain visible for history."""
+    items = EquipmentItem.objects.all()
+    query = (request.GET.get("q") or "").strip()
+    status = (request.GET.get("status") or "active").strip()
+    if query:
+        items = items.filter(Q(name__icontains=query) | Q(size__icontains=query))
+    if status == "active":
+        items = items.filter(is_active=True)
+    elif status == "inactive":
+        items = items.filter(is_active=False)
+    else:
+        status = "all"
+    return TemplateResponse(
+        request,
+        "pages/equipment_catalog.html",
+        {"items": items, "query": query, "status_filter": status},
+    )
+
+
+@require_action(Action.CATALOG_MANAGE)
+def equipment_create(request: HttpRequest) -> HttpResponse:
+    form = EquipmentItemForm(request.POST or None)
+    if request.method == "POST" and form.is_valid():
+        save_equipment_item(form.save(commit=False), actor=request.user)
+        messages.success(request, _("Equipment item created."))
+        return redirect("equipment_catalog")
+    return TemplateResponse(request, "pages/equipment_form.html", {"form": form})
+
+
+@require_action(Action.CATALOG_MANAGE)
+def equipment_edit(request: HttpRequest, pk: int) -> HttpResponse:
+    item = get_object_or_404(EquipmentItem, pk=pk)
+    old = {
+        "name": item.name,
+        "size": item.size,
+        "unit_price": str(item.unit_price),
+        "is_active": item.is_active,
+    }
+    form = EquipmentItemForm(request.POST or None, instance=item)
+    if request.method == "POST" and form.is_valid():
+        save_equipment_item(form.save(commit=False), actor=request.user, old=old)
+        messages.success(request, _("Equipment item updated."))
+        return redirect("equipment_catalog")
+    return TemplateResponse(
+        request, "pages/equipment_form.html", {"form": form, "item": item}
+    )
+
+
 @require_POST
 @require_action(Action.EQUIPMENT_ISSUE_RETURN)
 def issue_equipment_view(request: HttpRequest, person_pk: int) -> HttpResponse:
     person = get_object_or_404(Person, pk=person_pk)
-    item = get_object_or_404(EquipmentItem, pk=request.POST.get("item"))
+    item = get_object_or_404(EquipmentItem, pk=request.POST.get("item"), is_active=True)
     issue_equipment(person, item, request.POST.get("quantity", 1), actor=request.user)
     messages.success(request, _("Equipment issued."))
     return redirect("person_detail", pk=person.pk)

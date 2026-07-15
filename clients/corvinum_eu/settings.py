@@ -39,7 +39,7 @@ FEATURE_FLAGS = {
     "accommodation": False,       # rejected in interview (§15.4)
     "equipment": True,            # issued items + cost recovery (§5.8)
     "transport": False,           # rejected in interview (§15.8)
-    "recruitment_trials": False,  # test/trial handling unconfirmed for MVP (§13.1)
+    "recruitment_trials": True,   # owner-confirmed for the CorvinumEU demo
     "intake": True,
     "worker_messaging": False,    # phone + Messenger, no SMS module (§15.9)
     "documents": True,            # compliance certificates + expiry (§5.4)

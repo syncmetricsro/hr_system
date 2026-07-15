@@ -70,12 +70,14 @@ class Command(BaseCommand):
                 template=template, label=label, defaults={"critical": critical, "order": order}
             )
 
-        # People. The worker carries a fictional email — the payslip act
-        # (corvinum-demo-runbook §6) sends the encrypted PDF to it.
-        worker, _ = Person.objects.get_or_create(first_name="Marek", last_name="Skladník")
-        if worker.email != "marek.skladnik@demo.corvinum.test":
-            worker.email = "marek.skladnik@demo.corvinum.test"
-            worker.save(update_fields=["email"])
+        # People. A fresh seed uses a fictional address. Do not overwrite an
+        # address deliberately changed to a controlled demo inbox: the runner
+        # may be re-applied during rehearsal and a resend must remain safe.
+        worker, _ = Person.objects.get_or_create(
+            first_name="Marek",
+            last_name="Skladník",
+            defaults={"email": "marek.skladnik@demo.corvinum.test"},
+        )
         candidate, _ = Person.objects.get_or_create(first_name="Eszter", last_name="Varga")
 
         # Equipment with values (§5.8) + one approved charge that lands in the

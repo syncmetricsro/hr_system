@@ -155,8 +155,27 @@ def person_detail(request: HttpRequest, pk: int) -> TemplateResponse:
                 person.lifecycle_status == LifecycleStatus.INACTIVE
                 and user_can(request.user, Action.PERSON_RECYCLE_AVAILABLE)
             ),
+            "can_archive": (
+                not person.is_archived
+                and user_can(request.user, Action.PERSON_ARCHIVE)
+            ),
         },
     )
+
+
+@require_POST
+@require_action(Action.PERSON_ARCHIVE)
+def archive_person(request: HttpRequest, person_pk: int) -> HttpResponse:
+    """Operational archive, not data erasure.
+
+    A linked blacklist case/fingerprint intentionally remains so an archived
+    person cannot be reintroduced without the protected re-entry check.
+    Retention and lawful erasure are separate controlled processes.
+    """
+    person = get_object_or_404(Person, pk=person_pk)
+    person.archive(actor=request.user, reason=request.POST.get("reason", ""))
+    messages.success(request, _("Person archived. Blacklist protection remains in place."))
+    return redirect("people_list")
 
 
 @require_POST

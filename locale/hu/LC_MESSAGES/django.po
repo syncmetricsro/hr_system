@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-13 01:45+0200\n"
+"POT-Creation-Date: 2026-07-15 15:11+0200\n"
 "Language: hu\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -51,103 +51,117 @@ msgstr "Üdvözlő hívás megtörtént"
 msgid "Safety boots"
 msgstr "Munkavédelmi bakancs"
 
-#: clients/corvinum_eu/templates/layouts/base.html:27
-#: templates/layouts/base.html:15
+#: clients/corvinum_eu/templates/layouts/base.html:29
+#: templates/layouts/base.html:17
 msgid "Skip to content"
 msgstr "Ugrás a tartalomra"
 
-#: clients/corvinum_eu/templates/layouts/base.html:33
-#: clients/corvinum_eu/templates/layouts/base.html:59
-#: templates/layouts/base.html:17 templates/layouts/base.html:36
+#: clients/corvinum_eu/templates/layouts/base.html:39
+#: clients/corvinum_eu/templates/layouts/base.html:67
+#: templates/layouts/base.html:20 templates/layouts/base.html:43
 #: templates/pages/finance_summary.html:8 templates/pages/reports.html:4
 #: templates/pages/reports.html:9 templates/pages/reports.html:12
 msgid "Reports"
 msgstr "Jelentések"
 
-#: clients/corvinum_eu/templates/layouts/base.html:37
+#: clients/corvinum_eu/templates/layouts/base.html:43
 msgid "Main navigation"
 msgstr "Fő navigáció"
 
 # --- people list / detail ---
-#: clients/corvinum_eu/templates/layouts/base.html:38
+#: clients/corvinum_eu/templates/layouts/base.html:44
 #: templates/pages/people_list.html:8 templates/pages/reports.html:23
 msgid "Workforce"
 msgstr "Munkaerő"
 
-#: clients/corvinum_eu/templates/layouts/base.html:39
-#: templates/layouts/base.html:26 templates/pages/people_list.html:4
-#: templates/pages/people_list.html:9 templates/pages/people_list.html:30
+#: clients/corvinum_eu/templates/layouts/base.html:45
+#: templates/layouts/base.html:33 templates/pages/people_list.html:4
+#: templates/pages/people_list.html:9 templates/pages/people_list.html:39
 #: templates/pages/reports.html:14
 msgid "People"
 msgstr "Emberek"
 
-#: clients/corvinum_eu/templates/layouts/base.html:40
-#: templates/layouts/base.html:27 templates/pages/project_list.html:4
-#: templates/pages/project_list.html:9 templates/pages/project_list.html:16
+#: clients/corvinum_eu/templates/layouts/base.html:46
+#: templates/layouts/base.html:34 templates/pages/project_list.html:4
+#: templates/pages/project_list.html:9 templates/pages/project_list.html:25
 msgid "Projects"
 msgstr "Projektek"
 
 # --- projects UI ---
-#: clients/corvinum_eu/templates/layouts/base.html:42
+#: clients/corvinum_eu/templates/layouts/base.html:48
 #: templates/pages/dashboard.html:8 templates/pages/project_list.html:8
 #: templates/pages/reports.html:8
 msgid "Operations"
 msgstr "Műveletek"
 
 # --- compliance ---
-#: clients/corvinum_eu/templates/layouts/base.html:44
+#: clients/corvinum_eu/templates/layouts/base.html:50
 #: features/compliance/panels.py:16 features/finance/models.py:68
-#: features/intake/catalog_i18n.py:12 templates/layouts/base.html:31
+#: features/intake/catalog_i18n.py:12 templates/layouts/base.html:38
 #: templates/pages/compliance_list.html:4
 #: templates/pages/compliance_list.html:9
 #: templates/pages/compliance_list.html:12
 msgid "Compliance"
 msgstr "Megfelelőség"
 
-#: clients/corvinum_eu/templates/layouts/base.html:47
-#: templates/layouts/base.html:50 templates/pages/ledger.html:8
+#: clients/corvinum_eu/templates/layouts/base.html:53
+#: templates/layouts/base.html:57 templates/pages/ledger.html:8
 msgid "Ledger"
 msgstr "Főkönyv"
 
-#: clients/corvinum_eu/templates/layouts/base.html:50
-#: templates/layouts/base.html:53 templates/pages/payslips.html:4
+#: clients/corvinum_eu/templates/layouts/base.html:56
+#: templates/layouts/base.html:60 templates/pages/payslips.html:4
 #: templates/pages/payslips.html:9
 msgid "Payslips"
 msgstr "Bérjegyzékek"
 
-#: clients/corvinum_eu/templates/layouts/base.html:53
-#: templates/layouts/base.html:41
+#: clients/corvinum_eu/templates/layouts/base.html:60
+#: templates/layouts/base.html:48
 msgid "Reviews"
 msgstr "Ellenőrzések"
 
-#: clients/corvinum_eu/templates/layouts/base.html:56
-#: templates/layouts/base.html:44 templates/pages/blacklist_queue.html:4
+#: clients/corvinum_eu/templates/layouts/base.html:61
+#: templates/panels/logistics_equipment.html:44
+msgid "Manage equipment catalogue"
+msgstr "Felszerelés-katalóg kezelése"
+
+#: clients/corvinum_eu/templates/layouts/base.html:61
+#: templates/pages/equipment_catalog.html:4
+#: templates/pages/equipment_catalog.html:9
+#: templates/pages/equipment_catalog.html:27
+#: templates/pages/equipment_form.html:8
+msgid "Equipment catalogue"
+msgstr "Felszerelés-katalóg"
+
+#: clients/corvinum_eu/templates/layouts/base.html:64
+#: templates/layouts/base.html:51 templates/pages/blacklist_queue.html:4
 #: templates/panels/blacklist_banner.html:3
 #: templates/panels/blacklist_case.html:5
 msgid "Blacklist"
 msgstr "Feketelista"
 
-#: clients/corvinum_eu/templates/layouts/base.html:58
+#: clients/corvinum_eu/templates/layouts/base.html:66
+#: core/notifications/services.py:134 templates/partials/theme_picker.html:7
 msgid "System"
 msgstr "Rendszer"
 
-#: clients/corvinum_eu/templates/layouts/base.html:61
-#: templates/layouts/base.html:38
+#: clients/corvinum_eu/templates/layouts/base.html:69
+#: templates/layouts/base.html:45
 msgid "Audit"
 msgstr "Audit"
 
-#: clients/corvinum_eu/templates/layouts/base.html:76
-#: templates/layouts/base.html:63
+#: clients/corvinum_eu/templates/layouts/base.html:85
+#: templates/layouts/base.html:71
 msgid "Language"
 msgstr "Nyelv"
 
-#: clients/corvinum_eu/templates/layouts/base.html:86
-#: templates/layouts/base.html:75
+#: clients/corvinum_eu/templates/layouts/base.html:95
+#: templates/layouts/base.html:83
 msgid "Sign out"
 msgstr "Kijelentkezés"
 
-#: clients/corvinum_eu/templates/layouts/base.html:97
-#: templates/layouts/base.html:22
+#: clients/corvinum_eu/templates/layouts/base.html:106
+#: templates/layouts/base.html:28 templates/layouts/base.html:29
 msgid "Open navigation"
 msgstr "Navigáció megnyitása"
 
@@ -190,6 +204,7 @@ msgid "role"
 msgstr "szerepkör"
 
 #: core/accounts/models.py:67 core/accounts/models.py:81
+#: core/notifications/models.py:19
 msgid "user"
 msgstr "felhasználó"
 
@@ -212,9 +227,9 @@ msgstr "megerősítve"
 #: features/blacklist/models.py:113 features/checklists/models.py:23
 #: features/compliance/models.py:17 features/feedback/models.py:26
 #: features/feedback/models.py:48 features/finance/models.py:39
-#: features/intake/models.py:31 features/logistics/models.py:32
-#: features/logistics/models.py:92 features/logistics/models.py:124
-#: features/logistics/models.py:207 features/messaging/models.py:17
+#: features/intake/models.py:32 features/logistics/models.py:32
+#: features/logistics/models.py:98 features/logistics/models.py:130
+#: features/logistics/models.py:213 features/messaging/models.py:17
 #: features/messaging/models.py:45 features/payslips/models.py:35
 msgid "created"
 msgstr "létrehozva"
@@ -231,19 +246,19 @@ msgstr "TOTP eszköz"
 msgid "TOTP devices"
 msgstr "TOTP eszközök"
 
-#: core/accounts/views.py:50
+#: core/accounts/views.py:52
 msgid "Your role requires two-factor authentication — set it up now."
 msgstr "A szerepköröd kétlépcsős azonosítást igényel — állítsd be most."
 
-#: core/accounts/views.py:53
+#: core/accounts/views.py:55
 msgid "Invalid email or password."
 msgstr "Hibás e-mail vagy jelszó."
 
-#: core/accounts/views.py:87 core/accounts/views.py:110
+#: core/accounts/views.py:90 core/accounts/views.py:113
 msgid "Invalid code."
 msgstr "Érvénytelen kód."
 
-#: core/accounts/views.py:108
+#: core/accounts/views.py:111
 msgid "Two-factor authentication enabled."
 msgstr "Kétlépcsős azonosítás bekapcsolva."
 
@@ -296,7 +311,7 @@ msgstr "Egyedi díj mentve."
 msgid "Room rate saved"
 msgstr "Szobadíj mentve."
 
-#: core/audit/presentation.py:17 core/people/services.py:59
+#: core/audit/presentation.py:17 core/people/services.py:67
 msgid "Assigned to project"
 msgstr "Projekthez rendelve"
 
@@ -342,124 +357,189 @@ msgid "Checklist item reopened"
 msgstr "Ellenőrzőlista-tétel újra megnyitva"
 
 #: core/audit/presentation.py:28
+msgid "Equipment item created"
+msgstr "Felszerelési tétel létrehozva"
+
+#: core/audit/presentation.py:29
+msgid "Equipment item updated"
+msgstr "Felszerelési tétel frissítve"
+
+#: core/audit/presentation.py:30
 msgid "Equipment deduction review recorded"
 msgstr "Felszerelés levonási felülvizsgálata rögzítve"
 
-#: core/audit/presentation.py:29
+#: core/audit/presentation.py:31
 msgid "Equipment flagged as unreturned"
 msgstr "Felszerelés vissza nem adottként jelölve"
 
-#: core/audit/presentation.py:30 core/people/services.py:68
+#: core/audit/presentation.py:32 core/people/services.py:76
 msgid "Equipment issued"
 msgstr "Felszerelés kiadva"
 
-#: core/audit/presentation.py:31
+#: core/audit/presentation.py:33
 msgid "Equipment returned"
 msgstr "Felszerelés visszavéve."
 
-#: core/audit/presentation.py:32
+#: core/audit/presentation.py:34
 msgid "Finance line item saved"
 msgstr "Pénzügyi tételsor mentve"
 
-#: core/audit/presentation.py:33
+#: core/audit/presentation.py:35
 msgid "Financial month locked"
 msgstr "Pénzügyi hónap zárolva"
 
-#: core/audit/presentation.py:34
+#: core/audit/presentation.py:36
 msgid "Financial month recorded"
 msgstr "Pénzügyi hónap rögzítve"
 
-#: core/audit/presentation.py:35
+#: core/audit/presentation.py:37
 msgid "Finance recalculated"
 msgstr "Mentés és újraszámolás"
 
-#: core/audit/presentation.py:36
+#: core/audit/presentation.py:38
 msgid "Financial month reopened"
 msgstr "Pénzügyi hónap újranyitva"
 
-#: core/audit/presentation.py:37 core/people/services.py:78
+#: core/audit/presentation.py:39
+msgid "Worker feedback received"
+msgstr "Dolgozói visszajelzés érkezett"
+
+#: core/audit/presentation.py:40 core/people/services.py:86
 msgid "Intake completed"
 msgstr "Felvétel befejezve"
 
-#: core/audit/presentation.py:38
+#: core/audit/presentation.py:41
 msgid "Ledger cycle marked settled"
 msgstr "Főkönyvi ciklus rendezettként jelölve"
 
-#: core/audit/presentation.py:39
+#: core/audit/presentation.py:42
 msgid "Ledger entries included in cycle"
 msgstr "Főkönyvi tételek ciklusba sorolva"
 
-#: core/audit/presentation.py:40
+#: core/audit/presentation.py:43
 msgid "Ledger entry cancelled"
 msgstr "Tétel törölve."
 
-#: core/audit/presentation.py:41
+#: core/audit/presentation.py:44
 msgid "Ledger entry recorded"
 msgstr "Főkönyvi tétel rögzítve."
 
-#: core/audit/presentation.py:42
+#: core/audit/presentation.py:45
 msgid "Ledger entry reversed"
 msgstr "Főkönyvi tétel sztornózva"
 
-#: core/audit/presentation.py:43
+#: core/audit/presentation.py:46
 msgid "Payslip recorded"
 msgstr "Bérjegyzék rögzítve."
 
-#: core/audit/presentation.py:44
+#: core/audit/presentation.py:47
 msgid "Payslip sent"
 msgstr "Bérjegyzék elküldve"
 
-#: core/audit/presentation.py:45
+#: core/audit/presentation.py:48
 msgid "Person archived"
 msgstr "Személy archiválva"
 
-#: core/audit/presentation.py:46
+#: core/audit/presentation.py:49
 msgid "Person added"
 msgstr "Személy hozzáadva."
 
-#: core/audit/presentation.py:47
+#: core/audit/presentation.py:50
 msgid "Exit completed"
 msgstr "Kilépés befejezve."
 
-#: core/audit/presentation.py:48 core/people/services.py:86
+#: core/audit/presentation.py:51 core/people/services.py:94
 msgid "Status changed"
 msgstr "Állapot megváltozott"
 
-#: core/audit/presentation.py:49
+#: core/audit/presentation.py:52
 msgid "Recycled to Available"
 msgstr "Visszaküldve Elérhetőre."
 
-#: core/audit/presentation.py:50
+#: core/audit/presentation.py:53
 msgid "Person updated"
 msgstr "Személy frissítve."
 
-#: core/audit/presentation.py:51
+#: core/audit/presentation.py:54
 msgid "Readiness saved"
 msgstr "Készenlét elmentve."
 
-#: core/audit/presentation.py:52 core/people/services.py:62
+#: core/audit/presentation.py:55 core/people/services.py:70
 msgid "Room assigned"
 msgstr "Szoba hozzárendelve"
 
-#: core/audit/presentation.py:53
+#: core/audit/presentation.py:56
 msgid "Room released"
 msgstr "Szoba felszabadítva."
 
-#: core/audit/presentation.py:54
+#: core/audit/presentation.py:57
 msgid "Message sent"
 msgstr "Üzenet elküldve."
 
-#: core/audit/presentation.py:55
+#: core/audit/presentation.py:58
 msgid "Transport week recorded"
 msgstr "Szállítási hét rögzítve."
 
-#: core/audit/presentation.py:56
+#: core/audit/presentation.py:59
 msgid "Trial outcome recorded"
 msgstr "Próba eredménye rögzítve."
 
-#: core/audit/presentation.py:57 core/people/services.py:50
+#: core/audit/presentation.py:60 core/people/services.py:58
 msgid "Trial scheduled"
 msgstr "Próbanap ütemezve"
+
+#: core/notifications/models.py:21
+#, fuzzy
+#| msgid "item"
+msgid "item key"
+msgstr "tétel"
+
+#: core/notifications/models.py:22
+#, fuzzy
+#| msgid "key version"
+msgid "item version"
+msgstr "kulcsverzió"
+
+#: core/notifications/models.py:23
+#, fuzzy
+#| msgid "issued at"
+msgid "dismissed at"
+msgstr "kiadás ideje"
+
+# --- floating notification center (2026-07-13) ---
+#: core/notifications/models.py:26
+#, fuzzy
+#| msgid "Notifications"
+msgid "notification dismissal"
+msgstr "Értesítések"
+
+# --- floating notification center (2026-07-13) ---
+#: core/notifications/models.py:27
+#, fuzzy
+#| msgid "Notifications"
+msgid "notification dismissals"
+msgstr "Értesítések"
+
+#: core/notifications/services.py:132
+msgid "Operational record"
+msgstr "Működési bejegyzés"
+
+#: core/notifications/services.py:133
+#, python-format
+msgid "%(actor)s · %(subject)s"
+msgstr "%(actor)s · %(subject)s"
+
+#: core/notifications/services.py:165
+msgid "Trial outcome is waiting"
+msgstr "A próbanap eredménye rögzítésre vár"
+
+#: core/notifications/services.py:190
+msgid "Readiness needs attention"
+msgstr "A készenlét figyelmet igényel"
+
+#: core/notifications/views.py:31
+msgid "Notification is not available."
+msgstr "Az értesítés nem érhető el."
 
 #: core/people/catalog_i18n.py:10
 msgid "Sick"
@@ -480,6 +560,7 @@ msgstr "Katonai szolgálat"
 #: core/people/catalog_i18n.py:14 features/advances/models.py:40
 #: features/blacklist/catalog_i18n.py:15 features/blacklist/models.py:87
 #: features/blacklist/panels.py:56 features/finance/models.py:74
+#: features/intake/catalog_i18n.py:28
 msgid "Other"
 msgstr "Egyéb"
 
@@ -491,7 +572,8 @@ msgstr "Keresztnév"
 msgid "Last name"
 msgstr "Vezetéknév"
 
-#: core/people/forms.py:28 templates/pages/login.html:16
+#: core/people/forms.py:28 features/intake/catalog_i18n.py:18
+#: features/intake/models.py:16 templates/pages/login.html:17
 msgid "Email"
 msgstr "E-mail"
 
@@ -500,17 +582,17 @@ msgstr "E-mail"
 msgid "Phone"
 msgstr "Telefon"
 
-#: core/people/forms.py:30 features/intake/catalog_i18n.py:18
+#: core/people/forms.py:30 features/intake/catalog_i18n.py:19
 #: templates/pages/person_detail.html:144
 msgid "Address"
 msgstr "Cím"
 
-#: core/people/forms.py:31 features/intake/catalog_i18n.py:19
+#: core/people/forms.py:31 features/intake/catalog_i18n.py:20
 #: templates/pages/person_detail.html:145
 msgid "Nationality"
 msgstr "Állampolgárság"
 
-#: core/people/forms.py:32 features/intake/catalog_i18n.py:20
+#: core/people/forms.py:32 features/intake/catalog_i18n.py:21
 msgid "Preferred language"
 msgstr "Preferált nyelv"
 
@@ -528,7 +610,7 @@ msgstr "Születési hely"
 msgid "Has disability"
 msgstr "Fogyatékossággal él"
 
-#: core/people/forms.py:36 features/intake/catalog_i18n.py:22
+#: core/people/forms.py:36 features/intake/catalog_i18n.py:23
 msgid "Disability type"
 msgstr "Fogyatékosság típusa"
 
@@ -545,8 +627,13 @@ msgstr "Próbanap"
 msgid "Working"
 msgstr "Dolgozik"
 
-#: core/people/models.py:15 templates/pages/person_detail.html:198
-#: templates/pages/project_detail.html:8 templates/pages/project_list.html:26
+#: core/people/models.py:15 templates/pages/accommodation_detail.html:25
+#: templates/pages/accommodation_list.html:20
+#: templates/pages/accommodation_list.html:33
+#: templates/pages/equipment_catalog.html:18
+#: templates/pages/equipment_catalog.html:32
+#: templates/pages/person_detail.html:198 templates/pages/project_detail.html:8
+#: templates/pages/project_list.html:19 templates/pages/project_list.html:35
 msgid "Inactive"
 msgstr "Inaktív"
 
@@ -556,7 +643,7 @@ msgstr "Feketelistán"
 
 #: core/people/models.py:38 features/blacklist/models.py:16
 #: features/checklists/models.py:37 features/feedback/models.py:20
-#: features/finance/models.py:85 features/intake/models.py:65
+#: features/finance/models.py:85 features/intake/models.py:66
 #: features/logistics/models.py:47
 msgid "label"
 msgstr "címke"
@@ -565,13 +652,14 @@ msgstr "címke"
 #: features/blacklist/models.py:17 features/blacklist/models.py:112
 #: features/checklists/models.py:22 features/feedback/models.py:25
 #: features/finance/models.py:88 features/logistics/models.py:30
-#: features/logistics/models.py:123 features/messaging/models.py:13
+#: features/logistics/models.py:49 features/logistics/models.py:129
+#: features/messaging/models.py:13
 msgid "active"
 msgstr "aktív"
 
 #: core/people/models.py:40 features/blacklist/models.py:18
 #: features/checklists/models.py:41 features/finance/models.py:89
-#: features/intake/models.py:51 features/intake/models.py:68
+#: features/intake/models.py:52 features/intake/models.py:69
 msgid "order"
 msgstr "sorrend"
 
@@ -665,8 +753,8 @@ msgstr "frissítve"
 #: core/projects/models.py:123 core/projects/models.py:169
 #: features/advances/models.py:61 features/blacklist/models.py:45
 #: features/blacklist/models.py:104 features/checklists/models.py:57
-#: features/compliance/models.py:12 features/intake/models.py:100
-#: features/logistics/models.py:76 features/logistics/models.py:156
+#: features/compliance/models.py:12 features/intake/models.py:106
+#: features/logistics/models.py:82 features/logistics/models.py:162
 #: features/messaging/models.py:35 features/payslips/models.py:19
 msgid "person"
 msgstr "személy"
@@ -675,49 +763,82 @@ msgstr "személy"
 msgid "people"
 msgstr "személyek"
 
-#: core/people/services.py:23
+#: core/people/services.py:28 templates/pages/people_list.html:29
 msgid "No reason"
 msgstr "Nincs ok"
 
-#: core/people/services.py:54
+#: core/people/services.py:62
 msgid "Trial outcome"
 msgstr "Próba eredménye"
 
-#: core/people/services.py:74
+#: core/people/services.py:82
 msgid "Readiness submitted"
 msgstr "Készenlét beküldve"
 
-#: core/people/views.py:56
+#: core/people/views.py:73
 msgid "Person added."
 msgstr "Személy hozzáadva."
 
-#: core/people/views.py:66 templates/pages/people_list.html:12
+#: core/people/views.py:83 templates/pages/people_list.html:12
 msgid "Add person"
 msgstr "Személy hozzáadása"
 
-#: core/people/views.py:78
+#: core/people/views.py:95
 msgid "Person updated."
 msgstr "Személy frissítve."
 
-#: core/people/views.py:84
+#: core/people/views.py:101
 msgid "Edit person"
 msgstr "Személy szerkesztése"
 
-#: core/people/views.py:108 templates/pages/person_detail.html:119
+#: core/people/views.py:125 templates/pages/person_detail.html:119
 msgid "Entry medical date"
 msgstr "Belépő orvosi dátuma"
 
-#: core/people/views.py:108
+#: core/people/views.py:125
 msgid "Review this future date."
 msgstr "Ellenőrizze ezt a jövőbeli dátumot."
 
-#: core/people/views.py:151
+#: core/people/views.py:177
+msgid "Person archived. Blacklist protection remains in place."
+msgstr "A személy archiválva. A feketelista-védelem megmarad."
+
+#: core/people/views.py:187
 msgid "Recycled to Available."
 msgstr "Visszaküldve Elérhetőre."
 
+#: core/projects/forms.py:20
+msgid "Candidate"
+msgstr "Jelölt"
+
+#: core/projects/forms.py:21
+msgid "Only available candidates can be scheduled."
+msgstr "Csak elérhető jelöltek ütemezhetők."
+
+#: core/projects/forms.py:23 core/projects/forms.py:43
+#: templates/pages/feedback_inbox.html:25
+#: templates/pages/finance_summary.html:34
+#: templates/pages/person_detail.html:28 templates/pages/project_detail.html:8
+#: templates/pages/transport_trends.html:31
+#: templates/pages/transport_trends.html:44
+#: templates/pages/transport_trends.html:64
+#: templates/pages/trials_queue.html:35
+msgid "Project"
+msgstr "Projekt"
+
+#: core/projects/forms.py:25 core/projects/forms.py:45
+#: templates/pages/person_detail.html:33 templates/pages/person_detail.html:46
+msgid "Arrival time"
+msgstr "Érkezés ideje"
+
+#: core/projects/forms.py:30 core/projects/forms.py:50
+#: features/logistics/forms.py:29
+msgid "Operational note"
+msgstr "Működési megjegyzés"
+
 #: core/projects/models.py:12 features/checklists/models.py:18
-#: features/compliance/models.py:14 features/intake/models.py:24
-#: features/logistics/models.py:28 features/logistics/models.py:118
+#: features/compliance/models.py:14 features/intake/models.py:25
+#: features/logistics/models.py:28 features/logistics/models.py:124
 #: features/messaging/models.py:11
 msgid "name"
 msgstr "név"
@@ -749,7 +870,7 @@ msgstr "pénzügyi riportban szerepel"
 #: core/projects/models.py:33 core/projects/models.py:63
 #: core/projects/models.py:126 core/projects/models.py:172
 #: features/feedback/models.py:23 features/finance/models.py:27
-#: features/logistics/models.py:198
+#: features/logistics/models.py:204
 msgid "project"
 msgstr "projekt"
 
@@ -757,12 +878,16 @@ msgstr "projekt"
 msgid "projects"
 msgstr "projektek"
 
-#: core/projects/models.py:42 features/logistics/models.py:70
-#: templates/pages/project_detail.html:8 templates/pages/project_list.html:26
+#: core/projects/models.py:42 features/logistics/models.py:76
+#: templates/pages/accommodation_detail.html:25
+#: templates/pages/accommodation_list.html:19
+#: templates/pages/equipment_catalog.html:17
+#: templates/pages/project_detail.html:8 templates/pages/project_list.html:18
+#: templates/pages/project_list.html:35
 msgid "Active"
 msgstr "Aktív"
 
-#: core/projects/models.py:43 features/logistics/models.py:71
+#: core/projects/models.py:43 features/logistics/models.py:77
 msgid "Ended"
 msgstr "Befejezve"
 
@@ -772,22 +897,22 @@ msgid "Cancelled"
 msgstr "Törölve"
 
 #: core/projects/models.py:66 features/blacklist/models.py:48
-#: features/intake/models.py:26 features/intake/models.py:102
-#: features/logistics/models.py:81 features/logistics/models.py:162
+#: features/intake/models.py:27 features/intake/models.py:108
+#: features/logistics/models.py:87 features/logistics/models.py:168
 #: features/messaging/models.py:39
 msgid "status"
 msgstr "állapot"
 
-#: core/projects/models.py:71 features/logistics/models.py:82
+#: core/projects/models.py:71 features/logistics/models.py:88
 msgid "start date"
 msgstr "kezdő dátum"
 
-#: core/projects/models.py:72 features/logistics/models.py:83
+#: core/projects/models.py:72 features/logistics/models.py:89
 msgid "end date"
 msgstr "záró dátum"
 
 #: core/projects/models.py:79 core/projects/models.py:137
-#: features/logistics/models.py:90
+#: features/logistics/models.py:96
 msgid "assigned by"
 msgstr "hozzárendelte"
 
@@ -811,7 +936,7 @@ msgstr "projekt-hozzárendelések"
 msgid "Scheduled"
 msgstr "Ütemezve"
 
-#: core/projects/models.py:107 features/intake/models.py:91
+#: core/projects/models.py:107 features/intake/models.py:97
 msgid "Completed"
 msgstr "Befejezve"
 
@@ -849,7 +974,7 @@ msgstr "eredmény"
 
 #: core/projects/models.py:134 features/advances/models.py:83
 #: features/checklists/models.py:68 features/finance/models.py:33
-#: features/logistics/models.py:202 features/payslips/models.py:30
+#: features/logistics/models.py:208 features/payslips/models.py:30
 msgid "note"
 msgstr "megjegyzés"
 
@@ -932,90 +1057,126 @@ msgstr "készenléti rekord"
 msgid "readiness records"
 msgstr "készenléti rekordok"
 
-#: core/projects/services.py:150 features/advances/models.py:38
+#: core/projects/services.py:115
+msgid "Only pending trials can be edited."
+msgstr "Csak függő próbanapok szerkeszthetők."
+
+#: core/projects/services.py:117
+msgid "Trials can only be scheduled for active projects."
+msgstr "Próbanap csak aktív projekthez ütemezhető."
+
+#: core/projects/services.py:178 features/advances/models.py:38
 #: features/finance/catalog_i18n.py:20 templates/pages/person_detail.html:87
 msgid "Medical"
 msgstr "Orvosi"
 
-#: core/projects/services.py:150
+#: core/projects/services.py:178
 msgid "Medical clearance is incomplete."
 msgstr "Az orvosi alkalmasság hiányos."
 
-#: core/projects/services.py:151 templates/pages/person_detail.html:93
+#: core/projects/services.py:179 templates/pages/person_detail.html:93
 msgid "Gear"
 msgstr "Felszerelés"
 
-#: core/projects/services.py:151
+#: core/projects/services.py:179
 msgid "Required equipment is incomplete."
 msgstr "A szükséges felszerelés hiányos."
 
-#: core/projects/services.py:152 features/finance/catalog_i18n.py:18
-#: features/finance/models.py:67 templates/layouts/base.html:33
+#: core/projects/services.py:180 features/finance/catalog_i18n.py:18
+#: features/finance/models.py:67 templates/layouts/base.html:40
 #: templates/pages/accommodation_costs.html:8
 #: templates/pages/accommodation_costs.html:21
 #: templates/pages/accommodation_detail.html:8
 #: templates/pages/accommodation_list.html:4
 #: templates/pages/accommodation_list.html:9
-#: templates/pages/accommodation_list.html:14
-#: templates/pages/person_detail.html:99 templates/panels/logistics_room.html:4
+#: templates/pages/accommodation_list.html:27
+#: templates/pages/person_detail.html:99 templates/pages/room_form.html:7
+#: templates/panels/logistics_room.html:4
 msgid "Accommodation"
 msgstr "Szállás"
 
-#: core/projects/services.py:152
+#: core/projects/services.py:180
 msgid "Accommodation is incomplete."
 msgstr "A szállás nincs rendezve."
 
-#: core/projects/services.py:153 features/finance/models.py:66
-#: templates/layouts/base.html:35 templates/pages/person_detail.html:109
+#: core/projects/services.py:181 features/finance/models.py:66
+#: templates/layouts/base.html:42 templates/pages/person_detail.html:109
 msgid "Transport"
 msgstr "Szállítás"
 
-#: core/projects/services.py:153
+#: core/projects/services.py:181
 msgid "Transport is incomplete."
 msgstr "A szállítás nincs rendezve."
 
-#: core/projects/services.py:166
+#: core/projects/services.py:194
 msgid "A reason is required when this is not applicable."
 msgstr "Ha nem alkalmazható, indoklás szükséges."
 
-#: core/projects/services.py:202
+#: core/projects/services.py:230
 msgid "Entry medical date is invalid."
 msgstr "Belépő orvosi dátuma érvénytelen."
 
-#: core/projects/services.py:204
+#: core/projects/services.py:232
 msgid "Entry medical date cannot be in the future."
 msgstr "Belépő orvosi dátuma nem lehet jövőbeli."
 
-#: core/projects/services.py:218
+#: core/projects/services.py:246
 msgid ""
 "Cannot activate this worker because no readiness record has been completed."
 msgstr ""
 "A munkavállaló nem aktiválható, mert nincs kitöltött készenléti adatlapja."
 
-#: core/projects/services.py:222
+#: core/projects/services.py:250
 #, python-format
 msgid "Cannot activate this worker until: %(items)s"
 msgstr "A munkavállaló nem aktiválható, amíg ezek nem teljesülnek: %(items)s"
 
-#: core/projects/views.py:85
+#: core/projects/views.py:148 core/projects/views.py:195
 msgid "Trial scheduled."
 msgstr "Próbanap ütemezve."
 
-#: core/projects/views.py:97
+#: core/projects/views.py:170
+msgid "Trial updated."
+msgstr "A próbanap frissítve."
+
+#: core/projects/views.py:190
+msgid "Review the trial details and try again."
+msgstr "Ellenőrizze a próbanap adatait, majd próbálja újra."
+
+#: core/projects/views.py:210
 msgid "Trial outcome recorded."
 msgstr "Próba eredménye rögzítve."
 
-#: core/projects/views.py:122
+#: core/projects/views.py:235
 msgid "Readiness saved."
 msgstr "Készenlét elmentve."
 
-#: core/projects/views.py:142
+#: core/projects/views.py:255
 msgid "Exit completed."
 msgstr "Kilépés befejezve."
 
-#: core/projects/views.py:153
+#: core/projects/views.py:266
 msgid "Activated — now Working."
 msgstr "Aktiválva — most Dolgozik."
+
+#: core/ui/views.py:70
+#, python-format
+msgid "View %(status)s people"
+msgstr "%(status)s állapotú személyek megtekintése"
+
+#: core/ui/views.py:71 templates/pages/dashboard.html:20
+#: templates/pages/dashboard.html:23
+msgid "Open People filtered to this lifecycle status."
+msgstr "Nyissa meg a személylistát erre az életciklus-állapotra szűrve."
+
+#: core/ui/views.py:78
+#, python-format
+msgid "View inactive people: %(reason)s"
+msgstr "Inaktív személyek megtekintése: %(reason)s"
+
+#: core/ui/views.py:81
+msgid "Open People filtered to this inactive reason."
+msgstr "Nyissa meg a személylistát erre az inaktivitási okra szűrve."
 
 #: features/advances/hooks.py:33
 #, python-format
@@ -1267,10 +1428,12 @@ msgid "blacklist cases"
 msgstr "tiltólista-ügyek"
 
 #: features/blacklist/models.py:85 features/blacklist/panels.py:54
+#: features/intake/catalog_i18n.py:26
 msgid "National ID"
 msgstr "Személyi igazolvány"
 
 #: features/blacklist/models.py:86 features/blacklist/panels.py:55
+#: features/intake/catalog_i18n.py:27
 msgid "Passport"
 msgstr "Útlevél"
 
@@ -1302,15 +1465,24 @@ msgstr "egyezési ujjlenyomat"
 msgid "match fingerprints"
 msgstr "egyezési ujjlenyomatok"
 
-#: features/blacklist/panels.py:48
+#: features/blacklist/notifications.py:26
+msgid "Blacklist decisions are waiting"
+msgstr "Feketelista-döntések várakoznak"
+
+#: features/blacklist/notifications.py:27
+#, python-format
+msgid "%(count)s proposed cases require a decision"
+msgstr "%(count)s javasolt eset döntést igényel"
+
+#: features/blacklist/panels.py:48 features/intake/catalog_i18n.py:24
 msgid "ID number (blacklist check)"
 msgstr "Igazolványszám (feketelista-ellenőrzés)"
 
-#: features/blacklist/panels.py:52
+#: features/blacklist/panels.py:52 features/intake/catalog_i18n.py:25
 msgid "ID type"
 msgstr "Igazolvány típusa"
 
-#: features/blacklist/panels.py:74
+#: features/blacklist/panels.py:75
 msgid ""
 "Possible blacklist match — flagged for manager review. Activation is blocked "
 "until resolved."
@@ -1373,7 +1545,7 @@ msgstr "ellenőrzőlista-tétel sablon"
 msgid "checklist item templates"
 msgstr "ellenőrzőlista-tétel sablonok"
 
-#: features/checklists/models.py:60 features/logistics/models.py:159
+#: features/checklists/models.py:60 features/logistics/models.py:165
 msgid "item"
 msgstr "tétel"
 
@@ -1397,6 +1569,15 @@ msgstr "személy ellenőrzőlista-tétele"
 msgid "person checklist items"
 msgstr "személy ellenőrzőlista-tételei"
 
+#: features/checklists/notifications.py:40
+msgid "Activation checklist is incomplete"
+msgstr "Az aktiválási ellenőrzőlista hiányos"
+
+#: features/checklists/notifications.py:41
+#, python-format
+msgid "%(person)s · %(count)s critical items"
+msgstr "%(person)s · %(count)s kritikus tétel"
+
 #: features/checklists/services.py:72
 #, python-format
 msgid "Activation blocked by open checklist items: %(items)s"
@@ -1413,6 +1594,25 @@ msgstr "tanúsítvány"
 #: features/compliance/models.py:21
 msgid "certificates"
 msgstr "tanúsítványok"
+
+#: features/compliance/notifications.py:32
+msgid "Compliance problems need attention"
+msgstr "A megfelelőségi problémák figyelmet igényelnek"
+
+#: features/compliance/notifications.py:33
+#, python-format
+msgid "%(count)s open document or medical alerts"
+msgstr "%(count)s nyitott dokumentum- vagy orvosi figyelmeztetés"
+
+#: features/compliance/panels.py:19
+msgid "Review compliance issues"
+msgstr "Megfelelőségi problémák áttekintése"
+
+#: features/compliance/panels.py:21
+msgid "Open workers with document or medical requirements that need attention."
+msgstr ""
+"Nyissa meg a figyelmet igénylő dokumentum- vagy orvosi követelményekkel "
+"rendelkező munkavállalókat."
 
 #: features/feedback/models.py:19
 msgid "token"
@@ -1447,15 +1647,24 @@ msgstr "beküldött visszajelzés"
 msgid "feedback submissions"
 msgstr "beküldött visszajelzések"
 
-#: features/feedback/views.py:29
+#: features/feedback/notifications.py:24
+msgid "Worker feedback is available"
+msgstr "Dolgozói visszajelzés érkezett"
+
+#: features/feedback/notifications.py:25
+#, python-format
+msgid "%(count)s feedback submissions in the inbox"
+msgstr "%(count)s visszajelzés található a beérkező üzenetek között"
+
+#: features/feedback/views.py:31
 msgid "Message is required."
 msgstr "Az üzenet kötelező."
 
-#: features/feedback/views.py:54
+#: features/feedback/views.py:56
 msgid "Feedback link created."
 msgstr "Visszajelzési link létrehozva."
 
-#: features/feedback/views.py:56
+#: features/feedback/views.py:58
 msgid "Label is required."
 msgstr "A címke kötelező."
 
@@ -1568,7 +1777,7 @@ msgstr "költség"
 msgid "locked"
 msgstr "zárolva"
 
-#: features/finance/models.py:37 features/logistics/models.py:205
+#: features/finance/models.py:37 features/logistics/models.py:211
 msgid "recorded by"
 msgstr "rögzítette"
 
@@ -1659,11 +1868,11 @@ msgstr "Személyazonosság"
 msgid "Contact"
 msgstr "Kapcsolat"
 
-#: features/intake/catalog_i18n.py:21
+#: features/intake/catalog_i18n.py:22
 msgid "Disability — type 'nie' if none"
 msgstr "Fogyatékosság — ha nincs, írja be: „nie”"
 
-#: features/intake/models.py:9 features/intake/models.py:90
+#: features/intake/models.py:9 features/intake/models.py:96
 msgid "Draft"
 msgstr "Piszkozat"
 
@@ -1679,149 +1888,153 @@ msgstr "Kivonva"
 msgid "Text"
 msgstr "Szöveg"
 
-#: features/intake/models.py:16
+#: features/intake/models.py:17
 msgid "Long text"
 msgstr "Hosszú szöveg"
 
-#: features/intake/models.py:17
+#: features/intake/models.py:18
 msgid "Yes/No"
 msgstr "Igen/Nem"
 
-#: features/intake/models.py:18 templates/pages/ledger.html:49
-#: templates/pages/ledger.html:103
+#: features/intake/models.py:19 templates/pages/ledger.html:50
+#: templates/pages/ledger.html:105
 msgid "Date"
 msgstr "Dátum"
 
-#: features/intake/models.py:19
+#: features/intake/models.py:20
 msgid "Number"
 msgstr "Szám"
 
-#: features/intake/models.py:20
+#: features/intake/models.py:21
 msgid "Choice"
 msgstr "Választás"
 
-#: features/intake/models.py:25
+#: features/intake/models.py:26
 msgid "version"
 msgstr "verzió"
 
-#: features/intake/models.py:27
+#: features/intake/models.py:28
 msgid "effective date"
 msgstr "hatálybalépés dátuma"
 
-#: features/intake/models.py:34
+#: features/intake/models.py:35
 msgid "intake questionnaire version"
 msgstr "felvételi kérdőív verziója"
 
-#: features/intake/models.py:35
+#: features/intake/models.py:36
 msgid "intake questionnaire versions"
 msgstr "felvételi kérdőív verziói"
 
-#: features/intake/models.py:47 features/intake/models.py:94
+#: features/intake/models.py:48 features/intake/models.py:100
 msgid "questionnaire"
 msgstr "kérdőív"
 
-#: features/intake/models.py:49
+#: features/intake/models.py:50
 msgid "title"
 msgstr "cím"
 
-#: features/intake/models.py:50
+#: features/intake/models.py:51
 msgid "help"
 msgstr "súgó"
 
-#: features/intake/models.py:54
+#: features/intake/models.py:55
 msgid "intake panel"
 msgstr "felvételi panel"
 
-#: features/intake/models.py:55
+#: features/intake/models.py:56
 msgid "intake panels"
 msgstr "felvételi panelek"
 
-#: features/intake/models.py:63
+#: features/intake/models.py:64
 msgid "panel"
 msgstr "panel"
 
-#: features/intake/models.py:64
+#: features/intake/models.py:65
 msgid "stable key"
 msgstr "stabil kulcs"
 
-#: features/intake/models.py:66
+#: features/intake/models.py:67
 msgid "type"
 msgstr "típus"
 
-#: features/intake/models.py:67
+#: features/intake/models.py:68
 msgid "required"
 msgstr "kötelező"
 
 # --- projects UI ---
-#: features/intake/models.py:69
+#: features/intake/models.py:70
 msgid "options"
 msgstr "opciók"
 
-#: features/intake/models.py:70
+#: features/intake/models.py:71
 msgid "requires typed negative"
 msgstr "kötelező kiírt nemleges válasz"
 
-#: features/intake/models.py:71
+#: features/intake/models.py:72
 msgid "accepted negatives"
 msgstr "elfogadott nemleges válaszok"
 
-#: features/intake/models.py:74
+#: features/intake/models.py:75
 msgid "conditional on"
 msgstr "feltétele"
 
-#: features/intake/models.py:77
+#: features/intake/models.py:80
+msgid "transient"
+msgstr "átmeneti"
+
+#: features/intake/models.py:83
 msgid "intake question"
 msgstr "felvételi kérdés"
 
-#: features/intake/models.py:78
+#: features/intake/models.py:84
 msgid "intake questions"
 msgstr "felvételi kérdések"
 
-#: features/intake/models.py:103
+#: features/intake/models.py:109
 msgid "current panel"
 msgstr "aktuális panel"
 
-#: features/intake/models.py:104
+#: features/intake/models.py:110
 msgid "started"
 msgstr "elkezdve"
 
-#: features/intake/models.py:105
+#: features/intake/models.py:111
 msgid "completed"
 msgstr "befejezve"
 
-#: features/intake/models.py:108
+#: features/intake/models.py:114
 msgid "recruitment intake"
 msgstr "toborzási felvétel"
 
-#: features/intake/models.py:109
+#: features/intake/models.py:115
 msgid "recruitment intakes"
 msgstr "toborzási felvételek"
 
-#: features/intake/models.py:117
+#: features/intake/models.py:123
 msgid "intake"
 msgstr "felvétel"
 
-#: features/intake/models.py:118
+#: features/intake/models.py:124
 msgid "question"
 msgstr "kérdés"
 
-#: features/intake/models.py:119
+#: features/intake/models.py:125
 msgid "value"
 msgstr "érték"
 
-#: features/intake/models.py:120
+#: features/intake/models.py:126
 msgid "normalized value"
 msgstr "normalizált érték"
 
-#: features/intake/models.py:124
+#: features/intake/models.py:130
 msgid "answered at"
 msgstr "megválaszolás ideje"
 
-#: features/intake/models.py:127
+#: features/intake/models.py:133
 msgid "intake answer"
 msgstr "felvételi válasz"
 
-#: features/intake/models.py:128
+#: features/intake/models.py:134
 msgid "intake answers"
 msgstr "felvételi válaszok"
 
@@ -1829,15 +2042,19 @@ msgstr "felvételi válaszok"
 msgid "No published intake questionnaire."
 msgstr "Nincs közzétett felvételi kérdőív."
 
-#: features/intake/views.py:43
+#: features/intake/views.py:45
 msgid "Intake complete — person added."
 msgstr "Felvétel kész — személy hozzáadva."
 
-#: features/intake/views.py:47
+#: features/intake/views.py:50
 msgid "Please type a value (or the word for 'none')."
 msgstr "Adjon meg értéket (vagy a nincs szót)."
 
-#: features/intake/views.py:47
+#: features/intake/views.py:52
+msgid "Enter a valid email address."
+msgstr "Adjon meg érvényes e-mail-címet."
+
+#: features/intake/views.py:54
 msgid "Required."
 msgstr "Kötelező."
 
@@ -1853,6 +2070,18 @@ msgstr "Láthatósági mellény"
 msgid "Safety helmet"
 msgstr "Védősisak"
 
+#: features/logistics/forms.py:50
+msgid "Release all occupants before deactivating this location."
+msgstr "A szállás kikapcsolása előtt költöztessen ki minden lakót."
+
+#: features/logistics/forms.py:67
+msgid "Capacity cannot be lower than current occupancy."
+msgstr "A kapacitás nem lehet kisebb a jelenlegi kihasználtságnál."
+
+#: features/logistics/forms.py:69
+msgid "Release all occupants before deactivating this room."
+msgstr "A szoba kikapcsolása előtt költöztessen ki minden lakót."
+
 #: features/logistics/models.py:36
 msgid "accommodations"
 msgstr "szállások"
@@ -1861,185 +2090,263 @@ msgstr "szállások"
 msgid "capacity"
 msgstr "kapacitás"
 
-#: features/logistics/models.py:51
+#: features/logistics/models.py:52
 msgid "monthly rate"
 msgstr "havi díj"
 
-#: features/logistics/models.py:55 features/logistics/models.py:79
+#: features/logistics/models.py:56 features/logistics/models.py:85
 msgid "room"
 msgstr "szoba"
 
-#: features/logistics/models.py:56
+#: features/logistics/models.py:57
 msgid "rooms"
 msgstr "szobák"
 
 # --- dashboard ---
-#: features/logistics/models.py:86
+#: features/logistics/models.py:92
 msgid "rate override"
 msgstr "egyedi díj"
 
-#: features/logistics/models.py:95
+#: features/logistics/models.py:101
 msgid "room assignment"
 msgstr "szoba-hozzárendelés"
 
-#: features/logistics/models.py:96
+#: features/logistics/models.py:102
 msgid "room assignments"
 msgstr "szoba-hozzárendelések"
 
-#: features/logistics/models.py:119
+#: features/logistics/models.py:125
 msgid "size"
 msgstr "méret"
 
-#: features/logistics/models.py:122
+#: features/logistics/models.py:128
 msgid "unit price"
 msgstr "egységár"
 
-#: features/logistics/models.py:127
+#: features/logistics/models.py:133
 msgid "equipment item"
 msgstr "felszerelési tétel"
 
-#: features/logistics/models.py:128
+#: features/logistics/models.py:134
 msgid "equipment items"
 msgstr "felszerelési tételek"
 
-#: features/logistics/models.py:136
+#: features/logistics/models.py:142
 msgid "Issued"
 msgstr "Kiadva"
 
-#: features/logistics/models.py:137
+#: features/logistics/models.py:143
 msgid "Returned"
 msgstr "Visszaadva"
 
-#: features/logistics/models.py:148
+#: features/logistics/models.py:154
 msgid "None"
 msgstr "Nincs"
 
-#: features/logistics/models.py:149
+#: features/logistics/models.py:155
 msgid "Pending review"
 msgstr "Ellenőrzésre vár"
 
-#: features/logistics/models.py:150
+#: features/logistics/models.py:156
 msgid "Charge approved"
 msgstr "Levonás jóváhagyva"
 
-#: features/logistics/models.py:151
+#: features/logistics/models.py:157
 msgid "Waived"
 msgstr "Elengedve"
 
-#: features/logistics/models.py:161
+#: features/logistics/models.py:167
 msgid "quantity"
 msgstr "mennyiség"
 
-#: features/logistics/models.py:166
+#: features/logistics/models.py:172
 msgid "review status"
 msgstr "felülvizsgálati állapot"
 
-#: features/logistics/models.py:170
+#: features/logistics/models.py:176
 msgid "charge amount"
 msgstr "terhelendő összeg"
 
-#: features/logistics/models.py:174
+#: features/logistics/models.py:180
 msgid "reviewed by"
 msgstr "felülvizsgálta"
 
-#: features/logistics/models.py:176
+#: features/logistics/models.py:182
 msgid "reviewed at"
 msgstr "felülvizsgálat ideje"
 
-#: features/logistics/models.py:177
+#: features/logistics/models.py:183
 msgid "review note"
 msgstr "felülvizsgálati megjegyzés"
 
-#: features/logistics/models.py:180
+#: features/logistics/models.py:186
 msgid "issued by"
 msgstr "kiadta"
 
-#: features/logistics/models.py:182
+#: features/logistics/models.py:188
 msgid "issued at"
 msgstr "kiadás ideje"
 
-#: features/logistics/models.py:183
+#: features/logistics/models.py:189
 msgid "returned at"
 msgstr "visszaadás ideje"
 
-#: features/logistics/models.py:186
+#: features/logistics/models.py:192
 msgid "equipment issue"
 msgstr "felszerelés-kiadás"
 
-#: features/logistics/models.py:187
+#: features/logistics/models.py:193
 msgid "equipment issues"
 msgstr "felszerelés-kiadások"
 
-#: features/logistics/models.py:200
+#: features/logistics/models.py:206
 msgid "week start"
 msgstr "hét kezdete"
 
-#: features/logistics/models.py:201
+#: features/logistics/models.py:207
 msgid "headcount"
 msgstr "létszám"
 
-#: features/logistics/models.py:210
+#: features/logistics/models.py:216
 msgid "transport week"
 msgstr "szállítási hét"
 
 # --- transport trends ---
-#: features/logistics/models.py:211
+#: features/logistics/models.py:217
 msgid "transport weeks"
 msgstr "szállítási hetek"
 
-#: features/logistics/panels.py:59 templates/pages/accommodation_costs.html:16
+#: features/logistics/notifications.py:26
+msgid "Equipment reviews are waiting"
+msgstr "Felszerelési ellenőrzések várakoznak"
+
+#: features/logistics/notifications.py:27
+#, python-format
+msgid "%(count)s unreturned equipment reviews"
+msgstr "%(count)s vissza nem adott felszerelés ellenőrzése"
+
+#: features/logistics/panels.py:58 templates/pages/accommodation_costs.html:16
 #: templates/pages/accommodation_costs.html:27
-#: templates/pages/accommodation_detail.html:19
+#: templates/pages/accommodation_detail.html:23
 msgid "Occupancy"
 msgstr "Kihasználtság"
 
-#: features/logistics/panels.py:68
+#: features/logistics/panels.py:61
+msgid "Review accommodation occupancy"
+msgstr "Szálláskihasználtság áttekintése"
+
+#: features/logistics/panels.py:63
+msgid "Open accommodation costs, occupied places, and assigned costs."
+msgstr ""
+"Nyissa meg a szállásköltségeket, a foglalt helyeket és a hozzárendelt "
+"költségeket."
+
+#: features/logistics/panels.py:71
 msgid "Equipment value"
 msgstr "Felszerelés értéke"
 
-#: features/logistics/views.py:113
+#: features/logistics/panels.py:74
+msgid "Review equipment exceptions"
+msgstr "Felszerelési kivételek áttekintése"
+
+#: features/logistics/panels.py:76
+msgid "Open issued equipment awaiting return or a deduction decision."
+msgstr ""
+"Nyissa meg a visszaadásra vagy levonási döntésre váró kiadott "
+"felszereléseket."
+
+#: features/logistics/services.py:59
+msgid "Amounts use a positive convention; negative values are not allowed."
+msgstr ""
+"Az összegek pozitív előjelet használnak; negatív érték nem engedélyezett."
+
+#: features/logistics/services.py:126
+msgid "Only active rooms in active locations can be assigned."
+msgstr "Csak aktív szállás aktív szobája rendelhető hozzá."
+
+#: features/logistics/services.py:129
+msgid "Room is at full capacity."
+msgstr "A szoba megtelt."
+
+#: features/logistics/services.py:267
+msgid "This equipment item is inactive and cannot be issued."
+msgstr "Ez a felszerelési tétel inaktív, ezért nem adható ki."
+
+#: features/logistics/services.py:298 features/logistics/services.py:314
+msgid "A transport record already exists for this project and week."
+msgstr "Ehhez a projekthez és héthez már létezik szállítási bejegyzés."
+
+#: features/logistics/views.py:183
+msgid "Accommodation created. Add rooms to make it assignable."
+msgstr "A szállás létrejött. A hozzárendeléshez adjon hozzá szobákat."
+
+#: features/logistics/views.py:195
+msgid "Accommodation updated."
+msgstr "A szállás frissítve."
+
+#: features/logistics/views.py:212
+msgid "Room created."
+msgstr "A szoba létrejött."
+
+#: features/logistics/views.py:226
+msgid "Room updated."
+msgstr "A szoba frissítve."
+
+#: features/logistics/views.py:248
 msgid "Room rate saved."
 msgstr "Szobadíj mentve."
 
-#: features/logistics/views.py:115 features/logistics/views.py:127
+#: features/logistics/views.py:250 features/logistics/views.py:262
 msgid "Invalid amount."
 msgstr "Érvénytelen összeg."
 
-#: features/logistics/views.py:125
+#: features/logistics/views.py:260
 msgid "Rate override saved."
 msgstr "Egyedi díj mentve."
 
-#: features/logistics/views.py:138
+#: features/logistics/views.py:273
 msgid "Room assigned."
 msgstr "Szoba hozzárendelve."
 
-#: features/logistics/views.py:149
+#: features/logistics/views.py:284
 msgid "Room released."
 msgstr "Szoba felszabadítva."
 
-#: features/logistics/views.py:159
+#: features/logistics/views.py:314
+msgid "Equipment item created."
+msgstr "Felszerelési tétel létrehozva."
+
+#: features/logistics/views.py:331
+msgid "Equipment item updated."
+msgstr "Felszerelési tétel frissítve."
+
+#: features/logistics/views.py:344
 msgid "Equipment issued."
 msgstr "Felszerelés kiadva."
 
-#: features/logistics/views.py:168
+#: features/logistics/views.py:353
 msgid "Equipment returned."
 msgstr "Felszerelés visszavéve."
 
-#: features/logistics/views.py:178
+#: features/logistics/views.py:363
 msgid "Flagged for deduction review."
 msgstr "Levonási ellenőrzésre jelölve."
 
-#: features/logistics/views.py:201
+#: features/logistics/views.py:386
 msgid "Review recorded."
 msgstr "Ellenőrzés rögzítve."
 
-#: features/logistics/views.py:217
+#: features/logistics/views.py:402 features/logistics/views.py:418
 msgid "Transport week recorded."
 msgstr "Szállítási hét rögzítve."
 
-#: features/logistics/views.py:219
-msgid "Week start is required."
-msgstr "A hét kezdete kötelező."
+#: features/logistics/views.py:404
+msgid "Review the transport details and try again."
+msgstr "Ellenőrizze a szállítás adatait, majd próbálja újra."
+
+#: features/logistics/views.py:441
+msgid "Transport record updated."
+msgstr "A szállítási bejegyzés frissítve."
 
 #: features/messaging/models.py:12 features/messaging/models.py:38
 #: features/messaging/models.py:58
@@ -2155,16 +2462,16 @@ msgstr "bérjegyzék"
 msgid "payslips"
 msgstr "bérjegyzékek"
 
-#: features/payslips/services.py:129
+#: features/payslips/services.py:133
 msgid "This person has no email address on file."
 msgstr "Ennek a személynek nincs rögzített e-mail-címe."
 
-#: features/payslips/services.py:135
+#: features/payslips/services.py:139
 #, python-format
 msgid "Payslip %(period)s"
 msgstr "Bérjegyzék %(period)s"
 
-#: features/payslips/services.py:137
+#: features/payslips/services.py:141
 #, python-format
 msgid ""
 "Your payslip for %(period)s is attached as an encrypted PDF.\n"
@@ -2172,6 +2479,12 @@ msgid ""
 msgstr ""
 "Mellékeljük a(z) %(period)s időszak bérjegyzékét titkosított PDF-ként.\n"
 "A jelszót külön kapja meg — e-mailben soha nem küldjük."
+
+#: features/payslips/services.py:151 features/payslips/services.py:155
+msgid ""
+"Unable to send the payslip email. Check the recipient address and mail "
+"configuration."
+msgstr "A bérjegyzék e-mailben történő elküldése nem sikerült. Ellenőrizze a címzett címét és a levelezési beállításokat."
 
 #: features/payslips/views.py:26
 msgid "Payslip recorded."
@@ -2186,17 +2499,12 @@ msgstr ""
 "Bérjegyzék elküldve: %(to)s. Egyszeri jelszó (telefonon/Messengeren közölje "
 "a munkavállalóval, NE e-mailben): %(pw)s"
 
-# --- shell / navigation ---
-#: templates/layouts/base.html:7
-msgid "Jober operations"
-msgstr "Jober üzemeltetés"
-
-#: templates/layouts/base.html:29 templates/pages/trials_queue.html:4
+#: templates/layouts/base.html:36 templates/pages/trials_queue.html:4
 msgid "Field"
 msgstr "Terep"
 
 # --- finance ---
-#: templates/layouts/base.html:47 templates/pages/finance_month_detail.html:8
+#: templates/layouts/base.html:54 templates/pages/finance_month_detail.html:8
 #: templates/pages/finance_month_detail.html:39
 #: templates/pages/finance_summary.html:4
 #: templates/pages/finance_summary.html:9 templates/pages/finance_year.html:4
@@ -2206,14 +2514,63 @@ msgid "Finance"
 msgstr "Pénzügyek"
 
 # --- feedback ---
-#: templates/layouts/base.html:56 templates/pages/feedback_form.html:7
+#: templates/layouts/base.html:63 templates/pages/feedback_form.html:7
 #: templates/pages/feedback_form.html:14
 msgid "Feedback"
 msgstr "Visszajelzés"
 
-#: templates/layouts/base.html:72
+#: templates/layouts/base.html:80
 msgid "Role"
 msgstr "Szerepkör"
+
+# --- floating notification center (2026-07-13) ---
+#: templates/notifications/panel.html:10 templates/notifications/panel.html:18
+#: templates/notifications/panel.html:23 templates/notifications/panel.html:40
+#: tests/test_notifications.py:219
+msgid "Notifications"
+msgstr "Értesítések"
+
+#: templates/notifications/panel.html:24
+#, python-format
+msgid "%(counter)s problem"
+msgid_plural "%(counter)s problems"
+msgstr[0] "%(counter)s probléma"
+msgstr[1] "%(counter)s probléma"
+
+#: templates/notifications/panel.html:25
+#, python-format
+msgid "%(counter)s update"
+msgid_plural "%(counter)s updates"
+msgstr[0] "%(counter)s frissítés"
+msgstr[1] "%(counter)s frissítés"
+
+#: templates/notifications/panel.html:39
+msgid "Session activity"
+msgstr "Munkamenet-tevékenység"
+
+#: templates/notifications/panel.html:49 templates/notifications/panel.html:50
+msgid "Refresh notifications"
+msgstr "Értesítések frissítése"
+
+#: templates/notifications/panel.html:57 templates/notifications/panel.html:58
+msgid "Close notifications"
+msgstr "Értesítések bezárása"
+
+#: templates/notifications/panel.html:66
+msgid "Problems"
+msgstr "Problémák"
+
+#: templates/notifications/panel.html:80 templates/notifications/panel.html:104
+msgid "Dismiss notification"
+msgstr "Értesítés elrejtése"
+
+#: templates/notifications/panel.html:90
+msgid "Updates"
+msgstr "Frissítések"
+
+#: templates/notifications/panel.html:113
+msgid "Nothing needs your attention right now."
+msgstr "Jelenleg semmi sem igényel figyelmet."
 
 #: templates/pages/accommodation_costs.html:4
 msgid "Accommodation costs"
@@ -2243,7 +2600,7 @@ msgstr "Csak kimutatáshoz — a munkavállalóktól semmi nem kerül levonásra
 #: templates/pages/finance_summary.html:57
 #: templates/pages/finance_summary.html:71
 #: templates/pages/finance_summary.html:83 templates/pages/finance_year.html:13
-#: templates/pages/transport_trends.html:14
+#: templates/pages/transport_trends.html:51
 #: templates/panels/finance_company_totals.html:3
 msgid "Company total"
 msgstr "Vállalati összesen"
@@ -2259,32 +2616,82 @@ msgid "Assigned cost"
 msgstr "Hozzárendelt költség"
 
 #: templates/pages/accommodation_costs.html:26
-#: templates/pages/accommodation_detail.html:14
-#: templates/pages/accommodation_list.html:22
+#: templates/pages/accommodation_detail.html:18
+#: templates/pages/accommodation_list.html:36
 msgid "Rooms"
 msgstr "Szobák"
 
 #: templates/pages/accommodation_costs.html:33
-#: templates/pages/accommodation_list.html:26
+#: templates/pages/accommodation_list.html:40
 msgid "No accommodations found."
 msgstr "Nincs találat."
 
-#: templates/pages/accommodation_detail.html:20
-#: templates/pages/accommodation_detail.html:25
+#: templates/pages/accommodation_detail.html:12
+#: templates/pages/accommodation_form.html:4
+#: templates/pages/accommodation_form.html:8
+msgid "Edit location"
+msgstr "Szállás szerkesztése"
+
+#: templates/pages/accommodation_detail.html:13
+#: templates/pages/room_form.html:4 templates/pages/room_form.html:8
+msgid "Add room"
+msgstr "Szoba hozzáadása"
+
+#: templates/pages/accommodation_detail.html:16
+msgid "This location is inactive and cannot receive new assignments."
+msgstr "Ez a szállás inaktív, ezért nem kaphat új hozzárendelést."
+
+#: templates/pages/accommodation_detail.html:24
 #: templates/panels/logistics_room.html:9
 msgid "Monthly rate"
 msgstr "Havi díj"
 
-#: templates/pages/accommodation_detail.html:26
-msgid "Save rate"
-msgstr "Díj mentése"
+#: templates/pages/accommodation_detail.html:25
+#: templates/pages/accommodation_list.html:18
+#: templates/pages/compliance_list.html:21
+#: templates/pages/equipment_catalog.html:16
+#: templates/pages/people_list.html:20 templates/pages/people_list.html:44
+#: templates/pages/project_list.html:34 templates/pages/trials_queue.html:55
+#: templates/panels/blacklist_case.html:8
+msgid "Status"
+msgstr "Állapot"
 
-#: templates/pages/accommodation_detail.html:31
+#: templates/pages/accommodation_detail.html:28
+#: templates/pages/room_form.html:4 templates/pages/room_form.html:8
+msgid "Edit room"
+msgstr "Szoba szerkesztése"
+
+#: templates/pages/accommodation_detail.html:32
 msgid "No rooms."
 msgstr "Nincsenek szobák."
 
+#: templates/pages/accommodation_form.html:4
+#: templates/pages/accommodation_form.html:8
+#: templates/pages/accommodation_list.html:12
+#: tests/test_operations_workspaces.py:24
+msgid "Create location"
+msgstr "Szállás létrehozása"
+
+#: templates/pages/accommodation_form.html:7
+msgid "Accommodation management"
+msgstr "Szálláskezelés"
+
+# --- compliance ---
+#: templates/pages/accommodation_form.html:9
+#: templates/pages/equipment_form.html:10 templates/pages/ledger.html:123
+#: templates/pages/room_form.html:9 templates/pages/transport_trends.html:22
+#: templates/pages/trials_queue.html:25
+#: templates/partials/confirm_dialog.html:12
+msgid "Cancel"
+msgstr "Törlés"
+
+#: templates/pages/accommodation_form.html:14
+msgid "Save location"
+msgstr "Szállás mentése"
+
 # --- logistics: accommodation ---
 #: templates/pages/accommodation_list.html:8
+#: templates/pages/equipment_catalog.html:8
 #: templates/pages/equipment_reviews.html:8
 #: templates/pages/project_detail.html:50
 #: templates/pages/transport_trends.html:8
@@ -2292,6 +2699,31 @@ msgstr "Nincsenek szobák."
 #: templates/panels/logistics_room.html:3
 msgid "Logistics"
 msgstr "Logisztika"
+
+#: templates/pages/accommodation_list.html:17
+msgid "Name or address"
+msgstr "Név vagy cím"
+
+#: templates/pages/accommodation_list.html:21
+#: templates/pages/equipment_catalog.html:19
+msgid "All"
+msgstr "Összes"
+
+#: templates/pages/accommodation_list.html:23 templates/pages/audit_log.html:29
+#: templates/pages/equipment_catalog.html:21
+#: templates/pages/project_list.html:21
+#: templates/pages/transport_trends.html:37
+#: templates/pages/trials_queue.html:41
+msgid "Filter"
+msgstr "Szűrés"
+
+#: templates/pages/accommodation_list.html:29
+#: templates/pages/compliance_list.html:14 templates/pages/people_list.html:41
+#: templates/pages/person_detail.html:141
+#: templates/pages/project_detail.html:16 templates/pages/project_list.html:27
+#: tests/test_tooltips.py:86
+msgid "Details"
+msgstr "Részletek"
 
 #: templates/pages/audit_log.html:4 templates/pages/audit_log.html:9
 msgid "Audit log"
@@ -2315,6 +2747,7 @@ msgstr "Végrehajtó (e-mail tartalmazza)"
 
 # --- projects UI ---
 #: templates/pages/audit_log.html:17 templates/pages/audit_log.html:40
+#: templates/pages/transport_trends.html:44
 msgid "Action"
 msgstr "Művelet"
 
@@ -2338,10 +2771,6 @@ msgstr "Ettől"
 #: templates/pages/audit_log.html:28
 msgid "To"
 msgstr "Eddig"
-
-#: templates/pages/audit_log.html:29
-msgid "Filter"
-msgstr "Szűrés"
 
 #: templates/pages/audit_log.html:38
 msgid "When"
@@ -2443,12 +2872,6 @@ msgstr "Semmi nem vár ellenőrzésre."
 msgid "Alerts"
 msgstr "Figyelmeztetések"
 
-#: templates/pages/compliance_list.html:21 templates/pages/people_list.html:20
-#: templates/pages/people_list.html:35 templates/pages/project_list.html:25
-#: templates/pages/trials_queue.html:21 templates/panels/blacklist_case.html:8
-msgid "Status"
-msgstr "Állapot"
-
 #: templates/pages/compliance_list.html:23
 msgid "Expired"
 msgstr "Lejárt"
@@ -2482,22 +2905,93 @@ msgstr "Projektek kezelése"
 msgid "Operational summaries"
 msgstr "Üzemeltetési összesítők"
 
+#: templates/pages/dashboard.html:17 templates/pages/reports.html:13
+#: tests/test_tooltips.py:116
+msgid "Review active projects"
+msgstr "Aktív projektek áttekintése"
+
+#: templates/pages/dashboard.html:17 templates/pages/reports.html:13
+#: tests/test_tooltips.py:118
+msgid "Open active projects to review their coordinators and assignments."
+msgstr ""
+"Nyissa meg az aktív projekteket a koordinátorok és hozzárendelések "
+"áttekintéséhez."
+
 #: templates/pages/dashboard.html:18 templates/pages/reports.html:13
 msgid "Active projects"
 msgstr "Aktív projektek"
+
+#: templates/pages/dashboard.html:20
+msgid "View available people"
+msgstr "Elérhető személyek megtekintése"
+
+#: templates/pages/dashboard.html:23
+msgid "View working people"
+msgstr "Dolgozó személyek megtekintése"
+
+#: templates/pages/dashboard.html:28 templates/pages/reports.html:15
+msgid "Resolve pending trial outcomes"
+msgstr "Függőben lévő próbanaperedmények kezelése"
+
+#: templates/pages/dashboard.html:28 templates/pages/reports.html:15
+msgid "Open trials that still require an outcome."
+msgstr ""
+"Nyissa meg azokat a próbanapokat, amelyeknél még rögzíteni kell az eredményt."
 
 #: templates/pages/dashboard.html:29 templates/pages/reports.html:15
 msgid "Awaiting outcome"
 msgstr "Eredményre vár"
 
 #: templates/pages/dashboard.html:37 templates/pages/trials_queue.html:9
-#: templates/pages/trials_queue.html:12
+#: templates/pages/trials_queue.html:45
 msgid "Trials"
 msgstr "Próbanapok"
 
-#: templates/pages/dashboard.html:42 templates/pages/trials_queue.html:27
+#: templates/pages/dashboard.html:42 templates/pages/trials_queue.html:62
 msgid "No trials awaiting an outcome."
 msgstr "Nincs eredményre váró próbanap."
+
+#: templates/pages/equipment_catalog.html:10
+#: templates/pages/equipment_form.html:4 templates/pages/equipment_form.html:9
+#: tests/test_corvinum_client.py:175
+msgid "Add equipment item"
+msgstr "Felszerelési tétel hozzáadása"
+
+#: templates/pages/equipment_catalog.html:15
+msgid "Name or size"
+msgstr "Név vagy méret"
+
+#: templates/pages/equipment_catalog.html:25
+msgid ""
+"Inactive items remain on past issue records but cannot be selected for a new "
+"issue."
+msgstr ""
+"A nem aktív tételek a korábbi kiadási nyilvántartásokban megmaradnak, de új "
+"kiadáshoz nem választhatók ki."
+
+#: templates/pages/equipment_catalog.html:34
+#: templates/panels/logistics_equipment.html:12
+msgid "Unit price"
+msgstr "Egységár"
+
+#: templates/pages/equipment_catalog.html:35
+#: templates/pages/person_detail.html:13
+#: templates/pages/transport_trends.html:45
+#: templates/pages/trials_queue.html:59
+msgid "Edit"
+msgstr "Szerkesztés"
+
+#: templates/pages/equipment_catalog.html:38
+msgid "No equipment items found."
+msgstr "Nem találhatók felszerelési tételek."
+
+#: templates/pages/equipment_form.html:4 templates/pages/equipment_form.html:9
+msgid "Edit equipment item"
+msgstr "Felszerelési tétel szerkesztése"
+
+#: templates/pages/equipment_form.html:15 tests/test_corvinum_client.py:176
+msgid "Save equipment item"
+msgstr "Felszerelési tétel mentése"
 
 #: templates/pages/equipment_reviews.html:4
 #: templates/pages/equipment_reviews.html:9
@@ -2583,13 +3077,6 @@ msgstr "Visszajelzési linkek"
 msgid "Label"
 msgstr "Címke"
 
-#: templates/pages/feedback_inbox.html:25
-#: templates/pages/finance_summary.html:34
-#: templates/pages/person_detail.html:28 templates/pages/project_detail.html:8
-#: templates/pages/transport_trends.html:27
-msgid "Project"
-msgstr "Projekt"
-
 #: templates/pages/feedback_inbox.html:29
 msgid "Create link"
 msgstr "Link létrehozása"
@@ -2673,11 +3160,11 @@ msgstr "Pénzügyi hónapok"
 msgid "No financial months."
 msgstr "Nincs pénzügyi hónap."
 
-#: templates/pages/finance_summary.html:39 templates/pages/ledger.html:66
+#: templates/pages/finance_summary.html:39 templates/pages/ledger.html:68
 msgid "Year"
 msgstr "Év"
 
-#: templates/pages/finance_summary.html:42 templates/pages/ledger.html:69
+#: templates/pages/finance_summary.html:42 templates/pages/ledger.html:71
 msgid "Month"
 msgstr "Hónap"
 
@@ -2719,11 +3206,11 @@ msgstr "Igen"
 msgid "No"
 msgstr "Nem"
 
-#: templates/pages/intake_panel.html:45
+#: templates/pages/intake_panel.html:51
 msgid "Finish"
 msgstr "Befejezés"
 
-#: templates/pages/intake_panel.html:45
+#: templates/pages/intake_panel.html:51
 msgid "Next"
 msgstr "Tovább"
 
@@ -2736,10 +3223,10 @@ msgstr "Előlegek és levonások"
 msgid "Record entry"
 msgstr "Tétel rögzítése"
 
-#: templates/pages/ledger.html:20 templates/pages/ledger.html:49
-#: templates/pages/ledger.html:77 templates/pages/ledger.html:103
+#: templates/pages/ledger.html:20 templates/pages/ledger.html:50
+#: templates/pages/ledger.html:79 templates/pages/ledger.html:105
 #: templates/pages/payslips.html:17 templates/pages/payslips.html:31
-#: templates/pages/person_detail.html:8 templates/pages/person_detail.html:214
+#: templates/pages/person_detail.html:8 templates/pages/person_detail.html:227
 msgid "Person"
 msgstr "Személy"
 
@@ -2751,7 +3238,7 @@ msgstr "Cég / projekt"
 msgid "Entry type"
 msgstr "Tétel típusa"
 
-#: templates/pages/ledger.html:33 templates/pages/ledger.html:103
+#: templates/pages/ledger.html:33 templates/pages/ledger.html:105
 #: templates/panels/advances_ledger.html:27
 #: templates/panels/blacklist_case.html:10
 #: templates/panels/blacklist_case.html:33
@@ -2763,6 +3250,7 @@ msgid "Amount (EUR)"
 msgstr "Összeg (EUR)"
 
 #: templates/pages/ledger.html:38 templates/pages/payslips.html:23
+#: templates/pages/transport_trends.html:44
 #: templates/panels/advances_ledger.html:32
 msgid "Note"
 msgstr "Megjegyzés"
@@ -2781,48 +3269,48 @@ msgstr ""
 "tételek a következő hétre kerülnek."
 
 # --- compliance ---
-#: templates/pages/ledger.html:49
+#: templates/pages/ledger.html:50
 msgid "Company"
 msgstr "Cég"
 
-#: templates/pages/ledger.html:49 templates/pages/ledger.html:103
+#: templates/pages/ledger.html:50 templates/pages/ledger.html:105
 msgid "Amount"
 msgstr "Összeg"
 
-#: templates/pages/ledger.html:55
+#: templates/pages/ledger.html:56
 msgid "Total"
 msgstr "Összesen"
 
-#: templates/pages/ledger.html:57 templates/pages/ledger.html:84
+#: templates/pages/ledger.html:59 templates/pages/ledger.html:86
 msgid "Download CSV"
 msgstr "CSV letöltése"
 
-#: templates/pages/ledger.html:59
+#: templates/pages/ledger.html:61
 msgid "No open advances before this week's cut-off."
 msgstr "Az e heti zárás előtt nincs nyitott előleg."
 
-#: templates/pages/ledger.html:64
+#: templates/pages/ledger.html:66
 #, python-format
 msgid "Cycle %(start)s → %(end)s"
 msgstr "Ciklus: %(start)s → %(end)s"
 
-#: templates/pages/ledger.html:72
+#: templates/pages/ledger.html:74
 msgid "Show"
 msgstr "Megjelenítés"
 
-#: templates/pages/ledger.html:77
+#: templates/pages/ledger.html:79
 msgid "To deduct"
 msgstr "Levonandó"
 
-#: templates/pages/ledger.html:77
+#: templates/pages/ledger.html:79
 msgid "To add"
 msgstr "Hozzáadandó"
 
-#: templates/pages/ledger.html:77
+#: templates/pages/ledger.html:79
 msgid "Net pay effect"
 msgstr "Nettó bérhatás"
 
-#: templates/pages/ledger.html:91
+#: templates/pages/ledger.html:93
 msgid ""
 "This locks every open entry of the window into the cycle; locked entries can "
 "only be corrected by reversal."
@@ -2830,35 +3318,35 @@ msgstr ""
 "A ciklusba zárja az ablak összes nyitott tételét; a zárolt tételek csak "
 "sztornóval javíthatók."
 
-#: templates/pages/ledger.html:91
+#: templates/pages/ledger.html:93
 msgid "Include open entries in cycle"
 msgstr "Nyitott tételek ciklusba sorolása"
 
-#: templates/pages/ledger.html:92
+#: templates/pages/ledger.html:94
 msgid "This marks the whole cycle as settled with pay."
 msgstr "Az egész ciklust bérrel rendezettként jelöli."
 
-#: templates/pages/ledger.html:92
+#: templates/pages/ledger.html:94
 msgid "Mark cycle settled"
 msgstr "Ciklus rendezettként jelölése"
 
-#: templates/pages/ledger.html:96
+#: templates/pages/ledger.html:98
 msgid "No entries in this cycle window."
 msgstr "Ebben a ciklusablakban nincs tétel."
 
-#: templates/pages/ledger.html:101
+#: templates/pages/ledger.html:103
 msgid "Entries"
 msgstr "Tételek"
 
-#: templates/pages/ledger.html:103
+#: templates/pages/ledger.html:105
 msgid "Type"
 msgstr "Típus"
 
-#: templates/pages/ledger.html:103
+#: templates/pages/ledger.html:105
 msgid "Settlement"
 msgstr "Elszámolás"
 
-#: templates/pages/ledger.html:119
+#: templates/pages/ledger.html:121
 msgid ""
 "This records a reversal entry with the opposite pay effect; the original "
 "stays in the ledger."
@@ -2866,38 +3354,29 @@ msgstr ""
 "Sztornótételt rögzít ellentétes bérhatással; az eredeti tétel a főkönyvben "
 "marad."
 
-#: templates/pages/ledger.html:119
+#: templates/pages/ledger.html:121
 msgid "Reverse"
 msgstr "Sztornó"
 
-#: templates/pages/ledger.html:121
+#: templates/pages/ledger.html:123
 msgid ""
 "This cancels the open ledger entry; it will no longer count against pay."
 msgstr "Törli a nyitott főkönyvi tételt; többé nem számít bele a bérbe."
 
-# --- compliance ---
-#: templates/pages/ledger.html:121 templates/partials/confirm_dialog.html:12
-msgid "Cancel"
-msgstr "Törlés"
-
 # --- login ---
-#: templates/pages/login.html:4
+#: templates/pages/login.html:4 templates/pages/login.html:10
 msgid "Sign in"
 msgstr "Bejelentkezés"
 
-#: templates/pages/login.html:8
+#: templates/pages/login.html:9
 msgid "Internal system"
 msgstr "Belső rendszer"
 
-#: templates/pages/login.html:9
-msgid "Sign in to the Jober team"
-msgstr "Bejelentkezés a Jober csapatba"
-
-#: templates/pages/login.html:20
+#: templates/pages/login.html:21
 msgid "Password"
 msgstr "Jelszó"
 
-#: templates/pages/login.html:23
+#: templates/pages/login.html:24
 msgid "Continue"
 msgstr "Folytatás"
 
@@ -2962,21 +3441,25 @@ msgstr "Keresés név szerint"
 msgid "All statuses"
 msgstr "Minden állapot"
 
-#: templates/pages/people_list.html:26
+#: templates/pages/people_list.html:27 templates/pages/person_detail.html:185
+msgid "Inactive reason"
+msgstr "Inaktivitás oka"
+
+#: templates/pages/people_list.html:28
+msgid "All inactive reasons"
+msgstr "Minden inaktivitási ok"
+
+#: templates/pages/people_list.html:35
 msgid "Search"
 msgstr "Keresés"
 
-#: templates/pages/people_list.html:39
+#: templates/pages/people_list.html:48
 msgid "No people found."
 msgstr "Nincs találat."
 
 #: templates/pages/person_detail.html:10 templates/pages/person_form.html:10
 msgid "Back to people"
 msgstr "Vissza az emberekhez"
-
-#: templates/pages/person_detail.html:13
-msgid "Edit"
-msgstr "Szerkesztés"
 
 # --- workflow: trials / readiness / intake ---
 #: templates/pages/person_detail.html:24
@@ -2987,11 +3470,8 @@ msgstr "Következő lépés"
 msgid "Send to a project trial"
 msgstr "Küldés próbanapra"
 
-#: templates/pages/person_detail.html:33 templates/pages/person_detail.html:46
-msgid "Arrival time"
-msgstr "Érkezés ideje"
-
-#: templates/pages/person_detail.html:36
+#: templates/pages/person_detail.html:36 templates/pages/trials_queue.html:10
+#: templates/pages/trials_queue.html:24
 msgid "Schedule trial"
 msgstr "Próbanap ütemezése"
 
@@ -3044,11 +3524,6 @@ msgstr "Orvosi és felszerelés szükséges"
 #: templates/pages/project_detail.html:15
 msgid "Operational"
 msgstr "Üzemeltetési"
-
-#: templates/pages/person_detail.html:141
-#: templates/pages/project_detail.html:16
-msgid "Details"
-msgstr "Részletek"
 
 #: templates/pages/person_detail.html:146
 msgid "Current project"
@@ -3118,10 +3593,6 @@ msgstr ""
 "Lezárja az aktív kihelyezést, felszabadítja a szobát, visszaveszi a kiadott "
 "felszerelést, és a személyt Inaktív állapotba teszi a kiválasztott indokkal."
 
-#: templates/pages/person_detail.html:185
-msgid "Inactive reason"
-msgstr "Inaktivitás oka"
-
 #: templates/pages/person_detail.html:186
 msgid "Reason…"
 msgstr "Ok…"
@@ -3142,12 +3613,42 @@ msgstr "Mióta"
 msgid "Recycle to Available"
 msgstr "Visszaküldés Elérhetőre"
 
-# --- person card: history + filter ---
+#: templates/pages/person_detail.html:214
+#: templates/pages/transport_trends.html:42
+msgid "Records"
+msgstr "Bejegyzések"
+
 #: templates/pages/person_detail.html:215
+#: templates/pages/person_detail.html:220
+msgid "Archive person"
+msgstr "Személy archiválása"
+
+#: templates/pages/person_detail.html:216
+msgid ""
+"Hides this operational record from the People list. It is not a deletion and "
+"does not remove blacklist protection or audit history."
+msgstr ""
+"Elrejti ezt a működési rekordot az Emberek listájáról. Nem törlés, és nem "
+"távolítja el a feketelista-védelmet vagy az auditnaplót."
+
+#: templates/pages/person_detail.html:217
+msgid ""
+"This archives the person from the operational list. It does not delete their "
+"record, audit history, or blacklist protection."
+msgstr ""
+"Ezzel archiválja a személyt a működési listáról. Nem törli a rekordját, az "
+"auditnaplót vagy a feketelista-védelmet."
+
+#: templates/pages/person_detail.html:219
+msgid "Archive reason"
+msgstr "Archiválás oka"
+
+# --- person card: history + filter ---
+#: templates/pages/person_detail.html:228
 msgid "History"
 msgstr "Előzmények"
 
-#: templates/pages/person_detail.html:220
+#: templates/pages/person_detail.html:233
 msgid "No history yet."
 msgstr "Még nincs előzmény."
 
@@ -3159,7 +3660,7 @@ msgstr "Mentés"
 msgid "Back to projects"
 msgstr "Vissza a projektekhez"
 
-#: templates/pages/project_detail.html:18 templates/pages/project_list.html:21
+#: templates/pages/project_detail.html:18 templates/pages/project_list.html:30
 msgid "Code"
 msgstr "Kód"
 
@@ -3189,7 +3690,7 @@ msgstr "Nincs hozzárendelt dolgozó."
 
 # --- logistics: transport ---
 #: templates/pages/project_detail.html:51
-#: templates/pages/transport_trends.html:15
+#: templates/pages/transport_trends.html:52
 msgid "Weekly transport"
 msgstr "Heti szállítás"
 
@@ -3197,21 +3698,40 @@ msgstr "Heti szállítás"
 msgid "No transport weeks recorded."
 msgstr "Nincs rögzített szállítási hét."
 
-#: templates/pages/project_detail.html:63
+#: templates/pages/project_detail.html:62
+#: templates/pages/transport_trends.html:44
 msgid "Week start"
 msgstr "Hét kezdete"
 
-#: templates/pages/project_detail.html:64
+#: templates/pages/project_detail.html:63
+#: templates/pages/transport_trends.html:44
 msgid "Headcount"
 msgstr "Létszám"
 
-#: templates/pages/project_detail.html:65
+#: templates/pages/project_detail.html:64
 msgid "Record week"
 msgstr "Hét rögzítése"
 
-#: templates/pages/project_list.html:31
+#: templates/pages/project_list.html:15
+msgid "Project status"
+msgstr "Projekt állapota"
+
+#: templates/pages/project_list.html:17
+msgid "All project statuses"
+msgstr "Minden projektállapot"
+
+#: templates/pages/project_list.html:40
 msgid "No projects found."
 msgstr "Nincs találat."
+
+#: templates/pages/reports.html:14
+msgid "Browse people"
+msgstr "Személyek böngészése"
+
+#: templates/pages/reports.html:14
+msgid "Open the full People list to search and filter workers."
+msgstr ""
+"Nyissa meg a teljes személylistát a munkavállalók kereséséhez és szűréséhez."
 
 #: templates/pages/reports.html:24
 msgid "People by status"
@@ -3225,56 +3745,134 @@ msgstr "Inaktívak ok szerint"
 msgid "No inactive people."
 msgstr "Nincsenek inaktív személyek."
 
+#: templates/pages/room_form.html:14
+msgid "Save room"
+msgstr "Szoba mentése"
+
 # --- transport trends ---
 #: templates/pages/transport_trends.html:4
 #: templates/pages/transport_trends.html:9
 msgid "Transport trends"
 msgstr "Szállítási trendek"
 
-#: templates/pages/transport_trends.html:39
-msgid "No transport data."
-msgstr "Nincs szállítási adat."
+#: templates/pages/transport_trends.html:10
+msgid "Record transport week"
+msgstr "Szállítási hét rögzítése"
+
+#: templates/pages/transport_trends.html:15
+msgid "Edit transport record"
+msgstr "Szállítási bejegyzés szerkesztése"
+
+#: templates/pages/transport_trends.html:15
+msgid "New transport record"
+msgstr "Új szállítási bejegyzés"
+
+#: templates/pages/transport_trends.html:16
+msgid "Weekly transported headcount"
+msgstr "Heti szállított létszám"
+
+#: templates/pages/transport_trends.html:21
+msgid "Save transport record"
+msgstr "Szállítási bejegyzés mentése"
+
+#: templates/pages/transport_trends.html:29
+#: templates/pages/trials_queue.html:32
+msgid "Lookup"
+msgstr "Keresés"
+
+#: templates/pages/transport_trends.html:32
+#: templates/pages/trials_queue.html:36
+msgid "All projects"
+msgstr "Minden projekt"
+
+#: templates/pages/transport_trends.html:35
+msgid "From week"
+msgstr "Kezdő hét"
+
+#: templates/pages/transport_trends.html:36
+msgid "To week"
+msgstr "Záró hét"
+
+#: templates/pages/transport_trends.html:43
+msgid "Transport weeks"
+msgstr "Szállítási hetek"
+
+#: templates/pages/transport_trends.html:45
+msgid "No transport records match these filters."
+msgstr "Ezeknek a szűrőknek egyetlen szállítási bejegyzés sem felel meg."
+
+#: templates/pages/transport_trends.html:76
+msgid "No transport data. Record a project week to start the trend."
+msgstr "Nincs szállítási adat. A trendhez rögzítsen egy projekthetet."
+
+#: templates/pages/trials_queue.html:15
+msgid "Edit pending trial"
+msgstr "Függő próbanap szerkesztése"
+
+#: templates/pages/trials_queue.html:15
+msgid "New trial"
+msgstr "Új próbanap"
+
+#: templates/pages/trials_queue.html:16
+msgid "Schedule a candidate"
+msgstr "Jelölt ütemezése"
+
+#: templates/pages/trials_queue.html:24
+msgid "Save trial"
+msgstr "Próbanap mentése"
+
+#: templates/pages/trials_queue.html:34
+msgid "Candidate name"
+msgstr "Jelölt neve"
+
+#: templates/pages/trials_queue.html:39
+msgid "From date"
+msgstr "Kezdő dátum"
+
+#: templates/pages/trials_queue.html:40
+msgid "To date"
+msgstr "Záró dátum"
 
 #: templates/pages/two_factor_setup.html:4
-#: templates/pages/two_factor_setup.html:9
+#: templates/pages/two_factor_setup.html:10
 msgid "Two-factor setup"
 msgstr "Kétlépcsős beállítás"
 
-#: templates/pages/two_factor_setup.html:8
-#: templates/pages/two_factor_verify.html:8
+#: templates/pages/two_factor_setup.html:9
+#: templates/pages/two_factor_verify.html:9
 msgid "Security"
 msgstr "Biztonság"
 
-#: templates/pages/two_factor_setup.html:11
+#: templates/pages/two_factor_setup.html:12
 msgid "Two-factor authentication is enabled for your account."
 msgstr "A kétlépcsős azonosítás be van kapcsolva a fiókodhoz."
 
-#: templates/pages/two_factor_setup.html:13
+#: templates/pages/two_factor_setup.html:14
 msgid "Scan the QR code with your authenticator app, then confirm with a code."
 msgstr ""
 "Olvassa be a QR-kódot a hitelesítő alkalmazással, majd erősítse meg egy "
 "kóddal.Add hozzá ezt a fiókot a hitelesítő alkalmazáshoz, majd erősítsd meg "
 "egy kóddal."
 
-#: templates/pages/two_factor_setup.html:16
+#: templates/pages/two_factor_setup.html:17
 msgid "Secret (manual entry)"
 msgstr "Titkos kulcs (kézi bevitel)"
 
-#: templates/pages/two_factor_setup.html:22
-#: templates/pages/two_factor_verify.html:13
+#: templates/pages/two_factor_setup.html:23
+#: templates/pages/two_factor_verify.html:14
 msgid "6-digit code"
 msgstr "6 számjegyű kód"
 
-#: templates/pages/two_factor_setup.html:25
+#: templates/pages/two_factor_setup.html:26
 msgid "Confirm"
 msgstr "Megerősítés"
 
 #: templates/pages/two_factor_verify.html:4
-#: templates/pages/two_factor_verify.html:9
+#: templates/pages/two_factor_verify.html:10
 msgid "Two-factor verification"
 msgstr "Kétlépcsős ellenőrzés"
 
-#: templates/pages/two_factor_verify.html:16
+#: templates/pages/two_factor_verify.html:17
 msgid "Verify"
 msgstr "Ellenőrzés"
 
@@ -3341,13 +3939,18 @@ msgstr[1] "%(n)s kritikus tétel nyitott — az aktiválás blokkolva van."
 msgid "All critical items are complete."
 msgstr "Minden kritikus tétel teljesítve."
 
+#: templates/panels/finance_company_totals.html:2
+msgid "Review company finances"
+msgstr "Vállalati pénzügyek áttekintése"
+
+#: templates/panels/finance_company_totals.html:2
+msgid "Open the finance summary for revenue, costs, and net results."
+msgstr ""
+"Nyissa meg a bevételek, költségek és nettó eredmény pénzügyi összesítését."
+
 #: templates/panels/logistics_equipment.html:7
 msgid "Value"
 msgstr "Érték"
-
-#: templates/panels/logistics_equipment.html:12
-msgid "Unit price"
-msgstr "Egységár"
 
 #: templates/panels/logistics_equipment.html:17
 msgid "Return"
@@ -3389,13 +3992,17 @@ msgstr "Egyedi díj"
 msgid "Save override"
 msgstr "Felülírás mentése"
 
-#: templates/panels/logistics_room.html:26
+#: templates/panels/logistics_room.html:27
 msgid "Room"
 msgstr "Szoba"
 
-#: templates/panels/logistics_room.html:31
+#: templates/panels/logistics_room.html:32
 msgid "Assign room"
 msgstr "Szoba hozzárendelése"
+
+#: templates/panels/logistics_room.html:34
+msgid "No active room with free capacity is available."
+msgstr "Nincs szabad férőhellyel rendelkező aktív szoba."
 
 # --- messaging / SMS ---
 #: templates/panels/messaging_sms.html:3
@@ -3429,6 +4036,35 @@ msgstr "Biztosan meg akarja tenni?"
 #: templates/partials/confirm_dialog.html:13
 msgid "Yes, proceed"
 msgstr "Igen, folytatás"
+
+#: templates/partials/theme_picker.html:3
+#: templates/partials/theme_picker.html:4
+msgid "Theme"
+msgstr "Téma"
+
+#: templates/partials/theme_picker.html:5
+msgid "Light"
+msgstr "Világos"
+
+#: templates/partials/theme_picker.html:6
+msgid "Dark"
+msgstr "Sötét"
+
+#~ msgid "Week start is required."
+#~ msgstr "A hét kezdete kötelező."
+
+# --- shell / navigation ---
+#~ msgid "Jober operations"
+#~ msgstr "Jober üzemeltetés"
+
+#~ msgid "Save rate"
+#~ msgstr "Díj mentése"
+
+#~ msgid "Sign in to the Jober team"
+#~ msgstr "Bejelentkezés a Jober csapatba"
+
+#~ msgid "No transport data."
+#~ msgstr "Nincs szállítási adat."
 
 # --- projects UI ---
 #~| msgid "Reactivation"
@@ -3479,328 +4115,3 @@ msgstr "Igen, folytatás"
 
 #~ msgid "Responsible"
 #~ msgstr "Felelős"
-# --- floating notification center (2026-07-13) ---
-msgid "Notifications"
-msgstr "Értesítések"
-
-msgid "Session activity"
-msgstr "Munkamenet-tevékenység"
-
-msgid "Refresh notifications"
-msgstr "Értesítések frissítése"
-
-msgid "Close notifications"
-msgstr "Értesítések bezárása"
-
-#, python-format
-msgid "%(counter)s problem"
-msgid_plural "%(counter)s problems"
-msgstr[0] "%(counter)s probléma"
-msgstr[1] "%(counter)s probléma"
-
-#, python-format
-msgid "%(counter)s update"
-msgid_plural "%(counter)s updates"
-msgstr[0] "%(counter)s frissítés"
-msgstr[1] "%(counter)s frissítés"
-
-msgid "Problems"
-msgstr "Problémák"
-
-msgid "Updates"
-msgstr "Frissítések"
-
-msgid "Dismiss notification"
-msgstr "Értesítés elrejtése"
-
-msgid "Nothing needs your attention right now."
-msgstr "Jelenleg semmi sem igényel figyelmet."
-
-msgid "Notification is not available."
-msgstr "Az értesítés nem érhető el."
-
-msgid "Operational record"
-msgstr "Működési bejegyzés"
-
-#, python-format
-msgid "%(actor)s · %(subject)s"
-msgstr "%(actor)s · %(subject)s"
-
-msgid "Trial outcome is waiting"
-msgstr "A próbanap eredménye rögzítésre vár"
-
-msgid "Readiness needs attention"
-msgstr "A készenlét figyelmet igényel"
-
-msgid "Compliance problems need attention"
-msgstr "A megfelelőségi problémák figyelmet igényelnek"
-
-#, python-format
-msgid "%(count)s open document or medical alerts"
-msgstr "%(count)s nyitott dokumentum- vagy orvosi figyelmeztetés"
-
-msgid "Equipment reviews are waiting"
-msgstr "Felszerelési ellenőrzések várakoznak"
-
-#, python-format
-msgid "%(count)s unreturned equipment reviews"
-msgstr "%(count)s vissza nem adott felszerelés ellenőrzése"
-
-msgid "Blacklist decisions are waiting"
-msgstr "Feketelista-döntések várakoznak"
-
-#, python-format
-msgid "%(count)s proposed cases require a decision"
-msgstr "%(count)s javasolt eset döntést igényel"
-
-msgid "Worker feedback is available"
-msgstr "Dolgozói visszajelzés érkezett"
-
-#, python-format
-msgid "%(count)s feedback submissions in the inbox"
-msgstr "%(count)s visszajelzés található a beérkező üzenetek között"
-
-msgid "Activation checklist is incomplete"
-msgstr "Az aktiválási ellenőrzőlista hiányos"
-
-#, python-format
-msgid "%(person)s · %(count)s critical items"
-msgstr "%(person)s · %(count)s kritikus tétel"
-
-msgid "Worker feedback received"
-msgstr "Dolgozói visszajelzés érkezett"
-msgid "Theme"
-msgstr "Téma"
-
-msgid "Light"
-msgstr "Világos"
-
-msgid "Dark"
-msgstr "Sötét"
-
-msgid "Review active projects"
-msgstr "Aktív projektek áttekintése"
-
-msgid "Open active projects to review their coordinators and assignments."
-msgstr "Nyissa meg az aktív projekteket a koordinátorok és hozzárendelések áttekintéséhez."
-
-msgid "Browse people"
-msgstr "Személyek böngészése"
-
-msgid "Open the full People list to search and filter workers."
-msgstr "Nyissa meg a teljes személylistát a munkavállalók kereséséhez és szűréséhez."
-
-msgid "Resolve pending trial outcomes"
-msgstr "Függőben lévő próbanaperedmények kezelése"
-
-msgid "Open trials that still require an outcome."
-msgstr "Nyissa meg azokat a próbanapokat, amelyeknél még rögzíteni kell az eredményt."
-
-msgid "Review compliance issues"
-msgstr "Megfelelőségi problémák áttekintése"
-
-msgid "Open workers with document or medical requirements that need attention."
-msgstr "Nyissa meg a figyelmet igénylő dokumentum- vagy orvosi követelményekkel rendelkező munkavállalókat."
-
-msgid "Review accommodation occupancy"
-msgstr "Szálláskihasználtság áttekintése"
-
-msgid "Open accommodation costs, occupied places, and assigned costs."
-msgstr "Nyissa meg a szállásköltségeket, a foglalt helyeket és a hozzárendelt költségeket."
-
-msgid "Review equipment exceptions"
-msgstr "Felszerelési kivételek áttekintése"
-
-msgid "Open issued equipment awaiting return or a deduction decision."
-msgstr "Nyissa meg a visszaadásra vagy levonási döntésre váró kiadott felszereléseket."
-
-#, python-format
-msgid "View %(status)s people"
-msgstr "%(status)s állapotú személyek megtekintése"
-
-msgid "Open People filtered to this lifecycle status."
-msgstr "Nyissa meg a személylistát erre az életciklus-állapotra szűrve."
-
-#, python-format
-msgid "View inactive people: %(reason)s"
-msgstr "Inaktív személyek megtekintése: %(reason)s"
-
-msgid "Open People filtered to this inactive reason."
-msgstr "Nyissa meg a személylistát erre az inaktivitási okra szűrve."
-
-msgid "Review company finances"
-msgstr "Vállalati pénzügyek áttekintése"
-
-msgid "Open the finance summary for revenue, costs, and net results."
-msgstr "Nyissa meg a bevételek, költségek és nettó eredmény pénzügyi összesítését."
-
-msgid "Project status"
-msgstr "Projekt állapota"
-
-msgid "All project statuses"
-msgstr "Minden projektállapot"
-
-msgid "All inactive reasons"
-msgstr "Minden inaktivitási ok"
-
-msgid "View available people"
-msgstr "Elérhető személyek megtekintése"
-
-msgid "View working people"
-msgstr "Dolgozó személyek megtekintése"
-
-msgid "A transport record already exists for this project and week."
-msgstr "Ehhez a projekthez és héthez már létezik szállítási bejegyzés."
-
-msgid "Accommodation created. Add rooms to make it assignable."
-msgstr "A szállás létrejött. A hozzárendeléshez adjon hozzá szobákat."
-
-msgid "Accommodation management"
-msgstr "Szálláskezelés"
-
-msgid "Accommodation updated."
-msgstr "A szállás frissítve."
-
-msgid "Add room"
-msgstr "Szoba hozzáadása"
-
-msgid "All"
-msgstr "Összes"
-
-msgid "All projects"
-msgstr "Minden projekt"
-
-msgid "Amounts use a positive convention; negative values are not allowed."
-msgstr "Az összegek pozitív előjelet használnak; negatív érték nem engedélyezett."
-
-msgid "Candidate"
-msgstr "Jelölt"
-
-msgid "Candidate name"
-msgstr "Jelölt neve"
-
-msgid "Cannot activate this worker because no readiness record has been completed."
-msgstr "A dolgozó nem aktiválható, mert nincs kitöltött készenléti bejegyzés."
-
-msgid "Capacity cannot be lower than current occupancy."
-msgstr "A kapacitás nem lehet kisebb a jelenlegi kihasználtságnál."
-
-msgid "Create location"
-msgstr "Szállás létrehozása"
-
-msgid "Edit location"
-msgstr "Szállás szerkesztése"
-
-msgid "Edit pending trial"
-msgstr "Függő próbanap szerkesztése"
-
-msgid "Edit room"
-msgstr "Szoba szerkesztése"
-
-msgid "Edit transport record"
-msgstr "Szállítási bejegyzés szerkesztése"
-
-msgid "From date"
-msgstr "Kezdő dátum"
-
-msgid "From week"
-msgstr "Kezdő hét"
-
-msgid "Lookup"
-msgstr "Keresés"
-
-msgid "Name or address"
-msgstr "Név vagy cím"
-
-msgid "New transport record"
-msgstr "Új szállítási bejegyzés"
-
-msgid "New trial"
-msgstr "Új próbanap"
-
-msgid "No active room with free capacity is available."
-msgstr "Nincs szabad férőhellyel rendelkező aktív szoba."
-
-msgid "No transport data. Record a project week to start the trend."
-msgstr "Nincs szállítási adat. A trendhez rögzítsen egy projekthetet."
-
-msgid "No transport records match these filters."
-msgstr "Ezeknek a szűrőknek egyetlen szállítási bejegyzés sem felel meg."
-
-msgid "Only active rooms in active locations can be assigned."
-msgstr "Csak aktív szállás aktív szobája rendelhető hozzá."
-
-msgid "Only available candidates can be scheduled."
-msgstr "Csak elérhető jelöltek ütemezhetők."
-
-msgid "Only pending trials can be edited."
-msgstr "Csak függő próbanapok szerkeszthetők."
-
-msgid "Operational note"
-msgstr "Működési megjegyzés"
-
-msgid "Record transport week"
-msgstr "Szállítási hét rögzítése"
-
-msgid "Records"
-msgstr "Bejegyzések"
-
-msgid "Release all occupants before deactivating this location."
-msgstr "A szállás kikapcsolása előtt költöztessen ki minden lakót."
-
-msgid "Release all occupants before deactivating this room."
-msgstr "A szoba kikapcsolása előtt költöztessen ki minden lakót."
-
-msgid "Review the transport details and try again."
-msgstr "Ellenőrizze a szállítás adatait, majd próbálja újra."
-
-msgid "Review the trial details and try again."
-msgstr "Ellenőrizze a próbanap adatait, majd próbálja újra."
-
-msgid "Room created."
-msgstr "A szoba létrejött."
-
-msgid "Room is at full capacity."
-msgstr "A szoba megtelt."
-
-msgid "Room updated."
-msgstr "A szoba frissítve."
-
-msgid "Save location"
-msgstr "Szállás mentése"
-
-msgid "Save room"
-msgstr "Szoba mentése"
-
-msgid "Save transport record"
-msgstr "Szállítási bejegyzés mentése"
-
-msgid "Save trial"
-msgstr "Próbanap mentése"
-
-msgid "Schedule a candidate"
-msgstr "Jelölt ütemezése"
-
-msgid "This location is inactive and cannot receive new assignments."
-msgstr "Ez a szállás inaktív, ezért nem kaphat új hozzárendelést."
-
-msgid "To date"
-msgstr "Záró dátum"
-
-msgid "To week"
-msgstr "Záró hét"
-
-msgid "Transport record updated."
-msgstr "A szállítási bejegyzés frissítve."
-
-msgid "Transport weeks"
-msgstr "Szállítási hetek"
-
-msgid "Trial updated."
-msgstr "A próbanap frissítve."
-
-msgid "Trials can only be scheduled for active projects."
-msgstr "Próbanap csak aktív projekthez ütemezhető."
-
-msgid "Weekly transported headcount"
-msgstr "Heti szállított létszám"

@@ -26,6 +26,7 @@ class Action(str, Enum):
     INTAKE_CREATE_EDIT = "intake.create_edit"
     INTAKE_ASSIGN_TRIAL = "intake.assign_trial"
     PERSON_RECYCLE_AVAILABLE = "person.recycle_available"
+    PERSON_ARCHIVE = "person.archive"
     SMS_SEND = "sms.send"
 
     # Coordinator field operations

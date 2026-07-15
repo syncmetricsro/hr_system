@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-13 01:45+0200\n"
+"POT-Creation-Date: 2026-07-15 15:11+0200\n"
 "Language: sk\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -51,103 +51,117 @@ msgstr "Uvítací telefonát uskutočnený"
 msgid "Safety boots"
 msgstr "Bezpečnostná obuv"
 
-#: clients/corvinum_eu/templates/layouts/base.html:27
-#: templates/layouts/base.html:15
+#: clients/corvinum_eu/templates/layouts/base.html:29
+#: templates/layouts/base.html:17
 msgid "Skip to content"
 msgstr "Preskočiť na obsah"
 
-#: clients/corvinum_eu/templates/layouts/base.html:33
-#: clients/corvinum_eu/templates/layouts/base.html:59
-#: templates/layouts/base.html:17 templates/layouts/base.html:36
+#: clients/corvinum_eu/templates/layouts/base.html:39
+#: clients/corvinum_eu/templates/layouts/base.html:67
+#: templates/layouts/base.html:20 templates/layouts/base.html:43
 #: templates/pages/finance_summary.html:8 templates/pages/reports.html:4
 #: templates/pages/reports.html:9 templates/pages/reports.html:12
 msgid "Reports"
 msgstr "Reporty"
 
-#: clients/corvinum_eu/templates/layouts/base.html:37
+#: clients/corvinum_eu/templates/layouts/base.html:43
 msgid "Main navigation"
 msgstr "Hlavná navigácia"
 
 # --- people list / detail ---
-#: clients/corvinum_eu/templates/layouts/base.html:38
+#: clients/corvinum_eu/templates/layouts/base.html:44
 #: templates/pages/people_list.html:8 templates/pages/reports.html:23
 msgid "Workforce"
 msgstr "Pracovná sila"
 
-#: clients/corvinum_eu/templates/layouts/base.html:39
-#: templates/layouts/base.html:26 templates/pages/people_list.html:4
-#: templates/pages/people_list.html:9 templates/pages/people_list.html:30
+#: clients/corvinum_eu/templates/layouts/base.html:45
+#: templates/layouts/base.html:33 templates/pages/people_list.html:4
+#: templates/pages/people_list.html:9 templates/pages/people_list.html:39
 #: templates/pages/reports.html:14
 msgid "People"
 msgstr "Ľudia"
 
-#: clients/corvinum_eu/templates/layouts/base.html:40
-#: templates/layouts/base.html:27 templates/pages/project_list.html:4
-#: templates/pages/project_list.html:9 templates/pages/project_list.html:16
+#: clients/corvinum_eu/templates/layouts/base.html:46
+#: templates/layouts/base.html:34 templates/pages/project_list.html:4
+#: templates/pages/project_list.html:9 templates/pages/project_list.html:25
 msgid "Projects"
 msgstr "Projekty"
 
 # --- projects UI ---
-#: clients/corvinum_eu/templates/layouts/base.html:42
+#: clients/corvinum_eu/templates/layouts/base.html:48
 #: templates/pages/dashboard.html:8 templates/pages/project_list.html:8
 #: templates/pages/reports.html:8
 msgid "Operations"
 msgstr "Prevádzka"
 
 # --- compliance ---
-#: clients/corvinum_eu/templates/layouts/base.html:44
+#: clients/corvinum_eu/templates/layouts/base.html:50
 #: features/compliance/panels.py:16 features/finance/models.py:68
-#: features/intake/catalog_i18n.py:12 templates/layouts/base.html:31
+#: features/intake/catalog_i18n.py:12 templates/layouts/base.html:38
 #: templates/pages/compliance_list.html:4
 #: templates/pages/compliance_list.html:9
 #: templates/pages/compliance_list.html:12
 msgid "Compliance"
 msgstr "Súlad"
 
-#: clients/corvinum_eu/templates/layouts/base.html:47
-#: templates/layouts/base.html:50 templates/pages/ledger.html:8
+#: clients/corvinum_eu/templates/layouts/base.html:53
+#: templates/layouts/base.html:57 templates/pages/ledger.html:8
 msgid "Ledger"
 msgstr "Kniha záloh"
 
-#: clients/corvinum_eu/templates/layouts/base.html:50
-#: templates/layouts/base.html:53 templates/pages/payslips.html:4
+#: clients/corvinum_eu/templates/layouts/base.html:56
+#: templates/layouts/base.html:60 templates/pages/payslips.html:4
 #: templates/pages/payslips.html:9
 msgid "Payslips"
 msgstr "Výplatné pásky"
 
-#: clients/corvinum_eu/templates/layouts/base.html:53
-#: templates/layouts/base.html:41
+#: clients/corvinum_eu/templates/layouts/base.html:60
+#: templates/layouts/base.html:48
 msgid "Reviews"
 msgstr "Kontroly"
 
-#: clients/corvinum_eu/templates/layouts/base.html:56
-#: templates/layouts/base.html:44 templates/pages/blacklist_queue.html:4
+#: clients/corvinum_eu/templates/layouts/base.html:61
+#: templates/panels/logistics_equipment.html:44
+msgid "Manage equipment catalogue"
+msgstr "Spravovať katalóg vybavenia"
+
+#: clients/corvinum_eu/templates/layouts/base.html:61
+#: templates/pages/equipment_catalog.html:4
+#: templates/pages/equipment_catalog.html:9
+#: templates/pages/equipment_catalog.html:27
+#: templates/pages/equipment_form.html:8
+msgid "Equipment catalogue"
+msgstr "Katalóg vybavenia"
+
+#: clients/corvinum_eu/templates/layouts/base.html:64
+#: templates/layouts/base.html:51 templates/pages/blacklist_queue.html:4
 #: templates/panels/blacklist_banner.html:3
 #: templates/panels/blacklist_case.html:5
 msgid "Blacklist"
 msgstr "Čierna listina"
 
-#: clients/corvinum_eu/templates/layouts/base.html:58
+#: clients/corvinum_eu/templates/layouts/base.html:66
+#: core/notifications/services.py:134 templates/partials/theme_picker.html:7
 msgid "System"
 msgstr "Systém"
 
-#: clients/corvinum_eu/templates/layouts/base.html:61
-#: templates/layouts/base.html:38
+#: clients/corvinum_eu/templates/layouts/base.html:69
+#: templates/layouts/base.html:45
 msgid "Audit"
 msgstr "Audit"
 
-#: clients/corvinum_eu/templates/layouts/base.html:76
-#: templates/layouts/base.html:63
+#: clients/corvinum_eu/templates/layouts/base.html:85
+#: templates/layouts/base.html:71
 msgid "Language"
 msgstr "Jazyk"
 
-#: clients/corvinum_eu/templates/layouts/base.html:86
-#: templates/layouts/base.html:75
+#: clients/corvinum_eu/templates/layouts/base.html:95
+#: templates/layouts/base.html:83
 msgid "Sign out"
 msgstr "Odhlásiť sa"
 
-#: clients/corvinum_eu/templates/layouts/base.html:97
-#: templates/layouts/base.html:22
+#: clients/corvinum_eu/templates/layouts/base.html:106
+#: templates/layouts/base.html:28 templates/layouts/base.html:29
 msgid "Open navigation"
 msgstr "Otvoriť navigáciu"
 
@@ -190,6 +204,7 @@ msgid "role"
 msgstr "rola"
 
 #: core/accounts/models.py:67 core/accounts/models.py:81
+#: core/notifications/models.py:19
 msgid "user"
 msgstr "používateľ"
 
@@ -212,9 +227,9 @@ msgstr "potvrdené"
 #: features/blacklist/models.py:113 features/checklists/models.py:23
 #: features/compliance/models.py:17 features/feedback/models.py:26
 #: features/feedback/models.py:48 features/finance/models.py:39
-#: features/intake/models.py:31 features/logistics/models.py:32
-#: features/logistics/models.py:92 features/logistics/models.py:124
-#: features/logistics/models.py:207 features/messaging/models.py:17
+#: features/intake/models.py:32 features/logistics/models.py:32
+#: features/logistics/models.py:98 features/logistics/models.py:130
+#: features/logistics/models.py:213 features/messaging/models.py:17
 #: features/messaging/models.py:45 features/payslips/models.py:35
 msgid "created"
 msgstr "vytvorené"
@@ -231,19 +246,19 @@ msgstr "TOTP zariadenie"
 msgid "TOTP devices"
 msgstr "TOTP zariadenia"
 
-#: core/accounts/views.py:50
+#: core/accounts/views.py:52
 msgid "Your role requires two-factor authentication — set it up now."
 msgstr "Vaša rola vyžaduje dvojfaktorové overenie — nastavte si ho teraz."
 
-#: core/accounts/views.py:53
+#: core/accounts/views.py:55
 msgid "Invalid email or password."
 msgstr "Nesprávny e-mail alebo heslo."
 
-#: core/accounts/views.py:87 core/accounts/views.py:110
+#: core/accounts/views.py:90 core/accounts/views.py:113
 msgid "Invalid code."
 msgstr "Neplatný kód."
 
-#: core/accounts/views.py:108
+#: core/accounts/views.py:111
 msgid "Two-factor authentication enabled."
 msgstr "Dvojfaktorové overenie zapnuté."
 
@@ -296,7 +311,7 @@ msgstr "Úprava sadzby uložená."
 msgid "Room rate saved"
 msgstr "Sadzba izby uložená."
 
-#: core/audit/presentation.py:17 core/people/services.py:59
+#: core/audit/presentation.py:17 core/people/services.py:67
 msgid "Assigned to project"
 msgstr "Pridelený na projekt"
 
@@ -342,124 +357,189 @@ msgid "Checklist item reopened"
 msgstr "Položka kontrolného zoznamu znovu otvorená"
 
 #: core/audit/presentation.py:28
+msgid "Equipment item created"
+msgstr "Položka vybavenia vytvorená"
+
+#: core/audit/presentation.py:29
+msgid "Equipment item updated"
+msgstr "Položka vybavenia aktualizovaná"
+
+#: core/audit/presentation.py:30
 msgid "Equipment deduction review recorded"
 msgstr "Kontrola zrážky za vybavenie zaznamenaná"
 
-#: core/audit/presentation.py:29
+#: core/audit/presentation.py:31
 msgid "Equipment flagged as unreturned"
 msgstr "Vybavenie označené ako nevrátené"
 
-#: core/audit/presentation.py:30 core/people/services.py:68
+#: core/audit/presentation.py:32 core/people/services.py:76
 msgid "Equipment issued"
 msgstr "Vybavenie vydané"
 
-#: core/audit/presentation.py:31
+#: core/audit/presentation.py:33
 msgid "Equipment returned"
 msgstr "Vybavenie vrátené."
 
-#: core/audit/presentation.py:32
+#: core/audit/presentation.py:34
 msgid "Finance line item saved"
 msgstr "Finančná položka uložená"
 
-#: core/audit/presentation.py:33
+#: core/audit/presentation.py:35
 msgid "Financial month locked"
 msgstr "Finančný mesiac uzamknutý"
 
-#: core/audit/presentation.py:34
+#: core/audit/presentation.py:36
 msgid "Financial month recorded"
 msgstr "Finančný mesiac zaznamenaný"
 
-#: core/audit/presentation.py:35
+#: core/audit/presentation.py:37
 msgid "Finance recalculated"
 msgstr "Uložiť a prepočítať"
 
-#: core/audit/presentation.py:36
+#: core/audit/presentation.py:38
 msgid "Financial month reopened"
 msgstr "Finančný mesiac znovu otvorený"
 
-#: core/audit/presentation.py:37 core/people/services.py:78
+#: core/audit/presentation.py:39
+msgid "Worker feedback received"
+msgstr "Prijatá spätná väzba od pracovníka"
+
+#: core/audit/presentation.py:40 core/people/services.py:86
 msgid "Intake completed"
 msgstr "Príjem dokončený"
 
-#: core/audit/presentation.py:38
+#: core/audit/presentation.py:41
 msgid "Ledger cycle marked settled"
 msgstr "Cyklus knihy označený ako vysporiadaný"
 
-#: core/audit/presentation.py:39
+#: core/audit/presentation.py:42
 msgid "Ledger entries included in cycle"
 msgstr "Položky knihy zahrnuté do cyklu"
 
-#: core/audit/presentation.py:40
+#: core/audit/presentation.py:43
 msgid "Ledger entry cancelled"
 msgstr "Záznam zrušený."
 
-#: core/audit/presentation.py:41
+#: core/audit/presentation.py:44
 msgid "Ledger entry recorded"
 msgstr "Záznam v knihe uložený."
 
-#: core/audit/presentation.py:42
+#: core/audit/presentation.py:45
 msgid "Ledger entry reversed"
 msgstr "Záznam v knihe stornovaný"
 
-#: core/audit/presentation.py:43
+#: core/audit/presentation.py:46
 msgid "Payslip recorded"
 msgstr "Výplatná páska uložená."
 
-#: core/audit/presentation.py:44
+#: core/audit/presentation.py:47
 msgid "Payslip sent"
 msgstr "Výplatná páska odoslaná"
 
-#: core/audit/presentation.py:45
+#: core/audit/presentation.py:48
 msgid "Person archived"
 msgstr "Osoba archivovaná"
 
-#: core/audit/presentation.py:46
+#: core/audit/presentation.py:49
 msgid "Person added"
 msgstr "Osoba pridaná."
 
-#: core/audit/presentation.py:47
+#: core/audit/presentation.py:50
 msgid "Exit completed"
 msgstr "Odchod dokončený."
 
-#: core/audit/presentation.py:48 core/people/services.py:86
+#: core/audit/presentation.py:51 core/people/services.py:94
 msgid "Status changed"
 msgstr "Stav zmenený"
 
-#: core/audit/presentation.py:49
+#: core/audit/presentation.py:52
 msgid "Recycled to Available"
 msgstr "Vrátené na Dostupný."
 
-#: core/audit/presentation.py:50
+#: core/audit/presentation.py:53
 msgid "Person updated"
 msgstr "Osoba aktualizovaná."
 
-#: core/audit/presentation.py:51
+#: core/audit/presentation.py:54
 msgid "Readiness saved"
 msgstr "Pripravenosť uložená."
 
-#: core/audit/presentation.py:52 core/people/services.py:62
+#: core/audit/presentation.py:55 core/people/services.py:70
 msgid "Room assigned"
 msgstr "Izba pridelená"
 
-#: core/audit/presentation.py:53
+#: core/audit/presentation.py:56
 msgid "Room released"
 msgstr "Izba uvoľnená."
 
-#: core/audit/presentation.py:54
+#: core/audit/presentation.py:57
 msgid "Message sent"
 msgstr "Správa odoslaná."
 
-#: core/audit/presentation.py:55
+#: core/audit/presentation.py:58
 msgid "Transport week recorded"
 msgstr "Týždeň dopravy zaznamenaný."
 
-#: core/audit/presentation.py:56
+#: core/audit/presentation.py:59
 msgid "Trial outcome recorded"
 msgstr "Výsledok skúšky zaznamenaný."
 
-#: core/audit/presentation.py:57 core/people/services.py:50
+#: core/audit/presentation.py:60 core/people/services.py:58
 msgid "Trial scheduled"
 msgstr "Skúška naplánovaná"
+
+#: core/notifications/models.py:21
+#, fuzzy
+#| msgid "item"
+msgid "item key"
+msgstr "položka"
+
+#: core/notifications/models.py:22
+#, fuzzy
+#| msgid "key version"
+msgid "item version"
+msgstr "verzia kľúča"
+
+#: core/notifications/models.py:23
+#, fuzzy
+#| msgid "issued at"
+msgid "dismissed at"
+msgstr "vydané o"
+
+# --- floating notification center (2026-07-13) ---
+#: core/notifications/models.py:26
+#, fuzzy
+#| msgid "Notifications"
+msgid "notification dismissal"
+msgstr "Upozornenia"
+
+# --- floating notification center (2026-07-13) ---
+#: core/notifications/models.py:27
+#, fuzzy
+#| msgid "Notifications"
+msgid "notification dismissals"
+msgstr "Upozornenia"
+
+#: core/notifications/services.py:132
+msgid "Operational record"
+msgstr "Prevádzkový záznam"
+
+#: core/notifications/services.py:133
+#, python-format
+msgid "%(actor)s · %(subject)s"
+msgstr "%(actor)s · %(subject)s"
+
+#: core/notifications/services.py:165
+msgid "Trial outcome is waiting"
+msgstr "Čaká sa na výsledok skúšobného dňa"
+
+#: core/notifications/services.py:190
+msgid "Readiness needs attention"
+msgstr "Pripravenosť vyžaduje pozornosť"
+
+#: core/notifications/views.py:31
+msgid "Notification is not available."
+msgstr "Upozornenie nie je dostupné."
 
 #: core/people/catalog_i18n.py:10
 msgid "Sick"
@@ -480,6 +560,7 @@ msgstr "Vojenská služba"
 #: core/people/catalog_i18n.py:14 features/advances/models.py:40
 #: features/blacklist/catalog_i18n.py:15 features/blacklist/models.py:87
 #: features/blacklist/panels.py:56 features/finance/models.py:74
+#: features/intake/catalog_i18n.py:28
 msgid "Other"
 msgstr "Ostatné"
 
@@ -491,7 +572,8 @@ msgstr "Meno"
 msgid "Last name"
 msgstr "Priezvisko"
 
-#: core/people/forms.py:28 templates/pages/login.html:16
+#: core/people/forms.py:28 features/intake/catalog_i18n.py:18
+#: features/intake/models.py:16 templates/pages/login.html:17
 msgid "Email"
 msgstr "E-mail"
 
@@ -500,17 +582,17 @@ msgstr "E-mail"
 msgid "Phone"
 msgstr "Telefón"
 
-#: core/people/forms.py:30 features/intake/catalog_i18n.py:18
+#: core/people/forms.py:30 features/intake/catalog_i18n.py:19
 #: templates/pages/person_detail.html:144
 msgid "Address"
 msgstr "Adresa"
 
-#: core/people/forms.py:31 features/intake/catalog_i18n.py:19
+#: core/people/forms.py:31 features/intake/catalog_i18n.py:20
 #: templates/pages/person_detail.html:145
 msgid "Nationality"
 msgstr "Národnosť"
 
-#: core/people/forms.py:32 features/intake/catalog_i18n.py:20
+#: core/people/forms.py:32 features/intake/catalog_i18n.py:21
 msgid "Preferred language"
 msgstr "Preferovaný jazyk"
 
@@ -528,7 +610,7 @@ msgstr "Miesto narodenia"
 msgid "Has disability"
 msgstr "Má zdravotné postihnutie"
 
-#: core/people/forms.py:36 features/intake/catalog_i18n.py:22
+#: core/people/forms.py:36 features/intake/catalog_i18n.py:23
 msgid "Disability type"
 msgstr "Typ postihnutia"
 
@@ -545,8 +627,13 @@ msgstr "Skúšobný deň"
 msgid "Working"
 msgstr "Pracuje"
 
-#: core/people/models.py:15 templates/pages/person_detail.html:198
-#: templates/pages/project_detail.html:8 templates/pages/project_list.html:26
+#: core/people/models.py:15 templates/pages/accommodation_detail.html:25
+#: templates/pages/accommodation_list.html:20
+#: templates/pages/accommodation_list.html:33
+#: templates/pages/equipment_catalog.html:18
+#: templates/pages/equipment_catalog.html:32
+#: templates/pages/person_detail.html:198 templates/pages/project_detail.html:8
+#: templates/pages/project_list.html:19 templates/pages/project_list.html:35
 msgid "Inactive"
 msgstr "Neaktívny"
 
@@ -556,7 +643,7 @@ msgstr "Na čiernej listine"
 
 #: core/people/models.py:38 features/blacklist/models.py:16
 #: features/checklists/models.py:37 features/feedback/models.py:20
-#: features/finance/models.py:85 features/intake/models.py:65
+#: features/finance/models.py:85 features/intake/models.py:66
 #: features/logistics/models.py:47
 msgid "label"
 msgstr "označenie"
@@ -565,13 +652,14 @@ msgstr "označenie"
 #: features/blacklist/models.py:17 features/blacklist/models.py:112
 #: features/checklists/models.py:22 features/feedback/models.py:25
 #: features/finance/models.py:88 features/logistics/models.py:30
-#: features/logistics/models.py:123 features/messaging/models.py:13
+#: features/logistics/models.py:49 features/logistics/models.py:129
+#: features/messaging/models.py:13
 msgid "active"
 msgstr "aktívne"
 
 #: core/people/models.py:40 features/blacklist/models.py:18
 #: features/checklists/models.py:41 features/finance/models.py:89
-#: features/intake/models.py:51 features/intake/models.py:68
+#: features/intake/models.py:52 features/intake/models.py:69
 msgid "order"
 msgstr "poradie"
 
@@ -665,8 +753,8 @@ msgstr "aktualizované"
 #: core/projects/models.py:123 core/projects/models.py:169
 #: features/advances/models.py:61 features/blacklist/models.py:45
 #: features/blacklist/models.py:104 features/checklists/models.py:57
-#: features/compliance/models.py:12 features/intake/models.py:100
-#: features/logistics/models.py:76 features/logistics/models.py:156
+#: features/compliance/models.py:12 features/intake/models.py:106
+#: features/logistics/models.py:82 features/logistics/models.py:162
 #: features/messaging/models.py:35 features/payslips/models.py:19
 msgid "person"
 msgstr "osoba"
@@ -675,49 +763,82 @@ msgstr "osoba"
 msgid "people"
 msgstr "osoby"
 
-#: core/people/services.py:23
+#: core/people/services.py:28 templates/pages/people_list.html:29
 msgid "No reason"
 msgstr "Bez dôvodu"
 
-#: core/people/services.py:54
+#: core/people/services.py:62
 msgid "Trial outcome"
 msgstr "Výsledok skúšky"
 
-#: core/people/services.py:74
+#: core/people/services.py:82
 msgid "Readiness submitted"
 msgstr "Pripravenosť odoslaná"
 
-#: core/people/views.py:56
+#: core/people/views.py:73
 msgid "Person added."
 msgstr "Osoba pridaná."
 
-#: core/people/views.py:66 templates/pages/people_list.html:12
+#: core/people/views.py:83 templates/pages/people_list.html:12
 msgid "Add person"
 msgstr "Pridať osobu"
 
-#: core/people/views.py:78
+#: core/people/views.py:95
 msgid "Person updated."
 msgstr "Osoba aktualizovaná."
 
-#: core/people/views.py:84
+#: core/people/views.py:101
 msgid "Edit person"
 msgstr "Upraviť osobu"
 
-#: core/people/views.py:108 templates/pages/person_detail.html:119
+#: core/people/views.py:125 templates/pages/person_detail.html:119
 msgid "Entry medical date"
 msgstr "Dátum vstupnej prehliadky"
 
-#: core/people/views.py:108
+#: core/people/views.py:125
 msgid "Review this future date."
 msgstr "Skontrolujte tento budúci dátum."
 
-#: core/people/views.py:151
+#: core/people/views.py:177
+msgid "Person archived. Blacklist protection remains in place."
+msgstr "Osoba bola archivovaná. Ochrana čiernej listiny zostáva zachovaná."
+
+#: core/people/views.py:187
 msgid "Recycled to Available."
 msgstr "Vrátené na Dostupný."
 
+#: core/projects/forms.py:20
+msgid "Candidate"
+msgstr "Uchádzač"
+
+#: core/projects/forms.py:21
+msgid "Only available candidates can be scheduled."
+msgstr "Naplánovať možno iba dostupných uchádzačov."
+
+#: core/projects/forms.py:23 core/projects/forms.py:43
+#: templates/pages/feedback_inbox.html:25
+#: templates/pages/finance_summary.html:34
+#: templates/pages/person_detail.html:28 templates/pages/project_detail.html:8
+#: templates/pages/transport_trends.html:31
+#: templates/pages/transport_trends.html:44
+#: templates/pages/transport_trends.html:64
+#: templates/pages/trials_queue.html:35
+msgid "Project"
+msgstr "Projekt"
+
+#: core/projects/forms.py:25 core/projects/forms.py:45
+#: templates/pages/person_detail.html:33 templates/pages/person_detail.html:46
+msgid "Arrival time"
+msgstr "Čas príchodu"
+
+#: core/projects/forms.py:30 core/projects/forms.py:50
+#: features/logistics/forms.py:29
+msgid "Operational note"
+msgstr "Prevádzková poznámka"
+
 #: core/projects/models.py:12 features/checklists/models.py:18
-#: features/compliance/models.py:14 features/intake/models.py:24
-#: features/logistics/models.py:28 features/logistics/models.py:118
+#: features/compliance/models.py:14 features/intake/models.py:25
+#: features/logistics/models.py:28 features/logistics/models.py:124
 #: features/messaging/models.py:11
 msgid "name"
 msgstr "názov"
@@ -749,7 +870,7 @@ msgstr "zahrnuté do finančného výkazníctva"
 #: core/projects/models.py:33 core/projects/models.py:63
 #: core/projects/models.py:126 core/projects/models.py:172
 #: features/feedback/models.py:23 features/finance/models.py:27
-#: features/logistics/models.py:198
+#: features/logistics/models.py:204
 msgid "project"
 msgstr "projekt"
 
@@ -757,12 +878,16 @@ msgstr "projekt"
 msgid "projects"
 msgstr "projekty"
 
-#: core/projects/models.py:42 features/logistics/models.py:70
-#: templates/pages/project_detail.html:8 templates/pages/project_list.html:26
+#: core/projects/models.py:42 features/logistics/models.py:76
+#: templates/pages/accommodation_detail.html:25
+#: templates/pages/accommodation_list.html:19
+#: templates/pages/equipment_catalog.html:17
+#: templates/pages/project_detail.html:8 templates/pages/project_list.html:18
+#: templates/pages/project_list.html:35
 msgid "Active"
 msgstr "Aktívny"
 
-#: core/projects/models.py:43 features/logistics/models.py:71
+#: core/projects/models.py:43 features/logistics/models.py:77
 msgid "Ended"
 msgstr "Ukončené"
 
@@ -772,22 +897,22 @@ msgid "Cancelled"
 msgstr "Zrušené"
 
 #: core/projects/models.py:66 features/blacklist/models.py:48
-#: features/intake/models.py:26 features/intake/models.py:102
-#: features/logistics/models.py:81 features/logistics/models.py:162
+#: features/intake/models.py:27 features/intake/models.py:108
+#: features/logistics/models.py:87 features/logistics/models.py:168
 #: features/messaging/models.py:39
 msgid "status"
 msgstr "stav"
 
-#: core/projects/models.py:71 features/logistics/models.py:82
+#: core/projects/models.py:71 features/logistics/models.py:88
 msgid "start date"
 msgstr "dátum začiatku"
 
-#: core/projects/models.py:72 features/logistics/models.py:83
+#: core/projects/models.py:72 features/logistics/models.py:89
 msgid "end date"
 msgstr "dátum konca"
 
 #: core/projects/models.py:79 core/projects/models.py:137
-#: features/logistics/models.py:90
+#: features/logistics/models.py:96
 msgid "assigned by"
 msgstr "priradil"
 
@@ -811,7 +936,7 @@ msgstr "priradenia na projekt"
 msgid "Scheduled"
 msgstr "Naplánované"
 
-#: core/projects/models.py:107 features/intake/models.py:91
+#: core/projects/models.py:107 features/intake/models.py:97
 msgid "Completed"
 msgstr "Dokončené"
 
@@ -849,7 +974,7 @@ msgstr "výsledok"
 
 #: core/projects/models.py:134 features/advances/models.py:83
 #: features/checklists/models.py:68 features/finance/models.py:33
-#: features/logistics/models.py:202 features/payslips/models.py:30
+#: features/logistics/models.py:208 features/payslips/models.py:30
 msgid "note"
 msgstr "poznámka"
 
@@ -932,90 +1057,126 @@ msgstr "záznam pripravenosti"
 msgid "readiness records"
 msgstr "záznamy pripravenosti"
 
-#: core/projects/services.py:150 features/advances/models.py:38
+#: core/projects/services.py:115
+msgid "Only pending trials can be edited."
+msgstr "Upravovať možno iba čakajúce skúšobné dni."
+
+#: core/projects/services.py:117
+msgid "Trials can only be scheduled for active projects."
+msgstr "Skúšobné dni možno plánovať iba pre aktívne projekty."
+
+#: core/projects/services.py:178 features/advances/models.py:38
 #: features/finance/catalog_i18n.py:20 templates/pages/person_detail.html:87
 msgid "Medical"
 msgstr "Lekárska"
 
-#: core/projects/services.py:150
+#: core/projects/services.py:178
 msgid "Medical clearance is incomplete."
 msgstr "Lekárska spôsobilosť nie je dokončená."
 
-#: core/projects/services.py:151 templates/pages/person_detail.html:93
+#: core/projects/services.py:179 templates/pages/person_detail.html:93
 msgid "Gear"
 msgstr "Výstroj"
 
-#: core/projects/services.py:151
+#: core/projects/services.py:179
 msgid "Required equipment is incomplete."
 msgstr "Požadované vybavenie nie je kompletné."
 
-#: core/projects/services.py:152 features/finance/catalog_i18n.py:18
-#: features/finance/models.py:67 templates/layouts/base.html:33
+#: core/projects/services.py:180 features/finance/catalog_i18n.py:18
+#: features/finance/models.py:67 templates/layouts/base.html:40
 #: templates/pages/accommodation_costs.html:8
 #: templates/pages/accommodation_costs.html:21
 #: templates/pages/accommodation_detail.html:8
 #: templates/pages/accommodation_list.html:4
 #: templates/pages/accommodation_list.html:9
-#: templates/pages/accommodation_list.html:14
-#: templates/pages/person_detail.html:99 templates/panels/logistics_room.html:4
+#: templates/pages/accommodation_list.html:27
+#: templates/pages/person_detail.html:99 templates/pages/room_form.html:7
+#: templates/panels/logistics_room.html:4
 msgid "Accommodation"
 msgstr "Ubytovanie"
 
-#: core/projects/services.py:152
+#: core/projects/services.py:180
 msgid "Accommodation is incomplete."
 msgstr "Ubytovanie nie je zabezpečené."
 
-#: core/projects/services.py:153 features/finance/models.py:66
-#: templates/layouts/base.html:35 templates/pages/person_detail.html:109
+#: core/projects/services.py:181 features/finance/models.py:66
+#: templates/layouts/base.html:42 templates/pages/person_detail.html:109
 msgid "Transport"
 msgstr "Doprava"
 
-#: core/projects/services.py:153
+#: core/projects/services.py:181
 msgid "Transport is incomplete."
 msgstr "Doprava nie je zabezpečená."
 
-#: core/projects/services.py:166
+#: core/projects/services.py:194
 msgid "A reason is required when this is not applicable."
 msgstr "Ak sa to neuplatňuje, je potrebný dôvod."
 
-#: core/projects/services.py:202
+#: core/projects/services.py:230
 msgid "Entry medical date is invalid."
 msgstr "Dátum vstupnej lekárskej prehliadky je neplatný."
 
-#: core/projects/services.py:204
+#: core/projects/services.py:232
 msgid "Entry medical date cannot be in the future."
 msgstr "Dátum vstupnej lekárskej prehliadky nemôže byť v budúcnosti."
 
-#: core/projects/services.py:218
+#: core/projects/services.py:246
 msgid ""
 "Cannot activate this worker because no readiness record has been completed."
 msgstr ""
 "Pracovníka nemožno aktivovať, pretože nie je vyplnený záznam pripravenosti."
 
-#: core/projects/services.py:222
+#: core/projects/services.py:250
 #, python-format
 msgid "Cannot activate this worker until: %(items)s"
 msgstr "Pracovníka nemožno aktivovať, kým nie je splnené: %(items)s"
 
-#: core/projects/views.py:85
+#: core/projects/views.py:148 core/projects/views.py:195
 msgid "Trial scheduled."
 msgstr "Skúška naplánovaná."
 
-#: core/projects/views.py:97
+#: core/projects/views.py:170
+msgid "Trial updated."
+msgstr "Skúšobný deň bol aktualizovaný."
+
+#: core/projects/views.py:190
+msgid "Review the trial details and try again."
+msgstr "Skontrolujte údaje skúšobného dňa a skúste to znova."
+
+#: core/projects/views.py:210
 msgid "Trial outcome recorded."
 msgstr "Výsledok skúšky zaznamenaný."
 
-#: core/projects/views.py:122
+#: core/projects/views.py:235
 msgid "Readiness saved."
 msgstr "Pripravenosť uložená."
 
-#: core/projects/views.py:142
+#: core/projects/views.py:255
 msgid "Exit completed."
 msgstr "Odchod dokončený."
 
-#: core/projects/views.py:153
+#: core/projects/views.py:266
 msgid "Activated — now Working."
 msgstr "Aktivované — teraz Pracuje."
+
+#: core/ui/views.py:70
+#, python-format
+msgid "View %(status)s people"
+msgstr "Zobraziť ľudí so stavom %(status)s"
+
+#: core/ui/views.py:71 templates/pages/dashboard.html:20
+#: templates/pages/dashboard.html:23
+msgid "Open People filtered to this lifecycle status."
+msgstr "Otvorte zoznam ľudí filtrovaný podľa tohto stavu životného cyklu."
+
+#: core/ui/views.py:78
+#, python-format
+msgid "View inactive people: %(reason)s"
+msgstr "Zobraziť neaktívnych ľudí: %(reason)s"
+
+#: core/ui/views.py:81
+msgid "Open People filtered to this inactive reason."
+msgstr "Otvorte zoznam ľudí filtrovaný podľa tohto dôvodu neaktivity."
 
 #: features/advances/hooks.py:33
 #, python-format
@@ -1266,10 +1427,12 @@ msgid "blacklist cases"
 msgstr "prípady čiernej listiny"
 
 #: features/blacklist/models.py:85 features/blacklist/panels.py:54
+#: features/intake/catalog_i18n.py:26
 msgid "National ID"
 msgstr "Národný doklad"
 
 #: features/blacklist/models.py:86 features/blacklist/panels.py:55
+#: features/intake/catalog_i18n.py:27
 msgid "Passport"
 msgstr "Pas"
 
@@ -1301,15 +1464,24 @@ msgstr "odtlačok zhody"
 msgid "match fingerprints"
 msgstr "odtlačky zhody"
 
-#: features/blacklist/panels.py:48
+#: features/blacklist/notifications.py:26
+msgid "Blacklist decisions are waiting"
+msgstr "Čakajú rozhodnutia o čiernej listine"
+
+#: features/blacklist/notifications.py:27
+#, python-format
+msgid "%(count)s proposed cases require a decision"
+msgstr "%(count)s navrhnutých prípadov vyžaduje rozhodnutie"
+
+#: features/blacklist/panels.py:48 features/intake/catalog_i18n.py:24
 msgid "ID number (blacklist check)"
 msgstr "Číslo dokladu (kontrola čiernej listiny)"
 
-#: features/blacklist/panels.py:52
+#: features/blacklist/panels.py:52 features/intake/catalog_i18n.py:25
 msgid "ID type"
 msgstr "Typ dokladu"
 
-#: features/blacklist/panels.py:74
+#: features/blacklist/panels.py:75
 msgid ""
 "Possible blacklist match — flagged for manager review. Activation is blocked "
 "until resolved."
@@ -1371,7 +1543,7 @@ msgstr "šablóna položky kontrolného zoznamu"
 msgid "checklist item templates"
 msgstr "šablóny položiek kontrolného zoznamu"
 
-#: features/checklists/models.py:60 features/logistics/models.py:159
+#: features/checklists/models.py:60 features/logistics/models.py:165
 msgid "item"
 msgstr "položka"
 
@@ -1395,6 +1567,15 @@ msgstr "položka kontrolného zoznamu osoby"
 msgid "person checklist items"
 msgstr "položky kontrolného zoznamu osoby"
 
+#: features/checklists/notifications.py:40
+msgid "Activation checklist is incomplete"
+msgstr "Aktivačný kontrolný zoznam nie je dokončený"
+
+#: features/checklists/notifications.py:41
+#, python-format
+msgid "%(person)s · %(count)s critical items"
+msgstr "%(person)s · %(count)s kritických položiek"
+
 #: features/checklists/services.py:72
 #, python-format
 msgid "Activation blocked by open checklist items: %(items)s"
@@ -1412,6 +1593,25 @@ msgstr "certifikát"
 #: features/compliance/models.py:21
 msgid "certificates"
 msgstr "certifikáty"
+
+#: features/compliance/notifications.py:32
+msgid "Compliance problems need attention"
+msgstr "Problémy s dodržiavaním predpisov vyžadujú pozornosť"
+
+#: features/compliance/notifications.py:33
+#, python-format
+msgid "%(count)s open document or medical alerts"
+msgstr "%(count)s otvorených upozornení na doklady alebo lekársku prehliadku"
+
+#: features/compliance/panels.py:19
+msgid "Review compliance issues"
+msgstr "Skontrolovať problémy súladu"
+
+#: features/compliance/panels.py:21
+msgid "Open workers with document or medical requirements that need attention."
+msgstr ""
+"Otvorte pracovníkov s dokumentmi alebo zdravotnými požiadavkami, ktoré "
+"vyžadujú pozornosť."
 
 #: features/feedback/models.py:19
 msgid "token"
@@ -1446,15 +1646,24 @@ msgstr "odoslaná spätná väzba"
 msgid "feedback submissions"
 msgstr "odoslané spätné väzby"
 
-#: features/feedback/views.py:29
+#: features/feedback/notifications.py:24
+msgid "Worker feedback is available"
+msgstr "K dispozícii je spätná väzba od pracovníkov"
+
+#: features/feedback/notifications.py:25
+#, python-format
+msgid "%(count)s feedback submissions in the inbox"
+msgstr "%(count)s podnetov v schránke spätnej väzby"
+
+#: features/feedback/views.py:31
 msgid "Message is required."
 msgstr "Správa je povinná."
 
-#: features/feedback/views.py:54
+#: features/feedback/views.py:56
 msgid "Feedback link created."
 msgstr "Odkaz na spätnú väzbu vytvorený."
 
-#: features/feedback/views.py:56
+#: features/feedback/views.py:58
 msgid "Label is required."
 msgstr "Označenie je povinné."
 
@@ -1567,7 +1776,7 @@ msgstr "náklady"
 msgid "locked"
 msgstr "uzamknuté"
 
-#: features/finance/models.py:37 features/logistics/models.py:205
+#: features/finance/models.py:37 features/logistics/models.py:211
 msgid "recorded by"
 msgstr "zaznamenal"
 
@@ -1658,11 +1867,11 @@ msgstr "Totožnosť"
 msgid "Contact"
 msgstr "Kontakt"
 
-#: features/intake/catalog_i18n.py:21
+#: features/intake/catalog_i18n.py:22
 msgid "Disability — type 'nie' if none"
 msgstr "Zdravotné postihnutie — ak žiadne, napíšte „nie“"
 
-#: features/intake/models.py:9 features/intake/models.py:90
+#: features/intake/models.py:9 features/intake/models.py:96
 msgid "Draft"
 msgstr "Koncept"
 
@@ -1678,149 +1887,153 @@ msgstr "Vyradené"
 msgid "Text"
 msgstr "Text"
 
-#: features/intake/models.py:16
+#: features/intake/models.py:17
 msgid "Long text"
 msgstr "Dlhý text"
 
-#: features/intake/models.py:17
+#: features/intake/models.py:18
 msgid "Yes/No"
 msgstr "Áno/Nie"
 
-#: features/intake/models.py:18 templates/pages/ledger.html:49
-#: templates/pages/ledger.html:103
+#: features/intake/models.py:19 templates/pages/ledger.html:50
+#: templates/pages/ledger.html:105
 msgid "Date"
 msgstr "Dátum"
 
-#: features/intake/models.py:19
+#: features/intake/models.py:20
 msgid "Number"
 msgstr "Číslo"
 
-#: features/intake/models.py:20
+#: features/intake/models.py:21
 msgid "Choice"
 msgstr "Výber"
 
-#: features/intake/models.py:25
+#: features/intake/models.py:26
 msgid "version"
 msgstr "verzia"
 
-#: features/intake/models.py:27
+#: features/intake/models.py:28
 msgid "effective date"
 msgstr "dátum účinnosti"
 
-#: features/intake/models.py:34
+#: features/intake/models.py:35
 msgid "intake questionnaire version"
 msgstr "verzia vstupného dotazníka"
 
-#: features/intake/models.py:35
+#: features/intake/models.py:36
 msgid "intake questionnaire versions"
 msgstr "verzie vstupného dotazníka"
 
-#: features/intake/models.py:47 features/intake/models.py:94
+#: features/intake/models.py:48 features/intake/models.py:100
 msgid "questionnaire"
 msgstr "dotazník"
 
-#: features/intake/models.py:49
+#: features/intake/models.py:50
 msgid "title"
 msgstr "nadpis"
 
-#: features/intake/models.py:50
+#: features/intake/models.py:51
 msgid "help"
 msgstr "nápoveda"
 
-#: features/intake/models.py:54
+#: features/intake/models.py:55
 msgid "intake panel"
 msgstr "panel vstupu"
 
-#: features/intake/models.py:55
+#: features/intake/models.py:56
 msgid "intake panels"
 msgstr "panely vstupu"
 
-#: features/intake/models.py:63
+#: features/intake/models.py:64
 msgid "panel"
 msgstr "panel"
 
-#: features/intake/models.py:64
+#: features/intake/models.py:65
 msgid "stable key"
 msgstr "stabilný kľúč"
 
-#: features/intake/models.py:66
+#: features/intake/models.py:67
 msgid "type"
 msgstr "typ"
 
-#: features/intake/models.py:67
+#: features/intake/models.py:68
 msgid "required"
 msgstr "povinné"
 
 # --- projects UI ---
-#: features/intake/models.py:69
+#: features/intake/models.py:70
 msgid "options"
 msgstr "možnosti"
 
-#: features/intake/models.py:70
+#: features/intake/models.py:71
 msgid "requires typed negative"
 msgstr "vyžaduje vypísanú zápornú odpoveď"
 
-#: features/intake/models.py:71
+#: features/intake/models.py:72
 msgid "accepted negatives"
 msgstr "akceptované záporné odpovede"
 
-#: features/intake/models.py:74
+#: features/intake/models.py:75
 msgid "conditional on"
 msgstr "podmienené otázkou"
 
-#: features/intake/models.py:77
+#: features/intake/models.py:80
+msgid "transient"
+msgstr "prechodný"
+
+#: features/intake/models.py:83
 msgid "intake question"
 msgstr "vstupná otázka"
 
-#: features/intake/models.py:78
+#: features/intake/models.py:84
 msgid "intake questions"
 msgstr "vstupné otázky"
 
-#: features/intake/models.py:103
+#: features/intake/models.py:109
 msgid "current panel"
 msgstr "aktuálny panel"
 
-#: features/intake/models.py:104
+#: features/intake/models.py:110
 msgid "started"
 msgstr "začaté"
 
-#: features/intake/models.py:105
+#: features/intake/models.py:111
 msgid "completed"
 msgstr "dokončené"
 
-#: features/intake/models.py:108
+#: features/intake/models.py:114
 msgid "recruitment intake"
 msgstr "náborový vstup"
 
-#: features/intake/models.py:109
+#: features/intake/models.py:115
 msgid "recruitment intakes"
 msgstr "náborové vstupy"
 
-#: features/intake/models.py:117
+#: features/intake/models.py:123
 msgid "intake"
 msgstr "vstup"
 
-#: features/intake/models.py:118
+#: features/intake/models.py:124
 msgid "question"
 msgstr "otázka"
 
-#: features/intake/models.py:119
+#: features/intake/models.py:125
 msgid "value"
 msgstr "hodnota"
 
-#: features/intake/models.py:120
+#: features/intake/models.py:126
 msgid "normalized value"
 msgstr "normalizovaná hodnota"
 
-#: features/intake/models.py:124
+#: features/intake/models.py:130
 msgid "answered at"
 msgstr "zodpovedané o"
 
-#: features/intake/models.py:127
+#: features/intake/models.py:133
 msgid "intake answer"
 msgstr "vstupná odpoveď"
 
-#: features/intake/models.py:128
+#: features/intake/models.py:134
 msgid "intake answers"
 msgstr "vstupné odpovede"
 
@@ -1828,15 +2041,19 @@ msgstr "vstupné odpovede"
 msgid "No published intake questionnaire."
 msgstr "Žiadny publikovaný dotazník príjmu."
 
-#: features/intake/views.py:43
+#: features/intake/views.py:45
 msgid "Intake complete — person added."
 msgstr "Príjem dokončený — osoba pridaná."
 
-#: features/intake/views.py:47
+#: features/intake/views.py:50
 msgid "Please type a value (or the word for 'none')."
 msgstr "Zadajte hodnotu (alebo slovo pre žiadne)."
 
-#: features/intake/views.py:47
+#: features/intake/views.py:52
+msgid "Enter a valid email address."
+msgstr "Zadajte platnú e-mailovú adresu."
+
+#: features/intake/views.py:54
 msgid "Required."
 msgstr "Povinné."
 
@@ -1852,6 +2069,18 @@ msgstr "Reflexná vesta"
 msgid "Safety helmet"
 msgstr "Ochranná prilba"
 
+#: features/logistics/forms.py:50
+msgid "Release all occupants before deactivating this location."
+msgstr "Pred deaktiváciou tohto ubytovania uvoľnite všetkých ubytovaných."
+
+#: features/logistics/forms.py:67
+msgid "Capacity cannot be lower than current occupancy."
+msgstr "Kapacita nemôže byť nižšia ako aktuálna obsadenosť."
+
+#: features/logistics/forms.py:69
+msgid "Release all occupants before deactivating this room."
+msgstr "Pred deaktiváciou tejto izby uvoľnite všetkých ubytovaných."
+
 #: features/logistics/models.py:36
 msgid "accommodations"
 msgstr "ubytovania"
@@ -1860,185 +2089,260 @@ msgstr "ubytovania"
 msgid "capacity"
 msgstr "kapacita"
 
-#: features/logistics/models.py:51
+#: features/logistics/models.py:52
 msgid "monthly rate"
 msgstr "mesačná sadzba"
 
-#: features/logistics/models.py:55 features/logistics/models.py:79
+#: features/logistics/models.py:56 features/logistics/models.py:85
 msgid "room"
 msgstr "izba"
 
-#: features/logistics/models.py:56
+#: features/logistics/models.py:57
 msgid "rooms"
 msgstr "izby"
 
 # --- dashboard ---
-#: features/logistics/models.py:86
+#: features/logistics/models.py:92
 msgid "rate override"
 msgstr "individuálna sadzba"
 
-#: features/logistics/models.py:95
+#: features/logistics/models.py:101
 msgid "room assignment"
 msgstr "priradenie izby"
 
-#: features/logistics/models.py:96
+#: features/logistics/models.py:102
 msgid "room assignments"
 msgstr "priradenia izieb"
 
-#: features/logistics/models.py:119
+#: features/logistics/models.py:125
 msgid "size"
 msgstr "veľkosť"
 
-#: features/logistics/models.py:122
+#: features/logistics/models.py:128
 msgid "unit price"
 msgstr "jednotková cena"
 
-#: features/logistics/models.py:127
+#: features/logistics/models.py:133
 msgid "equipment item"
 msgstr "položka výbavy"
 
-#: features/logistics/models.py:128
+#: features/logistics/models.py:134
 msgid "equipment items"
 msgstr "položky výbavy"
 
-#: features/logistics/models.py:136
+#: features/logistics/models.py:142
 msgid "Issued"
 msgstr "Vydané"
 
-#: features/logistics/models.py:137
+#: features/logistics/models.py:143
 msgid "Returned"
 msgstr "Vrátené"
 
-#: features/logistics/models.py:148
+#: features/logistics/models.py:154
 msgid "None"
 msgstr "Žiadne"
 
-#: features/logistics/models.py:149
+#: features/logistics/models.py:155
 msgid "Pending review"
 msgstr "Čaká na kontrolu"
 
-#: features/logistics/models.py:150
+#: features/logistics/models.py:156
 msgid "Charge approved"
 msgstr "Zrážka schválená"
 
-#: features/logistics/models.py:151
+#: features/logistics/models.py:157
 msgid "Waived"
 msgstr "Odpustené"
 
-#: features/logistics/models.py:161
+#: features/logistics/models.py:167
 msgid "quantity"
 msgstr "množstvo"
 
-#: features/logistics/models.py:166
+#: features/logistics/models.py:172
 msgid "review status"
 msgstr "stav kontroly"
 
-#: features/logistics/models.py:170
+#: features/logistics/models.py:176
 msgid "charge amount"
 msgstr "suma na úhradu"
 
-#: features/logistics/models.py:174
+#: features/logistics/models.py:180
 msgid "reviewed by"
 msgstr "skontroloval"
 
-#: features/logistics/models.py:176
+#: features/logistics/models.py:182
 msgid "reviewed at"
 msgstr "skontrolované o"
 
-#: features/logistics/models.py:177
+#: features/logistics/models.py:183
 msgid "review note"
 msgstr "poznámka ku kontrole"
 
-#: features/logistics/models.py:180
+#: features/logistics/models.py:186
 msgid "issued by"
 msgstr "vydal"
 
-#: features/logistics/models.py:182
+#: features/logistics/models.py:188
 msgid "issued at"
 msgstr "vydané o"
 
-#: features/logistics/models.py:183
+#: features/logistics/models.py:189
 msgid "returned at"
 msgstr "vrátené o"
 
-#: features/logistics/models.py:186
+#: features/logistics/models.py:192
 msgid "equipment issue"
 msgstr "výdaj výbavy"
 
-#: features/logistics/models.py:187
+#: features/logistics/models.py:193
 msgid "equipment issues"
 msgstr "výdaje výbavy"
 
-#: features/logistics/models.py:200
+#: features/logistics/models.py:206
 msgid "week start"
 msgstr "začiatok týždňa"
 
-#: features/logistics/models.py:201
+#: features/logistics/models.py:207
 msgid "headcount"
 msgstr "počet osôb"
 
-#: features/logistics/models.py:210
+#: features/logistics/models.py:216
 msgid "transport week"
 msgstr "dopravný týždeň"
 
 # --- transport trends ---
-#: features/logistics/models.py:211
+#: features/logistics/models.py:217
 msgid "transport weeks"
 msgstr "dopravné týždne"
 
-#: features/logistics/panels.py:59 templates/pages/accommodation_costs.html:16
+#: features/logistics/notifications.py:26
+msgid "Equipment reviews are waiting"
+msgstr "Čakajú kontroly vybavenia"
+
+#: features/logistics/notifications.py:27
+#, python-format
+msgid "%(count)s unreturned equipment reviews"
+msgstr "%(count)s kontrol nevráteného vybavenia"
+
+#: features/logistics/panels.py:58 templates/pages/accommodation_costs.html:16
 #: templates/pages/accommodation_costs.html:27
-#: templates/pages/accommodation_detail.html:19
+#: templates/pages/accommodation_detail.html:23
 msgid "Occupancy"
 msgstr "Obsadenosť"
 
-#: features/logistics/panels.py:68
+#: features/logistics/panels.py:61
+msgid "Review accommodation occupancy"
+msgstr "Skontrolovať obsadenosť ubytovania"
+
+#: features/logistics/panels.py:63
+msgid "Open accommodation costs, occupied places, and assigned costs."
+msgstr "Otvorte náklady na ubytovanie, obsadené miesta a priradené náklady."
+
+#: features/logistics/panels.py:71
 msgid "Equipment value"
 msgstr "Hodnota vybavenia"
 
-#: features/logistics/views.py:113
+#: features/logistics/panels.py:74
+msgid "Review equipment exceptions"
+msgstr "Skontrolovať nezrovnalosti vo vybavení"
+
+#: features/logistics/panels.py:76
+msgid "Open issued equipment awaiting return or a deduction decision."
+msgstr ""
+"Otvorte vydané vybavenie čakajúce na vrátenie alebo rozhodnutie o zrážke."
+
+#: features/logistics/services.py:59
+msgid "Amounts use a positive convention; negative values are not allowed."
+msgstr "Sumy používajú kladnú konvenciu; záporné hodnoty nie sú povolené."
+
+#: features/logistics/services.py:126
+msgid "Only active rooms in active locations can be assigned."
+msgstr "Prideľovať možno iba aktívne izby v aktívnych ubytovaniach."
+
+#: features/logistics/services.py:129
+msgid "Room is at full capacity."
+msgstr "Izba je plne obsadená."
+
+#: features/logistics/services.py:267
+msgid "This equipment item is inactive and cannot be issued."
+msgstr "Táto položka vybavenia je neaktívna a nemožno ju vydať."
+
+#: features/logistics/services.py:298 features/logistics/services.py:314
+msgid "A transport record already exists for this project and week."
+msgstr "Pre tento projekt a týždeň už existuje záznam dopravy."
+
+#: features/logistics/views.py:183
+msgid "Accommodation created. Add rooms to make it assignable."
+msgstr ""
+"Ubytovanie bolo vytvorené. Pridajte izby, aby ho bolo možné prideľovať."
+
+#: features/logistics/views.py:195
+msgid "Accommodation updated."
+msgstr "Ubytovanie bolo aktualizované."
+
+#: features/logistics/views.py:212
+msgid "Room created."
+msgstr "Izba bola vytvorená."
+
+#: features/logistics/views.py:226
+msgid "Room updated."
+msgstr "Izba bola aktualizovaná."
+
+#: features/logistics/views.py:248
 msgid "Room rate saved."
 msgstr "Sadzba izby uložená."
 
-#: features/logistics/views.py:115 features/logistics/views.py:127
+#: features/logistics/views.py:250 features/logistics/views.py:262
 msgid "Invalid amount."
 msgstr "Neplatná suma."
 
-#: features/logistics/views.py:125
+#: features/logistics/views.py:260
 msgid "Rate override saved."
 msgstr "Úprava sadzby uložená."
 
-#: features/logistics/views.py:138
+#: features/logistics/views.py:273
 msgid "Room assigned."
 msgstr "Izba pridelená."
 
-#: features/logistics/views.py:149
+#: features/logistics/views.py:284
 msgid "Room released."
 msgstr "Izba uvoľnená."
 
-#: features/logistics/views.py:159
+#: features/logistics/views.py:314
+msgid "Equipment item created."
+msgstr "Položka vybavenia vytvorená."
+
+#: features/logistics/views.py:331
+msgid "Equipment item updated."
+msgstr "Položka vybavenia aktualizovaná."
+
+#: features/logistics/views.py:344
 msgid "Equipment issued."
 msgstr "Vybavenie vydané."
 
-#: features/logistics/views.py:168
+#: features/logistics/views.py:353
 msgid "Equipment returned."
 msgstr "Vybavenie vrátené."
 
-#: features/logistics/views.py:178
+#: features/logistics/views.py:363
 msgid "Flagged for deduction review."
 msgstr "Označené na kontrolu zrážky."
 
-#: features/logistics/views.py:201
+#: features/logistics/views.py:386
 msgid "Review recorded."
 msgstr "Kontrola zaznamenaná."
 
-#: features/logistics/views.py:217
+#: features/logistics/views.py:402 features/logistics/views.py:418
 msgid "Transport week recorded."
 msgstr "Týždeň dopravy zaznamenaný."
 
-#: features/logistics/views.py:219
-msgid "Week start is required."
-msgstr "Začiatok týždňa je povinný."
+#: features/logistics/views.py:404
+msgid "Review the transport details and try again."
+msgstr "Skontrolujte údaje o doprave a skúste to znova."
+
+#: features/logistics/views.py:441
+msgid "Transport record updated."
+msgstr "Záznam dopravy bol aktualizovaný."
 
 #: features/messaging/models.py:12 features/messaging/models.py:38
 #: features/messaging/models.py:58
@@ -2154,16 +2458,16 @@ msgstr "výplatná páska"
 msgid "payslips"
 msgstr "výplatné pásky"
 
-#: features/payslips/services.py:129
+#: features/payslips/services.py:133
 msgid "This person has no email address on file."
 msgstr "Táto osoba nemá evidovanú e-mailovú adresu."
 
-#: features/payslips/services.py:135
+#: features/payslips/services.py:139
 #, python-format
 msgid "Payslip %(period)s"
 msgstr "Výplatná páska %(period)s"
 
-#: features/payslips/services.py:137
+#: features/payslips/services.py:141
 #, python-format
 msgid ""
 "Your payslip for %(period)s is attached as an encrypted PDF.\n"
@@ -2171,6 +2475,12 @@ msgid ""
 msgstr ""
 "V prílohe je vaša výplatná páska za %(period)s ako šifrované PDF.\n"
 "Heslo dostanete samostatne — nikdy sa neposiela e-mailom."
+
+#: features/payslips/services.py:151 features/payslips/services.py:155
+msgid ""
+"Unable to send the payslip email. Check the recipient address and mail "
+"configuration."
+msgstr "Výplatnú pásku sa nepodarilo odoslať e-mailom. Skontrolujte adresu príjemcu a nastavenie pošty."
 
 #: features/payslips/views.py:26
 msgid "Payslip recorded."
@@ -2185,17 +2495,12 @@ msgstr ""
 "Výplatná páska odoslaná na %(to)s. Jednorazové heslo (oznámte pracovníkovi "
 "telefonicky/cez Messenger, NIE e-mailom): %(pw)s"
 
-# --- shell / navigation ---
-#: templates/layouts/base.html:7
-msgid "Jober operations"
-msgstr "Jober prevádzka"
-
-#: templates/layouts/base.html:29 templates/pages/trials_queue.html:4
+#: templates/layouts/base.html:36 templates/pages/trials_queue.html:4
 msgid "Field"
 msgstr "Terén"
 
 # --- finance ---
-#: templates/layouts/base.html:47 templates/pages/finance_month_detail.html:8
+#: templates/layouts/base.html:54 templates/pages/finance_month_detail.html:8
 #: templates/pages/finance_month_detail.html:39
 #: templates/pages/finance_summary.html:4
 #: templates/pages/finance_summary.html:9 templates/pages/finance_year.html:4
@@ -2205,14 +2510,65 @@ msgid "Finance"
 msgstr "Financie"
 
 # --- feedback ---
-#: templates/layouts/base.html:56 templates/pages/feedback_form.html:7
+#: templates/layouts/base.html:63 templates/pages/feedback_form.html:7
 #: templates/pages/feedback_form.html:14
 msgid "Feedback"
 msgstr "Spätná väzba"
 
-#: templates/layouts/base.html:72
+#: templates/layouts/base.html:80
 msgid "Role"
 msgstr "Rola"
+
+# --- floating notification center (2026-07-13) ---
+#: templates/notifications/panel.html:10 templates/notifications/panel.html:18
+#: templates/notifications/panel.html:23 templates/notifications/panel.html:40
+#: tests/test_notifications.py:219
+msgid "Notifications"
+msgstr "Upozornenia"
+
+#: templates/notifications/panel.html:24
+#, python-format
+msgid "%(counter)s problem"
+msgid_plural "%(counter)s problems"
+msgstr[0] "%(counter)s problém"
+msgstr[1] "%(counter)s problémy"
+msgstr[2] "%(counter)s problémov"
+
+#: templates/notifications/panel.html:25
+#, python-format
+msgid "%(counter)s update"
+msgid_plural "%(counter)s updates"
+msgstr[0] "%(counter)s aktualizácia"
+msgstr[1] "%(counter)s aktualizácie"
+msgstr[2] "%(counter)s aktualizácií"
+
+#: templates/notifications/panel.html:39
+msgid "Session activity"
+msgstr "Aktivita relácie"
+
+#: templates/notifications/panel.html:49 templates/notifications/panel.html:50
+msgid "Refresh notifications"
+msgstr "Obnoviť upozornenia"
+
+#: templates/notifications/panel.html:57 templates/notifications/panel.html:58
+msgid "Close notifications"
+msgstr "Zavrieť upozornenia"
+
+#: templates/notifications/panel.html:66
+msgid "Problems"
+msgstr "Problémy"
+
+#: templates/notifications/panel.html:80 templates/notifications/panel.html:104
+msgid "Dismiss notification"
+msgstr "Skryť upozornenie"
+
+#: templates/notifications/panel.html:90
+msgid "Updates"
+msgstr "Aktualizácie"
+
+#: templates/notifications/panel.html:113
+msgid "Nothing needs your attention right now."
+msgstr "Momentálne nič nevyžaduje vašu pozornosť."
 
 #: templates/pages/accommodation_costs.html:4
 msgid "Accommodation costs"
@@ -2242,7 +2598,7 @@ msgstr "Iba na účely reportingu — pracovníkom sa nič nestrháva."
 #: templates/pages/finance_summary.html:57
 #: templates/pages/finance_summary.html:71
 #: templates/pages/finance_summary.html:83 templates/pages/finance_year.html:13
-#: templates/pages/transport_trends.html:14
+#: templates/pages/transport_trends.html:51
 #: templates/panels/finance_company_totals.html:3
 msgid "Company total"
 msgstr "Celkový súčet firmy"
@@ -2258,32 +2614,82 @@ msgid "Assigned cost"
 msgstr "Priradené náklady"
 
 #: templates/pages/accommodation_costs.html:26
-#: templates/pages/accommodation_detail.html:14
-#: templates/pages/accommodation_list.html:22
+#: templates/pages/accommodation_detail.html:18
+#: templates/pages/accommodation_list.html:36
 msgid "Rooms"
 msgstr "Izby"
 
 #: templates/pages/accommodation_costs.html:33
-#: templates/pages/accommodation_list.html:26
+#: templates/pages/accommodation_list.html:40
 msgid "No accommodations found."
 msgstr "Nenašli sa žiadne ubytovania."
 
-#: templates/pages/accommodation_detail.html:20
-#: templates/pages/accommodation_detail.html:25
+#: templates/pages/accommodation_detail.html:12
+#: templates/pages/accommodation_form.html:4
+#: templates/pages/accommodation_form.html:8
+msgid "Edit location"
+msgstr "Upraviť ubytovanie"
+
+#: templates/pages/accommodation_detail.html:13
+#: templates/pages/room_form.html:4 templates/pages/room_form.html:8
+msgid "Add room"
+msgstr "Pridať izbu"
+
+#: templates/pages/accommodation_detail.html:16
+msgid "This location is inactive and cannot receive new assignments."
+msgstr "Toto ubytovanie je neaktívne a nemožno doň pridávať nové pridelenia."
+
+#: templates/pages/accommodation_detail.html:24
 #: templates/panels/logistics_room.html:9
 msgid "Monthly rate"
 msgstr "Mesačná sadzba"
 
-#: templates/pages/accommodation_detail.html:26
-msgid "Save rate"
-msgstr "Uložiť sadzbu"
+#: templates/pages/accommodation_detail.html:25
+#: templates/pages/accommodation_list.html:18
+#: templates/pages/compliance_list.html:21
+#: templates/pages/equipment_catalog.html:16
+#: templates/pages/people_list.html:20 templates/pages/people_list.html:44
+#: templates/pages/project_list.html:34 templates/pages/trials_queue.html:55
+#: templates/panels/blacklist_case.html:8
+msgid "Status"
+msgstr "Stav"
 
-#: templates/pages/accommodation_detail.html:31
+#: templates/pages/accommodation_detail.html:28
+#: templates/pages/room_form.html:4 templates/pages/room_form.html:8
+msgid "Edit room"
+msgstr "Upraviť izbu"
+
+#: templates/pages/accommodation_detail.html:32
 msgid "No rooms."
 msgstr "Žiadne izby."
 
+#: templates/pages/accommodation_form.html:4
+#: templates/pages/accommodation_form.html:8
+#: templates/pages/accommodation_list.html:12
+#: tests/test_operations_workspaces.py:24
+msgid "Create location"
+msgstr "Vytvoriť ubytovanie"
+
+#: templates/pages/accommodation_form.html:7
+msgid "Accommodation management"
+msgstr "Správa ubytovania"
+
+# --- compliance ---
+#: templates/pages/accommodation_form.html:9
+#: templates/pages/equipment_form.html:10 templates/pages/ledger.html:123
+#: templates/pages/room_form.html:9 templates/pages/transport_trends.html:22
+#: templates/pages/trials_queue.html:25
+#: templates/partials/confirm_dialog.html:12
+msgid "Cancel"
+msgstr "Zrušiť"
+
+#: templates/pages/accommodation_form.html:14
+msgid "Save location"
+msgstr "Uložiť ubytovanie"
+
 # --- logistics: accommodation ---
 #: templates/pages/accommodation_list.html:8
+#: templates/pages/equipment_catalog.html:8
 #: templates/pages/equipment_reviews.html:8
 #: templates/pages/project_detail.html:50
 #: templates/pages/transport_trends.html:8
@@ -2291,6 +2697,31 @@ msgstr "Žiadne izby."
 #: templates/panels/logistics_room.html:3
 msgid "Logistics"
 msgstr "Logistika"
+
+#: templates/pages/accommodation_list.html:17
+msgid "Name or address"
+msgstr "Názov alebo adresa"
+
+#: templates/pages/accommodation_list.html:21
+#: templates/pages/equipment_catalog.html:19
+msgid "All"
+msgstr "Všetky"
+
+#: templates/pages/accommodation_list.html:23 templates/pages/audit_log.html:29
+#: templates/pages/equipment_catalog.html:21
+#: templates/pages/project_list.html:21
+#: templates/pages/transport_trends.html:37
+#: templates/pages/trials_queue.html:41
+msgid "Filter"
+msgstr "Filtrovať"
+
+#: templates/pages/accommodation_list.html:29
+#: templates/pages/compliance_list.html:14 templates/pages/people_list.html:41
+#: templates/pages/person_detail.html:141
+#: templates/pages/project_detail.html:16 templates/pages/project_list.html:27
+#: tests/test_tooltips.py:86
+msgid "Details"
+msgstr "Podrobnosti"
 
 #: templates/pages/audit_log.html:4 templates/pages/audit_log.html:9
 msgid "Audit log"
@@ -2314,6 +2745,7 @@ msgstr "Aktér (e-mail obsahuje)"
 
 # --- projects UI ---
 #: templates/pages/audit_log.html:17 templates/pages/audit_log.html:40
+#: templates/pages/transport_trends.html:44
 msgid "Action"
 msgstr "Akcia"
 
@@ -2337,10 +2769,6 @@ msgstr "Od"
 #: templates/pages/audit_log.html:28
 msgid "To"
 msgstr "Do"
-
-#: templates/pages/audit_log.html:29
-msgid "Filter"
-msgstr "Filtrovať"
 
 #: templates/pages/audit_log.html:38
 msgid "When"
@@ -2442,12 +2870,6 @@ msgstr "Nič nečaká na kontrolu."
 msgid "Alerts"
 msgstr "Upozornenia"
 
-#: templates/pages/compliance_list.html:21 templates/pages/people_list.html:20
-#: templates/pages/people_list.html:35 templates/pages/project_list.html:25
-#: templates/pages/trials_queue.html:21 templates/panels/blacklist_case.html:8
-msgid "Status"
-msgstr "Stav"
-
 #: templates/pages/compliance_list.html:23
 msgid "Expired"
 msgstr "Vypršané"
@@ -2481,22 +2903,92 @@ msgstr "Spravovať projekty"
 msgid "Operational summaries"
 msgstr "Prevádzkové súhrny"
 
+#: templates/pages/dashboard.html:17 templates/pages/reports.html:13
+#: tests/test_tooltips.py:116
+msgid "Review active projects"
+msgstr "Skontrolovať aktívne projekty"
+
+#: templates/pages/dashboard.html:17 templates/pages/reports.html:13
+#: tests/test_tooltips.py:118
+msgid "Open active projects to review their coordinators and assignments."
+msgstr ""
+"Otvorte aktívne projekty a skontrolujte ich koordinátorov a priradenia."
+
 #: templates/pages/dashboard.html:18 templates/pages/reports.html:13
 msgid "Active projects"
 msgstr "Aktívne projekty"
+
+#: templates/pages/dashboard.html:20
+msgid "View available people"
+msgstr "Zobraziť dostupných ľudí"
+
+#: templates/pages/dashboard.html:23
+msgid "View working people"
+msgstr "Zobraziť pracujúcich ľudí"
+
+#: templates/pages/dashboard.html:28 templates/pages/reports.html:15
+msgid "Resolve pending trial outcomes"
+msgstr "Vyriešiť čakajúce výsledky skúšobných dní"
+
+#: templates/pages/dashboard.html:28 templates/pages/reports.html:15
+msgid "Open trials that still require an outcome."
+msgstr ""
+"Otvorte skúšobné dni, pri ktorých je ešte potrebné zaznamenať výsledok."
 
 #: templates/pages/dashboard.html:29 templates/pages/reports.html:15
 msgid "Awaiting outcome"
 msgstr "Čaká na výsledok"
 
 #: templates/pages/dashboard.html:37 templates/pages/trials_queue.html:9
-#: templates/pages/trials_queue.html:12
+#: templates/pages/trials_queue.html:45
 msgid "Trials"
 msgstr "Skúšky"
 
-#: templates/pages/dashboard.html:42 templates/pages/trials_queue.html:27
+#: templates/pages/dashboard.html:42 templates/pages/trials_queue.html:62
 msgid "No trials awaiting an outcome."
 msgstr "Žiadne skúšky nečakajú na výsledok."
+
+#: templates/pages/equipment_catalog.html:10
+#: templates/pages/equipment_form.html:4 templates/pages/equipment_form.html:9
+#: tests/test_corvinum_client.py:175
+msgid "Add equipment item"
+msgstr "Pridať položku vybavenia"
+
+#: templates/pages/equipment_catalog.html:15
+msgid "Name or size"
+msgstr "Názov alebo veľkosť"
+
+#: templates/pages/equipment_catalog.html:25
+msgid ""
+"Inactive items remain on past issue records but cannot be selected for a new "
+"issue."
+msgstr ""
+"Neaktívne položky zostávajú v predchádzajúcich záznamoch o vydaní, ale "
+"nemožno ich vybrať pre nové vydanie."
+
+#: templates/pages/equipment_catalog.html:34
+#: templates/panels/logistics_equipment.html:12
+msgid "Unit price"
+msgstr "Jednotková cena"
+
+#: templates/pages/equipment_catalog.html:35
+#: templates/pages/person_detail.html:13
+#: templates/pages/transport_trends.html:45
+#: templates/pages/trials_queue.html:59
+msgid "Edit"
+msgstr "Upraviť"
+
+#: templates/pages/equipment_catalog.html:38
+msgid "No equipment items found."
+msgstr "Nenašli sa žiadne položky vybavenia."
+
+#: templates/pages/equipment_form.html:4 templates/pages/equipment_form.html:9
+msgid "Edit equipment item"
+msgstr "Upraviť položku vybavenia"
+
+#: templates/pages/equipment_form.html:15 tests/test_corvinum_client.py:176
+msgid "Save equipment item"
+msgstr "Uložiť položku vybavenia"
 
 #: templates/pages/equipment_reviews.html:4
 #: templates/pages/equipment_reviews.html:9
@@ -2581,13 +3073,6 @@ msgstr "Odkazy na spätnú väzbu"
 msgid "Label"
 msgstr "Označenie"
 
-#: templates/pages/feedback_inbox.html:25
-#: templates/pages/finance_summary.html:34
-#: templates/pages/person_detail.html:28 templates/pages/project_detail.html:8
-#: templates/pages/transport_trends.html:27
-msgid "Project"
-msgstr "Projekt"
-
 #: templates/pages/feedback_inbox.html:29
 msgid "Create link"
 msgstr "Vytvoriť odkaz"
@@ -2670,11 +3155,11 @@ msgstr "Finančné mesiace"
 msgid "No financial months."
 msgstr "Žiadne finančné mesiace."
 
-#: templates/pages/finance_summary.html:39 templates/pages/ledger.html:66
+#: templates/pages/finance_summary.html:39 templates/pages/ledger.html:68
 msgid "Year"
 msgstr "Rok"
 
-#: templates/pages/finance_summary.html:42 templates/pages/ledger.html:69
+#: templates/pages/finance_summary.html:42 templates/pages/ledger.html:71
 msgid "Month"
 msgstr "Mesiac"
 
@@ -2716,11 +3201,11 @@ msgstr "Áno"
 msgid "No"
 msgstr "Nie"
 
-#: templates/pages/intake_panel.html:45
+#: templates/pages/intake_panel.html:51
 msgid "Finish"
 msgstr "Dokončiť"
 
-#: templates/pages/intake_panel.html:45
+#: templates/pages/intake_panel.html:51
 msgid "Next"
 msgstr "Ďalej"
 
@@ -2733,10 +3218,10 @@ msgstr "Zálohy a zrážky"
 msgid "Record entry"
 msgstr "Zaznamenať položku"
 
-#: templates/pages/ledger.html:20 templates/pages/ledger.html:49
-#: templates/pages/ledger.html:77 templates/pages/ledger.html:103
+#: templates/pages/ledger.html:20 templates/pages/ledger.html:50
+#: templates/pages/ledger.html:79 templates/pages/ledger.html:105
 #: templates/pages/payslips.html:17 templates/pages/payslips.html:31
-#: templates/pages/person_detail.html:8 templates/pages/person_detail.html:214
+#: templates/pages/person_detail.html:8 templates/pages/person_detail.html:227
 msgid "Person"
 msgstr "Osoba"
 
@@ -2748,7 +3233,7 @@ msgstr "Firma / projekt"
 msgid "Entry type"
 msgstr "Typ záznamu"
 
-#: templates/pages/ledger.html:33 templates/pages/ledger.html:103
+#: templates/pages/ledger.html:33 templates/pages/ledger.html:105
 #: templates/panels/advances_ledger.html:27
 #: templates/panels/blacklist_case.html:10
 #: templates/panels/blacklist_case.html:33
@@ -2760,6 +3245,7 @@ msgid "Amount (EUR)"
 msgstr "Suma (EUR)"
 
 #: templates/pages/ledger.html:38 templates/pages/payslips.html:23
+#: templates/pages/transport_trends.html:44
 #: templates/panels/advances_ledger.html:32
 msgid "Note"
 msgstr "Poznámka"
@@ -2778,48 +3264,48 @@ msgstr ""
 "Neskoršie záznamy sa presúvajú na ďalší týždeň."
 
 # --- compliance ---
-#: templates/pages/ledger.html:49
+#: templates/pages/ledger.html:50
 msgid "Company"
 msgstr "Firma"
 
-#: templates/pages/ledger.html:49 templates/pages/ledger.html:103
+#: templates/pages/ledger.html:50 templates/pages/ledger.html:105
 msgid "Amount"
 msgstr "Suma"
 
-#: templates/pages/ledger.html:55
+#: templates/pages/ledger.html:56
 msgid "Total"
 msgstr "Spolu"
 
-#: templates/pages/ledger.html:57 templates/pages/ledger.html:84
+#: templates/pages/ledger.html:59 templates/pages/ledger.html:86
 msgid "Download CSV"
 msgstr "Stiahnuť CSV"
 
-#: templates/pages/ledger.html:59
+#: templates/pages/ledger.html:61
 msgid "No open advances before this week's cut-off."
 msgstr "Pred uzávierkou tohto týždňa nie sú žiadne otvorené zálohy."
 
-#: templates/pages/ledger.html:64
+#: templates/pages/ledger.html:66
 #, python-format
 msgid "Cycle %(start)s → %(end)s"
 msgstr "Cyklus %(start)s → %(end)s"
 
-#: templates/pages/ledger.html:72
+#: templates/pages/ledger.html:74
 msgid "Show"
 msgstr "Zobraziť"
 
-#: templates/pages/ledger.html:77
+#: templates/pages/ledger.html:79
 msgid "To deduct"
 msgstr "Na zrazenie"
 
-#: templates/pages/ledger.html:77
+#: templates/pages/ledger.html:79
 msgid "To add"
 msgstr "Na pripočítanie"
 
-#: templates/pages/ledger.html:77
+#: templates/pages/ledger.html:79
 msgid "Net pay effect"
 msgstr "Čistý vplyv na mzdu"
 
-#: templates/pages/ledger.html:91
+#: templates/pages/ledger.html:93
 msgid ""
 "This locks every open entry of the window into the cycle; locked entries can "
 "only be corrected by reversal."
@@ -2827,35 +3313,35 @@ msgstr ""
 "Uzamkne všetky otvorené záznamy okna do cyklu; uzamknuté záznamy možno "
 "opraviť len stornom."
 
-#: templates/pages/ledger.html:91
+#: templates/pages/ledger.html:93
 msgid "Include open entries in cycle"
 msgstr "Zahrnúť otvorené záznamy do cyklu"
 
-#: templates/pages/ledger.html:92
+#: templates/pages/ledger.html:94
 msgid "This marks the whole cycle as settled with pay."
 msgstr "Označí celý cyklus ako vysporiadaný so mzdou."
 
-#: templates/pages/ledger.html:92
+#: templates/pages/ledger.html:94
 msgid "Mark cycle settled"
 msgstr "Označiť cyklus ako vysporiadaný"
 
-#: templates/pages/ledger.html:96
+#: templates/pages/ledger.html:98
 msgid "No entries in this cycle window."
 msgstr "V tomto cykle nie sú žiadne záznamy."
 
-#: templates/pages/ledger.html:101
+#: templates/pages/ledger.html:103
 msgid "Entries"
 msgstr "Záznamy"
 
-#: templates/pages/ledger.html:103
+#: templates/pages/ledger.html:105
 msgid "Type"
 msgstr "Typ"
 
-#: templates/pages/ledger.html:103
+#: templates/pages/ledger.html:105
 msgid "Settlement"
 msgstr "Vysporiadanie"
 
-#: templates/pages/ledger.html:119
+#: templates/pages/ledger.html:121
 msgid ""
 "This records a reversal entry with the opposite pay effect; the original "
 "stays in the ledger."
@@ -2863,38 +3349,29 @@ msgstr ""
 "Zaznamená storno záznam s opačným vplyvom na mzdu; pôvodný záznam ostáva v "
 "knihe."
 
-#: templates/pages/ledger.html:119
+#: templates/pages/ledger.html:121
 msgid "Reverse"
 msgstr "Stornovať"
 
-#: templates/pages/ledger.html:121
+#: templates/pages/ledger.html:123
 msgid ""
 "This cancels the open ledger entry; it will no longer count against pay."
 msgstr "Zruší otvorený záznam v knihe; už sa nebude započítavať voči mzde."
 
-# --- compliance ---
-#: templates/pages/ledger.html:121 templates/partials/confirm_dialog.html:12
-msgid "Cancel"
-msgstr "Zrušiť"
-
 # --- login ---
-#: templates/pages/login.html:4
+#: templates/pages/login.html:4 templates/pages/login.html:10
 msgid "Sign in"
 msgstr "Prihlásenie"
 
-#: templates/pages/login.html:8
+#: templates/pages/login.html:9
 msgid "Internal system"
 msgstr "Interný systém"
 
-#: templates/pages/login.html:9
-msgid "Sign in to the Jober team"
-msgstr "Prihlásenie tímu Jober"
-
-#: templates/pages/login.html:20
+#: templates/pages/login.html:21
 msgid "Password"
 msgstr "Heslo"
 
-#: templates/pages/login.html:23
+#: templates/pages/login.html:24
 msgid "Continue"
 msgstr "Pokračovať"
 
@@ -2959,21 +3436,25 @@ msgstr "Hľadať podľa mena"
 msgid "All statuses"
 msgstr "Všetky stavy"
 
-#: templates/pages/people_list.html:26
+#: templates/pages/people_list.html:27 templates/pages/person_detail.html:185
+msgid "Inactive reason"
+msgstr "Dôvod neaktivity"
+
+#: templates/pages/people_list.html:28
+msgid "All inactive reasons"
+msgstr "Všetky dôvody neaktivity"
+
+#: templates/pages/people_list.html:35
 msgid "Search"
 msgstr "Hľadať"
 
-#: templates/pages/people_list.html:39
+#: templates/pages/people_list.html:48
 msgid "No people found."
 msgstr "Nenašli sa žiadni ľudia."
 
 #: templates/pages/person_detail.html:10 templates/pages/person_form.html:10
 msgid "Back to people"
 msgstr "Späť na ľudí"
-
-#: templates/pages/person_detail.html:13
-msgid "Edit"
-msgstr "Upraviť"
 
 # --- workflow: trials / readiness / intake ---
 #: templates/pages/person_detail.html:24
@@ -2984,11 +3465,8 @@ msgstr "Ďalší krok"
 msgid "Send to a project trial"
 msgstr "Poslať na skúšobný deň"
 
-#: templates/pages/person_detail.html:33 templates/pages/person_detail.html:46
-msgid "Arrival time"
-msgstr "Čas príchodu"
-
-#: templates/pages/person_detail.html:36
+#: templates/pages/person_detail.html:36 templates/pages/trials_queue.html:10
+#: templates/pages/trials_queue.html:24
 msgid "Schedule trial"
 msgstr "Naplánovať skúšku"
 
@@ -3041,11 +3519,6 @@ msgstr "Vyžaduje sa lekárska a výstroj"
 #: templates/pages/project_detail.html:15
 msgid "Operational"
 msgstr "Prevádzkové"
-
-#: templates/pages/person_detail.html:141
-#: templates/pages/project_detail.html:16
-msgid "Details"
-msgstr "Podrobnosti"
 
 #: templates/pages/person_detail.html:146
 msgid "Current project"
@@ -3113,10 +3586,6 @@ msgstr ""
 "Ukončí aktívne priradenie, uvoľní izbu, vráti vydanú výbavu a nastaví osobu "
 "na Neaktívny so zvoleným dôvodom."
 
-#: templates/pages/person_detail.html:185
-msgid "Inactive reason"
-msgstr "Dôvod neaktivity"
-
 #: templates/pages/person_detail.html:186
 msgid "Reason…"
 msgstr "Dôvod…"
@@ -3137,12 +3606,42 @@ msgstr "Od"
 msgid "Recycle to Available"
 msgstr "Vrátiť na Dostupný"
 
-# --- person card: history + filter ---
+#: templates/pages/person_detail.html:214
+#: templates/pages/transport_trends.html:42
+msgid "Records"
+msgstr "Záznamy"
+
 #: templates/pages/person_detail.html:215
+#: templates/pages/person_detail.html:220
+msgid "Archive person"
+msgstr "Archivovať osobu"
+
+#: templates/pages/person_detail.html:216
+msgid ""
+"Hides this operational record from the People list. It is not a deletion and "
+"does not remove blacklist protection or audit history."
+msgstr ""
+"Skryje tento prevádzkový záznam zo zoznamu ľudí. Nejde o vymazanie a "
+"neodstráni ochranu čiernej listiny ani históriu auditu."
+
+#: templates/pages/person_detail.html:217
+msgid ""
+"This archives the person from the operational list. It does not delete their "
+"record, audit history, or blacklist protection."
+msgstr ""
+"Týmto sa osoba archivuje z prevádzkového zoznamu. Nevymaže sa jej záznam, "
+"história auditu ani ochrana čiernej listiny."
+
+#: templates/pages/person_detail.html:219
+msgid "Archive reason"
+msgstr "Dôvod archivácie"
+
+# --- person card: history + filter ---
+#: templates/pages/person_detail.html:228
 msgid "History"
 msgstr "História"
 
-#: templates/pages/person_detail.html:220
+#: templates/pages/person_detail.html:233
 msgid "No history yet."
 msgstr "Zatiaľ žiadna história."
 
@@ -3154,7 +3653,7 @@ msgstr "Uložiť"
 msgid "Back to projects"
 msgstr "Späť na projekty"
 
-#: templates/pages/project_detail.html:18 templates/pages/project_list.html:21
+#: templates/pages/project_detail.html:18 templates/pages/project_list.html:30
 msgid "Code"
 msgstr "Kód"
 
@@ -3184,7 +3683,7 @@ msgstr "Nie sú pridelení žiadni pracovníci."
 
 # --- logistics: transport ---
 #: templates/pages/project_detail.html:51
-#: templates/pages/transport_trends.html:15
+#: templates/pages/transport_trends.html:52
 msgid "Weekly transport"
 msgstr "Týždenná doprava"
 
@@ -3192,21 +3691,41 @@ msgstr "Týždenná doprava"
 msgid "No transport weeks recorded."
 msgstr "Nie sú zaznamenané žiadne týždne dopravy."
 
-#: templates/pages/project_detail.html:63
+#: templates/pages/project_detail.html:62
+#: templates/pages/transport_trends.html:44
 msgid "Week start"
 msgstr "Začiatok týždňa"
 
-#: templates/pages/project_detail.html:64
+#: templates/pages/project_detail.html:63
+#: templates/pages/transport_trends.html:44
 msgid "Headcount"
 msgstr "Počet osôb"
 
-#: templates/pages/project_detail.html:65
+#: templates/pages/project_detail.html:64
 msgid "Record week"
 msgstr "Zaznamenať týždeň"
 
-#: templates/pages/project_list.html:31
+#: templates/pages/project_list.html:15
+msgid "Project status"
+msgstr "Stav projektu"
+
+#: templates/pages/project_list.html:17
+msgid "All project statuses"
+msgstr "Všetky stavy projektov"
+
+#: templates/pages/project_list.html:40
 msgid "No projects found."
 msgstr "Nenašli sa žiadne projekty."
+
+#: templates/pages/reports.html:14
+msgid "Browse people"
+msgstr "Prehľadávať ľudí"
+
+#: templates/pages/reports.html:14
+msgid "Open the full People list to search and filter workers."
+msgstr ""
+"Otvorte úplný zoznam ľudí, v ktorom môžete pracovníkov vyhľadávať a "
+"filtrovať."
 
 #: templates/pages/reports.html:24
 msgid "People by status"
@@ -3220,53 +3739,131 @@ msgstr "Neaktívni podľa dôvodu"
 msgid "No inactive people."
 msgstr "Žiadni neaktívni ľudia."
 
+#: templates/pages/room_form.html:14
+msgid "Save room"
+msgstr "Uložiť izbu"
+
 # --- transport trends ---
 #: templates/pages/transport_trends.html:4
 #: templates/pages/transport_trends.html:9
 msgid "Transport trends"
 msgstr "Trendy dopravy"
 
-#: templates/pages/transport_trends.html:39
-msgid "No transport data."
-msgstr "Žiadne údaje o doprave."
+#: templates/pages/transport_trends.html:10
+msgid "Record transport week"
+msgstr "Zaznamenať týždeň dopravy"
+
+#: templates/pages/transport_trends.html:15
+msgid "Edit transport record"
+msgstr "Upraviť záznam dopravy"
+
+#: templates/pages/transport_trends.html:15
+msgid "New transport record"
+msgstr "Nový záznam dopravy"
+
+#: templates/pages/transport_trends.html:16
+msgid "Weekly transported headcount"
+msgstr "Týždenný počet prepravených osôb"
+
+#: templates/pages/transport_trends.html:21
+msgid "Save transport record"
+msgstr "Uložiť záznam dopravy"
+
+#: templates/pages/transport_trends.html:29
+#: templates/pages/trials_queue.html:32
+msgid "Lookup"
+msgstr "Vyhľadávanie"
+
+#: templates/pages/transport_trends.html:32
+#: templates/pages/trials_queue.html:36
+msgid "All projects"
+msgstr "Všetky projekty"
+
+#: templates/pages/transport_trends.html:35
+msgid "From week"
+msgstr "Týždeň od"
+
+#: templates/pages/transport_trends.html:36
+msgid "To week"
+msgstr "Týždeň do"
+
+#: templates/pages/transport_trends.html:43
+msgid "Transport weeks"
+msgstr "Týždne dopravy"
+
+#: templates/pages/transport_trends.html:45
+msgid "No transport records match these filters."
+msgstr "Týmto filtrom nezodpovedajú žiadne záznamy dopravy."
+
+#: templates/pages/transport_trends.html:76
+msgid "No transport data. Record a project week to start the trend."
+msgstr "Žiadne údaje o doprave. Zaznamenajte týždeň projektu a vytvorte trend."
+
+#: templates/pages/trials_queue.html:15
+msgid "Edit pending trial"
+msgstr "Upraviť čakajúci skúšobný deň"
+
+#: templates/pages/trials_queue.html:15
+msgid "New trial"
+msgstr "Nový skúšobný deň"
+
+#: templates/pages/trials_queue.html:16
+msgid "Schedule a candidate"
+msgstr "Naplánovať uchádzača"
+
+#: templates/pages/trials_queue.html:24
+msgid "Save trial"
+msgstr "Uložiť skúšobný deň"
+
+#: templates/pages/trials_queue.html:34
+msgid "Candidate name"
+msgstr "Meno uchádzača"
+
+#: templates/pages/trials_queue.html:39
+msgid "From date"
+msgstr "Dátum od"
+
+#: templates/pages/trials_queue.html:40
+msgid "To date"
+msgstr "Dátum do"
 
 #: templates/pages/two_factor_setup.html:4
-#: templates/pages/two_factor_setup.html:9
+#: templates/pages/two_factor_setup.html:10
 msgid "Two-factor setup"
 msgstr "Nastavenie dvojfaktora"
 
-#: templates/pages/two_factor_setup.html:8
-#: templates/pages/two_factor_verify.html:8
+#: templates/pages/two_factor_setup.html:9
+#: templates/pages/two_factor_verify.html:9
 msgid "Security"
 msgstr "Bezpečnosť"
 
-#: templates/pages/two_factor_setup.html:11
+#: templates/pages/two_factor_setup.html:12
 msgid "Two-factor authentication is enabled for your account."
 msgstr "Dvojfaktorové overenie je pre váš účet zapnuté."
 
-#: templates/pages/two_factor_setup.html:13
+#: templates/pages/two_factor_setup.html:14
 msgid "Scan the QR code with your authenticator app, then confirm with a code."
 msgstr "Naskenujte QR kód autentifikačnou aplikáciou a potom potvrďte kódom."
 
-#: templates/pages/two_factor_setup.html:16
+#: templates/pages/two_factor_setup.html:17
 msgid "Secret (manual entry)"
 msgstr "Tajný kľúč (ručné zadanie)"
 
-#: templates/pages/two_factor_setup.html:22
-#: templates/pages/two_factor_verify.html:13
+#: templates/pages/two_factor_setup.html:23
+#: templates/pages/two_factor_verify.html:14
 msgid "6-digit code"
 msgstr "6-miestny kód"
 
-#: templates/pages/two_factor_setup.html:25
+#: templates/pages/two_factor_setup.html:26
 msgid "Confirm"
 msgstr "Potvrdiť"
 
 #: templates/pages/two_factor_verify.html:4
-#: templates/pages/two_factor_verify.html:9
+#: templates/pages/two_factor_verify.html:10
 msgid "Two-factor verification"
 msgstr "Dvojfaktorové overenie"
 
-#: templates/pages/two_factor_verify.html:16
+#: templates/pages/two_factor_verify.html:17
 msgid "Verify"
 msgstr "Overiť"
 
@@ -3333,13 +3930,17 @@ msgstr[2] "%(n)s kritických položiek je otvorených — aktivácia je zablokov
 msgid "All critical items are complete."
 msgstr "Všetky kritické položky sú splnené."
 
+#: templates/panels/finance_company_totals.html:2
+msgid "Review company finances"
+msgstr "Skontrolovať financie spoločnosti"
+
+#: templates/panels/finance_company_totals.html:2
+msgid "Open the finance summary for revenue, costs, and net results."
+msgstr "Otvorte finančný súhrn príjmov, nákladov a čistého výsledku."
+
 #: templates/panels/logistics_equipment.html:7
 msgid "Value"
 msgstr "Hodnota"
-
-#: templates/panels/logistics_equipment.html:12
-msgid "Unit price"
-msgstr "Jednotková cena"
 
 #: templates/panels/logistics_equipment.html:17
 msgid "Return"
@@ -3381,13 +3982,17 @@ msgstr "Úprava sadzby"
 msgid "Save override"
 msgstr "Uložiť úpravu"
 
-#: templates/panels/logistics_room.html:26
+#: templates/panels/logistics_room.html:27
 msgid "Room"
 msgstr "Izba"
 
-#: templates/panels/logistics_room.html:31
+#: templates/panels/logistics_room.html:32
 msgid "Assign room"
 msgstr "Prideliť izbu"
+
+#: templates/panels/logistics_room.html:34
+msgid "No active room with free capacity is available."
+msgstr "Nie je dostupná žiadna aktívna izba s voľnou kapacitou."
 
 # --- messaging / SMS ---
 #: templates/panels/messaging_sms.html:3
@@ -3421,6 +4026,35 @@ msgstr "Naozaj to chcete urobiť?"
 #: templates/partials/confirm_dialog.html:13
 msgid "Yes, proceed"
 msgstr "Áno, pokračovať"
+
+#: templates/partials/theme_picker.html:3
+#: templates/partials/theme_picker.html:4
+msgid "Theme"
+msgstr "Téma"
+
+#: templates/partials/theme_picker.html:5
+msgid "Light"
+msgstr "Svetlá"
+
+#: templates/partials/theme_picker.html:6
+msgid "Dark"
+msgstr "Tmavá"
+
+#~ msgid "Week start is required."
+#~ msgstr "Začiatok týždňa je povinný."
+
+# --- shell / navigation ---
+#~ msgid "Jober operations"
+#~ msgstr "Jober prevádzka"
+
+#~ msgid "Save rate"
+#~ msgstr "Uložiť sadzbu"
+
+#~ msgid "Sign in to the Jober team"
+#~ msgstr "Prihlásenie tímu Jober"
+
+#~ msgid "No transport data."
+#~ msgstr "Žiadne údaje o doprave."
 
 # --- projects UI ---
 #~| msgid "Reactivation"
@@ -3470,330 +4104,3 @@ msgstr "Áno, pokračovať"
 
 #~ msgid "Responsible"
 #~ msgstr "Zodpovedný"
-# --- floating notification center (2026-07-13) ---
-msgid "Notifications"
-msgstr "Upozornenia"
-
-msgid "Session activity"
-msgstr "Aktivita relácie"
-
-msgid "Refresh notifications"
-msgstr "Obnoviť upozornenia"
-
-msgid "Close notifications"
-msgstr "Zavrieť upozornenia"
-
-#, python-format
-msgid "%(counter)s problem"
-msgid_plural "%(counter)s problems"
-msgstr[0] "%(counter)s problém"
-msgstr[1] "%(counter)s problémy"
-msgstr[2] "%(counter)s problémov"
-
-#, python-format
-msgid "%(counter)s update"
-msgid_plural "%(counter)s updates"
-msgstr[0] "%(counter)s aktualizácia"
-msgstr[1] "%(counter)s aktualizácie"
-msgstr[2] "%(counter)s aktualizácií"
-
-msgid "Problems"
-msgstr "Problémy"
-
-msgid "Updates"
-msgstr "Aktualizácie"
-
-msgid "Dismiss notification"
-msgstr "Skryť upozornenie"
-
-msgid "Nothing needs your attention right now."
-msgstr "Momentálne nič nevyžaduje vašu pozornosť."
-
-msgid "Notification is not available."
-msgstr "Upozornenie nie je dostupné."
-
-msgid "Operational record"
-msgstr "Prevádzkový záznam"
-
-#, python-format
-msgid "%(actor)s · %(subject)s"
-msgstr "%(actor)s · %(subject)s"
-
-msgid "Trial outcome is waiting"
-msgstr "Čaká sa na výsledok skúšobného dňa"
-
-msgid "Readiness needs attention"
-msgstr "Pripravenosť vyžaduje pozornosť"
-
-msgid "Compliance problems need attention"
-msgstr "Problémy s dodržiavaním predpisov vyžadujú pozornosť"
-
-#, python-format
-msgid "%(count)s open document or medical alerts"
-msgstr "%(count)s otvorených upozornení na doklady alebo lekársku prehliadku"
-
-msgid "Equipment reviews are waiting"
-msgstr "Čakajú kontroly vybavenia"
-
-#, python-format
-msgid "%(count)s unreturned equipment reviews"
-msgstr "%(count)s kontrol nevráteného vybavenia"
-
-msgid "Blacklist decisions are waiting"
-msgstr "Čakajú rozhodnutia o čiernej listine"
-
-#, python-format
-msgid "%(count)s proposed cases require a decision"
-msgstr "%(count)s navrhnutých prípadov vyžaduje rozhodnutie"
-
-msgid "Worker feedback is available"
-msgstr "K dispozícii je spätná väzba od pracovníkov"
-
-#, python-format
-msgid "%(count)s feedback submissions in the inbox"
-msgstr "%(count)s podnetov v schránke spätnej väzby"
-
-msgid "Activation checklist is incomplete"
-msgstr "Aktivačný kontrolný zoznam nie je dokončený"
-
-#, python-format
-msgid "%(person)s · %(count)s critical items"
-msgstr "%(person)s · %(count)s kritických položiek"
-
-msgid "Worker feedback received"
-msgstr "Prijatá spätná väzba od pracovníka"
-msgid "Theme"
-msgstr "Téma"
-
-msgid "Light"
-msgstr "Svetlá"
-
-msgid "Dark"
-msgstr "Tmavá"
-
-msgid "Review active projects"
-msgstr "Skontrolovať aktívne projekty"
-
-msgid "Open active projects to review their coordinators and assignments."
-msgstr "Otvorte aktívne projekty a skontrolujte ich koordinátorov a priradenia."
-
-msgid "Browse people"
-msgstr "Prehľadávať ľudí"
-
-msgid "Open the full People list to search and filter workers."
-msgstr "Otvorte úplný zoznam ľudí, v ktorom môžete pracovníkov vyhľadávať a filtrovať."
-
-msgid "Resolve pending trial outcomes"
-msgstr "Vyriešiť čakajúce výsledky skúšobných dní"
-
-msgid "Open trials that still require an outcome."
-msgstr "Otvorte skúšobné dni, pri ktorých je ešte potrebné zaznamenať výsledok."
-
-msgid "Review compliance issues"
-msgstr "Skontrolovať problémy súladu"
-
-msgid "Open workers with document or medical requirements that need attention."
-msgstr "Otvorte pracovníkov s dokumentmi alebo zdravotnými požiadavkami, ktoré vyžadujú pozornosť."
-
-msgid "Review accommodation occupancy"
-msgstr "Skontrolovať obsadenosť ubytovania"
-
-msgid "Open accommodation costs, occupied places, and assigned costs."
-msgstr "Otvorte náklady na ubytovanie, obsadené miesta a priradené náklady."
-
-msgid "Review equipment exceptions"
-msgstr "Skontrolovať nezrovnalosti vo vybavení"
-
-msgid "Open issued equipment awaiting return or a deduction decision."
-msgstr "Otvorte vydané vybavenie čakajúce na vrátenie alebo rozhodnutie o zrážke."
-
-#, python-format
-msgid "View %(status)s people"
-msgstr "Zobraziť ľudí so stavom %(status)s"
-
-msgid "Open People filtered to this lifecycle status."
-msgstr "Otvorte zoznam ľudí filtrovaný podľa tohto stavu životného cyklu."
-
-#, python-format
-msgid "View inactive people: %(reason)s"
-msgstr "Zobraziť neaktívnych ľudí: %(reason)s"
-
-msgid "Open People filtered to this inactive reason."
-msgstr "Otvorte zoznam ľudí filtrovaný podľa tohto dôvodu neaktivity."
-
-msgid "Review company finances"
-msgstr "Skontrolovať financie spoločnosti"
-
-msgid "Open the finance summary for revenue, costs, and net results."
-msgstr "Otvorte finančný súhrn príjmov, nákladov a čistého výsledku."
-
-msgid "Project status"
-msgstr "Stav projektu"
-
-msgid "All project statuses"
-msgstr "Všetky stavy projektov"
-
-msgid "All inactive reasons"
-msgstr "Všetky dôvody neaktivity"
-
-msgid "View available people"
-msgstr "Zobraziť dostupných ľudí"
-
-msgid "View working people"
-msgstr "Zobraziť pracujúcich ľudí"
-
-msgid "A transport record already exists for this project and week."
-msgstr "Pre tento projekt a týždeň už existuje záznam dopravy."
-
-msgid "Accommodation created. Add rooms to make it assignable."
-msgstr "Ubytovanie bolo vytvorené. Pridajte izby, aby ho bolo možné prideľovať."
-
-msgid "Accommodation management"
-msgstr "Správa ubytovania"
-
-msgid "Accommodation updated."
-msgstr "Ubytovanie bolo aktualizované."
-
-msgid "Add room"
-msgstr "Pridať izbu"
-
-msgid "All"
-msgstr "Všetky"
-
-msgid "All projects"
-msgstr "Všetky projekty"
-
-msgid "Amounts use a positive convention; negative values are not allowed."
-msgstr "Sumy používajú kladnú konvenciu; záporné hodnoty nie sú povolené."
-
-msgid "Candidate"
-msgstr "Uchádzač"
-
-msgid "Candidate name"
-msgstr "Meno uchádzača"
-
-msgid "Cannot activate this worker because no readiness record has been completed."
-msgstr "Pracovníka nemožno aktivovať, pretože nebol vyplnený záznam pripravenosti."
-
-msgid "Capacity cannot be lower than current occupancy."
-msgstr "Kapacita nemôže byť nižšia ako aktuálna obsadenosť."
-
-msgid "Create location"
-msgstr "Vytvoriť ubytovanie"
-
-msgid "Edit location"
-msgstr "Upraviť ubytovanie"
-
-msgid "Edit pending trial"
-msgstr "Upraviť čakajúci skúšobný deň"
-
-msgid "Edit room"
-msgstr "Upraviť izbu"
-
-msgid "Edit transport record"
-msgstr "Upraviť záznam dopravy"
-
-msgid "From date"
-msgstr "Dátum od"
-
-msgid "From week"
-msgstr "Týždeň od"
-
-msgid "Lookup"
-msgstr "Vyhľadávanie"
-
-msgid "Name or address"
-msgstr "Názov alebo adresa"
-
-msgid "New transport record"
-msgstr "Nový záznam dopravy"
-
-msgid "New trial"
-msgstr "Nový skúšobný deň"
-
-msgid "No active room with free capacity is available."
-msgstr "Nie je dostupná žiadna aktívna izba s voľnou kapacitou."
-
-msgid "No transport data. Record a project week to start the trend."
-msgstr "Žiadne údaje o doprave. Zaznamenajte týždeň projektu a vytvorte trend."
-
-msgid "No transport records match these filters."
-msgstr "Týmto filtrom nezodpovedajú žiadne záznamy dopravy."
-
-msgid "Only active rooms in active locations can be assigned."
-msgstr "Prideľovať možno iba aktívne izby v aktívnych ubytovaniach."
-
-msgid "Only available candidates can be scheduled."
-msgstr "Naplánovať možno iba dostupných uchádzačov."
-
-msgid "Only pending trials can be edited."
-msgstr "Upravovať možno iba čakajúce skúšobné dni."
-
-msgid "Operational note"
-msgstr "Prevádzková poznámka"
-
-msgid "Record transport week"
-msgstr "Zaznamenať týždeň dopravy"
-
-msgid "Records"
-msgstr "Záznamy"
-
-msgid "Release all occupants before deactivating this location."
-msgstr "Pred deaktiváciou tohto ubytovania uvoľnite všetkých ubytovaných."
-
-msgid "Release all occupants before deactivating this room."
-msgstr "Pred deaktiváciou tejto izby uvoľnite všetkých ubytovaných."
-
-msgid "Review the transport details and try again."
-msgstr "Skontrolujte údaje o doprave a skúste to znova."
-
-msgid "Review the trial details and try again."
-msgstr "Skontrolujte údaje skúšobného dňa a skúste to znova."
-
-msgid "Room created."
-msgstr "Izba bola vytvorená."
-
-msgid "Room is at full capacity."
-msgstr "Izba je plne obsadená."
-
-msgid "Room updated."
-msgstr "Izba bola aktualizovaná."
-
-msgid "Save location"
-msgstr "Uložiť ubytovanie"
-
-msgid "Save room"
-msgstr "Uložiť izbu"
-
-msgid "Save transport record"
-msgstr "Uložiť záznam dopravy"
-
-msgid "Save trial"
-msgstr "Uložiť skúšobný deň"
-
-msgid "Schedule a candidate"
-msgstr "Naplánovať uchádzača"
-
-msgid "This location is inactive and cannot receive new assignments."
-msgstr "Toto ubytovanie je neaktívne a nemožno doň pridávať nové pridelenia."
-
-msgid "To date"
-msgstr "Dátum do"
-
-msgid "To week"
-msgstr "Týždeň do"
-
-msgid "Transport record updated."
-msgstr "Záznam dopravy bol aktualizovaný."
-
-msgid "Transport weeks"
-msgstr "Týždne dopravy"
-
-msgid "Trial updated."
-msgstr "Skúšobný deň bol aktualizovaný."
-
-msgid "Trials can only be scheduled for active projects."
-msgstr "Skúšobné dni možno plánovať iba pre aktívne projekty."
-
-msgid "Weekly transported headcount"
-msgstr "Týždenný počet prepravených osôb"

@@ -2,10 +2,12 @@ from __future__ import annotations
 
 import io
 import re
+from smtplib import SMTPRecipientsRefused
 from decimal import Decimal
 
 import pytest
 from django.core import mail
+from django.core.mail import EmailMessage
 
 from core.audit.models import AuditEvent
 from core.people.models import Person
@@ -91,6 +93,32 @@ def test_send_requires_email_on_file(settings, manager):
     with pytest.raises(PayslipError):
         send_payslip(slip, actor=manager)
     assert mail.outbox == []
+
+
+def test_resend_uses_the_previous_successful_delivery_address(settings, payslip, manager):
+    settings.EMAIL_BACKEND = "django.core.mail.backends.locmem.EmailBackend"
+    payslip.sent_to = "controlled-demo-inbox@example.test"
+    payslip.save(update_fields=["sent_to"])
+    payslip.person.email = "seed-only@demo.corvinum.test"
+    payslip.person.save(update_fields=["email"])
+
+    send_payslip(payslip, actor=manager)
+
+    assert mail.outbox[0].to == ["controlled-demo-inbox@example.test"]
+
+
+def test_smtp_recipient_failure_becomes_a_safe_payslip_error(monkeypatch, payslip, manager):
+    def reject(*_args, **_kwargs):
+        raise SMTPRecipientsRefused({"bad@example.test": (550, b"invalid recipient")})
+
+    monkeypatch.setattr(EmailMessage, "send", reject)
+    with pytest.raises(PayslipError) as excinfo:
+        send_payslip(payslip, actor=manager)
+
+    assert "bad@example.test" not in str(excinfo.value)
+
+    payslip.refresh_from_db()
+    assert payslip.sent_at is None and payslip.sent_to == ""
 
 
 def test_record_payslip_is_audited(manager):

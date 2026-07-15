@@ -66,6 +66,22 @@ def test_check_match_active_and_company_wide(setup, settings):
     assert not check_match("OTHER").exists()
 
 
+def test_archiving_a_blacklisted_person_preserves_reentry_protection(setup):
+    manager, _c, person = setup
+    case = decide_case(
+        propose_case(person, identifier="CE-DEMO-BL-2026-001", actor=manager),
+        "approve",
+        actor=manager,
+    )
+
+    person.archive(actor=manager, reason="fictional demo archive")
+
+    person.refresh_from_db()
+    assert person.is_archived
+    assert case.fingerprints.filter(is_active=True).exists()
+    assert check_match("CE-DEMO-BL-2026-001").exists()
+
+
 def test_matching_disabled_returns_empty(setup, settings):
     manager, _c, person = setup
     decide_case(propose_case(person, identifier="ID-1", actor=manager), "approve", actor=manager)

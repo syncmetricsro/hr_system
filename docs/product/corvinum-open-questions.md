@@ -7,7 +7,7 @@ Sources: design doc §5.10/§12.6/§13, Addendum A1.
 
 | # | Question (design doc ref) | Default built in Stage C | Confirm with |
 |---|---|---|---|
-| C-Q1 | Status lifecycle — statuses are proposed, not confirmed (§12.6) | Core lifecycle minus trial-day (Available ⇄ Working / Inactive / Blacklisted), transitions in `clients/corvinum_eu/policies.py` | Client |
+| C-Q1 | Status lifecycle — statuses are proposed, not confirmed (§12.6) | **Trial-day workflow enabled for the demo**: Available → Trial day → Working / Available / Inactive / Blacklisted; transitions in `clients/corvinum_eu/policies.py` | Client confirmation still required |
 | C-Q2 | Ledger rules (§5.10 "must be fixed before build"): timezone + Thursday cut-off | Europe/Bratislava, **Thursday 14:00**; entries after cut-off roll to next week's Friday, never retro-inserted | Client (exact time) |
 | C-Q3 | 20th-to-20th cycle boundary | Window = 21st 00:00 → 20th 24:00 inclusive, local time, date math correct across Dec→Jan | Client |
 | C-Q4 | Partial advance recovery across cycles (§13.3, model-affecting) | **Not in MVP** — an advance settles in one cycle; reversal entries are the correction path. If confirmed needed, add linked recovery entries (`recovers_advance_id`) | Client |

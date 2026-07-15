@@ -44,6 +44,7 @@ app_routes = [
     path("people/new/", people_views.person_create, name="person_create"),
     path("people/<int:pk>/", people_views.person_detail, name="person_detail"),
     path("people/<int:pk>/edit/", people_views.person_edit, name="person_edit"),
+    path("people/<int:person_pk>/archive/", people_views.archive_person, name="archive_person"),
     path("people/<int:person_pk>/recycle/", people_views.recycle_person, name="recycle_person"),
     path("projects/", project_views.project_list, name="project_list"),
     path("projects/<int:pk>/", project_views.project_detail, name="project_detail"),
@@ -88,6 +89,9 @@ if _feature_on("logistics", "equipment"):
     from features.logistics import views as logistics_views
 
     app_routes += [
+        path("equipment/catalog/", logistics_views.equipment_catalog, name="equipment_catalog"),
+        path("equipment/catalog/new/", logistics_views.equipment_create, name="equipment_create"),
+        path("equipment/catalog/<int:pk>/edit/", logistics_views.equipment_edit, name="equipment_edit"),
         path("people/<int:person_pk>/issue-equipment/", logistics_views.issue_equipment_view, name="issue_equipment"),
         path("equipment/<int:issue_pk>/return/", logistics_views.return_equipment_view, name="return_equipment"),
         path("equipment/<int:issue_pk>/flag/", logistics_views.flag_unreturned_view, name="flag_unreturned"),

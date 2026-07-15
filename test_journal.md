@@ -1,5 +1,47 @@
 # Test Journal
 
+## 2026-07-15 — Payslip resend recipient and SMTP-error handling
+
+- Added coverage for resending to the prior successful recipient after a
+  person-email change, plus SMTP recipient rejection becoming a safe
+  `PayslipError` without recording a delivery.
+
+## 2026-07-15 — Corvinum sidebar icon-subset guard
+
+- Added a template guard that rejects sidebar Material Symbol names absent from
+  the committed self-hosted font subset, preventing raw ligature text from
+  appearing in navigation.
+
+## 2026-07-15 — Equipment catalogue permissions and workflow
+
+- Added manager create/search/edit/deactivate coverage with audit entries and
+  explicit coordinator 403 assertions for catalogue routes.
+
+## 2026-07-15 — Optional intake email
+
+- Added intake coverage for a valid optional email, invalid-email rejection,
+  and blank-email completion; the value maps to the person email field only
+  after the questionnaire is completed.
+
+## 2026-07-15 — CorvinumEU trial-day route and policy activation
+
+- Added Corvinum client-surface assertions for the mounted trial queue/create
+  routes and scheduling/outcome grants. The client still excludes finance,
+  accommodation, transport, and SMS routes.
+- Focused Corvinum policy validation passed: **6 tests** plus Django system
+  checks and Ruff for the changed client/test surfaces.
+
+## 2026-07-15 — Corvinum blacklist archive and re-entry workflow
+
+- Added coverage proving an approved case remains matchable after operational
+  archive and that guided intake creates a new proposed case from the same
+  transient ID without storing the raw value in IntakeAnswer.
+- Focused Corvinum validation passed: **34 passed, 1 Jober-only test
+  deselected**; migration consistency, Ruff for the changed surfaces, and
+  whitespace checks also pass. The local production-style Corvinum image
+  rebuilt successfully, applied the transient-question migration, seeded
+  questionnaire v2, and returned OK from the health endpoint.
+
 ## 2026-07-15 — Corvinum Basic deployment-script contracts
 
 - Added structural tests that require encrypted off-site PostgreSQL exports,

@@ -67,9 +67,10 @@ class IntakeMatchExtension:
                 person, reason="Auto: intake identifier match",
                 identifier=identifier,
                 identifier_type=cleaned.get("identifier_type") or "national_id",
-                actor=request.user,
+                actor=getattr(request, "user", None),
             )
-            messages.warning(
-                request,
-                _("Possible blacklist match — flagged for manager review. Activation is blocked until resolved."),
-            )
+            if request is not None:
+                messages.warning(
+                    request,
+                    _("Possible blacklist match — flagged for manager review. Activation is blocked until resolved."),
+                )

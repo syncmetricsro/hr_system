@@ -25,6 +25,8 @@ AUDIT_ACTION_LABELS = {
     "blacklist.removed": _("Removed from blacklist"),
     "checklist.item_ticked": _("Checklist item completed"),
     "checklist.item_unticked": _("Checklist item reopened"),
+    "equipment.catalog_created": _("Equipment item created"),
+    "equipment.catalog_updated": _("Equipment item updated"),
     "equipment.deduction_reviewed": _("Equipment deduction review recorded"),
     "equipment.flagged_unreturned": _("Equipment flagged as unreturned"),
     "equipment.issued": _("Equipment issued"),

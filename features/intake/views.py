@@ -37,14 +37,22 @@ def intake_panel(request: HttpRequest, pk: int) -> HttpResponse:
     panel = current_panel(intake)
     errors: dict[str, str] = {}
     if request.method == "POST" and panel is not None:
-        raw_errors = save_panel(intake, request.POST, actor=request.user)
+        raw_errors = save_panel(
+            intake, request.POST, actor=request.user, http_request=request
+        )
         if not raw_errors:
             if intake.status == RecruitmentIntake.Status.COMPLETED and intake.person_id:
                 messages.success(request, _("Intake complete — person added."))
                 return redirect("person_detail", pk=intake.person_id)
             return redirect("intake_panel", pk=intake.pk)
         errors = {
-            key: _("Please type a value (or the word for 'none').") if code == "type_required" else _("Required.")
+            key: (
+                _("Please type a value (or the word for 'none').")
+                if code == "type_required"
+                else _("Enter a valid email address.")
+                if code == "invalid_email"
+                else _("Required.")
+            )
             for key, code in raw_errors.items()
         }
         panel = current_panel(intake)

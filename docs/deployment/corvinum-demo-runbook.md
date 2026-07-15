@@ -142,9 +142,13 @@ statistics; each opens a relevant list or filter.
    - first and last name: `Olena Demo`;
    - date/place of birth: `1995-05-14`, `Uzhhorod`;
    - phone: `+421 900 000 999`;
+   - email: optional — leave it blank for the ordinary intake, or use the
+     controlled test inbox only when rehearsing the later payslip-email step;
    - address/nationality: `Fiktívna 15, Komárno`, `Ukrajina`;
    - preferred language: `sk`;
    - disability: enter `nie`, then leave disability type empty.
+   - leave the optional **ID number (blacklist check)** empty for this ordinary
+     intake; the later blacklist demonstration supplies its own fictional ID.
 3. Finish the questionnaire and show that the new person opens immediately in
    **Available** state with the HR Admin recorded as the intake owner.
 
@@ -152,22 +156,30 @@ Talking point: the questionnaire is versioned, validates every server-driven
 step, handles conditional answers, and creates the personnel record only after
 the final panel succeeds.
 
-### 4. Guided activation checklist — 3 minutes
+### 4. Schedule and record a trial day — 3 minutes
 
-1. Continue on **Olena Demo**. If the intake was skipped, use
-   **People → Eszter Varga** instead. Opening the record instantiates the
-   checklist from the global template on first use.
-2. Show the activation checklist and the message listing eight open critical
-   items. Explain that critical approvals block activation.
-3. Tick one item. Point out the immediate confirmation and the recorded staff
+1. Continue on **Olena Demo**. In the **Next step** panel, select **Alfa
+   Metallwerk** and choose a fictional arrival time tomorrow at `08:00`.
+2. Select **Schedule trial**. Explain that recruiters, coordinators, and
+   managers can schedule; the event records both the destination and arrival
+   time.
+3. Open **Trials**, find Olena’s pending trial, and record **Pass** as HR
+   Admin. A coordinator can record the outcome too; an Observer cannot.
+4. Return to Olena. The record is now in **Trial day** and the readiness panel
+   is available for the approved project.
+
+Talking point: a passed trial does not activate a worker by itself. It moves
+the person into the documented readiness/approval workflow.
+
+### 5. Guided activation checklist — 3 minutes
+
+1. On Olena’s record, show the activation checklist and the message listing
+   eight open critical items. Explain that critical approvals block activation.
+2. Tick one item. Point out the immediate confirmation and the recorded staff
    identity beside the completed item.
-4. Leave the remaining items open so the blocking state remains easy to see.
+3. Leave the remaining items open so the blocking state remains easy to see.
 
-Do **not** promise a trial-day or readiness workflow in this client. Corvinum's
-current configuration does not enable recruitment trials; the checklist is the
-demonstrable approval control.
-
-### 5. Work waiting for the user — 2 minutes
+### 6. Work waiting for the user — 2 minutes
 
 1. Now open the bell in the top-right. The checklist opened in the previous
    step supplies a real actionable problem for this fresh demo database.
@@ -180,18 +192,23 @@ demonstrable approval control.
 Talking point: the first release refreshes after navigation and mutations, so
 an idle browser makes no periodic requests.
 
-### 6. Equipment charge with a ledger trail — 3 minutes
+### 7. Equipment charge with a ledger trail — 3 minutes
 
-1. Go to **People → Marek Skladník** and find **Equipment**.
-2. Show the safety boots, quantity, unit price in EUR, and approved charge.
-3. Open **Ledger** and show the corresponding equipment deduction alongside
+1. Open **Equipment catalogue**. As HR Admin, add a fictional example such as
+   `High-visibility vest`, size `L`, price `8.50 EUR`, active. Show that the
+   new item is immediately available in personnel equipment dropdowns.
+2. Explain that managers can search, edit, or deactivate catalogue entries;
+   coordinators can issue/return items but cannot alter the catalogue.
+3. Go to **People → Marek Skladník** and find **Equipment**.
+4. Show the safety boots, quantity, unit price in EUR, and approved charge.
+5. Open **Ledger** and show the corresponding equipment deduction alongside
    the seeded 100.00 EUR advance and 30.00 EUR travel addition.
 
 Talking point: equipment review and payroll effect are linked explicitly and
 audited. Values are decimal EUR amounts; nothing is silently calculated or
 deleted.
 
-### 7. Ledger controls and safe consequences — 4 minutes
+### 8. Ledger controls and safe consequences — 4 minutes
 
 1. In **Ledger**, show the Thursday summary and its cut-off explanation.
 2. In the cycle selector use **2026 / 7** and select **Show**.
@@ -222,6 +239,11 @@ the client to confirm C-Q2 and C-Q3.
 5. Open the received message in the test inbox and use the separately displayed
    password to open its encrypted PDF attachment.
 
+**Resend** delivers a newly encrypted PDF to the same address as the last
+successful delivery and displays a new one-time password. If the send fails,
+the application keeps the existing delivery record and shows an in-app error;
+it never exposes a server-error page.
+
 If the app was intentionally started without Doppler, the console backend
 prints MIME output instead and does **not** offer a clickable attachment.
 
@@ -235,14 +257,72 @@ prints MIME output instead and does **not** offer a clickable attachment.
    and audit access without operational write controls.
 4. Close on the decisions listed below.
 
+## Optional manager demonstration — blacklist and re-entry protection
+
+Use this only after the main route, with **fictional** data and HR Admin signed
+in. It is a manager-controlled safety workflow, not an automatic deletion or
+silent deduplication feature.
+
+### What the current product does
+
+1. Open a fictional person created during this rehearsal, such as **Olena
+   Demo**.
+2. In the **Blacklist** panel, select a neutral demonstration category, enter
+   the fictional reason `Demo only — manager review required`, and enter the
+   fictional identifier `CE-DEMO-BL-2026-001` in **ID number (optional,
+   hashed)**.
+3. Choose **Propose blacklist**. This creates a proposed case; it does not yet
+   change the person’s status.
+4. Open **Blacklist** in the navigation. Show the proposed case, then choose
+   **Approve** and enter `Fictional approval for walkthrough` as the decision
+   reason.
+5. Return to the person. Expected result: the person is **Blacklisted**, the
+   case is approved, and activation is blocked. Explain that the raw ID is not
+   stored: the application retains only a keyed HMAC fingerprint, its type,
+   key version, and expiry.
+6. Open **Audit** and filter for the fictional person or blacklist action.
+   Show the proposal, decision, actor, and timestamp. Do not display or claim
+   to store the raw identifier.
+
+### Archive and re-enter the fictional person — 4 minutes
+
+There is deliberately no destructive person-delete control. **Archive person**
+hides the record from the operational People list but retains the case,
+fingerprint, and audit history. It is not GDPR erasure and cannot bypass
+blacklist protection.
+
+1. On the original approved person, open **Archive person**, enter
+   `Fictional re-entry demonstration`, confirm the consequence dialog, and
+   submit. The original record disappears from People but remains Blacklisted
+   for authorized audit/review purposes.
+2. Start **People → Add person** and use a visibly different fictional name,
+   for example `Olena Re-entry`, so the audience can distinguish the two
+   records.
+3. Complete Identity and Contact with fictional values. On the final
+   **Compliance** panel, enter `nie` for disability, then enter the **same**
+   fictional identifier `CE-DEMO-BL-2026-001` and choose `national_id` as the
+   ID type. Finish intake.
+4. Expected result: the new record is created for review, a **proposed
+   blacklist match** is raised, and activation remains blocked. The system does
+   not merge the two people and does not automatically blacklist the new one.
+5. The manager decides the new proposal in the Blacklist queue. An approval
+   blacklists the new record; a rejection closes only that new proposal. The
+   original approved case remains until a manager explicitly removes it with a
+   reason.
+
+Talking point: only a keyed HMAC fingerprint is retained for the ID check. The
+raw identifier is never stored as an intake answer, audit value, or person
+field. Re-entering only a name, birth date, phone, or email deliberately does
+not create a blacklist match.
+
 ## Ten-minute route
 
 When time is tight, use only:
 
 1. HR Admin login and forced TOTP.
 2. Interactive Reports, one tooltip, and the SK/HU switch.
-3. Add `Olena Demo` through intake, then tick one checklist item and show its
-   notification.
+3. Add Olena Demo through intake, schedule and pass one trial, then tick one
+   checklist item and show its notification.
 4. Marek → equipment value → linked ledger deduction.
 5. Ledger confirmation dialog, then Cancel.
 6. Audit and the decision checklist. Skip payslip creation unless the client
@@ -253,16 +333,16 @@ When time is tight, use only:
 The following are intentionally **not mounted** in CorvinumEU today and must
 not be presented as hidden or unfinished menu items:
 
-- recruitment trials;
 - accommodation and room assignment;
 - transport scheduling and trends;
 - profitability/finance dashboards;
 - SMS or worker-portal feedback.
 
-Corvinum currently demonstrates people and projects, compliance, activation
-checklists, equipment review, blacklist decisions, advances/deductions,
-payslips, notifications, Reports, and Audit. These boundaries come from the
-client feature configuration and remain subject to confirmed client scope.
+Corvinum currently demonstrates people and projects, recruitment trials,
+compliance, activation checklists, equipment review, blacklist decisions,
+advances/deductions, payslips, notifications, Reports, and Audit. These
+boundaries come from the client feature configuration and remain subject to
+confirmed client scope.
 
 ## Recovery during rehearsal or the live call
 

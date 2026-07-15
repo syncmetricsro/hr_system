@@ -40,4 +40,6 @@
       <button class="button button-primary" type="submit">{% trans "Issue equipment" %}</button>
     </form>
   {% endif %}
+  {% can 'catalog.manage' as may_manage_catalog %}
+  {% if may_manage_catalog %}<a class="button button-secondary" href="{% url 'equipment_catalog' %}">{% trans "Manage equipment catalogue" %}</a>{% endif %}
 </section>

@@ -1,10 +1,13 @@
 from __future__ import annotations
 
 import os
+import re
 import subprocess
 import sys
 from pathlib import Path
 
+import pytest
+from django.utils.translation import gettext, override
 REPO = Path(__file__).resolve().parent.parent
 
 URL_SCRIPT = """
@@ -15,10 +18,14 @@ from django.conf import settings as s
 
 # CorvinumEU mounts equipment + blacklist + compliance…
 reverse("equipment_reviews")
+reverse("equipment_catalog")
 reverse("blacklist_queue")
 reverse("compliance_list")
 reverse("two_factor_setup")
 reverse("checklist_item_toggle", args=[1])
+reverse("archive_person", args=[1])
+reverse("trials_queue")
+reverse("trial_create")
 reverse("ledger_overview")
 reverse("payslip_list")
 reverse("notification_panel")
@@ -26,6 +33,8 @@ reverse("notification_dismiss")
 if "testserver" not in s.ALLOWED_HOSTS:
     s.ALLOWED_HOSTS.append("testserver")
 from django.test import Client
+from core.accounts.models import User
+from core.accounts.permissions import Action, can
 from core.people.forms import PersonForm
 assert s.SESSION_COOKIE_NAME == "corvinum_sessionid", s.SESSION_COOKIE_NAME
 assert s.CSRF_COOKIE_NAME == "corvinum_csrftoken"
@@ -34,6 +43,12 @@ assert s.CLIENT_DEFAULT_THEME == "dark"
 assert s.CLIENT_THEME_STORAGE_KEY == "corvinum-theme"
 assert s.BRAND_NAME == "CorvinumEU PeopleOps"
 assert s.BRAND_LOGO == "corvinum/brand/corvinum-logo-v1.webp"
+assert can(User(role="manager"), Action.PERSON_ARCHIVE)
+assert not can(User(role="coordinator"), Action.PERSON_ARCHIVE)
+assert can(User(role="manager"), Action.INTAKE_ASSIGN_TRIAL)
+assert can(User(role="coordinator"), Action.TRIAL_RECORD_OUTCOME)
+assert can(User(role="manager"), Action.CATALOG_MANAGE)
+assert not can(User(role="coordinator"), Action.CATALOG_MANAGE)
 client = Client()
 login = client.get(reverse("login"))
 login_body = login.content.decode("utf-8")
@@ -49,8 +64,8 @@ assert response["Location"] == "/sk/people/"
 assert response.cookies["corvinum_language"].value == "sk"
 assert "email" in PersonForm.base_fields
 assert "core.notifications" in s.INSTALLED_APPS
-# …and must NOT mount finance, SMS, accommodation, transport, or trials.
-for absent in ("finance_summary", "accommodation_list", "transport_trends", "trials_queue"):
+# …and must NOT mount finance, SMS, accommodation, or transport.
+for absent in ("finance_summary", "accommodation_list", "transport_trends"):
     try:
         reverse(absent)
     except NoReverseMatch:
@@ -127,7 +142,8 @@ def test_corvinum_demo_runner_keeps_smtp_secrets_in_web_runtime_only():
 
 def test_corvinum_url_surface_matches_flag_set():
     """Flags decide the URL surface: equipment/blacklist/compliance mounted,
-    Jober-only modules (finance, accommodation, transport, trials) absent."""
+    Jober-only modules (finance, accommodation, transport) absent; trials are
+    enabled for CorvinumEU's candidate workflow."""
     result = _run(sys.executable, "-c", URL_SCRIPT)
     assert result.returncode == 0, result.stdout + result.stderr
     assert "ok" in result.stdout
@@ -137,3 +153,24 @@ def test_corvinum_shell_includes_shared_confirmation_dialog():
     result = _run(sys.executable, "-c", TEMPLATE_SCRIPT)
     assert result.returncode == 0, result.stdout + result.stderr
     assert "ok" in result.stdout
+
+
+def test_corvinum_sidebar_uses_only_self_hosted_icon_glyphs():
+    """A missing subset glyph renders its raw ligature name in the sidebar."""
+    source = (
+        REPO / "clients/corvinum_eu/templates/layouts/base.html"
+    ).read_text(encoding="utf-8")
+    available = set(
+        (REPO / "clients/corvinum_eu/static/corvinum/fonts/icon-names.txt")
+        .read_text(encoding="utf-8")
+        .splitlines()
+    )
+    used = set(re.findall(r'material-symbols-outlined" aria-hidden="true">([^<]+)<', source))
+    assert used <= available
+
+
+@pytest.mark.parametrize("language", ("sk", "hu", "uk"))
+def test_equipment_catalogue_controls_are_translated(language):
+    with override(language):
+        assert gettext("Add equipment item") != "Add equipment item"
+        assert gettext("Save equipment item") != "Save equipment item"

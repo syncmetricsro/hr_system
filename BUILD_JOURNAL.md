@@ -1,5 +1,41 @@
 # Build Journal
 
+## 2026-07-15 — Safe payslip resend and SMTP failures
+
+- Payslip resend now uses the last successful recipient address, rather than a
+  subsequently changed person email. SMTP/network failure is converted to a
+  translated safe error, leaves delivery metadata unchanged, and cannot return
+  a raw 500 page.
+
+## 2026-07-15 — Manager equipment catalogue
+
+- Added a manager-only Equipment catalogue to the shared logistics feature:
+  search, create, edit, and deactivate items with EUR unit prices. Catalogue
+  changes are audited; coordinators retain issue/return actions only.
+
+## 2026-07-15 — Optional intake email for CorvinumEU
+
+- Published questionnaire v3 adds an optional, server-validated Email input on
+  the Contact panel and maps it to the existing person email field. This makes
+  later encrypted-payslip delivery possible without making email a condition
+  of recruitment or activation.
+
+## 2026-07-15 — CorvinumEU trial-day workflow enabled
+
+- Enabled the existing shared trial workflow through Corvinum’s feature flag
+  and client policy. No model, migration, dependency, or client branch was
+  added: the client layer selects the shared routes and role grants.
+
+## 2026-07-15 — Corvinum blacklist archive and re-entry workflow
+
+- Added a manager-only operational archive action and the Corvinum intake’s
+  transient blacklist ID/type inputs. Archive is intentionally distinct from
+  erasure: it preserves an approved case and its active HMAC fingerprint.
+- Guided intake passes the transient identifier into the existing feature hook
+  only after the person is created; it never persists the raw identifier in an
+  intake answer, person field, or audit payload. A match creates a proposed
+  case and preserves manager review as the decision point.
+
 ## 2026-07-15 — Corvinum Basic production backup operations
 
 - Added dependency-free, deployment-host-only scripts for encrypted off-site

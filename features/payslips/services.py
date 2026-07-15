@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import io
 import secrets
+from smtplib import SMTPException
 
 from django.core.mail import EmailMessage
 from django.utils import timezone
@@ -124,7 +125,10 @@ def build_encrypted_pdf(payslip, password: str) -> bytes:
 def send_payslip(payslip, *, actor=None) -> str:
     """Email the encrypted PDF to the worker; return the one-time password
     for out-of-band delivery. The password appears nowhere else."""
-    email = (payslip.person.email or "").strip()
+    # A resend must go to the address of the last successful delivery. Person
+    # details may be edited later (or a fictional demo seed may be reapplied),
+    # but that must not silently change the recipient of an existing payslip.
+    email = (payslip.sent_to or payslip.person.email or "").strip()
     if not email:
         raise PayslipError(_("This person has no email address on file."))
 
@@ -140,7 +144,16 @@ def send_payslip(payslip, *, actor=None) -> str:
         to=[email],
     )
     message.attach(f"payslip-{payslip.period}.pdf", pdf, "application/pdf")
-    message.send(fail_silently=False)
+    try:
+        sent = message.send(fail_silently=False)
+    except (OSError, SMTPException) as exc:
+        raise PayslipError(
+            _("Unable to send the payslip email. Check the recipient address and mail configuration.")
+        ) from exc
+    if sent != 1:
+        raise PayslipError(
+            _("Unable to send the payslip email. Check the recipient address and mail configuration.")
+        )
 
     payslip.sent_at = timezone.now()
     payslip.sent_to = email

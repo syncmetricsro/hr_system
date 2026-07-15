@@ -7,7 +7,7 @@ from django.utils.translation import gettext_lazy as _
 from core.accounts.models import Role
 from core.projects.models import Project
 from features.logistics.models import (
-    Accommodation, Room, RoomAssignmentStatus, TransportWeek,
+    Accommodation, EquipmentItem, Room, RoomAssignmentStatus, TransportWeek,
 )
 
 
@@ -68,6 +68,17 @@ class RoomForm(forms.ModelForm):
         if cleaned.get("is_active") is False and occupancy:
             self.add_error("is_active", _("Release all occupants before deactivating this room."))
         return cleaned
+
+
+class EquipmentItemForm(forms.ModelForm):
+    """Manager-maintained catalogue data; issuing remains a coordinator action."""
+
+    class Meta:
+        model = EquipmentItem
+        fields = ("name", "size", "unit_price", "is_active")
+        widgets = {
+            "unit_price": forms.NumberInput(attrs={"step": "0.01", "min": "0"}),
+        }
 
 
 def assignable_rooms():

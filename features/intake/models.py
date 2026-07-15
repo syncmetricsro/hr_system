@@ -13,6 +13,7 @@ class QuestionnaireStatus(models.TextChoices):
 
 class QuestionType(models.TextChoices):
     TEXT = "text", _("Text")
+    EMAIL = "email", _("Email")
     TEXTAREA = "textarea", _("Long text")
     BOOL = "bool", _("Yes/No")
     DATE = "date", _("Date")
@@ -72,6 +73,11 @@ class IntakeQuestion(models.Model):
     # Conditional: this question is shown/required only when another question's
     # answer (by stable_key) is "positive" (non-negative, non-empty).
     conditional_on = models.CharField(_("conditional on"), max_length=60, blank=True)
+    # A transient answer is validated and used while the current panel submits,
+    # but is deliberately never written to IntakeAnswer. This is for values
+    # such as a blacklist-match identifier that must not be retained in raw
+    # form merely because guided intake collected it.
+    transient = models.BooleanField(_("transient"), default=False)
 
     class Meta:
         verbose_name = _("intake question")

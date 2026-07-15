@@ -1,5 +1,26 @@
 # Deployment Journal
 
+## 2026-07-15 — CorvinumEU recruitment trials enabled
+
+- Enabled the shared recruitment-trial feature for CorvinumEU’s demo. Recruiters,
+  coordinators, and managers may schedule a trial; coordinators and managers
+  may record its outcome. Observers remain read-only.
+- Added Trial day transitions to Corvinum’s client policy and updated the
+  client-demo walkthrough to show scheduling, outcome, and the subsequent
+  readiness/checklist gate.
+
+## 2026-07-15 — Corvinum blacklist archive and re-entry demo
+
+- Added a manager-only operational archive action. It is explicitly not GDPR
+  erasure: it hides the original record from the People list while retaining
+  its blacklist case, active HMAC fingerprint, and audit history.
+- The guided intake now accepts a transient blacklist identifier and type on
+  its final panel. The raw identifier is validated and matched but never
+  persisted as an intake answer. A match creates a new proposed case for
+  manager review and blocks activation; it never merges or auto-blacklists.
+- The Corvinum runbook now contains the full fictional propose → approve →
+  archive → re-enter → manager-decision scenario.
+
 ## 2026-07-15 — CorvinumEU cost-conscious production operating model
 
 - Recorded the owner decision for a low-traffic **FORPSI Basic** production

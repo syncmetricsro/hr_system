@@ -1,0 +1,18 @@
+{% extends "layouts/base.html" %}
+{% load i18n %}
+
+{% block title %}{% if item %}{% trans "Edit equipment item" %}{% else %}{% trans "Add equipment item" %}{% endif %} · {{ BRAND_NAME }}{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <p class="eyebrow">{% trans "Equipment catalogue" %}</p>
+  <h1>{% if item %}{% trans "Edit equipment item" %}{% else %}{% trans "Add equipment item" %}{% endif %}</h1>
+  <a class="button button-secondary" href="{% url 'equipment_catalog' %}">{% trans "Cancel" %}</a>
+</section>
+<section class="panel workflow-panel">
+  <form class="stack" method="post">{% csrf_token %}{{ form.non_field_errors }}
+    {% for field in form %}<label>{{ field.label }}{{ field }}{{ field.errors }}</label>{% endfor %}
+    <button class="button button-primary" type="submit">{% trans "Save equipment item" %}</button>
+  </form>
+</section>
+{% endblock %}

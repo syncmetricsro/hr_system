@@ -2,9 +2,9 @@
 
 Role grants and lifecycle transitions for the CorvinumEU flag set. Roles reuse
 the core set; "HR Admin" maps to ``manager`` for MVP (C-Q9). The lifecycle is
-the core one **without trial-day** (recruitment_trials is off; statuses pend
-client confirmation — C-Q1). Grants cover only the features CorvinumEU mounts;
-ledger/checklist actions join here in slices C1/C2.
+the core lifecycle with the owner-approved demo trial-day workflow enabled.
+The status set still awaits client confirmation (C-Q1). Grants cover only the
+features CorvinumEU mounts; ledger/checklist actions join here in slices C1/C2.
 """
 
 from __future__ import annotations
@@ -21,9 +21,12 @@ _OBSERVER = Role.OBSERVER
 ACTION_ROLES: dict[Action, frozenset[Role]] = {
     # People / intake
     Action.INTAKE_CREATE_EDIT: frozenset({_RECRUITER, _MANAGER}),
+    Action.INTAKE_ASSIGN_TRIAL: frozenset({_RECRUITER, _COORDINATOR, _MANAGER}),
     Action.PERSON_RECYCLE_AVAILABLE: frozenset({_RECRUITER, _COORDINATOR, _MANAGER}),
+    Action.PERSON_ARCHIVE: frozenset({_MANAGER}),
     # Assignment / activation (partner company = project, §5.7)
     Action.PROJECT_ASSIGN: frozenset({_COORDINATOR, _MANAGER}),
+    Action.TRIAL_RECORD_OUTCOME: frozenset({_COORDINATOR, _MANAGER}),
     Action.READINESS_COMPLETE: frozenset({_COORDINATOR, _MANAGER}),
     Action.APPROVAL_ACTIVATE: frozenset({_MANAGER}),
     Action.PROJECT_MANAGE: frozenset({_MANAGER}),
@@ -49,9 +52,16 @@ ACTION_ROLES: dict[Action, frozenset[Role]] = {
     Action.AUDIT_VIEW: frozenset({_MANAGER, _OBSERVER}),
 }
 
-# Core lifecycle minus TRIAL_DAY (recruitment_trials off; C-Q1 default).
+# Core lifecycle with TRIAL_DAY enabled for the CorvinumEU demo (C-Q1).
 ALLOWED_TRANSITIONS: dict[str, set[str]] = {
     LifecycleStatus.AVAILABLE: {
+        LifecycleStatus.TRIAL_DAY,
+        LifecycleStatus.WORKING,
+        LifecycleStatus.INACTIVE,
+        LifecycleStatus.BLACKLISTED,
+    },
+    LifecycleStatus.TRIAL_DAY: {
+        LifecycleStatus.AVAILABLE,
         LifecycleStatus.WORKING,
         LifecycleStatus.INACTIVE,
         LifecycleStatus.BLACKLISTED,

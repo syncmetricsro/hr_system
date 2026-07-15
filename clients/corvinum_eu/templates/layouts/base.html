@@ -54,8 +54,10 @@
         {% can 'payslip.manage' as may_payslips %}
         {% if may_payslips and has_payslips %}<a class="sb-item {% nav_active 'payslip_list' %}" href="{% url 'payslip_list' %}" data-tooltip="{% trans 'Payslips' %}"><span class="material-symbols-outlined" aria-hidden="true">paid</span><span class="sb-text">{% trans "Payslips" %}</span></a>{% endif %}
         {% can 'equipment.review_deduction' as may_equip_review %}
+        {% can 'catalog.manage' as may_manage_catalog %}
         {% flag_on 'equipment' as has_equipment %}
         {% if may_equip_review and has_equipment %}<a class="sb-item {% nav_active 'equipment_reviews' %}" href="{% url 'equipment_reviews' %}" data-tooltip="{% trans 'Reviews' %}"><span class="material-symbols-outlined" aria-hidden="true">precision_manufacturing</span><span class="sb-text">{% trans "Reviews" %}</span></a>{% endif %}
+        {% if may_manage_catalog and has_equipment %}<a class="sb-item {% nav_active 'equipment_catalog' 'equipment_create' 'equipment_edit' %}" href="{% url 'equipment_catalog' %}" data-tooltip="{% trans 'Manage equipment catalogue' %}"><span class="material-symbols-outlined" aria-hidden="true">workspace_premium</span><span class="sb-text">{% trans "Equipment catalogue" %}</span></a>{% endif %}
         {% can 'blacklist.decide' as may_blacklist %}
         {% flag_on 'duplicate_blacklist' as has_blacklist %}
         {% if may_blacklist and has_blacklist %}<a class="sb-item {% nav_active 'blacklist_queue' %}" href="{% url 'blacklist_queue' %}" data-tooltip="{% trans 'Blacklist' %}"><span class="material-symbols-outlined" aria-hidden="true">gavel</span><span class="sb-text">{% trans "Blacklist" %}</span></a>{% endif %}

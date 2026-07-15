@@ -10,6 +10,7 @@ from core.audit.services import record_event
 from features.logistics.models import (
     Accommodation,
     DeductionReviewStatus,
+    EquipmentItem,
     EquipmentIssue,
     EquipmentIssueStatus,
     RoomAssignment,
@@ -28,6 +29,26 @@ class LogisticsWorkflowError(Exception):
 
 class DeductionReviewError(Exception):
     """Raised on an invalid unreturned-equipment review transition."""
+
+
+@transaction.atomic
+def save_equipment_item(item: EquipmentItem, *, actor=None, old=None) -> EquipmentItem:
+    """Save manager-maintained catalogue data with a concise audit trail."""
+    creating = item._state.adding
+    item.save()
+    record_event(
+        actor,
+        "equipment.catalog_created" if creating else "equipment.catalog_updated",
+        target=item,
+        old=old or {},
+        new={
+            "name": item.name,
+            "size": item.size,
+            "unit_price": str(item.unit_price),
+            "is_active": item.is_active,
+        },
+    )
+    return item
 
 
 def _non_negative(value) -> Decimal:
@@ -242,6 +263,8 @@ def pending_deduction_reviews():
 
 @transaction.atomic
 def issue_equipment(person, item, quantity=1, *, actor=None):
+    if not item.is_active:
+        raise LogisticsWorkflowError(_("This equipment item is inactive and cannot be issued."))
     issue = EquipmentIssue.objects.create(
         person=person,
         item=item,
