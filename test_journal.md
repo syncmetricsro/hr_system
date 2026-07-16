@@ -11,6 +11,10 @@
   verifies CSRF remains present, the person URL is unchanged, the updated
   checklist is rendered, and scroll position is preserved after clicking a
   checklist item.
+- Public `corvinum-staging` acceptance after deploying image
+  `jober-platform:corvinum-demo-6abdb56`: Dokku container checks passed, no
+  migrations remained, and HTTPS health, Slovak login, and CSS routes returned
+  200.
 
 ## 2026-07-15 — CorvinumEU public staging smoke verification
 

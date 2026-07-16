@@ -1,5 +1,23 @@
 # Deployment Journal
 
+## 2026-07-16 — Corvinum checklist in-place update deployed
+
+- Built committed revision **`6abdb56`** in a detached clean worktree without
+  runtime credentials and streamed
+  `jober-platform:corvinum-demo-6abdb56` directly to the isolated
+  `corvinum-staging` Dokku app.
+- Dokku's replacement container passed its uptime and port-8000 checks before
+  replacing the prior web process. The existing PostgreSQL service and
+  fictional staging data were preserved; no reseeding was performed.
+- The idempotent migration step reported no migrations to apply. Public HTTPS
+  acceptance passed for `/healthz/`, the Slovak login page, and the compiled
+  CSS asset.
+- This release changes activation-checklist toggles to an in-place htmx panel
+  refresh, preserving the user's URL and scroll position while retaining the
+  full-page POST/redirect fallback.
+- The known Dokku default-bridge deprecation warning remains tracked as host
+  maintenance and did not affect the release.
+
 ## 2026-07-16 — Jober public fictional-data staging and Twilio configuration
 
 - Deployed the committed release **`12d0735`** to the isolated Dokku app
