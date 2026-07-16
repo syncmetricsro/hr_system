@@ -1,5 +1,17 @@
 # Test Journal
 
+## 2026-07-16 — In-place activation-checklist toggles
+
+- Corvinum checklist unit slice: **8 passed**, including the existing
+  full-page redirect and the new htmx fragment response with updated critical
+  count, completion state, and staff attribution.
+- Relevant Ruff check passed for the checklist view, unit coverage, and browser
+  scenario.
+- Complete Playwright suite: **39 passed**. The Corvinum browser test now
+  verifies CSRF remains present, the person URL is unchanged, the updated
+  checklist is rendered, and scroll position is preserved after clicking a
+  checklist item.
+
 ## 2026-07-15 — CorvinumEU public staging smoke verification
 
 - Verified the fictional `corvinum-staging` deployment on syncmetric-prime:

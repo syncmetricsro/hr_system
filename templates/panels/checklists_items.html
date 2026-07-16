@@ -1,5 +1,5 @@
 {% load i18n nav %}
-<section class="panel workflow-panel">
+<section class="panel workflow-panel" id="activation-checklist">
   <p class="eyebrow">{% trans "Approvals" %}</p>
   <h2>{% trans "Activation checklist" %}</h2>
 
@@ -13,9 +13,16 @@
     {% for item in panel.checklist_items %}
       <li>
         {% if panel.can_tick_checklist %}
-          <form method="post" action="{% url 'checklist_item_toggle' item.pk %}">
+          <form
+            method="post"
+            action="{% url 'checklist_item_toggle' item.pk %}"
+            hx-post="{% url 'checklist_item_toggle' item.pk %}"
+            hx-target="#activation-checklist"
+            hx-swap="outerHTML"
+            hx-disabled-elt="button"
+          >
             {% csrf_token %}
-            <button class="button button-secondary" type="submit">
+            <button class="button button-secondary" id="checklist-toggle-{{ item.pk }}" type="submit">
               {% if item.done %}✓{% else %}○{% endif %}
             </button>
             <span>{{ item.item_template.label|db_trans }}</span>

@@ -164,7 +164,10 @@ def test_corvinum_top_level_sections_have_vertical_rhythm(page):
 
 def test_corvinum_coordinator_can_tick_checklist_with_csrf(page):
     """A rendered checklist control must remain a normal CSRF-protected POST,
-    rather than exposing a state-changing URL that only works by direct access."""
+    rather than exposing a state-changing URL that only works by direct access.
+    The htmx enhancement must update in place without losing the user's scroll
+    position."""
+    page.set_viewport_size({"width": 1280, "height": 667})
     _login(page, "coordinator")
     page.goto(f"{base_url()}/hu/people/")
     page.wait_for_load_state("networkidle")
@@ -174,10 +177,15 @@ def test_corvinum_coordinator_can_tick_checklist_with_csrf(page):
     form = page.locator("form[action*='/checklist/'][action$='/toggle/']").first
     assert form.locator("input[name='csrfmiddlewaretoken']").count() == 1
     assert any(cookie["name"] == "corvinum_csrftoken" for cookie in page.context.cookies())  # per-client cookie names (session slice)
+    form.scroll_into_view_if_needed()
+    page.evaluate("window.scrollBy(0, -120)")
+    scroll_before = page.evaluate("window.scrollY")
+    page_url = page.url
     form.locator("button[type='submit']").click()
-    page.wait_for_load_state("networkidle")
+    expect(page.locator("#activation-checklist")).to_contain_text("coordinator@demo.corvinum.test")
 
-    assert "/people/" in page.url
+    assert page.url == page_url
+    assert abs(page.evaluate("window.scrollY") - scroll_before) < 2
     assert "CSRF verification failed" not in page.content()
 
 

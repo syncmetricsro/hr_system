@@ -1,5 +1,18 @@
 # Build Journal
 
+## 2026-07-16 — Checklist toggles preserve workflow position
+
+- Changed CorvinumEU activation-checklist toggles to refresh only the checklist
+  panel through htmx. The critical-item count, completion mark, and staff
+  attribution update together without a full-page navigation or jump to the
+  top of the person record.
+- Preserved the ordinary CSRF-protected POST and person-detail redirect as the
+  no-JavaScript/full-page fallback. Stable button IDs allow focus restoration
+  after the panel swap, and the existing notification trigger continues to
+  refresh actionable alerts after the mutation.
+- Added focused fragment/fallback coverage and a browser regression asserting
+  that the URL and scroll position remain unchanged after a toggle.
+
 ## 2026-07-15 — CorvinumEU public staging release
 
 - Built the committed Corvinum demo release `12d0735` locally without runtime
