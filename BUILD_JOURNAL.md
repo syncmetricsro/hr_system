@@ -26,6 +26,18 @@
   the Jober permission matrix): the action existed in core and Corvinum but was
   unmapped for Jober, which failed the RBAC completeness test.
 
+## 2026-07-16 — Consolidated session handoff
+
+- Added `docs/session-summary-2026-07-16.md`, consolidating the completed Jober
+  and CorvinumEU product work, demo workflows, provider boundaries, public
+  staging state, verification evidence, and remaining real-data/production
+  gates. It contains no credentials, phone numbers, recipient addresses, or
+  worker PII.
+- Indexed the handoff from `docs/README.md`. This documentation-only addition
+  does not require an application rebuild or staging deployment.
+
+## 2026-07-16 — Checklist toggles preserve workflow position
+
 - Changed CorvinumEU activation-checklist toggles to refresh only the checklist
   panel through htmx. The critical-item count, completion mark, and staff
   attribution update together without a full-page navigation or jump to the
