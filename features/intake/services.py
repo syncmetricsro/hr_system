@@ -187,6 +187,9 @@ def complete_intake(intake, *, actor=None, http_request=None, transient_values=N
         "identifier_type": (transient_values or {}).get(
             "blacklist_identifier_type", "national_id"
         ),
+        "mothers_maiden_name": (transient_values or {}).get(
+            "blacklist_mothers_maiden_name", ""
+        ),
     }
     for extension in registry.person_form_extensions:
         post_create = getattr(extension, "post_create", None)

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-15 15:11+0200\n"
+"POT-Creation-Date: 2026-07-17 11:24+0200\n"
 "Language: sk\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -224,7 +224,7 @@ msgstr "potvrdené"
 #: core/projects/models.py:29 core/projects/models.py:85
 #: core/projects/models.py:144 core/projects/models.py:186
 #: features/advances/models.py:92 features/blacklist/models.py:66
-#: features/blacklist/models.py:113 features/checklists/models.py:23
+#: features/blacklist/models.py:114 features/checklists/models.py:23
 #: features/compliance/models.py:17 features/feedback/models.py:26
 #: features/feedback/models.py:48 features/finance/models.py:39
 #: features/intake/models.py:32 features/logistics/models.py:32
@@ -489,36 +489,26 @@ msgid "Trial scheduled"
 msgstr "Skúška naplánovaná"
 
 #: core/notifications/models.py:21
-#, fuzzy
-#| msgid "item"
 msgid "item key"
-msgstr "položka"
+msgstr "kľúč položky"
 
 #: core/notifications/models.py:22
-#, fuzzy
-#| msgid "key version"
 msgid "item version"
-msgstr "verzia kľúča"
+msgstr "verzia položky"
 
 #: core/notifications/models.py:23
-#, fuzzy
-#| msgid "issued at"
 msgid "dismissed at"
-msgstr "vydané o"
+msgstr "odmietnuté o"
 
 # --- floating notification center (2026-07-13) ---
 #: core/notifications/models.py:26
-#, fuzzy
-#| msgid "Notifications"
 msgid "notification dismissal"
-msgstr "Upozornenia"
+msgstr "odmietnutie upozornenia"
 
 # --- floating notification center (2026-07-13) ---
 #: core/notifications/models.py:27
-#, fuzzy
-#| msgid "Notifications"
 msgid "notification dismissals"
-msgstr "Upozornenia"
+msgstr "odmietnutia upozornení"
 
 #: core/notifications/services.py:132
 msgid "Operational record"
@@ -558,9 +548,9 @@ msgid "Military service"
 msgstr "Vojenská služba"
 
 #: core/people/catalog_i18n.py:14 features/advances/models.py:40
-#: features/blacklist/catalog_i18n.py:15 features/blacklist/models.py:87
-#: features/blacklist/panels.py:56 features/finance/models.py:74
-#: features/intake/catalog_i18n.py:28
+#: features/blacklist/catalog_i18n.py:15 features/blacklist/models.py:88
+#: features/blacklist/panels.py:61 features/finance/models.py:74
+#: features/intake/catalog_i18n.py:29
 msgid "Other"
 msgstr "Ostatné"
 
@@ -649,7 +639,7 @@ msgid "label"
 msgstr "označenie"
 
 #: core/people/models.py:39 core/projects/models.py:16
-#: features/blacklist/models.py:17 features/blacklist/models.py:112
+#: features/blacklist/models.py:17 features/blacklist/models.py:113
 #: features/checklists/models.py:22 features/feedback/models.py:25
 #: features/finance/models.py:88 features/logistics/models.py:30
 #: features/logistics/models.py:49 features/logistics/models.py:129
@@ -752,7 +742,7 @@ msgstr "aktualizované"
 #: core/people/models.py:112 core/projects/models.py:57
 #: core/projects/models.py:123 core/projects/models.py:169
 #: features/advances/models.py:61 features/blacklist/models.py:45
-#: features/blacklist/models.py:104 features/checklists/models.py:57
+#: features/blacklist/models.py:105 features/checklists/models.py:57
 #: features/compliance/models.py:12 features/intake/models.py:106
 #: features/logistics/models.py:82 features/logistics/models.py:162
 #: features/messaging/models.py:35 features/payslips/models.py:19
@@ -1426,41 +1416,45 @@ msgstr "prípad čiernej listiny"
 msgid "blacklist cases"
 msgstr "prípady čiernej listiny"
 
-#: features/blacklist/models.py:85 features/blacklist/panels.py:54
-#: features/intake/catalog_i18n.py:26
+#: features/blacklist/models.py:85 features/blacklist/panels.py:59
+#: features/intake/catalog_i18n.py:27
 msgid "National ID"
 msgstr "Národný doklad"
 
-#: features/blacklist/models.py:86 features/blacklist/panels.py:55
-#: features/intake/catalog_i18n.py:27
+#: features/blacklist/models.py:86 features/blacklist/panels.py:60
+#: features/intake/catalog_i18n.py:28
 msgid "Passport"
 msgstr "Pas"
 
-#: features/blacklist/models.py:100
+#: features/blacklist/models.py:87
+msgid "Name + birth date + mother's maiden name"
+msgstr "Meno + dátum narodenia + rodné priezvisko matky"
+
+#: features/blacklist/models.py:101
 msgid "case"
 msgstr "prípad"
 
-#: features/blacklist/models.py:107
+#: features/blacklist/models.py:108
 msgid "identifier type"
 msgstr "typ identifikátora"
 
-#: features/blacklist/models.py:110
+#: features/blacklist/models.py:111
 msgid "HMAC"
 msgstr "HMAC"
 
-#: features/blacklist/models.py:111
+#: features/blacklist/models.py:112
 msgid "key version"
 msgstr "verzia kľúča"
 
-#: features/blacklist/models.py:114
+#: features/blacklist/models.py:115
 msgid "expires at"
 msgstr "expiruje o"
 
-#: features/blacklist/models.py:117
+#: features/blacklist/models.py:118
 msgid "match fingerprint"
 msgstr "odtlačok zhody"
 
-#: features/blacklist/models.py:118
+#: features/blacklist/models.py:119
 msgid "match fingerprints"
 msgstr "odtlačky zhody"
 
@@ -1473,31 +1467,38 @@ msgstr "Čakajú rozhodnutia o čiernej listine"
 msgid "%(count)s proposed cases require a decision"
 msgstr "%(count)s navrhnutých prípadov vyžaduje rozhodnutie"
 
-#: features/blacklist/panels.py:48 features/intake/catalog_i18n.py:24
+#: features/blacklist/panels.py:53 features/intake/catalog_i18n.py:24
 msgid "ID number (blacklist check)"
 msgstr "Číslo dokladu (kontrola čiernej listiny)"
 
-#: features/blacklist/panels.py:52 features/intake/catalog_i18n.py:25
+#: features/blacklist/panels.py:57 features/intake/catalog_i18n.py:25
 msgid "ID type"
 msgstr "Typ dokladu"
 
-#: features/blacklist/panels.py:75
-msgid ""
-"Possible blacklist match — flagged for manager review. Activation is blocked "
-"until resolved."
-msgstr ""
-"Možná zhoda s čiernou listinou — označené na posúdenie manažérom. Aktivácia "
-"je blokovaná do vyriešenia."
+#: features/blacklist/panels.py:65 features/intake/catalog_i18n.py:26
+msgid "Mother's maiden name (blacklist check)"
+msgstr "Rodné priezvisko matky (kontrola čiernej listiny)"
 
-#: features/blacklist/views.py:39
+#: features/blacklist/panels.py:67
+msgid "Used only to compute a re-entry check; never stored."
+msgstr "Používa sa len na výpočet kontroly opätovného vstupu; nikdy sa neukladá."
+
+#: features/blacklist/panels.py:102
+#, python-format
+msgid ""
+"Possible blacklist match (%(types)s) — flagged for manager review. "
+"Activation is blocked until resolved."
+msgstr "Možná zhoda s čiernou listinou (%(types)s) — označené na posúdenie manažérom. Aktivácia je blokovaná do vyriešenia."
+
+#: features/blacklist/views.py:51
 msgid "Blacklist case proposed for review."
 msgstr "Prípad čiernej listiny navrhnutý na posúdenie."
 
-#: features/blacklist/views.py:50
+#: features/blacklist/views.py:62
 msgid "Decision recorded."
 msgstr "Rozhodnutie zaznamenané."
 
-#: features/blacklist/views.py:62
+#: features/blacklist/views.py:74
 msgid "Removed from blacklist."
 msgstr "Odstránené z čiernej listiny."
 
@@ -1526,8 +1527,8 @@ msgstr "šablóny kontrolných zoznamov"
 msgid "template"
 msgstr "šablóna"
 
-#: features/checklists/models.py:39 templates/panels/checklists_items.html:22
-#: templates/panels/checklists_items.html:27
+#: features/checklists/models.py:39 templates/panels/checklists_items.html:29
+#: templates/panels/checklists_items.html:34
 msgid "critical"
 msgstr "kritické"
 
@@ -2480,7 +2481,9 @@ msgstr ""
 msgid ""
 "Unable to send the payslip email. Check the recipient address and mail "
 "configuration."
-msgstr "Výplatnú pásku sa nepodarilo odoslať e-mailom. Skontrolujte adresu príjemcu a nastavenie pošty."
+msgstr ""
+"Výplatnú pásku sa nepodarilo odoslať e-mailom. Skontrolujte adresu príjemcu "
+"a nastavenie pošty."
 
 #: features/payslips/views.py:26
 msgid "Payslip recorded."
@@ -2784,7 +2787,7 @@ msgid "Record"
 msgstr "Uložiť"
 
 #: templates/pages/audit_log.html:42 templates/pages/blacklist_queue.html:23
-#: templates/pages/blacklist_queue.html:27
+#: templates/pages/blacklist_queue.html:28
 #: templates/pages/finance_month_detail.html:19
 #: templates/pages/person_detail.html:200
 #: templates/panels/blacklist_case.html:11
@@ -2837,7 +2840,11 @@ msgstr ""
 msgid "Proposed by"
 msgstr "Navrhol/-la"
 
-#: templates/pages/blacklist_queue.html:28
+#: templates/pages/blacklist_queue.html:24 tests/test_blacklist.py:291
+msgid "Matched via"
+msgstr "Zhoda podľa"
+
+#: templates/pages/blacklist_queue.html:29
 #: templates/panels/blacklist_case.html:20
 msgid ""
 "This approves the blacklist case: the person becomes Blacklisted and future "
@@ -2846,22 +2853,22 @@ msgstr ""
 "Schváli prípad čiernej listiny: osoba bude Na čiernej listine a budúce "
 "pokusy o návrat budú označené."
 
-#: templates/pages/blacklist_queue.html:28
+#: templates/pages/blacklist_queue.html:29
 #: templates/panels/blacklist_case.html:20
 msgid "Approve"
 msgstr "Schváliť"
 
-#: templates/pages/blacklist_queue.html:29
+#: templates/pages/blacklist_queue.html:30
 #: templates/panels/blacklist_case.html:21
 msgid "This rejects the proposed blacklist case and closes it."
 msgstr "Zamietne navrhovaný prípad čiernej listiny a uzavrie ho."
 
-#: templates/pages/blacklist_queue.html:29
+#: templates/pages/blacklist_queue.html:30
 #: templates/panels/blacklist_case.html:21
 msgid "Reject"
 msgstr "Zamietnuť"
 
-#: templates/pages/blacklist_queue.html:33
+#: templates/pages/blacklist_queue.html:34
 #: templates/pages/equipment_reviews.html:36
 msgid "Nothing awaiting review."
 msgstr "Nič nečaká na kontrolu."
@@ -3907,6 +3914,10 @@ msgid "ID number (optional, hashed)"
 msgstr "Číslo dokladu (voliteľné, hashované)"
 
 #: templates/panels/blacklist_case.html:39
+msgid "Mother's maiden name (optional, hashed)"
+msgstr "Rodné priezvisko matky (voliteľné, hashované)"
+
+#: templates/panels/blacklist_case.html:40
 msgid "Propose blacklist"
 msgstr "Navrhnúť na čiernu listinu"
 

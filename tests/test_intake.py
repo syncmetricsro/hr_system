@@ -58,6 +58,21 @@ def questionnaire():
         order=3,
         transient=True,
     )
+    IntakeQuestion.objects.create(
+        panel=identity,
+        stable_key="date_of_birth",
+        label="Date of birth",
+        type=QuestionType.DATE,
+        order=3,
+    )
+    IntakeQuestion.objects.create(
+        panel=compliance,
+        stable_key="blacklist_mothers_maiden_name",
+        label="Mother's maiden name",
+        type=QuestionType.TEXT,
+        order=4,
+        transient=True,
+    )
     return v
 
 
@@ -176,3 +191,46 @@ def test_transient_intake_identifier_flags_reentry_without_being_persisted(
     intake.refresh_from_db()
     assert has_open_case(intake.person)
     assert not IntakeAnswer.objects.filter(value__contains="CE-DEMO-BL-2026-001").exists()
+
+
+def test_transient_maiden_name_flags_composite_reentry_without_being_persisted(
+    questionnaire, recruiter
+):
+    from datetime import date
+
+    from core.people.models import Person
+    from features.blacklist.services import compute_composite_identifier
+    from features.intake.models import IntakeAnswer
+
+    prior = Person.objects.create(
+        first_name="Olena", last_name="Kováčová", date_of_birth=date(1990, 1, 15)
+    )
+    decide_case(
+        propose_case(
+            prior,
+            composite_identifier=compute_composite_identifier(
+                "Olena", "Kováčová", date(1990, 1, 15), "Nováková"
+            ),
+            actor=recruiter,
+        ),
+        "approve",
+        actor=recruiter,
+    )
+
+    intake = start_intake(recruiter, questionnaire)
+    save_panel(
+        intake,
+        {"first_name": "Olena", "last_name": "Kovacova", "date_of_birth": "1990-01-15"},
+        actor=recruiter,
+    )
+    errors = save_panel(
+        intake,
+        {"disability": "none", "blacklist_mothers_maiden_name": "Novakova"},
+        actor=recruiter,
+    )
+
+    assert errors == {}
+    intake.refresh_from_db()
+    assert has_open_case(intake.person)  # matched with no ID code at all
+    assert not IntakeAnswer.objects.filter(value__icontains="Novakova").exists()
+    assert not IntakeAnswer.objects.filter(question__stable_key="blacklist_mothers_maiden_name").exists()

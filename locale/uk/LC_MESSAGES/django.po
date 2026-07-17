@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-15 15:11+0200\n"
+"POT-Creation-Date: 2026-07-17 11:24+0200\n"
 "Language: uk\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -225,7 +225,7 @@ msgstr "підтверджено"
 #: core/projects/models.py:29 core/projects/models.py:85
 #: core/projects/models.py:144 core/projects/models.py:186
 #: features/advances/models.py:92 features/blacklist/models.py:66
-#: features/blacklist/models.py:113 features/checklists/models.py:23
+#: features/blacklist/models.py:114 features/checklists/models.py:23
 #: features/compliance/models.py:17 features/feedback/models.py:26
 #: features/feedback/models.py:48 features/finance/models.py:39
 #: features/intake/models.py:32 features/logistics/models.py:32
@@ -490,36 +490,26 @@ msgid "Trial scheduled"
 msgstr "Пробний день заплановано"
 
 #: core/notifications/models.py:21
-#, fuzzy
-#| msgid "item"
 msgid "item key"
-msgstr "пункт"
+msgstr "ключ елемента"
 
 #: core/notifications/models.py:22
-#, fuzzy
-#| msgid "key version"
 msgid "item version"
-msgstr "версія ключа"
+msgstr "версія елемента"
 
 #: core/notifications/models.py:23
-#, fuzzy
-#| msgid "issued at"
 msgid "dismissed at"
-msgstr "видано о"
+msgstr "відхилено о"
 
 # --- floating notification center (2026-07-13) ---
 #: core/notifications/models.py:26
-#, fuzzy
-#| msgid "Notifications"
 msgid "notification dismissal"
-msgstr "Сповіщення"
+msgstr "відхилення сповіщення"
 
 # --- floating notification center (2026-07-13) ---
 #: core/notifications/models.py:27
-#, fuzzy
-#| msgid "Notifications"
 msgid "notification dismissals"
-msgstr "Сповіщення"
+msgstr "відхилення сповіщень"
 
 #: core/notifications/services.py:132
 msgid "Operational record"
@@ -559,9 +549,9 @@ msgid "Military service"
 msgstr "Військова служба"
 
 #: core/people/catalog_i18n.py:14 features/advances/models.py:40
-#: features/blacklist/catalog_i18n.py:15 features/blacklist/models.py:87
-#: features/blacklist/panels.py:56 features/finance/models.py:74
-#: features/intake/catalog_i18n.py:28
+#: features/blacklist/catalog_i18n.py:15 features/blacklist/models.py:88
+#: features/blacklist/panels.py:61 features/finance/models.py:74
+#: features/intake/catalog_i18n.py:29
 msgid "Other"
 msgstr "Інше"
 
@@ -650,7 +640,7 @@ msgid "label"
 msgstr "позначка"
 
 #: core/people/models.py:39 core/projects/models.py:16
-#: features/blacklist/models.py:17 features/blacklist/models.py:112
+#: features/blacklist/models.py:17 features/blacklist/models.py:113
 #: features/checklists/models.py:22 features/feedback/models.py:25
 #: features/finance/models.py:88 features/logistics/models.py:30
 #: features/logistics/models.py:49 features/logistics/models.py:129
@@ -753,7 +743,7 @@ msgstr "оновлено"
 #: core/people/models.py:112 core/projects/models.py:57
 #: core/projects/models.py:123 core/projects/models.py:169
 #: features/advances/models.py:61 features/blacklist/models.py:45
-#: features/blacklist/models.py:104 features/checklists/models.py:57
+#: features/blacklist/models.py:105 features/checklists/models.py:57
 #: features/compliance/models.py:12 features/intake/models.py:106
 #: features/logistics/models.py:82 features/logistics/models.py:162
 #: features/messaging/models.py:35 features/payslips/models.py:19
@@ -1428,41 +1418,45 @@ msgstr "справа чорного списку"
 msgid "blacklist cases"
 msgstr "справи чорного списку"
 
-#: features/blacklist/models.py:85 features/blacklist/panels.py:54
-#: features/intake/catalog_i18n.py:26
+#: features/blacklist/models.py:85 features/blacklist/panels.py:59
+#: features/intake/catalog_i18n.py:27
 msgid "National ID"
 msgstr "Національний ID"
 
-#: features/blacklist/models.py:86 features/blacklist/panels.py:55
-#: features/intake/catalog_i18n.py:27
+#: features/blacklist/models.py:86 features/blacklist/panels.py:60
+#: features/intake/catalog_i18n.py:28
 msgid "Passport"
 msgstr "Паспорт"
 
-#: features/blacklist/models.py:100
+#: features/blacklist/models.py:87
+msgid "Name + birth date + mother's maiden name"
+msgstr "Ім'я + дата народження + дівоче прізвище матері"
+
+#: features/blacklist/models.py:101
 msgid "case"
 msgstr "справа"
 
-#: features/blacklist/models.py:107
+#: features/blacklist/models.py:108
 msgid "identifier type"
 msgstr "тип ідентифікатора"
 
-#: features/blacklist/models.py:110
+#: features/blacklist/models.py:111
 msgid "HMAC"
 msgstr "HMAC"
 
-#: features/blacklist/models.py:111
+#: features/blacklist/models.py:112
 msgid "key version"
 msgstr "версія ключа"
 
-#: features/blacklist/models.py:114
+#: features/blacklist/models.py:115
 msgid "expires at"
 msgstr "закінчується о"
 
-#: features/blacklist/models.py:117
+#: features/blacklist/models.py:118
 msgid "match fingerprint"
 msgstr "відбиток збігу"
 
-#: features/blacklist/models.py:118
+#: features/blacklist/models.py:119
 msgid "match fingerprints"
 msgstr "відбитки збігу"
 
@@ -1475,31 +1469,38 @@ msgstr "Очікують рішення щодо чорного списку"
 msgid "%(count)s proposed cases require a decision"
 msgstr "%(count)s запропонованих справ потребують рішення"
 
-#: features/blacklist/panels.py:48 features/intake/catalog_i18n.py:24
+#: features/blacklist/panels.py:53 features/intake/catalog_i18n.py:24
 msgid "ID number (blacklist check)"
 msgstr "Номер документа (перевірка чорного списку)"
 
-#: features/blacklist/panels.py:52 features/intake/catalog_i18n.py:25
+#: features/blacklist/panels.py:57 features/intake/catalog_i18n.py:25
 msgid "ID type"
 msgstr "Тип документа"
 
-#: features/blacklist/panels.py:75
-msgid ""
-"Possible blacklist match — flagged for manager review. Activation is blocked "
-"until resolved."
-msgstr ""
-"Можливий збіг із чорним списком — позначено на розгляд менеджером. Активацію "
-"заблоковано до вирішення."
+#: features/blacklist/panels.py:65 features/intake/catalog_i18n.py:26
+msgid "Mother's maiden name (blacklist check)"
+msgstr "Дівоче прізвище матері (перевірка чорного списку)"
 
-#: features/blacklist/views.py:39
+#: features/blacklist/panels.py:67
+msgid "Used only to compute a re-entry check; never stored."
+msgstr "Використовується лише для обчислення перевірки повторного входу; ніколи не зберігається."
+
+#: features/blacklist/panels.py:102
+#, python-format
+msgid ""
+"Possible blacklist match (%(types)s) — flagged for manager review. "
+"Activation is blocked until resolved."
+msgstr "Можливий збіг із чорним списком (%(types)s) — позначено на розгляд менеджером. Активацію заблоковано до вирішення."
+
+#: features/blacklist/views.py:51
 msgid "Blacklist case proposed for review."
 msgstr "Справу чорного списку подано на розгляд."
 
-#: features/blacklist/views.py:50
+#: features/blacklist/views.py:62
 msgid "Decision recorded."
 msgstr "Рішення записано."
 
-#: features/blacklist/views.py:62
+#: features/blacklist/views.py:74
 msgid "Removed from blacklist."
 msgstr "Вилучено з чорного списку."
 
@@ -1528,8 +1529,8 @@ msgstr "шаблони контрольних списків"
 msgid "template"
 msgstr "шаблон"
 
-#: features/checklists/models.py:39 templates/panels/checklists_items.html:22
-#: templates/panels/checklists_items.html:27
+#: features/checklists/models.py:39 templates/panels/checklists_items.html:29
+#: templates/panels/checklists_items.html:34
 msgid "critical"
 msgstr "критичний"
 
@@ -2483,7 +2484,9 @@ msgstr ""
 msgid ""
 "Unable to send the payslip email. Check the recipient address and mail "
 "configuration."
-msgstr "Не вдалося надіслати розрахунковий лист електронною поштою. Перевірте адресу одержувача та налаштування пошти."
+msgstr ""
+"Не вдалося надіслати розрахунковий лист електронною поштою. Перевірте адресу "
+"одержувача та налаштування пошти."
 
 #: features/payslips/views.py:26
 msgid "Payslip recorded."
@@ -2787,7 +2790,7 @@ msgid "Record"
 msgstr "Записати"
 
 #: templates/pages/audit_log.html:42 templates/pages/blacklist_queue.html:23
-#: templates/pages/blacklist_queue.html:27
+#: templates/pages/blacklist_queue.html:28
 #: templates/pages/finance_month_detail.html:19
 #: templates/pages/person_detail.html:200
 #: templates/panels/blacklist_case.html:11
@@ -2840,7 +2843,11 @@ msgstr ""
 msgid "Proposed by"
 msgstr "Запропонував/-ла"
 
-#: templates/pages/blacklist_queue.html:28
+#: templates/pages/blacklist_queue.html:24 tests/test_blacklist.py:291
+msgid "Matched via"
+msgstr "Збіг за"
+
+#: templates/pages/blacklist_queue.html:29
 #: templates/panels/blacklist_case.html:20
 msgid ""
 "This approves the blacklist case: the person becomes Blacklisted and future "
@@ -2849,22 +2856,22 @@ msgstr ""
 "Схвалює справу чорного списку: особа потрапляє до Чорного списку, і майбутні "
 "спроби повернення будуть позначені."
 
-#: templates/pages/blacklist_queue.html:28
+#: templates/pages/blacklist_queue.html:29
 #: templates/panels/blacklist_case.html:20
 msgid "Approve"
 msgstr "Затвердити"
 
-#: templates/pages/blacklist_queue.html:29
+#: templates/pages/blacklist_queue.html:30
 #: templates/panels/blacklist_case.html:21
 msgid "This rejects the proposed blacklist case and closes it."
 msgstr "Відхиляє запропоновану справу чорного списку та закриває її."
 
-#: templates/pages/blacklist_queue.html:29
+#: templates/pages/blacklist_queue.html:30
 #: templates/panels/blacklist_case.html:21
 msgid "Reject"
 msgstr "Відхилити"
 
-#: templates/pages/blacklist_queue.html:33
+#: templates/pages/blacklist_queue.html:34
 #: templates/pages/equipment_reviews.html:36
 msgid "Nothing awaiting review."
 msgstr "Немає нічого на перевірку."
@@ -3916,6 +3923,10 @@ msgid "ID number (optional, hashed)"
 msgstr "Номер документа (необов'язково, хешовано)"
 
 #: templates/panels/blacklist_case.html:39
+msgid "Mother's maiden name (optional, hashed)"
+msgstr "Дівоче прізвище матері (необов'язкове, хешується)"
+
+#: templates/panels/blacklist_case.html:40
 msgid "Propose blacklist"
 msgstr "Запропонувати до чорного списку"
 

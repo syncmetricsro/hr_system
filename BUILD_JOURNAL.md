@@ -1,6 +1,30 @@
 # Build Journal
 
-## 2026-07-16 — Checklist toggles preserve workflow position
+## 2026-07-17 — Secondary blacklist fingerprint (name + DOB + mother's maiden name)
+
+- Added a second re-entry fingerprint type alongside the optional ID code: a
+  canonical composite of the person's name tokens (sorted, so first/last entry
+  order is irrelevant), ISO date of birth, and the mother's maiden name. The
+  maiden name is a new transient input — hashed into the keyed fingerprint at
+  intake or manual proposal, never stored as a person field, intake answer, or
+  audit value.
+- Fixed the fingerprint normalizer to transliterate diacritics (NFKD plus a
+  small fold table for ß/đ/ø/ł/æ/œ) instead of deleting accented letters;
+  "Kováč" now normalizes to KOVAC rather than KOV. ASCII identifiers are
+  unchanged, so existing stored ID fingerprints keep matching without any
+  re-hash or data migration.
+- Matching stays "warning, not silent merge": a composite hit auto-proposes a
+  case for manager decision and never blocks person creation. New
+  `check_matches` requires type+hash agreement so hashes never cross
+  fingerprint types; the manager queue now shows a "Matched via" row and the
+  intake warning names the matched fingerprint types.
+- Seeded Recruiter intake v4 with the transient mother's-maiden-name question;
+  manual proposal gains an optional equivalent input. New identifier-type
+  label, form strings, and warning localized into SK/HU/UK (plus five
+  pre-existing untranslated notification model labels).
+- Granted `person.archive` to Jober managers (`clients/jober/policies.py` and
+  the Jober permission matrix): the action existed in core and Corvinum but was
+  unmapped for Jober, which failed the RBAC completeness test.
 
 - Changed CorvinumEU activation-checklist toggles to refresh only the checklist
   panel through htmx. The critical-item count, completion mark, and staff

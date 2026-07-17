@@ -84,6 +84,7 @@ class BlacklistCase(models.Model):
 class IdentifierType(models.TextChoices):
     NATIONAL_ID = "national_id", _("National ID")
     PASSPORT = "passport", _("Passport")
+    NAME_DOB_MMN = "name_dob_mmn", _("Name + birth date + mother's maiden name")
     OTHER = "other", _("Other")
 
 

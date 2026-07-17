@@ -31,6 +31,15 @@ list: it is not withdrawable at will, and it fits fraud-prevention / security us
   transiently-entered ID (`apps.blacklist.services.compute_fingerprint`); only the
   hash + `key_version` are persisted (`MatchFingerprint`). Keys rotate via
   `BLACKLIST_HMAC_KEYS` without re-hashing.
+- **Secondary composite fingerprint (2026-07-17; LIA must cover it).** Alongside
+  the optional ID hash, a second fingerprint type hashes a canonical composite
+  of name tokens + date of birth + **mother's maiden name**
+  (`compute_composite_identifier`). The maiden name is a *new data element*
+  collected transiently for hashing only — never stored as a person field,
+  intake answer, or audit value. The pending LIA and the written contractual
+  language must describe this composite (data categories, purpose, the
+  false-match risk being mitigated by mandatory manager review of every
+  proposed match, and retention identical to ID fingerprints).
 - **Data minimisation** — the `Person` record gains no identifier field.
 - **Warning, not silent merge** — a match creates a *proposed* case for manager
   review; it never auto-blacklists or merges records. Activation is hard-gated

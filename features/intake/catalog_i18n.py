@@ -23,6 +23,7 @@ SEEDED_INTAKE_STRINGS = [
     _("Disability type"),
     _("ID number (blacklist check)"),
     _("ID type"),
+    _("Mother's maiden name (blacklist check)"),
     _("National ID"),
     _("Passport"),
     _("Other"),
