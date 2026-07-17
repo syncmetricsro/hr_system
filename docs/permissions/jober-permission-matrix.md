@@ -28,6 +28,7 @@ Legend: ✅ permitted · — denied
 | `intake.create_edit` | ✅ | — | ✅ | — |
 | `intake.assign_trial` | ✅ | ✅ | ✅ | — |
 | `person.recycle_available` | ✅ | ✅ | ✅ | — |
+| `person.archive` | — | — | ✅ | — |
 | `project.assign` (place/reassign a person on a project) | — | ✅ | ✅ | — |
 | `sms.send` | ✅ | ✅ | ✅ | — |
 | `trial.record_outcome` | — | ✅ | ✅ | — |

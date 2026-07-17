@@ -8,8 +8,13 @@ from django.utils.translation import gettext_lazy as _
 
 from core.accounts.permissions import Action
 from core.accounts.permissions import can as user_can
-from features.blacklist.models import BlacklistCategory
-from features.blacklist.services import check_match, has_open_case, propose_case
+from features.blacklist.models import BlacklistCategory, IdentifierType
+from features.blacklist.services import (
+    check_matches,
+    compute_composite_identifier,
+    has_open_case,
+    propose_case,
+)
 from core.ui.registry import flag_enabled
 
 
@@ -56,21 +61,44 @@ class IntakeMatchExtension:
                     ("other", _("Other")),
                 ],
             ),
+            "mothers_maiden_name": forms.CharField(
+                label=_("Mother's maiden name (blacklist check)"), required=False,
+                widget=forms.TextInput(attrs={"autocomplete": "off"}),
+                help_text=_("Used only to compute a re-entry check; never stored."),
+            ),
         }
 
     def post_create(self, request, person, cleaned):
-        identifier = cleaned.get("identifier")
-        if not flag_enabled("duplicate_blacklist") or not identifier:
+        if not flag_enabled("duplicate_blacklist"):
             return
-        if check_match(identifier).exists():
+        identifier = cleaned.get("identifier")
+        composite = compute_composite_identifier(
+            person.first_name, person.last_name, person.date_of_birth,
+            cleaned.get("mothers_maiden_name") or "",
+        )
+        candidates = {}
+        if identifier:
+            candidates[cleaned.get("identifier_type") or "national_id"] = identifier
+        if composite:
+            candidates[IdentifierType.NAME_DOB_MMN] = composite
+        if not candidates:
+            return
+        matched_types = sorted(
+            set(check_matches(candidates).values_list("identifier_type", flat=True))
+        )
+        if matched_types:
             propose_case(
-                person, reason="Auto: intake identifier match",
-                identifier=identifier,
+                person,
+                reason=f"Auto: intake re-entry match ({', '.join(matched_types)})",
+                identifier=identifier or None,
                 identifier_type=cleaned.get("identifier_type") or "national_id",
+                composite_identifier=composite,
                 actor=getattr(request, "user", None),
             )
             if request is not None:
+                labels = dict(IdentifierType.choices)
                 messages.warning(
                     request,
-                    _("Possible blacklist match — flagged for manager review. Activation is blocked until resolved."),
+                    _("Possible blacklist match (%(types)s) — flagged for manager review. Activation is blocked until resolved.")
+                    % {"types": ", ".join(str(labels.get(t, t)) for t in matched_types)},
                 )

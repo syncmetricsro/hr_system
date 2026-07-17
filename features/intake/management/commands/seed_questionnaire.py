@@ -19,7 +19,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         version, created = IntakeQuestionnaireVersion.objects.get_or_create(
             name="Recruiter intake",
-            version=3,
+            version=4,
             defaults={"status": QuestionnaireStatus.PUBLISHED},
         )
         if not created:
@@ -62,5 +62,7 @@ class Command(BaseCommand):
           order=3,
           transient=True,
         )
+        q(compliance, "blacklist_mothers_maiden_name", "Mother's maiden name (blacklist check)",
+          type=QuestionType.TEXT, required=False, order=4, transient=True)
 
-        self.stdout.write(self.style.SUCCESS("Seeded published 'Recruiter intake' v3."))
+        self.stdout.write(self.style.SUCCESS("Seeded published 'Recruiter intake' v4."))

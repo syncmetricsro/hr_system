@@ -1,5 +1,25 @@
 # Test Journal
 
+## 2026-07-17 — Composite blacklist fingerprint
+
+- Full unit suite in the pinned test container: **388 passed**, including nine
+  new blacklist/intake tests. New coverage: diacritic folding with ASCII hash-stability, canonical composite
+  format and token-order insensitivity, type+hash matching in `check_matches`,
+  inactive-until-approved composite fingerprints with no raw maiden name
+  stored, person-create composite match without an ID code, both-tier match
+  reasons, locale-aware "Matched via" queue rendering, optional maiden name on
+  manual proposal, and intake composite re-entry with the transient value never
+  persisted as an answer.
+- Corvinum-flags lane (`scripts/test_corvinum.sh`): **209 passed, 7 skipped**.
+  The queue-rendering test asserts against the response's own locale because
+  Corvinum ships only SK/HU.
+- Ruff clean across core/features/clients/config/tests.
+- The full-suite run exposed a pre-existing RBAC completeness failure
+  (`person.archive` unmapped for Jober) on the base branch; fixed in this
+  slice and the suite is green again.
+- Complete Playwright suite after the i18n compile: **39 passed** with the new
+  compiled catalogs and both client seeds.
+
 ## 2026-07-16 — In-place activation-checklist toggles
 
 - Corvinum checklist unit slice: **8 passed**, including the existing

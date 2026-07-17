@@ -317,15 +317,25 @@ blacklist protection.
 4. Expected result: the new record is created for review, a **proposed
    blacklist match** is raised, and activation remains blocked. The system does
    not merge the two people and does not automatically blacklist the new one.
-5. The manager decides the new proposal in the Blacklist queue. An approval
-   blacklists the new record; a rejection closes only that new proposal. The
-   original approved case remains until a manager explicitly removes it with a
-   reason.
+5. The manager decides the new proposal in the Blacklist queue. The queue's
+   **Matched via** row shows which fingerprint matched (ID, or the composite
+   below). An approval blacklists the new record; a rejection closes only that
+   new proposal. The original approved case remains until a manager explicitly
+   removes it with a reason.
 
-Talking point: only a keyed HMAC fingerprint is retained for the ID check. The
-raw identifier is never stored as an intake answer, audit value, or person
-field. Re-entering only a name, birth date, phone, or email deliberately does
-not create a blacklist match.
+Optional composite variant (no ID code): repeat the re-entry with the ID field
+left empty, but re-use the original fictional first name, surname, and date of
+birth in any spelling or order (diacritics and swapped name order still match)
+and enter the same fictional **Mother's maiden name (blacklist check)** on the
+Compliance panel. The same proposed-match warning appears, labelled with the
+composite fingerprint type. The maiden name is hashed transiently and never
+stored.
+
+Talking point: only keyed HMAC fingerprints are retained — one for the optional
+ID code and one for the name + birth date + mother's-maiden-name composite. No
+raw identifier or maiden name is ever stored as an intake answer, audit value,
+or person field. Re-entering only a name, birth date, phone, or email — without
+the maiden name — deliberately does not create a blacklist match.
 
 ## Ten-minute route
 
