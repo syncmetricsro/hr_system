@@ -1,0 +1,25 @@
+{% load i18n %}
+<section class="panel">
+  <p class="eyebrow">{% trans "Pay" %}</p>
+  <h2>{% trans "Wage and payslip overview" %}</h2>
+  <div class="data-table-scroll">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th scope="col">{% trans "Period" %}</th>
+          {% for series in overview.series %}<th scope="col">{{ series.label }}</th>{% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in overview.rows %}
+          <tr>
+            <th scope="row">{{ row.period }}</th>
+            {% for cell in row.cells %}
+              <td>{% if cell %}{{ cell.amount }} {{ cell.currency }}{% else %}—{% endif %}</td>
+            {% endfor %}
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>

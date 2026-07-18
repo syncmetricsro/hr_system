@@ -1,5 +1,24 @@
 # Test Journal
 
+## 2026-07-18 — CorvinumEU gross-wage ledger
+
+- Full Jober/default unit lane: **389 passed, 1 skipped**. The skipped module is
+  the intentionally uninstalled Corvinum wage feature; Jober policy
+  completeness and explicit absence of wage routes remain covered.
+- Full Corvinum-flags lane: **215 passed, 7 skipped, 139 deselected**. New
+  coverage verifies positive and unique wage records, append-only audit data,
+  Manager write access, Observer read-only access, Coordinator/Recruiter 403s,
+  duplicate form rejection, feature/permission hiding, Gross-vs-Net period
+  alignment, deterministic provider order, and idempotent paired demo seeds.
+- Complete Playwright suite: **40 passed**. The new browser scenario signs in
+  as the Corvinum Observer, reviews seeded wages, follows Marek to the aligned
+  person overview, checks translated Gross/Net columns, and confirms the wide
+  table scrolls locally without causing page overflow at 375×667.
+- Ruff, Django system checks, migration consistency, dependency direction,
+  vendored-asset integrity, forbidden Node/npm artifacts, production-image
+  runtime exclusions, translation compilation, and whitespace checks all
+  passed.
+
 ## 2026-07-17 — Composite blacklist fingerprint
 
 - Full unit suite in the pinned test container: **388 passed**, including nine

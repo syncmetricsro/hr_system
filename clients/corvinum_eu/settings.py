@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     "features.checklists",
     "features.advances",
     "features.payslips",
+    "features.wage_ledger",
     "core.ui",
     "clients.corvinum_eu.demo",
 ]
@@ -49,6 +50,7 @@ FEATURE_FLAGS = {
     "checklists": True,           # approval checklists (§5.5, Stage C1)
     "advances": True,             # advance & deduction ledger (§5.10, Stage C2)
     "payslips": True,             # encrypted payslip email (ADR 0023, Stage C5)
+    "wage_ledger": True,          # gross wage per calendar month
 }
 
 # Bilingual SK/HU (confirmed); SK default pending confirmation (C-Q8).

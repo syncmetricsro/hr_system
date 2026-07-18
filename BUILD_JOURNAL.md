@@ -1,5 +1,26 @@
 # Build Journal
 
+## 2026-07-18 — CorvinumEU gross-wage ledger and payslip comparison
+
+- Added the Corvinum-only `wage_ledger` feature with one positive gross-wage
+  record per person/calendar month, an additive migration, a transactional
+  audited service, and a manager-only recording workflow. Wage records are
+  deliberately create-only in this fictional-data release; duplicate months
+  are rejected instead of silently overwriting financial history.
+- Split sensitive financial reads from writes: Managers record and review
+  wages, Observers have read-only wage and payslip visibility, and the new
+  actions are mapped explicitly in both client policies. Jober keeps wages and
+  payslips disabled and mounts no wage routes.
+- Extended the core-owned UI registry with ordered person finance series.
+  Wage and payslip features independently contribute Gross wage and Net
+  payslip data; core aligns their calendar-month periods without either
+  feature importing the other.
+- Added the translated Gross wages section, responsive person-page comparison,
+  deterministic June/July 2026 fictional wage+payslip pairs, and an updated
+  Corvinum walkthrough. All new strings are translated into SK/HU/UK with no
+  fuzzy catalog entries. C-Q17 records the still-open real-data correction and
+  retention policy.
+
 ## 2026-07-17 — Secondary blacklist fingerprint (name + DOB + mother's maiden name)
 
 - Added a second re-entry fingerprint type alongside the optional ID code: a

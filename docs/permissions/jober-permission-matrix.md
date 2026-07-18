@@ -1,6 +1,6 @@
 # Permission Matrix — Jober
 
-Last updated: 2026-07-12
+Last updated: 2026-07-18
 
 This document is the human-readable mirror of `clients/jober/policies.py`
 (`ACTION_ROLES`; the `Action` enum lives in `core/accounts/permissions.py`). When you change one, change the other in the same commit.
@@ -49,7 +49,10 @@ Legend: ✅ permitted · — denied
 | `checklist.tick` (Jober: feature off — ADR 0022) | — | ✅ | ✅ | — |
 | `ledger.enter` (Jober: feature off — ADR 0022) | — | — | ✅ | — |
 | `ledger.view` (Jober: feature off — ADR 0022) | — | — | ✅ | ✅ |
+| `wage.manage` (Jober: feature off) | — | — | ✅ | — |
+| `wage.view` (Jober: feature off) | — | — | ✅ | ✅ |
 | `payslip.manage` (Jober: feature off — ADR 0023) | — | — | ✅ | — |
+| `payslip.view` (Jober: feature off — ADR 0023) | — | — | ✅ | ✅ |
 | `finance.manage` | — | — | ✅ | — |
 | `export.approved` | — | — | ✅ | ✅ |
 

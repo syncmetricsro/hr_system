@@ -39,8 +39,12 @@ ACTION_ROLES: dict[Action, frozenset[Role]] = {
     # Advance & deduction ledger (§5.10) — office/HR/management only
     Action.LEDGER_ENTER: frozenset({_MANAGER}),
     Action.LEDGER_VIEW: frozenset({_MANAGER, _OBSERVER}),
+    # Gross wage ledger — managers record; observers have oversight reads.
+    Action.WAGE_MANAGE: frozenset({_MANAGER}),
+    Action.WAGE_VIEW: frozenset({_MANAGER, _OBSERVER}),
     # Payslips (ADR 0023) — office/HR only
     Action.PAYSLIP_MANAGE: frozenset({_MANAGER}),
+    Action.PAYSLIP_VIEW: frozenset({_MANAGER, _OBSERVER}),
     # Duplicate / blacklist (§5.6)
     Action.BLACKLIST_PROPOSE: frozenset({_COORDINATOR, _MANAGER}),
     Action.BLACKLIST_DECIDE: frozenset({_MANAGER}),

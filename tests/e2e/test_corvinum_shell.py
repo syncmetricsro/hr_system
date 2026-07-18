@@ -129,6 +129,29 @@ def test_corvinum_person_edit_includes_email(page):
     page.locator("input[name='email']").wait_for()
 
 
+def test_corvinum_observer_can_review_aligned_wage_and_payslip_history(page):
+    _login(page, "observer")
+    page.goto(f"{base_url()}/hu/wages/")
+    page.wait_for_load_state("networkidle")
+
+    expect(page.get_by_role("heading", name="Bruttó bérek", exact=True)).to_be_visible()
+    assert page.locator("form[action$='/wages/record/']").count() == 0
+    expect(page.locator(".data-table")).to_contain_text("2026-07")
+
+    page.get_by_role("link", name="Marek Skladník").first.click()
+    expect(page.get_by_role("heading", name="Bér- és bérjegyzék-áttekintés")).to_be_visible()
+    expect(page.locator(".data-table")).to_contain_text("Bruttó bér")
+    expect(page.locator(".data-table")).to_contain_text("Nettó bérjegyzék")
+
+    page.set_viewport_size({"width": 375, "height": 667})
+    page.reload()
+    page.wait_for_load_state("networkidle")
+    assert page.evaluate("document.documentElement.scrollWidth") == 375
+    assert page.locator(".data-table-scroll").evaluate(
+        "element => element.scrollWidth > element.clientWidth"
+    )
+
+
 def test_corvinum_notification_center_uses_shared_responsive_panel(page):
     page.set_viewport_size({"width": 375, "height": 667})
     _login(page, "coordinator")

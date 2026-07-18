@@ -145,6 +145,9 @@ def person_detail(request: HttpRequest, pk: int) -> TemplateResponse:
             "active_projects": Project.objects.filter(is_active=True),
             "person_banners": registry.person_banners(request, person),
             "person_panels": registry.person_panels(request, person),
+            "person_finance_overview": registry.person_finance_overview(
+                request, person
+            ),
             "can_exit": user_can(request.user, Action.EXIT_RECONCILE) and (
                 person.lifecycle_status == LifecycleStatus.WORKING
                 or registry.exit_relevant(person)

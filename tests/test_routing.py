@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import pytest
-from django.urls import reverse
+from django.urls import NoReverseMatch, reverse
 
 from core.people.models import Person
 from core.projects.models import Project
@@ -45,3 +45,10 @@ def test_manager_sees_all_trials(client, make_user, routed):
     body = client.get(reverse("trials_queue")).content.decode("utf-8")
     assert "Alice Alpha" in body
     assert "Bob Beta" in body
+
+
+def test_corvinum_wage_routes_are_not_mounted_for_jober():
+    with pytest.raises(NoReverseMatch):
+        reverse("wage_list")
+    with pytest.raises(NoReverseMatch):
+        reverse("wage_record")

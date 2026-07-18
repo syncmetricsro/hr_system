@@ -14,6 +14,10 @@ from features.advances.services import record_entry
 from features.checklists.models import ChecklistItemTemplate, ChecklistTemplate
 from features.logistics.models import EquipmentItem
 from features.logistics.services import flag_unreturned, issue_equipment, review_deduction
+from features.payslips.models import Payslip
+from features.payslips.services import record_payslip
+from features.wage_ledger.models import WageEntry
+from features.wage_ledger.services import record_wage
 
 # Obviously-fictional accounts only — the real-data gate (AGENTS.md) applies
 # to every client, CorvinumEU included.
@@ -104,7 +108,31 @@ class Command(BaseCommand):
                 entry_date=dt.date.today(), note="private-car commute (C-Q10 default)",
             )
 
+        # Calendar-month gross wage and net payslip pairs. Fixed fictional
+        # periods keep demo rehearsals deterministic and make the person-page
+        # side-by-side comparison useful immediately.
+        pay_rows = [
+            ("2026-06", Decimal("1920.00"), Decimal("1450.00")),
+            ("2026-07", Decimal("2050.00"), Decimal("1540.00")),
+        ]
+        for period, gross_amount, net_amount in pay_rows:
+            if not WageEntry.objects.filter(person=worker, period=period).exists():
+                record_wage(
+                    worker,
+                    period=period,
+                    gross_amount=gross_amount,
+                    actor=hradmin,
+                )
+            if not Payslip.objects.filter(person=worker, period=period).exists():
+                record_payslip(
+                    worker,
+                    period=period,
+                    net_amount=net_amount,
+                    actor=hradmin,
+                )
+
         self.stdout.write(self.style.SUCCESS(
             f"CorvinumEU demo ready: 4 users @{DEMO_DOMAIN}, companies {alfa.code}/{beta.code}, "
-            f"checklist '{template.name}', worker ledger seeded (candidate: {candidate})."
+            f"checklist '{template.name}', worker ledger and wages seeded "
+            f"(candidate: {candidate})."
         ))

@@ -1070,6 +1070,36 @@ select {
   gap: var(--space-4);
 }
 
+/* Responsive tabular records used by optional operational features. The
+   wrapper owns horizontal overflow so a wide table never widens the page. */
+.data-table-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.data-table {
+  width: 100%;
+  min-width: 36rem;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+
+.data-table th,
+.data-table td {
+  padding: 0.8rem;
+  text-align: left;
+  vertical-align: middle;
+  border-bottom: 1px solid var(--line);
+}
+
+.data-table th {
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
 .readiness-attention {
   margin: 0 0 var(--space-4);
   padding: var(--space-3) var(--space-4);

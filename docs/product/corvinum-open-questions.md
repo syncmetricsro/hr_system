@@ -23,6 +23,7 @@ Sources: design doc §5.10/§12.6/§13, Addendum A1.
 | C-Q14 | Staging/production server, domain, DB names | Deployment deferred (ADR 0022) | Owner |
 | C-Q15 | Payslip password delivery channel (ADR 0023 — never by email) | Shown once to the office user; phone/Messenger assumed | Client |
 | C-Q16 | Retention period for stored pay amounts (payslips) | No purge registered yet; joins the GDPR review | Client + legal |
+| C-Q17 | Gross-wage correction and retention policy | One positive gross-wage record per person/calendar month; create-only in the fictional-data release, with no silent overwrite or delete | Client + legal |
 
 Update this file (and the design doc's §16 back-and-forth notes) as answers
 arrive — the pattern that worked for Jober's Q1–Q5.

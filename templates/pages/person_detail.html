@@ -167,6 +167,9 @@
   </aside>
 </section>
 
+{% if person_finance_overview %}
+  {% include "partials/person_finance_overview.html" with overview=person_finance_overview %}
+{% endif %}
 
 {% for panel in person_panels %}{% include panel.template %}{% endfor %}
 

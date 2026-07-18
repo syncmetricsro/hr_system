@@ -18,7 +18,7 @@ has successfully delivered one encrypted fictional payslip PDF to a controlled
 test inbox. Never use a real worker address for either environment.
 
 Use this as the source of truth for the client demonstration. The extended
-walkthrough takes **25–30 minutes**; a ten-minute route is included below.
+walkthrough takes **30–35 minutes**; a ten-minute route is included below.
 Present in Slovak and switch to Hungarian briefly. State at the start that all
 names and records are fictional and that the real-data legal gate is not open.
 
@@ -113,13 +113,14 @@ All four accounts use the password `demo-corvinum-2026`.
 
 - **Marek Skladník** has an email address, safety boots size 43 valued at
   **35.00 EUR**, an approved unreturned-equipment charge, a **100.00 EUR** open
-  advance, and a **30.00 EUR** travel addition.
+  advance, a **30.00 EUR** travel addition, and aligned fictional gross-wage
+  and net-payslip records for June and July 2026.
 - **Eszter Varga** is a candidate with a nine-item activation checklist. Eight
   items are critical and initially open.
 - **Alfa Metallwerk / CV-ALFA** and **Beta Logistik / CV-BETA** are the two
   partner projects.
 
-## Extended walkthrough — 25–30 minutes
+## Extended walkthrough — 30–35 minutes
 
 ### 1. Secure entry — 3 minutes
 
@@ -235,12 +236,25 @@ deleted.
 Do not claim the proposed Thursday cut-off or 20th-to-20th cycle is final. Ask
 the client to confirm C-Q2 and C-Q3.
 
-### 8. Encrypted payslip delivery — 4 minutes
+### 9. Gross wage and net payslip overview — 3 minutes
 
-1. Open **Payslips** and record a payslip for Marek:
-   - period: `2026-07`
-   - net amount: `1450.00`
-   - note: `Fictional client demo`
+1. Open **Gross wages**. Explain that the ledger stores one positive gross-wage
+   amount per person and calendar month.
+2. Show Marek's seeded June and July 2026 entries. Observers can review this
+   history; only HR Admin/Manager can record a new entry.
+3. Open Marek from the table and show **Gross wage** beside **Net payslip** for
+   the same calendar months.
+4. State that records are create-only in the fictional-data release: an
+   existing person/month is rejected rather than silently overwritten.
+
+Talking point: the calendar-month alignment is implemented for the demo, but
+the client must still confirm the correction and retention policy (C-Q17)
+before real-data use.
+
+### 10. Encrypted payslip delivery — 4 minutes
+
+1. Open **Payslips** and find Marek's seeded `2026-07` fictional payslip. The
+   same record was visible as the Net payslip column in the previous step.
 2. Before sending, edit Marek's email to a controlled, non-personal test inbox
    with a real deliverable domain. The seeded `@demo.corvinum.test` address is
    deliberately non-deliverable.
@@ -259,7 +273,7 @@ it never exposes a server-error page.
 If the app was intentionally started without Doppler, the console backend
 prints MIME output instead and does **not** offer a clickable attachment.
 
-### 9. Audit and close — 3 minutes
+### 11. Audit and close — 3 minutes
 
 1. Open **Audit** as HR Admin. Filter by Marek or by an action from this
    session, such as the checklist tick or payslip send.
@@ -362,7 +376,7 @@ not be presented as hidden or unfinished menu items:
 
 Corvinum currently demonstrates people and projects, recruitment trials,
 compliance, activation checklists, equipment review, blacklist decisions,
-advances/deductions, payslips, notifications, Reports, and Audit. These
+advances/deductions, gross wages, payslips, notifications, Reports, and Audit. These
 boundaries come from the client feature configuration and remain subject to
 confirmed client scope.
 

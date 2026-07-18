@@ -1,6 +1,6 @@
 # Permission Matrix — CorvinumEU
 
-Last updated: 2026-07-11
+Last updated: 2026-07-18
 
 Human-readable mirror of `clients/corvinum_eu/policies.py` (`ACTION_ROLES`).
 When you change one, change the other in the same commit. The mechanism
@@ -36,7 +36,10 @@ Legend: ✅ permitted · — denied
 | `checklist.tick` | — | ✅ | ✅ | — |
 | `ledger.enter` | — | — | ✅ | — |
 | `ledger.view` | — | — | ✅ | ✅ |
+| `wage.manage` | — | — | ✅ | — |
+| `wage.view` | — | — | ✅ | ✅ |
 | `payslip.manage` | — | — | ✅ | — |
+| `payslip.view` | — | — | ✅ | ✅ |
 | `blacklist.propose` | — | ✅ | ✅ | — |
 | `blacklist.decide` | — | — | ✅ | — |
 | `blacklist.view_reason` | — | — | ✅ | — |

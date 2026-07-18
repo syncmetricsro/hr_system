@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-17 11:24+0200\n"
+"POT-Creation-Date: 2026-07-18 07:50+0200\n"
 "Language: uk\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -58,7 +58,7 @@ msgid "Skip to content"
 msgstr "Перейти до вмісту"
 
 #: clients/corvinum_eu/templates/layouts/base.html:39
-#: clients/corvinum_eu/templates/layouts/base.html:67
+#: clients/corvinum_eu/templates/layouts/base.html:70
 #: templates/layouts/base.html:20 templates/layouts/base.html:43
 #: templates/pages/finance_summary.html:8 templates/pages/reports.html:4
 #: templates/pages/reports.html:9 templates/pages/reports.html:12
@@ -116,17 +116,22 @@ msgstr "Книга"
 msgid "Payslips"
 msgstr "Розрахункові листи"
 
-#: clients/corvinum_eu/templates/layouts/base.html:60
+#: clients/corvinum_eu/templates/layouts/base.html:59
+#: templates/pages/wages.html:4 templates/pages/wages.html:9
+msgid "Gross wages"
+msgstr "Валові зарплати"
+
+#: clients/corvinum_eu/templates/layouts/base.html:63
 #: templates/layouts/base.html:48
 msgid "Reviews"
 msgstr "Перевірки"
 
-#: clients/corvinum_eu/templates/layouts/base.html:61
+#: clients/corvinum_eu/templates/layouts/base.html:64
 #: templates/panels/logistics_equipment.html:44
 msgid "Manage equipment catalogue"
 msgstr "Керувати каталогом спорядження"
 
-#: clients/corvinum_eu/templates/layouts/base.html:61
+#: clients/corvinum_eu/templates/layouts/base.html:64
 #: templates/pages/equipment_catalog.html:4
 #: templates/pages/equipment_catalog.html:9
 #: templates/pages/equipment_catalog.html:27
@@ -134,34 +139,34 @@ msgstr "Керувати каталогом спорядження"
 msgid "Equipment catalogue"
 msgstr "Каталог спорядження"
 
-#: clients/corvinum_eu/templates/layouts/base.html:64
+#: clients/corvinum_eu/templates/layouts/base.html:67
 #: templates/layouts/base.html:51 templates/pages/blacklist_queue.html:4
 #: templates/panels/blacklist_banner.html:3
 #: templates/panels/blacklist_case.html:5
 msgid "Blacklist"
 msgstr "Чорний список"
 
-#: clients/corvinum_eu/templates/layouts/base.html:66
+#: clients/corvinum_eu/templates/layouts/base.html:69
 #: core/notifications/services.py:134 templates/partials/theme_picker.html:7
 msgid "System"
 msgstr "Система"
 
-#: clients/corvinum_eu/templates/layouts/base.html:69
+#: clients/corvinum_eu/templates/layouts/base.html:72
 #: templates/layouts/base.html:45
 msgid "Audit"
 msgstr "Аудит"
 
-#: clients/corvinum_eu/templates/layouts/base.html:85
+#: clients/corvinum_eu/templates/layouts/base.html:88
 #: templates/layouts/base.html:71
 msgid "Language"
 msgstr "Мова"
 
-#: clients/corvinum_eu/templates/layouts/base.html:95
+#: clients/corvinum_eu/templates/layouts/base.html:98
 #: templates/layouts/base.html:83
 msgid "Sign out"
 msgstr "Вийти"
 
-#: clients/corvinum_eu/templates/layouts/base.html:106
+#: clients/corvinum_eu/templates/layouts/base.html:109
 #: templates/layouts/base.html:28 templates/layouts/base.html:29
 msgid "Open navigation"
 msgstr "Відкрити навігацію"
@@ -232,6 +237,7 @@ msgstr "підтверджено"
 #: features/logistics/models.py:98 features/logistics/models.py:130
 #: features/logistics/models.py:213 features/messaging/models.py:17
 #: features/messaging/models.py:45 features/payslips/models.py:35
+#: features/wage_ledger/models.py:43
 msgid "created"
 msgstr "створено"
 
@@ -623,7 +629,7 @@ msgstr "Працює"
 #: templates/pages/accommodation_list.html:33
 #: templates/pages/equipment_catalog.html:18
 #: templates/pages/equipment_catalog.html:32
-#: templates/pages/person_detail.html:198 templates/pages/project_detail.html:8
+#: templates/pages/person_detail.html:201 templates/pages/project_detail.html:8
 #: templates/pages/project_list.html:19 templates/pages/project_list.html:35
 msgid "Inactive"
 msgstr "Неактивний"
@@ -747,6 +753,7 @@ msgstr "оновлено"
 #: features/compliance/models.py:12 features/intake/models.py:106
 #: features/logistics/models.py:82 features/logistics/models.py:162
 #: features/messaging/models.py:35 features/payslips/models.py:19
+#: features/wage_ledger/models.py:16
 msgid "person"
 msgstr "особа"
 
@@ -790,11 +797,11 @@ msgstr "Дата вхідного медогляду"
 msgid "Review this future date."
 msgstr "Перевірте цю майбутню дату."
 
-#: core/people/views.py:177
+#: core/people/views.py:180
 msgid "Person archived. Blacklist protection remains in place."
 msgstr "Особу архівовано. Захист чорного списку залишається чинним."
 
-#: core/people/views.py:187
+#: core/people/views.py:190
 msgid "Recycled to Available."
 msgstr "Повернено до доступних."
 
@@ -966,6 +973,7 @@ msgstr "результат"
 #: core/projects/models.py:134 features/advances/models.py:83
 #: features/checklists/models.py:68 features/finance/models.py:33
 #: features/logistics/models.py:208 features/payslips/models.py:30
+#: features/wage_ledger/models.py:34
 msgid "note"
 msgstr "нотатка"
 
@@ -1248,6 +1256,7 @@ msgid "amount"
 msgstr "сума"
 
 #: features/advances/models.py:73 features/payslips/models.py:29
+#: features/wage_ledger/models.py:33
 msgid "currency"
 msgstr "валюта"
 
@@ -1483,14 +1492,18 @@ msgstr "Дівоче прізвище матері (перевірка чорн�
 
 #: features/blacklist/panels.py:67
 msgid "Used only to compute a re-entry check; never stored."
-msgstr "Використовується лише для обчислення перевірки повторного входу; ніколи не зберігається."
+msgstr ""
+"Використовується лише для обчислення перевірки повторного входу; ніколи не "
+"зберігається."
 
 #: features/blacklist/panels.py:102
 #, python-format
 msgid ""
 "Possible blacklist match (%(types)s) — flagged for manager review. "
 "Activation is blocked until resolved."
-msgstr "Можливий збіг із чорним списком (%(types)s) — позначено на розгляд менеджером. Активацію заблоковано до вирішення."
+msgstr ""
+"Можливий збіг із чорним списком (%(types)s) — позначено на розгляд "
+"менеджером. Активацію заблоковано до вирішення."
 
 #: features/blacklist/views.py:51
 msgid "Blacklist case proposed for review."
@@ -1670,7 +1683,9 @@ msgstr "Посилання для відгуків створено."
 msgid "Label is required."
 msgstr "Назва обов’язкова."
 
-#: features/finance/catalog_i18n.py:11
+#: features/finance/catalog_i18n.py:11 features/wage_ledger/providers.py:17
+#: templates/pages/wages.html:40 tests/test_wage_ledger.py:112
+#: tests/test_wage_ledger.py:134
 msgid "Gross wage"
 msgstr "Валова зарплата"
 
@@ -2426,11 +2441,11 @@ msgstr "Повідомлення надіслано."
 msgid "Message failed: %(error)s"
 msgstr "Помилка повідомлення: %(error)s"
 
-#: features/payslips/models.py:22
+#: features/payslips/models.py:22 features/wage_ledger/models.py:19
 msgid "period"
 msgstr "період"
 
-#: features/payslips/models.py:23
+#: features/payslips/models.py:23 features/wage_ledger/models.py:23
 msgid "Use the YYYY-MM format."
 msgstr "Використовуйте формат РРРР-ММ."
 
@@ -2438,7 +2453,7 @@ msgstr "Використовуйте формат РРРР-ММ."
 msgid "net amount"
 msgstr "чиста сума"
 
-#: features/payslips/models.py:33
+#: features/payslips/models.py:33 features/wage_ledger/models.py:41
 msgid "created by"
 msgstr "створив"
 
@@ -2461,6 +2476,11 @@ msgstr "розрахунковий лист"
 #: features/payslips/models.py:45
 msgid "payslips"
 msgstr "розрахункові листи"
+
+#: features/payslips/providers.py:15 tests/test_wage_ledger.py:113
+#: tests/test_wage_ledger.py:135
+msgid "Net payslip"
+msgstr "Розрахунковий лист із чистою зарплатою"
 
 #: features/payslips/services.py:133
 msgid "This person has no email address on file."
@@ -2500,6 +2520,38 @@ msgid ""
 msgstr ""
 "Розрахунковий лист надіслано на %(to)s. Одноразовий пароль (повідомте "
 "працівнику телефоном/через Messenger, НЕ електронною поштою): %(pw)s"
+
+#: features/wage_ledger/forms.py:15 templates/pages/payslips.html:21
+msgid "Period (YYYY-MM)"
+msgstr "Період (РРРР-ММ)"
+
+#: features/wage_ledger/forms.py:16
+msgid "Gross wage (EUR)"
+msgstr "Валова зарплата (EUR)"
+
+#: features/wage_ledger/models.py:28
+msgid "gross amount"
+msgstr "валова сума"
+
+#: features/wage_ledger/models.py:46
+msgid "wage entry"
+msgstr "запис про зарплату"
+
+#: features/wage_ledger/models.py:47
+msgid "wage entries"
+msgstr "записи про зарплату"
+
+#: features/wage_ledger/models.py:54 features/wage_ledger/services.py:39
+msgid "A wage is already recorded for this person and period."
+msgstr "Зарплату для цієї особи за цей період уже записано."
+
+#: features/wage_ledger/services.py:25
+msgid "Enter a valid gross amount."
+msgstr "Введіть дійсну валову суму."
+
+#: features/wage_ledger/views.py:45
+msgid "Gross wage recorded."
+msgstr "Валову зарплату записано."
 
 #: templates/layouts/base.html:36 templates/pages/trials_queue.html:4
 msgid "Field"
@@ -2792,7 +2844,7 @@ msgstr "Записати"
 #: templates/pages/audit_log.html:42 templates/pages/blacklist_queue.html:23
 #: templates/pages/blacklist_queue.html:28
 #: templates/pages/finance_month_detail.html:19
-#: templates/pages/person_detail.html:200
+#: templates/pages/person_detail.html:203
 #: templates/panels/blacklist_case.html:11
 #: templates/panels/blacklist_case.html:19
 #: templates/panels/blacklist_case.html:26
@@ -2959,7 +3011,7 @@ msgstr "Немає пробних днів, що очікують результ
 
 #: templates/pages/equipment_catalog.html:10
 #: templates/pages/equipment_form.html:4 templates/pages/equipment_form.html:9
-#: tests/test_corvinum_client.py:175
+#: tests/test_corvinum_client.py:182
 msgid "Add equipment item"
 msgstr "Додати одиницю спорядження"
 
@@ -2995,7 +3047,7 @@ msgstr "Не знайдено жодної одиниці спорядження
 msgid "Edit equipment item"
 msgstr "Редагувати одиницю спорядження"
 
-#: templates/pages/equipment_form.html:15 tests/test_corvinum_client.py:176
+#: templates/pages/equipment_form.html:15 tests/test_corvinum_client.py:183
 msgid "Save equipment item"
 msgstr "Зберегти одиницю спорядження"
 
@@ -3231,7 +3283,8 @@ msgstr "Внести запис"
 #: templates/pages/ledger.html:20 templates/pages/ledger.html:50
 #: templates/pages/ledger.html:79 templates/pages/ledger.html:105
 #: templates/pages/payslips.html:17 templates/pages/payslips.html:31
-#: templates/pages/person_detail.html:8 templates/pages/person_detail.html:227
+#: templates/pages/person_detail.html:8 templates/pages/person_detail.html:230
+#: templates/pages/wages.html:38
 msgid "Person"
 msgstr "Особа"
 
@@ -3255,7 +3308,7 @@ msgid "Amount (EUR)"
 msgstr "Сума (EUR)"
 
 #: templates/pages/ledger.html:38 templates/pages/payslips.html:23
-#: templates/pages/transport_trends.html:44
+#: templates/pages/transport_trends.html:44 templates/pages/wages.html:41
 #: templates/panels/advances_ledger.html:32
 msgid "Note"
 msgstr "Нотатка"
@@ -3387,7 +3440,8 @@ msgstr "Пароль"
 msgid "Continue"
 msgstr "Продовжити"
 
-#: templates/pages/payslips.html:8
+#: templates/pages/payslips.html:8 templates/pages/wages.html:8
+#: templates/partials/person_finance_overview.html:3
 msgid "Pay"
 msgstr "Оплата"
 
@@ -3408,10 +3462,6 @@ msgstr "Внести розрахунковий лист"
 msgid "no email!"
 msgstr "немає ел. пошти!"
 
-#: templates/pages/payslips.html:21
-msgid "Period (YYYY-MM)"
-msgstr "Період (РРРР-ММ)"
-
 #: templates/pages/payslips.html:22
 msgid "Net amount (EUR)"
 msgstr "Чиста сума (EUR)"
@@ -3420,7 +3470,8 @@ msgstr "Чиста сума (EUR)"
 msgid "Recorded payslips"
 msgstr "Збережені розрахункові листи"
 
-#: templates/pages/payslips.html:31
+#: templates/pages/payslips.html:31 templates/pages/wages.html:39
+#: templates/partials/person_finance_overview.html:9
 msgid "Period"
 msgstr "Період"
 
@@ -3448,7 +3499,7 @@ msgstr "Пошук за іменем"
 msgid "All statuses"
 msgstr "Усі статуси"
 
-#: templates/pages/people_list.html:27 templates/pages/person_detail.html:185
+#: templates/pages/people_list.html:27 templates/pages/person_detail.html:188
 msgid "Inactive reason"
 msgstr "Причина неактивності"
 
@@ -3565,22 +3616,22 @@ msgstr ""
 "та відповідальному координатору."
 
 # --- exit / recycling ---
-#: templates/pages/person_detail.html:175
+#: templates/pages/person_detail.html:178
 msgid "Exit"
 msgstr "Вихід"
 
-#: templates/pages/person_detail.html:176
+#: templates/pages/person_detail.html:179
 msgid "Exit & reconcile"
 msgstr "Вихід та звірка"
 
-#: templates/pages/person_detail.html:177
+#: templates/pages/person_detail.html:180
 msgid ""
 "Ends the project assignment, releases the room, and returns issued equipment."
 msgstr ""
 "Завершує призначення на проєкт, звільняє кімнату та повертає видане "
 "спорядження."
 
-#: templates/pages/person_detail.html:179
+#: templates/pages/person_detail.html:182
 msgid ""
 "This ends the active assignment, releases the room, returns issued "
 "equipment, and sets the person to Available."
@@ -3588,11 +3639,11 @@ msgstr ""
 "Завершує активне призначення, звільняє кімнату, повертає видане спорядження "
 "та переводить особу в статус Доступний."
 
-#: templates/pages/person_detail.html:181
+#: templates/pages/person_detail.html:184
 msgid "Exit to Available"
 msgstr "Вихід до Доступний"
 
-#: templates/pages/person_detail.html:183
+#: templates/pages/person_detail.html:186
 msgid ""
 "This ends the active assignment, releases the room, returns issued "
 "equipment, and sets the person to Inactive with the chosen reason."
@@ -3600,37 +3651,37 @@ msgstr ""
 "Завершує активне призначення, звільняє кімнату, повертає видане спорядження "
 "та переводить особу в статус Неактивний з обраною причиною."
 
-#: templates/pages/person_detail.html:186
+#: templates/pages/person_detail.html:189
 msgid "Reason…"
 msgstr "Причина…"
 
-#: templates/pages/person_detail.html:189
+#: templates/pages/person_detail.html:192
 msgid "Exit to Inactive"
 msgstr "Вихід до Неактивний"
 
-#: templates/pages/person_detail.html:197
+#: templates/pages/person_detail.html:200
 msgid "Lifecycle"
 msgstr "Життєвий цикл"
 
-#: templates/pages/person_detail.html:201
+#: templates/pages/person_detail.html:204
 msgid "Since"
 msgstr "З"
 
-#: templates/pages/person_detail.html:206
+#: templates/pages/person_detail.html:209
 msgid "Recycle to Available"
 msgstr "Повернути до доступних"
 
-#: templates/pages/person_detail.html:214
+#: templates/pages/person_detail.html:217
 #: templates/pages/transport_trends.html:42
 msgid "Records"
 msgstr "Записи"
 
-#: templates/pages/person_detail.html:215
-#: templates/pages/person_detail.html:220
+#: templates/pages/person_detail.html:218
+#: templates/pages/person_detail.html:223
 msgid "Archive person"
 msgstr "Архівувати особу"
 
-#: templates/pages/person_detail.html:216
+#: templates/pages/person_detail.html:219
 msgid ""
 "Hides this operational record from the People list. It is not a deletion and "
 "does not remove blacklist protection or audit history."
@@ -3638,7 +3689,7 @@ msgstr ""
 "Приховує цей робочий запис зі списку людей. Це не видалення й не скасовує "
 "захист чорного списку чи історію аудиту."
 
-#: templates/pages/person_detail.html:217
+#: templates/pages/person_detail.html:220
 msgid ""
 "This archives the person from the operational list. It does not delete their "
 "record, audit history, or blacklist protection."
@@ -3646,16 +3697,16 @@ msgstr ""
 "Це архівує особу з робочого списку. Її запис, історію аудиту та захист "
 "чорного списку не буде видалено."
 
-#: templates/pages/person_detail.html:219
+#: templates/pages/person_detail.html:222
 msgid "Archive reason"
 msgstr "Причина архівування"
 
 # --- person card: history + filter ---
-#: templates/pages/person_detail.html:228
+#: templates/pages/person_detail.html:231
 msgid "History"
 msgstr "Історія"
 
-#: templates/pages/person_detail.html:233
+#: templates/pages/person_detail.html:236
 msgid "No history yet."
 msgstr "Ще немає історії."
 
@@ -3882,6 +3933,30 @@ msgstr "Двофакторна перевірка"
 msgid "Verify"
 msgstr "Перевірити"
 
+#: templates/pages/wages.html:10
+msgid ""
+"Gross wages are recorded by calendar month and shown next to the matching "
+"net payslip on each person's page."
+msgstr ""
+"Валові зарплати записуються за календарними місяцями та відображаються поруч "
+"із відповідним розрахунковим листом на сторінці кожної особи."
+
+#: templates/pages/wages.html:15 templates/pages/wages.html:27
+msgid "Record gross wage"
+msgstr "Записати валову зарплату"
+
+#: templates/pages/wages.html:33
+msgid "Recorded gross wages"
+msgstr "Записані валові зарплати"
+
+#: templates/pages/wages.html:42
+msgid "Recorded by"
+msgstr "Записано користувачем"
+
+#: templates/pages/wages.html:55
+msgid "No gross wages recorded."
+msgstr "Валових зарплат не записано."
+
 #: templates/panels/advances_ledger.html:3
 msgid "Money"
 msgstr "Гроші"
@@ -4046,6 +4121,11 @@ msgstr "Ви справді хочете це зробити?"
 #: templates/partials/confirm_dialog.html:13
 msgid "Yes, proceed"
 msgstr "Так, продовжити"
+
+# --- dashboard ---
+#: templates/partials/person_finance_overview.html:4
+msgid "Wage and payslip overview"
+msgstr "Огляд зарплати та розрахункового листа"
 
 #: templates/partials/theme_picker.html:3
 #: templates/partials/theme_picker.html:4

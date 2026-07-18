@@ -1,0 +1,61 @@
+{% extends "layouts/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Gross wages" %} · {{ BRAND_NAME }}{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <p class="eyebrow">{% trans "Pay" %}</p>
+  <h1>{% trans "Gross wages" %}</h1>
+  <p class="muted">{% trans "Gross wages are recorded by calendar month and shown next to the matching net payslip on each person's page." %}</p>
+</section>
+
+{% if may_manage %}
+<section class="panel">
+  <h2>{% trans "Record gross wage" %}</h2>
+  <form class="stack" method="post" action="{% url 'wage_record' %}">
+    {% csrf_token %}
+    {% if form.non_field_errors %}<div class="form-errors">{{ form.non_field_errors }}</div>{% endif %}
+    {% for field in form %}
+      <label>
+        <span>{{ field.label }}</span>
+        {{ field }}
+        {% if field.help_text %}<small class="muted">{{ field.help_text }}</small>{% endif %}
+        {{ field.errors }}
+      </label>
+    {% endfor %}
+    <button class="button button-primary" type="submit">{% trans "Record gross wage" %}</button>
+  </form>
+</section>
+{% endif %}
+
+<section class="panel">
+  <h2>{% trans "Recorded gross wages" %}</h2>
+  <div class="data-table-scroll">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th scope="col">{% trans "Person" %}</th>
+          <th scope="col">{% trans "Period" %}</th>
+          <th scope="col">{% trans "Gross wage" %}</th>
+          <th scope="col">{% trans "Note" %}</th>
+          <th scope="col">{% trans "Recorded by" %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for wage in wages %}
+          <tr>
+            <td><a href="{% url 'person_detail' wage.person_id %}">{{ wage.person }}</a></td>
+            <td>{{ wage.period }}</td>
+            <td>{{ wage.gross_amount }} {{ wage.currency }}</td>
+            <td>{{ wage.note|default:"—" }}</td>
+            <td>{{ wage.created_by|default:"—" }}</td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="5" class="muted">{% trans "No gross wages recorded." %}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}
