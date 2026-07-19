@@ -136,7 +136,10 @@ def test_corvinum_observer_can_review_aligned_wage_and_payslip_history(page):
 
     expect(page.get_by_role("heading", name="Bruttó bérek", exact=True)).to_be_visible()
     assert page.locator("form[action$='/wages/record/']").count() == 0
-    expect(page.locator(".data-table")).to_contain_text("2026-07")
+    # Recovery assignment is manager-only; the observer sees the tables read-only.
+    expect(page.get_by_role("heading", name="Előleglevonások", exact=True)).to_be_visible()
+    assert page.locator("form[action$='/wages/recoveries/assign/']").count() == 0
+    expect(page.locator(".data-table").last).to_contain_text("2026-07")
 
     page.get_by_role("link", name="Marek Skladník").first.click()
     expect(page.get_by_role("heading", name="Bér- és bérjegyzék-áttekintés")).to_be_visible()

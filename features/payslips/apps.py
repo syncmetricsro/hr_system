@@ -10,4 +10,4 @@ class PayslipsConfig(AppConfig):
         from core.ui.registry import register_person_finance_series
         from features.payslips.providers import net_payslip_series
 
-        register_person_finance_series(net_payslip_series, order=20)
+        register_person_finance_series(net_payslip_series, order=40)

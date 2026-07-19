@@ -13,5 +13,6 @@ def net_payslip_series(request, person) -> dict | None:
     rows = Payslip.objects.filter(person=person).only("period", "net_amount", "currency")
     return {
         "label": _("Net payslip"),
+        "kind": "recorded_net",
         "periods": {row.period: (row.net_amount, row.currency) for row in rows},
     }

@@ -1,5 +1,33 @@
 # Test Journal
 
+## 2026-07-19 — Advance recovery, reconciliation overview, admin sweep
+
+- Full Jober/default unit lane: **389 passed, 2 skipped** (both skips are the
+  Corvinum-only wage modules, intentionally uninstalled for Jober).
+- Full Corvinum-flags lane: **230 passed, 7 skipped, 139 deselected** — +15 new
+  tests. New coverage: suggested-recovery-period rule on both sides of the 20th
+  including December→January, rejection of wage months earlier than the cycle
+  end (later months allowed), audited assignment driving the advance's
+  OPEN → INCLUDED_IN_CYCLE transition via the advances service, non-advance and
+  already-assigned guards, partial-amount bounds, the one-active-recovery
+  conditional constraint (inactive rows exempt), derived-net math with mixed
+  DEDUCT/ADD entries and proof no net field is persisted, overview rendering
+  for wage-only / advances-only / neither people, the Δ mismatch marker
+  appearing only on disagreeing months, observer payslip nav + read-only page
+  with manage controls hidden and POST 403, coordinator/recruiter payslip 403s
+  with no nav entry, recovery-assignment view permissions, and no Django-admin
+  registration for any money model (WageEntry, AdvanceRecovery, LedgerEntry,
+  Payslip).
+- Ruff clean; `check_dependency_direction.py` clean (no core→feature imports);
+  `makemigrations --check` clean under Corvinum settings.
+- SK/HU/UK catalogs re-extracted; 16 msgmerge fuzzy mispairings per locale
+  corrected by hand (e.g. "Computed net" → "Dokončené"), zero fuzzy or empty
+  entries remain; compiled and re-verified in both lanes.
+- Complete Playwright suite: **40 passed**. The observer wage scenario now
+  also asserts the Advance recoveries section is visible read-only (no assign
+  forms for the observer) and scopes its table assertion to the recorded-wages
+  table, since the wages page grew two recovery tables.
+
 ## 2026-07-18 — CorvinumEU gross-wage ledger
 
 - Full Jober/default unit lane: **389 passed, 1 skipped**. The skipped module is

@@ -1,5 +1,4 @@
-from django.contrib import admin
-
-from features.wage_ledger.models import WageEntry
-
-admin.site.register(WageEntry)
+# No Django-admin registration on purpose: wage records and recovery
+# assignments are create-only money data whose every mutation must flow
+# through the audited service layer. An admin ModelAdmin would be an
+# unaudited edit/delete side door.

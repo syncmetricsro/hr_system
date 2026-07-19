@@ -58,3 +58,72 @@ class WageEntry(models.Model):
 
     def __str__(self) -> str:
         return f"{self.person} — {self.period} ({self.gross_amount} {self.currency})"
+
+
+class AdvanceRecovery(models.Model):
+    """Which advance is recovered in which gross-wage month.
+
+    Lives here, not in advances: the advances LedgerEntry stays untouched and
+    the pointer belongs to the wage side of the relationship. ``amount`` may be
+    below the advance amount so partial recovery (an open client question) is a
+    constraint drop away, but today one active recovery covers the full
+    advance in a single wage month.
+    """
+
+    advance = models.ForeignKey(
+        "advances.LedgerEntry",
+        on_delete=models.PROTECT,
+        related_name="wage_recoveries",
+        verbose_name=_("advance"),
+    )
+    recovered_in_period = models.CharField(
+        _("recovered in period"),
+        max_length=7,
+        validators=[
+            RegexValidator(
+                r"^\d{4}-(0[1-9]|1[0-2])$", _("Use the YYYY-MM format.")
+            )
+        ],
+    )
+    amount = models.DecimalField(
+        _("amount"),
+        max_digits=9,
+        decimal_places=2,
+        validators=[MinValueValidator(Decimal("0.01"))],
+    )
+    is_active = models.BooleanField(_("active"), default=True)
+    note = models.CharField(_("note"), max_length=200, blank=True)
+    assigned_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+        verbose_name=_("assigned by"),
+    )
+    assigned_at = models.DateTimeField(_("assigned"), auto_now_add=True)
+
+    class Meta:
+        verbose_name = _("advance recovery")
+        verbose_name_plural = _("advance recoveries")
+        ordering = ("-recovered_in_period", "-id")
+        constraints = [
+            models.UniqueConstraint(
+                fields=["advance"],
+                condition=models.Q(is_active=True),
+                name="uniq_active_recovery_per_advance",
+                violation_error_message=_(
+                    "This advance already has an active wage recovery."
+                ),
+            )
+        ]
+
+    def __str__(self) -> str:
+        return f"advance #{self.advance_id} → {self.recovered_in_period} ({self.amount})"
+
+    @property
+    def is_deferred(self) -> bool:
+        """True when recovery lands in a later month than the advance was
+        given — the late-in-cycle (after the 20th) starter case."""
+        given = self.advance.entry_date
+        return self.recovered_in_period != f"{given.year:04d}-{given.month:02d}"

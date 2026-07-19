@@ -133,13 +133,105 @@ def test_finance_series_honor_flag_and_permission(person, staff):
     assert overview is not None
     assert [series["label"] for series in overview["series"]] == [
         gettext("Gross wage"),
+        gettext("Advances & deductions"),
+        gettext("Computed net"),
         gettext("Net payslip"),
     ]
+    assert overview["has_delta"] is True
 
     flags = {**settings.FEATURE_FLAGS, "wage_ledger": False, "payslips": False}
     with override_settings(FEATURE_FLAGS=flags):
         assert gross_wage_series(request, person) is None
         assert net_payslip_series(request, person) is None
+
+
+def test_overview_renders_for_partial_data_and_flags_mismatch(client, person, staff):
+    import datetime as dt
+    from decimal import Decimal
+
+    from features.advances.models import EntryType, LedgerCategory
+    from features.advances.services import record_entry
+    from features.wage_ledger.services import assign_recovery
+
+    client.force_login(staff["manager"])
+
+    # Wage only: panel renders, payslip and advances cells are em-dashes.
+    record_wage(person, period="2026-07", gross_amount="1200", actor=staff["manager"])
+    response = client.get(reverse("person_detail", args=[person.pk]))
+    assert response.status_code == 200
+    language = response.headers["Content-Language"]
+    with override(language):
+        assert gettext("Computed net").encode() in response.content
+    assert b"finance-delta-mismatch" not in response.content
+
+    # Advances only (assigned to a wage month): panel still renders.
+    other = Person.objects.create(first_name="Advances", last_name="Only")
+    advance = record_entry(
+        other,
+        entry_type=EntryType.CASH_ADVANCE,
+        category=LedgerCategory.CASH_ADVANCE,
+        amount=Decimal("80.00"),
+        entry_date=dt.date(2026, 7, 3),
+    )
+    assign_recovery(advance, actor=staff["manager"])
+    response = client.get(reverse("person_detail", args=[other.pk]))
+    assert response.status_code == 200
+    language = response.headers["Content-Language"]
+    with override(language):
+        assert gettext("Advances & deductions").encode() in response.content
+    assert b"2026-07" in response.content
+
+    # Neither: page renders without the overview panel.
+    empty = Person.objects.create(first_name="No", last_name="Money")
+    response = client.get(reverse("person_detail", args=[empty.pk]))
+    assert response.status_code == 200
+    language = response.headers["Content-Language"]
+    with override(language):
+        assert gettext("Computed net").encode() not in response.content
+
+    # Both, disagreeing: computed 1100 (1200 − 100 advance) vs recorded 900.
+    second = record_entry(
+        person,
+        entry_type=EntryType.CASH_ADVANCE,
+        category=LedgerCategory.CASH_ADVANCE,
+        amount=Decimal("100.00"),
+        entry_date=dt.date(2026, 7, 10),
+    )
+    assign_recovery(second, actor=staff["manager"])
+    Payslip.objects.create(person=person, period="2026-07", net_amount="900")
+    response = client.get(reverse("person_detail", args=[person.pk]))
+    assert b"finance-delta-mismatch" in response.content
+
+    # Agreeing month: no mismatch marker for it.
+    record_wage(person, period="2026-08", gross_amount="1000", actor=staff["manager"])
+    Payslip.objects.create(person=person, period="2026-08", net_amount="1000")
+    response = client.get(reverse("person_detail", args=[person.pk]))
+    assert response.content.count(b"finance-delta-mismatch") == 1
+
+
+def test_observer_reads_payslips_with_nav_but_cannot_manage(client, person, staff):
+    Payslip.objects.create(person=person, period="2026-07", net_amount="900")
+
+    client.force_login(staff["observer"])
+    nav_page = client.get(reverse("wage_list"))
+    assert reverse("payslip_list").encode() in nav_page.content
+
+    listing = client.get(reverse("payslip_list"))
+    assert listing.status_code == 200
+    assert b"900" in listing.content
+    assert b'name="net_amount"' not in listing.content
+    assert b"/send/" not in listing.content
+    assert client.post(reverse("payslip_list"), {"person": person.pk}).status_code == 403
+
+    client.force_login(staff["manager"])
+    manager_listing = client.get(reverse("payslip_list"))
+    assert b'name="net_amount"' in manager_listing.content
+
+    for role in ("coordinator", "recruiter"):
+        client.force_login(staff[role])
+        assert client.get(reverse("payslip_list")).status_code == 403
+        no_nav = client.get(reverse("dashboard"))
+        assert reverse("payslip_list").encode() not in no_nav.content
 
 
 def test_corvinum_demo_wage_and_payslip_seed_is_idempotent():

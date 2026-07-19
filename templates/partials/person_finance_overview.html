@@ -8,6 +8,7 @@
         <tr>
           <th scope="col">{% trans "Period" %}</th>
           {% for series in overview.series %}<th scope="col">{{ series.label }}</th>{% endfor %}
+          {% if overview.has_delta %}<th scope="col">{% trans "Difference" %}</th>{% endif %}
         </tr>
       </thead>
       <tbody>
@@ -17,6 +18,17 @@
             {% for cell in row.cells %}
               <td>{% if cell %}{{ cell.amount }} {{ cell.currency }}{% else %}—{% endif %}</td>
             {% endfor %}
+            {% if overview.has_delta %}
+              <td>
+                {% if row.delta %}
+                  {% if row.delta.mismatch %}
+                    <span class="finance-delta-mismatch" title="{% trans 'Computed net does not match the recorded payslip.' %}">⚠ {{ row.delta.amount }} {{ row.delta.currency }}</span>
+                  {% else %}
+                    {{ row.delta.amount }} {{ row.delta.currency }}
+                  {% endif %}
+                {% else %}—{% endif %}
+              </td>
+            {% endif %}
           </tr>
         {% endfor %}
       </tbody>

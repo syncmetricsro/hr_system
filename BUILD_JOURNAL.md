@@ -1,5 +1,40 @@
 # Build Journal
 
+## 2026-07-19 — Wage-ledger verification fixes: advance recovery link, reconciliation, admin sweep
+
+- Closed the verification report's deviations. A new `AdvanceRecovery` model in
+  `features/wage_ledger` points each cash advance at the gross-wage month that
+  recovers it — the advances `LedgerEntry` model and migrations are untouched.
+  One active recovery per advance is a conditional unique constraint, so
+  confirmed partial recovery later is a constraint drop, not a remodel.
+- Assignment is suggest-then-confirm: the system derives the first eligible
+  wage month from the 21st→20th cycle rule (on/before the 20th → same month;
+  the 21st or later → next month, correct across December→January), the manager
+  confirms or picks a later month, and an earlier month is always rejected.
+  Deferred recoveries are badge-flagged in both wage-page tables. Assignment is
+  audited (`wage.recovery_assigned`) and drives OPEN → INCLUDED_IN_CYCLE
+  through a new generic `include_entry` in the advances service layer — wage
+  code never touches `settlement_status`.
+- Net is derived at read time, never stored: gross − recovery amounts − other
+  DEDUCT entries settled in the month + ADD entries. Advances with an active
+  recovery contribute the recovery amount, not the entry amount, so nothing is
+  double-counted.
+- The person finance overview now reconciles instead of duplicating: Gross
+  wage | Advances & deductions (cycle totals, contributed by a provider inside
+  the advances feature) | Computed net | recorded Net payslip | Difference,
+  with a visible mismatch marker when the computed and recorded nets disagree.
+  Core's registry gained kind-tagged series and a generic computed-vs-recorded
+  difference column; it still knows nothing about either feature. The panel
+  renders for wage-only and advances-only people alike.
+- Admin sweep: removed the unaudited Django-admin registrations for WageEntry,
+  Payslip, and LedgerEntry (none added for AdvanceRecovery) — every mutation of
+  money data now flows through the audited services.
+- Observer payslip access made consistent: the payslips page accepts
+  `payslip.view` for reads, record/send stay `payslip.manage`, the sidebar
+  link now follows the view action, and the record form and send buttons are
+  hidden from read-only roles with server-side 403s behind them.
+- New SK/HU/UK strings translated with every msgmerge fuzzy pairing corrected.
+
 ## 2026-07-18 — CorvinumEU gross-wage ledger and payslip comparison
 
 - Added the Corvinum-only `wage_ledger` feature with one positive gross-wage

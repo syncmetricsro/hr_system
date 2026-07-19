@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-18 07:50+0200\n"
+"POT-Creation-Date: 2026-07-19 20:46+0200\n"
 "Language: sk\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -649,7 +649,7 @@ msgstr "označenie"
 #: features/checklists/models.py:22 features/feedback/models.py:25
 #: features/finance/models.py:88 features/logistics/models.py:30
 #: features/logistics/models.py:49 features/logistics/models.py:129
-#: features/messaging/models.py:13
+#: features/messaging/models.py:13 features/wage_ledger/models.py:94
 msgid "active"
 msgstr "aktívne"
 
@@ -909,7 +909,7 @@ msgid "end date"
 msgstr "dátum konca"
 
 #: core/projects/models.py:79 core/projects/models.py:137
-#: features/logistics/models.py:96
+#: features/logistics/models.py:96 features/wage_ledger/models.py:102
 msgid "assigned by"
 msgstr "priradil"
 
@@ -972,7 +972,7 @@ msgstr "výsledok"
 #: core/projects/models.py:134 features/advances/models.py:83
 #: features/checklists/models.py:68 features/finance/models.py:33
 #: features/logistics/models.py:208 features/payslips/models.py:30
-#: features/wage_ledger/models.py:34
+#: features/wage_ledger/models.py:34 features/wage_ledger/models.py:95
 msgid "note"
 msgstr "poznámka"
 
@@ -1250,6 +1250,7 @@ msgid "category"
 msgstr "kategória"
 
 #: features/advances/models.py:70 features/finance/models.py:112
+#: features/wage_ledger/models.py:89
 msgid "amount"
 msgstr "suma"
 
@@ -1298,6 +1299,12 @@ msgstr "záznam v knihe"
 msgid "ledger entries"
 msgstr "záznamy v knihe"
 
+#: features/advances/providers.py:38 templates/pages/ledger.html:4
+#: templates/pages/ledger.html:9 templates/panels/advances_ledger.html:4
+#: tests/test_wage_ledger.py:136 tests/test_wage_ledger.py:181
+msgid "Advances & deductions"
+msgstr "Zálohy a zrážky"
+
 #: features/advances/services.py:57
 msgid "Amount must be positive — meaning lives in the entry type."
 msgstr "Suma musí byť kladná — význam určuje typ záznamu."
@@ -1323,7 +1330,11 @@ msgstr "Záznam už bol stornovaný."
 msgid "Entries without payroll effect cannot be reversed."
 msgstr "Záznamy bez vplyvu na mzdu nemožno stornovať."
 
-#: features/advances/services.py:233
+#: features/advances/services.py:216
+msgid "Only open entries can be included in a settlement cycle."
+msgstr "Do zúčtovacieho cyklu možno zaradiť len otvorené záznamy."
+
+#: features/advances/services.py:252
 msgid "Entry is locked after cycle inclusion; record a reversal instead."
 msgstr "Po zahrnutí do cyklu je záznam uzamknutý; zaznamenajte storno."
 
@@ -1680,9 +1691,9 @@ msgstr "Odkaz na spätnú väzbu vytvorený."
 msgid "Label is required."
 msgstr "Označenie je povinné."
 
-#: features/finance/catalog_i18n.py:11 features/wage_ledger/providers.py:17
-#: templates/pages/wages.html:40 tests/test_wage_ledger.py:112
-#: tests/test_wage_ledger.py:134
+#: features/finance/catalog_i18n.py:11 features/wage_ledger/providers.py:18
+#: templates/pages/wages.html:108 tests/test_wage_ledger.py:113
+#: tests/test_wage_ledger.py:135
 msgid "Gross wage"
 msgstr "Hrubá mzda"
 
@@ -2376,7 +2387,7 @@ msgstr "šablóny správ"
 msgid "Queued"
 msgstr "Vo fronte"
 
-#: features/messaging/models.py:31 templates/pages/payslips.html:31
+#: features/messaging/models.py:31 templates/pages/payslips.html:33
 msgid "Sent"
 msgstr "Odoslané"
 
@@ -2442,6 +2453,7 @@ msgid "period"
 msgstr "obdobie"
 
 #: features/payslips/models.py:23 features/wage_ledger/models.py:23
+#: features/wage_ledger/models.py:84 features/wage_ledger/services.py:106
 msgid "Use the YYYY-MM format."
 msgstr "Použite formát RRRR-MM."
 
@@ -2473,8 +2485,8 @@ msgstr "výplatná páska"
 msgid "payslips"
 msgstr "výplatné pásky"
 
-#: features/payslips/providers.py:15 tests/test_wage_ledger.py:113
-#: tests/test_wage_ledger.py:135
+#: features/payslips/providers.py:15 tests/test_wage_ledger.py:114
+#: tests/test_wage_ledger.py:138
 msgid "Net payslip"
 msgstr "Čistá výplatná páska"
 
@@ -2504,11 +2516,11 @@ msgstr ""
 "Výplatnú pásku sa nepodarilo odoslať e-mailom. Skontrolujte adresu príjemcu "
 "a nastavenie pošty."
 
-#: features/payslips/views.py:26
+#: features/payslips/views.py:28
 msgid "Payslip recorded."
 msgstr "Výplatná páska uložená."
 
-#: features/payslips/views.py:51
+#: features/payslips/views.py:54
 #, python-format
 msgid ""
 "Payslip emailed to %(to)s. One-time password (tell the worker by phone/"
@@ -2517,7 +2529,7 @@ msgstr ""
 "Výplatná páska odoslaná na %(to)s. Jednorazové heslo (oznámte pracovníkovi "
 "telefonicky/cez Messenger, NIE e-mailom): %(pw)s"
 
-#: features/wage_ledger/forms.py:15 templates/pages/payslips.html:21
+#: features/wage_ledger/forms.py:15 templates/pages/payslips.html:22
 msgid "Period (YYYY-MM)"
 msgstr "Obdobie (RRRR-MM)"
 
@@ -2537,17 +2549,73 @@ msgstr "záznam mzdy"
 msgid "wage entries"
 msgstr "záznamy miezd"
 
-#: features/wage_ledger/models.py:54 features/wage_ledger/services.py:39
+#: features/wage_ledger/models.py:54 features/wage_ledger/services.py:51
 msgid "A wage is already recorded for this person and period."
 msgstr "Mzda pre túto osobu a obdobie je už zaznamenaná."
 
-#: features/wage_ledger/services.py:25
+#: features/wage_ledger/models.py:77
+msgid "advance"
+msgstr "záloha"
+
+#: features/wage_ledger/models.py:80
+msgid "recovered in period"
+msgstr "zrazené v období"
+
+#: features/wage_ledger/models.py:104
+msgid "assigned"
+msgstr "priradené"
+
+#: features/wage_ledger/models.py:107
+msgid "advance recovery"
+msgstr "zrážka zálohy"
+
+#: features/wage_ledger/models.py:108
+msgid "advance recoveries"
+msgstr "zrážky záloh"
+
+#: features/wage_ledger/models.py:116 features/wage_ledger/services.py:135
+msgid "This advance already has an active wage recovery."
+msgstr "Táto záloha už má aktívnu zrážku zo mzdy."
+
+#: features/wage_ledger/providers.py:34 tests/test_wage_ledger.py:137
+#: tests/test_wage_ledger.py:164 tests/test_wage_ledger.py:190
+msgid "Computed net"
+msgstr "Vypočítaná čistá mzda"
+
+#: features/wage_ledger/services.py:37
 msgid "Enter a valid gross amount."
 msgstr "Zadajte platnú hrubú sumu."
 
-#: features/wage_ledger/views.py:45
+#: features/wage_ledger/services.py:99
+msgid "Only cash advances can be assigned a wage recovery."
+msgstr "Zrážku zo mzdy možno priradiť len hotovostným zálohám."
+
+#: features/wage_ledger/services.py:101
+msgid "This advance is already assigned or settled."
+msgstr "Táto záloha je už priradená alebo vysporiadaná."
+
+#: features/wage_ledger/services.py:109
+#, python-format
+msgid ""
+"This advance falls in the cycle ending on the 20th; the earliest wage month "
+"that can recover it is %(period)s."
+msgstr "Táto záloha patrí do cyklu končiaceho 20. dňa; najskorší mzdový mesiac, z ktorého ju možno zraziť, je %(period)s."
+
+#: features/wage_ledger/services.py:117
+msgid "Enter a valid recovery amount."
+msgstr "Zadajte platnú sumu zrážky."
+
+#: features/wage_ledger/services.py:120
+msgid "Recovery amount must be positive and at most the advance amount."
+msgstr "Suma zrážky musí byť kladná a najviac vo výške zálohy."
+
+#: features/wage_ledger/views.py:64
 msgid "Gross wage recorded."
 msgstr "Hrubá mzda bola zaznamenaná."
+
+#: features/wage_ledger/views.py:88
+msgid "Advance recovery assigned."
+msgstr "Zrážka zálohy bola priradená."
 
 #: templates/layouts/base.html:36 templates/pages/trials_queue.html:4
 msgid "Field"
@@ -2833,7 +2901,7 @@ msgid "Actor"
 msgstr "Aktér"
 
 #: templates/pages/audit_log.html:41 templates/pages/ledger.html:39
-#: templates/pages/payslips.html:24
+#: templates/pages/payslips.html:25
 msgid "Record"
 msgstr "Uložiť"
 
@@ -3267,20 +3335,16 @@ msgstr "Dokončiť"
 msgid "Next"
 msgstr "Ďalej"
 
-#: templates/pages/ledger.html:4 templates/pages/ledger.html:9
-#: templates/panels/advances_ledger.html:4
-msgid "Advances & deductions"
-msgstr "Zálohy a zrážky"
-
 #: templates/pages/ledger.html:17 templates/panels/advances_ledger.html:33
 msgid "Record entry"
 msgstr "Zaznamenať položku"
 
 #: templates/pages/ledger.html:20 templates/pages/ledger.html:50
 #: templates/pages/ledger.html:79 templates/pages/ledger.html:105
-#: templates/pages/payslips.html:17 templates/pages/payslips.html:31
+#: templates/pages/payslips.html:18 templates/pages/payslips.html:33
 #: templates/pages/person_detail.html:8 templates/pages/person_detail.html:230
-#: templates/pages/wages.html:38
+#: templates/pages/wages.html:40 templates/pages/wages.html:76
+#: templates/pages/wages.html:106
 msgid "Person"
 msgstr "Osoba"
 
@@ -3303,8 +3367,8 @@ msgstr "Kategória"
 msgid "Amount (EUR)"
 msgstr "Suma (EUR)"
 
-#: templates/pages/ledger.html:38 templates/pages/payslips.html:23
-#: templates/pages/transport_trends.html:44 templates/pages/wages.html:41
+#: templates/pages/ledger.html:38 templates/pages/payslips.html:24
+#: templates/pages/transport_trends.html:44 templates/pages/wages.html:109
 #: templates/panels/advances_ledger.html:32
 msgid "Note"
 msgstr "Poznámka"
@@ -3328,6 +3392,7 @@ msgid "Company"
 msgstr "Firma"
 
 #: templates/pages/ledger.html:50 templates/pages/ledger.html:105
+#: templates/pages/wages.html:42 templates/pages/wages.html:79
 msgid "Amount"
 msgstr "Suma"
 
@@ -3448,40 +3513,40 @@ msgstr ""
 "pracovníkovi ho treba oznámiť telefonicky alebo cez Messenger — nikdy e-"
 "mailom."
 
-#: templates/pages/payslips.html:14
+#: templates/pages/payslips.html:15
 msgid "Record payslip"
 msgstr "Zaznamenať výplatnú pásku"
 
-#: templates/pages/payslips.html:19
+#: templates/pages/payslips.html:20
 msgid "no email!"
 msgstr "chýba e-mail!"
 
-#: templates/pages/payslips.html:22
+#: templates/pages/payslips.html:23
 msgid "Net amount (EUR)"
 msgstr "Čistá suma (EUR)"
 
-#: templates/pages/payslips.html:29
+#: templates/pages/payslips.html:31
 msgid "Recorded payslips"
 msgstr "Uložené výplatné pásky"
 
-#: templates/pages/payslips.html:31 templates/pages/wages.html:39
+#: templates/pages/payslips.html:33 templates/pages/wages.html:107
 #: templates/partials/person_finance_overview.html:9
 msgid "Period"
 msgstr "Obdobie"
 
-#: templates/pages/payslips.html:31
+#: templates/pages/payslips.html:33
 msgid "Net amount"
 msgstr "Čistá suma"
 
-#: templates/pages/payslips.html:43
+#: templates/pages/payslips.html:46
 msgid "Resend (new password)"
 msgstr "Odoslať znova (nové heslo)"
 
-#: templates/pages/payslips.html:43
+#: templates/pages/payslips.html:46
 msgid "Send encrypted PDF"
 msgstr "Odoslať šifrované PDF"
 
-#: templates/pages/payslips.html:49
+#: templates/pages/payslips.html:53
 msgid "No payslips recorded."
 msgstr "Žiadne uložené výplatné pásky."
 
@@ -3937,14 +4002,73 @@ msgid "Record gross wage"
 msgstr "Zaznamenať hrubú mzdu"
 
 #: templates/pages/wages.html:33
+msgid "Advance recoveries"
+msgstr "Zrážky záloh"
+
+#: templates/pages/wages.html:34
+msgid ""
+"An advance given after the 20th falls in the next cycle and is recovered "
+"from the following wage month — deferred advances are flagged, never "
+"silently moved."
+msgstr "Záloha poskytnutá po 20. dni patrí do nasledujúceho cyklu a zráža sa z nasledujúceho mzdového mesiaca — odložené zálohy sú označené, nikdy sa nepresúvajú potichu."
+
+#: templates/pages/wages.html:35
+msgid "Awaiting assignment"
+msgstr "Čaká na priradenie"
+
+#: templates/pages/wages.html:41
+msgid "Given"
+msgstr "Poskytnutá"
+
+#: templates/pages/wages.html:43
+msgid "Suggested wage month"
+msgstr "Navrhovaný mzdový mesiac"
+
+#: templates/pages/wages.html:44 templates/pages/wages.html:60
+msgid "Assign"
+msgstr "Priradiť"
+
+#: templates/pages/wages.html:53 templates/pages/wages.html:88
+msgid "Deferred to next wage month"
+msgstr "Odložené na ďalší mzdový mesiac"
+
+#: templates/pages/wages.html:59
+msgid "Recovery wage month (YYYY-MM)"
+msgstr "Mzdový mesiac zrážky (RRRR-MM)"
+
+#: templates/pages/wages.html:66
+msgid "No open advances awaiting assignment."
+msgstr "Žiadne otvorené zálohy nečakajú na priradenie."
+
+#: templates/pages/wages.html:71
+msgid "Assigned recoveries"
+msgstr "Priradené zrážky"
+
+#: templates/pages/wages.html:77
+msgid "Advance"
+msgstr "Záloha"
+
+#: templates/pages/wages.html:78
+msgid "Recovered in"
+msgstr "Zrazené v"
+
+#: templates/pages/wages.html:80
+msgid "Assigned by"
+msgstr "Priradil"
+
+#: templates/pages/wages.html:93
+msgid "No recoveries assigned yet."
+msgstr "Zatiaľ nie sú priradené žiadne zrážky."
+
+#: templates/pages/wages.html:101
 msgid "Recorded gross wages"
 msgstr "Zaznamenané hrubé mzdy"
 
-#: templates/pages/wages.html:42
+#: templates/pages/wages.html:110
 msgid "Recorded by"
 msgstr "Zaznamenal"
 
-#: templates/pages/wages.html:55
+#: templates/pages/wages.html:123
 msgid "No gross wages recorded."
 msgstr "Nie sú zaznamenané žiadne hrubé mzdy."
 
@@ -4116,6 +4240,14 @@ msgstr "Áno, pokračovať"
 #: templates/partials/person_finance_overview.html:4
 msgid "Wage and payslip overview"
 msgstr "Prehľad mzdy a výplatnej pásky"
+
+#: templates/partials/person_finance_overview.html:11
+msgid "Difference"
+msgstr "Rozdiel"
+
+#: templates/partials/person_finance_overview.html:25
+msgid "Computed net does not match the recorded payslip."
+msgstr "Vypočítaná čistá mzda nesúhlasí so zaznamenanou výplatnou páskou."
 
 #: templates/partials/theme_picker.html:3
 #: templates/partials/theme_picker.html:4

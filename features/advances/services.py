@@ -207,6 +207,25 @@ def include_cycle(year: int, month: int, *, actor=None) -> int:
 
 
 @transaction.atomic
+def include_entry(entry: LedgerEntry, *, cycle_key: str, actor=None) -> LedgerEntry:
+    """Lock a single open entry into a settlement cycle (OPEN →
+    INCLUDED_IN_CYCLE). Generic per-entry counterpart of ``include_cycle`` for
+    callers that settle entries individually rather than by window."""
+    _require(
+        entry.settlement_status == SettlementStatus.OPEN,
+        _("Only open entries can be included in a settlement cycle."),
+    )
+    entry.settlement_status = SettlementStatus.INCLUDED_IN_CYCLE
+    entry.cycle_key = cycle_key
+    entry.save(update_fields=["settlement_status", "cycle_key"])
+    record_event(
+        actor, "ledger.entry_included", target=entry.person,
+        reason=cycle_key, entry_id=entry.pk,
+    )
+    return entry
+
+
+@transaction.atomic
 def mark_cycle_deducted(year: int, month: int, *, actor=None) -> int:
     """INCLUDED_IN_CYCLE → DEDUCTED for the cycle (pay has been settled)."""
     key = cycle_key(year, month)

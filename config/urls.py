@@ -196,6 +196,11 @@ if _feature_on("wage_ledger", "wage_ledger"):
     app_routes += [
         path("wages/", wage_views.wage_list, name="wage_list"),
         path("wages/record/", wage_views.wage_record, name="wage_record"),
+        path(
+            "wages/recoveries/assign/",
+            wage_views.wage_recovery_assign,
+            name="wage_recovery_assign",
+        ),
     ]
 
 if _feature_on("feedback", "feedback"):

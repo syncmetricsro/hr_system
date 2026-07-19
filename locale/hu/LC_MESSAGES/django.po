@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-18 07:50+0200\n"
+"POT-Creation-Date: 2026-07-19 20:46+0200\n"
 "Language: hu\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -649,7 +649,7 @@ msgstr "címke"
 #: features/checklists/models.py:22 features/feedback/models.py:25
 #: features/finance/models.py:88 features/logistics/models.py:30
 #: features/logistics/models.py:49 features/logistics/models.py:129
-#: features/messaging/models.py:13
+#: features/messaging/models.py:13 features/wage_ledger/models.py:94
 msgid "active"
 msgstr "aktív"
 
@@ -909,7 +909,7 @@ msgid "end date"
 msgstr "záró dátum"
 
 #: core/projects/models.py:79 core/projects/models.py:137
-#: features/logistics/models.py:96
+#: features/logistics/models.py:96 features/wage_ledger/models.py:102
 msgid "assigned by"
 msgstr "hozzárendelte"
 
@@ -972,7 +972,7 @@ msgstr "eredmény"
 #: core/projects/models.py:134 features/advances/models.py:83
 #: features/checklists/models.py:68 features/finance/models.py:33
 #: features/logistics/models.py:208 features/payslips/models.py:30
-#: features/wage_ledger/models.py:34
+#: features/wage_ledger/models.py:34 features/wage_ledger/models.py:95
 msgid "note"
 msgstr "megjegyzés"
 
@@ -1250,6 +1250,7 @@ msgid "category"
 msgstr "kategória"
 
 #: features/advances/models.py:70 features/finance/models.py:112
+#: features/wage_ledger/models.py:89
 msgid "amount"
 msgstr "összeg"
 
@@ -1298,6 +1299,12 @@ msgstr "főkönyvi tétel"
 msgid "ledger entries"
 msgstr "főkönyvi tételek"
 
+#: features/advances/providers.py:38 templates/pages/ledger.html:4
+#: templates/pages/ledger.html:9 templates/panels/advances_ledger.html:4
+#: tests/test_wage_ledger.py:136 tests/test_wage_ledger.py:181
+msgid "Advances & deductions"
+msgstr "Előlegek és levonások"
+
 #: features/advances/services.py:57
 msgid "Amount must be positive — meaning lives in the entry type."
 msgstr ""
@@ -1324,7 +1331,11 @@ msgstr "A tétel már sztornózva van."
 msgid "Entries without payroll effect cannot be reversed."
 msgstr "Bérhatás nélküli tétel nem sztornózható."
 
-#: features/advances/services.py:233
+#: features/advances/services.py:216
+msgid "Only open entries can be included in a settlement cycle."
+msgstr "Csak nyitott tételek vonhatók be elszámolási ciklusba."
+
+#: features/advances/services.py:252
 msgid "Entry is locked after cycle inclusion; record a reversal instead."
 msgstr "Ciklusba sorolás után a tétel zárolt; rögzítsen sztornót."
 
@@ -1681,9 +1692,9 @@ msgstr "Visszajelzési link létrehozva."
 msgid "Label is required."
 msgstr "A címke kötelező."
 
-#: features/finance/catalog_i18n.py:11 features/wage_ledger/providers.py:17
-#: templates/pages/wages.html:40 tests/test_wage_ledger.py:112
-#: tests/test_wage_ledger.py:134
+#: features/finance/catalog_i18n.py:11 features/wage_ledger/providers.py:18
+#: templates/pages/wages.html:108 tests/test_wage_ledger.py:113
+#: tests/test_wage_ledger.py:135
 msgid "Gross wage"
 msgstr "Bruttó bér"
 
@@ -2380,7 +2391,7 @@ msgstr "üzenetsablonok"
 msgid "Queued"
 msgstr "Sorban áll"
 
-#: features/messaging/models.py:31 templates/pages/payslips.html:31
+#: features/messaging/models.py:31 templates/pages/payslips.html:33
 msgid "Sent"
 msgstr "Elküldve"
 
@@ -2446,6 +2457,7 @@ msgid "period"
 msgstr "időszak"
 
 #: features/payslips/models.py:23 features/wage_ledger/models.py:23
+#: features/wage_ledger/models.py:84 features/wage_ledger/services.py:106
 msgid "Use the YYYY-MM format."
 msgstr "Használja az ÉÉÉÉ-HH formátumot."
 
@@ -2477,8 +2489,8 @@ msgstr "bérjegyzék"
 msgid "payslips"
 msgstr "bérjegyzékek"
 
-#: features/payslips/providers.py:15 tests/test_wage_ledger.py:113
-#: tests/test_wage_ledger.py:135
+#: features/payslips/providers.py:15 tests/test_wage_ledger.py:114
+#: tests/test_wage_ledger.py:138
 msgid "Net payslip"
 msgstr "Nettó bérjegyzék"
 
@@ -2508,11 +2520,11 @@ msgstr ""
 "A bérjegyzék e-mailben történő elküldése nem sikerült. Ellenőrizze a címzett "
 "címét és a levelezési beállításokat."
 
-#: features/payslips/views.py:26
+#: features/payslips/views.py:28
 msgid "Payslip recorded."
 msgstr "Bérjegyzék rögzítve."
 
-#: features/payslips/views.py:51
+#: features/payslips/views.py:54
 #, python-format
 msgid ""
 "Payslip emailed to %(to)s. One-time password (tell the worker by phone/"
@@ -2521,7 +2533,7 @@ msgstr ""
 "Bérjegyzék elküldve: %(to)s. Egyszeri jelszó (telefonon/Messengeren közölje "
 "a munkavállalóval, NE e-mailben): %(pw)s"
 
-#: features/wage_ledger/forms.py:15 templates/pages/payslips.html:21
+#: features/wage_ledger/forms.py:15 templates/pages/payslips.html:22
 msgid "Period (YYYY-MM)"
 msgstr "Időszak (ÉÉÉÉ-HH)"
 
@@ -2541,17 +2553,73 @@ msgstr "bérbejegyzés"
 msgid "wage entries"
 msgstr "bérbejegyzések"
 
-#: features/wage_ledger/models.py:54 features/wage_ledger/services.py:39
+#: features/wage_ledger/models.py:54 features/wage_ledger/services.py:51
 msgid "A wage is already recorded for this person and period."
 msgstr "Ennek a személynek erre az időszakra már rögzítettek bért."
 
-#: features/wage_ledger/services.py:25
+#: features/wage_ledger/models.py:77
+msgid "advance"
+msgstr "előleg"
+
+#: features/wage_ledger/models.py:80
+msgid "recovered in period"
+msgstr "levonás bérhónapja"
+
+#: features/wage_ledger/models.py:104
+msgid "assigned"
+msgstr "hozzárendelve"
+
+#: features/wage_ledger/models.py:107
+msgid "advance recovery"
+msgstr "előleglevonás"
+
+#: features/wage_ledger/models.py:108
+msgid "advance recoveries"
+msgstr "előleglevonások"
+
+#: features/wage_ledger/models.py:116 features/wage_ledger/services.py:135
+msgid "This advance already has an active wage recovery."
+msgstr "Ehhez az előleghez már tartozik aktív bérlevonás."
+
+#: features/wage_ledger/providers.py:34 tests/test_wage_ledger.py:137
+#: tests/test_wage_ledger.py:164 tests/test_wage_ledger.py:190
+msgid "Computed net"
+msgstr "Számított nettó"
+
+#: features/wage_ledger/services.py:37
 msgid "Enter a valid gross amount."
 msgstr "Adjon meg érvényes bruttó összeget."
 
-#: features/wage_ledger/views.py:45
+#: features/wage_ledger/services.py:99
+msgid "Only cash advances can be assigned a wage recovery."
+msgstr "Bérlevonás csak készpénzelőleghez rendelhető."
+
+#: features/wage_ledger/services.py:101
+msgid "This advance is already assigned or settled."
+msgstr "Ez az előleg már hozzá van rendelve vagy el van számolva."
+
+#: features/wage_ledger/services.py:109
+#, python-format
+msgid ""
+"This advance falls in the cycle ending on the 20th; the earliest wage month "
+"that can recover it is %(period)s."
+msgstr "Ez az előleg a 20-án záruló ciklusba tartozik; a legkorábbi bérhónap, amelyből levonható: %(period)s."
+
+#: features/wage_ledger/services.py:117
+msgid "Enter a valid recovery amount."
+msgstr "Adjon meg érvényes levonási összeget."
+
+#: features/wage_ledger/services.py:120
+msgid "Recovery amount must be positive and at most the advance amount."
+msgstr "A levonás összege pozitív legyen, és legfeljebb az előleg összege lehet."
+
+#: features/wage_ledger/views.py:64
 msgid "Gross wage recorded."
 msgstr "A bruttó bér rögzítve."
+
+#: features/wage_ledger/views.py:88
+msgid "Advance recovery assigned."
+msgstr "Az előleglevonás hozzárendelve."
 
 #: templates/layouts/base.html:36 templates/pages/trials_queue.html:4
 msgid "Field"
@@ -2835,7 +2903,7 @@ msgid "Actor"
 msgstr "Végrehajtó"
 
 #: templates/pages/audit_log.html:41 templates/pages/ledger.html:39
-#: templates/pages/payslips.html:24
+#: templates/pages/payslips.html:25
 msgid "Record"
 msgstr "Rögzítés"
 
@@ -3272,20 +3340,16 @@ msgstr "Befejezés"
 msgid "Next"
 msgstr "Tovább"
 
-#: templates/pages/ledger.html:4 templates/pages/ledger.html:9
-#: templates/panels/advances_ledger.html:4
-msgid "Advances & deductions"
-msgstr "Előlegek és levonások"
-
 #: templates/pages/ledger.html:17 templates/panels/advances_ledger.html:33
 msgid "Record entry"
 msgstr "Tétel rögzítése"
 
 #: templates/pages/ledger.html:20 templates/pages/ledger.html:50
 #: templates/pages/ledger.html:79 templates/pages/ledger.html:105
-#: templates/pages/payslips.html:17 templates/pages/payslips.html:31
+#: templates/pages/payslips.html:18 templates/pages/payslips.html:33
 #: templates/pages/person_detail.html:8 templates/pages/person_detail.html:230
-#: templates/pages/wages.html:38
+#: templates/pages/wages.html:40 templates/pages/wages.html:76
+#: templates/pages/wages.html:106
 msgid "Person"
 msgstr "Személy"
 
@@ -3308,8 +3372,8 @@ msgstr "Kategória"
 msgid "Amount (EUR)"
 msgstr "Összeg (EUR)"
 
-#: templates/pages/ledger.html:38 templates/pages/payslips.html:23
-#: templates/pages/transport_trends.html:44 templates/pages/wages.html:41
+#: templates/pages/ledger.html:38 templates/pages/payslips.html:24
+#: templates/pages/transport_trends.html:44 templates/pages/wages.html:109
 #: templates/panels/advances_ledger.html:32
 msgid "Note"
 msgstr "Megjegyzés"
@@ -3333,6 +3397,7 @@ msgid "Company"
 msgstr "Cég"
 
 #: templates/pages/ledger.html:50 templates/pages/ledger.html:105
+#: templates/pages/wages.html:42 templates/pages/wages.html:79
 msgid "Amount"
 msgstr "Összeg"
 
@@ -3453,40 +3518,40 @@ msgstr ""
 "és telefonon vagy Messengeren kell közölni a munkavállalóval — e-mailben "
 "soha."
 
-#: templates/pages/payslips.html:14
+#: templates/pages/payslips.html:15
 msgid "Record payslip"
 msgstr "Bérjegyzék rögzítése"
 
-#: templates/pages/payslips.html:19
+#: templates/pages/payslips.html:20
 msgid "no email!"
 msgstr "nincs e-mail!"
 
-#: templates/pages/payslips.html:22
+#: templates/pages/payslips.html:23
 msgid "Net amount (EUR)"
 msgstr "Nettó összeg (EUR)"
 
-#: templates/pages/payslips.html:29
+#: templates/pages/payslips.html:31
 msgid "Recorded payslips"
 msgstr "Rögzített bérjegyzékek"
 
-#: templates/pages/payslips.html:31 templates/pages/wages.html:39
+#: templates/pages/payslips.html:33 templates/pages/wages.html:107
 #: templates/partials/person_finance_overview.html:9
 msgid "Period"
 msgstr "Időszak"
 
-#: templates/pages/payslips.html:31
+#: templates/pages/payslips.html:33
 msgid "Net amount"
 msgstr "Nettó összeg"
 
-#: templates/pages/payslips.html:43
+#: templates/pages/payslips.html:46
 msgid "Resend (new password)"
 msgstr "Újraküldés (új jelszó)"
 
-#: templates/pages/payslips.html:43
+#: templates/pages/payslips.html:46
 msgid "Send encrypted PDF"
 msgstr "Titkosított PDF küldése"
 
-#: templates/pages/payslips.html:49
+#: templates/pages/payslips.html:53
 msgid "No payslips recorded."
 msgstr "Nincs rögzített bérjegyzék."
 
@@ -3946,14 +4011,73 @@ msgid "Record gross wage"
 msgstr "Bruttó bér rögzítése"
 
 #: templates/pages/wages.html:33
+msgid "Advance recoveries"
+msgstr "Előleglevonások"
+
+#: templates/pages/wages.html:34
+msgid ""
+"An advance given after the 20th falls in the next cycle and is recovered "
+"from the following wage month — deferred advances are flagged, never "
+"silently moved."
+msgstr "A 20-a után adott előleg a következő ciklusba esik, és a következő bérhónapból kerül levonásra — a halasztott előlegek jelölést kapnak, soha nem kerülnek át némán."
+
+#: templates/pages/wages.html:35
+msgid "Awaiting assignment"
+msgstr "Hozzárendelésre vár"
+
+#: templates/pages/wages.html:41
+msgid "Given"
+msgstr "Kiadva"
+
+#: templates/pages/wages.html:43
+msgid "Suggested wage month"
+msgstr "Javasolt bérhónap"
+
+#: templates/pages/wages.html:44 templates/pages/wages.html:60
+msgid "Assign"
+msgstr "Hozzárendelés"
+
+#: templates/pages/wages.html:53 templates/pages/wages.html:88
+msgid "Deferred to next wage month"
+msgstr "Következő bérhónapra halasztva"
+
+#: templates/pages/wages.html:59
+msgid "Recovery wage month (YYYY-MM)"
+msgstr "Levonási bérhónap (ÉÉÉÉ-HH)"
+
+#: templates/pages/wages.html:66
+msgid "No open advances awaiting assignment."
+msgstr "Nincs hozzárendelésre váró nyitott előleg."
+
+#: templates/pages/wages.html:71
+msgid "Assigned recoveries"
+msgstr "Hozzárendelt levonások"
+
+#: templates/pages/wages.html:77
+msgid "Advance"
+msgstr "Előleg"
+
+#: templates/pages/wages.html:78
+msgid "Recovered in"
+msgstr "Levonás hónapja"
+
+#: templates/pages/wages.html:80
+msgid "Assigned by"
+msgstr "Hozzárendelte"
+
+#: templates/pages/wages.html:93
+msgid "No recoveries assigned yet."
+msgstr "Még nincs hozzárendelt levonás."
+
+#: templates/pages/wages.html:101
 msgid "Recorded gross wages"
 msgstr "Rögzített bruttó bérek"
 
-#: templates/pages/wages.html:42
+#: templates/pages/wages.html:110
 msgid "Recorded by"
 msgstr "Rögzítette"
 
-#: templates/pages/wages.html:55
+#: templates/pages/wages.html:123
 msgid "No gross wages recorded."
 msgstr "Nincs rögzített bruttó bér."
 
@@ -4126,6 +4250,14 @@ msgstr "Igen, folytatás"
 #: templates/partials/person_finance_overview.html:4
 msgid "Wage and payslip overview"
 msgstr "Bér- és bérjegyzék-áttekintés"
+
+#: templates/partials/person_finance_overview.html:11
+msgid "Difference"
+msgstr "Különbség"
+
+#: templates/partials/person_finance_overview.html:25
+msgid "Computed net does not match the recorded payslip."
+msgstr "A számított nettó nem egyezik a rögzített bérjegyzékkel."
 
 #: templates/partials/theme_picker.html:3
 #: templates/partials/theme_picker.html:4

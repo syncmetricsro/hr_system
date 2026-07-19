@@ -1,19 +1,21 @@
 from __future__ import annotations
 
 from django.contrib import messages
-from django.core.exceptions import ValidationError
+from django.core.exceptions import PermissionDenied, ValidationError
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import gettext as _
 
-from core.accounts.permissions import Action, require_action
+from core.accounts.permissions import Action, can, require_action
 from core.people.models import Person
 from features.payslips.models import Payslip
 from features.payslips.services import PayslipError, record_payslip, send_payslip
 
 
-@require_action(Action.PAYSLIP_MANAGE)
+@require_action(Action.PAYSLIP_VIEW)
 def payslip_list(request):
     if request.method == "POST":
+        if not can(request.user, Action.PAYSLIP_MANAGE):
+            raise PermissionDenied
         person = get_object_or_404(Person, pk=request.POST.get("person"))
         try:
             record_payslip(
@@ -31,6 +33,7 @@ def payslip_list(request):
     return render(request, "pages/payslips.html", {
         "payslips": Payslip.objects.select_related("person")[:100],
         "people": Person.objects.order_by("last_name", "first_name"),
+        "may_manage": can(request.user, Action.PAYSLIP_MANAGE),
     })
 
 

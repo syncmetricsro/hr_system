@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-18 07:50+0200\n"
+"POT-Creation-Date: 2026-07-19 20:46+0200\n"
 "Language: uk\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -650,7 +650,7 @@ msgstr "позначка"
 #: features/checklists/models.py:22 features/feedback/models.py:25
 #: features/finance/models.py:88 features/logistics/models.py:30
 #: features/logistics/models.py:49 features/logistics/models.py:129
-#: features/messaging/models.py:13
+#: features/messaging/models.py:13 features/wage_ledger/models.py:94
 msgid "active"
 msgstr "активний"
 
@@ -910,7 +910,7 @@ msgid "end date"
 msgstr "дата завершення"
 
 #: core/projects/models.py:79 core/projects/models.py:137
-#: features/logistics/models.py:96
+#: features/logistics/models.py:96 features/wage_ledger/models.py:102
 msgid "assigned by"
 msgstr "призначив"
 
@@ -973,7 +973,7 @@ msgstr "результат"
 #: core/projects/models.py:134 features/advances/models.py:83
 #: features/checklists/models.py:68 features/finance/models.py:33
 #: features/logistics/models.py:208 features/payslips/models.py:30
-#: features/wage_ledger/models.py:34
+#: features/wage_ledger/models.py:34 features/wage_ledger/models.py:95
 msgid "note"
 msgstr "нотатка"
 
@@ -1252,6 +1252,7 @@ msgid "category"
 msgstr "категорія"
 
 #: features/advances/models.py:70 features/finance/models.py:112
+#: features/wage_ledger/models.py:89
 msgid "amount"
 msgstr "сума"
 
@@ -1300,6 +1301,12 @@ msgstr "запис у книзі"
 msgid "ledger entries"
 msgstr "записи в книзі"
 
+#: features/advances/providers.py:38 templates/pages/ledger.html:4
+#: templates/pages/ledger.html:9 templates/panels/advances_ledger.html:4
+#: tests/test_wage_ledger.py:136 tests/test_wage_ledger.py:181
+msgid "Advances & deductions"
+msgstr "Аванси та утримання"
+
 #: features/advances/services.py:57
 msgid "Amount must be positive — meaning lives in the entry type."
 msgstr "Сума має бути додатною — зміст визначає тип запису."
@@ -1325,7 +1332,11 @@ msgstr "Запис уже сторновано."
 msgid "Entries without payroll effect cannot be reversed."
 msgstr "Записи без впливу на зарплату не можна сторнувати."
 
-#: features/advances/services.py:233
+#: features/advances/services.py:216
+msgid "Only open entries can be included in a settlement cycle."
+msgstr "До розрахункового циклу можна включити лише відкриті записи."
+
+#: features/advances/services.py:252
 msgid "Entry is locked after cycle inclusion; record a reversal instead."
 msgstr "Після включення в цикл запис заблоковано; внесіть сторно."
 
@@ -1683,9 +1694,9 @@ msgstr "Посилання для відгуків створено."
 msgid "Label is required."
 msgstr "Назва обов’язкова."
 
-#: features/finance/catalog_i18n.py:11 features/wage_ledger/providers.py:17
-#: templates/pages/wages.html:40 tests/test_wage_ledger.py:112
-#: tests/test_wage_ledger.py:134
+#: features/finance/catalog_i18n.py:11 features/wage_ledger/providers.py:18
+#: templates/pages/wages.html:108 tests/test_wage_ledger.py:113
+#: tests/test_wage_ledger.py:135
 msgid "Gross wage"
 msgstr "Валова зарплата"
 
@@ -2380,7 +2391,7 @@ msgstr "шаблони повідомлень"
 msgid "Queued"
 msgstr "У черзі"
 
-#: features/messaging/models.py:31 templates/pages/payslips.html:31
+#: features/messaging/models.py:31 templates/pages/payslips.html:33
 msgid "Sent"
 msgstr "Надіслано"
 
@@ -2446,6 +2457,7 @@ msgid "period"
 msgstr "період"
 
 #: features/payslips/models.py:23 features/wage_ledger/models.py:23
+#: features/wage_ledger/models.py:84 features/wage_ledger/services.py:106
 msgid "Use the YYYY-MM format."
 msgstr "Використовуйте формат РРРР-ММ."
 
@@ -2477,8 +2489,8 @@ msgstr "розрахунковий лист"
 msgid "payslips"
 msgstr "розрахункові листи"
 
-#: features/payslips/providers.py:15 tests/test_wage_ledger.py:113
-#: tests/test_wage_ledger.py:135
+#: features/payslips/providers.py:15 tests/test_wage_ledger.py:114
+#: tests/test_wage_ledger.py:138
 msgid "Net payslip"
 msgstr "Розрахунковий лист із чистою зарплатою"
 
@@ -2508,11 +2520,11 @@ msgstr ""
 "Не вдалося надіслати розрахунковий лист електронною поштою. Перевірте адресу "
 "одержувача та налаштування пошти."
 
-#: features/payslips/views.py:26
+#: features/payslips/views.py:28
 msgid "Payslip recorded."
 msgstr "Розрахунковий лист збережено."
 
-#: features/payslips/views.py:51
+#: features/payslips/views.py:54
 #, python-format
 msgid ""
 "Payslip emailed to %(to)s. One-time password (tell the worker by phone/"
@@ -2521,7 +2533,7 @@ msgstr ""
 "Розрахунковий лист надіслано на %(to)s. Одноразовий пароль (повідомте "
 "працівнику телефоном/через Messenger, НЕ електронною поштою): %(pw)s"
 
-#: features/wage_ledger/forms.py:15 templates/pages/payslips.html:21
+#: features/wage_ledger/forms.py:15 templates/pages/payslips.html:22
 msgid "Period (YYYY-MM)"
 msgstr "Період (РРРР-ММ)"
 
@@ -2541,17 +2553,73 @@ msgstr "запис про зарплату"
 msgid "wage entries"
 msgstr "записи про зарплату"
 
-#: features/wage_ledger/models.py:54 features/wage_ledger/services.py:39
+#: features/wage_ledger/models.py:54 features/wage_ledger/services.py:51
 msgid "A wage is already recorded for this person and period."
 msgstr "Зарплату для цієї особи за цей період уже записано."
 
-#: features/wage_ledger/services.py:25
+#: features/wage_ledger/models.py:77
+msgid "advance"
+msgstr "аванс"
+
+#: features/wage_ledger/models.py:80
+msgid "recovered in period"
+msgstr "період утримання"
+
+#: features/wage_ledger/models.py:104
+msgid "assigned"
+msgstr "призначено"
+
+#: features/wage_ledger/models.py:107
+msgid "advance recovery"
+msgstr "утримання авансу"
+
+#: features/wage_ledger/models.py:108
+msgid "advance recoveries"
+msgstr "утримання авансів"
+
+#: features/wage_ledger/models.py:116 features/wage_ledger/services.py:135
+msgid "This advance already has an active wage recovery."
+msgstr "Цей аванс уже має активне утримання із зарплати."
+
+#: features/wage_ledger/providers.py:34 tests/test_wage_ledger.py:137
+#: tests/test_wage_ledger.py:164 tests/test_wage_ledger.py:190
+msgid "Computed net"
+msgstr "Розрахована чиста зарплата"
+
+#: features/wage_ledger/services.py:37
 msgid "Enter a valid gross amount."
 msgstr "Введіть дійсну валову суму."
 
-#: features/wage_ledger/views.py:45
+#: features/wage_ledger/services.py:99
+msgid "Only cash advances can be assigned a wage recovery."
+msgstr "Утримання із зарплати можна призначити лише готівковим авансам."
+
+#: features/wage_ledger/services.py:101
+msgid "This advance is already assigned or settled."
+msgstr "Цей аванс уже призначено або розраховано."
+
+#: features/wage_ledger/services.py:109
+#, python-format
+msgid ""
+"This advance falls in the cycle ending on the 20th; the earliest wage month "
+"that can recover it is %(period)s."
+msgstr "Цей аванс належить до циклу, що закінчується 20-го; найраніший зарплатний місяць для утримання — %(period)s."
+
+#: features/wage_ledger/services.py:117
+msgid "Enter a valid recovery amount."
+msgstr "Введіть коректну суму утримання."
+
+#: features/wage_ledger/services.py:120
+msgid "Recovery amount must be positive and at most the advance amount."
+msgstr "Сума утримання має бути додатною і не більшою за суму авансу."
+
+#: features/wage_ledger/views.py:64
 msgid "Gross wage recorded."
 msgstr "Валову зарплату записано."
+
+#: features/wage_ledger/views.py:88
+msgid "Advance recovery assigned."
+msgstr "Утримання авансу призначено."
 
 #: templates/layouts/base.html:36 templates/pages/trials_queue.html:4
 msgid "Field"
@@ -2837,7 +2905,7 @@ msgid "Actor"
 msgstr "Виконавець"
 
 #: templates/pages/audit_log.html:41 templates/pages/ledger.html:39
-#: templates/pages/payslips.html:24
+#: templates/pages/payslips.html:25
 msgid "Record"
 msgstr "Записати"
 
@@ -3271,20 +3339,16 @@ msgstr "Завершити"
 msgid "Next"
 msgstr "Далі"
 
-#: templates/pages/ledger.html:4 templates/pages/ledger.html:9
-#: templates/panels/advances_ledger.html:4
-msgid "Advances & deductions"
-msgstr "Аванси та утримання"
-
 #: templates/pages/ledger.html:17 templates/panels/advances_ledger.html:33
 msgid "Record entry"
 msgstr "Внести запис"
 
 #: templates/pages/ledger.html:20 templates/pages/ledger.html:50
 #: templates/pages/ledger.html:79 templates/pages/ledger.html:105
-#: templates/pages/payslips.html:17 templates/pages/payslips.html:31
+#: templates/pages/payslips.html:18 templates/pages/payslips.html:33
 #: templates/pages/person_detail.html:8 templates/pages/person_detail.html:230
-#: templates/pages/wages.html:38
+#: templates/pages/wages.html:40 templates/pages/wages.html:76
+#: templates/pages/wages.html:106
 msgid "Person"
 msgstr "Особа"
 
@@ -3307,8 +3371,8 @@ msgstr "Категорія"
 msgid "Amount (EUR)"
 msgstr "Сума (EUR)"
 
-#: templates/pages/ledger.html:38 templates/pages/payslips.html:23
-#: templates/pages/transport_trends.html:44 templates/pages/wages.html:41
+#: templates/pages/ledger.html:38 templates/pages/payslips.html:24
+#: templates/pages/transport_trends.html:44 templates/pages/wages.html:109
 #: templates/panels/advances_ledger.html:32
 msgid "Note"
 msgstr "Нотатка"
@@ -3332,6 +3396,7 @@ msgid "Company"
 msgstr "Компанія"
 
 #: templates/pages/ledger.html:50 templates/pages/ledger.html:105
+#: templates/pages/wages.html:42 templates/pages/wages.html:79
 msgid "Amount"
 msgstr "Сума"
 
@@ -3454,40 +3519,40 @@ msgstr ""
 "раз і його слід повідомити працівнику телефоном або в Messenger — ніколи "
 "електронною поштою."
 
-#: templates/pages/payslips.html:14
+#: templates/pages/payslips.html:15
 msgid "Record payslip"
 msgstr "Внести розрахунковий лист"
 
-#: templates/pages/payslips.html:19
+#: templates/pages/payslips.html:20
 msgid "no email!"
 msgstr "немає ел. пошти!"
 
-#: templates/pages/payslips.html:22
+#: templates/pages/payslips.html:23
 msgid "Net amount (EUR)"
 msgstr "Чиста сума (EUR)"
 
-#: templates/pages/payslips.html:29
+#: templates/pages/payslips.html:31
 msgid "Recorded payslips"
 msgstr "Збережені розрахункові листи"
 
-#: templates/pages/payslips.html:31 templates/pages/wages.html:39
+#: templates/pages/payslips.html:33 templates/pages/wages.html:107
 #: templates/partials/person_finance_overview.html:9
 msgid "Period"
 msgstr "Період"
 
-#: templates/pages/payslips.html:31
+#: templates/pages/payslips.html:33
 msgid "Net amount"
 msgstr "Чиста сума"
 
-#: templates/pages/payslips.html:43
+#: templates/pages/payslips.html:46
 msgid "Resend (new password)"
 msgstr "Надіслати знову (новий пароль)"
 
-#: templates/pages/payslips.html:43
+#: templates/pages/payslips.html:46
 msgid "Send encrypted PDF"
 msgstr "Надіслати зашифрований PDF"
 
-#: templates/pages/payslips.html:49
+#: templates/pages/payslips.html:53
 msgid "No payslips recorded."
 msgstr "Немає збережених розрахункових листів."
 
@@ -3946,14 +4011,73 @@ msgid "Record gross wage"
 msgstr "Записати валову зарплату"
 
 #: templates/pages/wages.html:33
+msgid "Advance recoveries"
+msgstr "Утримання авансів"
+
+#: templates/pages/wages.html:34
+msgid ""
+"An advance given after the 20th falls in the next cycle and is recovered "
+"from the following wage month — deferred advances are flagged, never "
+"silently moved."
+msgstr "Аванс, виданий після 20-го числа, потрапляє до наступного циклу й утримується з наступного зарплатного місяця — відкладені аванси позначаються, а не переносяться мовчки."
+
+#: templates/pages/wages.html:35
+msgid "Awaiting assignment"
+msgstr "Очікує призначення"
+
+#: templates/pages/wages.html:41
+msgid "Given"
+msgstr "Видано"
+
+#: templates/pages/wages.html:43
+msgid "Suggested wage month"
+msgstr "Пропонований зарплатний місяць"
+
+#: templates/pages/wages.html:44 templates/pages/wages.html:60
+msgid "Assign"
+msgstr "Призначити"
+
+#: templates/pages/wages.html:53 templates/pages/wages.html:88
+msgid "Deferred to next wage month"
+msgstr "Відкладено на наступний зарплатний місяць"
+
+#: templates/pages/wages.html:59
+msgid "Recovery wage month (YYYY-MM)"
+msgstr "Зарплатний місяць утримання (РРРР-ММ)"
+
+#: templates/pages/wages.html:66
+msgid "No open advances awaiting assignment."
+msgstr "Немає відкритих авансів, що очікують призначення."
+
+#: templates/pages/wages.html:71
+msgid "Assigned recoveries"
+msgstr "Призначені утримання"
+
+#: templates/pages/wages.html:77
+msgid "Advance"
+msgstr "Аванс"
+
+#: templates/pages/wages.html:78
+msgid "Recovered in"
+msgstr "Утримано у"
+
+#: templates/pages/wages.html:80
+msgid "Assigned by"
+msgstr "Призначив"
+
+#: templates/pages/wages.html:93
+msgid "No recoveries assigned yet."
+msgstr "Поки немає призначених утримань."
+
+#: templates/pages/wages.html:101
 msgid "Recorded gross wages"
 msgstr "Записані валові зарплати"
 
-#: templates/pages/wages.html:42
+#: templates/pages/wages.html:110
 msgid "Recorded by"
 msgstr "Записано користувачем"
 
-#: templates/pages/wages.html:55
+#: templates/pages/wages.html:123
 msgid "No gross wages recorded."
 msgstr "Валових зарплат не записано."
 
@@ -4126,6 +4250,14 @@ msgstr "Так, продовжити"
 #: templates/partials/person_finance_overview.html:4
 msgid "Wage and payslip overview"
 msgstr "Огляд зарплати та розрахункового листа"
+
+#: templates/partials/person_finance_overview.html:11
+msgid "Difference"
+msgstr "Різниця"
+
+#: templates/partials/person_finance_overview.html:25
+msgid "Computed net does not match the recorded payslip."
+msgstr "Розрахована чиста зарплата не збігається із зафіксованим розрахунковим листом."
 
 #: templates/partials/theme_picker.html:3
 #: templates/partials/theme_picker.html:4

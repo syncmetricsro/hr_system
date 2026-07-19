@@ -107,13 +107,29 @@ def person_finance_series(request, person) -> list[dict]:
 
 
 def person_finance_overview(request, person) -> dict | None:
-    """Merge independently registered money series into period-aligned rows."""
+    """Merge independently registered money series into period-aligned rows.
+
+    Series may tag themselves with a ``kind``; when one series is a
+    ``computed_net`` and another a ``recorded_net``, core adds a per-period
+    difference column (computed − recorded) so a derived figure can be
+    reconciled against an independently recorded one. Pure arithmetic — core
+    knows nothing about how either side is produced.
+    """
     series = person_finance_series(request, person)
     periods = sorted(
         {period for item in series for period in item["periods"]}, reverse=True
     )
     if not periods:
         return None
+
+    def _index_of(kind: str) -> int | None:
+        return next(
+            (i for i, item in enumerate(series) if item.get("kind") == kind), None
+        )
+
+    computed_idx = _index_of("computed_net")
+    recorded_idx = _index_of("recorded_net")
+    has_delta = computed_idx is not None and recorded_idx is not None
 
     rows = []
     for period in periods:
@@ -125,8 +141,16 @@ def person_finance_overview(request, person) -> dict | None:
                 if value is None
                 else {"amount": value[0], "currency": value[1]}
             )
-        rows.append({"period": period, "cells": cells})
-    return {"series": series, "rows": rows}
+        delta = None
+        if has_delta and cells[computed_idx] and cells[recorded_idx]:
+            difference = cells[computed_idx]["amount"] - cells[recorded_idx]["amount"]
+            delta = {
+                "amount": difference,
+                "currency": cells[computed_idx]["currency"],
+                "mismatch": difference != 0,
+            }
+        rows.append({"period": period, "cells": cells, "delta": delta})
+    return {"series": series, "rows": rows, "has_delta": has_delta}
 
 
 def exit_relevant(person) -> bool:

@@ -10,6 +10,7 @@
   <p class="muted">{% trans "Encrypted PDF by email; the one-time password is shown here once and must be given to the worker by phone or Messenger — never by email." %}</p>
 </section>
 
+{% if may_manage %}
 <section class="panel">
   <h2>{% trans "Record payslip" %}</h2>
   <form class="stack" method="post" action="{% url 'payslip_list' %}">
@@ -24,6 +25,7 @@
     <button class="button button-primary" type="submit">{% trans "Record" %}</button>
   </form>
 </section>
+{% endif %}
 
 <section class="panel">
   <h2>{% trans "Recorded payslips" %}</h2>
@@ -37,12 +39,14 @@
           <td>{{ slip.net_amount }} {{ slip.currency }}</td>
           <td>{% if slip.sent_at %}{{ slip.sent_at|date:"Y-m-d H:i" }} → {{ slip.sent_to }}{% else %}—{% endif %}</td>
           <td>
+            {% if may_manage %}
             <form method="post" action="{% url 'payslip_send' slip.pk %}">
               {% csrf_token %}
               <button class="button button-secondary" type="submit">
                 {% if slip.sent_at %}{% trans "Resend (new password)" %}{% else %}{% trans "Send encrypted PDF" %}{% endif %}
               </button>
             </form>
+            {% endif %}
           </td>
         </tr>
       {% empty %}

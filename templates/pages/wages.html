@@ -30,6 +30,74 @@
 {% endif %}
 
 <section class="panel">
+  <h2>{% trans "Advance recoveries" %}</h2>
+  <p class="muted">{% trans "An advance given after the 20th falls in the next cycle and is recovered from the following wage month — deferred advances are flagged, never silently moved." %}</p>
+  <h3>{% trans "Awaiting assignment" %}</h3>
+  <div class="data-table-scroll">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th scope="col">{% trans "Person" %}</th>
+          <th scope="col">{% trans "Given" %}</th>
+          <th scope="col">{% trans "Amount" %}</th>
+          <th scope="col">{% trans "Suggested wage month" %}</th>
+          {% if may_manage %}<th scope="col">{% trans "Assign" %}</th>{% endif %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in pending_advances %}
+          <tr>
+            <td><a href="{% url 'person_detail' item.entry.person_id %}">{{ item.entry.person }}</a></td>
+            <td>{{ item.entry.entry_date|date:"Y-m-d" }}</td>
+            <td>{{ item.entry.amount }} {{ item.entry.currency }}</td>
+            <td>{{ item.suggested }}{% if item.deferred %} <span class="badge">{% trans "Deferred to next wage month" %}</span>{% endif %}</td>
+            {% if may_manage %}
+              <td>
+                <form class="inline-form" method="post" action="{% url 'wage_recovery_assign' %}">
+                  {% csrf_token %}
+                  <input type="hidden" name="advance" value="{{ item.entry.pk }}">
+                  <input type="text" name="period" value="{{ item.suggested }}" pattern="\d{4}-\d{2}" size="7" aria-label="{% trans 'Recovery wage month (YYYY-MM)' %}">
+                  <button class="button button-secondary" type="submit">{% trans "Assign" %}</button>
+                </form>
+              </td>
+            {% endif %}
+          </tr>
+        {% empty %}
+          <tr><td colspan="{% if may_manage %}5{% else %}4{% endif %}" class="muted">{% trans "No open advances awaiting assignment." %}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <h3>{% trans "Assigned recoveries" %}</h3>
+  <div class="data-table-scroll">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th scope="col">{% trans "Person" %}</th>
+          <th scope="col">{% trans "Advance" %}</th>
+          <th scope="col">{% trans "Recovered in" %}</th>
+          <th scope="col">{% trans "Amount" %}</th>
+          <th scope="col">{% trans "Assigned by" %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for recovery in recoveries %}
+          <tr>
+            <td><a href="{% url 'person_detail' recovery.advance.person_id %}">{{ recovery.advance.person }}</a></td>
+            <td>{{ recovery.advance.amount }} {{ recovery.advance.currency }} · {{ recovery.advance.entry_date|date:"Y-m-d" }}</td>
+            <td>{{ recovery.recovered_in_period }}{% if recovery.is_deferred %} <span class="badge">{% trans "Deferred to next wage month" %}</span>{% endif %}</td>
+            <td>{{ recovery.amount }} {{ recovery.advance.currency }}</td>
+            <td>{{ recovery.assigned_by|default:"—" }}</td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="5" class="muted">{% trans "No recoveries assigned yet." %}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="panel">
   <h2>{% trans "Recorded gross wages" %}</h2>
   <div class="data-table-scroll">
     <table class="data-table">

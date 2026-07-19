@@ -10,10 +10,15 @@ class AdvancesConfig(AppConfig):
         # Feature -> core registration (ADR 0022): person-card ledger panel.
         from django.apps import apps as django_apps
 
-        from core.ui.registry import register_person_panel
+        from core.ui.registry import (
+            register_person_finance_series,
+            register_person_panel,
+        )
         from features.advances.panels import ledger_panel
+        from features.advances.providers import advances_cycle_series
 
         register_person_panel("panels/advances_ledger.html", ledger_panel, order=45)
+        register_person_finance_series(advances_cycle_series, order=20)
 
         # Feature -> feature (flag-guarded): approved equipment charges land
         # in the ledger as linked PAY_DEDUCTIONs (§5.8). Only when logistics

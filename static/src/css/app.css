@@ -1100,6 +1100,14 @@ select {
   text-transform: uppercase;
 }
 
+/* Reconciliation mismatch: a derived money figure disagrees with the
+   independently recorded one — the error class the overview exists to catch. */
+.finance-delta-mismatch {
+  color: var(--danger);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
 .readiness-attention {
   margin: 0 0 var(--space-4);
   padding: var(--space-3) var(--space-4);
