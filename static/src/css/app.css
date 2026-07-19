@@ -1100,6 +1100,17 @@ select {
   text-transform: uppercase;
 }
 
+/* Audit log: timestamps and record references stay on one line; the free-text
+   reason column absorbs the width instead. */
+.audit-table {
+  min-width: 52rem;
+}
+
+.audit-table .audit-when,
+.audit-table td:nth-child(4) {
+  white-space: nowrap;
+}
+
 /* Reconciliation mismatch: a derived money figure disagrees with the
    independently recorded one — the error class the overview exists to catch. */
 .finance-delta-mismatch {

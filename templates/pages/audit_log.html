@@ -32,30 +32,32 @@
 </section>
 
 <section class="panel">
-  <table>
-    <thead>
-      <tr>
-        <th>{% trans "When" %}</th>
-        <th>{% trans "Actor" %}</th>
-        <th>{% trans "Action" %}</th>
-        <th>{% trans "Record" %}</th>
-        <th>{% trans "Reason" %}</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for event in page %}
+  <div class="data-table-scroll">
+    <table class="data-table audit-table">
+      <thead>
         <tr>
-          <td>{{ event.created_at|date:"Y-m-d H:i:s" }}</td>
-          <td>{% if event.actor %}{{ event.actor.email }}{% else %}<span class="muted">{% trans "system" %}</span>{% endif %}</td>
-          <td>{{ event.action_label }}</td>
-          <td>{% if event.target_type %}{{ event.target_type }} #{{ event.target_id }}{% else %}—{% endif %}</td>
-          <td class="muted">{{ event.reason|default:"—"|truncatechars:80 }}</td>
+          <th scope="col">{% trans "When" %}</th>
+          <th scope="col">{% trans "Actor" %}</th>
+          <th scope="col">{% trans "Action" %}</th>
+          <th scope="col">{% trans "Record" %}</th>
+          <th scope="col">{% trans "Reason" %}</th>
         </tr>
-      {% empty %}
-        <tr><td colspan="5" class="muted">{% trans "No audit events match the filter." %}</td></tr>
-      {% endfor %}
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        {% for event in page %}
+          <tr>
+            <td class="audit-when">{{ event.created_at|date:"Y-m-d H:i:s" }}</td>
+            <td>{% if event.actor %}{{ event.actor.email }}{% else %}<span class="muted">{% trans "system" %}</span>{% endif %}</td>
+            <td>{{ event.action_label }}</td>
+            <td>{% if event.target_type %}{{ event.target_type }} #{{ event.target_id }}{% else %}—{% endif %}</td>
+            <td class="muted">{{ event.reason|default:"—"|truncatechars:80 }}</td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="5" class="muted">{% trans "No audit events match the filter." %}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 
   {% if page.has_other_pages %}
     <div class="action-row">
