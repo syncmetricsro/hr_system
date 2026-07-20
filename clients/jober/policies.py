@@ -38,6 +38,7 @@ ACTION_ROLES: dict[Action, frozenset[Role]] = {
     Action.USER_MANAGE: frozenset({_MANAGER}),
     Action.BLACKLIST_PROPOSE: frozenset({_COORDINATOR, _MANAGER}),
     Action.BLACKLIST_DECIDE: frozenset({_MANAGER}),
+    Action.PERSON_ARCHIVE: frozenset({_MANAGER}),
     Action.SMS_MANAGE_TEMPLATES: frozenset({_MANAGER}),
     # Checklists feature is off for Jober (Stage C, ADR 0022); grant mirrors
     # the coordinator/manager pattern should Jober ever enable it.

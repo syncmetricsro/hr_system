@@ -1,5 +1,184 @@
 # Test Journal
 
+## 2026-07-17 — Composite blacklist fingerprint
+
+- Full unit suite in the pinned test container: **388 passed**, including nine
+  new blacklist/intake tests. New coverage: diacritic folding with ASCII hash-stability, canonical composite
+  format and token-order insensitivity, type+hash matching in `check_matches`,
+  inactive-until-approved composite fingerprints with no raw maiden name
+  stored, person-create composite match without an ID code, both-tier match
+  reasons, locale-aware "Matched via" queue rendering, optional maiden name on
+  manual proposal, and intake composite re-entry with the transient value never
+  persisted as an answer.
+- Corvinum-flags lane (`scripts/test_corvinum.sh`): **209 passed, 7 skipped**.
+  The queue-rendering test asserts against the response's own locale because
+  Corvinum ships only SK/HU.
+- Ruff clean across core/features/clients/config/tests.
+- The full-suite run exposed a pre-existing RBAC completeness failure
+  (`person.archive` unmapped for Jober) on the base branch; fixed in this
+  slice and the suite is green again.
+- Complete Playwright suite after the i18n compile: **39 passed** with the new
+  compiled catalogs and both client seeds.
+
+## 2026-07-16 — In-place activation-checklist toggles
+
+- Corvinum checklist unit slice: **8 passed**, including the existing
+  full-page redirect and the new htmx fragment response with updated critical
+  count, completion state, and staff attribution.
+- Relevant Ruff check passed for the checklist view, unit coverage, and browser
+  scenario.
+- Complete Playwright suite: **39 passed**. The Corvinum browser test now
+  verifies CSRF remains present, the person URL is unchanged, the updated
+  checklist is rendered, and scroll position is preserved after clicking a
+  checklist item.
+- Public `corvinum-staging` acceptance after deploying image
+  `jober-platform:corvinum-demo-6abdb56`: Dokku container checks passed, no
+  migrations remained, and HTTPS health, Slovak login, and CSS routes returned
+  200.
+
+## 2026-07-15 — CorvinumEU public staging smoke verification
+
+- Verified the fictional `corvinum-staging` deployment on syncmetric-prime:
+  Gunicorn running on port 8000; HTTPS `/sk/` unauthenticated redirect to the
+  Slovak login; HTTPS login `200`; secure Corvinum CSRF cookie; and static CSS
+  `200 text/css`.
+- Applied migrations and seeded published Recruiter intake v3 plus the
+  fictional CorvinumEU scenario.
+- Provider-backed staging acceptance also passed: the read-only,
+  config-scoped Doppler SMTP runtime configuration delivered an encrypted
+  fictional payslip PDF to the controlled test inbox. No provider credential,
+  recipient, service-token value, or one-time PDF password was logged.
+
+## 2026-07-15 — Payslip resend recipient and SMTP-error handling
+
+- Added coverage for resending to the prior successful recipient after a
+  person-email change, plus SMTP recipient rejection becoming a safe
+  `PayslipError` without recording a delivery.
+
+## 2026-07-15 — Corvinum sidebar icon-subset guard
+
+- Added a template guard that rejects sidebar Material Symbol names absent from
+  the committed self-hosted font subset, preventing raw ligature text from
+  appearing in navigation.
+
+## 2026-07-15 — Equipment catalogue permissions and workflow
+
+- Added manager create/search/edit/deactivate coverage with audit entries and
+  explicit coordinator 403 assertions for catalogue routes.
+
+## 2026-07-15 — Optional intake email
+
+- Added intake coverage for a valid optional email, invalid-email rejection,
+  and blank-email completion; the value maps to the person email field only
+  after the questionnaire is completed.
+
+## 2026-07-15 — CorvinumEU trial-day route and policy activation
+
+- Added Corvinum client-surface assertions for the mounted trial queue/create
+  routes and scheduling/outcome grants. The client still excludes finance,
+  accommodation, transport, and SMS routes.
+- Focused Corvinum policy validation passed: **6 tests** plus Django system
+  checks and Ruff for the changed client/test surfaces.
+
+## 2026-07-15 — Corvinum blacklist archive and re-entry workflow
+
+- Added coverage proving an approved case remains matchable after operational
+  archive and that guided intake creates a new proposed case from the same
+  transient ID without storing the raw value in IntakeAnswer.
+- Focused Corvinum validation passed: **34 passed, 1 Jober-only test
+  deselected**; migration consistency, Ruff for the changed surfaces, and
+  whitespace checks also pass. The local production-style Corvinum image
+  rebuilt successfully, applied the transient-question migration, seeded
+  questionnaire v2, and returned OK from the health endpoint.
+
+## 2026-07-15 — Corvinum Basic deployment-script contracts
+
+- Added structural tests that require encrypted off-site PostgreSQL exports,
+  prohibit Dokku-config export, lock 35-daily/12-monthly retention, enforce
+  the 26-hour/60% backup-health defaults, and keep staging operations explicit
+  (`start`, `stop`, `status`).
+- Focused Corvinum deployment-script tests pass: **3 passed**. Shell syntax,
+  Ruff for the new test, Django’s Corvinum settings check, and whitespace
+  validation are clean.
+- The scripts still require a real deployment host, registered SSH host key,
+  imported public GPG recipient, and provider-owned infrastructure for a live
+  transfer/restore drill; those checks cannot be truthfully run locally.
+
+## 2026-07-15 — Corvinum SMTP runner boundary
+
+- Added a regression contract proving the Corvinum demo runner keeps
+  migrations/seeds on console email and supplies provider variables only to the
+  long-running web container.
+- Verification passed: `bash -n scripts/corvinum_app.sh`; focused Corvinum
+  client suite **6 passed**; Ruff passed; the seven required variables were
+  present in `hr_system/dev_corvinum_demo`; non-secret SMTP transport settings
+  matched FORPSI; application health returned `ok`; and an authentication-only
+  SMTP connection opened successfully. No email was sent by the connection
+  check and no secret value was printed.
+
+## 2026-07-15 — Authentication client-identity isolation
+
+- Seven focused template/client tests pass, covering configured Corvinum name
+  and logo rendering, absence of Jober from the rendered login response,
+  hard-coded identity exclusion across shared pages, and shared branding on
+  login plus both TOTP screens.
+- The production-style Corvinum image rebuilt successfully. A live response
+  check confirms the Corvinum login contains its own name and fingerprinted
+  logo and no Jober text; the targeted Chromium identity scenario passes.
+- Ruff and whitespace checks are clean for the changed tests. Full-suite totals
+  were not rerun for this focused pre-demo correction.
+
+## 2026-07-15 — Corvinum personnel-intake bootstrap
+
+- Added a bootstrap-order regression requiring `seed_questionnaire` before
+  `seed_corvinum_demo`, preventing a clean database from rendering an Add
+  person button that cannot start intake.
+- Verified the running clean Corvinum database contains the published
+  questionnaire and that its authenticated intake start redirects into the
+  first questionnaire panel. Full-suite totals were not rerun for this
+  bootstrap-only correction.
+
+## 2026-07-14 — Operations data-entry workspaces
+
+- Full verification is green: **358 Jober unit tests**, **179 CorvinumEU tests**
+  (**7 skipped, 135 deselected**), and **38 Chromium Playwright scenarios**.
+- New coverage exercises central trial scheduling/editing, coordinator project
+  scope, transport create/edit/duplicate handling, manager-only location and
+  room management, occupancy safety, audit old/new values, invalid filters,
+  mobile form fit, and SK/HU/UK catalogue loading.
+- The idempotent fictional seed now creates a real pending trial, five transport
+  weeks across multiple projects, existing room occupancy, and equipment data.
+- Ruff, Django checks, migration consistency, dependency direction,
+  forbidden-Node, vendor integrity, production-image contents, and whitespace
+  checks are clean. The browser suite applies the new migration from an empty
+  database for both clients.
+
+## 2026-07-14 — Jober panel clearance
+
+- Added a shell contract test ensuring adjacent operational sections receive
+  the shared spacing token instead of relying on feature-panel margins.
+- Full Chromium verification passes **36 scenarios**. The browser regression
+  measures at least 16px between the person-detail grid and its following panel
+  in Jober Light, Jober Dark, and at the 375px mobile viewport.
+
+## 2026-07-14 — Action-oriented dashboard tooltips
+
+- Full verification is green: **346 Jober tests**, **178 CorvinumEU tests**
+  (**7 skipped, 127 deselected**), and **35 Chromium Playwright scenarios**.
+- Browser coverage verifies structured heading/body content, active-project and
+  inactive-reason click-through filters, Jober Light/Dark tooltip surfaces,
+  mobile hover/touch behavior, and the existing Corvinum theme treatments.
+- A targeted **2-test Firefox run** passes for the complete structured dashboard
+  flow and the shared hover/keyboard/touch contract. Firefox exposed and now
+  covers focus-induced scrolling: keyboard tooltips remain visible and are
+  repositioned while pointer-only tooltips still dismiss on scroll.
+- Focused filter/tooltip coverage passes **35 tests**; the final shared tooltip
+  contract passes **14 tests**. SK/HU/UK compiled catalogs contain every new
+  dashboard heading, description, and filter label.
+- Ruff, Django checks, migration consistency, dependency direction,
+  forbidden-Node, vendored-asset checksum, and whitespace checks are clean.
+  Both production-style clients were rebuilt and left running locally.
+
 ## 2026-07-13 — Language-prefix switching regression
 
 - Full verification is green: **337 Jober tests**, **169 CorvinumEU tests**
@@ -424,10 +603,26 @@ Manual end-to-end check of the messaging slice against real Twilio, secrets via 
 
 - **Auth isolation:** `doppler run -- curl … Messages.json` returned **401** with a mismatched SID/token pair, then **201** after correcting the pair in Doppler — confirming the failure was credentials, not the app.
 - **In-app, Test credentials + magic number** (`+15005550006`): Send SMS recorded **Sent** (fail-closed when unconfigured was also observed first — correct behaviour).
-- **In-app, Live credentials + trial number** (`+1928…`) → Twilio **Virtual Phone** (`+18777804236`): message **Delivered** (Twilio Messaging Logs) and visible in the Virtual Phone simulator.
+- **In-app, Live credentials + approved trial recipient** → Twilio **Virtual
+  Phone**: message **Delivered** (Twilio Messaging Logs) and visible in the
+  Virtual Phone simulator. Phone values are intentionally not recorded.
 - Verified the gated **Send SMS** panel (phone-gated, `sms.send`, coordinator-scoped) and the new **Edit-person** form used to set the recipient phone.
 
 Conclusion: messaging works end-to-end in production form. Outstanding items are operational only (account upgrade to drop the trial prefix; public inbound webhook URL).
+
+## 2026-07-16 — Jober staging Twilio configuration boundary (manual)
+
+- Verified the public `jober-staging` app remained healthy after synchronizing
+  only the four approved Twilio runtime keys from its separate read-only
+  Doppler scope.
+- A failed controlled send produced Twilio error **21266**: the selected
+  recipient and configured sender were the same. This confirms the provider
+  request reached Twilio; it is not an application, deployment, or CSRF
+  failure.
+- Acceptance prerequisite: `DEMO_SMS_PHONE` must be a distinct approved test
+  recipient, and a harmless outbound SMS must be confirmed in Twilio before
+  the client demonstration. No phone value, credential, or service-token value
+  is recorded.
 
 ## 2026-06-28 (later) — Per-view RBAC gating
 

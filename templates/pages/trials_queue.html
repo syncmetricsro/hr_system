@@ -1,20 +1,54 @@
 {% extends "layouts/base.html" %}
 {% load i18n %}
 
-{% block title %}{% trans "Field" %} · Jober{% endblock %}
+{% block title %}{% trans "Field" %} · {{ BRAND_NAME }}{% endblock %}
 
 {% block content %}
 <section class="page-head">
   <p class="eyebrow">{% trans "Coordinator" %}</p>
   <h1>{% trans "Trials" %}</h1>
+  {% if may_schedule %}<a class="button button-primary" href="?create=1">{% trans "Schedule trial" %}</a>{% endif %}
+</section>
+
+{% if form %}
+<section class="panel workflow-panel">
+  <p class="eyebrow">{% if editing %}{% trans "Edit pending trial" %}{% else %}{% trans "New trial" %}{% endif %}</p>
+  <h2>{% if editing %}{{ editing.person }}{% else %}{% trans "Schedule a candidate" %}{% endif %}</h2>
+  <form class="stack" method="post" action="{% if editing %}{% url 'trial_edit' editing.pk %}{% else %}{% url 'trial_create' %}{% endif %}">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    {% for field in form %}
+      <label>{{ field.label }}{{ field }}{{ field.errors }}{% if field.help_text %}<span class="muted">{{ field.help_text }}</span>{% endif %}</label>
+    {% endfor %}
+    <div class="action-row">
+      <button class="button button-primary" type="submit">{% if editing %}{% trans "Save trial" %}{% else %}{% trans "Schedule trial" %}{% endif %}</button>
+      <a class="button button-secondary" href="{% url 'trials_queue' %}">{% trans "Cancel" %}</a>
+    </div>
+  </form>
+</section>
+{% endif %}
+
+<section class="panel workflow-panel">
+  <p class="eyebrow">{% trans "Lookup" %}</p>
+  <form class="people-search" method="get">
+    <input type="search" name="q" value="{{ query }}" placeholder="{% trans 'Candidate name' %}" aria-label="{% trans 'Candidate name' %}">
+    <select name="project" aria-label="{% trans 'Project' %}">
+      <option value="">{% trans "All projects" %}</option>
+      {% for project in projects %}<option value="{{ project.pk }}"{% if project_filter == project.pk|stringformat:'s' %} selected{% endif %}>{{ project.name }}</option>{% endfor %}
+    </select>
+    <input type="date" name="date_from" value="{{ date_from }}" aria-label="{% trans 'From date' %}">
+    <input type="date" name="date_to" value="{{ date_to }}" aria-label="{% trans 'To date' %}">
+    <button class="button button-secondary" type="submit">{% trans "Filter" %}</button>
+  </form>
 </section>
 
 <section class="field-list" aria-label="{% trans 'Trials' %}">
   {% for trial in trials %}
-    <a class="field-card person-row" href="{% url 'person_detail' trial.person.pk %}" data-tooltip="{% trans 'Details' %}">
+    <article class="field-card person-row">
       <div>
-        <h3>{{ trial.person }}</h3>
+        <h3><a href="{% url 'person_detail' trial.person.pk %}">{{ trial.person }}</a></h3>
         <p>{{ trial.project.name }}{% if trial.project.office %} · {{ trial.project.office }}{% endif %}{% if trial.scheduled_for %} · {{ trial.scheduled_for|date:"Y-m-d H:i" }}{% elif trial.scheduled_date %} · {{ trial.scheduled_date }}{% endif %}</p>
+        {% if trial.note %}<p class="muted">{{ trial.note }}</p>{% endif %}
       </div>
       <dl>
         <div>
@@ -22,7 +56,8 @@
           <dd>{{ trial.get_outcome_display }}</dd>
         </div>
       </dl>
-    </a>
+      {% if may_schedule %}<a class="button button-secondary" href="?edit={{ trial.pk }}">{% trans "Edit" %}</a>{% endif %}
+    </article>
   {% empty %}
     <p>{% trans "No trials awaiting an outcome." %}</p>
   {% endfor %}

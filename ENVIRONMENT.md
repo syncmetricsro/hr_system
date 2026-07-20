@@ -31,7 +31,14 @@ Last updated: 2026-07-13
   forwards only the required variables into the runtime/test container; secrets
   must never enter Docker build stages, logs, screenshots, or test artifacts.
 - Example for a Twilio-enabled Jober session:
-  `doppler run -- scripts/dev_app.sh up` (or `rebuild`).
+  `doppler run --project hr_system --config dev -- scripts/dev_app.sh up` (or
+  `rebuild`).
+- Corvinum's isolated local SMTP demo uses Doppler project `hr_system`, config
+  `dev_corvinum_demo`:
+  `doppler run --project hr_system --config dev_corvinum_demo -- scripts/corvinum_app.sh up`.
+  The runner forwards only the required `DJANGO_EMAIL_*` variables to the web
+  runtime; migrations and fictional-data seeds never receive provider secrets.
+  Without that injected SMTP backend it safely uses console email.
 - The standard pytest and Playwright suites do **not** require Doppler. They
   remain deterministic and secret-free, use mocks/fakes where applicable, and
   cover fail-closed behavior when provider credentials are absent.

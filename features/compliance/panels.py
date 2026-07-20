@@ -16,4 +16,8 @@ def compliance_tile(request):
         "label": _("Compliance"),
         "value": len(compliance_alerts(request.user)),
         "url": reverse("compliance_list"),
+        "tooltip_heading": _("Review compliance issues"),
+        "tooltip_body": _(
+            "Open workers with document or medical requirements that need attention."
+        ),
     }

@@ -1,0 +1,41 @@
+{% extends "layouts/base.html" %}
+{% load i18n nav %}
+
+{% block title %}{% trans "Equipment catalogue" %} · {{ BRAND_NAME }}{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <p class="eyebrow">{% trans "Logistics" %}</p>
+  <h1>{% trans "Equipment catalogue" %}</h1>
+  <a class="button button-primary" href="{% url 'equipment_create' %}">{% trans "Add equipment item" %}</a>
+</section>
+
+<section class="panel workflow-panel">
+  <form class="people-search" method="get">
+    <input type="search" name="q" value="{{ query }}" placeholder="{% trans 'Name or size' %}" aria-label="{% trans 'Name or size' %}">
+    <select name="status" aria-label="{% trans 'Status' %}">
+      <option value="active"{% if status_filter == 'active' %} selected{% endif %}>{% trans "Active" %}</option>
+      <option value="inactive"{% if status_filter == 'inactive' %} selected{% endif %}>{% trans "Inactive" %}</option>
+      <option value="all"{% if status_filter == 'all' %} selected{% endif %}>{% trans "All" %}</option>
+    </select>
+    <button class="button button-secondary" type="submit">{% trans "Filter" %}</button>
+  </form>
+</section>
+
+<p class="muted">{% trans "Inactive items remain on past issue records but cannot be selected for a new issue." %}</p>
+
+<section class="field-list" aria-label="{% trans 'Equipment catalogue' %}">
+  {% for item in items %}
+    <article class="field-card">
+      <div>
+        <h3>{{ item.name|db_trans }}{% if item.size %} · {{ item.size }}{% endif %}</h3>
+        {% if not item.is_active %}<span class="badge">{% trans "Inactive" %}</span>{% endif %}
+      </div>
+      <dl><div><dt>{% trans "Unit price" %}</dt><dd>{{ item.unit_price }} EUR</dd></div></dl>
+      <a class="button button-secondary" href="{% url 'equipment_edit' item.pk %}">{% trans "Edit" %}</a>
+    </article>
+  {% empty %}
+    <p>{% trans "No equipment items found." %}</p>
+  {% endfor %}
+</section>
+{% endblock %}

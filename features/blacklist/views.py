@@ -9,7 +9,13 @@ from django.views.decorators.http import require_POST
 
 from core.accounts.permissions import Action, require_action
 from features.blacklist.models import BlacklistCase, BlacklistCaseStatus, BlacklistCategory
-from features.blacklist.services import BlacklistError, decide_case, propose_case, remove_case
+from features.blacklist.services import (
+    BlacklistError,
+    compute_composite_identifier,
+    decide_case,
+    propose_case,
+    remove_case,
+)
 from core.people.models import Person
 
 
@@ -19,6 +25,7 @@ def blacklist_queue(request: HttpRequest) -> TemplateResponse:
     cases = (
         BlacklistCase.objects.filter(status=BlacklistCaseStatus.PROPOSED)
         .select_related("person", "category", "proposed_by")
+        .prefetch_related("fingerprints")
     )
     return TemplateResponse(request, "pages/blacklist_queue.html", {"cases": cases})
 
@@ -30,10 +37,15 @@ def blacklist_propose(request: HttpRequest, person_pk: int) -> HttpResponse:
     category = BlacklistCategory.objects.filter(
         pk=request.POST.get("category"), is_active=True
     ).first()
+    maiden = request.POST.get("mothers_maiden_name", "")
+    composite = compute_composite_identifier(
+        person.first_name, person.last_name, person.date_of_birth, maiden
+    ) if maiden else None
     propose_case(
         person, category=category, reason=request.POST.get("reason", ""),
         identifier=request.POST.get("identifier") or None,
         identifier_type=request.POST.get("identifier_type", "national_id"),
+        composite_identifier=composite,
         actor=request.user,
     )
     messages.success(request, _("Blacklist case proposed for review."))

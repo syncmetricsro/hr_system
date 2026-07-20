@@ -1,7 +1,7 @@
 {% extends "layouts/base.html" %}
 {% load i18n rbac nav %}
 
-{% block title %}{{ person }} · Jober{% endblock %}
+{% block title %}{{ person }} · {{ BRAND_NAME }}{% endblock %}
 
 {% block content %}
 <section class="page-head">
@@ -206,6 +206,19 @@
       <button class="button button-primary" type="submit">{% trans "Recycle to Available" %}</button>
     </form>
   {% endif %}
+</section>
+{% endif %}
+
+{% if can_archive %}
+<section class="panel workflow-panel">
+  <p class="eyebrow">{% trans "Records" %}</p>
+  <h2>{% trans "Archive person" %}</h2>
+  <p>{% trans "Hides this operational record from the People list. It is not a deletion and does not remove blacklist protection or audit history." %}</p>
+  <form class="people-search" method="post" action="{% url 'archive_person' person.pk %}" data-confirm="{% trans 'This archives the person from the operational list. It does not delete their record, audit history, or blacklist protection.' %}">
+    {% csrf_token %}
+    <input type="text" name="reason" required aria-label="{% trans 'Archive reason' %}" placeholder="{% trans 'Archive reason' %}">
+    <button class="button button-secondary" type="submit">{% trans "Archive person" %}</button>
+  </form>
 </section>
 {% endif %}
 

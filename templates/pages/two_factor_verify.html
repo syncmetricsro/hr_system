@@ -5,7 +5,8 @@
 
 {% block content %}
 <section class="panel login-panel">
-  <p class="eyebrow">{% trans "Security" %}</p>
+  {% include "partials/auth_brand.html" %}
+  <p class="eyebrow">{{ BRAND_NAME }} · {% trans "Security" %}</p>
   <h1>{% trans "Two-factor verification" %}</h1>
   {% if error %}<ul class="messages"><li class="message message-error">{{ error }}</li></ul>{% endif %}
   <form class="stack" method="post">

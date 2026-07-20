@@ -5,7 +5,8 @@
 
 {% block content %}
 <section class="panel login-panel">
-  <p class="eyebrow">{% trans "Security" %}</p>
+  {% include "partials/auth_brand.html" %}
+  <p class="eyebrow">{{ BRAND_NAME }} · {% trans "Security" %}</p>
   <h1>{% trans "Two-factor setup" %}</h1>
   {% if device.confirmed %}
     <p>{% trans "Two-factor authentication is enabled for your account." %}</p>

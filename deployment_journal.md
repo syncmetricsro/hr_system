@@ -1,5 +1,158 @@
 # Deployment Journal
 
+## 2026-07-16 — Corvinum checklist in-place update deployed
+
+- Built committed revision **`6abdb56`** in a detached clean worktree without
+  runtime credentials and streamed
+  `jober-platform:corvinum-demo-6abdb56` directly to the isolated
+  `corvinum-staging` Dokku app.
+- Dokku's replacement container passed its uptime and port-8000 checks before
+  replacing the prior web process. The existing PostgreSQL service and
+  fictional staging data were preserved; no reseeding was performed.
+- The idempotent migration step reported no migrations to apply. Public HTTPS
+  acceptance passed for `/healthz/`, the Slovak login page, and the compiled
+  CSS asset.
+- This release changes activation-checklist toggles to an in-place htmx panel
+  refresh, preserving the user's URL and scroll position while retaining the
+  full-page POST/redirect fallback.
+- The known Dokku default-bridge deprecation warning remains tracked as host
+  maintenance and did not affect the release.
+
+## 2026-07-16 — Jober public fictional-data staging and Twilio configuration
+
+- Deployed the committed release **`12d0735`** to the isolated Dokku app
+  **`jober-staging`** on **syncmetric-prime**, with its separate
+  `pg-jober-staging` PostgreSQL service, Jober settings module, temporary
+  HTTPS hostname, and fictional-only seed data. Django checks and migrations
+  completed cleanly; the public health endpoint returned `ok` after restart.
+- Created the separate read-only Doppler scope `hr_system/stg_jober-staging`
+  and synchronized exactly the four approved Jober SMS runtime keys:
+  `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN`, `TWILIO_FROM_NUMBER`, and
+  `DEMO_SMS_PHONE`. Jober email remains intentionally deferred for this demo.
+  No Doppler token, provider credential, sender, or recipient value is
+  recorded here.
+- Initial SMS troubleshooting confirmed that Twilio error **21266** means the
+  configured recipient matched the configured sender. This is a provider
+  safety rule, not a Dokku, CSRF, or application error. The controlled demo
+  recipient must be a distinct, approved SMS-capable/verified number; do not
+  use `TWILIO_FROM_NUMBER` as `DEMO_SMS_PHONE`.
+- Before presenting SMS, send one harmless controlled test message and confirm
+  delivery in Twilio. Configure and test the signed inbound webhook only after
+  that outbound check succeeds.
+
+## 2026-07-15 — CorvinumEU public fictional-data staging demo deployed
+
+- Deployed the committed release **`12d0735`** (`jober-platform:corvinum-demo-12d0735`)
+  to the isolated Dokku app **`corvinum-staging`** on
+  **syncmetric-prime** (Dokku 0.38.23). The public temporary demo URL is
+  `https://corvinum-staging.80.211.210.46.sslip.io/sk/prihlasenie/`; it is not
+  a production CorvinumEU domain.
+- The app uses `clients.corvinum_eu.production`, the separate linked PostgreSQL
+  service `pg-corvinum-staging`, and the existing explicit `http:80:8000` port
+  mapping. The image was built locally without secrets and streamed directly to
+  Dokku with `git:load-image`; no source checkout or application build ran on
+  the VPS.
+- Applied migrations and seeded only the published **Recruiter intake v3** and
+  the fictional CorvinumEU scenario. The four `@demo.corvinum.test` accounts,
+  projects, checklist, equipment/ledger records, and questionnaire are staging
+  demonstration data only.
+- Verified externally: HTTPS login route returns 200 with a Secure Corvinum
+  CSRF cookie; `/sk/` correctly redirects unauthenticated visitors to login;
+  CSS returns `200 text/css`; and Gunicorn is running on port 8000 without
+  application errors in the Dokku log.
+- Created a Doppler **read-only, config-scoped service token**, synchronized
+  only the seven `DJANGO_EMAIL_*` values into this Dokku app, and completed one
+  controlled fictional payslip-email test successfully. The encrypted PDF
+  reached the controlled test inbox; no recipient address, SMTP credential,
+  one-time PDF password, or token value is recorded here. No real recipient or
+  real personal data is authorized.
+- The Dokku default-bridge-network deprecation warning is recorded as post-demo
+  host maintenance; it did not affect this deployment. Revoke or replace the
+  staging service token after the demo according to the retention decision.
+- Documented the repeatable image-stream release and rollback procedure for
+  `corvinum-staging`, plus the planned isolated `jober-staging` app/database,
+  hostname, provider boundary, fictional seeding, and acceptance checks on the
+  same Dokku host. Jober has not yet been created or deployed there.
+- Clarified the Jober-specific staging sheet: `config.settings.production`
+  selects Jober, while a separately scoped `TWILIO_*` configuration enables
+  only its controlled SMS demonstration. Corvinum's SMTP configuration and
+  service token must not be reused.
+- Documented Jober's exact staging release boundary: derive explicit `DB_*`
+  values from the linked service without recording them, run migrations and
+  `ensure_superuser` after an image deployment, and use the repository's real
+  fictional seed sequence only for a deliberate reset. Same-origin HTTPS does
+  not require an unused `DJANGO_CSRF_TRUSTED_ORIGINS` setting in this codebase.
+
+## 2026-07-15 — CorvinumEU recruitment trials enabled
+
+- Enabled the shared recruitment-trial feature for CorvinumEU’s demo. Recruiters,
+  coordinators, and managers may schedule a trial; coordinators and managers
+  may record its outcome. Observers remain read-only.
+- Added Trial day transitions to Corvinum’s client policy and updated the
+  client-demo walkthrough to show scheduling, outcome, and the subsequent
+  readiness/checklist gate.
+
+## 2026-07-15 — Corvinum blacklist archive and re-entry demo
+
+- Added a manager-only operational archive action. It is explicitly not GDPR
+  erasure: it hides the original record from the People list while retaining
+  its blacklist case, active HMAC fingerprint, and audit history.
+- The guided intake now accepts a transient blacklist identifier and type on
+  its final panel. The raw identifier is validated and matched but never
+  persisted as an intake answer. A match creates a new proposed case for
+  manager review and blocks activation; it never merges or auto-blacklists.
+- The Corvinum runbook now contains the full fictional propose → approve →
+  archive → re-enter → manager-decision scenario.
+
+## 2026-07-15 — CorvinumEU cost-conscious production operating model
+
+- Recorded the owner decision for a low-traffic **FORPSI Basic** production
+  VPS (2 vCPU / 4 GB / 40 GB NVMe), with `corvinum-staging` stopped except for
+  rehearsals, deployment checks, and restore drills. Standard is the defined
+  upgrade path for continuous staging, resource pressure/OOMs, recurring swap,
+  or a restore that exceeds four business hours.
+- Added `docs/deployment/corvinum-basic-production.md`: provider choices,
+  external DPA and data-location gates, encrypted off-site retention, disk
+  thresholds, website Supabase backup boundary, and a restricted monthly
+  restore procedure.
+- Added deployment-host scripts for an encrypted PostgreSQL/release-manifest
+  backup, backup-age/capacity monitoring, and explicit staging start/stop.
+  The scripts retain 35 daily and 12 monthly archives, fail at 26-hour backup
+  age or 60% target use, and intentionally never export Doppler/Dokku config.
+- Still owner-controlled and not claimed complete: VPS orders, DPA signatures,
+  SSH/firewall/DNS setup, GPG recovery-key custody, monitoring delivery, and
+  least-privilege Supabase database/private-bucket export automation.
+
+## 2026-07-15 — Corvinum intake seed correction
+
+- Corvinum local and fictional staging bootstrap instructions now seed the
+  published personnel-intake questionnaire before the client scenario. Clean
+  resets no longer leave the visible **Add person** action without a usable
+  questionnaire.
+- Production remains unaffected: demo seeds must never run against a real-data
+  environment.
+
+## 2026-07-15 — Corvinum client-demo rehearsal runbook
+
+- Refreshed `docs/deployment/corvinum-demo-runbook.md` into a rehearsal-safe
+  20–25 minute walkthrough with a ten-minute fallback route, exact demo
+  accounts, presenter checkpoints, recovery steps, and a clean disposable-DB
+  reset between practice and the client call.
+- Corrected the demonstrated scope to match Corvinum's active feature flags:
+  recruitment trials, accommodation, transport, profitability, messaging, and
+  feedback are not mounted in this thin client.
+- Corrected the local payslip demonstration: the console backend proves the
+  fictional recipient and attachment output but is not a clickable mailbox;
+  real provider-backed testing remains Doppler-injected.
+
+## 2026-07-14 — Operations workspace migration
+
+- Deploy includes logistics migration `0008_room_is_active_and_unique_label`.
+  It adds an active flag to rooms and enforces unique room labels within each
+  accommodation. Existing rooms default active; no record is deleted.
+- Run the normal migration step before serving the new accommodation forms.
+  The production image remains npm-free and contains no new runtime dependency.
+
 ## 2026-07-12 (later)
 
 Staging deploy target chosen and runbook written.

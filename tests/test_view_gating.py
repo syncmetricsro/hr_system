@@ -66,6 +66,8 @@ def test_anonymous_is_redirected(client, objs, url_name, kwargs_fn, method, deni
 def test_authorized_roles_can_schedule_a_trial(client, users, role):
     person = Person.objects.create(first_name="Available", last_name="Person")
     project = Project.objects.create(name="DHL", code=f"DHL-{role}")
+    if role == "coordinator":
+        project.responsible_coordinators.add(users[role])
     client.force_login(users[role])
 
     response = client.post(

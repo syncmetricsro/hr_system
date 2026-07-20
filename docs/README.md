@@ -20,6 +20,7 @@ they are never renamed or renumbered per client.
 | Doc | Owner | Purpose |
 |---|---|---|
 | `i18n-seeded-data.md` | Platform | How seeded catalog data stays localized (db_trans + catalog_i18n) |
+| `session-summary-2026-07-16.md` | Platform | Consolidated product, demo, staging, testing, and remaining-gates handoff for the implementation session |
 
 ## docs/adr/ — Platform (shared decision log, 0001–0024)
 Highlights: 0008 RBAC model · 0016 whitenoise · 0019 Twilio-via-stdlib ·

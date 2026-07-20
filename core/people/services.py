@@ -18,9 +18,17 @@ def inactive_by_reason(*, include_archived: bool = False) -> list[dict]:
         qs = qs.filter(is_archived=False)
     rows = []
     for r in (
-        qs.values("inactive_reason__label").annotate(count=Count("id")).order_by("-count")
+        qs.values("inactive_reason_id", "inactive_reason__label")
+        .annotate(count=Count("id"))
+        .order_by("-count")
     ):
-        rows.append({"label": r["inactive_reason__label"] or _("No reason"), "count": r["count"]})
+        rows.append(
+            {
+                "value": r["inactive_reason_id"] or "none",
+                "label": r["inactive_reason__label"] or _("No reason"),
+                "count": r["count"],
+            }
+        )
     return rows
 
 

@@ -3,6 +3,7 @@ from __future__ import annotations
 import hashlib
 import hmac
 import re
+import unicodedata
 from datetime import timedelta
 
 from django.conf import settings
@@ -14,6 +15,7 @@ from core.audit.services import record_event
 from features.blacklist.models import (
     BlacklistCase,
     BlacklistCaseStatus,
+    IdentifierType,
     MatchFingerprint,
 )
 from core.people.models import LifecycleStatus
@@ -28,10 +30,34 @@ def _hmac_keys() -> list[str]:
     return [k for k in keys if k]
 
 
+# Latin letters NFKD cannot decompose to base + combining mark; folded
+# explicitly so names like Groß/Łukasz survive normalization. Anything still
+# non-ASCII afterwards (Cyrillic, CJK, …) is stripped by the final regex.
+_FOLD = str.maketrans(
+    {"ß": "SS", "ẞ": "SS", "Đ": "D", "đ": "D", "Ø": "O", "ø": "O",
+     "Ł": "L", "ł": "L", "Æ": "AE", "æ": "AE", "Œ": "OE", "œ": "OE"}
+)
+
+
 def _normalize(identifier: str) -> str:
-    """Uppercase and strip non-alphanumerics so trivial formatting differences
-    (spaces, slashes in a rodné číslo) don't defeat matching."""
-    return re.sub(r"[^A-Za-z0-9]", "", identifier or "").upper()
+    """Uppercase, transliterate diacritics, and strip non-alphanumerics so
+    trivial formatting/spelling differences (spaces, slashes in a rodné číslo,
+    Kováč vs Kovac) don't defeat matching.
+
+    Pure ASCII-alphanumeric input passes through unchanged, so fingerprints of
+    existing stored ID codes are stable across this normalizer."""
+    text = (identifier or "").upper().translate(_FOLD)
+    text = unicodedata.normalize("NFKD", text)
+    text = "".join(c for c in text if not unicodedata.combining(c))
+    return re.sub(r"[^A-Za-z0-9]", "", text)
+
+
+def _hmac_digest(canonical: str, *, key_version: int | None = None) -> tuple[str, int]:
+    keys = _hmac_keys()
+    version = len(keys) - 1 if key_version is None else key_version
+    key = keys[version]
+    digest = hmac.new(key.encode(), canonical.encode("utf-8"), hashlib.sha256)
+    return digest.hexdigest(), version
 
 
 def compute_fingerprint(identifier: str, *, key_version: int | None = None) -> tuple[str, int]:
@@ -39,23 +65,81 @@ def compute_fingerprint(identifier: str, *, key_version: int | None = None) -> t
 
     The raw identifier is used only transiently here and never stored. Defaults to
     the newest key (highest index) so new fingerprints use the current key."""
-    keys = _hmac_keys()
-    version = len(keys) - 1 if key_version is None else key_version
-    key = keys[version]
-    digest = hmac.new(key.encode(), _normalize(identifier).encode("utf-8"), hashlib.sha256)
-    return digest.hexdigest(), version
+    return _hmac_digest(_normalize(identifier), key_version=key_version)
+
+
+def compute_composite_identifier(
+    first_name: str, last_name: str, date_of_birth, mothers_maiden_name: str
+) -> str | None:
+    """Canonical composite identity string for the secondary fingerprint:
+
+        v1|<name-token-1>|…|<name-token-N>|<YYYY-MM-DD>|<MAIDEN>
+
+    Name tokens are the whitespace/hyphen-split parts of first + last name,
+    each normalized and sorted lexicographically (so first/last entry order
+    can't defeat matching); the maiden name normalizes to a single token. The
+    string is hashed as-is — separators keep field boundaries, so ANNA|KOVAC
+    never collides with ANN|AKOVAC. Returns None when any component is missing
+    or normalizes to empty (e.g. an all-Cyrillic name): no fingerprint then."""
+    tokens = sorted(
+        t for t in (
+            _normalize(part)
+            for part in re.split(r"[\s\-]+", f"{first_name or ''} {last_name or ''}")
+        ) if t
+    )
+    maiden = _normalize(mothers_maiden_name)
+    if not tokens or not date_of_birth or not maiden:
+        return None
+    return "|".join(["v1", *tokens, date_of_birth.isoformat(), maiden])
+
+
+def compute_composite_fingerprint(canonical: str, *, key_version: int | None = None) -> tuple[str, int]:
+    """HMAC of an already-canonical composite string (no re-normalization —
+    it would erase the field separators)."""
+    return _hmac_digest(canonical, key_version=key_version)
 
 
 def check_match(identifier: str):
     """Company-wide re-entry check: return active, non-expired MatchFingerprints
     whose HMAC matches ``identifier`` under any configured key version (so rotated
-    keys still match). Empty if matching is disabled or no identifier given."""
+    keys still match). Empty if matching is disabled or no identifier given.
+
+    Intentionally identifier-type-agnostic (a national ID recorded as "other"
+    still matches); type-aware multi-candidate checks live in check_matches."""
     if not getattr(settings, "BLACKLIST_MATCHING_ENABLED", True) or not identifier:
         return MatchFingerprint.objects.none()
     today = timezone.localdate()
     hashes = {compute_fingerprint(identifier, key_version=v)[0] for v in range(len(_hmac_keys()))}
     return (
         MatchFingerprint.objects.filter(is_active=True, hmac__in=hashes)
+        .filter(Q(expires_at__isnull=True) | Q(expires_at__gte=today))
+        .select_related("person", "case")
+    )
+
+
+def check_matches(candidates: dict[str, str]):
+    """Re-entry check over multiple fingerprint types at once. ``candidates``
+    maps identifier_type → raw identifier (or, for NAME_DOB_MMN, the canonical
+    composite string from compute_composite_identifier). A fingerprint matches
+    only when BOTH its type and its HMAC match, so hashes never cross types.
+    Same gating and expiry rules as check_match."""
+    candidates = {t: v for t, v in (candidates or {}).items() if v}
+    if not getattr(settings, "BLACKLIST_MATCHING_ENABLED", True) or not candidates:
+        return MatchFingerprint.objects.none()
+    versions = range(len(_hmac_keys()))
+    match_q = Q(pk__in=[])
+    for identifier_type, value in candidates.items():
+        compute = (
+            compute_composite_fingerprint
+            if identifier_type == IdentifierType.NAME_DOB_MMN
+            else compute_fingerprint
+        )
+        hashes = {compute(value, key_version=v)[0] for v in versions}
+        match_q |= Q(identifier_type=identifier_type, hmac__in=hashes)
+    today = timezone.localdate()
+    return (
+        MatchFingerprint.objects.filter(is_active=True)
+        .filter(match_q)
         .filter(Q(expires_at__isnull=True) | Q(expires_at__gte=today))
         .select_related("person", "case")
     )
@@ -68,10 +152,11 @@ def _retention_expiry():
 
 @transaction.atomic
 def propose_case(person, *, category=None, reason="", identifier=None,
-                 identifier_type="national_id", actor=None):
+                 identifier_type="national_id", composite_identifier=None, actor=None):
     """Open a proposed blacklist case (does NOT change lifecycle — a manager
     decides). If an identifier is given, store a keyed HMAC fingerprint; the raw
-    identifier is discarded."""
+    identifier is discarded. ``composite_identifier`` (a canonical string from
+    compute_composite_identifier) adds a secondary NAME_DOB_MMN fingerprint."""
     case = BlacklistCase.objects.create(
         person=person,
         status=BlacklistCaseStatus.PROPOSED,
@@ -85,6 +170,13 @@ def propose_case(person, *, category=None, reason="", identifier=None,
         MatchFingerprint.objects.create(
             case=case, person=person, identifier_type=identifier_type,
             hmac=digest, key_version=version, is_active=False,  # activated on approval
+            expires_at=_retention_expiry(),
+        )
+    if composite_identifier:
+        digest, version = compute_composite_fingerprint(composite_identifier)
+        MatchFingerprint.objects.create(
+            case=case, person=person, identifier_type=IdentifierType.NAME_DOB_MMN,
+            hmac=digest, key_version=version, is_active=False,
             expires_at=_retention_expiry(),
         )
     record_event(actor, "blacklist.proposed", target=case, person=str(person))

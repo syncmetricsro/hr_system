@@ -16,7 +16,7 @@ def base_url() -> str:
 
 def _login(page) -> None:
     page.goto(f"{base_url()}/prihlasenie/")
-    page.get_by_role("heading", name="Prihlásenie tímu Jober").wait_for()
+    page.get_by_role("heading", name="Prihlásenie — Jober").wait_for()
     page.fill("input[name='email']", DEMO_EMAIL)
     page.fill("input[name='password']", DEMO_PASSWORD)
     page.get_by_role("button", name="Pokračovať").click()
@@ -31,6 +31,34 @@ def test_shell_renders_mobile(page):
     page.get_by_text("Aktívne projekty").wait_for()
 
 
+def test_person_panels_keep_clearance_in_both_themes(page):
+    _login(page)
+    page.goto(f"{base_url()}/en/people/1/")
+    page.locator(".two-column").wait_for()
+
+    def section_gap() -> float:
+        return page.locator(".two-column").evaluate(
+            """grid => {
+              const next = grid.nextElementSibling;
+              if (!next) throw new Error("Expected a panel after the person detail grid");
+              return next.getBoundingClientRect().top - grid.getBoundingClientRect().bottom;
+            }"""
+        )
+
+    for theme in ("light", "dark"):
+        page.evaluate(
+            """theme => {
+              document.documentElement.classList.remove("theme-light", "theme-dark");
+              document.documentElement.classList.add(`theme-${theme}`);
+            }""",
+            theme,
+        )
+        assert section_gap() >= 16
+
+    page.set_viewport_size({"width": 375, "height": 667})
+    assert section_gap() >= 16
+
+
 def test_health_endpoint(page):
     page.goto(f"{base_url()}/healthz/")
     assert page.locator("body").inner_text() == "ok"
@@ -38,13 +66,15 @@ def test_health_endpoint(page):
 
 def test_login_page_renders(page):
     page.goto(f"{base_url()}/prihlasenie/")
-    page.get_by_role("heading", name="Prihlásenie tímu Jober").wait_for()
+    page.get_by_role("heading", name="Prihlásenie — Jober").wait_for()
+    assert "corvinum" not in page.content().lower()
+    assert "/static/jober/brand/jober-logo" in page.locator(".auth-brand-logo").get_attribute("src")
 
 
 def test_dashboard_requires_login(page):
     # Hitting the app root unauthenticated must bounce to the login screen.
     page.goto(f"{base_url()}/")
-    page.get_by_role("heading", name="Prihlásenie tímu Jober").wait_for()
+    page.get_by_role("heading", name="Prihlásenie — Jober").wait_for()
 
 
 def test_static_css_is_served(page):

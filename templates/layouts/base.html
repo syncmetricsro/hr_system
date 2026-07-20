@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block title %}{% trans "Jober operations" %}{% endblock %}</title>
+    <title>{% block title %}{{ BRAND_NAME }}{% endblock %}</title>
     <script src="{% static 'src/js/theme.js' %}"></script>
     <link rel="stylesheet" href="{% static 'dist/css/app.css' %}">
     {% if CLIENT_THEME_CSS %}<link rel="stylesheet" href="{% static CLIENT_THEME_CSS %}">{% endif %}

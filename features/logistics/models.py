@@ -46,6 +46,7 @@ class Room(models.Model):
     )
     label = models.CharField(_("label"), max_length=100)
     capacity = models.PositiveIntegerField(_("capacity"), default=1)
+    is_active = models.BooleanField(_("active"), default=True)
     # Per-room monthly cost (EUR). Q1 safe default; recorded for reporting only.
     monthly_rate = models.DecimalField(
         _("monthly rate"), max_digits=10, decimal_places=2, default=Decimal("0"), validators=NON_NEGATIVE
@@ -55,6 +56,11 @@ class Room(models.Model):
         verbose_name = _("room")
         verbose_name_plural = _("rooms")
         ordering = ("accommodation__name", "label")
+        constraints = [
+            models.UniqueConstraint(
+                fields=["accommodation", "label"], name="unique_room_label_per_accommodation"
+            )
+        ]
 
     def __str__(self) -> str:
         return f"{self.accommodation.name} · {self.label}"

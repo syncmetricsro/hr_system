@@ -1,0 +1,17 @@
+{% extends "layouts/base.html" %}
+{% load i18n %}
+
+{% block title %}{% if room %}{% trans "Edit room" %}{% else %}{% trans "Add room" %}{% endif %} · {{ BRAND_NAME }}{% endblock %}
+{% block content %}
+<section class="page-head">
+  <p class="eyebrow">{% trans "Accommodation" %} · {{ accommodation.name }}</p>
+  <h1>{% if room %}{% trans "Edit room" %}{% else %}{% trans "Add room" %}{% endif %}</h1>
+  <a class="button button-secondary" href="{% url 'accommodation_detail' accommodation.pk %}">{% trans "Cancel" %}</a>
+</section>
+<section class="panel workflow-panel">
+  <form class="stack" method="post">{% csrf_token %}{{ form.non_field_errors }}
+    {% for field in form %}<label>{{ field.label }}{{ field }}{{ field.errors }}</label>{% endfor %}
+    <button class="button button-primary" type="submit">{% trans "Save room" %}</button>
+  </form>
+</section>
+{% endblock %}

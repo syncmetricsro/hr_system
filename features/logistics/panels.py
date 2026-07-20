@@ -8,6 +8,7 @@ from django.utils.translation import gettext as _
 from core.accounts.permissions import Action
 from core.accounts.permissions import can as user_can
 from core.ui.registry import flag_enabled
+from features.logistics.forms import assignable_rooms
 from features.logistics.models import (
     EquipmentItem,
     EquipmentIssueStatus,
@@ -25,9 +26,7 @@ def room_panel(request, person):
         "current_room": person.room_assignments.filter(
             status=RoomAssignmentStatus.ACTIVE
         ).select_related("room__accommodation").first(),
-        "rooms": Room.objects.select_related("accommodation").filter(
-            accommodation__is_active=True
-        ),
+        "rooms": assignable_rooms(),
     }
 
 
@@ -59,6 +58,10 @@ def occupancy_tile(request):
     tile = {"label": _("Occupancy"), "value": f"{occupied}/{capacity}"}
     if user_can(request.user, Action.ACCOMMODATION_MANAGE):
         tile["url"] = reverse("accommodation_costs")
+        tile["tooltip_heading"] = _("Review accommodation occupancy")
+        tile["tooltip_body"] = _(
+            "Open accommodation costs, occupied places, and assigned costs."
+        )
     return tile
 
 
@@ -68,4 +71,8 @@ def equipment_value_tile(request):
     tile = {"label": _("Equipment value"), "value": f"{issued_equipment_value()} EUR"}
     if user_can(request.user, Action.EQUIPMENT_REVIEW_DEDUCTION):
         tile["url"] = reverse("equipment_reviews")
+        tile["tooltip_heading"] = _("Review equipment exceptions")
+        tile["tooltip_body"] = _(
+            "Open issued equipment awaiting return or a deduction decision."
+        )
     return tile

@@ -1,7 +1,7 @@
 {% extends "layouts/base.html" %}
 {% load i18n nav %}
 
-{% block title %}{% trans "Intake" %} · Jober{% endblock %}
+{% block title %}{% trans "Intake" %} · {{ BRAND_NAME }}{% endblock %}
 
 {% block content %}
 <section class="page-head">
@@ -28,11 +28,17 @@
           <input type="date" name="{{ item.q.stable_key }}" value="{{ item.value }}">
         {% elif item.q.type == "number" %}
           <input type="number" name="{{ item.q.stable_key }}" value="{{ item.value }}">
+        {% elif item.q.type == "email" %}
+          <input type="email" name="{{ item.q.stable_key }}" value="{{ item.value }}" autocomplete="email">
         {% elif item.q.type == "select" %}
           <select name="{{ item.q.stable_key }}">
             <option value="">—</option>
             {% for opt in item.q.options %}
-              <option value="{{ opt }}" {% if item.value == opt %}selected{% endif %}>{{ opt }}</option>
+              {% if opt.value %}
+                <option value="{{ opt.value }}" {% if item.value == opt.value %}selected{% endif %}>{{ opt.label|db_trans }}</option>
+              {% else %}
+                <option value="{{ opt }}" {% if item.value == opt %}selected{% endif %}>{{ opt|db_trans }}</option>
+              {% endif %}
             {% endfor %}
           </select>
         {% else %}

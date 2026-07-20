@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import os
 
+from playwright.sync_api import expect
+
 
 def base_url() -> str:
     value = os.environ.get("CORVINUM_BASE_URL")
@@ -20,6 +22,18 @@ def _login(page, local_part: str) -> None:
 
 def _login_recruiter(page) -> None:
     _login(page, "recruiter")
+
+
+def test_corvinum_anonymous_authentication_is_client_branded(page):
+    page.goto(f"{base_url()}/sk/prihlasenie/")
+
+    expect(page.get_by_role("heading", name="Prihlásenie — CorvinumEU PeopleOps")).to_be_visible()
+    logo_src = page.locator(".auth-brand-logo").get_attribute("src")
+    assert logo_src is not None
+    assert "/static/corvinum/brand/corvinum-logo-v1." in logo_src
+    assert logo_src.endswith(".webp")
+    assert "jober" not in page.content().lower()
+    assert "Jober" not in page.title()
 
 
 def test_corvinum_brand_and_content_use_available_viewport(page):
@@ -122,7 +136,7 @@ def test_corvinum_notification_center_uses_shared_responsive_panel(page):
     center.wait_for()
     center.locator(".notification-toggle").click()
     popover = center.locator(".notification-popover")
-    assert popover.is_visible()
+    expect(popover).to_be_visible()
     box = popover.bounding_box()
     assert box is not None
     assert box["x"] >= 0
@@ -150,7 +164,10 @@ def test_corvinum_top_level_sections_have_vertical_rhythm(page):
 
 def test_corvinum_coordinator_can_tick_checklist_with_csrf(page):
     """A rendered checklist control must remain a normal CSRF-protected POST,
-    rather than exposing a state-changing URL that only works by direct access."""
+    rather than exposing a state-changing URL that only works by direct access.
+    The htmx enhancement must update in place without losing the user's scroll
+    position."""
+    page.set_viewport_size({"width": 1280, "height": 667})
     _login(page, "coordinator")
     page.goto(f"{base_url()}/hu/people/")
     page.wait_for_load_state("networkidle")
@@ -160,10 +177,15 @@ def test_corvinum_coordinator_can_tick_checklist_with_csrf(page):
     form = page.locator("form[action*='/checklist/'][action$='/toggle/']").first
     assert form.locator("input[name='csrfmiddlewaretoken']").count() == 1
     assert any(cookie["name"] == "corvinum_csrftoken" for cookie in page.context.cookies())  # per-client cookie names (session slice)
+    form.scroll_into_view_if_needed()
+    page.evaluate("window.scrollBy(0, -120)")
+    scroll_before = page.evaluate("window.scrollY")
+    page_url = page.url
     form.locator("button[type='submit']").click()
-    page.wait_for_load_state("networkidle")
+    expect(page.locator("#activation-checklist")).to_contain_text("coordinator@demo.corvinum.test")
 
-    assert "/people/" in page.url
+    assert page.url == page_url
+    assert abs(page.evaluate("window.scrollY") - scroll_before) < 2
     assert "CSRF verification failed" not in page.content()
 
 

@@ -1,7 +1,7 @@
 {% extends "layouts/base.html" %}
 {% load i18n nav %}
 
-{% block title %}{% trans "Blacklist" %} · Jober{% endblock %}
+{% block title %}{% trans "Blacklist" %} · {{ BRAND_NAME }}{% endblock %}
 
 {% block content %}
 <section class="page-head">
@@ -21,6 +21,7 @@
       <dl>
         <div><dt>{% trans "Proposed by" %}</dt><dd>{{ case.proposed_by|default:"—" }}</dd></div>
         <div><dt>{% trans "Reason" %}</dt><dd>{{ case.restricted_reason|default:"—" }}</dd></div>
+        <div><dt>{% trans "Matched via" %}</dt><dd>{% for fp in case.fingerprints.all %}{{ fp.get_identifier_type_display }}{% if not forloop.last %}, {% endif %}{% empty %}—{% endfor %}</dd></div>
       </dl>
       <form class="people-search" method="post" action="{% url 'blacklist_decide' case.pk %}">
         {% csrf_token %}

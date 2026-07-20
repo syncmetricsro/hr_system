@@ -4,11 +4,13 @@ from decimal import Decimal
 
 from django.db import transaction
 from django.utils import timezone
+from django.utils.translation import gettext as _
 
 from core.audit.services import record_event
 from features.logistics.models import (
     Accommodation,
     DeductionReviewStatus,
+    EquipmentItem,
     EquipmentIssue,
     EquipmentIssueStatus,
     RoomAssignment,
@@ -21,8 +23,32 @@ class CapacityError(Exception):
     """Raised when a room is at capacity."""
 
 
+class LogisticsWorkflowError(Exception):
+    """Raised when logistics master data or history would be made inconsistent."""
+
+
 class DeductionReviewError(Exception):
     """Raised on an invalid unreturned-equipment review transition."""
+
+
+@transaction.atomic
+def save_equipment_item(item: EquipmentItem, *, actor=None, old=None) -> EquipmentItem:
+    """Save manager-maintained catalogue data with a concise audit trail."""
+    creating = item._state.adding
+    item.save()
+    record_event(
+        actor,
+        "equipment.catalog_created" if creating else "equipment.catalog_updated",
+        target=item,
+        old=old or {},
+        new={
+            "name": item.name,
+            "size": item.size,
+            "unit_price": str(item.unit_price),
+            "is_active": item.is_active,
+        },
+    )
+    return item
 
 
 def _non_negative(value) -> Decimal:
@@ -30,7 +56,7 @@ def _non_negative(value) -> Decimal:
     charges are never negative."""
     amount = Decimal(value or 0)
     if amount < 0:
-        raise ValueError("Amounts use a positive convention; negative values are not allowed.")
+        raise ValueError(_("Amounts use a positive convention; negative values are not allowed."))
     return amount
 
 
@@ -96,9 +122,11 @@ def assign_room(person, room, *, actor=None):
     """Assign a person to a room, enforcing capacity (one active room per person)."""
     # Re-check capacity against currently active assignments (excludes this person's
     # existing active room, which we are about to close).
+    if not room.is_active or not room.accommodation.is_active:
+        raise CapacityError(_("Only active rooms in active locations can be assigned."))
     active = room.assignments.filter(status=RoomAssignmentStatus.ACTIVE).exclude(person=person)
     if active.count() >= room.capacity:
-        raise CapacityError("Room is at full capacity.")
+        raise CapacityError(_("Room is at full capacity."))
 
     today = timezone.localdate()
     for existing in person.room_assignments.filter(status=RoomAssignmentStatus.ACTIVE):
@@ -235,6 +263,8 @@ def pending_deduction_reviews():
 
 @transaction.atomic
 def issue_equipment(person, item, quantity=1, *, actor=None):
+    if not item.is_active:
+        raise LogisticsWorkflowError(_("This equipment item is inactive and cannot be issued."))
     issue = EquipmentIssue.objects.create(
         person=person,
         item=item,
@@ -260,6 +290,71 @@ def record_transport_week(project, week_start, headcount, *, actor=None, note: s
     )
     record_event(actor, "transport.week_recorded", target=week, project=project.code)
     return week
+
+
+@transaction.atomic
+def create_transport_week(*, project, week_start, headcount, note: str = "", actor=None):
+    if TransportWeek.objects.filter(project=project, week_start=week_start).exists():
+        raise LogisticsWorkflowError(_("A transport record already exists for this project and week."))
+    week = TransportWeek.objects.create(
+        project=project, week_start=week_start, headcount=headcount, note=note,
+        recorded_by=actor if getattr(actor, "is_authenticated", False) else None,
+    )
+    record_event(
+        actor, "transport.week_created", target=week,
+        new={"project": project.code, "week_start": str(week_start), "headcount": headcount, "note": note},
+    )
+    return week
+
+
+@transaction.atomic
+def update_transport_week(week, *, project, week_start, headcount, note: str = "", actor=None):
+    duplicate = TransportWeek.objects.filter(project=project, week_start=week_start).exclude(pk=week.pk)
+    if duplicate.exists():
+        raise LogisticsWorkflowError(_("A transport record already exists for this project and week."))
+    old = {
+        "project": week.project.code, "week_start": str(week.week_start),
+        "headcount": week.headcount, "note": week.note,
+    }
+    week.project = project
+    week.week_start = week_start
+    week.headcount = headcount
+    week.note = note
+    week.recorded_by = actor if getattr(actor, "is_authenticated", False) else None
+    week.save()
+    record_event(
+        actor, "transport.week_updated", target=week, old=old,
+        new={"project": project.code, "week_start": str(week_start), "headcount": headcount, "note": note},
+    )
+    return week
+
+
+@transaction.atomic
+def save_accommodation(accommodation, *, actor=None, old=None):
+    accommodation.save()
+    record_event(
+        actor, "accommodation.updated" if old else "accommodation.created",
+        target=accommodation, old=old or {},
+        new={
+            "name": accommodation.name, "address": accommodation.address,
+            "notes": accommodation.notes, "is_active": accommodation.is_active,
+        },
+    )
+    return accommodation
+
+
+@transaction.atomic
+def save_room(room, *, actor=None, old=None):
+    room.save()
+    record_event(
+        actor, "room.updated" if old else "room.created", target=room, old=old or {},
+        new={
+            "accommodation": room.accommodation_id, "label": room.label,
+            "capacity": room.capacity, "monthly_rate": str(room.monthly_rate),
+            "is_active": room.is_active,
+        },
+    )
+    return room
 
 
 @transaction.atomic

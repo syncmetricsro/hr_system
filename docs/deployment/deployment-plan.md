@@ -1,5 +1,12 @@
 # Deployment plan — Dokku on one VPS, both thin clients
 
+> **CorvinumEU production decision (2026-07-15):** Corvinum runs on its own
+> cost-first FORPSI Basic VPS with on-demand staging and an independent
+> encrypted Contabo backup target. The Corvinum rows below describe app naming
+> and settings only; their previous shared/always-on hosting assumption is
+> superseded by [corvinum-basic-production.md](corvinum-basic-production.md).
+> Jober’s topology is unchanged.
+
 Contextual tooltips are shipped in the existing CSS, JavaScript, and templates.
 They require no deployment setting, migration, service, or network endpoint.
 

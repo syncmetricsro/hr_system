@@ -21,15 +21,17 @@
       </form>
     {% endif %}
   {% elif may_room %}
-    <form class="people-search" method="post" action="{% url 'assign_room' panel.person.pk %}">
-      {% csrf_token %}
-      <select name="room" aria-label="{% trans 'Room' %}">
-        {% for room in panel.rooms %}
-          <option value="{{ room.pk }}">{{ room }} ({{ room.occupancy }}/{{ room.capacity }})</option>
-        {% endfor %}
-      </select>
-      <button class="button button-primary" type="submit">{% trans "Assign room" %}</button>
-    </form>
+    {% if panel.rooms %}
+      <form class="people-search" method="post" action="{% url 'assign_room' panel.person.pk %}">
+        {% csrf_token %}
+        <select name="room" aria-label="{% trans 'Room' %}">
+          {% for room in panel.rooms %}
+            <option value="{{ room.pk }}">{{ room }} ({{ room.active_occupancy }}/{{ room.capacity }})</option>
+          {% endfor %}
+        </select>
+        <button class="button button-primary" type="submit">{% trans "Assign room" %}</button>
+      </form>
+    {% else %}<p>{% trans "No active room with free capacity is available." %}</p>{% endif %}
   {% else %}
     <p>—</p>
   {% endif %}

@@ -109,6 +109,34 @@ def schedule_trial(person, project, *, actor=None, scheduled_for=None, scheduled
 
 
 @transaction.atomic
+def update_pending_trial(trial, *, project, scheduled_for, note: str = "", actor=None):
+    """Edit routing details while preserving the candidate and completed history."""
+    if trial.outcome != TrialOutcome.PENDING or trial.state != TrialState.SCHEDULED:
+        raise WorkflowError(_("Only pending trials can be edited."))
+    if not project.is_active:
+        raise WorkflowError(_("Trials can only be scheduled for active projects."))
+    old = {
+        "project": trial.project.code,
+        "scheduled_for": trial.scheduled_for.isoformat() if trial.scheduled_for else "",
+        "note": trial.note,
+    }
+    trial.project = project
+    trial.scheduled_for = scheduled_for
+    trial.scheduled_date = timezone.localdate(scheduled_for)
+    trial.note = note or ""
+    trial.save(update_fields=["project", "scheduled_for", "scheduled_date", "note"])
+    record_event(
+        actor, "trial.updated", target=trial, old=old,
+        new={
+            "project": project.code,
+            "scheduled_for": scheduled_for.isoformat(),
+            "note": trial.note,
+        },
+    )
+    return trial
+
+
+@transaction.atomic
 def record_trial_outcome(trial, outcome, *, actor=None, note: str = ""):
     """Coordinator marks pass / fail / no-show (§12.3). Fail/no-show recycles."""
     if trial.outcome != TrialOutcome.PENDING:

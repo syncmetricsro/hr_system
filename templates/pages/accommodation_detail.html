@@ -1,7 +1,7 @@
 {% extends "layouts/base.html" %}
 {% load i18n %}
 
-{% block title %}{{ accommodation.name }} · Jober{% endblock %}
+{% block title %}{{ accommodation.name }} · {{ BRAND_NAME }}{% endblock %}
 
 {% block content %}
 <section class="page-head">
@@ -9,7 +9,11 @@
   <h1>{{ accommodation.name }}</h1>
   <a class="button button-secondary" href="{% url 'accommodation_list' %}">{% trans "Back" %}</a>
   {% if can_manage %}<a class="button button-secondary" href="{% url 'accommodation_costs' %}">{% trans "Cost report" %}</a>{% endif %}
+  {% if can_manage %}<a class="button button-secondary" href="{% url 'accommodation_edit' accommodation.pk %}">{% trans "Edit location" %}</a>{% endif %}
+  {% if can_manage %}<a class="button button-primary" href="{% url 'room_create' accommodation.pk %}">{% trans "Add room" %}</a>{% endif %}
 </section>
+
+{% if not accommodation.is_active %}<section class="panel workflow-panel"><strong>{% trans "This location is inactive and cannot receive new assignments." %}</strong></section>{% endif %}
 
 <section class="field-list" aria-label="{% trans 'Rooms' %}">
   {% for room in rooms %}
@@ -18,13 +22,10 @@
       <dl>
         <div><dt>{% trans "Occupancy" %}</dt><dd>{{ room.occupancy }}/{{ room.capacity }}</dd></div>
         <div><dt>{% trans "Monthly rate" %}</dt><dd>{{ room.monthly_rate }} EUR</dd></div>
+        <div><dt>{% trans "Status" %}</dt><dd>{% if room.is_active %}{% trans "Active" %}{% else %}{% trans "Inactive" %}{% endif %}</dd></div>
       </dl>
       {% if can_manage %}
-        <form class="people-search" method="post" action="{% url 'set_room_rate' room.pk %}">
-          {% csrf_token %}
-          <input type="number" step="0.01" min="0" name="monthly_rate" value="{{ room.monthly_rate }}" aria-label="{% trans 'Monthly rate' %}">
-          <button class="button button-secondary" type="submit">{% trans "Save rate" %}</button>
-        </form>
+        <a class="button button-secondary" href="{% url 'room_edit' room.pk %}">{% trans "Edit room" %}</a>
       {% endif %}
     </article>
   {% empty %}

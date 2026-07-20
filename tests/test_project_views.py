@@ -30,6 +30,25 @@ def test_project_list_shows_project(client, manager):
     assert "DHL Bratislava" in body
 
 
+def test_project_list_filters_active_inactive_and_ignores_invalid_status(client, manager):
+    Project.objects.create(name="Active project", code="ACTIVE", is_active=True)
+    Project.objects.create(name="Inactive project", code="INACTIVE", is_active=False)
+    client.force_login(manager)
+
+    active = client.get(reverse("project_list"), {"status": "active"})
+    assert "Active project" in active.content.decode()
+    assert "Inactive project" not in active.content.decode()
+    assert active.context["project_status"] == "active"
+
+    inactive = client.get(reverse("project_list"), {"status": "inactive"})
+    assert "Inactive project" in inactive.content.decode()
+    assert "Active project" not in inactive.content.decode()
+
+    invalid = client.get(reverse("project_list"), {"status": "unexpected"})
+    assert invalid.context["project_status"] == ""
+    assert len(invalid.context["projects"]) == 2
+
+
 def test_project_detail_lists_assigned_workers(client, manager):
     project = Project.objects.create(name="DHL Bratislava", code="DHLBA")
     person = Person.objects.create(first_name="Olha", last_name="Kovalenko")

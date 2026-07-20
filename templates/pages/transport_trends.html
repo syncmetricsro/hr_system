@@ -1,12 +1,49 @@
 {% extends "layouts/base.html" %}
 {% load i18n %}
 
-{% block title %}{% trans "Transport trends" %} · Jober{% endblock %}
+{% block title %}{% trans "Transport trends" %} · {{ BRAND_NAME }}{% endblock %}
 
 {% block content %}
 <section class="page-head">
   <p class="eyebrow">{% trans "Logistics" %}</p>
   <h1>{% trans "Transport trends" %}</h1>
+  {% if may_record %}<a class="button button-primary" href="?create=1">{% trans "Record transport week" %}</a>{% endif %}
+</section>
+
+{% if form %}
+<section class="panel workflow-panel">
+  <p class="eyebrow">{% if editing %}{% trans "Edit transport record" %}{% else %}{% trans "New transport record" %}{% endif %}</p>
+  <h2>{% trans "Weekly transported headcount" %}</h2>
+  <form class="stack" method="post" action="{% if editing %}{% url 'transport_edit' editing.pk %}{% else %}{% url 'transport_create' %}{% endif %}">
+    {% csrf_token %}{{ form.non_field_errors }}
+    {% for field in form %}<label>{{ field.label }}{{ field }}{{ field.errors }}</label>{% endfor %}
+    <div class="action-row">
+      <button class="button button-primary" type="submit">{% trans "Save transport record" %}</button>
+      <a class="button button-secondary" href="{% url 'transport_trends' %}">{% trans "Cancel" %}</a>
+    </div>
+  </form>
+</section>
+{% endif %}
+
+<section class="panel workflow-panel">
+  <p class="eyebrow">{% trans "Lookup" %}</p>
+  <form class="people-search" method="get">
+    <select name="project" aria-label="{% trans 'Project' %}">
+      <option value="">{% trans "All projects" %}</option>
+      {% for project in projects %}<option value="{{ project.pk }}"{% if project_filter == project.pk|stringformat:'s' %} selected{% endif %}>{{ project.name }}</option>{% endfor %}
+    </select>
+    <input type="date" name="week_from" value="{{ week_from }}" aria-label="{% trans 'From week' %}">
+    <input type="date" name="week_to" value="{{ week_to }}" aria-label="{% trans 'To week' %}">
+    <button class="button button-secondary" type="submit">{% trans "Filter" %}</button>
+  </form>
+</section>
+
+<section class="panel workflow-panel">
+  <p class="eyebrow">{% trans "Records" %}</p>
+  <h2>{% trans "Transport weeks" %}</h2>
+  <div class="table-wrap"><table><thead><tr><th>{% trans "Project" %}</th><th>{% trans "Week start" %}</th><th>{% trans "Headcount" %}</th><th>{% trans "Note" %}</th>{% if may_record %}<th>{% trans "Action" %}</th>{% endif %}</tr></thead>
+    <tbody>{% for record in records %}<tr><td>{{ record.project.name }}</td><td>{{ record.week_start }}</td><td>{{ record.headcount }}</td><td>{{ record.note|default:"—" }}</td>{% if may_record %}<td><a class="button button-secondary" href="?edit={{ record.pk }}">{% trans "Edit" %}</a></td>{% endif %}</tr>{% empty %}<tr><td colspan="5">{% trans "No transport records match these filters." %}</td></tr>{% endfor %}</tbody>
+  </table></div>
 </section>
 
 {% if company %}
@@ -36,6 +73,6 @@
 </section>
 {% endfor %}
 {% else %}
-<section class="panel"><p>{% trans "No transport data." %}</p></section>
+<section class="panel"><p>{% trans "No transport data. Record a project week to start the trend." %}</p></section>
 {% endif %}
 {% endblock %}

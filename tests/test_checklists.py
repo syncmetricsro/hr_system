@@ -47,10 +47,11 @@ def template():
     return tpl
 
 
-def _post_toggle(user, item):
+def _post_toggle(user, item, *, htmx=False):
     # The toggle URL is only mounted for clients with the flag on (e.g.
     # corvinum_eu), so tests under Jober settings call the view directly.
-    request = RequestFactory().post(f"/checklist/{item.pk}/toggle/")
+    headers = {"HTTP_HX_REQUEST": "true"} if htmx else {}
+    request = RequestFactory().post(f"/checklist/{item.pk}/toggle/", **headers)
     request.user = user
     return toggle_item_view(request, item_pk=item.pk)
 
@@ -107,6 +108,20 @@ def test_toggle_view_flips_item(settings, person, template, manager):
     assert resp.status_code == 302
     item.refresh_from_db()
     assert item.done
+
+
+def test_toggle_view_returns_updated_panel_for_htmx(settings, person, template, manager):
+    settings.FEATURE_FLAGS = {**settings.FEATURE_FLAGS, **FLAGS_ON}
+    item = ensure_person_checklist(person)[0]
+
+    response = _post_toggle(manager, item, htmx=True)
+
+    assert response.status_code == 200
+    assert response.template_name == "panels/checklists_items.html"
+    assert response.context_data["panel"]["checklist_missing_critical"] == 0
+    updated_item = response.context_data["panel"]["checklist_items"][0]
+    assert updated_item.done
+    assert updated_item.done_by == manager
 
 
 def test_toggle_view_denied_for_observer(settings, person, template, django_user_model):

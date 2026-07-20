@@ -1,7 +1,7 @@
 {% extends "layouts/base.html" %}
 {% load i18n rbac nav %}
 
-{% block title %}{% trans "Operational overview" %} · Jober{% endblock %}
+{% block title %}{% trans "Operational overview" %} · {{ BRAND_NAME }}{% endblock %}
 
 {% block content %}
 <section class="page-head">
@@ -14,18 +14,18 @@
 </section>
 
 <section class="dashboard-grid" aria-label="{% trans 'Operational summaries' %}">
-  <a class="metric-card" href="{% url 'project_list' %}" data-tooltip="{% trans 'Details' %}">
+  <a class="metric-card" href="{% url 'project_list' %}?status=active" data-tooltip-heading="{% trans 'Review active projects' %}" data-tooltip="{% trans 'Open active projects to review their coordinators and assignments.' %}">
     <span>{% trans "Active projects" %}</span><strong>{{ metrics.active_projects }}</strong>
   </a>
-  <a class="metric-card" href="{% url 'people_list' %}?status=available" data-tooltip="{% trans 'Details' %}">
+  <a class="metric-card" href="{% url 'people_list' %}?status=available" data-tooltip-heading="{% trans 'View available people' %}" data-tooltip="{% trans 'Open People filtered to this lifecycle status.' %}">
     <span>{% trans "Available" %}</span><strong>{{ metrics.available }}</strong>
   </a>
-  <a class="metric-card" href="{% url 'people_list' %}?status=working" data-tooltip="{% trans 'Details' %}">
+  <a class="metric-card" href="{% url 'people_list' %}?status=working" data-tooltip-heading="{% trans 'View working people' %}" data-tooltip="{% trans 'Open People filtered to this lifecycle status.' %}">
     <span>{% trans "Working" %}</span><strong>{{ metrics.working }}</strong>
   </a>
   {% flag_on 'recruitment_trials' as has_trials %}
   {% if has_trials %}
-  <a class="metric-card" href="{% url 'trials_queue' %}" data-tooltip="{% trans 'Details' %}">
+  <a class="metric-card" href="{% url 'trials_queue' %}" data-tooltip-heading="{% trans 'Resolve pending trial outcomes' %}" data-tooltip="{% trans 'Open trials that still require an outcome.' %}">
     <span>{% trans "Awaiting outcome" %}</span><strong>{{ metrics.awaiting_outcome }}</strong>
   </a>
   {% endif %}

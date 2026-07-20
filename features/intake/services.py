@@ -1,10 +1,13 @@
 from __future__ import annotations
 
 from django.db import transaction
+from django.core.exceptions import ValidationError
+from django.core.validators import validate_email
 from django.utils import timezone
 from django.utils.dateparse import parse_date
 
 from core.audit.services import record_event
+from core.ui import registry
 from features.intake.models import (
     IntakeAnswer,
     IntakeQuestionnaireVersion,
@@ -18,7 +21,7 @@ NEGATIVE = "__negative__"
 
 # stable_keys mapped straight onto Person on completion.
 _DIRECT_FIELDS = (
-    "first_name", "last_name", "phone", "address", "nationality",
+    "first_name", "last_name", "email", "phone", "address", "nationality",
     "preferred_language", "place_of_birth",
 )
 
@@ -76,7 +79,7 @@ def _parent_positive(key, parsed, existing) -> bool:
 
 
 @transaction.atomic
-def save_panel(intake, post, *, actor=None) -> dict:
+def save_panel(intake, post, *, actor=None, http_request=None) -> dict:
     """Validate + persist the current panel. Returns {} on success (and advances),
     or {stable_key: error} without advancing. Server state drives which panel is
     active, so panels cannot be bypassed by a forged POST (§12.1)."""
@@ -110,15 +113,25 @@ def save_panel(intake, post, *, actor=None) -> dict:
             errors[q.stable_key] = "type_required"
         elif q.required and not value:
             errors[q.stable_key] = "required"
+        elif q.type == "email" and value:
+            try:
+                validate_email(value)
+            except ValidationError:
+                errors[q.stable_key] = "invalid_email"
     if errors:
         return errors
 
-    # Persist applicable answers.
+    # Persist applicable non-transient answers. A transient value is usable only
+    # for this final submission; it must never become a raw IntakeAnswer.
+    transient_values: dict[str, str] = {}
     for q in questions:
         applicable = not (q.conditional_on and not _parent_positive(q.conditional_on, parsed, existing))
         if not applicable:
             continue
         value, normalized, _negative = parsed[q.stable_key]
+        if q.transient:
+            transient_values[q.stable_key] = value
+            continue
         IntakeAnswer.objects.update_or_create(
             intake=intake,
             question=q,
@@ -133,12 +146,17 @@ def save_panel(intake, post, *, actor=None) -> dict:
     intake.save(update_fields=["current_panel_order"])
 
     if current_panel(intake) is None:
-        complete_intake(intake, actor=actor)
+        complete_intake(
+            intake,
+            actor=actor,
+            http_request=http_request,
+            transient_values=transient_values,
+        )
     return {}
 
 
 @transaction.atomic
-def complete_intake(intake, *, actor=None) -> Person:
+def complete_intake(intake, *, actor=None, http_request=None, transient_values=None) -> Person:
     amap = answers_map(intake)
 
     def val(key: str) -> str:
@@ -164,4 +182,17 @@ def complete_intake(intake, *, actor=None) -> Person:
     intake.completed_at = timezone.now()
     intake.save(update_fields=["person", "status", "completed_at"])
     record_event(actor, "intake.completed", target=intake, person_id=person.pk)
+    cleaned = {
+        "identifier": (transient_values or {}).get("blacklist_identifier", ""),
+        "identifier_type": (transient_values or {}).get(
+            "blacklist_identifier_type", "national_id"
+        ),
+        "mothers_maiden_name": (transient_values or {}).get(
+            "blacklist_mothers_maiden_name", ""
+        ),
+    }
+    for extension in registry.person_form_extensions:
+        post_create = getattr(extension, "post_create", None)
+        if post_create:
+            post_create(http_request, person, cleaned)
     return person

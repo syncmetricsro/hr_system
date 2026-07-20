@@ -27,8 +27,8 @@ class AccommodationAdmin(admin.ModelAdmin):
 
 @admin.register(Room)
 class RoomAdmin(admin.ModelAdmin):
-    list_display = ("accommodation", "label", "capacity", "monthly_rate")
-    list_filter = ("accommodation",)
+    list_display = ("accommodation", "label", "capacity", "monthly_rate", "is_active")
+    list_filter = ("accommodation", "is_active")
 
 
 @admin.register(RoomAssignment)

@@ -1,10 +1,12 @@
 from __future__ import annotations
 
 from django.shortcuts import get_object_or_404, redirect
+from django.template.response import TemplateResponse
 from django.views.decorators.http import require_POST
 
 from core.accounts.permissions import Action, require_action
 from features.checklists.models import PersonChecklistItem
+from features.checklists.panels import checklist_panel
 from features.checklists.services import set_item_state
 
 
@@ -20,4 +22,15 @@ def toggle_item_view(request, item_pk: int):
         actor=request.user,
         note=request.POST.get("note", "").strip(),
     )
+    if request.headers.get("HX-Request") == "true":
+        return TemplateResponse(
+            request,
+            "panels/checklists_items.html",
+            {
+                "panel": {
+                    "person": item.person,
+                    **checklist_panel(request, item.person),
+                }
+            },
+        )
     return redirect("person_detail", pk=item.person_id)

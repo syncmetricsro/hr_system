@@ -1,7 +1,7 @@
 {% extends "layouts/base.html" %}
 {% load i18n rbac %}
 
-{% block title %}{% trans "People" %} · Jober{% endblock %}
+{% block title %}{% trans "People" %} · {{ BRAND_NAME }}{% endblock %}
 
 {% block content %}
 <section class="page-head">
@@ -23,6 +23,15 @@
         <option value="{{ value }}" {% if status == value %}selected{% endif %}>{{ label }}</option>
       {% endfor %}
     </select>
+    {% if status == "inactive" %}
+      <select name="inactive_reason" aria-label="{% trans 'Inactive reason' %}">
+        <option value=""{% if not inactive_reason %} selected{% endif %}>{% trans "All inactive reasons" %}</option>
+        <option value="none"{% if inactive_reason == "none" %} selected{% endif %}>{% trans "No reason" %}</option>
+        {% for reason in inactive_reasons %}
+          <option value="{{ reason.pk }}"{% if inactive_reason == reason.pk|stringformat:"s" %} selected{% endif %}>{{ reason.label }}</option>
+        {% endfor %}
+      </select>
+    {% endif %}
     <button class="button button-secondary" type="submit">{% trans "Search" %}</button>
   </form>
 </section>

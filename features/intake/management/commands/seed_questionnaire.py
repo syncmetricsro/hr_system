@@ -19,7 +19,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         version, created = IntakeQuestionnaireVersion.objects.get_or_create(
             name="Recruiter intake",
-            version=1,
+            version=4,
             defaults={"status": QuestionnaireStatus.PUBLISHED},
         )
         if not created:
@@ -39,15 +39,30 @@ class Command(BaseCommand):
         q(identity, "place_of_birth", "Place of birth", type=QuestionType.TEXT, order=3)
 
         q(contact, "phone", "Phone", type=QuestionType.TEXT, required=True, order=0)
-        q(contact, "address", "Address", type=QuestionType.TEXT, order=1)
-        q(contact, "nationality", "Nationality", type=QuestionType.TEXT, order=2)
+        q(contact, "email", "Email", type=QuestionType.EMAIL, order=1)
+        q(contact, "address", "Address", type=QuestionType.TEXT, order=2)
+        q(contact, "nationality", "Nationality", type=QuestionType.TEXT, order=3)
         q(contact, "preferred_language", "Preferred language", type=QuestionType.SELECT,
-          options=["en", "sk", "hu", "uk"], order=3)
+          options=["en", "sk", "hu", "uk"], order=4)
 
         q(compliance, "disability", "Disability — type 'nie' if none",
           type=QuestionType.TEXT, required=True, order=0,
           requires_typed_negative=True, accepted_negatives=NEGATIVES)
         q(compliance, "disability_type", "Disability type",
           type=QuestionType.TEXT, required=True, order=1, conditional_on="disability")
+        q(compliance, "blacklist_identifier", "ID number (blacklist check)",
+          type=QuestionType.TEXT, required=False, order=2, transient=True)
+        q(compliance, "blacklist_identifier_type", "ID type",
+          type=QuestionType.SELECT, required=False,
+          options=[
+              {"value": "national_id", "label": "National ID"},
+              {"value": "passport", "label": "Passport"},
+              {"value": "other", "label": "Other"},
+          ],
+          order=3,
+          transient=True,
+        )
+        q(compliance, "blacklist_mothers_maiden_name", "Mother's maiden name (blacklist check)",
+          type=QuestionType.TEXT, required=False, order=4, transient=True)
 
-        self.stdout.write(self.style.SUCCESS("Seeded published 'Recruiter intake' v1."))
+        self.stdout.write(self.style.SUCCESS("Seeded published 'Recruiter intake' v4."))
