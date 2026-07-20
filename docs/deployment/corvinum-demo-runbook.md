@@ -12,15 +12,33 @@ The current fictional-data client demo is also deployed to
 **syncmetric-prime**. Use this URL for the client presentation; use the local
 `localhost:8001` stack for practice and disposable resets.
 
-The staging app contains only the published Recruiter intake v3 and fictional
+The staging app contains only the published Recruiter intake v4 and fictional
 CorvinumEU seed scenario. Its separately scoped Doppler staging configuration
 has successfully delivered one encrypted fictional payslip PDF to a controlled
 test inbox. Never use a real worker address for either environment.
 
 Use this as the source of truth for the client demonstration. The extended
-walkthrough takes **25–30 minutes**; a ten-minute route is included below.
+walkthrough takes **40–45 minutes**; 20-minute and 10-minute routes are included
+below. The extended route intentionally shows every currently mounted product
+area, including read-only boundaries and confirmation controls. Do not lengthen
+the call by improvising features that are listed as deferred.
 Present in Slovak and switch to Hungarian briefly. State at the start that all
 names and records are fictional and that the real-data legal gate is not open.
+
+## Choose the environment before rehearsing
+
+The two demo environments have different reset and authentication behavior:
+
+| Environment | Data behavior | TOTP behavior | Use |
+|---|---|---|---|
+| Local `localhost:8001` | Disposable; `down` then `up` rebuilds the seeded database | Fresh reset shows setup and a new QR code | Full rehearsal, destructive-path practice, screenshots |
+| Public staging | Persistent PostgreSQL data shared by rehearsals | Enrolled HR Admin normally shows verification, not setup | Client presentation and final acceptance |
+
+Do not assume public staging is clean. Before presenting it, inspect the
+candidate, equipment, ledger, and payslip lists and choose the appropriate
+create-versus-show path described below. Never clear TOTP enrollment, delete
+demo records, or reset staging immediately before a call unless that mutation
+was planned, rehearsed, and verified.
 
 ## One-time local Doppler setup
 
@@ -90,6 +108,9 @@ opening act.
 - Before sharing the screen, confirm the login card shows the Corvinum logo,
   **CorvinumEU PeopleOps** heading, and no Jober name or artwork.
 - Have a phone with Aegis, Google Authenticator, FreeOTP, or another TOTP app.
+- Decide whether step 1 will demonstrate first-time enrollment on a clean local
+  stack or ordinary verification on persistent staging. Both are valid; do not
+  promise a QR code when staging already has an enrolled device.
 - Open the controlled, non-personal test mailbox that will receive the payslip.
   Do not use a real worker's address while the real-data gate is closed.
 - Keep this runbook and
@@ -98,13 +119,31 @@ opening act.
 - If role switching is planned, use a separate private browser profile for the
   Observer. One Corvinum browser session holds one signed-in account.
 
+### Automated preflight
+
+The companion walkthrough checker validates the same numbered route using the
+hash-pinned test dependency set. Run it only from the repository's approved
+test environment, never after installing packages directly on the host:
+
+```bash
+python scripts/test_corvinum_walkthrough.py --url http://localhost:8001
+```
+
+The default check does not send provider-backed email. A real SMTP check is a
+separate, explicit action and must use the controlled recipient, the approved
+Doppler scope, and the script's opt-in described by `--help`. The checker
+creates fictional candidates and catalogue records, so run it against local by
+default. When staging is the target, record the run in
+[corvinum-demo-verification-summary.md](corvinum-demo-verification-summary.md)
+and review the resulting fictional records before presenting.
+
 ## Demo accounts
 
 All four accounts use the password `demo-corvinum-2026`.
 
 | Role | Email | Best use in the demo |
 |---|---|---|
-| HR Admin / Manager | `hradmin@demo.corvinum.test` | Main walkthrough; forced TOTP, all operational actions |
+| HR Admin / Manager | `hradmin@demo.corvinum.test` | Main walkthrough; required TOTP, all operational actions |
 | Recruiter | `recruiter@demo.corvinum.test` | Person intake and editing |
 | Coordinator | `coordinator@demo.corvinum.test` | Checklists and equipment operations |
 | Observer | `observer@demo.corvinum.test` | Read-only ledger, exports, and audit |
@@ -119,19 +158,24 @@ All four accounts use the password `demo-corvinum-2026`.
 - **Alfa Metallwerk / CV-ALFA** and **Beta Logistik / CV-BETA** are the two
   partner projects.
 
-## Extended walkthrough — 25–30 minutes
+## Extended walkthrough - 40–45 minutes
 
-### 1. Secure entry — 3 minutes
+### 1. Secure entry and client isolation - 3 minutes
 
 1. Sign in as `hradmin@demo.corvinum.test`.
-2. On the forced two-factor setup screen, scan the QR code and enter the
-   current six-digit code. The manual secret is the fallback.
+2. On a clean local stack, scan the QR code on the required two-factor setup
+   screen and enter the current six-digit code. On persistent staging, enter
+   the current code on the verification screen using the already enrolled
+   **Corvinum staging** authenticator entry.
 3. Explain that Corvinum requires TOTP for the Manager/HR Admin role; this is a
    client policy on the shared platform, not merely a visual prompt.
+4. Point out the Corvinum logo, dark shell, Slovak URL, and Corvinum-specific
+   session. Jober is deployed separately and cannot leak navigation or data
+   into this client.
 
 Expected result: the Reports workspace opens after verification.
 
-### 2. Reports as the interactive overview — 3 minutes
+### 2. Reports as the interactive overview - 3 minutes
 
 1. Start on **Reports**. Point out that the old passive overview was merged
    into this operational dashboard.
@@ -145,10 +189,27 @@ Expected result: the Reports workspace opens after verification.
 Talking point: cards and lifecycle rows are drill-downs, not decorative
 statistics; each opens a relevant list or filter.
 
-### 3. Add fictional personnel through guided intake — 4 minutes
+### 3. Projects, assignments, and approved exports - 3 minutes
 
-1. Open **People → Add person**. The clean demo bootstrap publishes the shared
-   three-step intake questionnaire automatically.
+1. Open **Projects** and filter Active versus Inactive. Explain that the two
+   seeded partner companies are represented as projects: **Alfa Metallwerk**
+   (`CV-ALFA`) and **Beta Logistik** (`CV-BETA`).
+2. Open Alfa Metallwerk. Show its code, office/partner metadata when present,
+   responsible coordinators, financial-reporting eligibility, and linked
+   worker list.
+3. Return to Projects and point out **Export**. Manager and Observer can export
+   approved people/project data; Coordinator and Recruiter cannot.
+4. Do not claim full project create/edit/archive controls. Current project
+   navigation and assignment are working; broader project CRUD remains a
+   separately tracked product increment.
+
+Talking point: project responsibility scopes coordinator actions, while core
+records and permissions remain shared across clients without sharing data.
+
+### 4. Add fictional personnel through guided intake - 4 minutes
+
+1. Open **People -> Add person**. The clean demo bootstrap publishes Recruiter
+   intake **v4**, a shared three-step questionnaire, automatically.
 2. Enter this obviously fictional candidate so the client can follow the same
    person through the next steps:
    - first and last name: `Olena Demo`;
@@ -163,12 +224,17 @@ statistics; each opens a relevant list or filter.
      intake; the later blacklist demonstration supplies its own fictional ID.
 3. Finish the questionnaire and show that the new person opens immediately in
    **Available** state with the HR Admin recorded as the intake owner.
+4. Return briefly to **People**. Search for `Olena`, filter by Available, and
+   point out the approved CSV export. Open the new record again.
+5. On the person card distinguish operational details from restricted personal
+   data. Explain that sensitive visibility is server-enforced for managers,
+   observers, the owning recruiter, and the responsible coordinator.
 
 Talking point: the questionnaire is versioned, validates every server-driven
 step, handles conditional answers, and creates the personnel record only after
 the final panel succeeds.
 
-### 4. Schedule and record a trial day — 3 minutes
+### 5. Schedule and record a trial day - 3 minutes
 
 1. Continue on **Olena Demo**. In the **Next step** panel, select **Alfa
    Metallwerk** and choose a fictional arrival time tomorrow at `08:00`.
@@ -183,15 +249,25 @@ the final panel succeeds.
 Talking point: a passed trial does not activate a worker by itself. It moves
 the person into the documented readiness/approval workflow.
 
-### 5. Guided activation checklist — 3 minutes
+### 6. Readiness, activation checklist, and blocked activation - 4 minutes
 
 1. On Olena’s record, show the activation checklist and the message listing
    eight open critical items. Explain that critical approvals block activation.
 2. Tick one item. Point out the immediate confirmation and the recorded staff
    identity beside the completed item.
 3. Leave the remaining items open so the blocking state remains easy to see.
+4. In Readiness set Medical and Gear to complete, and Accommodation to **Not
+   applicable** with a short reason. Transport is absent because Corvinum has
+   that feature disabled.
+5. Select **Activate (Working)** while critical checklist items remain open.
+   Expected result: activation is rejected safely and the record remains in
+   Trial day. Do not complete every item during the main route.
 
-### 6. Work waiting for the user — 2 minutes
+Talking point: passing a trial, completing readiness, and approving a checklist
+are separate auditable decisions. No browser-only state can bypass the
+server-side activation gates.
+
+### 7. Work waiting for the user - 2 minutes
 
 1. Now open the bell in the top-right. The checklist opened in the previous
    step supplies a real actionable problem for this fresh demo database.
@@ -204,7 +280,21 @@ the person into the documented readiness/approval workflow.
 Talking point: the first release refreshes after navigation and mutations, so
 an idle browser makes no periodic requests.
 
-### 7. Equipment charge with a ledger trail — 3 minutes
+### 8. Compliance and missing-document visibility - 2 minutes
+
+1. Open **Compliance** from the navigation or Reports drill-down.
+2. Show missing, expiring, and expired metadata alerts and follow one alert to
+   its person record.
+3. Explain the current boundary precisely: the feature tracks certificate
+   names and issue/expiry dates. It does not yet store document files or OCR
+   results for Corvinum.
+4. Note that the exact mandatory-document catalog and retention periods remain
+   client/legal decisions C-Q7, C-Q13, and C-Q16.
+
+Talking point: the operational alert surface is working, while real documents
+and personal data remain behind the legal and retention gate.
+
+### 9. Equipment custody, review, and ledger trail - 4 minutes
 
 1. Open **Equipment catalogue**. As HR Admin, add a fictional example such as
    `High-visibility vest`, size `L`, price `8.50 EUR`, active. Show that the
@@ -213,42 +303,58 @@ an idle browser makes no periodic requests.
    coordinators can issue/return items but cannot alter the catalogue.
 3. Go to **People → Marek Skladník** and find **Equipment**.
 4. Show the safety boots, quantity, unit price in EUR, and approved charge.
-5. Open **Ledger** and show the corresponding equipment deduction alongside
+5. Open **Equipment reviews**. Explain that unreturned items require a manager
+   decision. The seeded boots are already approved, so the queue may be empty;
+   use Marek's person card and ledger as the evidence trail rather than creating
+   another charge during the call.
+6. Open **Ledger** and show the corresponding equipment deduction alongside
    the seeded 100.00 EUR advance and 30.00 EUR travel addition.
 
-Talking point: equipment review and payroll effect are linked explicitly and
-audited. Values are decimal EUR amounts; nothing is silently calculated or
-deleted.
+Talking point: equipment review and recovery are linked explicitly and audited.
+Approval records a recovery entry; it does not mutate wages automatically.
+Values are Decimal EUR amounts and nothing is silently deleted. Corvinum uses
+the per-person custody/value view, not Jober's warehouse-stock report.
 
-### 8. Ledger controls and safe consequences — 4 minutes
+### 10. Ledger entry, exports, and safe consequences - 5 minutes
 
-1. In **Ledger**, show the Thursday summary and its cut-off explanation.
-2. In the cycle selector use **2026 / 7** and select **Show**.
-3. Point out the per-person deduct, add, and net-effect columns and the detailed
+1. In **Ledger**, use **Record entry** to add a small fictional travel/fuel
+   addition for Olena: project **Alfa**, entry type **Pay addition**, category
+   **Travel / fuel**, amount `12.50 EUR`, and note `Demo only`. Point out that
+   the amount is stored positive while entry type determines whether it adds
+   to or deducts from pay.
+2. Show the Thursday summary, cut-off explanation, and CSV download.
+3. In the cycle selector use the current cycle end year/month and select
+   **Show**. If rehearsing a historical seeded state, use the cycle containing
+   Marek's entries instead.
+4. Point out the per-person deduct, add, and net-effect columns and the detailed
    entries below.
-4. Select **Include open entries in cycle**, show the consequence tooltip and
+5. Download the cycle CSV only if it helps the bookkeeping discussion.
+6. Select **Include open entries in cycle**, show the consequence tooltip and
    confirmation dialog, then choose **Cancel**. This demonstrates the safety
    control without locking the rehearsal data.
-5. Mention CSV export and the reversal-only correction path after an entry is
+7. Mention the cancellation path for open entries and reversal-only correction
+   path after an entry is
    locked.
 
 Do not claim the proposed Thursday cut-off or 20th-to-20th cycle is final. Ask
 the client to confirm C-Q2 and C-Q3.
 
-### 8. Encrypted payslip delivery — 4 minutes
+### 11. Encrypted payslip delivery - 4 minutes
 
-1. Open **Payslips** and record a payslip for Marek:
-   - period: `2026-07`
-   - net amount: `1450.00`
-   - note: `Fictional client demo`
-2. Before sending, edit Marek's email to a controlled, non-personal test inbox
+1. Open **Payslips** and first inspect the Recorded payslips table.
+2. On a clean local database, record a payslip for Marek using an unused
+   fictional period, `1450.00 EUR`, and note `Fictional client demo`.
+3. On persistent staging, if the intended Marek/period row already exists, do
+   not create it again. Use that row's **Resend (new password)** action. The
+   database allows one payslip per person and period.
+4. Before sending, edit Marek's email to a controlled, non-personal test inbox
    with a real deliverable domain. The seeded `@demo.corvinum.test` address is
    deliberately non-deliverable.
-3. Select **Send encrypted PDF**.
-4. Point out that the one-time PDF password is shown only in the on-screen
+5. Select **Send encrypted PDF** or **Resend (new password)**.
+6. Point out that the one-time PDF password is shown only in the on-screen
    confirmation and must be delivered separately by phone, Messenger, or in
    person. It is never included in the email or audit log.
-5. Open the received message in the test inbox and use the separately displayed
+7. Open the received message in the test inbox and use the separately displayed
    password to open its encrypted PDF attachment.
 
 **Resend** delivers a newly encrypted PDF to the same address as the last
@@ -259,15 +365,28 @@ it never exposes a server-error page.
 If the app was intentionally started without Doppler, the console backend
 prints MIME output instead and does **not** offer a clickable attachment.
 
-### 9. Audit and close — 3 minutes
+### 12. Audit filters and person history - 3 minutes
 
 1. Open **Audit** as HR Admin. Filter by Marek or by an action from this
    session, such as the checklist tick or payslip send.
 2. Show that sensitive changes record the actor and before/after context while
    the one-time payslip password is absent.
-3. If useful, switch to the Observer profile to show read-only ledger, export,
-   and audit access without operational write controls.
-4. Close on the decisions listed below.
+3. Return to Olena and show the person-level History sequence: intake, trial,
+   status, and related operational events. Distinguish this concise timeline
+   from the global append-only audit.
+4. Explain that actor-complete person history is still being refined; the
+   global Audit remains the authoritative actor record in this build.
+
+### 13. Observer RBAC and close - 3 minutes
+
+1. In a separate private browser profile, sign in as
+   `observer@demo.corvinum.test`.
+2. Open People, Projects, Ledger, exports, and Audit. Confirm read visibility.
+3. Confirm that Add person, checklist mutation, catalogue management, ledger
+   entry, payslip management, blacklist decisions, and operational lifecycle
+   controls are absent.
+4. Close on the decisions listed below and state that the client policy grants
+   actions server-side; hiding buttons is not the authorization boundary.
 
 ## Optional manager demonstration — blacklist and re-entry protection
 
@@ -337,15 +456,36 @@ raw identifier or maiden name is ever stored as an intake answer, audit value,
 or person field. Re-entering only a name, birth date, phone, or email — without
 the maiden name — deliberately does not create a blacklist match.
 
+## Twenty-minute route
+
+Use this route when the audience wants breadth but not every mutation:
+
+1. Sign in with required TOTP, identify the isolated Corvinum shell, and open
+   Reports.
+2. Show one report drill-down, the SK/HU switch, Projects, and project-scoped
+   worker links.
+3. Create Olena through intake v4, schedule and pass the trial, tick one
+   checklist item, and demonstrate blocked activation.
+4. Open the notification and compliance surfaces and follow one issue to the
+   person record.
+5. Show Marek's equipment custody, approved recovery, and linked ledger entry.
+6. Show Thursday/cycle summaries, CSV availability, and the cycle confirmation
+   dialog; choose Cancel.
+7. Show an existing payslip row and explain encryption/password separation
+   without sending unless provider delivery is an agreed objective.
+8. Filter Audit by an action from the session and close with Observer read-only
+   access and the open-decision list.
+
 ## Ten-minute route
 
 When time is tight, use only:
 
-1. HR Admin login and forced TOTP.
+1. HR Admin login and required TOTP setup or verification, depending on the
+   selected environment.
 2. Interactive Reports, one tooltip, and the SK/HU switch.
 3. Add Olena Demo through intake, schedule and pass one trial, then tick one
    checklist item and show its notification.
-4. Marek → equipment value → linked ledger deduction.
+4. Marek -> equipment value -> linked ledger deduction.
 5. Ledger confirmation dialog, then Cancel.
 6. Audit and the decision checklist. Skip payslip creation unless the client
    specifically asks about delivery.
@@ -366,17 +506,25 @@ advances/deductions, payslips, notifications, Reports, and Audit. These
 boundaries come from the client feature configuration and remain subject to
 confirmed client scope.
 
+Also do not present the parked wage-ledger branch as deployed. The current
+staging release records net payslips and operational advance/deduction entries;
+it does not yet expose the unmerged gross-wage ledger or wage-versus-payslip
+reconciliation surface.
+
 ## Recovery during rehearsal or the live call
 
 | Symptom | Recovery |
 |---|---|
 | Nothing at port 8001 | Run `scripts/corvinum_app.sh status`, then `scripts/corvinum_app.sh up` |
 | UI does not contain the latest changes | Run `scripts/corvinum_app.sh rebuild` before the call, then repeat the health check |
-| TOTP code is rejected after a reset | Delete the old authenticator entry, return to login, and scan the newly generated QR code |
-| Rehearsal data is already changed | Run `down`, then `up`; this recreates the disposable database and seed |
+| Local TOTP code is rejected after a reset | Delete the old local authenticator entry, return to login, and scan the newly generated QR code |
+| Staging opens verification but no enrolled authenticator is available | Stop and coordinate a deliberate staging TOTP reset; do not improvise deletion during the call |
+| Local rehearsal data is already changed | Run `down`, then `up`; this recreates the disposable database and seed |
+| Staging already contains Olena/catalogue/payslip records | Use a visibly unique fictional suffix, show the existing row, or use Resend; never assume staging is disposable |
 | Runner reports a missing SMTP variable | Confirm all seven `DJANGO_EMAIL_*` values exist in Doppler `hr_system/dev_corvinum_demo`; do not print their values |
 | SMTP send fails | Confirm Marek has a deliverable controlled test address, then check `scripts/corvinum_app.sh logs`; FORPSI may also require the current country in its GeoIP allow-list |
 | Console email appears instead of real delivery | Restart with `doppler run -- scripts/corvinum_app.sh up` |
+| Payslip creation reports a duplicate | Select the existing person/period row and use Resend, or choose an unused fictional period |
 | A risky button is reached accidentally | Use **Cancel** in the confirmation dialog; do not include or settle the cycle during the main walkthrough |
 
 ## Decisions to request from the client

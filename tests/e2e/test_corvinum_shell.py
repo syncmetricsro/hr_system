@@ -144,6 +144,41 @@ def test_corvinum_notification_center_uses_shared_responsive_panel(page):
     assert page.evaluate("document.documentElement.scrollWidth") == 375
 
 
+def test_corvinum_audit_table_keeps_columns_inside_a_scroll_panel(page):
+    page.set_viewport_size({"width": 375, "height": 667})
+    _login(page, "observer")
+    page.goto(f"{base_url()}/sk/audit/")
+    page.wait_for_load_state("networkidle")
+
+    wrapper = page.locator(".data-table-scroll")
+    table = wrapper.locator(".audit-table")
+    expect(wrapper).to_be_visible()
+    expect(table.locator("thead th")).to_have_count(5)
+    expect(table.locator("tbody tr").first.locator("td")).to_have_count(5)
+
+    layout = page.evaluate("""
+      () => {
+        const wrapper = document.querySelector('.data-table-scroll');
+        const row = document.querySelector('.audit-table tbody tr');
+        const cells = [...row.cells];
+        return {
+          documentWidth: document.documentElement.scrollWidth,
+          viewportWidth: innerWidth,
+          wrapperClientWidth: wrapper.clientWidth,
+          wrapperScrollWidth: wrapper.scrollWidth,
+          overflowX: getComputedStyle(wrapper).overflowX,
+          timestampWhiteSpace: getComputedStyle(cells[0]).whiteSpace,
+          cellLefts: cells.map(cell => cell.offsetLeft),
+        };
+      }
+    """)
+    assert layout["documentWidth"] == layout["viewportWidth"]
+    assert layout["wrapperScrollWidth"] > layout["wrapperClientWidth"]
+    assert layout["overflowX"] == "auto"
+    assert layout["timestampWhiteSpace"] == "nowrap"
+    assert layout["cellLefts"] == sorted(layout["cellLefts"])
+
+
 def test_corvinum_project_page_keeps_clean_layout_without_transport(page):
     page.set_viewport_size({"width": 1650, "height": 900})
     _login_recruiter(page)

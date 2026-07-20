@@ -1,5 +1,28 @@
 # Test Journal
 
+## 2026-07-20 - Shared audit-table layout
+
+- Corvinum-settings audit page slice: **8 passed**. Manager/Observer access now
+  also asserts the responsive wrapper, shared table class, and timestamp cell
+  marker; coordinator denial and localized filters remain green.
+- Complete isolated Playwright suite: **42 passed**. The new Corvinum mobile
+  regression verifies five aligned columns, panel-owned horizontal scrolling,
+  no document-level overflow at 375x667, and non-wrapping timestamps.
+
+## 2026-07-20 - Corvinum presenter walkthrough reconciliation
+
+- Human-supplied verification evidence records that the earlier ten-section
+  walkthrough passed against local rehearsal and public fictional staging,
+  including one controlled encrypted-payslip SMTP delivery. The evidence was
+  sanitized so it contains no one-time password or TOTP material.
+- The replacement checker compiles with Python 3.12, passes Ruff in the pinned
+  `jober-test:phase4` image, and exposes the expected guarded CLI. A targeted
+  secret-material scan and `git diff --check` pass for the changed artifacts.
+- The new 13-section checker was not executed in this documentation pass: the
+  existing local database contains the user's completed manual-test state, and
+  provider-backed delivery was intentionally not repeated. Run local and
+  staging acceptance again before recording the expanded route as passed.
+
 ## 2026-07-20 — Jober second-interview headline demo
 
 - Focused service/view coverage passes for age boundaries and htmx auth, FIFO
