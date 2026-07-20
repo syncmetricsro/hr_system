@@ -115,17 +115,17 @@ class Command(BaseCommand):
             ("2026-07", Decimal("2050.00"), Decimal("1540.00")),
         ]
         for period, gross_amount, net_amount in pay_rows:
-            if not WageEntry.objects.filter(person=worker, period=period).exists():
+            if not WageEntry.objects.filter(person=candidate, period=period).exists():
                 record_wage(
-                    worker,
+                    candidate,
                     period=period,
                     gross_amount=gross_amount,
                     note="Fictional gross source value",
                     actor=hradmin,
                 )
-            if not Payslip.objects.filter(person=worker, period=period).exists():
+            if not Payslip.objects.filter(person=candidate, period=period).exists():
                 record_payslip(
-                    worker,
+                    candidate,
                     period=period,
                     net_amount=net_amount,
                     note="Fictional net payslip source value",

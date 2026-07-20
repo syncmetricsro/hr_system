@@ -139,7 +139,7 @@ def test_observer_reads_both_sources_but_cannot_manage_payslips(client, person, 
 def test_corvinum_demo_pay_sources_are_exact_and_idempotent():
     call_command("seed_corvinum_demo", verbosity=0)
     call_command("seed_corvinum_demo", verbosity=0)
-    worker = Person.objects.get(first_name="Marek", last_name="Skladník")
+    worker = Person.objects.get(first_name="Eszter", last_name="Varga")
     assert list(
         WageEntry.objects.filter(person=worker).values_list("period", "gross_amount")
     ) == [
