@@ -9,6 +9,19 @@
 - Moved the deterministic wage-versus-payslip checkpoint to fictional candidate
   Eszter Varga. Marek remains the encrypted-delivery example; no historical
   payslip, delivery timestamp, recipient, or audit event was changed.
+- Merged the correction as PR **#78** and deployed application revision
+  **`67bcfae`** to `corvinum-staging` as
+  `jober-platform:corvinum-demo-67bcfae` (local image digest
+  `sha256:ea8eed4632886882c4b62a5beeba2250032ebf84ff4aea0014cb92982b136a3a`).
+- Dokku's replacement container passed uptime and port-8000 checks. Migrations
+  are current, the idempotent fictional seed completed, and a read-only runtime
+  assertion confirmed Eszter's exact source rows: June `1920.00 / 1450.00 EUR`
+  and July `2050.00 / 1540.00 EUR`; wage ledger and payslips are ON while
+  Corvinum transport remains OFF.
+- The public HTTPS smoke suite passed health, login/secure CSRF, fingerprinted
+  CSS, X-Frame-Options, and HSTS. The app remains available at
+  `https://corvinum-staging.80.211.210.46.sslip.io`. The known Dokku
+  default-bridge deprecation warning remains non-blocking host maintenance.
 
 ## 2026-07-20 — Jober amendments and latest Corvinum demo deployed
 
