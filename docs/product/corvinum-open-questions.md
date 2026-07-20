@@ -23,6 +23,7 @@ Sources: design doc §5.10/§12.6/§13, Addendum A1.
 | C-Q14 | Staging/production server, domain, DB names | Deployment deferred (ADR 0022) | Owner |
 | C-Q15 | Payslip password delivery channel (ADR 0023 — never by email) | Shown once to the office user; phone/Messenger assumed | Client |
 | C-Q16 | Retention period for stored pay amounts (payslips) | No purge registered yet; joins the GDPR review | Client + legal |
+| C-Q17 | Corvinum wage-source and payroll reconciliation definition | Calendar-month gross wage and calendar-month recorded net payslip are displayed as independent source values. The application does **not** derive net pay or flag their difference as an error; statutory inputs and `radonak.xlsx` remain deferred | Client + payroll owner |
 
 Update this file (and the design doc's §16 back-and-forth notes) as answers
 arrive — the pattern that worked for Jober's Q1–Q5.

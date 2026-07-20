@@ -1,5 +1,49 @@
 # Build Journal
 
+## 2026-07-20 - Corvinum wage and payslip source overview
+
+- Reconciled the safe wage-ledger slice from the preserved branch onto current
+  main without importing its unsupported computed-net formula. Corvinum now
+  records one positive Decimal gross-wage source per person/calendar month and
+  displays it beside the independently recorded net payslip on the person card.
+- The UI explicitly states that taxes, levies, and statutory payroll are not
+  calculated. Gross-versus-net differences are not labelled mismatches. The
+  operational advance/deduction ledger retains its separate 21st-to-20th cycle.
+- Added Manager write and Manager/Observer read policy, Corvinum-only routing,
+  deterministic fictional June/July fixtures, responsive tables, and an
+  expanded 14-section presenter/checker sequence with exact numeric checkpoints.
+
+## 2026-07-20 - Shared responsive audit table
+
+- Ported the isolated audit-table layout fix from the parked wage-ledger branch
+  without merging any wage-ledger code. The audit template now uses the shared
+  responsive data-table primitive, semantic column headers, and an
+  audit-specific timestamp class.
+- Wide audit data scrolls inside its panel instead of widening the page.
+  Timestamps and record references remain on one line, while the reason column
+  absorbs flexible width. Because the fix lives in shared CSS and the shared
+  template, both Jober and Corvinum receive the same behavior.
+
+## 2026-07-20 - Corvinum full-feature presenter walkthrough
+
+- Expanded the Corvinum manual runbook into a 13-section, 40-45 minute route
+  with 20-minute and 10-minute cuts. The route now covers client isolation,
+  Reports, projects/exports, intake v4, trials, readiness/checklist activation
+  gates, notifications, compliance, equipment recovery, ledger controls,
+  encrypted payslips, person/global audit, and Observer RBAC.
+- Separated disposable-local and persistent-staging instructions, including
+  TOTP setup versus verification, unique fictional records, payslip
+  create-versus-resend behavior, recovery paths, and the deployed feature
+  boundary. At that checkpoint the parked wage-ledger branch was explicitly
+  not presented; the later reconciliation entry above supersedes that boundary.
+- Added a companion 13-section HTTP checker. It discovers rendered IDs instead
+  of assuming database primary keys, verifies activation and role boundaries,
+  avoids fixed payslip-period collisions, and keeps provider-backed email off
+  unless explicitly approved.
+- Added a sanitized verification summary for the prior manual/automated run.
+  TOTP secrets, provider credentials, recipient details, and one-time PDF
+  passwords are not retained in the repository.
+
 ## 2026-07-20 — Jober second-interview headline demo
 
 - Removed Jober transport from flags, routes, navigation, seeds, project UI,

@@ -49,7 +49,10 @@ ACTION_ROLES: dict[Action, frozenset[Role]] = {
     # finance pattern should Jober ever enable it.
     Action.LEDGER_ENTER: frozenset({_MANAGER}),
     Action.LEDGER_VIEW: frozenset({_MANAGER, _OBSERVER}),
+    Action.WAGE_MANAGE: frozenset({_MANAGER}),
+    Action.WAGE_VIEW: frozenset({_MANAGER, _OBSERVER}),
     Action.PAYSLIP_MANAGE: frozenset({_MANAGER}),
+    Action.PAYSLIP_VIEW: frozenset({_MANAGER, _OBSERVER}),
     Action.FINANCE_MANAGE: frozenset({_MANAGER}),
     Action.EXPORT_APPROVED: frozenset({_MANAGER, _OBSERVER}),
     Action.BLACKLIST_VIEW_REASON: frozenset({_COORDINATOR, _MANAGER}),

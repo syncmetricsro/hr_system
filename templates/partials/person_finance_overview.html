@@ -1,0 +1,26 @@
+{% load i18n %}
+<section class="panel" data-testid="person-finance-overview">
+  <p class="eyebrow">{% trans "Pay" %}</p>
+  <h2>{% trans "Wage and payslip overview" %}</h2>
+  <p class="muted">{% trans "Both columns are recorded source values for the same calendar month. Gross wage is not converted into net pay here; taxes, levies, and other statutory payroll calculations remain outside this feature." %}</p>
+  <div class="data-table-scroll">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th scope="col">{% trans "Calendar month" %}</th>
+          {% for series in overview.series %}<th scope="col">{{ series.label }}</th>{% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in overview.rows %}
+          <tr>
+            <th scope="row">{{ row.period }}</th>
+            {% for cell in row.cells %}
+              <td>{% if cell %}{{ cell.amount }} {{ cell.currency }}{% else %}—{% endif %}</td>
+            {% endfor %}
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>

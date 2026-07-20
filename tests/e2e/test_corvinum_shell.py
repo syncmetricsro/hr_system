@@ -144,6 +144,41 @@ def test_corvinum_notification_center_uses_shared_responsive_panel(page):
     assert page.evaluate("document.documentElement.scrollWidth") == 375
 
 
+def test_corvinum_audit_table_keeps_columns_inside_a_scroll_panel(page):
+    page.set_viewport_size({"width": 375, "height": 667})
+    _login(page, "observer")
+    page.goto(f"{base_url()}/sk/audit/")
+    page.wait_for_load_state("networkidle")
+
+    wrapper = page.locator(".data-table-scroll")
+    table = wrapper.locator(".audit-table")
+    expect(wrapper).to_be_visible()
+    expect(table.locator("thead th")).to_have_count(5)
+    expect(table.locator("tbody tr").first.locator("td")).to_have_count(5)
+
+    layout = page.evaluate("""
+      () => {
+        const wrapper = document.querySelector('.data-table-scroll');
+        const row = document.querySelector('.audit-table tbody tr');
+        const cells = [...row.cells];
+        return {
+          documentWidth: document.documentElement.scrollWidth,
+          viewportWidth: innerWidth,
+          wrapperClientWidth: wrapper.clientWidth,
+          wrapperScrollWidth: wrapper.scrollWidth,
+          overflowX: getComputedStyle(wrapper).overflowX,
+          timestampWhiteSpace: getComputedStyle(cells[0]).whiteSpace,
+          cellLefts: cells.map(cell => cell.offsetLeft),
+        };
+      }
+    """)
+    assert layout["documentWidth"] == layout["viewportWidth"]
+    assert layout["wrapperScrollWidth"] > layout["wrapperClientWidth"]
+    assert layout["overflowX"] == "auto"
+    assert layout["timestampWhiteSpace"] == "nowrap"
+    assert layout["cellLefts"] == sorted(layout["cellLefts"])
+
+
 def test_corvinum_project_page_keeps_clean_layout_without_transport(page):
     page.set_viewport_size({"width": 1650, "height": 900})
     _login_recruiter(page)
@@ -237,3 +272,37 @@ def test_corvinum_ledger_groups_controls_and_keeps_tables_aligned(page):
       })
     """)
     assert mobile == {"pageOverflow": 0, "entryScrolls": True}
+
+
+def test_corvinum_wage_and_payslip_sources_are_aligned_and_responsive(page):
+    page.set_viewport_size({"width": 375, "height": 667})
+    _login(page, "observer")
+
+    page.goto(f"{base_url()}/sk/wages/")
+    page.wait_for_load_state("networkidle")
+    expect(page.get_by_role("heading", name="Hrubé mzdy", exact=True)).to_be_visible()
+    wage_table = page.locator(".data-table").last
+    expect(wage_table).to_contain_text("2050,00")
+    expect(wage_table).to_contain_text("1920,00")
+
+    page.get_by_role("link", name="Marek Skladník").first.click()
+    overview = page.locator("[data-testid='person-finance-overview']")
+    expect(overview).to_be_visible()
+    expect(overview.locator("thead th")).to_have_count(3)
+    expect(overview).to_contain_text("2050,00")
+    expect(overview).to_contain_text("1540,00")
+    expect(overview).to_contain_text("1920,00")
+    expect(overview).to_contain_text("1450,00")
+    assert "Vypočítaná čistá mzda" not in overview.inner_text()
+
+    layout = page.evaluate("""
+      () => ({
+        pageOverflow: document.documentElement.scrollWidth - innerWidth,
+        overviewScrolls: document.querySelector(
+          '[data-testid="person-finance-overview"] .data-table-scroll'
+        ).scrollWidth > document.querySelector(
+          '[data-testid="person-finance-overview"] .data-table-scroll'
+        ).clientWidth,
+      })
+    """)
+    assert layout == {"pageOverflow": 0, "overviewScrolls": True}

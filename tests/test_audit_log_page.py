@@ -35,6 +35,9 @@ def test_managers_and_observers_can_view(client, users, events):
         response = client.get(reverse("audit_log"))
         assert response.status_code == 200, role
         assert b"person.status_changed" in response.content
+        assert b'class="data-table-scroll"' in response.content
+        assert b'class="data-table audit-table"' in response.content
+        assert b'class="audit-when"' in response.content
 
 
 def test_coordinator_denied(client, users, events):
