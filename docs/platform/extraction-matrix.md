@@ -1,4 +1,12 @@
-> **Status: FUTURE-STAGE PLANNING — does not change the current build.**
+> **Changelog, 2026-07-20:** The second Jober demo interview reverses Jober
+> transport to OFF, confirms capability-level overlap between Jober operational
+> debt and CorvinumEU advances, and confirms shared equipment with different
+> client-selected reports. The received Jober P&L workbook unblocks Jober
+> profitability specification and is explicitly distinct from the deferred
+> CorvinumEU wage workbook. Existing artifact labels are otherwise unchanged.
+
+> **Status: HISTORICAL EXTRACTION RECORD + SPECIFICATION DELTAS — this change
+> does not alter the current build.**
 > Per [ADR 0001](../adr/0001-jober-only-scope.md) the production app stays
 > **single-client Jober** with no platform abstractions, client switching, or
 > shared-client data models. This matrix is the **post-completion** extraction
@@ -100,16 +108,16 @@ dashboard — see extraction-plan slice **B1** for the hook/registry designs.
 | `Accommodation`, `Room` (+ `monthly_rate`), `RoomAssignment` (+ `rate_override`, `effective_rate`) | model | **feature** | `features/accommodation` | Jober-only (CorvinumEU excludes housing) |
 | `assign_room`/`release_room`, rate services, `accommodation_cost_report` | service | feature | `features/accommodation` | |
 | accommodation views + 3 templates + `room.assign`/`accommodation.manage` actions | view/UI | feature | `features/accommodation` | |
-| `EquipmentItem` (unit_price), `EquipmentIssue` (+ `DeductionReviewStatus` review fields) | model | **feature** | `features/equipment` | **shared by both clients** (flag resolved below); reconcile pricing: Jober prices the catalog item, CorvinumEU values the issued item (add optional per-issue value in Stage C) |
-| `issue/return_equipment`, `flag_unreturned`, `review_deduction`, `pending_deduction_reviews`, `issued_equipment_value` | service | feature | `features/equipment` | |
+| `EquipmentItem` (unit_price), `EquipmentIssue` (+ `DeductionReviewStatus` review fields) | model | **feature** | `features/equipment` | **shared by both clients** (flag resolved below); Jober's target adds warehouse receipts/movements by item+size, while CorvinumEU retains per-issue value/custody |
+| `issue/return_equipment`, `flag_unreturned`, `review_deduction`, `pending_deduction_reviews`, `issued_equipment_value` | service | feature | `features/equipment` | Report policy diverges: Jober selects stock balance/monthly in-out and does not require person-carried value; CorvinumEU selects person-level outstanding items/value |
 | equipment views, `equipment_reviews.html`, `equipment.issue_return`/`equipment.review_deduction` actions | view/UI | feature | `features/equipment` | |
-| `TransportWeek`, `record_transport_week`, `transport_trends` view/template, `transport.record` action | model/view | **feature** | `features/transport` | Jober-only; CorvinumEU explicitly rejected transport |
+| `TransportWeek`, `record_transport_week`, `transport_trends` view/template, `transport.record` action | model/view | **feature** | `features/transport` | **Target OFF for both clients.** Jober removed transport in the second interview; its current runtime flag/code remain until a separate build prompt |
 
 ### `apps/finance` → `features/profitability` (Jober-only)
 
 | Artifact | Type | Label | Target | Notes |
 |---|---|---|---|---|
-| `FinancialMonth`, `FinanceCategory`, `FinanceLineItem` (positive convention, Q4) | model | feature | `features/profitability` | project-month P&L; **no overlap with CorvinumEU advances** (flag resolved below) |
+| `FinancialMonth`, `FinanceCategory`, `FinanceLineItem` (current positive-storage implementation; target reconciliation pending) | model | feature | `features/profitability` | Jober-only project-month P&L; verified filled source uses negative costs and positive revenues. This feature is distinct from, but may receive totals from, per-person recovery/advances |
 | all finance services (line items, recompute, lock/reopen, rollups, `company_totals`) | service | feature | `features/profitability` | |
 | 7 finance views, 3 templates, `finance.manage`/`finance.view_summary` actions, `seed_finance` | view/UI/command | feature | `features/profitability` | category *labels* are Jober data (seed) |
 
@@ -124,8 +132,8 @@ dashboard — see extraction-plan slice **B1** for the hook/registry designs.
 
 | Artifact | Type | Label | Target | Notes |
 |---|---|---|---|---|
-| `MessageTemplate`, `OutboundMessage`, `InboundMessage` | model | feature | `features/worker_messaging` | CorvinumEU rejected automated messaging (phone + Messenger) — flag off |
-| `send_sms` (stdlib Twilio), `verify_twilio_signature`, `twilio_inbound` webhook | service/view | feature | `features/worker_messaging` | webhook URL stays un-prefixed infra routing |
+| `MessageTemplate`, `OutboundMessage`, `InboundMessage` | model | feature | `features/worker_messaging` | Jober selects Twilio SMS plus Telegram channel-bot broadcast; CorvinumEU rejected automated messaging (phone + Messenger) — flag off |
+| `send_sms` (stdlib Twilio), `verify_twilio_signature`, `twilio_inbound` webhook | service/view | feature | `features/worker_messaging` | Telegram adapter/config is a Jober spec delta pending channel access; webhook URL stays un-prefixed infra routing |
 | `sms.send`/`sms.manage_templates` actions, SMS panel on person card | authz/UI | feature | contributed via panel registry (B1) | |
 
 ### `apps/compliance` → `features/documents` family (both clients)
@@ -211,14 +219,24 @@ their feature; the client matrix only grants what its enabled features register.
 
 ## Open flags — RESOLVED (2026-07-05, against the repo)
 
-- ~~**Advances vs. Jober financials overlap.**~~ **No overlap.** Jober finance is
-  project-month P&L (`FinancialMonth`/`FinanceLineItem`), not per-worker cash.
-  `features/advances` (CorvinumEU ledger) is **net-new** in Stage C;
-  `features/profitability` is Jober-only. CorvinumEU effort estimate unaffected.
+- ~~**Advances vs. Jober financials overlap.**~~ **Confirmed capability-level
+  overlap (second Jober interview, 2026-07-20).** Jober moves per-person
+  operational debt/recovery money (the compliance example showed a person
+  "EUR 850 in the red"), so `features/advances` is not purely net-new from a
+  product-capability perspective. Exact model/service reuse, Jober entry types,
+  approvals, and settlement remain a later design/build decision. This is not
+  wage computation and must never auto-deduct payroll. Jober-only project P&L
+  remains separately owned by `features/profitability`.
 - ~~**Equipment on both clients.**~~ **Yes — shared.** Jober ships
-  issue/return/deduction-review; `features/equipment` serves both. One model
-  reconciliation for Stage C: per-issue value (CorvinumEU) alongside Jober's
-  catalog `unit_price`.
+  issue/return/deduction-review and targets a warehouse stock ledger;
+  `features/equipment` serves both. Client policy selects genuinely different
+  reports: Jober balance by item/size/value plus monthly in-out, CorvinumEU
+  per-person custody/outstanding value for recovery decisions. Neither report
+  substitutes for the other.
+- **Finance workbook provenance.** `HV 202510.xlsx` (called `HV_202510.xlsx` in
+  discovery notes) is the received Jober per-project P&L and unblocks that
+  specification. It is not `radonak.xlsx`, the deferred CorvinumEU per-worker
+  wage sheet. The two files do not gate or specify the same feature.
 - ~~**Auth compatibility.**~~ **Compatible, with one addition.** Email-login
   `User` + action-gated RBAC transfer cleanly; **2FA must be added to
   `core/accounts`** (B4) — a genuinely reusable core capability, not a workaround.
