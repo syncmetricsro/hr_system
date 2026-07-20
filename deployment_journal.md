@@ -1,5 +1,30 @@
 # Deployment Journal
 
+## 2026-07-20 — Jober amendments and latest Corvinum demo deployed
+
+- Merged PR **#73** (shared platform/Corvinum work) and PR **#75** (Jober
+  interview amendments) into `main`; the deployed application revision is
+  **`cd28ac8`**.
+- Built the npm-free production image locally without runtime credentials and
+  streamed the same tag, **`jober-platform:demo-cd28ac8`** (local image digest
+  `sha256:dbfc9c29680e929a76ce42b6e8e66efa863a2a23f246a879f5feba1607126198`),
+  to both `jober-staging` and `corvinum-staging` on syncmetric-prime.
+- Both Dokku replacement containers passed their uptime and port checks. Applied
+  migrations through `projects.0005` and `logistics.0009`; `migrate --check`
+  then passed for both isolated databases.
+- Refreshed only fictional, idempotent demo data. Jober received the updated
+  warehouse stock, accommodation-cost, regional-finance, and age-warning
+  scenario; Corvinum retained its separate intake, checklist, equipment, and
+  worker-ledger scenario.
+- Runtime policy checks confirmed Jober transport OFF with profitability and
+  warehouse stock ON, and Corvinum transport, profitability, and warehouse
+  stock OFF. The public HTTPS smoke suite passed health, login/CSRF,
+  fingerprinted static assets, X-Frame-Options, and HSTS for both apps.
+- Public demos: `https://jober-staging.80.211.210.46.sslip.io` and
+  `https://corvinum-staging.80.211.210.46.sslip.io`. The known Dokku
+  default-bridge deprecation warning remains host maintenance; it did not
+  affect either release.
+
 ## 2026-07-16 — Corvinum checklist in-place update deployed
 
 - Built committed revision **`6abdb56`** in a detached clean worktree without
