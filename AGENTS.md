@@ -168,7 +168,13 @@ Keep these current at the repository root:
 
 ## 9. Operating-system & editor packages (always)
 
-- Do not install OS packages, AUR packages, or editor/marketplace extensions to make the build work. These are active supply-chain targets. If something seems to need one, **stop and ask**.
+- The agent must not directly install OS packages, AUR packages, or
+  editor/marketplace extensions. These are active supply-chain targets. When
+  one is needed, the agent may advise a human to perform the installation on
+  the agent's behalf by providing the reason, the official source, applicable
+  version and integrity checks, and exact installation and verification
+  commands. The human remains the approving and executing party; after the
+  installation, the agent verifies the installed tool before relying on it.
 
 ---
 
