@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+import datetime as dt
 import os
+from zoneinfo import ZoneInfo
 
 from playwright.sync_api import expect
 
@@ -233,7 +235,12 @@ def test_corvinum_coordinator_can_tick_checklist_with_csrf(page):
 def test_corvinum_ledger_groups_controls_and_keeps_tables_aligned(page):
     page.set_viewport_size({"width": 1470, "height": 900})
     _login(page, "observer")
-    page.goto(f"{base_url()}/hu/ledger/?year=2026&month=7")
+    today = dt.datetime.now(ZoneInfo("Europe/Bratislava")).date()
+    cycle_month = today.month if today.day <= 20 else today.month % 12 + 1
+    cycle_year = today.year + (1 if today.day > 20 and today.month == 12 else 0)
+    page.goto(
+        f"{base_url()}/hu/ledger/?year={cycle_year}&month={cycle_month}"
+    )
     page.wait_for_load_state("networkidle")
 
     desktop = page.evaluate("""
@@ -285,7 +292,7 @@ def test_corvinum_wage_and_payslip_sources_are_aligned_and_responsive(page):
     expect(wage_table).to_contain_text("2050,00")
     expect(wage_table).to_contain_text("1920,00")
 
-    page.get_by_role("link", name="Marek Skladník").first.click()
+    page.get_by_role("link", name="Eszter Varga").first.click()
     overview = page.locator("[data-testid='person-finance-overview']")
     expect(overview).to_be_visible()
     expect(overview.locator("thead th")).to_have_count(3)

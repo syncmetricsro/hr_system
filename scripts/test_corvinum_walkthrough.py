@@ -257,16 +257,16 @@ def verify_payslips(
 def verify_wage_sources(session: requests.Session, base_url: str) -> None:
     wages = session.get(f"{base_url}/sk/wages/", timeout=15)
     require(wages.status_code == 200, "Gross-wage workspace unavailable.")
-    wage_text = clean_text(wages.text)
+    rows = [clean_text(row) for row in re.findall(r"<tr>(.*?)</tr>", wages.text, re.S)]
     for period, gross in (("2026-06", "1920"), ("2026-07", "2050")):
         require(
-            period in wage_text and gross in wage_text,
-            f"Gross-wage fixture {period} / {gross}.00 is missing.",
+            any("Eszter Varga" in row and period in row and gross in row for row in rows),
+            f"Eszter's gross-wage fixture {period} / {gross}.00 is missing.",
         )
 
-    marek_id = find_person_id(session, base_url, "Marek Skladník")
-    detail = session.get(f"{base_url}/sk/people/{marek_id}/", timeout=15)
-    require(detail.status_code == 200, "Marek's person overview is unavailable.")
+    person_id = find_person_id(session, base_url, "Eszter Varga")
+    detail = session.get(f"{base_url}/sk/people/{person_id}/", timeout=15)
+    require(detail.status_code == 200, "Eszter's person overview is unavailable.")
     detail_text = clean_text(detail.text)
     for value in ("1920", "1450", "2050", "1540"):
         require(value in detail_text, f"Expected pay source {value}.00 is missing.")

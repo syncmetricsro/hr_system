@@ -12,6 +12,9 @@
 - Added Manager write and Manager/Observer read policy, Corvinum-only routing,
   deterministic fictional June/July fixtures, responsive tables, and an
   expanded 14-section presenter/checker sequence with exact numeric checkpoints.
+- The numeric checkpoint belongs to fictional candidate Eszter Varga, not
+  Marek Skladník. This isolates deterministic source values from Marek's
+  persistent encrypted-delivery rehearsal history.
 
 ## 2026-07-20 - Shared responsive audit table
 

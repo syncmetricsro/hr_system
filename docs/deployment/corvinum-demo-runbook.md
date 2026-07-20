@@ -346,7 +346,7 @@ the difference between gross and net a discrepancy.
 1. Open **Gross wages**. Explain that one entry is the gross wage earned for a
    calendar month, from the first through the last day. It is a recorded source
    value, not an hours-times-rate calculation.
-2. Find Marek's two seeded rows and verify the values on screen before moving
+2. Find Eszter's two seeded rows and verify the values on screen before moving
    on:
 
    | Calendar month | Recorded gross wage | Recorded net payslip |
@@ -354,7 +354,7 @@ the difference between gross and net a discrepancy.
    | `2026-06` | `1920.00 EUR` | `1450.00 EUR` |
    | `2026-07` | `2050.00 EUR` | `1540.00 EUR` |
 
-3. Open **Marek Skladník** from the wage table. In **Wage and payslip
+3. Open **Eszter Varga** from the wage table. In **Wage and payslip
    overview**, verify that each calendar month occupies one row and that the
    gross and net source values appear in separate, clearly labelled columns.
 4. State the boundary explicitly: `1920.00 - 1450.00 = 470.00` and
@@ -379,11 +379,11 @@ data.
 
 ### 12. Encrypted payslip delivery - 4 minutes
 
-1. Open **Payslips** and inspect the same seeded `2026-06` and `2026-07` net
+1. Open **Payslips** and inspect Eszter's same seeded `2026-06` and `2026-07` net
    values. This confirms that the person overview reads the payslip record; it
    does not copy or calculate the displayed number.
 2. If creation itself must be demonstrated, use a different fictional person
-   and an unused period. Do not overwrite or duplicate Marek's numeric
+   and an unused period. Do not overwrite or duplicate Eszter's numeric
    checkpoint rows.
 3. On persistent staging, if the intended Marek/period row already exists, do
    not create it again. Use that row's **Resend (new password)** action. The
@@ -513,7 +513,7 @@ Use this route when the audience wants breadth but not every mutation:
 5. Show Marek's equipment custody, approved recovery, and linked ledger entry.
 6. Show Thursday/cycle summaries, CSV availability, and the cycle confirmation
    dialog; choose Cancel.
-7. Show Marek's calendar-month gross wage and net payslip side by side, quote
+7. Show Eszter's calendar-month gross wage and net payslip side by side, quote
    the four expected fixture values, and explain why no net is calculated.
 8. Show the matching payslip row and explain encryption/password separation
    without sending unless provider delivery is an agreed objective.
@@ -531,7 +531,7 @@ When time is tight, use only:
    checklist item and show its notification.
 4. Marek -> equipment value -> linked ledger deduction.
 5. Ledger confirmation dialog, then Cancel.
-6. Marek's `2026-07` gross `2050.00 EUR` beside recorded net `1540.00 EUR`,
+6. Eszter's `2026-07` gross `2050.00 EUR` beside recorded net `1540.00 EUR`,
    with the source-versus-calculation boundary stated explicitly.
 7. Audit and the decision checklist. Skip payslip creation unless the client
    specifically asks about delivery.

@@ -1,5 +1,15 @@
 # Deployment Journal
 
+## 2026-07-20 - Corvinum wage release staging-data reconciliation
+
+- The first PR #77 staging release applied `wage_ledger.0001` and passed the
+  public HTTPS smoke suite, but acceptance found Marek's existing, sent
+  `2026-07` fictional payslip from an earlier manual rehearsal. The idempotent
+  seed correctly did not overwrite or delete that audited record.
+- Moved the deterministic wage-versus-payslip checkpoint to fictional candidate
+  Eszter Varga. Marek remains the encrypted-delivery example; no historical
+  payslip, delivery timestamp, recipient, or audit event was changed.
+
 ## 2026-07-20 — Jober amendments and latest Corvinum demo deployed
 
 - Merged PR **#73** (shared platform/Corvinum work) and PR **#75** (Jober

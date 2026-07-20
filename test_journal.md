@@ -19,6 +19,11 @@
 - Ruff and migration consistency pass. The 14-step HTTP checker was expanded
   but not run against persistent staging because it creates fictional workflow
   records; provider-backed email was intentionally not repeated.
+- Staging-fixture follow-up: **5 focused wage tests passed** and the complete
+  Playwright suite passed again (**43 passed**) with the deterministic source
+  rows assigned to Eszter Varga. The ledger layout test now derives the active
+  21st-to-20th cycle in Europe/Bratislava instead of hardcoding July; this was
+  exposed when local time crossed midnight to July 21 during deployment.
 
 ## 2026-07-20 - Shared audit-table layout
 
