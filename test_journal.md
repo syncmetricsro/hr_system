@@ -1,5 +1,21 @@
 # Test Journal
 
+## 2026-07-20 — Settlement seam and ledger entry dates
+
+- Full Jober/default unit lane: **390 passed, 2 skipped**. The new
+  flag-toggle test proves bulk inclusion skips open cash advances only when
+  `wage_ledger` is enabled and keeps the original behavior for a client
+  running advances standalone.
+- Full Corvinum-flags lane: **232 passed, 7 skipped, 139 deselected**. New
+  coverage: the reworked inclusion test settles a deduction through the bulk
+  path, and the ledger form round-trips a backdated post-20th entry date into
+  the deferral rule, defaults to today when omitted, and rejects an
+  unparseable date without creating an entry.
+- Ruff clean. SK/HU/UK catalogs updated for the two new strings ("Entry
+  date", the wage-aware include-cycle confirmation); both msgmerge fuzzy
+  pairings per locale corrected; zero fuzzy or empty entries.
+- Complete Playwright suite after the ledger-form changes: **40 passed**.
+
 ## 2026-07-19 — Advance recovery, reconciliation overview, admin sweep
 
 - Full Jober/default unit lane: **389 passed, 2 skipped** (both skips are the

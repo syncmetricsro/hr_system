@@ -60,6 +60,9 @@ def ledger_record(request):
     if request.POST.get("project"):
         project = get_object_or_404(Project, pk=request.POST["project"])
     try:
+        entry_date = None
+        if request.POST.get("entry_date"):
+            entry_date = dt.date.fromisoformat(request.POST["entry_date"])
         record_entry(
             person,
             entry_type=request.POST.get("entry_type", ""),
@@ -68,6 +71,7 @@ def ledger_record(request):
             actor=request.user,
             project=project,
             note=request.POST.get("note", "").strip(),
+            entry_date=entry_date,
         )
         messages.success(request, _("Ledger entry recorded."))
     except (LedgerError, ValueError, KeyError) as exc:

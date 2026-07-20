@@ -189,13 +189,23 @@ def cycle_report(year: int, month: int):
 @transaction.atomic
 def include_cycle(year: int, month: int, *, actor=None) -> int:
     """Assign every open entry of the cycle window to the cycle and lock it
-    (OPEN → INCLUDED_IN_CYCLE)."""
+    (OPEN → INCLUDED_IN_CYCLE).
+
+    When the wage-ledger feature is enabled, open cash advances are excluded:
+    each advance settles through its manager-confirmed wage-recovery
+    assignment so it always carries an explicit recovery pointer. Without the
+    wage ledger, advances keep settling through bulk inclusion as before.
+    """
+    from core.ui.registry import flag_enabled
+
     start, end = cycle_bounds(year, month)
     entries = LedgerEntry.objects.select_for_update().filter(
         settlement_status=SettlementStatus.OPEN,
         entry_date__gte=start,
         entry_date__lte=end,
     )
+    if flag_enabled("wage_ledger"):
+        entries = entries.exclude(entry_type=EntryType.CASH_ADVANCE)
     count = 0
     for entry in entries:
         entry.settlement_status = SettlementStatus.INCLUDED_IN_CYCLE

@@ -232,6 +232,11 @@ deleted.
    control without locking the rehearsal data.
 5. Mention CSV export and the reversal-only correction path after an entry is
    locked.
+6. Note the division of labour with the wage ledger: **cash advances are
+   excluded from bulk cycle inclusion** — each advance is assigned to its
+   recovery wage month on the Gross wages page (system suggests, manager
+   confirms), so it always carries an explicit recovery pointer. Bulk
+   inclusion covers deductions and additions only.
 
 Do not claim the proposed Thursday cut-off or 20th-to-20th cycle is final. Ask
 the client to confirm C-Q2 and C-Q3.

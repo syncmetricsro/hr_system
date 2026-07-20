@@ -29,6 +29,7 @@
           {% for value, label in panel.ledger_categories %}<option value="{{ value }}">{{ label }}</option>{% endfor %}
         </select></label>
       <label><span>{% trans "Amount (EUR)" %}</span><input type="number" name="amount" min="0.01" step="0.01" required></label>
+      <label><span>{% trans "Entry date" %}</span><input type="date" name="entry_date" value="{% now 'Y-m-d' %}"></label>
       <label><span>{% trans "Note" %}</span><input type="text" name="note"></label>
       <button class="button button-secondary" type="submit">{% trans "Record entry" %}</button>
     </form>

@@ -17,13 +17,14 @@ Sources: design doc §5.10/§12.6/§13, Addendum A1.
 | C-Q8 | Default UI language (SK or HU) + default theme (light/dark) | **SK default**, HU switchable; **Dark default**, with Light and System selectable per browser | Client |
 | C-Q9 | "HR Admin" as a distinct role vs. core `manager` | Mapped to `manager` for MVP | Client |
 | C-Q10 | Private-car fuel money basis/cadence/eligibility (A1.1) | Flat manual `PAY_ADDITION`, category `travel_fuel`, entered per worker | Client |
-| C-Q11 | Bus fuel log `features/fuel_costs` (A1.2 — secondhand request) | **Not built** pending decision-maker confirmation | Decision-maker |
+| C-Q11 | Bus fuel log `features/fuel_costs` (A1.2 — secondhand request) | **Confirmed needed by the owner 2026-07-20**; scheduled as its own slice on a fresh branch after the wage-ledger merge | Owner (confirmed) |
 | C-Q12 | Which equipment items carry recorded values (§13.1) | All issued items take an optional value (existing `features/logistics` model) | Client |
 | C-Q13 | Retention periods for ledger + equipment-deduction history (§13.2) | No purge registered for ledger entries yet (`core/retention` ready when periods are known) | Client + legal |
 | C-Q14 | Staging/production server, domain, DB names | Deployment deferred (ADR 0022) | Owner |
 | C-Q15 | Payslip password delivery channel (ADR 0023 — never by email) | Shown once to the office user; phone/Messenger assumed | Client |
 | C-Q16 | Retention period for stored pay amounts (payslips) | No purge registered yet; joins the GDPR review | Client + legal |
 | C-Q17 | Gross-wage correction and retention policy | One positive gross-wage record per person/calendar month; create-only in the fictional-data release, with no silent overwrite or delete | Client + legal |
+| C-Q18 | Payslip issued but not paid out (mid-month starter hold) — which hold reasons exist and what must be recorded | **No hold state built**: a payslip is recorded and sent in one step, with no `payslip_issued`/`paid_out`/`hold_reason` fields; add them only once the client names the hold reasons | Client |
 
 Update this file (and the design doc's §16 back-and-forth notes) as answers
 arrive — the pattern that worked for Jober's Q1–Q5.

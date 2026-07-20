@@ -1,5 +1,5 @@
 {% extends "layouts/base.html" %}
-{% load i18n rbac %}
+{% load i18n rbac nav %}
 
 {% block title %}{% trans "Advances & deductions" %} · {{ BRAND_NAME }}{% endblock %}
 
@@ -35,6 +35,7 @@
         {% for value, label in categories %}<option value="{{ value }}">{{ label }}</option>{% endfor %}
       </select></label>
     <label><span>{% trans "Amount (EUR)" %}</span><input type="number" name="amount" min="0.01" step="0.01" required></label>
+    <label><span>{% trans "Entry date" %}</span><input type="date" name="entry_date" value="{% now 'Y-m-d' %}"></label>
     <label><span>{% trans "Note" %}</span><input type="text" name="note"></label>
     <button class="button button-primary" type="submit">{% trans "Record" %}</button>
   </form>
@@ -90,7 +91,12 @@
         {% csrf_token %}
         <input type="hidden" name="year" value="{{ cycle_year }}">
         <input type="hidden" name="month" value="{{ cycle_month }}">
-        <button class="button button-secondary" type="submit" name="action" value="include" data-confirm="{% trans 'This locks every open entry of the window into the cycle; locked entries can only be corrected by reversal.' %}">{% trans "Include open entries in cycle" %}</button>
+        {% flag_on 'wage_ledger' as has_wage_ledger %}
+        {% if has_wage_ledger %}
+          <button class="button button-secondary" type="submit" name="action" value="include" data-confirm="{% trans 'This locks every open deduction and addition of the window into the cycle; cash advances are excluded and settle through wage-recovery assignments. Locked entries can only be corrected by reversal.' %}">{% trans "Include open entries in cycle" %}</button>
+        {% else %}
+          <button class="button button-secondary" type="submit" name="action" value="include" data-confirm="{% trans 'This locks every open entry of the window into the cycle; locked entries can only be corrected by reversal.' %}">{% trans "Include open entries in cycle" %}</button>
+        {% endif %}
         <button class="button button-secondary" type="submit" name="action" value="deducted" data-confirm="{% trans 'This marks the whole cycle as settled with pay.' %}">{% trans "Mark cycle settled" %}</button>
       </form>
     {% endif %}

@@ -204,6 +204,55 @@ def test_money_models_have_no_admin_registration():
         assert model not in admin.site._registry
 
 
+def test_ledger_form_accepts_entry_date_for_deferral(client, person, staff):
+    """A backdated (or real) post-20th hand-over date drives the deferral rule
+    from the UI, not just the service layer."""
+    client.force_login(staff["manager"])
+    response = client.post(
+        reverse("ledger_record"),
+        {
+            "person": person.pk,
+            "entry_type": EntryType.CASH_ADVANCE,
+            "category": LedgerCategory.CASH_ADVANCE,
+            "amount": "120.00",
+            "entry_date": "2026-07-22",
+        },
+    )
+    assert response.status_code == 302
+    entry = LedgerEntry.objects.get(person=person, amount=Decimal("120.00"))
+    assert entry.entry_date == dt.date(2026, 7, 22)
+    assert suggested_recovery_period(entry.entry_date) == "2026-08"
+
+    # Omitting the date keeps the old default of today.
+    client.post(
+        reverse("ledger_record"),
+        {
+            "person": person.pk,
+            "entry_type": EntryType.CASH_ADVANCE,
+            "category": LedgerCategory.CASH_ADVANCE,
+            "amount": "121.00",
+        },
+    )
+    from django.utils import timezone
+
+    today_entry = LedgerEntry.objects.get(person=person, amount=Decimal("121.00"))
+    assert today_entry.entry_date == timezone.localdate()
+
+    # An unparseable date is rejected without creating an entry.
+    bad = client.post(
+        reverse("ledger_record"),
+        {
+            "person": person.pk,
+            "entry_type": EntryType.CASH_ADVANCE,
+            "category": LedgerCategory.CASH_ADVANCE,
+            "amount": "122.00",
+            "entry_date": "not-a-date",
+        },
+    )
+    assert bad.status_code == 302
+    assert not LedgerEntry.objects.filter(person=person, amount=Decimal("122.00")).exists()
+
+
 # --- Recovery assignment view -------------------------------------------------
 
 def test_recovery_assignment_view_permissions_and_flow(client, person, staff):

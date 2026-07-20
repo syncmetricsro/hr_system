@@ -1,5 +1,24 @@
 # Build Journal
 
+## 2026-07-20 — Settlement seam closed, ledger entry dates, C-Q11/C-Q18 recorded
+
+- Bulk cycle inclusion now excludes open cash advances when the wage-ledger
+  feature is enabled: every advance settles through its manager-confirmed
+  wage-recovery assignment and therefore always carries a recovery pointer.
+  Clients running advances without the wage ledger keep the original bulk
+  behavior, so the advances feature stays self-sufficient. The include-cycle
+  confirmation dialog explains the split when the wage ledger is on, and the
+  Corvinum demo runbook walks through the division of labour.
+- Both ledger entry forms (person-page panel and the Ledger page) gained an
+  entry-date field defaulting to today. Advances can now be dated to the real
+  hand-over day, which lets the post-20th deferral rule fire from the UI and
+  supports backdating paper records; unparseable dates are rejected.
+- Recorded two decisions in `docs/product/corvinum-open-questions.md`: C-Q11
+  (bus fuel log) is owner-confirmed as needed and scheduled as its own slice
+  after the wage-ledger merge, and new C-Q18 captures the payslip-hold
+  question (no hold state built; fields added only once the client names the
+  hold reasons).
+
 ## 2026-07-19 — Wage-ledger verification fixes: advance recovery link, reconciliation, admin sweep
 
 - Closed the verification report's deviations. A new `AdvanceRecovery` model in

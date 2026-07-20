@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-19 20:46+0200\n"
+"POT-Creation-Date: 2026-07-20 06:42+0200\n"
 "Language: sk\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1330,40 +1330,40 @@ msgstr "Záznam už bol stornovaný."
 msgid "Entries without payroll effect cannot be reversed."
 msgstr "Záznamy bez vplyvu na mzdu nemožno stornovať."
 
-#: features/advances/services.py:216
+#: features/advances/services.py:226
 msgid "Only open entries can be included in a settlement cycle."
 msgstr "Do zúčtovacieho cyklu možno zaradiť len otvorené záznamy."
 
-#: features/advances/services.py:252
+#: features/advances/services.py:262
 msgid "Entry is locked after cycle inclusion; record a reversal instead."
 msgstr "Po zahrnutí do cyklu je záznam uzamknutý; zaznamenajte storno."
 
-#: features/advances/views.py:72
+#: features/advances/views.py:76
 msgid "Ledger entry recorded."
 msgstr "Záznam v knihe uložený."
 
-#: features/advances/views.py:74
+#: features/advances/views.py:78
 msgid "Invalid ledger entry."
 msgstr "Neplatný záznam."
 
-#: features/advances/views.py:88
+#: features/advances/views.py:92
 msgid "Entry cancelled."
 msgstr "Záznam zrušený."
 
-#: features/advances/views.py:91
+#: features/advances/views.py:95
 msgid "Reversal recorded."
 msgstr "Storno zaznamenané."
 
-#: features/advances/views.py:93
+#: features/advances/views.py:97
 msgid "Unknown action."
 msgstr "Neznáma akcia."
 
-#: features/advances/views.py:106
+#: features/advances/views.py:110
 #, python-format
 msgid "%(n)s entries included in the cycle."
 msgstr "Do cyklu bolo zahrnutých %(n)s záznamov."
 
-#: features/advances/views.py:109
+#: features/advances/views.py:113
 #, python-format
 msgid "%(n)s entries marked settled."
 msgstr "%(n)s záznamov označených ako vysporiadané."
@@ -1921,8 +1921,8 @@ msgstr "Dlhý text"
 msgid "Yes/No"
 msgstr "Áno/Nie"
 
-#: features/intake/models.py:19 templates/pages/ledger.html:50
-#: templates/pages/ledger.html:105
+#: features/intake/models.py:19 templates/pages/ledger.html:51
+#: templates/pages/ledger.html:111
 msgid "Date"
 msgstr "Dátum"
 
@@ -2599,7 +2599,9 @@ msgstr "Táto záloha je už priradená alebo vysporiadaná."
 msgid ""
 "This advance falls in the cycle ending on the 20th; the earliest wage month "
 "that can recover it is %(period)s."
-msgstr "Táto záloha patrí do cyklu končiaceho 20. dňa; najskorší mzdový mesiac, z ktorého ju možno zraziť, je %(period)s."
+msgstr ""
+"Táto záloha patrí do cyklu končiaceho 20. dňa; najskorší mzdový mesiac, z "
+"ktorého ju možno zraziť, je %(period)s."
 
 #: features/wage_ledger/services.py:117
 msgid "Enter a valid recovery amount."
@@ -2798,7 +2800,7 @@ msgstr "Správa ubytovania"
 
 # --- compliance ---
 #: templates/pages/accommodation_form.html:9
-#: templates/pages/equipment_form.html:10 templates/pages/ledger.html:123
+#: templates/pages/equipment_form.html:10 templates/pages/ledger.html:129
 #: templates/pages/room_form.html:9 templates/pages/transport_trends.html:22
 #: templates/pages/trials_queue.html:25
 #: templates/partials/confirm_dialog.html:12
@@ -2866,7 +2868,7 @@ msgid "Actor (email contains)"
 msgstr "Aktér (e-mail obsahuje)"
 
 # --- projects UI ---
-#: templates/pages/audit_log.html:17 templates/pages/audit_log.html:40
+#: templates/pages/audit_log.html:17 templates/pages/audit_log.html:41
 #: templates/pages/transport_trends.html:44
 msgid "Action"
 msgstr "Akcia"
@@ -2892,20 +2894,20 @@ msgstr "Od"
 msgid "To"
 msgstr "Do"
 
-#: templates/pages/audit_log.html:38
+#: templates/pages/audit_log.html:39
 msgid "When"
 msgstr "Kedy"
 
-#: templates/pages/audit_log.html:39
+#: templates/pages/audit_log.html:40
 msgid "Actor"
 msgstr "Aktér"
 
-#: templates/pages/audit_log.html:41 templates/pages/ledger.html:39
+#: templates/pages/audit_log.html:42 templates/pages/ledger.html:40
 #: templates/pages/payslips.html:25
 msgid "Record"
 msgstr "Uložiť"
 
-#: templates/pages/audit_log.html:42 templates/pages/blacklist_queue.html:23
+#: templates/pages/audit_log.html:43 templates/pages/blacklist_queue.html:23
 #: templates/pages/blacklist_queue.html:28
 #: templates/pages/finance_month_detail.html:19
 #: templates/pages/person_detail.html:203
@@ -2916,24 +2918,24 @@ msgstr "Uložiť"
 msgid "Reason"
 msgstr "Dôvod"
 
-#: templates/pages/audit_log.html:49
+#: templates/pages/audit_log.html:50
 msgid "system"
 msgstr "systém"
 
-#: templates/pages/audit_log.html:55
+#: templates/pages/audit_log.html:56
 msgid "No audit events match the filter."
 msgstr "Filtru nezodpovedajú žiadne auditné udalosti."
 
-#: templates/pages/audit_log.html:62
+#: templates/pages/audit_log.html:64
 msgid "Newer"
 msgstr "Novšie"
 
-#: templates/pages/audit_log.html:63
+#: templates/pages/audit_log.html:65
 #, python-format
 msgid "Page %(n)s of %(total)s"
 msgstr "Strana %(n)s z %(total)s"
 
-#: templates/pages/audit_log.html:64
+#: templates/pages/audit_log.html:66
 msgid "Older"
 msgstr "Staršie"
 
@@ -3281,11 +3283,11 @@ msgstr "Finančné mesiace"
 msgid "No financial months."
 msgstr "Žiadne finančné mesiace."
 
-#: templates/pages/finance_summary.html:39 templates/pages/ledger.html:68
+#: templates/pages/finance_summary.html:39 templates/pages/ledger.html:69
 msgid "Year"
 msgstr "Rok"
 
-#: templates/pages/finance_summary.html:42 templates/pages/ledger.html:71
+#: templates/pages/finance_summary.html:42 templates/pages/ledger.html:72
 msgid "Month"
 msgstr "Mesiac"
 
@@ -3335,12 +3337,12 @@ msgstr "Dokončiť"
 msgid "Next"
 msgstr "Ďalej"
 
-#: templates/pages/ledger.html:17 templates/panels/advances_ledger.html:33
+#: templates/pages/ledger.html:17 templates/panels/advances_ledger.html:34
 msgid "Record entry"
 msgstr "Zaznamenať položku"
 
-#: templates/pages/ledger.html:20 templates/pages/ledger.html:50
-#: templates/pages/ledger.html:79 templates/pages/ledger.html:105
+#: templates/pages/ledger.html:20 templates/pages/ledger.html:51
+#: templates/pages/ledger.html:80 templates/pages/ledger.html:111
 #: templates/pages/payslips.html:18 templates/pages/payslips.html:33
 #: templates/pages/person_detail.html:8 templates/pages/person_detail.html:230
 #: templates/pages/wages.html:40 templates/pages/wages.html:76
@@ -3356,7 +3358,7 @@ msgstr "Firma / projekt"
 msgid "Entry type"
 msgstr "Typ záznamu"
 
-#: templates/pages/ledger.html:33 templates/pages/ledger.html:105
+#: templates/pages/ledger.html:33 templates/pages/ledger.html:111
 #: templates/panels/advances_ledger.html:27
 #: templates/panels/blacklist_case.html:10
 #: templates/panels/blacklist_case.html:33
@@ -3367,17 +3369,21 @@ msgstr "Kategória"
 msgid "Amount (EUR)"
 msgstr "Suma (EUR)"
 
-#: templates/pages/ledger.html:38 templates/pages/payslips.html:24
+#: templates/pages/ledger.html:38 templates/panels/advances_ledger.html:32
+msgid "Entry date"
+msgstr "Dátum záznamu"
+
+#: templates/pages/ledger.html:39 templates/pages/payslips.html:24
 #: templates/pages/transport_trends.html:44 templates/pages/wages.html:109
-#: templates/panels/advances_ledger.html:32
+#: templates/panels/advances_ledger.html:33
 msgid "Note"
 msgstr "Poznámka"
 
-#: templates/pages/ledger.html:45
+#: templates/pages/ledger.html:46
 msgid "Thursday summary"
 msgstr "Štvrtkový súhrn"
 
-#: templates/pages/ledger.html:46
+#: templates/pages/ledger.html:47
 #, python-format
 msgid ""
 "Cut-off %(cutoff)s — open advances for Friday cash distribution. Later "
@@ -3387,49 +3393,60 @@ msgstr ""
 "Neskoršie záznamy sa presúvajú na ďalší týždeň."
 
 # --- compliance ---
-#: templates/pages/ledger.html:50
+#: templates/pages/ledger.html:51
 msgid "Company"
 msgstr "Firma"
 
-#: templates/pages/ledger.html:50 templates/pages/ledger.html:105
+#: templates/pages/ledger.html:51 templates/pages/ledger.html:111
 #: templates/pages/wages.html:42 templates/pages/wages.html:79
 msgid "Amount"
 msgstr "Suma"
 
-#: templates/pages/ledger.html:56
+#: templates/pages/ledger.html:57
 msgid "Total"
 msgstr "Spolu"
 
-#: templates/pages/ledger.html:59 templates/pages/ledger.html:86
+#: templates/pages/ledger.html:60 templates/pages/ledger.html:87
 msgid "Download CSV"
 msgstr "Stiahnuť CSV"
 
-#: templates/pages/ledger.html:61
+#: templates/pages/ledger.html:62
 msgid "No open advances before this week's cut-off."
 msgstr "Pred uzávierkou tohto týždňa nie sú žiadne otvorené zálohy."
 
-#: templates/pages/ledger.html:66
+#: templates/pages/ledger.html:67
 #, python-format
 msgid "Cycle %(start)s → %(end)s"
 msgstr "Cyklus %(start)s → %(end)s"
 
-#: templates/pages/ledger.html:74
+#: templates/pages/ledger.html:75
 msgid "Show"
 msgstr "Zobraziť"
 
-#: templates/pages/ledger.html:79
+#: templates/pages/ledger.html:80
 msgid "To deduct"
 msgstr "Na zrazenie"
 
-#: templates/pages/ledger.html:79
+#: templates/pages/ledger.html:80
 msgid "To add"
 msgstr "Na pripočítanie"
 
-#: templates/pages/ledger.html:79
+#: templates/pages/ledger.html:80
 msgid "Net pay effect"
 msgstr "Čistý vplyv na mzdu"
 
-#: templates/pages/ledger.html:93
+#: templates/pages/ledger.html:96
+msgid ""
+"This locks every open deduction and addition of the window into the cycle; "
+"cash advances are excluded and settle through wage-recovery assignments. "
+"Locked entries can only be corrected by reversal."
+msgstr "Uzamkne všetky otvorené zrážky a príplatky okna do cyklu; hotovostné zálohy sú vyňaté a vysporiadajú sa cez priradenie zrážky zo mzdy. Uzamknuté záznamy možno opraviť len stornom."
+
+#: templates/pages/ledger.html:96 templates/pages/ledger.html:98
+msgid "Include open entries in cycle"
+msgstr "Zahrnúť otvorené záznamy do cyklu"
+
+#: templates/pages/ledger.html:98
 msgid ""
 "This locks every open entry of the window into the cycle; locked entries can "
 "only be corrected by reversal."
@@ -3437,35 +3454,31 @@ msgstr ""
 "Uzamkne všetky otvorené záznamy okna do cyklu; uzamknuté záznamy možno "
 "opraviť len stornom."
 
-#: templates/pages/ledger.html:93
-msgid "Include open entries in cycle"
-msgstr "Zahrnúť otvorené záznamy do cyklu"
-
-#: templates/pages/ledger.html:94
+#: templates/pages/ledger.html:100
 msgid "This marks the whole cycle as settled with pay."
 msgstr "Označí celý cyklus ako vysporiadaný so mzdou."
 
-#: templates/pages/ledger.html:94
+#: templates/pages/ledger.html:100
 msgid "Mark cycle settled"
 msgstr "Označiť cyklus ako vysporiadaný"
 
-#: templates/pages/ledger.html:98
+#: templates/pages/ledger.html:104
 msgid "No entries in this cycle window."
 msgstr "V tomto cykle nie sú žiadne záznamy."
 
-#: templates/pages/ledger.html:103
+#: templates/pages/ledger.html:109
 msgid "Entries"
 msgstr "Záznamy"
 
-#: templates/pages/ledger.html:105
+#: templates/pages/ledger.html:111
 msgid "Type"
 msgstr "Typ"
 
-#: templates/pages/ledger.html:105
+#: templates/pages/ledger.html:111
 msgid "Settlement"
 msgstr "Vysporiadanie"
 
-#: templates/pages/ledger.html:121
+#: templates/pages/ledger.html:127
 msgid ""
 "This records a reversal entry with the opposite pay effect; the original "
 "stays in the ledger."
@@ -3473,11 +3486,11 @@ msgstr ""
 "Zaznamená storno záznam s opačným vplyvom na mzdu; pôvodný záznam ostáva v "
 "knihe."
 
-#: templates/pages/ledger.html:121
+#: templates/pages/ledger.html:127
 msgid "Reverse"
 msgstr "Stornovať"
 
-#: templates/pages/ledger.html:123
+#: templates/pages/ledger.html:129
 msgid ""
 "This cancels the open ledger entry; it will no longer count against pay."
 msgstr "Zruší otvorený záznam v knihe; už sa nebude započítavať voči mzde."
@@ -4010,7 +4023,10 @@ msgid ""
 "An advance given after the 20th falls in the next cycle and is recovered "
 "from the following wage month — deferred advances are flagged, never "
 "silently moved."
-msgstr "Záloha poskytnutá po 20. dni patrí do nasledujúceho cyklu a zráža sa z nasledujúceho mzdového mesiaca — odložené zálohy sú označené, nikdy sa nepresúvajú potichu."
+msgstr ""
+"Záloha poskytnutá po 20. dni patrí do nasledujúceho cyklu a zráža sa z "
+"nasledujúceho mzdového mesiaca — odložené zálohy sú označené, nikdy sa "
+"nepresúvajú potichu."
 
 #: templates/pages/wages.html:35
 msgid "Awaiting assignment"

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-19 20:46+0200\n"
+"POT-Creation-Date: 2026-07-20 06:42+0200\n"
 "Language: hu\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1331,40 +1331,40 @@ msgstr "A tétel már sztornózva van."
 msgid "Entries without payroll effect cannot be reversed."
 msgstr "Bérhatás nélküli tétel nem sztornózható."
 
-#: features/advances/services.py:216
+#: features/advances/services.py:226
 msgid "Only open entries can be included in a settlement cycle."
 msgstr "Csak nyitott tételek vonhatók be elszámolási ciklusba."
 
-#: features/advances/services.py:252
+#: features/advances/services.py:262
 msgid "Entry is locked after cycle inclusion; record a reversal instead."
 msgstr "Ciklusba sorolás után a tétel zárolt; rögzítsen sztornót."
 
-#: features/advances/views.py:72
+#: features/advances/views.py:76
 msgid "Ledger entry recorded."
 msgstr "Főkönyvi tétel rögzítve."
 
-#: features/advances/views.py:74
+#: features/advances/views.py:78
 msgid "Invalid ledger entry."
 msgstr "Érvénytelen tétel."
 
-#: features/advances/views.py:88
+#: features/advances/views.py:92
 msgid "Entry cancelled."
 msgstr "Tétel törölve."
 
-#: features/advances/views.py:91
+#: features/advances/views.py:95
 msgid "Reversal recorded."
 msgstr "Sztornó rögzítve."
 
-#: features/advances/views.py:93
+#: features/advances/views.py:97
 msgid "Unknown action."
 msgstr "Ismeretlen művelet."
 
-#: features/advances/views.py:106
+#: features/advances/views.py:110
 #, python-format
 msgid "%(n)s entries included in the cycle."
 msgstr "%(n)s tétel ciklusba sorolva."
 
-#: features/advances/views.py:109
+#: features/advances/views.py:113
 #, python-format
 msgid "%(n)s entries marked settled."
 msgstr "%(n)s tétel rendezettként megjelölve."
@@ -1922,8 +1922,8 @@ msgstr "Hosszú szöveg"
 msgid "Yes/No"
 msgstr "Igen/Nem"
 
-#: features/intake/models.py:19 templates/pages/ledger.html:50
-#: templates/pages/ledger.html:105
+#: features/intake/models.py:19 templates/pages/ledger.html:51
+#: templates/pages/ledger.html:111
 msgid "Date"
 msgstr "Dátum"
 
@@ -2603,7 +2603,9 @@ msgstr "Ez az előleg már hozzá van rendelve vagy el van számolva."
 msgid ""
 "This advance falls in the cycle ending on the 20th; the earliest wage month "
 "that can recover it is %(period)s."
-msgstr "Ez az előleg a 20-án záruló ciklusba tartozik; a legkorábbi bérhónap, amelyből levonható: %(period)s."
+msgstr ""
+"Ez az előleg a 20-án záruló ciklusba tartozik; a legkorábbi bérhónap, "
+"amelyből levonható: %(period)s."
 
 #: features/wage_ledger/services.py:117
 msgid "Enter a valid recovery amount."
@@ -2611,7 +2613,8 @@ msgstr "Adjon meg érvényes levonási összeget."
 
 #: features/wage_ledger/services.py:120
 msgid "Recovery amount must be positive and at most the advance amount."
-msgstr "A levonás összege pozitív legyen, és legfeljebb az előleg összege lehet."
+msgstr ""
+"A levonás összege pozitív legyen, és legfeljebb az előleg összege lehet."
 
 #: features/wage_ledger/views.py:64
 msgid "Gross wage recorded."
@@ -2800,7 +2803,7 @@ msgstr "Szálláskezelés"
 
 # --- compliance ---
 #: templates/pages/accommodation_form.html:9
-#: templates/pages/equipment_form.html:10 templates/pages/ledger.html:123
+#: templates/pages/equipment_form.html:10 templates/pages/ledger.html:129
 #: templates/pages/room_form.html:9 templates/pages/transport_trends.html:22
 #: templates/pages/trials_queue.html:25
 #: templates/partials/confirm_dialog.html:12
@@ -2868,7 +2871,7 @@ msgid "Actor (email contains)"
 msgstr "Végrehajtó (e-mail tartalmazza)"
 
 # --- projects UI ---
-#: templates/pages/audit_log.html:17 templates/pages/audit_log.html:40
+#: templates/pages/audit_log.html:17 templates/pages/audit_log.html:41
 #: templates/pages/transport_trends.html:44
 msgid "Action"
 msgstr "Művelet"
@@ -2894,20 +2897,20 @@ msgstr "Ettől"
 msgid "To"
 msgstr "Eddig"
 
-#: templates/pages/audit_log.html:38
+#: templates/pages/audit_log.html:39
 msgid "When"
 msgstr "Mikor"
 
-#: templates/pages/audit_log.html:39
+#: templates/pages/audit_log.html:40
 msgid "Actor"
 msgstr "Végrehajtó"
 
-#: templates/pages/audit_log.html:41 templates/pages/ledger.html:39
+#: templates/pages/audit_log.html:42 templates/pages/ledger.html:40
 #: templates/pages/payslips.html:25
 msgid "Record"
 msgstr "Rögzítés"
 
-#: templates/pages/audit_log.html:42 templates/pages/blacklist_queue.html:23
+#: templates/pages/audit_log.html:43 templates/pages/blacklist_queue.html:23
 #: templates/pages/blacklist_queue.html:28
 #: templates/pages/finance_month_detail.html:19
 #: templates/pages/person_detail.html:203
@@ -2918,24 +2921,24 @@ msgstr "Rögzítés"
 msgid "Reason"
 msgstr "Indok"
 
-#: templates/pages/audit_log.html:49
+#: templates/pages/audit_log.html:50
 msgid "system"
 msgstr "rendszer"
 
-#: templates/pages/audit_log.html:55
+#: templates/pages/audit_log.html:56
 msgid "No audit events match the filter."
 msgstr "A szűrőnek egyetlen auditesemény sem felel meg."
 
-#: templates/pages/audit_log.html:62
+#: templates/pages/audit_log.html:64
 msgid "Newer"
 msgstr "Újabbak"
 
-#: templates/pages/audit_log.html:63
+#: templates/pages/audit_log.html:65
 #, python-format
 msgid "Page %(n)s of %(total)s"
 msgstr "%(n)s. oldal / %(total)s"
 
-#: templates/pages/audit_log.html:64
+#: templates/pages/audit_log.html:66
 msgid "Older"
 msgstr "Régebbiek"
 
@@ -3286,11 +3289,11 @@ msgstr "Pénzügyi hónapok"
 msgid "No financial months."
 msgstr "Nincs pénzügyi hónap."
 
-#: templates/pages/finance_summary.html:39 templates/pages/ledger.html:68
+#: templates/pages/finance_summary.html:39 templates/pages/ledger.html:69
 msgid "Year"
 msgstr "Év"
 
-#: templates/pages/finance_summary.html:42 templates/pages/ledger.html:71
+#: templates/pages/finance_summary.html:42 templates/pages/ledger.html:72
 msgid "Month"
 msgstr "Hónap"
 
@@ -3340,12 +3343,12 @@ msgstr "Befejezés"
 msgid "Next"
 msgstr "Tovább"
 
-#: templates/pages/ledger.html:17 templates/panels/advances_ledger.html:33
+#: templates/pages/ledger.html:17 templates/panels/advances_ledger.html:34
 msgid "Record entry"
 msgstr "Tétel rögzítése"
 
-#: templates/pages/ledger.html:20 templates/pages/ledger.html:50
-#: templates/pages/ledger.html:79 templates/pages/ledger.html:105
+#: templates/pages/ledger.html:20 templates/pages/ledger.html:51
+#: templates/pages/ledger.html:80 templates/pages/ledger.html:111
 #: templates/pages/payslips.html:18 templates/pages/payslips.html:33
 #: templates/pages/person_detail.html:8 templates/pages/person_detail.html:230
 #: templates/pages/wages.html:40 templates/pages/wages.html:76
@@ -3361,7 +3364,7 @@ msgstr "Cég / projekt"
 msgid "Entry type"
 msgstr "Tétel típusa"
 
-#: templates/pages/ledger.html:33 templates/pages/ledger.html:105
+#: templates/pages/ledger.html:33 templates/pages/ledger.html:111
 #: templates/panels/advances_ledger.html:27
 #: templates/panels/blacklist_case.html:10
 #: templates/panels/blacklist_case.html:33
@@ -3372,17 +3375,21 @@ msgstr "Kategória"
 msgid "Amount (EUR)"
 msgstr "Összeg (EUR)"
 
-#: templates/pages/ledger.html:38 templates/pages/payslips.html:24
+#: templates/pages/ledger.html:38 templates/panels/advances_ledger.html:32
+msgid "Entry date"
+msgstr "Tétel dátuma"
+
+#: templates/pages/ledger.html:39 templates/pages/payslips.html:24
 #: templates/pages/transport_trends.html:44 templates/pages/wages.html:109
-#: templates/panels/advances_ledger.html:32
+#: templates/panels/advances_ledger.html:33
 msgid "Note"
 msgstr "Megjegyzés"
 
-#: templates/pages/ledger.html:45
+#: templates/pages/ledger.html:46
 msgid "Thursday summary"
 msgstr "Csütörtöki összesítő"
 
-#: templates/pages/ledger.html:46
+#: templates/pages/ledger.html:47
 #, python-format
 msgid ""
 "Cut-off %(cutoff)s — open advances for Friday cash distribution. Later "
@@ -3392,49 +3399,60 @@ msgstr ""
 "tételek a következő hétre kerülnek."
 
 # --- compliance ---
-#: templates/pages/ledger.html:50
+#: templates/pages/ledger.html:51
 msgid "Company"
 msgstr "Cég"
 
-#: templates/pages/ledger.html:50 templates/pages/ledger.html:105
+#: templates/pages/ledger.html:51 templates/pages/ledger.html:111
 #: templates/pages/wages.html:42 templates/pages/wages.html:79
 msgid "Amount"
 msgstr "Összeg"
 
-#: templates/pages/ledger.html:56
+#: templates/pages/ledger.html:57
 msgid "Total"
 msgstr "Összesen"
 
-#: templates/pages/ledger.html:59 templates/pages/ledger.html:86
+#: templates/pages/ledger.html:60 templates/pages/ledger.html:87
 msgid "Download CSV"
 msgstr "CSV letöltése"
 
-#: templates/pages/ledger.html:61
+#: templates/pages/ledger.html:62
 msgid "No open advances before this week's cut-off."
 msgstr "Az e heti zárás előtt nincs nyitott előleg."
 
-#: templates/pages/ledger.html:66
+#: templates/pages/ledger.html:67
 #, python-format
 msgid "Cycle %(start)s → %(end)s"
 msgstr "Ciklus: %(start)s → %(end)s"
 
-#: templates/pages/ledger.html:74
+#: templates/pages/ledger.html:75
 msgid "Show"
 msgstr "Megjelenítés"
 
-#: templates/pages/ledger.html:79
+#: templates/pages/ledger.html:80
 msgid "To deduct"
 msgstr "Levonandó"
 
-#: templates/pages/ledger.html:79
+#: templates/pages/ledger.html:80
 msgid "To add"
 msgstr "Hozzáadandó"
 
-#: templates/pages/ledger.html:79
+#: templates/pages/ledger.html:80
 msgid "Net pay effect"
 msgstr "Nettó bérhatás"
 
-#: templates/pages/ledger.html:93
+#: templates/pages/ledger.html:96
+msgid ""
+"This locks every open deduction and addition of the window into the cycle; "
+"cash advances are excluded and settle through wage-recovery assignments. "
+"Locked entries can only be corrected by reversal."
+msgstr "Az ablak minden nyitott levonását és pótlékát a ciklusba zárja; a készpénzelőlegek kimaradnak, és bérlevonás-hozzárendelésen keresztül kerülnek elszámolásra. A zárolt tételek csak sztornóval javíthatók."
+
+#: templates/pages/ledger.html:96 templates/pages/ledger.html:98
+msgid "Include open entries in cycle"
+msgstr "Nyitott tételek ciklusba sorolása"
+
+#: templates/pages/ledger.html:98
 msgid ""
 "This locks every open entry of the window into the cycle; locked entries can "
 "only be corrected by reversal."
@@ -3442,35 +3460,31 @@ msgstr ""
 "A ciklusba zárja az ablak összes nyitott tételét; a zárolt tételek csak "
 "sztornóval javíthatók."
 
-#: templates/pages/ledger.html:93
-msgid "Include open entries in cycle"
-msgstr "Nyitott tételek ciklusba sorolása"
-
-#: templates/pages/ledger.html:94
+#: templates/pages/ledger.html:100
 msgid "This marks the whole cycle as settled with pay."
 msgstr "Az egész ciklust bérrel rendezettként jelöli."
 
-#: templates/pages/ledger.html:94
+#: templates/pages/ledger.html:100
 msgid "Mark cycle settled"
 msgstr "Ciklus rendezettként jelölése"
 
-#: templates/pages/ledger.html:98
+#: templates/pages/ledger.html:104
 msgid "No entries in this cycle window."
 msgstr "Ebben a ciklusablakban nincs tétel."
 
-#: templates/pages/ledger.html:103
+#: templates/pages/ledger.html:109
 msgid "Entries"
 msgstr "Tételek"
 
-#: templates/pages/ledger.html:105
+#: templates/pages/ledger.html:111
 msgid "Type"
 msgstr "Típus"
 
-#: templates/pages/ledger.html:105
+#: templates/pages/ledger.html:111
 msgid "Settlement"
 msgstr "Elszámolás"
 
-#: templates/pages/ledger.html:121
+#: templates/pages/ledger.html:127
 msgid ""
 "This records a reversal entry with the opposite pay effect; the original "
 "stays in the ledger."
@@ -3478,11 +3492,11 @@ msgstr ""
 "Sztornótételt rögzít ellentétes bérhatással; az eredeti tétel a főkönyvben "
 "marad."
 
-#: templates/pages/ledger.html:121
+#: templates/pages/ledger.html:127
 msgid "Reverse"
 msgstr "Sztornó"
 
-#: templates/pages/ledger.html:123
+#: templates/pages/ledger.html:129
 msgid ""
 "This cancels the open ledger entry; it will no longer count against pay."
 msgstr "Törli a nyitott főkönyvi tételt; többé nem számít bele a bérbe."
@@ -4019,7 +4033,10 @@ msgid ""
 "An advance given after the 20th falls in the next cycle and is recovered "
 "from the following wage month — deferred advances are flagged, never "
 "silently moved."
-msgstr "A 20-a után adott előleg a következő ciklusba esik, és a következő bérhónapból kerül levonásra — a halasztott előlegek jelölést kapnak, soha nem kerülnek át némán."
+msgstr ""
+"A 20-a után adott előleg a következő ciklusba esik, és a következő "
+"bérhónapból kerül levonásra — a halasztott előlegek jelölést kapnak, soha "
+"nem kerülnek át némán."
 
 #: templates/pages/wages.html:35
 msgid "Awaiting assignment"

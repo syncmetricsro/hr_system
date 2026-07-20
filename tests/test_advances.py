@@ -110,7 +110,7 @@ def test_cycle_report_nets_positive_magnitudes(person, manager):
 
 
 def test_inclusion_locks_and_settles(person, manager):
-    entry = record_entry(person, entry_type=EntryType.CASH_ADVANCE, category="cash_advance",
+    entry = record_entry(person, entry_type=EntryType.PAY_DEDUCTION, category="clothing",
                          amount=Decimal("100"), actor=manager, entry_date=dt.date(2026, 7, 1))
     assert include_cycle(2026, 7, actor=manager) == 1
     entry.refresh_from_db()
@@ -121,6 +121,32 @@ def test_inclusion_locks_and_settles(person, manager):
     assert mark_cycle_deducted(2026, 7, actor=manager) == 1
     entry.refresh_from_db()
     assert entry.settlement_status == SettlementStatus.DEDUCTED
+
+
+def test_inclusion_excludes_open_advances_only_when_wage_ledger_on(person, manager):
+    from django.conf import settings
+    from django.test import override_settings
+
+    advance = record_entry(person, entry_type=EntryType.CASH_ADVANCE, category="cash_advance",
+                           amount=Decimal("100"), actor=manager, entry_date=dt.date(2026, 7, 1))
+    deduction = record_entry(person, entry_type=EntryType.PAY_DEDUCTION, category="clothing",
+                             amount=Decimal("25"), actor=manager, entry_date=dt.date(2026, 7, 2))
+
+    # With the wage ledger enabled, advances settle only through their
+    # manager-confirmed recovery assignment — bulk inclusion skips them.
+    with override_settings(FEATURE_FLAGS={**settings.FEATURE_FLAGS, "wage_ledger": True}):
+        assert include_cycle(2026, 7, actor=manager) == 1
+    advance.refresh_from_db()
+    deduction.refresh_from_db()
+    assert advance.settlement_status == SettlementStatus.OPEN
+    assert deduction.settlement_status == SettlementStatus.INCLUDED_IN_CYCLE
+
+    # A client running advances without the wage ledger keeps the original
+    # bulk behavior so advances remain settleable.
+    with override_settings(FEATURE_FLAGS={**settings.FEATURE_FLAGS, "wage_ledger": False}):
+        assert include_cycle(2026, 7, actor=manager) == 1
+    advance.refresh_from_db()
+    assert advance.settlement_status == SettlementStatus.INCLUDED_IN_CYCLE
 
 
 def test_cancel_only_open(person, manager):
