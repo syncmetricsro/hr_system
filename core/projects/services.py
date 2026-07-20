@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from django.conf import settings
 from django.db import transaction
 from django.utils import timezone
 from django.utils.translation import gettext as _
@@ -180,7 +181,10 @@ def readiness_blockers(readiness: ReadinessRecord) -> list[dict[str, str]]:
         ("accommodation", _("Accommodation"), _("Accommodation is incomplete.")),
         ("transport", _("Transport"), _("Transport is incomplete.")),
     )
+    transport_enabled = getattr(settings, "FEATURE_FLAGS", {}).get("transport", True)
     for pillar, label, incomplete_message in checks:
+        if pillar == "transport" and not transport_enabled:
+            continue
         state = getattr(readiness, f"{pillar}_state")
         if state == PillarState.INCOMPLETE:
             blockers.append({"field": pillar, "label": label, "message": incomplete_message})
@@ -204,7 +208,12 @@ def update_readiness(readiness, *, actor=None, states: dict, na_reasons: dict | 
 
     na_reasons = na_reasons or {}
     valid = set(PillarState.values)
+    transport_enabled = getattr(settings, "FEATURE_FLAGS", {}).get("transport", True)
     for pillar in ("medical", "gear", "accommodation", "transport"):
+        if pillar == "transport" and not transport_enabled:
+            readiness.transport_state = PillarState.NOT_APPLICABLE
+            readiness.transport_na_reason = "Feature disabled"
+            continue
         value = states.get(pillar)
         if value is None:
             continue

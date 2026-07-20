@@ -37,6 +37,7 @@ def test_finance_summary_and_month_detail(page):
     page.get_by_role("heading", name="Finance", exact=True).wait_for()
     page.get_by_role("heading", name="Group breakdown").wait_for()
     page.get_by_role("heading", name="Per-project results").wait_for()
+    page.get_by_role("heading", name="Profit/loss by region").wait_for()
     # Drill into a seeded financial month.
     page.locator("a[href*='/finance/month/']").first.click()
     page.wait_for_load_state("networkidle")
@@ -56,8 +57,23 @@ def test_finance_year_page(page):
 def test_accommodation_cost_report(page):
     _login(page)
     page.goto(f"{base_url()}/en/accommodation/costs/")
-    page.get_by_role("heading", name="Cost report").wait_for()
+    page.get_by_role("heading", name="Monthly cost and margin").wait_for()
     page.get_by_text("Reporting only").wait_for()
+
+
+def test_warehouse_stock(page):
+    _login(page)
+    page.goto(f"{base_url()}/en/equipment/stock/")
+    page.get_by_role("heading", name="Warehouse stock").wait_for()
+    page.get_by_text("Current stock value").wait_for()
+
+
+def test_age_warning_updates_from_birth_date(page):
+    _login(page, RECRUITER)
+    page.goto(f"{base_url()}/en/people/new/")
+    page.locator("input[name='date_of_birth']").fill("2010-01-01")
+    page.locator("input[name='date_of_birth']").dispatch_event("change")
+    page.locator(".age-warning-critical").wait_for()
 
 
 def test_equipment_review_queue(page):
@@ -87,6 +103,8 @@ def test_manager_sees_reviews_tab(page):
     assert navigation.get_by_role("link", name="Reviews").count() == 1
     assert navigation.get_by_role("link", name="Finance").count() == 1
     assert navigation.get_by_role("link", name="Blacklist").count() == 1
+    assert navigation.get_by_role("link", name="Warehouse").count() == 1
+    assert navigation.get_by_role("link", name="Transport").count() == 0
 
 
 def test_coordinator_blocked_from_blacklist_queue(page):

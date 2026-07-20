@@ -13,6 +13,7 @@ class Project(models.Model):
     partner = models.CharField(_("partner"), max_length=200, blank=True)
     code = models.CharField(_("code"), max_length=50, unique=True)
     office = models.CharField(_("office"), max_length=100, blank=True)
+    region = models.CharField(_("region"), max_length=100, blank=True)
     is_active = models.BooleanField(_("active"), default=True)
     # project <-> coordinator is many-to-many (e.g. DHL BA has three coordinators).
     responsible_coordinators = models.ManyToManyField(
@@ -202,17 +203,19 @@ class ReadinessRecord(models.Model):
             self.medical_state == PillarState.COMPLETE
             and self.gear_state == PillarState.COMPLETE
         )
-        optional_ok = (
+        accommodation_ok = (
             self.accommodation_state == PillarState.COMPLETE
             or (
                 self.accommodation_state == PillarState.NOT_APPLICABLE
                 and bool(self.accommodation_na_reason.strip())
             )
-        ) and (
+        )
+        transport_enabled = getattr(settings, "FEATURE_FLAGS", {}).get("transport", True)
+        transport_ok = not transport_enabled or (
             self.transport_state == PillarState.COMPLETE
             or (
                 self.transport_state == PillarState.NOT_APPLICABLE
                 and bool(self.transport_na_reason.strip())
             )
         )
-        return required_ok and optional_ok
+        return required_ok and accommodation_ok and transport_ok

@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from uuid import uuid4
+
 from django import forms
 from django.db.models import Count, F, Q
 from django.utils.translation import gettext_lazy as _
@@ -7,7 +9,8 @@ from django.utils.translation import gettext_lazy as _
 from core.accounts.models import Role
 from core.projects.models import Project
 from features.logistics.models import (
-    Accommodation, EquipmentItem, Room, RoomAssignmentStatus, TransportWeek,
+    Accommodation, AccommodationCostPeriod, EquipmentItem, Room,
+    RoomAssignmentStatus, TransportWeek,
 )
 
 
@@ -51,6 +54,24 @@ class AccommodationForm(forms.ModelForm):
         return active
 
 
+class AccommodationCostPeriodForm(forms.ModelForm):
+    effective_month = forms.DateField(
+        label=_("Effective month"), input_formats=["%Y-%m"],
+        widget=forms.DateInput(format="%Y-%m", attrs={"type": "month"}),
+    )
+
+    class Meta:
+        model = AccommodationCostPeriod
+        fields = ("effective_month", "capacity", "per_head_cost")
+        widgets = {
+            "per_head_cost": forms.NumberInput(attrs={"step": "0.01", "min": "0"}),
+        }
+
+    def clean_effective_month(self):
+        value = self.cleaned_data["effective_month"]
+        return value.replace(day=1)
+
+
 class RoomForm(forms.ModelForm):
     class Meta:
         model = Room
@@ -79,6 +100,55 @@ class EquipmentItemForm(forms.ModelForm):
         widgets = {
             "unit_price": forms.NumberInput(attrs={"step": "0.01", "min": "0"}),
         }
+
+
+class StockReceiptForm(forms.Form):
+    operation_key = forms.UUIDField(widget=forms.HiddenInput, initial=uuid4)
+    received_on = forms.DateField(label=_("Received on"), widget=forms.DateInput(attrs={"type": "date"}))
+    reference = forms.CharField(label=_("Reference"), max_length=120, required=False)
+    supplier = forms.CharField(label=_("Supplier"), max_length=200, required=False)
+    note = forms.CharField(label=_("Note"), max_length=300, required=False)
+
+
+class StockReceiptLineForm(forms.Form):
+    item = forms.ModelChoiceField(label=_("Item"), queryset=EquipmentItem.objects.none(), required=False)
+    quantity = forms.IntegerField(label=_("Quantity"), min_value=1, required=False)
+    total_value = forms.DecimalField(label=_("Total value"), min_value=0, decimal_places=2, required=False)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["item"].queryset = EquipmentItem.objects.filter(is_active=True)
+
+    def clean(self):
+        cleaned = super().clean()
+        values = (cleaned.get("item"), cleaned.get("quantity"), cleaned.get("total_value"))
+        if any(value not in (None, "") for value in values) and not all(value not in (None, "") for value in values):
+            raise forms.ValidationError(_("Complete the item, quantity, and total value."))
+        return cleaned
+
+
+StockReceiptLineFormSet = forms.formset_factory(StockReceiptLineForm, extra=4, max_num=12)
+
+
+class StockAdjustmentForm(forms.Form):
+    item = forms.ModelChoiceField(label=_("Item"), queryset=EquipmentItem.objects.none())
+    occurred_on = forms.DateField(label=_("Date"), widget=forms.DateInput(attrs={"type": "date"}))
+    quantity_delta = forms.IntegerField(label=_("Quantity adjustment"))
+    value = forms.DecimalField(label=_("Value for positive adjustment"), min_value=0, decimal_places=2, required=False)
+    reason = forms.CharField(label=_("Reason"), max_length=300)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["item"].queryset = EquipmentItem.objects.filter(is_active=True)
+
+    def clean(self):
+        cleaned = super().clean()
+        quantity = cleaned.get("quantity_delta")
+        if quantity == 0:
+            self.add_error("quantity_delta", _("The adjustment cannot be zero."))
+        if quantity and quantity > 0 and cleaned.get("value") is None:
+            self.add_error("value", _("A value is required when adding stock."))
+        return cleaned
 
 
 def assignable_rooms():

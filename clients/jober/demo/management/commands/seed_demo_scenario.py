@@ -3,6 +3,7 @@ from __future__ import annotations
 import os
 
 from datetime import timedelta
+from uuid import NAMESPACE_URL, uuid5
 
 from django.core.management.base import BaseCommand
 from django.utils import timezone
@@ -14,7 +15,7 @@ from features.compliance.models import Certificate
 from features.finance.models import FinanceCategory, FinanceCategoryKind, FinancialMonth
 from features.finance.services import recompute_month, set_line_item
 from features.logistics.models import EquipmentItem
-from features.logistics.services import flag_unreturned, issue_equipment
+from features.logistics.services import flag_unreturned, issue_equipment, return_equipment
 from core.people.models import InactiveReason, LifecycleStatus, Person
 
 DEMO_DOMAIN = "demo.jober.test"
@@ -58,10 +59,29 @@ class Command(BaseCommand):
             boots = EquipmentItem.objects.filter(name="Work boots").first()
             vest = EquipmentItem.objects.filter(name="High-visibility vest").first()
             if boots:
-                issue_equipment(olha, boots, 1, actor=coordinator)
+                issue_equipment(
+                    olha, boots, 1, actor=coordinator,
+                    operation_key=uuid5(NAMESPACE_URL, "jober-demo-olha-boots-v1"),
+                )
             if vest:
-                issue = issue_equipment(olha, vest, 1, actor=coordinator)
+                issue = issue_equipment(
+                    olha, vest, 1, actor=coordinator,
+                    operation_key=uuid5(NAMESPACE_URL, "jober-demo-olha-vest-v1"),
+                )
                 flag_unreturned(issue, actor=coordinator)  # -> manager Reviews queue (Q2)
+
+        # Returned-stock examples retain the FIFO issue value: one reusable,
+        # one physically retired. Deterministic keys keep repeated seeds safe.
+        demo_returner = Person.objects.filter(first_name="Tran", last_name="Van Minh").first()
+        helmet = EquipmentItem.objects.filter(name="Safety helmet").first()
+        if demo_returner and helmet:
+            for suffix, disposition in (("restock", "restock"), ("retire", "retire")):
+                issue = issue_equipment(
+                    demo_returner, helmet, 1, actor=coordinator,
+                    operation_key=uuid5(NAMESPACE_URL, f"jober-demo-return-{suffix}-v1"),
+                )
+                if issue.status == "issued":
+                    return_equipment(issue, actor=coordinator, disposition=disposition)
 
         # --- Phone for the optional live SMS demo ------------------------------
         # DEMO_SMS_PHONE (Doppler) points at a number whose inbox the presenter

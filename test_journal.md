@@ -1,5 +1,25 @@
 # Test Journal
 
+## 2026-07-20 — Jober second-interview headline demo
+
+- Focused service/view coverage passes for age boundaries and htmx auth, FIFO
+  mixed-price allocation and residual value, receipt idempotency, atomic
+  overdraw rollback, immutable stock movements, restock versus retire,
+  Corvinum policy isolation, leap-month accommodation proration, signed finance
+  validation, regional opt-out, extraordinary-row totals, and unmounted Jober
+  transport routes.
+- The fictional demo scenario passes three tests, including repeated seed
+  execution, warehouse movement examples, partial-month accommodation payment,
+  under-18 seed data, and two-region finance data.
+- Full Jober unit suite: **390 passed**. Corvinum flags lane: **215 passed,
+  8 skipped, 132 deselected**. Complete Playwright workflow after rebuilding,
+  migrating, and seeding both clients: **41 passed** at desktop and 375×667.
+- After the full run, the finance multi-line save was made atomic and its
+  rollback regression was verified in the final **24-test finance slice**.
+- Ruff, Django system checks, migration consistency, dependency direction,
+  no-Node artifact scan, vendored-asset checksums, compiled translations, and
+  the production runtime-image artifact check all pass.
+
 ## 2026-07-17 — Composite blacklist fingerprint
 
 - Full unit suite in the pinned test container: **388 passed**, including nine

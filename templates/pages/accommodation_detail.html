@@ -13,6 +13,16 @@
   {% if can_manage %}<a class="button button-primary" href="{% url 'room_create' accommodation.pk %}">{% trans "Add room" %}</a>{% endif %}
 </section>
 
+{% if can_manage %}<section class="panel">
+  <p class="eyebrow">{% trans "Monthly reporting" %}</p>
+  <h2>{% trans "Per-head cost periods" %}</h2>
+  <form class="people-search" method="post" action="{% url 'accommodation_cost_period' accommodation.pk %}">
+    {% csrf_token %}{{ cost_form.as_p }}
+    <button class="button button-primary" type="submit">{% trans "Save cost period" %}</button>
+  </form>
+  <ul class="plain-list">{% for period in cost_periods %}<li>{{ period.effective_month|date:"Y-m" }} — {{ period.capacity }} × {{ period.per_head_cost }} EUR</li>{% empty %}<li>{% trans "No cost period recorded." %}</li>{% endfor %}</ul>
+</section>{% endif %}
+
 {% if not accommodation.is_active %}<section class="panel workflow-panel"><strong>{% trans "This location is inactive and cannot receive new assignments." %}</strong></section>{% endif %}
 
 <section class="field-list" aria-label="{% trans 'Rooms' %}">

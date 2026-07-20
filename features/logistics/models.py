@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from decimal import Decimal
+from uuid import uuid4
 
 from django.conf import settings
 from django.core.validators import MinValueValidator
@@ -38,6 +39,35 @@ class Accommodation(models.Model):
 
     def __str__(self) -> str:
         return self.name
+
+
+class AccommodationCostPeriod(models.Model):
+    accommodation = models.ForeignKey(
+        Accommodation, on_delete=models.PROTECT, related_name="cost_periods",
+        verbose_name=_("accommodation"),
+    )
+    effective_month = models.DateField(_("effective month"))
+    capacity = models.PositiveIntegerField(_("capacity"), validators=[MinValueValidator(1)])
+    per_head_cost = models.DecimalField(
+        _("per-head monthly cost"), max_digits=10, decimal_places=2, validators=NON_NEGATIVE,
+    )
+    recorded_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True,
+        related_name="accommodation_cost_periods", verbose_name=_("recorded by"),
+    )
+    created_at = models.DateTimeField(_("created"), auto_now_add=True)
+
+    class Meta:
+        ordering = ("-effective_month", "-id")
+        constraints = [
+            models.UniqueConstraint(
+                fields=("accommodation", "effective_month"),
+                name="unique_accommodation_cost_effective_month",
+            ),
+        ]
+
+    def __str__(self) -> str:
+        return f"{self.accommodation} {self.effective_month:%Y-%m}"
 
 
 class Room(models.Model):
@@ -90,6 +120,10 @@ class RoomAssignment(models.Model):
     # Optional per-assignment override of the room's monthly rate (Q1).
     rate_override = models.DecimalField(
         _("rate override"), max_digits=10, decimal_places=2, null=True, blank=True, validators=NON_NEGATIVE
+    )
+    worker_payment_monthly = models.DecimalField(
+        _("worker monthly payment"), max_digits=10, decimal_places=2,
+        default=Decimal("0"), validators=NON_NEGATIVE,
     )
     assigned_by = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True,
@@ -187,6 +221,12 @@ class EquipmentIssue(models.Model):
     )
     issued_at = models.DateTimeField(_("issued at"), auto_now_add=True)
     returned_at = models.DateTimeField(_("returned at"), null=True, blank=True)
+    operation_key = models.UUIDField(_("operation key"), null=True, blank=True, unique=True)
+    issued_stock_value = models.DecimalField(
+        _("issued stock value"), max_digits=12, decimal_places=2, null=True, blank=True,
+        validators=NON_NEGATIVE,
+    )
+    return_disposition = models.CharField(_("return disposition"), max_length=20, blank=True)
 
     class Meta:
         verbose_name = _("equipment issue")
@@ -195,6 +235,142 @@ class EquipmentIssue(models.Model):
 
     def __str__(self) -> str:
         return f"{self.item} -> {self.person} ({self.status})"
+
+
+class EquipmentStockReceipt(models.Model):
+    operation_key = models.UUIDField(_("operation key"), default=uuid4, unique=True, editable=False)
+    received_on = models.DateField(_("received on"))
+    reference = models.CharField(_("reference"), max_length=120, blank=True)
+    supplier = models.CharField(_("supplier"), max_length=200, blank=True)
+    note = models.CharField(_("note"), max_length=300, blank=True)
+    recorded_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True,
+        related_name="equipment_stock_receipts", verbose_name=_("recorded by"),
+    )
+    created_at = models.DateTimeField(_("created"), auto_now_add=True)
+
+    class Meta:
+        ordering = ("-received_on", "-id")
+
+    def __str__(self) -> str:
+        return self.reference or f"Receipt {self.pk}"
+
+
+class EquipmentStockReceiptLine(models.Model):
+    receipt = models.ForeignKey(
+        EquipmentStockReceipt, on_delete=models.PROTECT, related_name="lines",
+        verbose_name=_("receipt"),
+    )
+    item = models.ForeignKey(
+        EquipmentItem, on_delete=models.PROTECT, related_name="stock_receipt_lines",
+        verbose_name=_("item"),
+    )
+    quantity = models.PositiveIntegerField(_("quantity"), validators=[MinValueValidator(1)])
+    total_value = models.DecimalField(
+        _("total value"), max_digits=12, decimal_places=2, validators=NON_NEGATIVE,
+    )
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=("receipt", "item"), name="unique_item_per_stock_receipt"),
+        ]
+
+
+class EquipmentStockMovementType(models.TextChoices):
+    RECEIPT = "receipt", _("Receipt")
+    ISSUE = "issue", _("Issue")
+    RETURN = "return", _("Return")
+    ADJUSTMENT = "adjustment", _("Adjustment")
+
+
+class EquipmentStockMovement(models.Model):
+    item = models.ForeignKey(
+        EquipmentItem, on_delete=models.PROTECT, related_name="stock_movements",
+        verbose_name=_("item"),
+    )
+    movement_type = models.CharField(
+        _("movement type"), max_length=20, choices=EquipmentStockMovementType.choices,
+    )
+    occurred_on = models.DateField(_("occurred on"))
+    quantity_delta = models.IntegerField(_("quantity delta"))
+    value_delta = models.DecimalField(_("value delta"), max_digits=12, decimal_places=2)
+    receipt_line = models.ForeignKey(
+        EquipmentStockReceiptLine, on_delete=models.PROTECT, null=True, blank=True,
+        related_name="movements", verbose_name=_("receipt line"),
+    )
+    issue = models.ForeignKey(
+        EquipmentIssue, on_delete=models.PROTECT, null=True, blank=True,
+        related_name="stock_movements", verbose_name=_("issue"),
+    )
+    actor = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True,
+        related_name="equipment_stock_movements", verbose_name=_("actor"),
+    )
+    reason = models.CharField(_("reason"), max_length=300, blank=True)
+    created_at = models.DateTimeField(_("created"), auto_now_add=True)
+
+    class Meta:
+        ordering = ("occurred_on", "id")
+        constraints = [
+            models.CheckConstraint(
+                condition=~Q(quantity_delta=0), name="stock_movement_quantity_nonzero"
+            ),
+            models.UniqueConstraint(
+                fields=("movement_type", "receipt_line"),
+                condition=Q(receipt_line__isnull=False),
+                name="unique_stock_movement_per_receipt_line_type",
+            ),
+            models.UniqueConstraint(
+                fields=("movement_type", "issue"),
+                condition=Q(issue__isnull=False),
+                name="unique_stock_movement_per_issue_type",
+            ),
+        ]
+
+    def save(self, *args, **kwargs):
+        if self.pk is not None:
+            raise ValueError("Stock movements are immutable.")
+        return super().save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        raise ValueError("Stock movements are immutable.")
+
+
+class EquipmentStockLot(models.Model):
+    inbound_movement = models.OneToOneField(
+        EquipmentStockMovement, on_delete=models.PROTECT, related_name="stock_lot",
+        verbose_name=_("inbound movement"),
+    )
+    item = models.ForeignKey(
+        EquipmentItem, on_delete=models.PROTECT, related_name="stock_lots",
+        verbose_name=_("item"),
+    )
+    received_on = models.DateField(_("received on"))
+    initial_quantity = models.PositiveIntegerField(_("initial quantity"))
+    initial_value = models.DecimalField(_("initial value"), max_digits=12, decimal_places=2)
+    remaining_quantity = models.PositiveIntegerField(_("remaining quantity"))
+    remaining_value = models.DecimalField(_("remaining value"), max_digits=12, decimal_places=2)
+
+    class Meta:
+        ordering = ("received_on", "id")
+
+
+class EquipmentStockAllocation(models.Model):
+    outbound_movement = models.ForeignKey(
+        EquipmentStockMovement, on_delete=models.PROTECT, related_name="allocations",
+        verbose_name=_("outbound movement"),
+    )
+    lot = models.ForeignKey(
+        EquipmentStockLot, on_delete=models.PROTECT, related_name="allocations",
+        verbose_name=_("lot"),
+    )
+    quantity = models.PositiveIntegerField(_("quantity"), validators=[MinValueValidator(1)])
+    value = models.DecimalField(_("value"), max_digits=12, decimal_places=2, validators=NON_NEGATIVE)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=("outbound_movement", "lot"), name="unique_stock_allocation_lot"),
+        ]
 
 
 class TransportWeek(models.Model):

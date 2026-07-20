@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from uuid import uuid4
+
 from django.urls import reverse
 from django.utils.translation import gettext as _
 
@@ -16,7 +18,7 @@ from features.logistics.models import (
     RoomAssignment,
     RoomAssignmentStatus,
 )
-from features.logistics.services import issued_equipment_value
+from features.logistics.services import equipment_stock_balance, issued_equipment_value, stock_ledger_enabled
 
 
 def room_panel(request, person):
@@ -33,12 +35,22 @@ def room_panel(request, person):
 def equipment_panel(request, person):
     if not flag_enabled("equipment"):
         return None
+    stock_enabled = stock_ledger_enabled()
+    items = list(EquipmentItem.objects.filter(is_active=True))
+    available = {
+        row["item_id"]: row["quantity"] for row in equipment_stock_balance()["rows"]
+    } if stock_enabled else {}
+    for item in items:
+        item.available_quantity = available.get(item.pk, 0)
     return {
         "issued_equipment": person.equipment_issues.filter(
             status=EquipmentIssueStatus.ISSUED
         ).select_related("item"),
-        "equipment_items": EquipmentItem.objects.filter(is_active=True),
+        "equipment_items": items,
         "issued_value": issued_equipment_value(person),
+        "show_person_value": not stock_enabled,
+        "stock_enabled": stock_enabled,
+        "operation_key": uuid4(),
     }
 
 
@@ -68,6 +80,14 @@ def occupancy_tile(request):
 def equipment_value_tile(request):
     if not flag_enabled("equipment"):
         return None
+    if stock_ledger_enabled():
+        balance = equipment_stock_balance()
+        tile = {"label": _("Warehouse stock"), "value": f"{balance['value']} EUR"}
+        if user_can(request.user, Action.EQUIPMENT_VIEW_STOCK):
+            tile["url"] = reverse("equipment_stock")
+            tile["tooltip_heading"] = _("Review warehouse stock")
+            tile["tooltip_body"] = _("Open current quantities, value, and monthly stock movements.")
+        return tile
     tile = {"label": _("Equipment value"), "value": f"{issued_equipment_value()} EUR"}
     if user_can(request.user, Action.EQUIPMENT_REVIEW_DEDUCTION):
         tile["url"] = reverse("equipment_reviews")

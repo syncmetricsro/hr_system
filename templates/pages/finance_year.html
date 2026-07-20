@@ -10,9 +10,21 @@
   <a class="button button-secondary" href="{% url 'finance_summary' %}">{% trans "Back" %}</a>
 </section>
 
+<section class="panel">
+  <p class="eyebrow">{% trans "Regional roll-up" %}</p>
+  <h2>{% trans "Profit/loss by region" %}</h2>
+  <dl class="detail-grid">
+    {% for region in regional_results %}
+      <div><dt>{{ region.region }}</dt><dd class="amount{% if region.net < 0 %} amount-neg{% else %} amount-pos{% endif %}">{{ region.net }} EUR</dd></div>
+    {% empty %}
+      <div><dd>{% trans "No financial months." %}</dd></div>
+    {% endfor %}
+  </dl>
+</section>
+
 <section class="dashboard-grid" aria-label="{% trans 'Company total' %}">
   <article class="metric-card"><span>{% trans "Revenue" %}</span><strong>{{ totals.revenue }} EUR</strong></article>
-  <article class="metric-card"><span>{% trans "Cost" %}</span><strong>{{ totals.cost }} EUR</strong></article>
+  <article class="metric-card"><span>{% trans "Cost" %}</span><strong>-{{ totals.cost }} EUR</strong></article>
   <article class="metric-card"><span>{% trans "Net" %}</span><strong>{{ totals.net }} EUR</strong></article>
 </section>
 

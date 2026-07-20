@@ -1,6 +1,6 @@
 # Permission Matrix — CorvinumEU
 
-Last updated: 2026-07-11
+Last updated: 2026-07-20
 
 Human-readable mirror of `clients/corvinum_eu/policies.py` (`ACTION_ROLES`).
 When you change one, change the other in the same commit. The mechanism
@@ -32,6 +32,8 @@ Legend: ✅ permitted · — denied
 | `exit.reconcile` | — | ✅ | ✅ | — |
 | `equipment.issue_return` | — | ✅ | ✅ | — |
 | `equipment.review_deduction` | — | — | ✅ | — |
+| `equipment.view_stock` (Jober-only warehouse policy) | — | — | — | — |
+| `equipment.manage_stock` (Jober-only warehouse policy) | — | — | — | — |
 | `catalog.manage` (equipment catalogue) | — | — | ✅ | — |
 | `checklist.tick` | — | ✅ | ✅ | — |
 | `ledger.enter` | — | — | ✅ | — |

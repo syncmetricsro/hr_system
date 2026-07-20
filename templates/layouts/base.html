@@ -46,6 +46,8 @@
         {% can 'equipment.review_deduction' as may_equip_review %}
         {% flag_on 'equipment' as has_equipment %}
         {% if may_equip_review and has_equipment %}<a class="folder-tab {% nav_active 'equipment_reviews' %}" href="{% url 'equipment_reviews' %}" data-tooltip="{% trans 'Reviews' %}"><svg class="nav-icon" aria-hidden="true"><use href="#nav-icon-reviews"></use></svg><span>{% trans "Reviews" %}</span></a>{% endif %}
+        {% can 'equipment.view_stock' as may_view_stock %}
+        {% if may_view_stock and has_equipment %}<a class="folder-tab {% nav_active 'equipment_stock' 'equipment_stock_receive' %}" href="{% url 'equipment_stock' %}" data-tooltip="{% trans 'Warehouse stock' %}"><svg class="nav-icon" aria-hidden="true"><use href="#nav-icon-reviews"></use></svg><span>{% trans "Warehouse" %}</span></a>{% endif %}
         {% can 'blacklist.decide' as may_blacklist %}
         {% flag_on 'duplicate_blacklist' as has_blacklist %}
         {% if may_blacklist and has_blacklist %}<a class="folder-tab {% nav_active 'blacklist_queue' %}" href="{% url 'blacklist_queue' %}" data-tooltip="{% trans 'Blacklist' %}"><svg class="nav-icon" aria-hidden="true"><use href="#nav-icon-blacklist"></use></svg><span>{% trans "Blacklist" %}</span></a>{% endif %}

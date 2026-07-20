@@ -4,7 +4,7 @@ from django.core.management.base import BaseCommand
 
 from core.accounts.models import User
 from features.finance.models import FinanceCategory, FinanceCategoryKind, FinanceGroup
-from features.finance.services import record_financial_month
+from features.finance.services import recompute_month, record_financial_month, set_line_item
 from core.projects.models import Project
 
 # Catalog from Jober_Finance_Specs.md §2 (English glosses + group tags).
@@ -54,10 +54,25 @@ class Command(BaseCommand):
             created += int(was_created)
         # Minimal demo financial months (positive convention, Q4-confirmed).
         coordinator = User.objects.filter(email="koordinator@demo.jober.test").first()
-        for code, month, rev, cost in [("DHLBA", 5, "18000", "12000"), ("WEB", 5, "9000", "7000")]:
+        for code, month, rev, cost in [("DHLBA", 11, "14600", "10850"), ("WEB", 11, "9800", "7650")]:
             project = Project.objects.filter(code=code).first()
             if project:
-                record_financial_month(project, 2026, month, rev, cost, actor=coordinator)
+                financial_month = record_financial_month(
+                    project, 2025, month, rev, cost, actor=coordinator
+                )
+                values = (
+                    [("Gross wage", COST, "7200"), ("Accommodation", COST, "1650"),
+                     ("Clothing/equipment", COST, "480"),
+                     ("Other extraordinary costs", COST, "200"),
+                     ("Client invoices", REV, rev)]
+                    if code == "DHLBA" else
+                    [("Gross wage", COST, "5100"), ("Accommodation", COST, "1250"),
+                     ("Office", COST, "320"), ("Client invoices", REV, rev)]
+                )
+                for label, kind, amount in values:
+                    category = FinanceCategory.objects.get(label=label, kind=kind)
+                    set_line_item(financial_month, category, amount, actor=coordinator)
+                recompute_month(financial_month, actor=coordinator)
 
         self.stdout.write(self.style.SUCCESS(
             f"Finance categories: {created} created, {FinanceCategory.objects.count()} total."

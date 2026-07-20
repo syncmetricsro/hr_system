@@ -1,0 +1,13 @@
+{% extends "layouts/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Receive stock" %} · {{ BRAND_NAME }}{% endblock %}
+{% block content %}
+<section class="page-head"><p class="eyebrow">{% trans "Warehouse stock" %}</p><h1>{% trans "Receive stock" %}</h1><a class="button button-secondary" href="{% url 'equipment_stock' %}">{% trans "Back" %}</a></section>
+<section class="panel"><form class="stack" method="post">
+  {% csrf_token %}{{ form.as_p }}{{ lines.management_form }}
+  <h2>{% trans "Receipt lines" %}</h2>
+  {% for line in lines %}<div class="grid-3">{{ line.as_p }}</div>{% endfor %}
+  <button class="button button-primary" type="submit">{% trans "Record receipt" %}</button>
+</form></section>
+{% endblock %}

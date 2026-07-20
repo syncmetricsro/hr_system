@@ -8,6 +8,7 @@
   <p class="eyebrow">{% trans "Logistics" %}</p>
   <h1>{% trans "Equipment catalogue" %}</h1>
   <a class="button button-primary" href="{% url 'equipment_create' %}">{% trans "Add equipment item" %}</a>
+  {% if stock_enabled %}<a class="button button-secondary" href="{% url 'equipment_stock' %}">{% trans "Warehouse stock" %}</a>{% endif %}
 </section>
 
 <section class="panel workflow-panel">

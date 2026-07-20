@@ -14,7 +14,7 @@ CLIENT_POLICIES = "clients.jober.policies"
 FEATURE_FLAGS = {
     "accommodation": True,
     "equipment": True,
-    "transport": True,
+    "transport": False,
     "recruitment_trials": True,
     "intake": True,
     "worker_messaging": True,
@@ -26,6 +26,8 @@ FEATURE_FLAGS = {
     "advances": False,     # CorvinumEU feature (ADR 0022) — not in the Jober product
     "payslips": False,     # CorvinumEU feature (ADR 0023) — not in the Jober product
 }
+
+EQUIPMENT_STOCK_LEDGER_ENABLED = True
 
 BRAND_NAME = "Jober"
 BRAND_MARK = "JB"

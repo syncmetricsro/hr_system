@@ -18,6 +18,7 @@
       <div><dt>{% trans "Code" %}</dt><dd>{{ project.code }}</dd></div>
       <div><dt>{% trans "Partner" %}</dt><dd>{{ project.partner|default:"—" }}</dd></div>
       <div><dt>{% trans "Office" %}</dt><dd>{{ project.office|default:"—" }}</dd></div>
+      <div><dt>{% trans "Region" %}</dt><dd>{{ project.region|default:"—" }}</dd></div>
       <div>
         <dt>{% trans "Responsible coordinators" %}</dt>
         <dd>
@@ -46,7 +47,7 @@
   </aside>
 </section>
 
-<section class="panel workflow-panel">
+{% if transport_enabled %}<section class="panel workflow-panel">
   <p class="eyebrow">{% trans "Logistics" %}</p>
   <h2>{% trans "Weekly transport" %}</h2>
   <ul class="plain-list">
@@ -64,5 +65,5 @@
       <button class="button button-primary" type="submit">{% trans "Record week" %}</button>
     </form>
   {% endif %}
-</section>
+</section>{% endif %}
 {% endblock %}

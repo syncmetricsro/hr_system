@@ -107,7 +107,7 @@ def test_na_requires_a_reason(fixtures):
     actor, project, person = fixtures
     r = get_or_create_readiness(person, project)
     with pytest.raises(WorkflowError):
-        update_readiness(r, actor=actor, states={"transport": PillarState.NOT_APPLICABLE})
+        update_readiness(r, actor=actor, states={"accommodation": PillarState.NOT_APPLICABLE})
 
 
 def test_entry_medical_date_is_saved(fixtures):

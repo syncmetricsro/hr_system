@@ -39,7 +39,6 @@ CASES = [
     ("assign_room", lambda o: {"person_pk": o["person"].pk}, "post", "observer"),
     ("issue_equipment", lambda o: {"person_pk": o["person"].pk}, "post", "observer"),
     ("return_equipment", lambda o: {"issue_pk": o["issue"].pk}, "post", "observer"),
-    ("record_transport", lambda o: {"project_pk": o["project"].pk}, "post", "recruiter"),
     ("finance_record", lambda o: {}, "post", "observer"),
     ("finance_summary", lambda o: {}, "get", "recruiter"),
     ("intake_start", lambda o: {}, "get", "observer"),

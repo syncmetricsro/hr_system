@@ -1,0 +1,6 @@
+{% if age_warning %}
+  <aside class="readiness-attention age-warning age-warning-{{ age_warning.level }}" role="status">
+    <strong>{{ age_warning.title }}</strong>
+    <p>{{ age_warning.message }}</p>
+  </aside>
+{% endif %}

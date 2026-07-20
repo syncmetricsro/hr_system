@@ -117,12 +117,26 @@ def test_save_view_persists_and_recomputes(client, setup):
     client.force_login(actor)
     resp = client.post(
         reverse("finance_month_save", kwargs={"pk": month.pk}),
-        {f"cat_{wage.pk}": "12000", f"cat_{invoice.pk}": "18000"},
+        {f"cat_{wage.pk}": "-12000", f"cat_{invoice.pk}": "18000"},
     )
     assert resp.status_code == 302
     month.refresh_from_db()
     assert month.cost == Decimal("12000")
     assert month.revenue == Decimal("18000")
+
+
+def test_save_view_rolls_back_all_lines_when_one_sign_is_invalid(client, setup):
+    actor, month, wage, _fuel, invoice = setup
+    client.force_login(actor)
+    response = client.post(
+        reverse("finance_month_save", kwargs={"pk": month.pk}),
+        {f"cat_{wage.pk}": "-12000", f"cat_{invoice.pk}": "-1"},
+    )
+    assert response.status_code == 302
+    assert not month.line_items.exists()
+    month.refresh_from_db()
+    assert month.cost == Decimal("0")
+    assert month.revenue == Decimal("0")
 
 
 def test_detail_view_gated_to_internal(client, setup, django_user_model):

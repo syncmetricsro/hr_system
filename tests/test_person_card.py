@@ -49,12 +49,21 @@ def test_people_list_status_filter(client, django_user_model):
 
 
 def test_history_translates_lifecycle_values_and_seeded_equipment(coordinator):
+    from datetime import date
+    from decimal import Decimal
+    from uuid import uuid4
+
     from features.logistics.models import EquipmentItem
-    from features.logistics.services import issue_equipment
+    from features.logistics.services import issue_equipment, receive_stock
 
     person = Person.objects.create(first_name="Olha", last_name="Kovalenko")
     boots = EquipmentItem.objects.create(name="Work boots", size="42")
-    issue_equipment(person, boots, 1, actor=coordinator)
+    receive_stock(
+        received_on=date.today(), operation_key=uuid4(),
+        lines=[{"item": boots, "quantity": 1, "total_value": Decimal("45")}],
+        actor=coordinator,
+    )
+    issue_equipment(person, boots, 1, actor=coordinator, operation_key=uuid4())
     person.set_status(LifecycleStatus.WORKING, actor=coordinator)
 
     with translation.override("hu"):

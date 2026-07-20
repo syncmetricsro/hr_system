@@ -2,35 +2,23 @@
 {% load i18n %}
 
 {% block title %}{% trans "Accommodation costs" %} · {{ BRAND_NAME }}{% endblock %}
-
 {% block content %}
-<section class="page-head">
-  <p class="eyebrow">{% trans "Accommodation" %}</p>
-  <h1>{% trans "Cost report" %}</h1>
-  <a class="button button-secondary" href="{% url 'accommodation_list' %}">{% trans "Back" %}</a>
-</section>
-
+<section class="page-head"><p class="eyebrow">{% trans "Accommodation" %}</p><h1>{% trans "Monthly cost and margin" %}</h1><a class="button button-secondary" href="{% url 'accommodation_list' %}">{% trans "Back" %}</a></section>
 <p class="muted">{% trans "Reporting only — no amounts are deducted from workers." %}</p>
-
-<section class="dashboard-grid" aria-label="{% trans 'Company total' %}">
-  <article class="metric-card"><span>{% trans "Occupancy" %}</span><strong>{{ company.occupancy }}/{{ company.capacity }}</strong></article>
-  <article class="metric-card"><span>{% trans "Room cost" %}</span><strong>{{ company.room_cost }} EUR</strong></article>
-  <article class="metric-card"><span>{% trans "Assigned cost" %}</span><strong>{{ company.assigned_cost }} EUR</strong></article>
+<section class="panel"><form class="people-search" method="get"><label>{% trans "Report month" %}<input type="month" name="month" value="{{ month_value }}"></label><button class="button button-secondary" type="submit">{% trans "Filter" %}</button></form></section>
+<section class="dashboard-grid">
+  <article class="metric-card"><span>{% trans "Standing cost" %}</span><strong>{{ company.standing_cost }} EUR</strong></article>
+  <article class="metric-card"><span>{% trans "Worker payments" %}</span><strong>{{ company.payments }} EUR</strong></article>
+  <article class="metric-card"><span>{% trans "Empty-bed loss" %}</span><strong>{{ company.empty_bed_loss }} EUR</strong></article>
+  <article class="metric-card"><span>{% trans "Margin" %}</span><strong class="amount{% if company.margin < 0 %} amount-neg{% else %} amount-pos{% endif %}">{{ company.margin }} EUR</strong></article>
 </section>
-
-<section class="field-list" aria-label="{% trans 'Accommodation' %}">
-  {% for row in rows %}
-    <article class="field-card">
-      <div><h3>{{ row.accommodation.name }}</h3></div>
-      <dl>
-        <div><dt>{% trans "Rooms" %}</dt><dd>{{ row.rooms }}</dd></div>
-        <div><dt>{% trans "Occupancy" %}</dt><dd>{{ row.occupancy }}/{{ row.capacity }}</dd></div>
-        <div><dt>{% trans "Room cost" %}</dt><dd>{{ row.room_cost }} EUR</dd></div>
-        <div><dt>{% trans "Assigned cost" %}</dt><dd>{{ row.assigned_cost }} EUR</dd></div>
-      </dl>
-    </article>
-  {% empty %}
-    <p>{% trans "No accommodations found." %}</p>
-  {% endfor %}
+<section class="field-list">
+{% for row in rows %}<article class="field-card"><div><h3>{{ row.accommodation.name }}</h3>{% if row.missing_period %}<span class="badge">{% trans "Missing cost period" %}</span>{% endif %}</div>
+{% if not row.missing_period %}<dl>
+  <div><dt>{% trans "Capacity" %}</dt><dd>{{ row.capacity }}</dd></div><div><dt>{% trans "Occupied bed-days" %}</dt><dd>{{ row.occupied_days }}</dd></div>
+  <div><dt>{% trans "Standing cost" %}</dt><dd>{{ row.standing_cost }} EUR</dd></div><div><dt>{% trans "Occupied cost" %}</dt><dd>{{ row.occupied_cost }} EUR</dd></div>
+  <div><dt>{% trans "Worker payments" %}</dt><dd>{{ row.payments }} EUR</dd></div><div><dt>{% trans "Empty-bed loss" %}</dt><dd>{{ row.empty_bed_loss }} EUR</dd></div>
+  <div><dt>{% trans "Margin" %}</dt><dd class="amount{% if row.margin < 0 %} amount-neg{% else %} amount-pos{% endif %}">{{ row.margin }} EUR</dd></div>
+</dl>{% endif %}</article>{% empty %}<p>{% trans "No accommodations found." %}</p>{% endfor %}
 </section>
 {% endblock %}

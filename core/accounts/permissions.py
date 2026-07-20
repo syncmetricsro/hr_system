@@ -43,6 +43,8 @@ class Action(str, Enum):
     PROJECT_MANAGE = "project.manage"
     ACCOMMODATION_MANAGE = "accommodation.manage"
     EQUIPMENT_REVIEW_DEDUCTION = "equipment.review_deduction"
+    EQUIPMENT_VIEW_STOCK = "equipment.view_stock"
+    EQUIPMENT_MANAGE_STOCK = "equipment.manage_stock"
     CATALOG_MANAGE = "catalog.manage"
     USER_MANAGE = "user.manage"
     BLACKLIST_PROPOSE = "blacklist.propose"

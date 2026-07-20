@@ -1,5 +1,25 @@
 # Build Journal
 
+## 2026-07-20 — Jober second-interview headline demo
+
+- Removed Jober transport from flags, routes, navigation, seeds, project UI,
+  and readiness enforcement while preserving historical models and migrations.
+- Added server-owned under-18/near-18 warnings to person intake, edit, detail,
+  and an authenticated htmx fragment with full-submit fallback.
+- Added Jober warehouse stock receipts, immutable movements, FIFO lots and
+  allocations, transactional issue/return/adjustment services, idempotency
+  keys, current balance, and monthly movement reporting. CorvinumEU keeps the
+  legacy issue-without-stock policy.
+- Added effective accommodation cost periods, separate worker payments, and a
+  daily-prorated monthly capacity/cost/loss/margin report with no payroll side
+  effects. Legacy room-rate fields and reports remain compatible.
+- Added project regions and workbook-facing signed finance entry/display/CSV,
+  regional roll-ups, project opt-out, and dynamic inclusion of extraordinary
+  categories while preserving positive internal magnitudes.
+- Refreshed fictional Jober seeds and the demo runbook for the five headline
+  amendments. Telegram, DAC attachments, feedback replies, consolidated debt,
+  actor-complete person history, and project CRUD remain deferred.
+
 ## 2026-07-17 — Secondary blacklist fingerprint (name + DOB + mother's maiden name)
 
 - Added a second re-entry fingerprint type alongside the optional ID code: a

@@ -1,14 +1,17 @@
 from __future__ import annotations
 
 from datetime import timedelta
+from decimal import Decimal
+from uuid import NAMESPACE_URL, uuid5
 
 from django.core.management.base import BaseCommand
 from django.utils import timezone
 
 from core.accounts.models import User
 from features.logistics.models import Accommodation, EquipmentItem, Room
-from features.logistics.services import assign_room, record_transport_week
-from core.projects.models import Project
+from features.logistics.services import (
+    assign_room, receive_stock, set_accommodation_cost_period,
+)
 from core.people.models import LifecycleStatus, Person
 
 DEMO_DOMAIN = "demo.jober.test"
@@ -33,26 +36,39 @@ class Command(BaseCommand):
         )
         working = Person.objects.filter(lifecycle_status=LifecycleStatus.WORKING).first()
         if working and not working.room_assignments.exists():
-            assign_room(working, room, actor=coordinator)
+            assignment = assign_room(
+                working, room, actor=coordinator, worker_payment_monthly=Decimal("125.00")
+            )
+            assignment.start_date = timezone.localdate().replace(day=15)
+            assignment.save(update_fields=["start_date"])
 
+        month_start = timezone.localdate().replace(day=1)
+        set_accommodation_cost_period(
+            accommodation, effective_month=month_start, capacity=4,
+            per_head_cost=Decimal("180.00"), actor=coordinator,
+        )
+
+        items = []
         for name, size, price in [
             ("Work boots", "42", "45.00"),  # canonical English; rendered via db_trans
             ("High-visibility vest", "L", "8.50"),
             ("Safety helmet", "", "15.00"),
         ]:
-            EquipmentItem.objects.get_or_create(name=name, size=size, defaults={"unit_price": price})
+            item, _ = EquipmentItem.objects.get_or_create(
+                name=name, size=size, defaults={"unit_price": price}
+            )
+            items.append(item)
 
-        # Populate several project weeks so Transport is a useful trend rather
-        # than an empty state in a fresh fictional demo.
-        today = timezone.localdate()
-        monday = today - timedelta(days=today.weekday())
-        projects = list(Project.objects.filter(is_active=True).order_by("code")[:3])
-        for project_index, project in enumerate(projects):
-            for weeks_ago in range(4, -1, -1):
-                week_start = monday - timedelta(weeks=weeks_ago)
-                record_transport_week(
-                    project, week_start, 5 + project_index * 3 + (4 - weeks_ago),
-                    actor=coordinator, note="Fictional demo transport",
-                )
+        receive_stock(
+            received_on=month_start - timedelta(days=4),
+            operation_key=uuid5(NAMESPACE_URL, "jober-demo-stock-opening-v1"),
+            reference="DEMO-DAC-001", supplier="Fictional Safety Supply",
+            lines=[
+                {"item": items[0], "quantity": 10, "total_value": Decimal("410.00")},
+                {"item": items[1], "quantity": 20, "total_value": Decimal("150.00")},
+                {"item": items[2], "quantity": 8, "total_value": Decimal("112.00")},
+            ],
+            actor=coordinator,
+        )
 
         self.stdout.write(self.style.SUCCESS("Logistics demo data seeded."))

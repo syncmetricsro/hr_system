@@ -1,6 +1,6 @@
 # Permission Matrix — Jober
 
-Last updated: 2026-07-12
+Last updated: 2026-07-20
 
 This document is the human-readable mirror of `clients/jober/policies.py`
 (`ACTION_ROLES`; the `Action` enum lives in `core/accounts/permissions.py`). When you change one, change the other in the same commit.
@@ -35,7 +35,9 @@ Legend: ✅ permitted · — denied
 | `readiness.complete` | — | ✅ | ✅ | — |
 | `room.assign` | — | ✅ | ✅ | — |
 | `equipment.issue_return` | — | ✅ | ✅ | — |
-| `transport.record` | — | ✅ | ✅ | — |
+| `equipment.view_stock` | — | — | ✅ | ✅ |
+| `equipment.manage_stock` | — | — | ✅ | — |
+| `transport.record` (Jober: feature off) | — | ✅ | ✅ | — |
 | `exit.reconcile` | — | ✅ | ✅ | — |
 | `approval.activate` | — | — | ✅ | — |
 | `project.manage` | — | — | ✅ | — |
@@ -77,7 +79,7 @@ responsible coordinator(s)**; hidden from unconnected recruiters/coordinators.
   warning exists but not the restricted reason. Cannot record trial outcomes,
   complete readiness, approve Working, or manage projects/catalogs/users/finance.
 - **Coordinator** — schedules and records project trials, then handles
-  readiness data, rooms, equipment, transport headcounts, and exit
+  readiness data, rooms, equipment issuance, and exit
   reconciliation; sends approved SMS.
   Coordinators may assign existing rooms but cannot create or edit accommodation
   locations or room catalogue records.
@@ -86,7 +88,7 @@ responsible coordinator(s)**; hidden from unconnected recruiters/coordinators.
   including finance, users, blacklist decisions, audit, and exports.
   Accommodation management includes creating, editing, and deactivating
   locations and rooms; occupied catalogue records cannot be deactivated.
-- **Observer** — read-only: approved dashboards/lists, approved financial
+- **Observer** — read-only: approved dashboards/lists, warehouse stock, approved financial
   summaries, exports only where explicitly allowed. No operational/financial
   writes.
 
