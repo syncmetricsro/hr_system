@@ -34,6 +34,8 @@ ACTION_ROLES: dict[Action, frozenset[Role]] = {
     Action.PROJECT_MANAGE: frozenset({_MANAGER}),
     Action.ACCOMMODATION_MANAGE: frozenset({_MANAGER}),
     Action.EQUIPMENT_REVIEW_DEDUCTION: frozenset({_MANAGER}),
+    Action.EQUIPMENT_VIEW_STOCK: frozenset({_MANAGER, _OBSERVER}),
+    Action.EQUIPMENT_MANAGE_STOCK: frozenset({_MANAGER}),
     Action.CATALOG_MANAGE: frozenset({_MANAGER}),
     Action.USER_MANAGE: frozenset({_MANAGER}),
     Action.BLACKLIST_PROPOSE: frozenset({_COORDINATOR, _MANAGER}),

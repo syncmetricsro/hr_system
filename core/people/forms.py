@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from django import forms
+from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from core.ui import registry
@@ -53,3 +54,9 @@ class PersonForm(forms.ModelForm):
         if not cleaned_data.get("has_disability"):
             cleaned_data["disability_type"] = ""
         return cleaned_data
+
+    def clean_date_of_birth(self):
+        value = self.cleaned_data.get("date_of_birth")
+        if value and value > timezone.localdate():
+            raise forms.ValidationError(_("Date of birth cannot be in the future."))
+        return value

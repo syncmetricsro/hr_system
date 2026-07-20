@@ -4,21 +4,25 @@
   <h2>{% trans "Equipment" %}</h2>
   {% can 'equipment.issue_return' as may_equip %}
   {% if panel.issued_equipment %}
-    <p class="eyebrow">{% trans "Value" %}: {{ panel.issued_value }} EUR</p>
+    {% if panel.show_person_value %}<p class="eyebrow">{% trans "Value" %}: {{ panel.issued_value }} EUR</p>{% endif %}
     <ul class="plain-list">
       {% for issue in panel.issued_equipment %}
         <li>
           {{ issue.item.name|db_trans }} {{ issue.item.size }} × {{ issue.quantity }}
-          <span class="equipment-unit-price">{% trans "Unit price" %}: {{ issue.item.unit_price }} EUR</span>
+          {% if not panel.stock_enabled %}<span class="equipment-unit-price">{% trans "Unit price" %}: {{ issue.item.unit_price }} EUR</span>{% endif %}
           {% if issue.review_status == 'none' %}
             {% if may_equip %}
               <form class="inline-form" method="post" action="{% url 'return_equipment' issue.pk %}">
                 {% csrf_token %}
+                {% if panel.stock_enabled %}<select name="disposition" required aria-label="{% trans 'Return disposition' %}">
+                  <option value="restock">{% trans "Reusable — return to stock" %}</option>
+                  <option value="retire">{% trans "Damaged or retired" %}</option>
+                </select>{% endif %}
                 <button class="button button-secondary" type="submit">{% trans "Return" %}</button>
               </form>
               <form class="inline-form" method="post" action="{% url 'flag_unreturned' issue.pk %}">
                 {% csrf_token %}
-                <button class="button button-secondary" type="submit" data-confirm="{% trans 'This flags the item as unreturned and opens a manager charge review at its current value.' %}">{% trans "Flag unreturned" %}</button>
+                <button class="button button-secondary" type="submit" data-confirm="{% trans 'This flags the item as unreturned and opens a manager charge review at its issued stock value.' %}">{% trans "Flag unreturned" %}</button>
               </form>
             {% endif %}
           {% else %}
@@ -33,8 +37,9 @@
   {% if may_equip %}
     <form class="people-search" method="post" action="{% url 'issue_equipment' panel.person.pk %}">
       {% csrf_token %}
+      <input type="hidden" name="operation_key" value="{{ panel.operation_key }}">
       <select name="item" aria-label="{% trans 'Item' %}">
-        {% for item in panel.equipment_items %}<option value="{{ item.pk }}">{{ item.name|db_trans }} {{ item.size }} — {{ item.unit_price }} EUR</option>{% endfor %}
+        {% for item in panel.equipment_items %}<option value="{{ item.pk }}"{% if panel.stock_enabled and item.available_quantity < 1 %} disabled{% endif %}>{{ item.name|db_trans }} {{ item.size }}{% if panel.stock_enabled %} — {% trans "Available" %}: {{ item.available_quantity }}{% else %} — {{ item.unit_price }} EUR{% endif %}</option>{% endfor %}
       </select>
       <input type="number" name="quantity" value="1" min="1" aria-label="{% trans 'Quantity' %}">
       <button class="button button-primary" type="submit">{% trans "Issue equipment" %}</button>

@@ -1,11 +1,14 @@
 from __future__ import annotations
 
 import pytest
+from datetime import date
+from decimal import Decimal
+from uuid import uuid4
 from django.urls import reverse
 from django.utils import translation
 
 from features.logistics.models import Accommodation, EquipmentIssueStatus, EquipmentItem, Room, RoomAssignmentStatus
-from features.logistics.services import assign_room, issue_equipment
+from features.logistics.services import assign_room, issue_equipment, receive_stock
 from core.people.models import LifecycleStatus, Person
 from core.projects.models import AssignmentStatus, Project
 from core.projects.services import activate_on_project, exit_person
@@ -22,7 +25,13 @@ def staffed(django_user_model):
     activate_on_project(person, project, actor=coord)  # WORKING + active assignment
     room = Room.objects.create(accommodation=Accommodation.objects.create(name="Dom"), label="1", capacity=2)
     assign_room(person, room, actor=coord)
-    issue_equipment(person, EquipmentItem.objects.create(name="Boots"), actor=coord)
+    item = EquipmentItem.objects.create(name="Boots")
+    receive_stock(
+        received_on=date.today(), operation_key=uuid4(),
+        lines=[{"item": item, "quantity": 1, "total_value": Decimal("10")}],
+        actor=coord,
+    )
+    issue_equipment(person, item, actor=coord, operation_key=uuid4())
     return coord, person
 
 
@@ -33,7 +42,8 @@ def test_exit_reconciles_everything_and_recycles(staffed):
     assert person.lifecycle_status == LifecycleStatus.AVAILABLE
     assert person.assignments.filter(status=AssignmentStatus.ACTIVE).count() == 0
     assert person.room_assignments.filter(status=RoomAssignmentStatus.ACTIVE).count() == 0
-    assert person.equipment_issues.filter(status=EquipmentIssueStatus.ISSUED).count() == 0
+    # Stock-tracked custody stays open until the item is physically returned.
+    assert person.equipment_issues.filter(status=EquipmentIssueStatus.ISSUED).count() == 1
 
 
 def test_exit_to_inactive(staffed):

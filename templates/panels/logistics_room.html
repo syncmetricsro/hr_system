@@ -6,7 +6,7 @@
   {% can 'accommodation.manage' as may_rate %}
   {% if panel.current_room %}
     <p>{{ panel.current_room.room }}</p>
-    <p class="muted">{% trans "Monthly rate" %}: {{ panel.current_room.effective_rate }} EUR</p>
+    <p class="muted">{% trans "Worker monthly payment" %}: {{ panel.current_room.worker_payment_monthly }} EUR</p>
     {% if may_room %}
       <form method="post" action="{% url 'release_room' panel.person.pk %}">
         {% csrf_token %}
@@ -14,11 +14,18 @@
       </form>
     {% endif %}
     {% if may_rate %}
+      <form class="people-search" method="post" action="{% url 'set_assignment_payment' panel.current_room.pk %}">
+        {% csrf_token %}
+        <input type="number" step="0.01" min="0" name="worker_payment_monthly" value="{{ panel.current_room.worker_payment_monthly }}" aria-label="{% trans 'Worker monthly payment' %}">
+        <button class="button button-secondary" type="submit">{% trans "Save payment" %}</button>
+      </form>
+      <details><summary>{% trans "Legacy rate override" %}</summary>
       <form class="people-search" method="post" action="{% url 'set_assignment_rate' panel.current_room.pk %}">
         {% csrf_token %}
         <input type="number" step="0.01" min="0" name="rate_override" value="{{ panel.current_room.rate_override|default_if_none:'' }}" placeholder="{% trans 'Rate override' %}" aria-label="{% trans 'Rate override' %}">
         <button class="button button-secondary" type="submit">{% trans "Save override" %}</button>
       </form>
+      </details>
     {% endif %}
   {% elif may_room %}
     {% if panel.rooms %}
@@ -29,6 +36,7 @@
             <option value="{{ room.pk }}">{{ room }} ({{ room.active_occupancy }}/{{ room.capacity }})</option>
           {% endfor %}
         </select>
+        <input type="number" step="0.01" min="0" name="worker_payment_monthly" value="0" aria-label="{% trans 'Worker monthly payment' %}" placeholder="{% trans 'Worker monthly payment' %}">
         <button class="button button-primary" type="submit">{% trans "Assign room" %}</button>
       </form>
     {% else %}<p>{% trans "No active room with free capacity is available." %}</p>{% endif %}

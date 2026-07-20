@@ -3,6 +3,7 @@ from __future__ import annotations
 from decimal import Decimal
 
 import pytest
+from django.test import override_settings
 
 from features.logistics.models import EquipmentItem
 from features.logistics.services import issue_equipment, issued_equipment_value, return_equipment
@@ -16,6 +17,7 @@ def coord(django_user_model):
     return django_user_model.objects.create_user(email="c@demo.jober.test", password="x", role="coordinator")
 
 
+@override_settings(EQUIPMENT_STOCK_LEDGER_ENABLED=False)
 def test_issued_value_sums_qty_times_price(coord):
     boots = EquipmentItem.objects.create(name="Boots", unit_price=Decimal("45.00"))
     vest = EquipmentItem.objects.create(name="Vest", unit_price=Decimal("8.50"))
@@ -26,6 +28,7 @@ def test_issued_value_sums_qty_times_price(coord):
     assert issued_equipment_value() == Decimal("62.00")          # company-wide
 
 
+@override_settings(EQUIPMENT_STOCK_LEDGER_ENABLED=False)
 def test_returned_equipment_excluded_from_value(coord):
     boots = EquipmentItem.objects.create(name="Boots", unit_price=Decimal("45.00"))
     person = Person.objects.create(first_name="A", last_name="B")

@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 from decimal import Decimal
+from datetime import date
+from uuid import uuid4
 
 import pytest
 from django.urls import reverse
@@ -17,6 +19,7 @@ from features.logistics.services import (
     issue_equipment,
     pending_deduction_reviews,
     review_deduction,
+    receive_stock,
 )
 from core.people.models import Person
 from core.projects.services import exit_person
@@ -33,13 +36,18 @@ def setup(django_user_model):
         email="c@demo.jober.test", password="x", role="coordinator"
     )
     item = EquipmentItem.objects.create(name="Boots", size="42", unit_price=Decimal("45.00"))
+    receive_stock(
+        received_on=date.today(), operation_key=uuid4(),
+        lines=[{"item": item, "quantity": 20, "total_value": Decimal("900.00")}],
+        actor=manager,
+    )
     person = Person.objects.create(first_name="A", last_name="B")
     return manager, coord, item, person
 
 
 def test_flag_snapshots_charge_at_unit_price(setup):
     manager, coord, item, person = setup
-    issue = issue_equipment(person, item, 2, actor=coord)
+    issue = issue_equipment(person, item, 2, actor=coord, operation_key=uuid4())
     flag_unreturned(issue, actor=coord)
     issue.refresh_from_db()
     assert issue.review_status == DeductionReviewStatus.PENDING
@@ -49,7 +57,7 @@ def test_flag_snapshots_charge_at_unit_price(setup):
 
 def test_cannot_flag_returned_or_double_flag(setup):
     manager, coord, item, person = setup
-    issue = issue_equipment(person, item, 1, actor=coord)
+    issue = issue_equipment(person, item, 1, actor=coord, operation_key=uuid4())
     flag_unreturned(issue, actor=coord)
     with pytest.raises(DeductionReviewError):
         flag_unreturned(issue, actor=coord)  # already pending
@@ -57,8 +65,8 @@ def test_cannot_flag_returned_or_double_flag(setup):
 
 def test_approve_and_waive(setup):
     manager, coord, item, person = setup
-    a = issue_equipment(person, item, 1, actor=coord)
-    b = issue_equipment(person, item, 1, actor=coord)
+    a = issue_equipment(person, item, 1, actor=coord, operation_key=uuid4())
+    b = issue_equipment(person, item, 1, actor=coord, operation_key=uuid4())
     flag_unreturned(a, actor=coord)
     flag_unreturned(b, actor=coord)
     review_deduction(a, "approve", actor=manager, note="not returned")
@@ -72,7 +80,7 @@ def test_approve_and_waive(setup):
 
 def test_review_requires_pending_and_valid_decision(setup):
     manager, coord, item, person = setup
-    issue = issue_equipment(person, item, 1, actor=coord)
+    issue = issue_equipment(person, item, 1, actor=coord, operation_key=uuid4())
     with pytest.raises(DeductionReviewError):
         review_deduction(issue, "approve", actor=manager)  # not pending
     flag_unreturned(issue, actor=coord)
@@ -83,8 +91,8 @@ def test_review_requires_pending_and_valid_decision(setup):
 def test_pending_queue_total(setup):
     manager, coord, item, person = setup
     p2 = Person.objects.create(first_name="C", last_name="D")
-    a = issue_equipment(person, item, 1, actor=coord)   # 45
-    b = issue_equipment(p2, item, 2, actor=coord)       # 90
+    a = issue_equipment(person, item, 1, actor=coord, operation_key=uuid4())   # 45
+    b = issue_equipment(p2, item, 2, actor=coord, operation_key=uuid4())       # 90
     flag_unreturned(a, actor=coord)
     flag_unreturned(b, actor=coord)
     review_deduction(a, "waive", actor=manager)          # leaves only b pending
@@ -93,15 +101,20 @@ def test_pending_queue_total(setup):
     assert queue["total"] == Decimal("90.00")
 
 
-def test_exit_leaves_flagged_items_for_review(setup):
+def test_exit_leaves_flagged_items_for_review(settings, setup):
     manager, coord, item, person = setup
-    keep = issue_equipment(person, item, 1, actor=coord)
-    flagged = issue_equipment(person, item, 1, actor=coord)
+    keep = issue_equipment(person, item, 1, actor=coord, operation_key=uuid4())
+    flagged = issue_equipment(person, item, 1, actor=coord, operation_key=uuid4())
     flag_unreturned(flagged, actor=coord)
     exit_person(person, actor=coord, reason="left")
     keep.refresh_from_db()
     flagged.refresh_from_db()
-    assert keep.status == EquipmentIssueStatus.RETURNED       # auto-returned
+    expected = (
+        EquipmentIssueStatus.ISSUED
+        if settings.EQUIPMENT_STOCK_LEDGER_ENABLED
+        else EquipmentIssueStatus.RETURNED
+    )
+    assert keep.status == expected
     assert flagged.status == EquipmentIssueStatus.ISSUED      # left for review
     assert flagged.review_status == DeductionReviewStatus.PENDING
 

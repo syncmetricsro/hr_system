@@ -4,12 +4,26 @@ from django.contrib import admin
 
 from features.logistics.models import (
     Accommodation,
+    AccommodationCostPeriod,
     EquipmentIssue,
     EquipmentItem,
+    EquipmentStockAllocation,
+    EquipmentStockLot,
+    EquipmentStockMovement,
+    EquipmentStockReceipt,
+    EquipmentStockReceiptLine,
     Room,
     RoomAssignment,
     TransportWeek,
 )
+
+
+admin.site.register(AccommodationCostPeriod)
+admin.site.register(EquipmentStockReceipt)
+admin.site.register(EquipmentStockReceiptLine)
+admin.site.register(EquipmentStockMovement)
+admin.site.register(EquipmentStockLot)
+admin.site.register(EquipmentStockAllocation)
 
 
 class RoomInline(admin.TabularInline):
@@ -33,7 +47,10 @@ class RoomAdmin(admin.ModelAdmin):
 
 @admin.register(RoomAssignment)
 class RoomAssignmentAdmin(admin.ModelAdmin):
-    list_display = ("person", "room", "status", "start_date", "end_date", "rate_override")
+    list_display = (
+        "person", "room", "status", "start_date", "end_date",
+        "worker_payment_monthly", "rate_override",
+    )
     list_filter = ("status",)
     search_fields = ("person__search_name",)
 

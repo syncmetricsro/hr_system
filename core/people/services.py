@@ -1,12 +1,42 @@
 from __future__ import annotations
 
+from datetime import date
+
 from django.db import transaction
 from django.db.models import Count
+from django.utils import timezone
 from django.utils.translation import gettext as _
 
 from core.audit.models import AuditEvent
 from core.audit.services import record_event
 from core.people.models import LifecycleError, LifecycleStatus, Person
+
+
+def age_warning(birth_date: date | None, *, on_date: date | None = None) -> dict | None:
+    """Return the server-authoritative under-18/advisory presentation state."""
+    if birth_date is None:
+        return None
+    today = on_date or timezone.localdate()
+    if birth_date > today:
+        return None
+    try:
+        eighteenth = birth_date.replace(year=birth_date.year + 18)
+    except ValueError:
+        eighteenth = birth_date.replace(year=birth_date.year + 18, day=28)
+    days_until = (eighteenth - today).days
+    if days_until > 30:
+        return {
+            "level": "critical",
+            "title": _("Under 18"),
+            "message": _("This person is under 18. Review the applicable employment requirements."),
+        }
+    if 0 < days_until <= 30:
+        return {
+            "level": "advisory",
+            "title": _("Approaching age 18"),
+            "message": _("This person turns 18 within 30 days."),
+        }
+    return None
 
 
 def inactive_by_reason(*, include_archived: bool = False) -> list[dict]:

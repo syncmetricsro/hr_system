@@ -5,7 +5,7 @@ from playwright.sync_api import expect
 from test_feature_pages import MANAGER, _login, base_url
 
 
-def test_manager_operates_trials_transport_and_accommodation(page):
+def test_manager_operates_trials_warehouse_and_accommodation(page):
     _login(page, MANAGER)
 
     # Schedule an Available candidate from the central queue.
@@ -23,17 +23,18 @@ def test_manager_operates_trials_transport_and_accommodation(page):
     expect(page.get_by_text(candidate_label, exact=True)).to_be_visible()
     expect(page.get_by_text("E2E main gate", exact=True)).to_be_visible()
 
-    # Add a distinct project week from Transport and see it in the record list.
-    page.goto(f"{base_url()}/en/transport/?create=1")
-    transport = page.locator("form[action*='/transport/create/']")
-    expect(transport).to_be_visible()
-    transport.locator("select[name='project']").select_option(index=1)
-    transport.locator("input[name='week_start']").fill("2030-01-07")
-    transport.locator("input[name='headcount']").fill("23")
-    transport.locator("textarea[name='note']").fill("E2E shuttle")
-    transport.get_by_role("button", name="Save transport record").click()
+    # Receive a fictional lot and land on the current warehouse balance.
+    page.goto(f"{base_url()}/en/equipment/stock/receive/")
+    receipt = page.locator("main form")
+    expect(receipt).to_be_visible()
+    receipt.locator("input[name='received_on']").fill("2030-01-07")
+    receipt.locator("input[name='reference']").fill("E2E-RECEIPT")
+    receipt.locator("select[name='lines-0-item']").select_option(index=1)
+    receipt.locator("input[name='lines-0-quantity']").fill("3")
+    receipt.locator("input[name='lines-0-total_value']").fill("75.00")
+    receipt.get_by_role("button", name="Record receipt").click()
     page.wait_for_load_state("networkidle")
-    expect(page.get_by_text("E2E shuttle", exact=True)).to_be_visible()
+    expect(page.get_by_role("heading", name="Warehouse stock")).to_be_visible()
 
     # Managers create catalogue records; the new room becomes visible on detail.
     page.goto(f"{base_url()}/en/accommodation/new/")
@@ -58,7 +59,7 @@ def test_operations_forms_fit_mobile(page):
     _login(page, MANAGER)
     for path, action in (
         ("/en/trials/?create=1", "/trials/create/"),
-        ("/en/transport/?create=1", "/transport/create/"),
+        ("/en/equipment/stock/receive/", "/equipment/stock/receive/"),
         ("/en/accommodation/new/", "/accommodation/new/"),
     ):
         page.goto(f"{base_url()}{path}")

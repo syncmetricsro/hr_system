@@ -14,7 +14,9 @@ from features.blacklist.models import BlacklistCaseStatus, MatchFingerprint
 from features.blacklist.services import check_match
 from features.compliance.services import compliance_alerts
 from features.finance.models import FinancialMonth
-from features.logistics.models import DeductionReviewStatus, EquipmentIssue, TransportWeek
+from features.logistics.models import (
+    DeductionReviewStatus, EquipmentIssue, EquipmentStockMovement, RoomAssignment,
+)
 from core.projects.models import TrialAssignment, TrialOutcome
 from core.people.models import LifecycleStatus, Person
 from core.people.services import inactive_by_reason
@@ -34,16 +36,19 @@ def _seed():
 def test_scenario_populates_every_module():
     _seed()
 
-    # Finance line items + recomputed net (positive convention).
+    # Finance line items include the extraordinary row and recompute every category.
     from decimal import Decimal
-    month = FinancialMonth.objects.get(project__code="DHLBA", year=2026, month=5)
+    month = FinancialMonth.objects.get(project__code="DHLBA", year=2025, month=11)
     assert month.line_items.exists()
-    assert month.cost == Decimal("12000")      # 9000 + 1200 + 1800, stored positive
-    assert month.revenue == Decimal("18900")   # 18000 + 900
-    assert month.net == Decimal("6900")        # revenue - cost
+    assert month.cost == Decimal("9530")
+    assert month.revenue == Decimal("14600")
+    assert month.net == Decimal("5070")
 
     # Equipment: one issued item flagged for the review queue.
     assert EquipmentIssue.objects.filter(review_status=DeductionReviewStatus.PENDING).exists()
+    assert EquipmentStockMovement.objects.filter(movement_type="receipt").exists()
+    assert EquipmentIssue.objects.filter(return_disposition="restock").exists()
+    assert EquipmentIssue.objects.filter(return_disposition="retire").exists()
 
     # Inactive-by-reason has a named bucket (not just "No reason").
     labels = {row["label"] for row in inactive_by_reason()}
@@ -67,8 +72,8 @@ def test_scenario_populates_every_module():
 
     # Operational workspaces contain records produced by their real services.
     assert TrialAssignment.objects.filter(outcome=TrialOutcome.PENDING).exists()
-    assert TransportWeek.objects.values("week_start").distinct().count() >= 5
-    assert TransportWeek.objects.values("project").distinct().count() >= 2
+    assert RoomAssignment.objects.filter(worker_payment_monthly__gt=0).exists()
+    assert Person.objects.get(first_name="Mira", last_name="Novakova").date_of_birth
 
 
 def test_scenario_is_idempotent():
@@ -89,6 +94,7 @@ def test_demo_sms_phone_env_overrides_olha(monkeypatch, django_user_model):
     monkeypatch.setenv("DEMO_SMS_PHONE", "+15005550006")
     call_command("seed_demo")
     call_command("seed_people")
+    call_command("seed_logistics")
     call_command("seed_demo_scenario")
     from core.people.models import Person
 

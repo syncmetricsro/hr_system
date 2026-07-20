@@ -14,9 +14,9 @@ from core.projects.services import activate_on_project, schedule_trial
 DEMO_DOMAIN = "demo.jober.test"
 
 PROJECTS = [
-    {"name": "DHL Bratislava", "code": "DHLBA", "office": "Bratislava", "partner": "DHL"},
-    {"name": "WEBASTO", "code": "WEB", "office": "Nitra", "partner": "Webasto"},
-    {"name": "CARGO", "code": "CARGO", "office": "Bratislava", "partner": "Cargo"},
+    {"name": "DHL Bratislava", "code": "DHLBA", "office": "Bratislava", "partner": "DHL", "region": "Megyer"},
+    {"name": "WEBASTO", "code": "WEB", "office": "Nitra", "partner": "Webasto", "region": "DS"},
+    {"name": "CARGO", "code": "CARGO", "office": "Bratislava", "partner": "Cargo", "region": "Megyer"},
 ]
 
 # (first, last, status, has_disability)
@@ -26,6 +26,7 @@ PEOPLE = [
     ("Tran", "Van Minh", LifecycleStatus.AVAILABLE, False),
     ("Diana", "Horvathova", LifecycleStatus.AVAILABLE, True),
     ("Bohdan", "Melnyk", LifecycleStatus.INACTIVE, False),
+    ("Mira", "Novakova", LifecycleStatus.AVAILABLE, False),
 ]
 
 
@@ -38,7 +39,7 @@ class Command(BaseCommand):
 
         projects = {}
         for spec in PROJECTS:
-            project, _ = Project.objects.get_or_create(code=spec["code"], defaults=spec)
+            project, _ = Project.objects.update_or_create(code=spec["code"], defaults=spec)
             if coordinator:
                 project.responsible_coordinators.add(coordinator)
             projects[spec["code"]] = project
@@ -60,6 +61,13 @@ class Command(BaseCommand):
                 activate_on_project(
                     person, projects["DHLBA"], actor=coordinator, reason="demo seed"
                 )
+
+        underage = Person.objects.filter(first_name="Mira", last_name="Novakova").first()
+        if underage:
+            underage.date_of_birth = timezone.localdate().replace(
+                year=timezone.localdate().year - 17
+            )
+            underage.save(update_fields=["date_of_birth", "updated_at"])
 
         # A lifecycle label alone does not populate the operational queue. Keep
         # one real pending TrialAssignment so the demo exercises the same UI and

@@ -1,31 +1,13 @@
 from __future__ import annotations
 
-import datetime as dt
-
 import pytest
-from django.urls import reverse
+from django.conf import settings
+from django.urls import NoReverseMatch, reverse
 
-from features.logistics.services import record_transport_week
-from core.projects.models import Project
-
-# Jober-specific URLs/policies/languages — excluded from the corvinum lane.
 pytestmark = [pytest.mark.django_db, pytest.mark.jober_only]
 
 
-def test_transport_trends_requires_login(client):
-    resp = client.get(reverse("transport_trends"))
-    assert resp.status_code == 302
-    assert reverse("login") in resp.headers["Location"]
-
-
-def test_transport_trends_shows_company_total(client, django_user_model):
-    p1 = Project.objects.create(name="Alpha", code="ALPHA")
-    p2 = Project.objects.create(name="Beta", code="BETA")
-    week = dt.date(2026, 6, 22)
-    record_transport_week(p1, week, 10)
-    record_transport_week(p2, week, 5)
-    user = django_user_model.objects.create_user(email="m@demo.jober.test", password="x", role="manager")
-    client.force_login(user)
-    body = client.get(reverse("transport_trends")).content.decode("utf-8")
-    assert "Alpha" in body and "Beta" in body
-    assert "15" in body  # company total for the week (10 + 5)
+def test_jober_transport_is_disabled_and_routes_are_unmounted():
+    assert settings.FEATURE_FLAGS["transport"] is False
+    with pytest.raises(NoReverseMatch):
+        reverse("transport_trends")

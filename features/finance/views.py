@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from django.contrib import messages
+from django.db import transaction
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.template.response import TemplateResponse
@@ -9,17 +10,20 @@ from django.views.decorators.http import require_POST
 
 from core.accounts.permissions import Action, require_action
 from core.accounts.permissions import can as user_can
-from features.finance.models import FinanceCategory, FinancialMonth
+from features.finance.models import FinanceCategory, FinanceCategoryKind, FinancialMonth
 from features.finance.services import (
     FinanceError,
     company_totals,
     group_breakdown,
     lock_month,
+    normalize_source_amount,
     project_totals,
     recompute_month,
     record_financial_month,
     reopen_month,
+    regional_totals,
     set_line_item,
+    signed_amount,
     yearly_totals,
 )
 from core.projects.models import Project
@@ -32,19 +36,22 @@ def finance_summary(request: HttpRequest) -> HttpResponse:
         request,
         "pages/finance_summary.html",
         {
-            "months": months,
+            "months": months.filter(project__financial_reporting_eligible=True),
             "totals": company_totals(),
             "groups": group_breakdown(),
             "project_results": project_totals(),
+            "regional_results": regional_totals(),
             "years": yearly_totals(),
-            "projects": Project.objects.filter(is_active=True),
+            "projects": Project.objects.filter(is_active=True, financial_reporting_eligible=True),
         },
     )
 
 
 @require_action(Action.FINANCE_VIEW_SUMMARY)
 def finance_year(request: HttpRequest, year: int) -> HttpResponse:
-    months = FinancialMonth.objects.select_related("project").filter(year=year)
+    months = FinancialMonth.objects.select_related("project").filter(
+        year=year, project__financial_reporting_eligible=True
+    )
     return TemplateResponse(
         request,
         "pages/finance_year.html",
@@ -54,6 +61,7 @@ def finance_year(request: HttpRequest, year: int) -> HttpResponse:
             "totals": company_totals(year),
             "groups": group_breakdown(list(months)),
             "project_results": project_totals(year),
+            "regional_results": regional_totals(year),
         },
     )
 
@@ -62,7 +70,10 @@ def finance_year(request: HttpRequest, year: int) -> HttpResponse:
 def finance_month_detail(request: HttpRequest, pk: int) -> HttpResponse:
     month = get_object_or_404(FinancialMonth.objects.select_related("project"), pk=pk)
     categories = FinanceCategory.objects.filter(is_active=True)
-    amounts = {li.category_id: li.amount for li in month.line_items.all()}
+    amounts = {
+        li.category_id: signed_amount(li.category.kind, li.amount)
+        for li in month.line_items.select_related("category")
+    }
     rows = [{"category": c, "amount": amounts.get(c.id, "")} for c in categories]
     can_manage = user_can(request.user, Action.FINANCE_MANAGE)
     return TemplateResponse(
@@ -83,11 +94,15 @@ def finance_month_detail(request: HttpRequest, pk: int) -> HttpResponse:
 def finance_month_save(request: HttpRequest, pk: int) -> HttpResponse:
     month = get_object_or_404(FinancialMonth, pk=pk)
     try:
-        for category in FinanceCategory.objects.filter(is_active=True):
-            raw = request.POST.get(f"cat_{category.pk}")
-            if raw not in (None, ""):
-                set_line_item(month, category, raw, actor=request.user)
-        recompute_month(month, actor=request.user)
+        with transaction.atomic():
+            for category in FinanceCategory.objects.filter(is_active=True):
+                raw = request.POST.get(f"cat_{category.pk}")
+                if raw not in (None, ""):
+                    set_line_item(
+                        month, category, normalize_source_amount(category.kind, raw),
+                        actor=request.user,
+                    )
+            recompute_month(month, actor=request.user)
         messages.success(request, _("Saved and recalculated."))
     except (FinanceError, ValueError) as exc:
         messages.error(request, str(exc) or _("Invalid input."))
@@ -118,14 +133,20 @@ def finance_month_reopen(request: HttpRequest, pk: int) -> HttpResponse:
 @require_POST
 @require_action(Action.FINANCE_MANAGE)
 def record_month(request: HttpRequest) -> HttpResponse:
-    project = get_object_or_404(Project, pk=request.POST.get("project"))
+    project = get_object_or_404(
+        Project, pk=request.POST.get("project"), financial_reporting_eligible=True
+    )
     try:
         record_financial_month(
             project,
             int(request.POST.get("year")),
             int(request.POST.get("month")),
-            request.POST.get("revenue") or 0,
-            request.POST.get("cost") or 0,
+            normalize_source_amount(
+                FinanceCategoryKind.REVENUE, request.POST.get("revenue") or 0
+            ),
+            normalize_source_amount(
+                FinanceCategoryKind.COST, request.POST.get("cost") or 0
+            ),
             actor=request.user,
         )
         messages.success(request, _("Financial month saved."))

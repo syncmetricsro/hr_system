@@ -144,7 +144,7 @@ def test_corvinum_notification_center_uses_shared_responsive_panel(page):
     assert page.evaluate("document.documentElement.scrollWidth") == 375
 
 
-def test_corvinum_top_level_sections_have_vertical_rhythm(page):
+def test_corvinum_project_page_keeps_clean_layout_without_transport(page):
     page.set_viewport_size({"width": 1650, "height": 900})
     _login_recruiter(page)
     page.goto(f"{base_url()}/hu/projects/")
@@ -152,14 +152,20 @@ def test_corvinum_top_level_sections_have_vertical_rhythm(page):
     page.locator("main a[href*='/projects/']").first.click()
     page.wait_for_load_state("networkidle")
 
-    gap = page.evaluate("""
+    layout = page.evaluate("""
       () => {
         const overview = document.querySelector('.cv-main > .two-column').getBoundingClientRect();
-        const nextPanel = document.querySelector('.cv-main > section.panel').getBoundingClientRect();
-        return nextPanel.top - overview.bottom;
+        return {
+          overviewWidth: overview.width,
+          transportHeadings: [...document.querySelectorAll('h2')]
+            .filter((heading) => heading.textContent.trim() === 'Szállítás').length,
+          overflow: document.documentElement.scrollWidth - innerWidth,
+        };
       }
     """)
-    assert gap == 16
+    assert layout["overviewWidth"] > 0
+    assert layout["transportHeadings"] == 0
+    assert layout["overflow"] == 0
 
 
 def test_corvinum_coordinator_can_tick_checklist_with_csrf(page):

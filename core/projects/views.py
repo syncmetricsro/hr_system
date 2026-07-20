@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, HttpResponse
@@ -66,13 +67,15 @@ def project_detail(request: HttpRequest, pk: int) -> TemplateResponse:
         .select_related("person")
         .order_by("person__last_name")
     )
-    transport_weeks = project.transport_weeks.all()[:8]
+    transport_enabled = getattr(settings, "FEATURE_FLAGS", {}).get("transport", True)
+    transport_weeks = project.transport_weeks.all()[:8] if transport_enabled else []
     return TemplateResponse(
         request,
         "pages/project_detail.html",
         {
             "project": project, "workers": workers, "transport_weeks": transport_weeks,
-            "may_transport": user_can(request.user, Action.TRANSPORT_RECORD)
+            "transport_enabled": transport_enabled,
+            "may_transport": transport_enabled and user_can(request.user, Action.TRANSPORT_RECORD)
             and operable_projects(request.user).filter(pk=project.pk).exists(),
         },
     )
@@ -219,9 +222,12 @@ def readiness_update(request: HttpRequest, person_pk: int) -> HttpResponse:
     person = get_object_or_404(Person, pk=person_pk)
     project = get_object_or_404(Project, pk=request.POST.get("project"))
     readiness = get_or_create_readiness(person, project)
+    pillars = ["medical", "gear", "accommodation"]
+    if getattr(settings, "FEATURE_FLAGS", {}).get("transport", True):
+        pillars.append("transport")
     states = {
         pillar: request.POST.get(pillar)
-        for pillar in ("medical", "gear", "accommodation", "transport")
+        for pillar in pillars
     }
     na_reasons = {
         "accommodation": request.POST.get("accommodation_na_reason", ""),

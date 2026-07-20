@@ -42,6 +42,7 @@ app_routes = [
     path("2fa/setup/", account_views.two_factor_setup, name="two_factor_setup"),
     path("people/", people_views.people_list, name="people_list"),
     path("people/new/", people_views.person_create, name="person_create"),
+    path("people/age-warning/", people_views.person_age_warning, name="person_age_warning"),
     path("people/<int:pk>/", people_views.person_detail, name="person_detail"),
     path("people/<int:pk>/edit/", people_views.person_edit, name="person_edit"),
     path("people/<int:person_pk>/archive/", people_views.archive_person, name="archive_person"),
@@ -77,10 +78,12 @@ if _feature_on("logistics", "accommodation"):
         path("accommodation/costs/", logistics_views.accommodation_costs, name="accommodation_costs"),
         path("accommodation/<int:pk>/", logistics_views.accommodation_detail, name="accommodation_detail"),
         path("accommodation/<int:pk>/edit/", logistics_views.accommodation_edit, name="accommodation_edit"),
+        path("accommodation/<int:accommodation_pk>/cost-period/", logistics_views.accommodation_cost_period, name="accommodation_cost_period"),
         path("accommodation/<int:accommodation_pk>/rooms/new/", logistics_views.room_create, name="room_create"),
         path("rooms/<int:pk>/edit/", logistics_views.room_edit, name="room_edit"),
         path("rooms/<int:pk>/rate/", logistics_views.set_room_rate_view, name="set_room_rate"),
         path("room-assignments/<int:pk>/rate/", logistics_views.set_assignment_rate_view, name="set_assignment_rate"),
+        path("room-assignments/<int:pk>/payment/", logistics_views.set_assignment_payment_view, name="set_assignment_payment"),
         path("people/<int:person_pk>/assign-room/", logistics_views.assign_room_view, name="assign_room"),
         path("people/<int:person_pk>/release-room/", logistics_views.release_room_view, name="release_room"),
     ]
@@ -98,6 +101,18 @@ if _feature_on("logistics", "equipment"):
         path("equipment/reviews/", logistics_views.equipment_reviews, name="equipment_reviews"),
         path("equipment/<int:issue_pk>/review/", logistics_views.review_deduction_view, name="review_deduction"),
     ]
+    if getattr(settings, "EQUIPMENT_STOCK_LEDGER_ENABLED", False):
+        app_routes += [
+            path("equipment/stock/", logistics_views.equipment_stock, name="equipment_stock"),
+            path(
+                "equipment/stock/receive/", logistics_views.equipment_stock_receive,
+                name="equipment_stock_receive",
+            ),
+            path(
+                "equipment/stock/adjust/", logistics_views.equipment_stock_adjust,
+                name="equipment_stock_adjust",
+            ),
+        ]
 
 if _feature_on("logistics", "transport"):
     from features.logistics import views as logistics_views

@@ -29,6 +29,25 @@ def positive_amount(value) -> Decimal:
     return amount
 
 
+def normalize_source_amount(kind, value) -> Decimal:
+    """Validate workbook-facing signs and return a positive storage magnitude."""
+    amount = Decimal(value or 0)
+    if kind == FinanceCategoryKind.COST:
+        if amount > 0:
+            raise FinanceError("Costs must be entered as negative amounts.")
+        return abs(amount)
+    if kind == FinanceCategoryKind.REVENUE:
+        if amount < 0:
+            raise FinanceError("Revenues must be entered as positive amounts.")
+        return amount
+    raise FinanceError("Unknown finance category kind.")
+
+
+def signed_amount(kind, amount) -> Decimal:
+    magnitude = positive_amount(amount)
+    return -magnitude if kind == FinanceCategoryKind.COST else magnitude
+
+
 @transaction.atomic
 def set_line_item(month, category, amount, *, actor=None):
     """Enter/update one line-item amount (positive) on a month. Does not
@@ -108,12 +127,12 @@ def reopen_month(month, *, reason, actor=None):
 def project_totals(year=None):
     """Per-project results (revenue, cost, net) — dynamic over all months or one
     year. Costs/revenues never hardcoded; every project is included."""
-    qs = FinancialMonth.objects.all()
+    qs = FinancialMonth.objects.filter(project__financial_reporting_eligible=True)
     if year is not None:
         qs = qs.filter(year=year)
     rows = []
     for r in (
-        qs.values("project_id", "project__name", "project__code")
+        qs.values("project_id", "project__name", "project__code", "project__region")
         .annotate(revenue=Sum("revenue"), cost=Sum("cost"))
         .order_by("project__name")
     ):
@@ -121,7 +140,8 @@ def project_totals(year=None):
         cost = r["cost"] or Decimal("0")
         rows.append({
             "project_id": r["project_id"], "name": r["project__name"],
-            "code": r["project__code"], "revenue": rev, "cost": cost, "net": rev - cost,
+            "code": r["project__code"], "region": r["project__region"],
+            "revenue": rev, "cost": cost, "net": rev - cost,
         })
     return rows
 
@@ -130,7 +150,7 @@ def yearly_totals():
     """Company results rolled up per year (newest first)."""
     rows = []
     for r in (
-        FinancialMonth.objects.values("year")
+        FinancialMonth.objects.filter(project__financial_reporting_eligible=True).values("year")
         .annotate(revenue=Sum("revenue"), cost=Sum("cost"))
         .order_by("-year")
     ):
@@ -161,10 +181,30 @@ def record_financial_month(project, year, month, revenue, cost, *, actor=None, n
 def company_totals(year=None):
     """Dynamic grand totals over every project/month (never hardcoded). Pass
     ``year`` to scope to a single year for the yearly rollup."""
-    qs = FinancialMonth.objects.all()
+    qs = FinancialMonth.objects.filter(project__financial_reporting_eligible=True)
     if year is not None:
         qs = qs.filter(year=year)
     agg = qs.aggregate(revenue=Sum("revenue"), cost=Sum("cost"))
     revenue = agg["revenue"] or Decimal("0")
     cost = agg["cost"] or Decimal("0")
     return {"revenue": revenue, "cost": cost, "net": revenue - cost}
+
+
+def regional_totals(year=None):
+    """Workbook-aligned roll-up by the project's configurable region."""
+    qs = FinancialMonth.objects.filter(project__financial_reporting_eligible=True)
+    if year is not None:
+        qs = qs.filter(year=year)
+    rows = []
+    for row in qs.values("project__region").annotate(
+        revenue=Sum("revenue"), cost=Sum("cost")
+    ).order_by("project__region"):
+        revenue = row["revenue"] or Decimal("0")
+        cost = row["cost"] or Decimal("0")
+        rows.append({
+            "region": row["project__region"] or "Unassigned",
+            "revenue": revenue,
+            "cost": -cost,
+            "net": revenue - cost,
+        })
+    return rows

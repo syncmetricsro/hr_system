@@ -51,6 +51,8 @@ FEATURE_FLAGS = {
     "payslips": True,             # encrypted payslip email (ADR 0023, Stage C5)
 }
 
+EQUIPMENT_STOCK_LEDGER_ENABLED = False
+
 # Bilingual SK/HU (confirmed); SK default pending confirmation (C-Q8).
 LANGUAGES = [
     ("sk", "Slovenčina"),

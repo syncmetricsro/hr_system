@@ -8,7 +8,7 @@ from django.utils.translation import gettext
 from core.audit.models import AuditEvent
 from core.people.models import LifecycleStatus, Person
 from core.projects.models import Project, TrialAssignment
-from features.logistics.models import Accommodation, Room, TransportWeek
+from features.logistics.models import Accommodation, Room
 from features.logistics.services import assign_room
 
 pytestmark = [pytest.mark.django_db, pytest.mark.jober_only]
@@ -103,37 +103,6 @@ def test_manager_edits_pending_trial_with_old_and_new_audit(client, operations):
     assert event.metadata["new"]["project"] == "OTHER"
 
 
-def test_transport_workspace_create_duplicate_and_edit(client, operations):
-    _manager, coordinator, _recruiter, project, _other, _person = operations
-    client.force_login(coordinator)
-    payload = {
-        "project": project.pk, "week_start": "2026-07-13",
-        "headcount": 12, "note": "Morning bus",
-    }
-    assert client.post(reverse("transport_create"), payload).status_code == 302
-    assert client.post(reverse("transport_create"), payload).status_code == 400
-    week = TransportWeek.objects.get()
-    response = client.post(reverse("transport_edit", args=[week.pk]), {
-        **payload, "headcount": 15, "note": "Two buses",
-    })
-    assert response.status_code == 302
-    week.refresh_from_db()
-    assert week.headcount == 15 and week.note == "Two buses"
-    event = AuditEvent.objects.get(action="transport.week_updated")
-    assert event.metadata["old"]["headcount"] == 12
-    assert event.metadata["new"]["headcount"] == 15
-
-
-def test_coordinator_transport_is_scoped_to_responsible_projects(client, operations):
-    _manager, coordinator, _recruiter, _project, other, _person = operations
-    client.force_login(coordinator)
-    response = client.post(reverse("transport_create"), {
-        "project": other.pk, "week_start": "2026-07-13", "headcount": 3, "note": "",
-    })
-    assert response.status_code == 400
-    assert not TransportWeek.objects.exists()
-
-
 def test_manager_creates_location_and_room_but_coordinator_cannot(client, operations):
     manager, coordinator, _recruiter, _project, _other, _person = operations
     client.force_login(coordinator)
@@ -174,11 +143,3 @@ def test_occupied_room_cannot_be_deactivated_or_shrunk(client, operations):
     assert response.status_code == 200
     accommodation.refresh_from_db()
     assert accommodation.is_active
-
-
-def test_transport_filters_ignore_invalid_dates(client, operations):
-    manager, _coordinator, _recruiter, _project, _other, _person = operations
-    client.force_login(manager)
-    response = client.get(reverse("transport_trends"), {"week_from": "2026-02-31"})
-    assert response.status_code == 200
-    assert response.context["week_from"] == ""

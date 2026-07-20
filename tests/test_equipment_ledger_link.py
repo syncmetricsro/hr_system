@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 from decimal import Decimal
+from datetime import date
+from uuid import uuid4
 
 import pytest
 from django.utils import translation
@@ -8,7 +10,9 @@ from django.utils import translation
 from core.people.models import Person
 from features.advances.models import EntryType, LedgerEntry, PayEffect
 from features.logistics.models import EquipmentItem
-from features.logistics.services import flag_unreturned, issue_equipment, review_deduction
+from features.logistics.services import (
+    flag_unreturned, issue_equipment, receive_stock, review_deduction,
+)
 
 pytestmark = pytest.mark.django_db
 
@@ -24,7 +28,12 @@ def manager(django_user_model):
 def flagged_issue(manager):
     person = Person.objects.create(first_name="Eq", last_name="Worker")
     item = EquipmentItem.objects.create(name="Jacket", size="L", unit_price=Decimal("25.00"))
-    issue = issue_equipment(person, item, 2, actor=manager)
+    receive_stock(
+        received_on=date.today(), operation_key=uuid4(),
+        lines=[{"item": item, "quantity": 2, "total_value": Decimal("50.00")}],
+        actor=manager,
+    )
+    issue = issue_equipment(person, item, 2, actor=manager, operation_key=uuid4())
     return flag_unreturned(issue, actor=manager)
 
 

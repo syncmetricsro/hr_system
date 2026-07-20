@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-17 11:24+0200\n"
+"POT-Creation-Date: 2026-07-20 17:12+0200\n"
 "Language: uk\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -106,12 +106,12 @@ msgid "Compliance"
 msgstr "Відповідність"
 
 #: clients/corvinum_eu/templates/layouts/base.html:53
-#: templates/layouts/base.html:57 templates/pages/ledger.html:8
+#: templates/layouts/base.html:59 templates/pages/ledger.html:8
 msgid "Ledger"
 msgstr "Книга"
 
 #: clients/corvinum_eu/templates/layouts/base.html:56
-#: templates/layouts/base.html:60 templates/pages/payslips.html:4
+#: templates/layouts/base.html:62 templates/pages/payslips.html:4
 #: templates/pages/payslips.html:9
 msgid "Payslips"
 msgstr "Розрахункові листи"
@@ -122,20 +122,20 @@ msgid "Reviews"
 msgstr "Перевірки"
 
 #: clients/corvinum_eu/templates/layouts/base.html:61
-#: templates/panels/logistics_equipment.html:44
+#: templates/panels/logistics_equipment.html:49
 msgid "Manage equipment catalogue"
 msgstr "Керувати каталогом спорядження"
 
 #: clients/corvinum_eu/templates/layouts/base.html:61
 #: templates/pages/equipment_catalog.html:4
 #: templates/pages/equipment_catalog.html:9
-#: templates/pages/equipment_catalog.html:27
+#: templates/pages/equipment_catalog.html:28
 #: templates/pages/equipment_form.html:8
 msgid "Equipment catalogue"
 msgstr "Каталог спорядження"
 
 #: clients/corvinum_eu/templates/layouts/base.html:64
-#: templates/layouts/base.html:51 templates/pages/blacklist_queue.html:4
+#: templates/layouts/base.html:53 templates/pages/blacklist_queue.html:4
 #: templates/panels/blacklist_banner.html:3
 #: templates/panels/blacklist_case.html:5
 msgid "Blacklist"
@@ -152,12 +152,12 @@ msgid "Audit"
 msgstr "Аудит"
 
 #: clients/corvinum_eu/templates/layouts/base.html:85
-#: templates/layouts/base.html:71
+#: templates/layouts/base.html:73
 msgid "Language"
 msgstr "Мова"
 
 #: clients/corvinum_eu/templates/layouts/base.html:95
-#: templates/layouts/base.html:83
+#: templates/layouts/base.html:85
 msgid "Sign out"
 msgstr "Вийти"
 
@@ -222,16 +222,18 @@ msgid "confirmed"
 msgstr "підтверджено"
 
 #: core/accounts/models.py:85 core/audit/models.py:33 core/people/models.py:108
-#: core/projects/models.py:29 core/projects/models.py:85
-#: core/projects/models.py:144 core/projects/models.py:186
+#: core/projects/models.py:30 core/projects/models.py:86
+#: core/projects/models.py:145 core/projects/models.py:187
 #: features/advances/models.py:92 features/blacklist/models.py:66
 #: features/blacklist/models.py:114 features/checklists/models.py:23
 #: features/compliance/models.py:17 features/feedback/models.py:26
 #: features/feedback/models.py:48 features/finance/models.py:39
-#: features/intake/models.py:32 features/logistics/models.py:32
-#: features/logistics/models.py:98 features/logistics/models.py:130
-#: features/logistics/models.py:213 features/messaging/models.py:17
-#: features/messaging/models.py:45 features/payslips/models.py:35
+#: features/intake/models.py:32 features/logistics/models.py:33
+#: features/logistics/models.py:58 features/logistics/models.py:132
+#: features/logistics/models.py:164 features/logistics/models.py:250
+#: features/logistics/models.py:310 features/logistics/models.py:389
+#: features/messaging/models.py:17 features/messaging/models.py:45
+#: features/payslips/models.py:35
 msgid "created"
 msgstr "створено"
 
@@ -263,7 +265,7 @@ msgstr "Недійсний код."
 msgid "Two-factor authentication enabled."
 msgstr "Двофакторну автентифікацію ввімкнено."
 
-#: core/audit/models.py:26
+#: core/audit/models.py:26 features/logistics/models.py:307
 msgid "actor"
 msgstr "виконавець"
 
@@ -280,7 +282,7 @@ msgstr "тип цілі"
 msgid "target id"
 msgstr "ідентифікатор цілі"
 
-#: core/audit/models.py:31
+#: core/audit/models.py:31 features/logistics/models.py:309
 msgid "reason"
 msgstr "причина"
 
@@ -312,7 +314,7 @@ msgstr "Змінену ставку збережено."
 msgid "Room rate saved"
 msgstr "Ставку кімнати збережено."
 
-#: core/audit/presentation.py:17 core/people/services.py:67
+#: core/audit/presentation.py:17 core/people/services.py:97
 msgid "Assigned to project"
 msgstr "Призначено на проєкт"
 
@@ -373,7 +375,7 @@ msgstr "Перевірку утримання за спорядження заф
 msgid "Equipment flagged as unreturned"
 msgstr "Спорядження позначено як неповернене"
 
-#: core/audit/presentation.py:32 core/people/services.py:76
+#: core/audit/presentation.py:32 core/people/services.py:106
 msgid "Equipment issued"
 msgstr "Спорядження видано"
 
@@ -405,7 +407,7 @@ msgstr "Фінансовий місяць знову відкрито"
 msgid "Worker feedback received"
 msgstr "Отримано відгук працівника"
 
-#: core/audit/presentation.py:40 core/people/services.py:86
+#: core/audit/presentation.py:40 core/people/services.py:116
 msgid "Intake completed"
 msgstr "Прийом завершено"
 
@@ -449,7 +451,7 @@ msgstr "Особу додано."
 msgid "Exit completed"
 msgstr "Вихід завершено."
 
-#: core/audit/presentation.py:51 core/people/services.py:94
+#: core/audit/presentation.py:51 core/people/services.py:124
 msgid "Status changed"
 msgstr "Статус змінено"
 
@@ -465,7 +467,7 @@ msgstr "Особу оновлено."
 msgid "Readiness saved"
 msgstr "Готовність збережено."
 
-#: core/audit/presentation.py:55 core/people/services.py:70
+#: core/audit/presentation.py:55 core/people/services.py:100
 msgid "Room assigned"
 msgstr "Кімнату призначено"
 
@@ -485,7 +487,7 @@ msgstr "Тиждень транспорту записано."
 msgid "Trial outcome recorded"
 msgstr "Результат пробного дня записано."
 
-#: core/audit/presentation.py:60 core/people/services.py:58
+#: core/audit/presentation.py:60 core/people/services.py:88
 msgid "Trial scheduled"
 msgstr "Пробний день заплановано"
 
@@ -555,62 +557,69 @@ msgstr "Військова служба"
 msgid "Other"
 msgstr "Інше"
 
-#: core/people/forms.py:26 features/intake/catalog_i18n.py:13
+#: core/people/forms.py:27 features/intake/catalog_i18n.py:13
 msgid "First name"
 msgstr "Ім’я"
 
-#: core/people/forms.py:27 features/intake/catalog_i18n.py:14
+#: core/people/forms.py:28 features/intake/catalog_i18n.py:14
 msgid "Last name"
 msgstr "Прізвище"
 
-#: core/people/forms.py:28 features/intake/catalog_i18n.py:18
+#: core/people/forms.py:29 features/intake/catalog_i18n.py:18
 #: features/intake/models.py:16 templates/pages/login.html:17
 msgid "Email"
 msgstr "Електронна пошта"
 
-#: core/people/forms.py:29 features/intake/catalog_i18n.py:17
-#: templates/pages/person_detail.html:143
+#: core/people/forms.py:30 features/intake/catalog_i18n.py:17
+#: templates/pages/person_detail.html:145
 msgid "Phone"
 msgstr "Телефон"
 
-#: core/people/forms.py:30 features/intake/catalog_i18n.py:19
-#: templates/pages/person_detail.html:144
+#: core/people/forms.py:31 features/intake/catalog_i18n.py:19
+#: templates/pages/person_detail.html:146
 msgid "Address"
 msgstr "Адреса"
 
-#: core/people/forms.py:31 features/intake/catalog_i18n.py:20
-#: templates/pages/person_detail.html:145
+#: core/people/forms.py:32 features/intake/catalog_i18n.py:20
+#: templates/pages/person_detail.html:147
 msgid "Nationality"
 msgstr "Громадянство"
 
-#: core/people/forms.py:32 features/intake/catalog_i18n.py:21
+#: core/people/forms.py:33 features/intake/catalog_i18n.py:21
 msgid "Preferred language"
 msgstr "Бажана мова"
 
-#: core/people/forms.py:33 features/intake/catalog_i18n.py:15
-#: templates/pages/person_detail.html:157
+#: core/people/forms.py:34 features/intake/catalog_i18n.py:15
+#: templates/pages/person_detail.html:159
 msgid "Date of birth"
 msgstr "Дата народження"
 
-#: core/people/forms.py:34 features/intake/catalog_i18n.py:16
-#: templates/pages/person_detail.html:158
+#: core/people/forms.py:35 features/intake/catalog_i18n.py:16
+#: templates/pages/person_detail.html:160
 msgid "Place of birth"
 msgstr "Місце народження"
 
-#: core/people/forms.py:35
+#: core/people/forms.py:36
 msgid "Has disability"
 msgstr "Має інвалідність"
 
-#: core/people/forms.py:36 features/intake/catalog_i18n.py:23
+#: core/people/forms.py:37 features/intake/catalog_i18n.py:23
 msgid "Disability type"
 msgstr "Тип інвалідності"
 
+#: core/people/forms.py:61
+#, fuzzy
+#| msgid "Entry medical date cannot be in the future."
+msgid "Date of birth cannot be in the future."
+msgstr "Дата вступного медогляду не може бути в майбутньому."
+
 # --- lifecycle status labels ---
 #: core/people/models.py:12 templates/pages/dashboard.html:21
+#: templates/panels/logistics_equipment.html:42
 msgid "Available"
 msgstr "Доступний"
 
-#: core/people/models.py:13 templates/pages/person_detail.html:42
+#: core/people/models.py:13 templates/pages/person_detail.html:44
 msgid "Trial day"
 msgstr "Пробний день"
 
@@ -618,12 +627,12 @@ msgstr "Пробний день"
 msgid "Working"
 msgstr "Працює"
 
-#: core/people/models.py:15 templates/pages/accommodation_detail.html:25
+#: core/people/models.py:15 templates/pages/accommodation_detail.html:35
 #: templates/pages/accommodation_list.html:20
 #: templates/pages/accommodation_list.html:33
-#: templates/pages/equipment_catalog.html:18
-#: templates/pages/equipment_catalog.html:32
-#: templates/pages/person_detail.html:198 templates/pages/project_detail.html:8
+#: templates/pages/equipment_catalog.html:19
+#: templates/pages/equipment_catalog.html:33
+#: templates/pages/person_detail.html:200 templates/pages/project_detail.html:8
 #: templates/pages/project_list.html:19 templates/pages/project_list.html:35
 msgid "Inactive"
 msgstr "Неактивний"
@@ -635,15 +644,15 @@ msgstr "У чорному списку"
 #: core/people/models.py:38 features/blacklist/models.py:16
 #: features/checklists/models.py:37 features/feedback/models.py:20
 #: features/finance/models.py:85 features/intake/models.py:66
-#: features/logistics/models.py:47
+#: features/logistics/models.py:77
 msgid "label"
 msgstr "позначка"
 
-#: core/people/models.py:39 core/projects/models.py:16
+#: core/people/models.py:39 core/projects/models.py:17
 #: features/blacklist/models.py:17 features/blacklist/models.py:113
 #: features/checklists/models.py:22 features/feedback/models.py:25
-#: features/finance/models.py:88 features/logistics/models.py:30
-#: features/logistics/models.py:49 features/logistics/models.py:129
+#: features/finance/models.py:88 features/logistics/models.py:31
+#: features/logistics/models.py:79 features/logistics/models.py:163
 #: features/messaging/models.py:13
 msgid "active"
 msgstr "активний"
@@ -682,7 +691,7 @@ msgstr "місце народження"
 msgid "phone"
 msgstr "телефон"
 
-#: core/people/models.py:63 features/logistics/models.py:29
+#: core/people/models.py:63 features/logistics/models.py:30
 msgid "address"
 msgstr "адреса"
 
@@ -734,18 +743,18 @@ msgstr "архівовано о"
 msgid "search name"
 msgstr "пошукове ім’я"
 
-#: core/people/models.py:109 core/projects/models.py:30
-#: core/projects/models.py:86 core/projects/models.py:187
+#: core/people/models.py:109 core/projects/models.py:31
+#: core/projects/models.py:87 core/projects/models.py:188
 #: features/blacklist/models.py:67 features/finance/models.py:40
 msgid "updated"
 msgstr "оновлено"
 
-#: core/people/models.py:112 core/projects/models.py:57
-#: core/projects/models.py:123 core/projects/models.py:169
+#: core/people/models.py:112 core/projects/models.py:58
+#: core/projects/models.py:124 core/projects/models.py:170
 #: features/advances/models.py:61 features/blacklist/models.py:45
 #: features/blacklist/models.py:105 features/checklists/models.py:57
 #: features/compliance/models.py:12 features/intake/models.py:106
-#: features/logistics/models.py:82 features/logistics/models.py:162
+#: features/logistics/models.py:112 features/logistics/models.py:196
 #: features/messaging/models.py:35 features/payslips/models.py:19
 msgid "person"
 msgstr "особа"
@@ -754,47 +763,65 @@ msgstr "особа"
 msgid "people"
 msgstr "особи"
 
-#: core/people/services.py:28 templates/pages/people_list.html:29
+#: core/people/services.py:30
+msgid "Under 18"
+msgstr "Молодше 18 років"
+
+#: core/people/services.py:31
+msgid "This person is under 18. Review the applicable employment requirements."
+msgstr "Цій особі менше 18 років. Перевірте відповідні умови працевлаштування."
+
+#: core/people/services.py:36
+#, fuzzy
+#| msgid "Approve charge"
+msgid "Approaching age 18"
+msgstr "Затвердити стягнення"
+
+#: core/people/services.py:37
+msgid "This person turns 18 within 30 days."
+msgstr "Цій особі виповниться 18 років протягом 30 днів."
+
+#: core/people/services.py:58 templates/pages/people_list.html:29
 msgid "No reason"
 msgstr "Без причини"
 
-#: core/people/services.py:62
+#: core/people/services.py:92
 msgid "Trial outcome"
 msgstr "Результат пробного дня"
 
-#: core/people/services.py:82
+#: core/people/services.py:112
 msgid "Readiness submitted"
 msgstr "Готовність подано"
 
-#: core/people/views.py:73
+#: core/people/views.py:98
 msgid "Person added."
 msgstr "Особу додано."
 
-#: core/people/views.py:83 templates/pages/people_list.html:12
+#: core/people/views.py:110 templates/pages/people_list.html:12
 msgid "Add person"
 msgstr "Додати особу"
 
-#: core/people/views.py:95
+#: core/people/views.py:124
 msgid "Person updated."
 msgstr "Особу оновлено."
 
-#: core/people/views.py:101
+#: core/people/views.py:132
 msgid "Edit person"
 msgstr "Редагувати особу"
 
-#: core/people/views.py:125 templates/pages/person_detail.html:119
+#: core/people/views.py:158 templates/pages/person_detail.html:121
 msgid "Entry medical date"
 msgstr "Дата вхідного медогляду"
 
-#: core/people/views.py:125
+#: core/people/views.py:158
 msgid "Review this future date."
 msgstr "Перевірте цю майбутню дату."
 
-#: core/people/views.py:177
+#: core/people/views.py:222
 msgid "Person archived. Blacklist protection remains in place."
 msgstr "Особу архівовано. Захист чорного списку залишається чинним."
 
-#: core/people/views.py:187
+#: core/people/views.py:232
 msgid "Recycled to Available."
 msgstr "Повернено до доступних."
 
@@ -809,7 +836,7 @@ msgstr "Можна планувати лише доступних кандида
 #: core/projects/forms.py:23 core/projects/forms.py:43
 #: templates/pages/feedback_inbox.html:25
 #: templates/pages/finance_summary.html:34
-#: templates/pages/person_detail.html:28 templates/pages/project_detail.html:8
+#: templates/pages/person_detail.html:30 templates/pages/project_detail.html:8
 #: templates/pages/transport_trends.html:31
 #: templates/pages/transport_trends.html:44
 #: templates/pages/transport_trends.html:64
@@ -818,18 +845,18 @@ msgid "Project"
 msgstr "Проєкт"
 
 #: core/projects/forms.py:25 core/projects/forms.py:45
-#: templates/pages/person_detail.html:33 templates/pages/person_detail.html:46
+#: templates/pages/person_detail.html:35 templates/pages/person_detail.html:48
 msgid "Arrival time"
 msgstr "Час прибуття"
 
 #: core/projects/forms.py:30 core/projects/forms.py:50
-#: features/logistics/forms.py:29
+#: features/logistics/forms.py:32
 msgid "Operational note"
 msgstr "Операційна примітка"
 
 #: core/projects/models.py:12 features/checklists/models.py:18
 #: features/compliance/models.py:14 features/intake/models.py:25
-#: features/logistics/models.py:28 features/logistics/models.py:124
+#: features/logistics/models.py:29 features/logistics/models.py:158
 #: features/messaging/models.py:11
 msgid "name"
 msgstr "назва"
@@ -846,307 +873,311 @@ msgstr "код"
 msgid "office"
 msgstr "офіс"
 
-#: core/projects/models.py:22
+#: core/projects/models.py:16
+msgid "region"
+msgstr "регіон"
+
+#: core/projects/models.py:23
 msgid "responsible coordinators"
 msgstr "відповідальні координатори"
 
-#: core/projects/models.py:24 features/logistics/models.py:31
+#: core/projects/models.py:25 features/logistics/models.py:32
 msgid "notes"
 msgstr "нотатки"
 
-#: core/projects/models.py:26
+#: core/projects/models.py:27
 msgid "financial reporting eligible"
 msgstr "включено до фінансової звітності"
 
-#: core/projects/models.py:33 core/projects/models.py:63
-#: core/projects/models.py:126 core/projects/models.py:172
+#: core/projects/models.py:34 core/projects/models.py:64
+#: core/projects/models.py:127 core/projects/models.py:173
 #: features/feedback/models.py:23 features/finance/models.py:27
-#: features/logistics/models.py:204
+#: features/logistics/models.py:380
 msgid "project"
 msgstr "проєкт"
 
-#: core/projects/models.py:34
+#: core/projects/models.py:35
 msgid "projects"
 msgstr "проєкти"
 
-#: core/projects/models.py:42 features/logistics/models.py:76
-#: templates/pages/accommodation_detail.html:25
+#: core/projects/models.py:43 features/logistics/models.py:106
+#: templates/pages/accommodation_detail.html:35
 #: templates/pages/accommodation_list.html:19
-#: templates/pages/equipment_catalog.html:17
+#: templates/pages/equipment_catalog.html:18
 #: templates/pages/project_detail.html:8 templates/pages/project_list.html:18
 #: templates/pages/project_list.html:35
 msgid "Active"
 msgstr "Активний"
 
-#: core/projects/models.py:43 features/logistics/models.py:77
+#: core/projects/models.py:44 features/logistics/models.py:107
 msgid "Ended"
 msgstr "Завершено"
 
-#: core/projects/models.py:44 core/projects/models.py:108
+#: core/projects/models.py:45 core/projects/models.py:109
 #: features/advances/models.py:30
 msgid "Cancelled"
 msgstr "Скасовано"
 
-#: core/projects/models.py:66 features/blacklist/models.py:48
+#: core/projects/models.py:67 features/blacklist/models.py:48
 #: features/intake/models.py:27 features/intake/models.py:108
-#: features/logistics/models.py:87 features/logistics/models.py:168
+#: features/logistics/models.py:117 features/logistics/models.py:202
 #: features/messaging/models.py:39
 msgid "status"
 msgstr "статус"
 
-#: core/projects/models.py:71 features/logistics/models.py:88
+#: core/projects/models.py:72 features/logistics/models.py:118
 msgid "start date"
 msgstr "дата початку"
 
-#: core/projects/models.py:72 features/logistics/models.py:89
+#: core/projects/models.py:73 features/logistics/models.py:119
 msgid "end date"
 msgstr "дата завершення"
 
-#: core/projects/models.py:79 core/projects/models.py:137
-#: features/logistics/models.py:96
+#: core/projects/models.py:80 core/projects/models.py:138
+#: features/logistics/models.py:130
 msgid "assigned by"
 msgstr "призначив"
 
-#: core/projects/models.py:81
+#: core/projects/models.py:82
 msgid "assignment reason"
 msgstr "причина призначення"
 
-#: core/projects/models.py:83
+#: core/projects/models.py:84
 msgid "coordinator snapshot"
 msgstr "знімок координаторів"
 
-#: core/projects/models.py:89
+#: core/projects/models.py:90
 msgid "project assignment"
 msgstr "призначення на проєкт"
 
-#: core/projects/models.py:90
+#: core/projects/models.py:91
 msgid "project assignments"
 msgstr "призначення на проєкти"
 
-#: core/projects/models.py:106
+#: core/projects/models.py:107
 msgid "Scheduled"
 msgstr "Заплановано"
 
-#: core/projects/models.py:107 features/intake/models.py:97
+#: core/projects/models.py:108 features/intake/models.py:97
 msgid "Completed"
 msgstr "Виконано"
 
-#: core/projects/models.py:112
+#: core/projects/models.py:113
 msgid "Pending"
 msgstr "Очікує"
 
-#: core/projects/models.py:113 templates/pages/person_detail.html:53
+#: core/projects/models.py:114 templates/pages/person_detail.html:55
 msgid "Pass"
 msgstr "Пройшов"
 
-#: core/projects/models.py:114 templates/pages/person_detail.html:57
+#: core/projects/models.py:115 templates/pages/person_detail.html:59
 msgid "Fail"
 msgstr "Не пройшов"
 
-#: core/projects/models.py:115 templates/pages/person_detail.html:61
+#: core/projects/models.py:116 templates/pages/person_detail.html:63
 msgid "No-show"
 msgstr "Не з’явився"
 
-#: core/projects/models.py:128
+#: core/projects/models.py:129
 msgid "scheduled date"
 msgstr "запланована дата"
 
-#: core/projects/models.py:131
+#: core/projects/models.py:132
 msgid "scheduled for"
 msgstr "час прибуття"
 
-#: core/projects/models.py:132
+#: core/projects/models.py:133
 msgid "state"
 msgstr "стан"
 
-#: core/projects/models.py:133
+#: core/projects/models.py:134
 msgid "outcome"
 msgstr "результат"
 
-#: core/projects/models.py:134 features/advances/models.py:83
+#: core/projects/models.py:135 features/advances/models.py:83
 #: features/checklists/models.py:68 features/finance/models.py:33
-#: features/logistics/models.py:208 features/payslips/models.py:30
+#: features/logistics/models.py:245 features/logistics/models.py:384
+#: features/payslips/models.py:30
 msgid "note"
 msgstr "нотатка"
 
-#: core/projects/models.py:141
+#: core/projects/models.py:142
 msgid "outcome recorded by"
 msgstr "результат записав"
 
-#: core/projects/models.py:143
+#: core/projects/models.py:144
 msgid "outcome recorded at"
 msgstr "результат записано о"
 
-#: core/projects/models.py:147
+#: core/projects/models.py:148
 msgid "trial assignment"
 msgstr "пробний день"
 
-#: core/projects/models.py:148
+#: core/projects/models.py:149
 msgid "trial assignments"
 msgstr "пробні дні"
 
-#: core/projects/models.py:156 templates/pages/person_detail.html:89
-#: templates/pages/person_detail.html:95 templates/pages/person_detail.html:101
-#: templates/pages/person_detail.html:111
+#: core/projects/models.py:157 templates/pages/person_detail.html:91
+#: templates/pages/person_detail.html:97 templates/pages/person_detail.html:103
+#: templates/pages/person_detail.html:113
 msgid "Incomplete"
 msgstr "Незавершено"
 
-#: core/projects/models.py:157 templates/pages/person_detail.html:90
-#: templates/pages/person_detail.html:96 templates/pages/person_detail.html:102
-#: templates/pages/person_detail.html:112
+#: core/projects/models.py:158 templates/pages/person_detail.html:92
+#: templates/pages/person_detail.html:98 templates/pages/person_detail.html:104
+#: templates/pages/person_detail.html:114
 msgid "Complete"
 msgstr "Завершено"
 
-#: core/projects/models.py:158 templates/pages/person_detail.html:103
-#: templates/pages/person_detail.html:113
+#: core/projects/models.py:159 templates/pages/person_detail.html:105
+#: templates/pages/person_detail.html:115
 msgid "Not applicable"
 msgstr "Не застосовується"
 
-#: core/projects/models.py:174
+#: core/projects/models.py:175
 msgid "medical"
 msgstr "медичне"
 
-#: core/projects/models.py:175
+#: core/projects/models.py:176
 msgid "gear"
 msgstr "спорядження"
 
-#: core/projects/models.py:176 features/logistics/models.py:35
-#: features/logistics/models.py:45
+#: core/projects/models.py:177 features/logistics/models.py:36
+#: features/logistics/models.py:47 features/logistics/models.py:75
 msgid "accommodation"
 msgstr "житло"
 
-#: core/projects/models.py:177
+#: core/projects/models.py:178
 msgid "transport"
 msgstr "транспорт"
 
-#: core/projects/models.py:178
+#: core/projects/models.py:179
 msgid "accommodation N/A reason"
 msgstr "причина незастосовності житла"
 
 # --- transport trends ---
-#: core/projects/models.py:179
+#: core/projects/models.py:180
 msgid "transport N/A reason"
 msgstr "причина незастосовності транспорту"
 
-#: core/projects/models.py:180
+#: core/projects/models.py:181
 msgid "entry medical date"
 msgstr "дата вступного медогляду"
 
-#: core/projects/models.py:183
+#: core/projects/models.py:184
 msgid "submitted by"
 msgstr "подав"
 
-#: core/projects/models.py:185
+#: core/projects/models.py:186
 msgid "submitted at"
 msgstr "подано о"
 
-#: core/projects/models.py:190
+#: core/projects/models.py:191
 msgid "readiness record"
 msgstr "запис готовності"
 
-#: core/projects/models.py:191
+#: core/projects/models.py:192
 msgid "readiness records"
 msgstr "записи готовності"
 
-#: core/projects/services.py:115
+#: core/projects/services.py:116
 msgid "Only pending trials can be edited."
 msgstr "Редагувати можна лише очікувані пробні дні."
 
-#: core/projects/services.py:117
+#: core/projects/services.py:118
 msgid "Trials can only be scheduled for active projects."
 msgstr "Пробні дні можна планувати лише для активних проєктів."
 
-#: core/projects/services.py:178 features/advances/models.py:38
-#: features/finance/catalog_i18n.py:20 templates/pages/person_detail.html:87
+#: core/projects/services.py:179 features/advances/models.py:38
+#: features/finance/catalog_i18n.py:20 templates/pages/person_detail.html:89
 msgid "Medical"
 msgstr "Медичне"
 
-#: core/projects/services.py:178
+#: core/projects/services.py:179
 msgid "Medical clearance is incomplete."
 msgstr "Медичний допуск не завершено."
 
-#: core/projects/services.py:179 templates/pages/person_detail.html:93
+#: core/projects/services.py:180 templates/pages/person_detail.html:95
 msgid "Gear"
 msgstr "Спорядження"
 
-#: core/projects/services.py:179
+#: core/projects/services.py:180
 msgid "Required equipment is incomplete."
 msgstr "Необхідне спорядження не укомплектовано."
 
-#: core/projects/services.py:180 features/finance/catalog_i18n.py:18
+#: core/projects/services.py:181 features/finance/catalog_i18n.py:18
 #: features/finance/models.py:67 templates/layouts/base.html:40
-#: templates/pages/accommodation_costs.html:8
-#: templates/pages/accommodation_costs.html:21
+#: templates/pages/accommodation_costs.html:6
 #: templates/pages/accommodation_detail.html:8
 #: templates/pages/accommodation_list.html:4
 #: templates/pages/accommodation_list.html:9
 #: templates/pages/accommodation_list.html:27
-#: templates/pages/person_detail.html:99 templates/pages/room_form.html:7
+#: templates/pages/person_detail.html:101 templates/pages/room_form.html:7
 #: templates/panels/logistics_room.html:4
 msgid "Accommodation"
 msgstr "Проживання"
 
-#: core/projects/services.py:180
+#: core/projects/services.py:181
 msgid "Accommodation is incomplete."
 msgstr "Проживання не забезпечено."
 
-#: core/projects/services.py:181 features/finance/models.py:66
-#: templates/layouts/base.html:42 templates/pages/person_detail.html:109
+#: core/projects/services.py:182 features/finance/models.py:66
+#: templates/layouts/base.html:42 templates/pages/person_detail.html:111
 msgid "Transport"
 msgstr "Транспорт"
 
-#: core/projects/services.py:181
+#: core/projects/services.py:182
 msgid "Transport is incomplete."
 msgstr "Транспорт не забезпечено."
 
-#: core/projects/services.py:194
+#: core/projects/services.py:198
 msgid "A reason is required when this is not applicable."
 msgstr "Якщо це не застосовується, потрібно вказати причину."
 
-#: core/projects/services.py:230
+#: core/projects/services.py:239
 msgid "Entry medical date is invalid."
 msgstr "Дата вступного медогляду недійсна."
 
-#: core/projects/services.py:232
+#: core/projects/services.py:241
 msgid "Entry medical date cannot be in the future."
 msgstr "Дата вступного медогляду не може бути в майбутньому."
 
-#: core/projects/services.py:246
+#: core/projects/services.py:255
 msgid ""
 "Cannot activate this worker because no readiness record has been completed."
 msgstr ""
 "Працівника неможливо активувати, оскільки запис готовності не заповнено."
 
-#: core/projects/services.py:250
+#: core/projects/services.py:259
 #, python-format
 msgid "Cannot activate this worker until: %(items)s"
 msgstr "Працівника неможливо активувати, доки не буде виконано: %(items)s"
 
-#: core/projects/views.py:148 core/projects/views.py:195
+#: core/projects/views.py:151 core/projects/views.py:198
 msgid "Trial scheduled."
 msgstr "Пробний день заплановано."
 
-#: core/projects/views.py:170
+#: core/projects/views.py:173
 msgid "Trial updated."
 msgstr "Пробний день оновлено."
 
-#: core/projects/views.py:190
+#: core/projects/views.py:193
 msgid "Review the trial details and try again."
 msgstr "Перевірте дані пробного дня та спробуйте ще раз."
 
-#: core/projects/views.py:210
+#: core/projects/views.py:213
 msgid "Trial outcome recorded."
 msgstr "Результат пробного дня записано."
 
-#: core/projects/views.py:235
+#: core/projects/views.py:241
 msgid "Readiness saved."
 msgstr "Готовність збережено."
 
-#: core/projects/views.py:255
+#: core/projects/views.py:261
 msgid "Exit completed."
 msgstr "Вихід завершено."
 
-#: core/projects/views.py:266
+#: core/projects/views.py:272
 msgid "Activated — now Working."
 msgstr "Активовано — тепер Працює."
 
@@ -1222,6 +1253,7 @@ msgstr "Взуття"
 
 # --- logistics: equipment ---
 #: features/advances/models.py:37 features/finance/models.py:70
+#: templates/pages/equipment_stock.html:7
 #: templates/panels/logistics_equipment.html:4
 msgid "Equipment"
 msgstr "Спорядження"
@@ -1483,14 +1515,18 @@ msgstr "Дівоче прізвище матері (перевірка чорн�
 
 #: features/blacklist/panels.py:67
 msgid "Used only to compute a re-entry check; never stored."
-msgstr "Використовується лише для обчислення перевірки повторного входу; ніколи не зберігається."
+msgstr ""
+"Використовується лише для обчислення перевірки повторного входу; ніколи не "
+"зберігається."
 
 #: features/blacklist/panels.py:102
 #, python-format
 msgid ""
 "Possible blacklist match (%(types)s) — flagged for manager review. "
 "Activation is blocked until resolved."
-msgstr "Можливий збіг із чорним списком (%(types)s) — позначено на розгляд менеджером. Активацію заблоковано до вирішення."
+msgstr ""
+"Можливий збіг із чорним списком (%(types)s) — позначено на розгляд "
+"менеджером. Активацію заблоковано до вирішення."
 
 #: features/blacklist/views.py:51
 msgid "Blacklist case proposed for review."
@@ -1546,7 +1582,9 @@ msgstr "шаблон пункту контрольного списку"
 msgid "checklist item templates"
 msgstr "шаблони пунктів контрольного списку"
 
-#: features/checklists/models.py:60 features/logistics/models.py:165
+#: features/checklists/models.py:60 features/logistics/models.py:199
+#: features/logistics/models.py:266 features/logistics/models.py:289
+#: features/logistics/models.py:346
 msgid "item"
 msgstr "пункт"
 
@@ -1779,7 +1817,8 @@ msgstr "витрати"
 msgid "locked"
 msgstr "заблоковано"
 
-#: features/finance/models.py:37 features/logistics/models.py:211
+#: features/finance/models.py:37 features/logistics/models.py:56
+#: features/logistics/models.py:248 features/logistics/models.py:387
 msgid "recorded by"
 msgstr "записав"
 
@@ -1793,7 +1832,7 @@ msgstr "фінансові місяці"
 
 #: features/finance/models.py:60 templates/pages/finance_month_detail.html:33
 #: templates/pages/finance_summary.html:15
-#: templates/pages/finance_summary.html:48 templates/pages/finance_year.html:15
+#: templates/pages/finance_summary.html:48 templates/pages/finance_year.html:27
 #: templates/panels/finance_company_totals.html:7
 msgid "Cost"
 msgstr "Витрати"
@@ -1801,7 +1840,7 @@ msgstr "Витрати"
 #: features/finance/models.py:61 features/finance/models.py:73
 #: templates/pages/finance_month_detail.html:32
 #: templates/pages/finance_summary.html:14
-#: templates/pages/finance_summary.html:45 templates/pages/finance_year.html:14
+#: templates/pages/finance_summary.html:45 templates/pages/finance_year.html:26
 #: templates/panels/finance_company_totals.html:6
 msgid "Revenue"
 msgstr "Дохід"
@@ -1842,23 +1881,23 @@ msgstr "фінансова позиція"
 msgid "finance line items"
 msgstr "фінансові позиції"
 
-#: features/finance/views.py:91
+#: features/finance/views.py:104
 msgid "Saved and recalculated."
 msgstr "Збережено та перераховано."
 
-#: features/finance/views.py:93 features/finance/views.py:133
+#: features/finance/views.py:106 features/finance/views.py:152
 msgid "Invalid input."
 msgstr "Невірні дані."
 
-#: features/finance/views.py:102
+#: features/finance/views.py:115
 msgid "Month locked."
 msgstr "Місяць заблоковано."
 
-#: features/finance/views.py:112
+#: features/finance/views.py:125
 msgid "Month reopened."
 msgstr "Місяць знову відкрито."
 
-#: features/finance/views.py:131
+#: features/finance/views.py:150
 msgid "Financial month saved."
 msgstr "Фінансовий місяць збережено."
 
@@ -1898,7 +1937,8 @@ msgstr "Довгий текст"
 msgid "Yes/No"
 msgstr "Так/Ні"
 
-#: features/intake/models.py:19 templates/pages/ledger.html:50
+#: features/intake/models.py:19 features/logistics/forms.py:135
+#: templates/pages/equipment_stock.html:46 templates/pages/ledger.html:50
 #: templates/pages/ledger.html:105
 msgid "Date"
 msgstr "Дата"
@@ -2020,7 +2060,7 @@ msgstr "вступ"
 msgid "question"
 msgstr "питання"
 
-#: features/intake/models.py:125
+#: features/intake/models.py:125 features/logistics/models.py:368
 msgid "value"
 msgstr "значення"
 
@@ -2072,149 +2112,380 @@ msgstr "Світловідбивний жилет"
 msgid "Safety helmet"
 msgstr "Захисна каска"
 
-#: features/logistics/forms.py:50
+#: features/logistics/forms.py:53
 msgid "Release all occupants before deactivating this location."
 msgstr "Перед деактивацією цього місця проживання виселіть усіх мешканців."
 
-#: features/logistics/forms.py:67
+#: features/logistics/forms.py:59
+#, fuzzy
+#| msgid "effective date"
+msgid "Effective month"
+msgstr "дата набрання чинності"
+
+#: features/logistics/forms.py:88
 msgid "Capacity cannot be lower than current occupancy."
 msgstr "Місткість не може бути меншою за поточну зайнятість."
 
-#: features/logistics/forms.py:69
+#: features/logistics/forms.py:90
 msgid "Release all occupants before deactivating this room."
 msgstr "Перед деактивацією цієї кімнати виселіть усіх мешканців."
 
-#: features/logistics/models.py:36
+#: features/logistics/forms.py:107
+#, fuzzy
+#| msgid "received"
+msgid "Received on"
+msgstr "отримано"
+
+#: features/logistics/forms.py:108
+msgid "Reference"
+msgstr "Посилання"
+
+#: features/logistics/forms.py:109
+msgid "Supplier"
+msgstr "Постачальник"
+
+#: features/logistics/forms.py:110 templates/pages/ledger.html:38
+#: templates/pages/payslips.html:23 templates/pages/transport_trends.html:44
+#: templates/panels/advances_ledger.html:32
+msgid "Note"
+msgstr "Нотатка"
+
+#: features/logistics/forms.py:114 features/logistics/forms.py:134
+#: templates/pages/equipment_stock.html:45
+#: templates/panels/logistics_equipment.html:41
+msgid "Item"
+msgstr "Позиція"
+
+#: features/logistics/forms.py:115 templates/pages/equipment_stock.html:34
+#: templates/panels/logistics_equipment.html:44
+msgid "Quantity"
+msgstr "Кількість"
+
+#: features/logistics/forms.py:116
+#, fuzzy
+#| msgid "normalized value"
+msgid "Total value"
+msgstr "нормалізоване значення"
+
+#: features/logistics/forms.py:126
+msgid "Complete the item, quantity, and total value."
+msgstr "Заповніть товар, кількість і загальну вартість."
+
+#: features/logistics/forms.py:136 templates/pages/equipment_stock.html:47
+msgid "Quantity adjustment"
+msgstr "Коригування кількості"
+
+#: features/logistics/forms.py:137 templates/pages/equipment_stock.html:48
+msgid "Value for positive adjustment"
+msgstr "Вартість для додатного коригування"
+
+#: features/logistics/forms.py:138 templates/pages/audit_log.html:42
+#: templates/pages/blacklist_queue.html:23
+#: templates/pages/blacklist_queue.html:28
+#: templates/pages/equipment_stock.html:49
+#: templates/pages/finance_month_detail.html:19
+#: templates/pages/person_detail.html:202
+#: templates/panels/blacklist_case.html:11
+#: templates/panels/blacklist_case.html:19
+#: templates/panels/blacklist_case.html:26
+#: templates/panels/blacklist_case.html:37
+msgid "Reason"
+msgstr "Причина"
+
+#: features/logistics/forms.py:148
+msgid "The adjustment cannot be zero."
+msgstr "Коригування не може дорівнювати нулю."
+
+#: features/logistics/forms.py:150
+#, fuzzy
+#| msgid "A reason is required when this is not applicable."
+msgid "A value is required when adding stock."
+msgstr "Якщо це не застосовується, потрібно вказати причину."
+
+#: features/logistics/models.py:37
 msgid "accommodations"
 msgstr "житла"
 
-#: features/logistics/models.py:48
+#: features/logistics/models.py:49
+#, fuzzy
+#| msgid "effective date"
+msgid "effective month"
+msgstr "дата набрання чинності"
+
+#: features/logistics/models.py:50 features/logistics/models.py:78
 msgid "capacity"
 msgstr "місткість"
 
 #: features/logistics/models.py:52
+msgid "per-head monthly cost"
+msgstr "місячна вартість на одну особу"
+
+#: features/logistics/models.py:82
 msgid "monthly rate"
 msgstr "місячна ставка"
 
-#: features/logistics/models.py:56 features/logistics/models.py:85
+#: features/logistics/models.py:86 features/logistics/models.py:115
 msgid "room"
 msgstr "кімната"
 
-#: features/logistics/models.py:57
+#: features/logistics/models.py:87
 msgid "rooms"
 msgstr "кімнати"
 
 # --- dashboard ---
-#: features/logistics/models.py:92
+#: features/logistics/models.py:122
 msgid "rate override"
 msgstr "індивідуальна ставка"
 
-#: features/logistics/models.py:101
+#: features/logistics/models.py:125
+msgid "worker monthly payment"
+msgstr "місячний платіж працівника"
+
+#: features/logistics/models.py:135
 msgid "room assignment"
 msgstr "призначення кімнати"
 
-#: features/logistics/models.py:102
+#: features/logistics/models.py:136
 msgid "room assignments"
 msgstr "призначення кімнат"
 
-#: features/logistics/models.py:125
+#: features/logistics/models.py:159
 msgid "size"
 msgstr "розмір"
 
-#: features/logistics/models.py:128
+#: features/logistics/models.py:162
 msgid "unit price"
 msgstr "ціна за одиницю"
 
-#: features/logistics/models.py:133
+#: features/logistics/models.py:167
 msgid "equipment item"
 msgstr "одиниця спорядження"
 
-#: features/logistics/models.py:134
+#: features/logistics/models.py:168
 msgid "equipment items"
 msgstr "одиниці спорядження"
 
-#: features/logistics/models.py:142
+#: features/logistics/models.py:176
 msgid "Issued"
 msgstr "Видано"
 
-#: features/logistics/models.py:143
+#: features/logistics/models.py:177
 msgid "Returned"
 msgstr "Повернено"
 
-#: features/logistics/models.py:154
+#: features/logistics/models.py:188
 msgid "None"
 msgstr "Немає"
 
-#: features/logistics/models.py:155
+#: features/logistics/models.py:189
 msgid "Pending review"
 msgstr "Очікує перевірки"
 
-#: features/logistics/models.py:156
+#: features/logistics/models.py:190
 msgid "Charge approved"
 msgstr "Стягнення затверджено"
 
-#: features/logistics/models.py:157
+#: features/logistics/models.py:191
 msgid "Waived"
 msgstr "Скасовано"
 
-#: features/logistics/models.py:167
+#: features/logistics/models.py:201 features/logistics/models.py:268
+#: features/logistics/models.py:367
 msgid "quantity"
 msgstr "кількість"
 
-#: features/logistics/models.py:172
+#: features/logistics/models.py:206
 msgid "review status"
 msgstr "стан перевірки"
 
-#: features/logistics/models.py:176
+#: features/logistics/models.py:210
 msgid "charge amount"
 msgstr "сума нарахування"
 
-#: features/logistics/models.py:180
+#: features/logistics/models.py:214
 msgid "reviewed by"
 msgstr "перевірив"
 
-#: features/logistics/models.py:182
+#: features/logistics/models.py:216
 msgid "reviewed at"
 msgstr "перевірено о"
 
-#: features/logistics/models.py:183
+#: features/logistics/models.py:217
 msgid "review note"
 msgstr "нотатка до перевірки"
 
-#: features/logistics/models.py:186
+#: features/logistics/models.py:220
 msgid "issued by"
 msgstr "видав"
 
-#: features/logistics/models.py:188
+#: features/logistics/models.py:222
 msgid "issued at"
 msgstr "видано о"
 
-#: features/logistics/models.py:189
+#: features/logistics/models.py:223
 msgid "returned at"
 msgstr "повернено о"
 
-#: features/logistics/models.py:192
+# --- projects UI ---
+#: features/logistics/models.py:224 features/logistics/models.py:241
+#, fuzzy
+#| msgid "Operations"
+msgid "operation key"
+msgstr "Операції"
+
+#: features/logistics/models.py:226
+msgid "issued stock value"
+msgstr "складська вартість при видачі"
+
+#: features/logistics/models.py:229
+msgid "return disposition"
+msgstr "спосіб повернення"
+
+#: features/logistics/models.py:232
 msgid "equipment issue"
 msgstr "видача спорядження"
 
-#: features/logistics/models.py:193
+#: features/logistics/models.py:233
 msgid "equipment issues"
 msgstr "видачі спорядження"
 
-#: features/logistics/models.py:206
+#: features/logistics/models.py:242 features/logistics/models.py:348
+#, fuzzy
+#| msgid "received"
+msgid "received on"
+msgstr "отримано"
+
+#: features/logistics/models.py:243
+msgid "reference"
+msgstr "посилання"
+
+#: features/logistics/models.py:244
+msgid "supplier"
+msgstr "постачальник"
+
+#: features/logistics/models.py:262
+#, fuzzy
+#| msgid "received"
+msgid "receipt"
+msgstr "отримано"
+
+#: features/logistics/models.py:270
+#, fuzzy
+#| msgid "normalized value"
+msgid "total value"
+msgstr "нормалізоване значення"
+
+#: features/logistics/models.py:280
+msgid "Receipt"
+msgstr "Надходження"
+
+#: features/logistics/models.py:281
+#, fuzzy
+#| msgid "Issued"
+msgid "Issue"
+msgstr "Видано"
+
+#: features/logistics/models.py:282
+#: templates/panels/logistics_equipment.html:21
+msgid "Return"
+msgstr "Повернути"
+
+#: features/logistics/models.py:283
+#, fuzzy
+#| msgid "settlement"
+msgid "Adjustment"
+msgstr "розрахунок"
+
+#: features/logistics/models.py:292
+#, fuzzy
+#| msgid "entry type"
+msgid "movement type"
+msgstr "тип запису"
+
+#: features/logistics/models.py:294
+#, fuzzy
+#| msgid "currency"
+msgid "occurred on"
+msgstr "валюта"
+
+#: features/logistics/models.py:295
+#, fuzzy
+#| msgid "quantity"
+msgid "quantity delta"
+msgstr "кількість"
+
+#: features/logistics/models.py:296
+#, fuzzy
+#| msgid "value"
+msgid "value delta"
+msgstr "значення"
+
+#: features/logistics/models.py:299
+#, fuzzy
+#| msgid "Create link"
+msgid "receipt line"
+msgstr "Створити посилання"
+
+#: features/logistics/models.py:303
+#, fuzzy
+#| msgid "Issued"
+msgid "issue"
+msgstr "Видано"
+
+#: features/logistics/models.py:342
+#, fuzzy
+#| msgid "inbound message"
+msgid "inbound movement"
+msgstr "вхідне повідомлення"
+
+#: features/logistics/models.py:349
+#, fuzzy
+#| msgid "quantity"
+msgid "initial quantity"
+msgstr "кількість"
+
+#: features/logistics/models.py:350
+#, fuzzy
+#| msgid "Equipment value"
+msgid "initial value"
+msgstr "Вартість спорядження"
+
+#: features/logistics/models.py:351
+#, fuzzy
+#| msgid "quantity"
+msgid "remaining quantity"
+msgstr "кількість"
+
+#: features/logistics/models.py:352
+#, fuzzy
+#| msgid "normalized value"
+msgid "remaining value"
+msgstr "нормалізоване значення"
+
+#: features/logistics/models.py:361
+#, fuzzy
+#| msgid "outbound message"
+msgid "outbound movement"
+msgstr "вихідне повідомлення"
+
+#: features/logistics/models.py:365
+msgid "lot"
+msgstr "партія"
+
+#: features/logistics/models.py:382
 msgid "week start"
 msgstr "початок тижня"
 
-#: features/logistics/models.py:207
+#: features/logistics/models.py:383
 msgid "headcount"
 msgstr "кількість осіб"
 
-#: features/logistics/models.py:216
+#: features/logistics/models.py:392
 msgid "transport week"
 msgstr "транспортний тиждень"
 
 # --- transport trends ---
-#: features/logistics/models.py:217
+#: features/logistics/models.py:393
 msgid "transport weeks"
 msgstr "транспортні тижні"
 
@@ -2227,124 +2498,210 @@ msgstr "Очікують перевірки обладнання"
 msgid "%(count)s unreturned equipment reviews"
 msgstr "%(count)s перевірок неповерненого обладнання"
 
-#: features/logistics/panels.py:58 templates/pages/accommodation_costs.html:16
-#: templates/pages/accommodation_costs.html:27
-#: templates/pages/accommodation_detail.html:23
+#: features/logistics/panels.py:70 templates/pages/accommodation_detail.html:33
 msgid "Occupancy"
 msgstr "Заповненість"
 
-#: features/logistics/panels.py:61
+#: features/logistics/panels.py:73
 msgid "Review accommodation occupancy"
 msgstr "Переглянути заповненість житла"
 
-#: features/logistics/panels.py:63
+#: features/logistics/panels.py:75
 msgid "Open accommodation costs, occupied places, and assigned costs."
 msgstr "Відкрийте витрати на житло, зайняті місця та призначені витрати."
 
-#: features/logistics/panels.py:71
+#: features/logistics/panels.py:85 templates/layouts/base.html:50
+#: templates/pages/equipment_catalog.html:11
+#: templates/pages/equipment_stock.html:4
+#: templates/pages/equipment_stock.html:8
+#: templates/pages/equipment_stock.html:31
+#: templates/pages/equipment_stock_receive.html:6
+msgid "Warehouse stock"
+msgstr "Складські запаси"
+
+#: features/logistics/panels.py:88
+msgid "Review warehouse stock"
+msgstr "Переглянути складські запаси"
+
+#: features/logistics/panels.py:89
+msgid "Open current quantities, value, and monthly stock movements."
+msgstr "Відкрити поточні кількості, вартість і місячні рухи запасів."
+
+#: features/logistics/panels.py:91
 msgid "Equipment value"
 msgstr "Вартість спорядження"
 
-#: features/logistics/panels.py:74
+#: features/logistics/panels.py:94
 msgid "Review equipment exceptions"
 msgstr "Переглянути винятки щодо спорядження"
 
-#: features/logistics/panels.py:76
+#: features/logistics/panels.py:96
 msgid "Open issued equipment awaiting return or a deduction decision."
 msgstr ""
 "Відкрийте видане спорядження, що очікує повернення або рішення щодо "
 "відрахування."
 
-#: features/logistics/services.py:59
+#: features/logistics/services.py:74
 msgid "Amounts use a positive convention; negative values are not allowed."
 msgstr "Суми мають бути додатними; від’ємні значення не дозволені."
 
-#: features/logistics/services.py:126
+#: features/logistics/services.py:215
 msgid "Only active rooms in active locations can be assigned."
 msgstr "Можна призначати лише активні кімнати в активних місцях проживання."
 
-#: features/logistics/services.py:129
+#: features/logistics/services.py:218
 msgid "Room is at full capacity."
 msgstr "Кімната повністю зайнята."
 
-#: features/logistics/services.py:267
+#: features/logistics/services.py:393
+#, fuzzy, python-format
+#| msgid "Only available candidates can be scheduled."
+msgid "Only %(available)s units are available in stock."
+msgstr "Можна планувати лише доступних кандидатів."
+
+#: features/logistics/services.py:435
+msgid "Receipt quantities must be at least one."
+msgstr "Кількість надходження має бути щонайменше один."
+
+#: features/logistics/services.py:438
+msgid "Add at least one receipt line."
+msgstr "Додайте щонайменше один рядок надходження."
+
+#: features/logistics/services.py:460
+msgid "A non-zero adjustment and reason are required."
+msgstr "Потрібні ненульове коригування та причина."
+
+#: features/logistics/services.py:510
 msgid "This equipment item is inactive and cannot be issued."
 msgstr "Ця одиниця спорядження неактивна, її не можна видати."
 
-#: features/logistics/services.py:298 features/logistics/services.py:314
+#: features/logistics/services.py:512
+msgid "An operation key is required for stock-tracked issuance."
+msgstr "Для видачі з обліком запасів потрібен ключ операції."
+
+#: features/logistics/services.py:556 features/logistics/services.py:572
 msgid "A transport record already exists for this project and week."
 msgstr "Для цього проєкту й тижня вже існує запис транспорту."
 
-#: features/logistics/views.py:183
+#: features/logistics/services.py:623
+msgid "Choose whether the returned equipment is reusable or retired."
+msgstr ""
+"Виберіть, чи повернене спорядження придатне до повторного використання або "
+"списане."
+
+#: features/logistics/views.py:194
 msgid "Accommodation created. Add rooms to make it assignable."
 msgstr ""
 "Місце проживання створено. Додайте кімнати, щоб його можна було призначати."
 
-#: features/logistics/views.py:195
+#: features/logistics/views.py:206
 msgid "Accommodation updated."
 msgstr "Місце проживання оновлено."
 
-#: features/logistics/views.py:212
+#: features/logistics/views.py:223
 msgid "Room created."
 msgstr "Кімнату створено."
 
-#: features/logistics/views.py:226
+#: features/logistics/views.py:237
 msgid "Room updated."
 msgstr "Кімнату оновлено."
 
-#: features/logistics/views.py:248
+#: features/logistics/views.py:275
+#, fuzzy
+#| msgid "Accommodation rate override saved"
+msgid "Accommodation cost period saved."
+msgstr "Змінену ставку збережено."
+
+#: features/logistics/views.py:277
+#, fuzzy
+#| msgid "Review accommodation occupancy"
+msgid "Review the accommodation cost details."
+msgstr "Переглянути заповненість житла"
+
+#: features/logistics/views.py:287
 msgid "Room rate saved."
 msgstr "Ставку кімнати збережено."
 
-#: features/logistics/views.py:250 features/logistics/views.py:262
+#: features/logistics/views.py:289 features/logistics/views.py:301
+#: features/logistics/views.py:313
 msgid "Invalid amount."
 msgstr "Недійсна сума."
 
-#: features/logistics/views.py:260
+#: features/logistics/views.py:299
 msgid "Rate override saved."
 msgstr "Змінену ставку збережено."
 
-#: features/logistics/views.py:273
+#: features/logistics/views.py:311
+#, fuzzy
+#| msgid "Accommodation updated."
+msgid "Worker accommodation payment saved."
+msgstr "Місце проживання оновлено."
+
+#: features/logistics/views.py:327
 msgid "Room assigned."
 msgstr "Кімнату призначено."
 
-#: features/logistics/views.py:284
+#: features/logistics/views.py:338
 msgid "Room released."
 msgstr "Кімнату звільнено."
 
-#: features/logistics/views.py:314
+#: features/logistics/views.py:402
+#, fuzzy
+#| msgid "No payslips recorded."
+msgid "Stock receipt recorded."
+msgstr "Немає збережених розрахункових листів."
+
+#: features/logistics/views.py:423
+#, fuzzy
+#| msgid "outcome recorded by"
+msgid "Stock adjustment recorded."
+msgstr "результат записав"
+
+#: features/logistics/views.py:427
+#, fuzzy
+#| msgid "Review the trial details and try again."
+msgid "Review the stock adjustment and try again."
+msgstr "Перевірте дані пробного дня та спробуйте ще раз."
+
+#: features/logistics/views.py:436
 msgid "Equipment item created."
 msgstr "Одиницю спорядження створено."
 
-#: features/logistics/views.py:331
+#: features/logistics/views.py:453
 msgid "Equipment item updated."
 msgstr "Одиницю спорядження оновлено."
 
-#: features/logistics/views.py:344
+#: features/logistics/views.py:471
 msgid "Equipment issued."
 msgstr "Спорядження видано."
 
-#: features/logistics/views.py:353
+#: features/logistics/views.py:473
+#, fuzzy
+#| msgid "equipment issue"
+msgid "Invalid equipment issue."
+msgstr "видача спорядження"
+
+#: features/logistics/views.py:483
 msgid "Equipment returned."
 msgstr "Спорядження повернено."
 
-#: features/logistics/views.py:363
+#: features/logistics/views.py:495
 msgid "Flagged for deduction review."
 msgstr "Позначено для перевірки стягнення."
 
-#: features/logistics/views.py:386
+#: features/logistics/views.py:518
 msgid "Review recorded."
 msgstr "Перевірку записано."
 
-#: features/logistics/views.py:402 features/logistics/views.py:418
+#: features/logistics/views.py:534 features/logistics/views.py:550
 msgid "Transport week recorded."
 msgstr "Тиждень транспорту записано."
 
-#: features/logistics/views.py:404
+#: features/logistics/views.py:536
 msgid "Review the transport details and try again."
 msgstr "Перевірте дані транспорту та спробуйте ще раз."
 
-#: features/logistics/views.py:441
+#: features/logistics/views.py:573
 msgid "Transport record updated."
 msgstr "Запис транспорту оновлено."
 
@@ -2505,8 +2862,12 @@ msgstr ""
 msgid "Field"
 msgstr "Поле"
 
+#: templates/layouts/base.html:50
+msgid "Warehouse"
+msgstr "Склад"
+
 # --- finance ---
-#: templates/layouts/base.html:54 templates/pages/finance_month_detail.html:8
+#: templates/layouts/base.html:56 templates/pages/finance_month_detail.html:8
 #: templates/pages/finance_month_detail.html:39
 #: templates/pages/finance_summary.html:4
 #: templates/pages/finance_summary.html:9 templates/pages/finance_year.html:4
@@ -2516,12 +2877,12 @@ msgid "Finance"
 msgstr "Фінанси"
 
 # --- feedback ---
-#: templates/layouts/base.html:63 templates/pages/feedback_form.html:7
+#: templates/layouts/base.html:65 templates/pages/feedback_form.html:7
 #: templates/pages/feedback_form.html:14
 msgid "Feedback"
 msgstr "Зворотний зв’язок"
 
-#: templates/layouts/base.html:80
+#: templates/layouts/base.html:82
 msgid "Role"
 msgstr "Роль"
 
@@ -2580,55 +2941,89 @@ msgstr "Наразі ніщо не потребує вашої уваги."
 msgid "Accommodation costs"
 msgstr "Витрати на житло"
 
-#: templates/pages/accommodation_costs.html:9
-#: templates/pages/accommodation_detail.html:11
-#: templates/pages/accommodation_list.html:11
-msgid "Cost report"
-msgstr "Звіт про витрати"
+#: templates/pages/accommodation_costs.html:6
+msgid "Monthly cost and margin"
+msgstr "Місячні витрати та маржа"
 
-#: templates/pages/accommodation_costs.html:10
+#: templates/pages/accommodation_costs.html:6
 #: templates/pages/accommodation_detail.html:10
+#: templates/pages/equipment_stock_receive.html:6
 #: templates/pages/finance_month_detail.html:10
 #: templates/pages/finance_year.html:10
 msgid "Back"
 msgstr "Назад"
 
-#: templates/pages/accommodation_costs.html:13
+#: templates/pages/accommodation_costs.html:7
 msgid "Reporting only — no amounts are deducted from workers."
 msgstr "Лише для звітності — з працівників нічого не утримується."
 
-#: templates/pages/accommodation_costs.html:15
-#: templates/pages/equipment_reviews.html:14
-#: templates/pages/finance_summary.html:13
-#: templates/pages/finance_summary.html:21
-#: templates/pages/finance_summary.html:57
-#: templates/pages/finance_summary.html:71
-#: templates/pages/finance_summary.html:83 templates/pages/finance_year.html:13
-#: templates/pages/transport_trends.html:51
-#: templates/panels/finance_company_totals.html:3
-msgid "Company total"
-msgstr "Загалом по компанії"
+#: templates/pages/accommodation_costs.html:8
+#: templates/pages/equipment_stock.html:21
+#, fuzzy
+#| msgid "Record month"
+msgid "Report month"
+msgstr "Записати місяць"
 
-#: templates/pages/accommodation_costs.html:17
-#: templates/pages/accommodation_costs.html:28
-msgid "Room cost"
-msgstr "Вартість кімнат"
+#: templates/pages/accommodation_costs.html:8
+#: templates/pages/accommodation_list.html:23 templates/pages/audit_log.html:29
+#: templates/pages/equipment_catalog.html:22
+#: templates/pages/equipment_stock.html:22 templates/pages/project_list.html:21
+#: templates/pages/transport_trends.html:37
+#: templates/pages/trials_queue.html:41
+msgid "Filter"
+msgstr "Фільтрувати"
+
+#: templates/pages/accommodation_costs.html:10
+#: templates/pages/accommodation_costs.html:19
+msgid "Standing cost"
+msgstr "Постійні витрати"
+
+#: templates/pages/accommodation_costs.html:11
+#: templates/pages/accommodation_costs.html:20
+#, fuzzy
+#| msgid "Workers"
+msgid "Worker payments"
+msgstr "Працівники"
+
+#: templates/pages/accommodation_costs.html:12
+#: templates/pages/accommodation_costs.html:20
+msgid "Empty-bed loss"
+msgstr "Втрати від вільних місць"
+
+#: templates/pages/accommodation_costs.html:13
+#: templates/pages/accommodation_costs.html:21
+msgid "Margin"
+msgstr "Маржа"
+
+#: templates/pages/accommodation_costs.html:16
+msgid "Missing cost period"
+msgstr "Відсутній період витрат"
 
 #: templates/pages/accommodation_costs.html:18
-#: templates/pages/accommodation_costs.html:29
-msgid "Assigned cost"
+#, fuzzy
+#| msgid "capacity"
+msgid "Capacity"
+msgstr "місткість"
+
+#: templates/pages/accommodation_costs.html:18
+msgid "Occupied bed-days"
+msgstr "Зайняті ліжко-дні"
+
+#: templates/pages/accommodation_costs.html:19
+#, fuzzy
+#| msgid "Assigned cost"
+msgid "Occupied cost"
 msgstr "Призначені витрати"
 
-#: templates/pages/accommodation_costs.html:26
-#: templates/pages/accommodation_detail.html:18
-#: templates/pages/accommodation_list.html:36
-msgid "Rooms"
-msgstr "Кімнати"
-
-#: templates/pages/accommodation_costs.html:33
+#: templates/pages/accommodation_costs.html:22
 #: templates/pages/accommodation_list.html:40
 msgid "No accommodations found."
 msgstr "Житло не знайдено."
+
+#: templates/pages/accommodation_detail.html:11
+#: templates/pages/accommodation_list.html:11
+msgid "Cost report"
+msgstr "Звіт про витрати"
 
 #: templates/pages/accommodation_detail.html:12
 #: templates/pages/accommodation_form.html:4
@@ -2641,31 +3036,57 @@ msgstr "Редагувати місце проживання"
 msgid "Add room"
 msgstr "Додати кімнату"
 
-#: templates/pages/accommodation_detail.html:16
+#: templates/pages/accommodation_detail.html:17
+#, fuzzy
+#| msgid "Monthly rate"
+msgid "Monthly reporting"
+msgstr "Місячна ставка"
+
+#: templates/pages/accommodation_detail.html:18
+msgid "Per-head cost periods"
+msgstr "Періоди витрат на одну особу"
+
+#: templates/pages/accommodation_detail.html:21
+#, fuzzy
+#| msgid "Save override"
+msgid "Save cost period"
+msgstr "Зберегти зміну"
+
+#: templates/pages/accommodation_detail.html:23
+#, fuzzy
+#| msgid "Decision recorded."
+msgid "No cost period recorded."
+msgstr "Рішення записано."
+
+#: templates/pages/accommodation_detail.html:26
 msgid "This location is inactive and cannot receive new assignments."
 msgstr "Це місце проживання неактивне й не може отримувати нові призначення."
 
-#: templates/pages/accommodation_detail.html:24
-#: templates/panels/logistics_room.html:9
+#: templates/pages/accommodation_detail.html:28
+#: templates/pages/accommodation_list.html:36
+msgid "Rooms"
+msgstr "Кімнати"
+
+#: templates/pages/accommodation_detail.html:34
 msgid "Monthly rate"
 msgstr "Місячна ставка"
 
-#: templates/pages/accommodation_detail.html:25
+#: templates/pages/accommodation_detail.html:35
 #: templates/pages/accommodation_list.html:18
 #: templates/pages/compliance_list.html:21
-#: templates/pages/equipment_catalog.html:16
+#: templates/pages/equipment_catalog.html:17
 #: templates/pages/people_list.html:20 templates/pages/people_list.html:44
 #: templates/pages/project_list.html:34 templates/pages/trials_queue.html:55
 #: templates/panels/blacklist_case.html:8
 msgid "Status"
 msgstr "Статус"
 
-#: templates/pages/accommodation_detail.html:28
+#: templates/pages/accommodation_detail.html:38
 #: templates/pages/room_form.html:4 templates/pages/room_form.html:8
 msgid "Edit room"
 msgstr "Редагувати кімнату"
 
-#: templates/pages/accommodation_detail.html:32
+#: templates/pages/accommodation_detail.html:42
 msgid "No rooms."
 msgstr "Немає кімнат."
 
@@ -2697,7 +3118,7 @@ msgstr "Зберегти місце проживання"
 #: templates/pages/accommodation_list.html:8
 #: templates/pages/equipment_catalog.html:8
 #: templates/pages/equipment_reviews.html:8
-#: templates/pages/project_detail.html:50
+#: templates/pages/project_detail.html:51
 #: templates/pages/transport_trends.html:8
 #: templates/panels/logistics_equipment.html:3
 #: templates/panels/logistics_room.html:3
@@ -2709,21 +3130,13 @@ msgid "Name or address"
 msgstr "Назва або адреса"
 
 #: templates/pages/accommodation_list.html:21
-#: templates/pages/equipment_catalog.html:19
+#: templates/pages/equipment_catalog.html:20
 msgid "All"
 msgstr "Усі"
 
-#: templates/pages/accommodation_list.html:23 templates/pages/audit_log.html:29
-#: templates/pages/equipment_catalog.html:21
-#: templates/pages/project_list.html:21
-#: templates/pages/transport_trends.html:37
-#: templates/pages/trials_queue.html:41
-msgid "Filter"
-msgstr "Фільтрувати"
-
 #: templates/pages/accommodation_list.html:29
 #: templates/pages/compliance_list.html:14 templates/pages/people_list.html:41
-#: templates/pages/person_detail.html:141
+#: templates/pages/person_detail.html:143
 #: templates/pages/project_detail.html:16 templates/pages/project_list.html:27
 #: tests/test_tooltips.py:86
 msgid "Details"
@@ -2788,17 +3201,6 @@ msgstr "Виконавець"
 #: templates/pages/payslips.html:24
 msgid "Record"
 msgstr "Записати"
-
-#: templates/pages/audit_log.html:42 templates/pages/blacklist_queue.html:23
-#: templates/pages/blacklist_queue.html:28
-#: templates/pages/finance_month_detail.html:19
-#: templates/pages/person_detail.html:200
-#: templates/panels/blacklist_case.html:11
-#: templates/panels/blacklist_case.html:19
-#: templates/panels/blacklist_case.html:26
-#: templates/panels/blacklist_case.html:37
-msgid "Reason"
-msgstr "Причина"
 
 #: templates/pages/audit_log.html:49
 msgid "system"
@@ -2963,11 +3365,11 @@ msgstr "Немає пробних днів, що очікують результ
 msgid "Add equipment item"
 msgstr "Додати одиницю спорядження"
 
-#: templates/pages/equipment_catalog.html:15
+#: templates/pages/equipment_catalog.html:16
 msgid "Name or size"
 msgstr "Назва або розмір"
 
-#: templates/pages/equipment_catalog.html:25
+#: templates/pages/equipment_catalog.html:26
 msgid ""
 "Inactive items remain on past issue records but cannot be selected for a new "
 "issue."
@@ -2975,19 +3377,19 @@ msgstr ""
 "Неактивні позиції залишаються в попередніх записах про видачу, але їх не "
 "можна вибрати для нової видачі."
 
-#: templates/pages/equipment_catalog.html:34
+#: templates/pages/equipment_catalog.html:35
 #: templates/panels/logistics_equipment.html:12
 msgid "Unit price"
 msgstr "Ціна за одиницю"
 
-#: templates/pages/equipment_catalog.html:35
+#: templates/pages/equipment_catalog.html:36
 #: templates/pages/person_detail.html:13
 #: templates/pages/transport_trends.html:45
 #: templates/pages/trials_queue.html:59
 msgid "Edit"
 msgstr "Редагувати"
 
-#: templates/pages/equipment_catalog.html:38
+#: templates/pages/equipment_catalog.html:39
 msgid "No equipment items found."
 msgstr "Не знайдено жодної одиниці спорядження."
 
@@ -3012,6 +3414,17 @@ msgid ""
 msgstr ""
 "Неповернені предмети, що очікують рішення про стягнення. Затвердження фіксує "
 "стягнення до відшкодування — жодна сума не утримується автоматично."
+
+#: templates/pages/equipment_reviews.html:14
+#: templates/pages/finance_summary.html:13
+#: templates/pages/finance_summary.html:21
+#: templates/pages/finance_summary.html:57
+#: templates/pages/finance_summary.html:71
+#: templates/pages/finance_summary.html:83 templates/pages/finance_year.html:25
+#: templates/pages/transport_trends.html:51
+#: templates/panels/finance_company_totals.html:3
+msgid "Company total"
+msgstr "Загалом по компанії"
 
 #: templates/pages/equipment_reviews.html:15
 msgid "Outstanding"
@@ -3044,6 +3457,74 @@ msgstr "Скасовує нарахування; з працівника не с
 #: templates/pages/equipment_reviews.html:32
 msgid "Waive"
 msgstr "Скасувати"
+
+#: templates/pages/equipment_stock.html:9
+#: templates/pages/equipment_stock_receive.html:4
+#: templates/pages/equipment_stock_receive.html:6
+msgid "Receive stock"
+msgstr "Оприбуткувати запаси"
+
+#: templates/pages/equipment_stock.html:10
+msgid "Catalogue"
+msgstr "Каталог"
+
+#: templates/pages/equipment_stock.html:14
+#, fuzzy
+#| msgid "Exit to Available"
+msgid "Units available"
+msgstr "Вихід до Доступний"
+
+#: templates/pages/equipment_stock.html:15
+msgid "Current stock value"
+msgstr "Поточна вартість запасів"
+
+#: templates/pages/equipment_stock.html:16
+#: templates/pages/equipment_stock.html:26
+msgid "Closing value"
+msgstr "Кінцева вартість"
+
+#: templates/pages/equipment_stock.html:25
+#, fuzzy
+#| msgid "Equipment value"
+msgid "Opening value"
+msgstr "Вартість спорядження"
+
+#: templates/pages/equipment_stock.html:35
+#: templates/panels/logistics_equipment.html:7
+msgid "Value"
+msgstr "Вартість"
+
+#: templates/pages/equipment_stock.html:37
+msgid "No stock has been received."
+msgstr "Запаси ще не оприбутковано."
+
+#: templates/pages/equipment_stock.html:41
+msgid "Controlled correction"
+msgstr "Контрольоване виправлення"
+
+#: templates/pages/equipment_stock.html:42
+msgid "Stock adjustment"
+msgstr "Коригування запасів"
+
+#: templates/pages/equipment_stock.html:43
+msgid ""
+"This posts an auditable stock adjustment and cannot edit prior movements."
+msgstr ""
+"Ця дія проводить аудитоване коригування запасів і не змінює попередні рухи."
+
+#: templates/pages/equipment_stock.html:50
+msgid "Post adjustment"
+msgstr "Провести коригування"
+
+#: templates/pages/equipment_stock_receive.html:9
+msgid "Receipt lines"
+msgstr "Рядки надходження"
+
+#: templates/pages/equipment_stock_receive.html:11
+#, fuzzy
+#| msgid "Record week"
+msgid "Record receipt"
+msgstr "Записати тиждень"
 
 #: templates/pages/feedback_form.html:16
 msgid "Thank you for your feedback."
@@ -3095,7 +3576,7 @@ msgid "No feedback yet."
 msgstr "Поки немає відгуків."
 
 #: templates/pages/finance_month_detail.html:8
-#: templates/pages/finance_summary.html:25 templates/pages/finance_year.html:50
+#: templates/pages/finance_summary.html:25 templates/pages/finance_year.html:62
 msgid "Locked"
 msgstr "Заблоковано"
 
@@ -3126,8 +3607,8 @@ msgstr "Заблокувати місяць"
 #: templates/pages/finance_month_detail.html:34
 #: templates/pages/finance_summary.html:16
 #: templates/pages/finance_summary.html:25
-#: templates/pages/finance_summary.html:87 templates/pages/finance_year.html:16
-#: templates/pages/finance_year.html:50
+#: templates/pages/finance_summary.html:87 templates/pages/finance_year.html:28
+#: templates/pages/finance_year.html:62
 #: templates/panels/finance_company_totals.html:8
 msgid "Net"
 msgstr "Чистий"
@@ -3141,7 +3622,7 @@ msgid "Save & recalculate"
 msgstr "Зберегти та перерахувати"
 
 #: templates/pages/finance_month_detail.html:60
-#: templates/pages/finance_summary.html:58 templates/pages/finance_year.html:33
+#: templates/pages/finance_summary.html:58 templates/pages/finance_year.html:45
 msgid "Group breakdown"
 msgstr "Розподіл за групами"
 
@@ -3154,14 +3635,16 @@ msgstr "За групою"
 msgid "Export"
 msgstr "Експорт"
 
-#: templates/pages/finance_summary.html:22 templates/pages/finance_year.html:46
+#: templates/pages/finance_summary.html:22 templates/pages/finance_year.html:58
 msgid "Financial months"
 msgstr "Фінансові місяці"
 
 #: templates/pages/finance_summary.html:27
 #: templates/pages/finance_summary.html:77
-#: templates/pages/finance_summary.html:89 templates/pages/finance_year.html:27
-#: templates/pages/finance_year.html:52
+#: templates/pages/finance_summary.html:89
+#: templates/pages/finance_summary.html:102
+#: templates/pages/finance_year.html:20 templates/pages/finance_year.html:39
+#: templates/pages/finance_year.html:64
 msgid "No financial months."
 msgstr "Немає фінансових місяців."
 
@@ -3177,17 +3660,25 @@ msgstr "Місяць"
 msgid "Record month"
 msgstr "Записати місяць"
 
-#: templates/pages/finance_summary.html:63 templates/pages/finance_year.html:39
+#: templates/pages/finance_summary.html:63 templates/pages/finance_year.html:51
 msgid "No line items yet."
 msgstr "Позицій поки немає."
 
-#: templates/pages/finance_summary.html:72 templates/pages/finance_year.html:21
+#: templates/pages/finance_summary.html:72 templates/pages/finance_year.html:33
 msgid "Per-project results"
 msgstr "Результати за проєктами"
 
 #: templates/pages/finance_summary.html:84 templates/pages/finance_year.html:8
 msgid "Yearly results"
 msgstr "Річні результати"
+
+#: templates/pages/finance_summary.html:96 templates/pages/finance_year.html:14
+msgid "Regional roll-up"
+msgstr "Регіональний підсумок"
+
+#: templates/pages/finance_summary.html:97 templates/pages/finance_year.html:15
+msgid "Profit/loss by region"
+msgstr "Прибуток/збиток за регіонами"
 
 #: templates/pages/intake_panel.html:4 templates/pages/intake_panel.html:8
 #: templates/pages/person_form.html:8
@@ -3199,15 +3690,15 @@ msgstr "Прийом"
 msgid "Step"
 msgstr "Крок"
 
-#: templates/pages/intake_panel.html:24 templates/pages/person_detail.html:148
-#: templates/pages/person_detail.html:161
-#: templates/pages/project_detail.html:31
+#: templates/pages/intake_panel.html:24 templates/pages/person_detail.html:150
+#: templates/pages/person_detail.html:163
+#: templates/pages/project_detail.html:32
 msgid "Yes"
 msgstr "Так"
 
-#: templates/pages/intake_panel.html:25 templates/pages/person_detail.html:148
-#: templates/pages/person_detail.html:161
-#: templates/pages/project_detail.html:31
+#: templates/pages/intake_panel.html:25 templates/pages/person_detail.html:150
+#: templates/pages/person_detail.html:163
+#: templates/pages/project_detail.html:32
 msgid "No"
 msgstr "Ні"
 
@@ -3231,7 +3722,7 @@ msgstr "Внести запис"
 #: templates/pages/ledger.html:20 templates/pages/ledger.html:50
 #: templates/pages/ledger.html:79 templates/pages/ledger.html:105
 #: templates/pages/payslips.html:17 templates/pages/payslips.html:31
-#: templates/pages/person_detail.html:8 templates/pages/person_detail.html:227
+#: templates/pages/person_detail.html:8 templates/pages/person_detail.html:229
 msgid "Person"
 msgstr "Особа"
 
@@ -3253,12 +3744,6 @@ msgstr "Категорія"
 #: templates/pages/ledger.html:37 templates/panels/advances_ledger.html:31
 msgid "Amount (EUR)"
 msgstr "Сума (EUR)"
-
-#: templates/pages/ledger.html:38 templates/pages/payslips.html:23
-#: templates/pages/transport_trends.html:44
-#: templates/panels/advances_ledger.html:32
-msgid "Note"
-msgstr "Нотатка"
 
 #: templates/pages/ledger.html:45
 msgid "Thursday summary"
@@ -3448,7 +3933,7 @@ msgstr "Пошук за іменем"
 msgid "All statuses"
 msgstr "Усі статуси"
 
-#: templates/pages/people_list.html:27 templates/pages/person_detail.html:185
+#: templates/pages/people_list.html:27 templates/pages/person_detail.html:187
 msgid "Inactive reason"
 msgstr "Причина неактивності"
 
@@ -3469,94 +3954,94 @@ msgid "Back to people"
 msgstr "Назад до людей"
 
 # --- workflow: trials / readiness / intake ---
-#: templates/pages/person_detail.html:24
+#: templates/pages/person_detail.html:26
 msgid "Next step"
 msgstr "Наступний крок"
 
-#: templates/pages/person_detail.html:25
+#: templates/pages/person_detail.html:27
 msgid "Send to a project trial"
 msgstr "Відправити на пробний день"
 
-#: templates/pages/person_detail.html:36 templates/pages/trials_queue.html:10
+#: templates/pages/person_detail.html:38 templates/pages/trials_queue.html:10
 #: templates/pages/trials_queue.html:24
 msgid "Schedule trial"
 msgstr "Запланувати пробний день"
 
-#: templates/pages/person_detail.html:43
+#: templates/pages/person_detail.html:45
 msgid "Record trial outcome"
 msgstr "Записати результат пробного дня"
 
-#: templates/pages/person_detail.html:45
+#: templates/pages/person_detail.html:47
 msgid "Trial destination"
 msgstr "Місце пробного дня"
 
-#: templates/pages/person_detail.html:65
+#: templates/pages/person_detail.html:67
 msgid "Awaiting the coordinator's outcome."
 msgstr "Очікування результату від координатора."
 
-#: templates/pages/person_detail.html:72
+#: templates/pages/person_detail.html:74 templates/pages/person_detail.html:75
 msgid "Readiness"
 msgstr "Готовність"
 
-#: templates/pages/person_detail.html:73
+#: templates/pages/person_detail.html:75
 msgid "Four-pillar readiness"
 msgstr "Чотиристовпова готовність"
 
-#: templates/pages/person_detail.html:78
+#: templates/pages/person_detail.html:80
 msgid "Needs attention before activation"
 msgstr "Потребує уваги перед активацією"
 
-#: templates/pages/person_detail.html:106
-#: templates/pages/person_detail.html:116
+#: templates/pages/person_detail.html:108
+#: templates/pages/person_detail.html:118
 msgid "Reason if not applicable"
 msgstr "Причина, якщо не застосовується"
 
-#: templates/pages/person_detail.html:122
+#: templates/pages/person_detail.html:124
 msgid "Save readiness"
 msgstr "Зберегти готовність"
 
-#: templates/pages/person_detail.html:127
+#: templates/pages/person_detail.html:129
 msgid "Activate (Working)"
 msgstr "Активувати (Працює)"
 
-#: templates/pages/person_detail.html:129
+#: templates/pages/person_detail.html:131
 msgid "Ready to activate"
 msgstr "Готово до активації"
 
-#: templates/pages/person_detail.html:131
+#: templates/pages/person_detail.html:133
 msgid "Medical and gear required"
 msgstr "Потрібні медичне та спорядження"
 
-#: templates/pages/person_detail.html:140
+#: templates/pages/person_detail.html:142
 #: templates/pages/project_detail.html:15
 msgid "Operational"
 msgstr "Операційні"
 
-#: templates/pages/person_detail.html:146
+#: templates/pages/person_detail.html:148
 msgid "Current project"
 msgstr "Поточний проєкт"
 
-#: templates/pages/person_detail.html:147
+#: templates/pages/person_detail.html:149
 msgid "Owning recruiter"
 msgstr "Відповідальний рекрутер"
 
-#: templates/pages/person_detail.html:148
+#: templates/pages/person_detail.html:150
 msgid "Rehire eligible"
 msgstr "Можливість повторного найму"
 
-#: templates/pages/person_detail.html:153
+#: templates/pages/person_detail.html:155
 msgid "Restricted"
 msgstr "Обмежено"
 
-#: templates/pages/person_detail.html:154
+#: templates/pages/person_detail.html:156
 msgid "Personal data"
 msgstr "Особисті дані"
 
-#: templates/pages/person_detail.html:160
+#: templates/pages/person_detail.html:162
 msgid "Disability"
 msgstr "Інвалідність"
 
-#: templates/pages/person_detail.html:165
+#: templates/pages/person_detail.html:167
 msgid ""
 "Restricted — visible only to managers, observers, the owning recruiter, and "
 "the responsible coordinator."
@@ -3565,22 +4050,22 @@ msgstr ""
 "та відповідальному координатору."
 
 # --- exit / recycling ---
-#: templates/pages/person_detail.html:175
+#: templates/pages/person_detail.html:177
 msgid "Exit"
 msgstr "Вихід"
 
-#: templates/pages/person_detail.html:176
+#: templates/pages/person_detail.html:178
 msgid "Exit & reconcile"
 msgstr "Вихід та звірка"
 
-#: templates/pages/person_detail.html:177
+#: templates/pages/person_detail.html:179
 msgid ""
 "Ends the project assignment, releases the room, and returns issued equipment."
 msgstr ""
 "Завершує призначення на проєкт, звільняє кімнату та повертає видане "
 "спорядження."
 
-#: templates/pages/person_detail.html:179
+#: templates/pages/person_detail.html:181
 msgid ""
 "This ends the active assignment, releases the room, returns issued "
 "equipment, and sets the person to Available."
@@ -3588,11 +4073,11 @@ msgstr ""
 "Завершує активне призначення, звільняє кімнату, повертає видане спорядження "
 "та переводить особу в статус Доступний."
 
-#: templates/pages/person_detail.html:181
+#: templates/pages/person_detail.html:183
 msgid "Exit to Available"
 msgstr "Вихід до Доступний"
 
-#: templates/pages/person_detail.html:183
+#: templates/pages/person_detail.html:185
 msgid ""
 "This ends the active assignment, releases the room, returns issued "
 "equipment, and sets the person to Inactive with the chosen reason."
@@ -3600,37 +4085,37 @@ msgstr ""
 "Завершує активне призначення, звільняє кімнату, повертає видане спорядження "
 "та переводить особу в статус Неактивний з обраною причиною."
 
-#: templates/pages/person_detail.html:186
+#: templates/pages/person_detail.html:188
 msgid "Reason…"
 msgstr "Причина…"
 
-#: templates/pages/person_detail.html:189
+#: templates/pages/person_detail.html:191
 msgid "Exit to Inactive"
 msgstr "Вихід до Неактивний"
 
-#: templates/pages/person_detail.html:197
+#: templates/pages/person_detail.html:199
 msgid "Lifecycle"
 msgstr "Життєвий цикл"
 
-#: templates/pages/person_detail.html:201
+#: templates/pages/person_detail.html:203
 msgid "Since"
 msgstr "З"
 
-#: templates/pages/person_detail.html:206
+#: templates/pages/person_detail.html:208
 msgid "Recycle to Available"
 msgstr "Повернути до доступних"
 
-#: templates/pages/person_detail.html:214
+#: templates/pages/person_detail.html:216
 #: templates/pages/transport_trends.html:42
 msgid "Records"
 msgstr "Записи"
 
-#: templates/pages/person_detail.html:215
-#: templates/pages/person_detail.html:220
+#: templates/pages/person_detail.html:217
+#: templates/pages/person_detail.html:222
 msgid "Archive person"
 msgstr "Архівувати особу"
 
-#: templates/pages/person_detail.html:216
+#: templates/pages/person_detail.html:218
 msgid ""
 "Hides this operational record from the People list. It is not a deletion and "
 "does not remove blacklist protection or audit history."
@@ -3638,7 +4123,7 @@ msgstr ""
 "Приховує цей робочий запис зі списку людей. Це не видалення й не скасовує "
 "захист чорного списку чи історію аудиту."
 
-#: templates/pages/person_detail.html:217
+#: templates/pages/person_detail.html:219
 msgid ""
 "This archives the person from the operational list. It does not delete their "
 "record, audit history, or blacklist protection."
@@ -3646,20 +4131,20 @@ msgstr ""
 "Це архівує особу з робочого списку. Її запис, історію аудиту та захист "
 "чорного списку не буде видалено."
 
-#: templates/pages/person_detail.html:219
+#: templates/pages/person_detail.html:221
 msgid "Archive reason"
 msgstr "Причина архівування"
 
 # --- person card: history + filter ---
-#: templates/pages/person_detail.html:228
+#: templates/pages/person_detail.html:230
 msgid "History"
 msgstr "Історія"
 
-#: templates/pages/person_detail.html:233
+#: templates/pages/person_detail.html:235
 msgid "No history yet."
 msgstr "Ще немає історії."
 
-#: templates/pages/person_form.html:17
+#: templates/pages/person_form.html:18
 msgid "Save"
 msgstr "Зберегти"
 
@@ -3675,47 +4160,51 @@ msgstr "Код"
 msgid "Partner"
 msgstr "Партнер"
 
-#: templates/pages/project_detail.html:22
+#: templates/pages/project_detail.html:21
+msgid "Region"
+msgstr "Регіон"
+
+#: templates/pages/project_detail.html:23
 msgid "Responsible coordinators"
 msgstr "Відповідальні координатори"
 
-#: templates/pages/project_detail.html:30
+#: templates/pages/project_detail.html:31
 msgid "Financial reporting"
 msgstr "Фінансова звітність"
 
-#: templates/pages/project_detail.html:37
+#: templates/pages/project_detail.html:38
 msgid "Assigned"
 msgstr "Призначені"
 
-#: templates/pages/project_detail.html:38
+#: templates/pages/project_detail.html:39
 msgid "Workers"
 msgstr "Працівники"
 
-#: templates/pages/project_detail.html:43
+#: templates/pages/project_detail.html:44
 msgid "No workers assigned."
 msgstr "Немає призначених працівників."
 
 # --- logistics: transport ---
-#: templates/pages/project_detail.html:51
+#: templates/pages/project_detail.html:52
 #: templates/pages/transport_trends.html:52
 msgid "Weekly transport"
 msgstr "Щотижневий транспорт"
 
-#: templates/pages/project_detail.html:56
+#: templates/pages/project_detail.html:57
 msgid "No transport weeks recorded."
 msgstr "Тижні транспорту не записані."
 
-#: templates/pages/project_detail.html:62
+#: templates/pages/project_detail.html:63
 #: templates/pages/transport_trends.html:44
 msgid "Week start"
 msgstr "Початок тижня"
 
-#: templates/pages/project_detail.html:63
+#: templates/pages/project_detail.html:64
 #: templates/pages/transport_trends.html:44
 msgid "Headcount"
 msgstr "Кількість осіб"
 
-#: templates/pages/project_detail.html:64
+#: templates/pages/project_detail.html:65
 msgid "Record week"
 msgstr "Записати тиждень"
 
@@ -3958,59 +4447,80 @@ msgstr "Переглянути фінанси компанії"
 msgid "Open the finance summary for revenue, costs, and net results."
 msgstr "Відкрийте фінансовий підсумок доходів, витрат і чистого результату."
 
-#: templates/panels/logistics_equipment.html:7
-msgid "Value"
-msgstr "Вартість"
-
 #: templates/panels/logistics_equipment.html:17
-msgid "Return"
-msgstr "Повернути"
+msgid "Return disposition"
+msgstr "Спосіб повернення"
 
-#: templates/panels/logistics_equipment.html:21
+#: templates/panels/logistics_equipment.html:18
+msgid "Reusable — return to stock"
+msgstr "Придатне — повернути на склад"
+
+#: templates/panels/logistics_equipment.html:19
+#, fuzzy
+#| msgid "Damage recovered"
+msgid "Damaged or retired"
+msgstr "Відшкодовані збитки"
+
+#: templates/panels/logistics_equipment.html:25
+#, fuzzy
+#| msgid ""
+#| "This flags the item as unreturned and opens a manager charge review at "
+#| "its current value."
 msgid ""
 "This flags the item as unreturned and opens a manager charge review at its "
-"current value."
+"issued stock value."
 msgstr ""
 "Позначає предмет як неповернений і відкриває менеджерську перевірку "
 "нарахування за його поточною вартістю."
 
-#: templates/panels/logistics_equipment.html:21
+#: templates/panels/logistics_equipment.html:25
 msgid "Flag unreturned"
 msgstr "Позначити як неповернене"
 
-#: templates/panels/logistics_equipment.html:36
-msgid "Item"
-msgstr "Позиція"
-
-#: templates/panels/logistics_equipment.html:39
-msgid "Quantity"
-msgstr "Кількість"
-
-#: templates/panels/logistics_equipment.html:40
+#: templates/panels/logistics_equipment.html:45
 msgid "Issue equipment"
 msgstr "Видати спорядження"
+
+#: templates/panels/logistics_room.html:9
+#: templates/panels/logistics_room.html:19
+#: templates/panels/logistics_room.html:39
+msgid "Worker monthly payment"
+msgstr "Місячний платіж працівника"
 
 #: templates/panels/logistics_room.html:13
 msgid "Release room"
 msgstr "Звільнити кімнату"
 
-#: templates/panels/logistics_room.html:19
+#: templates/panels/logistics_room.html:20
+#, fuzzy
+#| msgid "Save rate"
+msgid "Save payment"
+msgstr "Зберегти ставку"
+
+# --- dashboard ---
+#: templates/panels/logistics_room.html:22
+#, fuzzy
+#| msgid "rate override"
+msgid "Legacy rate override"
+msgstr "індивідуальна ставка"
+
+#: templates/panels/logistics_room.html:25
 msgid "Rate override"
 msgstr "Змінена ставка"
 
-#: templates/panels/logistics_room.html:20
+#: templates/panels/logistics_room.html:26
 msgid "Save override"
 msgstr "Зберегти зміну"
 
-#: templates/panels/logistics_room.html:27
+#: templates/panels/logistics_room.html:34
 msgid "Room"
 msgstr "Кімната"
 
-#: templates/panels/logistics_room.html:32
+#: templates/panels/logistics_room.html:40
 msgid "Assign room"
 msgstr "Призначити кімнату"
 
-#: templates/panels/logistics_room.html:34
+#: templates/panels/logistics_room.html:42
 msgid "No active room with free capacity is available."
 msgstr "Немає активної кімнати з вільними місцями."
 
@@ -4060,15 +4570,15 @@ msgstr "Світла"
 msgid "Dark"
 msgstr "Темна"
 
+#~ msgid "Room cost"
+#~ msgstr "Вартість кімнат"
+
 #~ msgid "Week start is required."
 #~ msgstr "Початок тижня обов’язковий."
 
 # --- shell / navigation ---
 #~ msgid "Jober operations"
 #~ msgstr "Операції Jober"
-
-#~ msgid "Save rate"
-#~ msgstr "Зберегти ставку"
 
 #~ msgid "Sign in to the Jober team"
 #~ msgstr "Вхід до команди Jober"

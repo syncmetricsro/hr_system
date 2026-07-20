@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, HttpResponse
@@ -8,6 +9,7 @@ from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.translation import gettext as _
 from django.utils import timezone
+from django.utils.dateparse import parse_date
 from django.views.decorators.http import require_POST
 
 from core.accounts.permissions import Action, require_action
@@ -16,10 +18,33 @@ from core.people.forms import PersonForm
 from core.accounts.permissions import can as user_can
 from core.people.models import InactiveReason, LifecycleError, LifecycleStatus, Person
 from core.people.permissions import can_view_sensitive
-from core.people.services import person_history, recycle_to_available
+from core.people.services import age_warning, person_history, recycle_to_available
 from core.ui import registry
 from core.projects.models import PillarState, Project, TrialOutcome
 from core.projects.services import get_or_create_readiness, readiness_blockers
+
+
+def _parsed_birth_date(value):
+    if not isinstance(value, str):
+        return value
+    try:
+        return parse_date(value)
+    except ValueError:
+        return None
+
+
+def _form_age_warning(form: PersonForm):
+    raw = form.data.get("date_of_birth") if form.is_bound else form.initial.get("date_of_birth")
+    return age_warning(_parsed_birth_date(raw))
+
+
+def _configure_age_warning(form: PersonForm) -> None:
+    form.fields["date_of_birth"].widget.attrs.update({
+        "hx-get": reverse("person_age_warning"),
+        "hx-trigger": "change",
+        "hx-target": "#age-warning",
+        "hx-include": "[name='date_of_birth']",
+    })
 
 
 @login_required
@@ -78,9 +103,13 @@ def person_create(request: HttpRequest) -> HttpResponse:
             return redirect("person_detail", pk=person.pk)
     else:
         form = PersonForm()
+    _configure_age_warning(form)
     return TemplateResponse(
         request, "pages/person_form.html",
-        {"form": form, "form_action": reverse("person_create"), "heading": _("Add person")},
+        {
+            "form": form, "form_action": reverse("person_create"), "heading": _("Add person"),
+            "age_warning": _form_age_warning(form),
+        },
     )
 
 
@@ -96,9 +125,13 @@ def person_edit(request: HttpRequest, pk: int) -> HttpResponse:
             return redirect("person_detail", pk=person.pk)
     else:
         form = PersonForm(instance=person)
+    _configure_age_warning(form)
     return TemplateResponse(
         request, "pages/person_form.html",
-        {"form": form, "form_action": reverse("person_edit", args=[person.pk]), "heading": _("Edit person")},
+        {
+            "form": form, "form_action": reverse("person_edit", args=[person.pk]), "heading": _("Edit person"),
+            "age_warning": age_warning(person.date_of_birth),
+        },
     )
 
 
@@ -128,6 +161,8 @@ def person_detail(request: HttpRequest, pk: int) -> TemplateResponse:
         "pages/person_detail.html",
         {
             "person": person,
+            "age_warning": age_warning(person.date_of_birth),
+            "transport_enabled": getattr(settings, "FEATURE_FLAGS", {}).get("transport", True),
             "assignment": assignment,
             "show_sensitive": can_view_sensitive(request.user, person),
             "history": person_history(person),
@@ -160,6 +195,16 @@ def person_detail(request: HttpRequest, pk: int) -> TemplateResponse:
                 and user_can(request.user, Action.PERSON_ARCHIVE)
             ),
         },
+    )
+
+
+@login_required
+def person_age_warning(request: HttpRequest) -> TemplateResponse:
+    value = _parsed_birth_date(request.GET.get("date_of_birth", ""))
+    return TemplateResponse(
+        request,
+        "partials/person_age_warning.html",
+        {"age_warning": age_warning(value)},
     )
 
 
