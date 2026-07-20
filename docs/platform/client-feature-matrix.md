@@ -47,7 +47,7 @@
 | Person history with actor | `core/audit`, `core/people` | SPEC | History lacks complete actor coverage | ON/general audit | Audit current | Jober prefers person timeline; global nav may later be removed |
 | Per-project profitability/P&L | `features/profitability` | ON, SPEC | Flag ON under `features.finance`; model differs | OFF | Flag OFF | Unblocked by verified Jober workbook; hard client divergence |
 | Profitability CSV export | `features/profitability` | ON, SPEC | Existing export requires reconciliation | OFF | Not enabled | Bookkeeper export only; no live accounting integration |
-| Wage ledger | `features/wage_ledger` | OFF | Flag OFF | ON | CURRENT | CorvinumEU calendar-month gross wage ledger |
+| Wage ledger | `features/wage_ledger` | OFF | Flag OFF | ON | CURRENT | CorvinumEU calendar-month recorded gross wage beside recorded net payslip; no statutory net computation |
 | Payslips | `features/payslips` | OFF | Flag OFF | ON | CURRENT | CorvinumEU only |
 
 ## Client policy divergences

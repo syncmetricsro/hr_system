@@ -205,6 +205,14 @@ if _feature_on("payslips", "payslips"):
         path("payslips/<int:pk>/send/", payslip_views.payslip_send, name="payslip_send"),
     ]
 
+if _feature_on("wage_ledger", "wage_ledger"):
+    from features.wage_ledger import views as wage_views
+
+    app_routes += [
+        path("wages/", wage_views.wage_list, name="wage_list"),
+        path("wages/record/", wage_views.wage_record, name="wage_record"),
+    ]
+
 if _feature_on("feedback", "feedback"):
     from features.feedback import views as feedback_views
 

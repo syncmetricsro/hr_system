@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Validate the CorvinumEU presenter walkthrough against a running demo.
 
-The checker follows the 13-section manual route in
+The checker follows the 14-section manual route in
 ``docs/deployment/corvinum-demo-runbook.md``. It mutates fictional candidate,
 trial, checklist, and catalogue data. Provider-backed payslip delivery is off
 by default and requires an explicit approval environment variable.
@@ -254,6 +254,33 @@ def verify_payslips(
     )
 
 
+def verify_wage_sources(session: requests.Session, base_url: str) -> None:
+    wages = session.get(f"{base_url}/sk/wages/", timeout=15)
+    require(wages.status_code == 200, "Gross-wage workspace unavailable.")
+    wage_text = clean_text(wages.text)
+    for period, gross in (("2026-06", "1920"), ("2026-07", "2050")):
+        require(
+            period in wage_text and gross in wage_text,
+            f"Gross-wage fixture {period} / {gross}.00 is missing.",
+        )
+
+    marek_id = find_person_id(session, base_url, "Marek Skladník")
+    detail = session.get(f"{base_url}/sk/people/{marek_id}/", timeout=15)
+    require(detail.status_code == 200, "Marek's person overview is unavailable.")
+    detail_text = clean_text(detail.text)
+    for value in ("1920", "1450", "2050", "1540"):
+        require(value in detail_text, f"Expected pay source {value}.00 is missing.")
+    require(
+        "Vypočítaná čistá mzda" not in detail_text and "Computed net" not in detail_text,
+        "The overview incorrectly presents an unsupported computed-net value.",
+    )
+    require(
+        "finance-delta-mismatch" not in detail.text,
+        "The overview incorrectly marks gross-versus-net source values as a mismatch.",
+    )
+    print("  PASS: calendar-month gross and recorded-net fixtures align by period.")
+
+
 def run_walkthrough(
     base_url: str,
     *,
@@ -267,7 +294,7 @@ def run_walkthrough(
 
     try:
         print(f"Target URL: {base_url}")
-        print("[1/13] Secure entry and client isolation")
+        print("[1/14] Secure entry and client isolation")
         secret = os.environ.get("TOTP_SECRET")
         if not secret and ("localhost" in base_url or "127.0.0.1" in base_url):
             secret = fetch_local_secret()
@@ -280,21 +307,21 @@ def run_walkthrough(
             "Client shell isolation failed.",
         )
 
-        print("[2/13] Reports dashboard")
+        print("[2/14] Reports dashboard")
         reports = manager.get(f"{base_url}/sk/reports/", timeout=15)
         require(
             reports.status_code == 200 and "Reporty" in reports.text,
             "Reports unavailable.",
         )
 
-        print("[3/13] Projects and export boundary")
+        print("[3/14] Projects and export boundary")
         projects = manager.get(f"{base_url}/sk/projects/", timeout=15)
         require(
             projects.status_code == 200 and "Alfa Metallwerk" in projects.text,
             "Projects unavailable.",
         )
 
-        print("[4/13] Guided intake v4")
+        print("[4/14] Guided intake v4")
         start_url = f"{base_url}/sk/intake/start/"
         started = manager.post(
             start_url,
@@ -355,7 +382,7 @@ def run_walkthrough(
         person_url = f"{base_url}{completed.headers['Location']}"
         person_id = int(person_url.rstrip("/").split("/")[-1])
 
-        print("[5/13] Trial scheduling and outcome")
+        print("[5/14] Trial scheduling and outcome")
         person = manager.get(person_url, timeout=15)
         alfa_id = option_value(person.text, "Alfa Metallwerk")
         tomorrow = (dt.datetime.now() + dt.timedelta(days=1)).strftime("%Y-%m-%dT08:00")
@@ -388,7 +415,7 @@ def run_walkthrough(
         )
         require(outcome.status_code == 200, "Trial outcome failed.")
 
-        print("[6/13] Checklist and activation gate")
+        print("[6/14] Checklist and activation gate")
         checklist_id = first_match(
             r"/sk/checklist/(\d+)/toggle/",
             outcome.text,
@@ -416,18 +443,18 @@ def run_walkthrough(
             "Open checklist did not block activation.",
         )
 
-        print("[7/13] Notifications")
+        print("[7/14] Notifications")
         notifications = manager.get(f"{base_url}/sk/notifications/", timeout=15)
         require(notifications.status_code == 200, "Notifications unavailable.")
 
-        print("[8/13] Compliance")
+        print("[8/14] Compliance")
         compliance = manager.get(f"{base_url}/sk/compliance/", timeout=15)
         require(
             compliance.status_code == 200 and "Compliance" in compliance.text,
             "Compliance unavailable.",
         )
 
-        print("[9/13] Equipment catalogue")
+        print("[9/14] Equipment catalogue")
         catalog_url = f"{base_url}/sk/equipment/catalog/new/"
         catalog = manager.get(catalog_url, timeout=15)
         created_item = manager.post(
@@ -445,7 +472,7 @@ def run_walkthrough(
         )
         require(created_item.status_code == 200, "Equipment catalogue creation failed.")
 
-        print("[10/13] Ledger and CSV controls")
+        print("[10/14] Ledger and CSV controls")
         ledger = manager.get(f"{base_url}/sk/ledger/", timeout=15)
         require(
             ledger.status_code == 200 and "Kniha záloh" in ledger.text,
@@ -456,7 +483,10 @@ def run_walkthrough(
             "Ledger export missing.",
         )
 
-        print("[11/13] Payslip workspace")
+        print("[11/14] Gross wage and payslip source reconciliation")
+        verify_wage_sources(manager, base_url)
+
+        print("[12/14] Payslip workspace")
         verify_payslips(
             manager,
             base_url,
@@ -464,13 +494,13 @@ def run_walkthrough(
             period=payslip_period,
         )
 
-        print("[12/13] Audit")
+        print("[13/14] Audit")
         audit = manager.get(f"{base_url}/sk/audit/", timeout=15)
         require(
             audit.status_code == 200 and "Audit" in audit.text, "Audit unavailable."
         )
 
-        print("[13/13] Observer read-only policy")
+        print("[14/14] Observer read-only policy")
         observer = requests.Session()
         observer_home = login(observer, base_url, OBSERVER_EMAIL)
         require(observer_home.status_code == 200, "Observer login failed.")
@@ -482,12 +512,13 @@ def run_walkthrough(
         )
         observer_audit = observer.get(f"{base_url}/sk/audit/", timeout=15)
         require(observer_audit.status_code == 200, "Observer cannot read Audit.")
+        verify_wage_sources(observer, base_url)
 
     except (requests.RequestException, WalkthroughFailure, ValueError) as exc:
         print(f"FAILED: {exc}", file=sys.stderr)
         return False
 
-    print("SUCCESS: all 13 Corvinum walkthrough sections passed.")
+    print("SUCCESS: all 14 Corvinum walkthrough sections passed.")
     return True
 
 

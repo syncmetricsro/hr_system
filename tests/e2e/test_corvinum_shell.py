@@ -272,3 +272,37 @@ def test_corvinum_ledger_groups_controls_and_keeps_tables_aligned(page):
       })
     """)
     assert mobile == {"pageOverflow": 0, "entryScrolls": True}
+
+
+def test_corvinum_wage_and_payslip_sources_are_aligned_and_responsive(page):
+    page.set_viewport_size({"width": 375, "height": 667})
+    _login(page, "observer")
+
+    page.goto(f"{base_url()}/sk/wages/")
+    page.wait_for_load_state("networkidle")
+    expect(page.get_by_role("heading", name="Hrubé mzdy", exact=True)).to_be_visible()
+    wage_table = page.locator(".data-table").last
+    expect(wage_table).to_contain_text("2050,00")
+    expect(wage_table).to_contain_text("1920,00")
+
+    page.get_by_role("link", name="Marek Skladník").first.click()
+    overview = page.locator("[data-testid='person-finance-overview']")
+    expect(overview).to_be_visible()
+    expect(overview.locator("thead th")).to_have_count(3)
+    expect(overview).to_contain_text("2050,00")
+    expect(overview).to_contain_text("1540,00")
+    expect(overview).to_contain_text("1920,00")
+    expect(overview).to_contain_text("1450,00")
+    assert "Vypočítaná čistá mzda" not in overview.inner_text()
+
+    layout = page.evaluate("""
+      () => ({
+        pageOverflow: document.documentElement.scrollWidth - innerWidth,
+        overviewScrolls: document.querySelector(
+          '[data-testid="person-finance-overview"] .data-table-scroll'
+        ).scrollWidth > document.querySelector(
+          '[data-testid="person-finance-overview"] .data-table-scroll'
+        ).clientWidth,
+      })
+    """)
+    assert layout == {"pageOverflow": 0, "overviewScrolls": True}

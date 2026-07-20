@@ -10,7 +10,7 @@
   <p class="muted">{% trans "Encrypted PDF by email; the one-time password is shown here once and must be given to the worker by phone or Messenger — never by email." %}</p>
 </section>
 
-<section class="panel">
+{% if may_manage %}<section class="panel">
   <h2>{% trans "Record payslip" %}</h2>
   <form class="stack" method="post" action="{% url 'payslip_list' %}">
     {% csrf_token %}
@@ -24,11 +24,13 @@
     <button class="button button-primary" type="submit">{% trans "Record" %}</button>
   </form>
 </section>
+{% endif %}
 
 <section class="panel">
   <h2>{% trans "Recorded payslips" %}</h2>
-  <table>
-    <thead><tr><th>{% trans "Person" %}</th><th>{% trans "Period" %}</th><th>{% trans "Net amount" %}</th><th>{% trans "Sent" %}</th><th></th></tr></thead>
+  <div class="data-table-scroll">
+  <table class="data-table">
+    <thead><tr><th scope="col">{% trans "Person" %}</th><th scope="col">{% trans "Calendar month" %}</th><th scope="col">{% trans "Recorded net payslip" %}</th><th scope="col">{% trans "Sent" %}</th>{% if may_manage %}<th scope="col">{% trans "Action" %}</th>{% endif %}</tr></thead>
     <tbody>
       {% for slip in payslips %}
         <tr>
@@ -36,19 +38,20 @@
           <td>{{ slip.period }}</td>
           <td>{{ slip.net_amount }} {{ slip.currency }}</td>
           <td>{% if slip.sent_at %}{{ slip.sent_at|date:"Y-m-d H:i" }} → {{ slip.sent_to }}{% else %}—{% endif %}</td>
-          <td>
+          {% if may_manage %}<td>
             <form method="post" action="{% url 'payslip_send' slip.pk %}">
               {% csrf_token %}
               <button class="button button-secondary" type="submit">
                 {% if slip.sent_at %}{% trans "Resend (new password)" %}{% else %}{% trans "Send encrypted PDF" %}{% endif %}
               </button>
             </form>
-          </td>
+          </td>{% endif %}
         </tr>
       {% empty %}
-        <tr><td colspan="5" class="muted">{% trans "No payslips recorded." %}</td></tr>
+        <tr><td colspan="{% if may_manage %}5{% else %}4{% endif %}" class="muted">{% trans "No payslips recorded." %}</td></tr>
       {% endfor %}
     </tbody>
   </table>
+  </div>
 </section>
 {% endblock %}

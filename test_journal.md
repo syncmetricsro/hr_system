@@ -1,5 +1,25 @@
 # Test Journal
 
+## 2026-07-20 - Corvinum wage/payslip reconciliation
+
+- Added unit coverage for positive Decimal validation, person/month uniqueness,
+  audit attribution, role enforcement, independently persisted gross/net
+  sources, missing-series rendering, exact idempotent seed values, and absence
+  of unsupported computed-net or mismatch presentation.
+- Added a 375x667 Corvinum browser regression for the gross-wage list and the
+  period-aligned person overview. The 14-step HTTP walkthrough checker now
+  verifies the four fictional source values for Manager and Observer.
+- Focused Corvinum wage/client/routing/audit slice: **23 passed, 4 deselected**.
+  Full Corvinum lane: **220 passed, 8 skipped, 133 deselected**. Full Jober
+  unit lane: **392 passed, 1 skipped**.
+- Complete isolated Playwright suite: **43 passed** after rebuilding, migrating,
+  and seeding both clients. The new 375x667 scenario verifies all four localized
+  fixture amounts, three aligned source columns, panel-owned horizontal scroll,
+  and no document-level overflow.
+- Ruff and migration consistency pass. The 14-step HTTP checker was expanded
+  but not run against persistent staging because it creates fictional workflow
+  records; provider-backed email was intentionally not repeated.
+
 ## 2026-07-20 - Shared audit-table layout
 
 - Corvinum-settings audit page slice: **8 passed**. Manager/Observer access now

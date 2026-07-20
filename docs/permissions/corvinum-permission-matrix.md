@@ -38,7 +38,10 @@ Legend: ✅ permitted · — denied
 | `checklist.tick` | — | ✅ | ✅ | — |
 | `ledger.enter` | — | — | ✅ | — |
 | `ledger.view` | — | — | ✅ | ✅ |
+| `wage.manage` | — | — | ✅ | — |
+| `wage.view` | — | — | ✅ | ✅ |
 | `payslip.manage` | — | — | ✅ | — |
+| `payslip.view` | — | — | ✅ | ✅ |
 | `blacklist.propose` | — | ✅ | ✅ | — |
 | `blacklist.decide` | — | — | ✅ | — |
 | `blacklist.view_reason` | — | — | ✅ | — |

@@ -51,8 +51,11 @@
         {% can 'ledger.view' as may_ledger %}
         {% if may_ledger and has_advances %}<a class="sb-item {% nav_active 'ledger_overview' %}" href="{% url 'ledger_overview' %}" data-tooltip="{% trans 'Ledger' %}"><span class="material-symbols-outlined" aria-hidden="true">payments</span><span class="sb-text">{% trans "Ledger" %}</span></a>{% endif %}
         {% flag_on 'payslips' as has_payslips %}
-        {% can 'payslip.manage' as may_payslips %}
+        {% can 'payslip.view' as may_payslips %}
         {% if may_payslips and has_payslips %}<a class="sb-item {% nav_active 'payslip_list' %}" href="{% url 'payslip_list' %}" data-tooltip="{% trans 'Payslips' %}"><span class="material-symbols-outlined" aria-hidden="true">paid</span><span class="sb-text">{% trans "Payslips" %}</span></a>{% endif %}
+        {% flag_on 'wage_ledger' as has_wage_ledger %}
+        {% can 'wage.view' as may_view_wages %}
+        {% if may_view_wages and has_wage_ledger %}<a class="sb-item {% nav_active 'wage_list' %}" href="{% url 'wage_list' %}" data-tooltip="{% trans 'Gross wages' %}"><span class="material-symbols-outlined" aria-hidden="true">payments</span><span class="sb-text">{% trans "Gross wages" %}</span></a>{% endif %}
         {% can 'equipment.review_deduction' as may_equip_review %}
         {% can 'catalog.manage' as may_manage_catalog %}
         {% flag_on 'equipment' as has_equipment %}

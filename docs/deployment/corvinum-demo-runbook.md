@@ -18,7 +18,7 @@ has successfully delivered one encrypted fictional payslip PDF to a controlled
 test inbox. Never use a real worker address for either environment.
 
 Use this as the source of truth for the client demonstration. The extended
-walkthrough takes **40–45 minutes**; 20-minute and 10-minute routes are included
+walkthrough takes **45–50 minutes**; 20-minute and 10-minute routes are included
 below. The extended route intentionally shows every currently mounted product
 area, including read-only boundaries and confirmation controls. Do not lengthen
 the call by improvising features that are listed as deferred.
@@ -333,17 +333,58 @@ the per-person custody/value view, not Jober's warehouse-stock report.
    confirmation dialog, then choose **Cancel**. This demonstrates the safety
    control without locking the rehearsal data.
 7. Mention the cancellation path for open entries and reversal-only correction
-   path after an entry is
-   locked.
+   path after an entry is locked.
 
 Do not claim the proposed Thursday cut-off or 20th-to-20th cycle is final. Ask
 the client to confirm C-Q2 and C-Q3.
 
-### 11. Encrypted payslip delivery - 4 minutes
+### 11. Gross wage and payslip source reconciliation - 6 minutes
 
-1. Open **Payslips** and first inspect the Recorded payslips table.
-2. On a clean local database, record a payslip for Marek using an unused
-   fictional period, `1450.00 EUR`, and note `Fictional client demo`.
+This is the required numeric checkpoint. Do not improvise arithmetic or call
+the difference between gross and net a discrepancy.
+
+1. Open **Gross wages**. Explain that one entry is the gross wage earned for a
+   calendar month, from the first through the last day. It is a recorded source
+   value, not an hours-times-rate calculation.
+2. Find Marek's two seeded rows and verify the values on screen before moving
+   on:
+
+   | Calendar month | Recorded gross wage | Recorded net payslip |
+   |---|---:|---:|
+   | `2026-06` | `1920.00 EUR` | `1450.00 EUR` |
+   | `2026-07` | `2050.00 EUR` | `1540.00 EUR` |
+
+3. Open **Marek Skladník** from the wage table. In **Wage and payslip
+   overview**, verify that each calendar month occupies one row and that the
+   gross and net source values appear in separate, clearly labelled columns.
+4. State the boundary explicitly: `1920.00 - 1450.00 = 470.00` and
+   `2050.00 - 1540.00 = 510.00`, but neither difference is presented as an
+   error or as an application-calculated deduction. The demo does not yet have
+   the client's statutory tax, levy, or complete payroll input structure.
+5. Contrast this with the **Ledger** shown in the previous section. Gross wage
+   and payslip use the same calendar-month key. Advances, equipment recovery,
+   and additions use the separate cycle from the 21st of the previous month
+   through the 20th of the named month. The ledger does not silently rewrite
+   either recorded source value.
+6. If the client challenges a figure, ask which source field is wrong: the
+   recorded gross wage, the recorded net payslip, or the operational ledger
+   period. Do not claim the system can calculate legal net pay until the
+   deferred Corvinum wage workbook (`radonak.xlsx`) and payroll rules are
+   received and approved.
+
+Expected presentation: no **Computed net**, **Mismatch**, or red variance
+indicator appears. A missing source is shown as `—`; it is not treated as zero.
+The two seeded periods are fictional acceptance fixtures, not client payroll
+data.
+
+### 12. Encrypted payslip delivery - 4 minutes
+
+1. Open **Payslips** and inspect the same seeded `2026-06` and `2026-07` net
+   values. This confirms that the person overview reads the payslip record; it
+   does not copy or calculate the displayed number.
+2. If creation itself must be demonstrated, use a different fictional person
+   and an unused period. Do not overwrite or duplicate Marek's numeric
+   checkpoint rows.
 3. On persistent staging, if the intended Marek/period row already exists, do
    not create it again. Use that row's **Resend (new password)** action. The
    database allows one payslip per person and period.
@@ -365,7 +406,7 @@ it never exposes a server-error page.
 If the app was intentionally started without Doppler, the console backend
 prints MIME output instead and does **not** offer a clickable attachment.
 
-### 12. Audit filters and person history - 3 minutes
+### 13. Audit filters and person history - 3 minutes
 
 1. Open **Audit** as HR Admin. Filter by Marek or by an action from this
    session, such as the checklist tick or payslip send.
@@ -377,11 +418,12 @@ prints MIME output instead and does **not** offer a clickable attachment.
 4. Explain that actor-complete person history is still being refined; the
    global Audit remains the authoritative actor record in this build.
 
-### 13. Observer RBAC and close - 3 minutes
+### 14. Observer RBAC and close - 3 minutes
 
 1. In a separate private browser profile, sign in as
    `observer@demo.corvinum.test`.
-2. Open People, Projects, Ledger, exports, and Audit. Confirm read visibility.
+2. Open People, Projects, Gross wages, Payslips, Ledger, exports, and Audit.
+   Confirm read visibility and the same four seeded wage/payslip amounts.
 3. Confirm that Add person, checklist mutation, catalogue management, ledger
    entry, payslip management, blacklist decisions, and operational lifecycle
    controls are absent.
@@ -471,9 +513,11 @@ Use this route when the audience wants breadth but not every mutation:
 5. Show Marek's equipment custody, approved recovery, and linked ledger entry.
 6. Show Thursday/cycle summaries, CSV availability, and the cycle confirmation
    dialog; choose Cancel.
-7. Show an existing payslip row and explain encryption/password separation
+7. Show Marek's calendar-month gross wage and net payslip side by side, quote
+   the four expected fixture values, and explain why no net is calculated.
+8. Show the matching payslip row and explain encryption/password separation
    without sending unless provider delivery is an agreed objective.
-8. Filter Audit by an action from the session and close with Observer read-only
+9. Filter Audit by an action from the session and close with Observer read-only
    access and the open-decision list.
 
 ## Ten-minute route
@@ -487,7 +531,9 @@ When time is tight, use only:
    checklist item and show its notification.
 4. Marek -> equipment value -> linked ledger deduction.
 5. Ledger confirmation dialog, then Cancel.
-6. Audit and the decision checklist. Skip payslip creation unless the client
+6. Marek's `2026-07` gross `2050.00 EUR` beside recorded net `1540.00 EUR`,
+   with the source-versus-calculation boundary stated explicitly.
+7. Audit and the decision checklist. Skip payslip creation unless the client
    specifically asks about delivery.
 
 ## Current Corvinum feature boundary
@@ -502,14 +548,10 @@ not be presented as hidden or unfinished menu items:
 
 Corvinum currently demonstrates people and projects, recruitment trials,
 compliance, activation checklists, equipment review, blacklist decisions,
-advances/deductions, payslips, notifications, Reports, and Audit. These
+advances/deductions, calendar-month gross wages, recorded net payslips,
+notifications, Reports, and Audit. These
 boundaries come from the client feature configuration and remain subject to
 confirmed client scope.
-
-Also do not present the parked wage-ledger branch as deployed. The current
-staging release records net payslips and operational advance/deduction entries;
-it does not yet expose the unmerged gross-wage ledger or wage-versus-payslip
-reconciliation surface.
 
 ## Recovery during rehearsal or the live call
 
@@ -525,6 +567,7 @@ reconciliation surface.
 | SMTP send fails | Confirm Marek has a deliverable controlled test address, then check `scripts/corvinum_app.sh logs`; FORPSI may also require the current country in its GeoIP allow-list |
 | Console email appears instead of real delivery | Restart with `doppler run -- scripts/corvinum_app.sh up` |
 | Payslip creation reports a duplicate | Select the existing person/period row and use Resend, or choose an unused fictional period |
+| Wage and payslip figures appear inconsistent | Verify the four fictional fixture values above, then confirm the two source records and period labels; do not infer statutory deductions from the difference |
 | A risky button is reached accidentally | Use **Cancel** in the confirmation dialog; do not include or settle the cycle during the main walkthrough |
 
 ## Decisions to request from the client

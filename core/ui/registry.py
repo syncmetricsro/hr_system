@@ -10,6 +10,7 @@ Slots:
 - person panels   — sections on the person card
 - form extensions — extra intake-form fields + post-create handlers
 - exit relevance  — "does this person still hold feature resources?" checks
+- finance series  — period-keyed person money data merged by core
 """
 
 from __future__ import annotations
@@ -33,6 +34,8 @@ exit_relevance_checks: list = []
 _report_tiles: list[dict] = []
 # Each: {"template": str, "context": fn(request) -> dict|None, "order": int}
 _report_panels: list[dict] = []
+# Each provider returns a label and period -> (Decimal, currency) values.
+_person_finance_series: list[dict] = []
 
 
 def register_person_banner(template: str, context, order: int = 100) -> None:
@@ -69,6 +72,12 @@ def register_report_panel(template: str, context, order: int = 100) -> None:
         _report_panels.append(entry)
 
 
+def register_person_finance_series(provider, order: int = 100) -> None:
+    entry = {"provider": provider, "order": order}
+    if entry not in _person_finance_series:
+        _person_finance_series.append(entry)
+
+
 def _render_slot(slot: list[dict], request, person) -> list[dict]:
     rendered = []
     for entry in sorted(slot, key=lambda e: e["order"]):
@@ -85,6 +94,30 @@ def person_banners(request, person) -> list[dict]:
 
 def person_panels(request, person) -> list[dict]:
     return _render_slot(_person_panels, request, person)
+
+
+def person_finance_overview(request, person) -> dict | None:
+    """Align feature-owned source values by calendar month."""
+    series = []
+    for entry in sorted(_person_finance_series, key=lambda item: item["order"]):
+        rendered = entry["provider"](request, person)
+        if rendered is not None:
+            series.append(rendered)
+    periods = sorted(
+        {period for item in series for period in item["periods"]}, reverse=True
+    )
+    if not periods:
+        return None
+    rows = []
+    for period in periods:
+        cells = []
+        for item in series:
+            value = item["periods"].get(period)
+            cells.append(
+                None if value is None else {"amount": value[0], "currency": value[1]}
+            )
+        rows.append({"period": period, "cells": cells})
+    return {"series": series, "rows": rows}
 
 
 def exit_relevant(person) -> bool:

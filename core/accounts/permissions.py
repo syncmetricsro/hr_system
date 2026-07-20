@@ -52,6 +52,7 @@ class Action(str, Enum):
     SMS_MANAGE_TEMPLATES = "sms.manage_templates"
     CHECKLIST_TICK = "checklist.tick"
     LEDGER_ENTER = "ledger.enter"
+    WAGE_MANAGE = "wage.manage"
     PAYSLIP_MANAGE = "payslip.manage"
     FINANCE_MANAGE = "finance.manage"
     EXPORT_APPROVED = "export.approved"
@@ -61,6 +62,8 @@ class Action(str, Enum):
     FEEDBACK_VIEW = "feedback.view"
     FINANCE_VIEW_SUMMARY = "finance.view_summary"
     LEDGER_VIEW = "ledger.view"
+    WAGE_VIEW = "wage.view"
+    PAYSLIP_VIEW = "payslip.view"
     AUDIT_VIEW = "audit.view"
 
 
