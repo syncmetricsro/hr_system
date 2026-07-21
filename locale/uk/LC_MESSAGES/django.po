@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-20 21:50+0200\n"
+"POT-Creation-Date: 2026-07-21 21:01+0200\n"
 "Language: uk\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -238,7 +238,7 @@ msgstr "підтверджено"
 #: features/logistics/models.py:164 features/logistics/models.py:250
 #: features/logistics/models.py:310 features/logistics/models.py:389
 #: features/messaging/models.py:17 features/messaging/models.py:45
-#: features/payslips/models.py:35 features/wage_ledger/models.py:43
+#: features/payslips/models.py:37 features/wage_ledger/models.py:43
 msgid "created"
 msgstr "створено"
 
@@ -760,7 +760,7 @@ msgstr "оновлено"
 #: features/blacklist/models.py:105 features/checklists/models.py:57
 #: features/compliance/models.py:12 features/intake/models.py:106
 #: features/logistics/models.py:112 features/logistics/models.py:196
-#: features/messaging/models.py:35 features/payslips/models.py:19
+#: features/messaging/models.py:35 features/payslips/models.py:20
 #: features/wage_ledger/models.py:16
 msgid "person"
 msgstr "особа"
@@ -1003,7 +1003,7 @@ msgstr "результат"
 #: core/projects/models.py:135 features/advances/models.py:83
 #: features/checklists/models.py:68 features/finance/models.py:33
 #: features/logistics/models.py:245 features/logistics/models.py:384
-#: features/payslips/models.py:30 features/wage_ledger/models.py:34
+#: features/payslips/models.py:31 features/wage_ledger/models.py:34
 msgid "note"
 msgstr "нотатка"
 
@@ -1285,7 +1285,7 @@ msgstr "категорія"
 msgid "amount"
 msgstr "сума"
 
-#: features/advances/models.py:73 features/payslips/models.py:29
+#: features/advances/models.py:73 features/payslips/models.py:30
 #: features/wage_ledger/models.py:33
 msgid "currency"
 msgstr "валюта"
@@ -1572,8 +1572,8 @@ msgstr "шаблони контрольних списків"
 msgid "template"
 msgstr "шаблон"
 
-#: features/checklists/models.py:39 templates/panels/checklists_items.html:29
-#: templates/panels/checklists_items.html:34
+#: features/checklists/models.py:39 templates/panels/checklists_items.html:30
+#: templates/panels/checklists_items.html:35
 msgid "critical"
 msgstr "критичний"
 
@@ -1630,18 +1630,9 @@ msgid "Activation blocked by open checklist items: %(items)s"
 msgstr ""
 "Активацію заблоковано відкритими пунктами контрольного списку: %(items)s"
 
-#: features/compliance/models.py:15
+#: features/compliance/models.py:15 features/payslips/models.py:32
 msgid "issue date"
 msgstr "дата видачі"
-
-msgid "Issue date"
-msgstr "Дата видачі"
-
-msgid "Payslip date (optional)"
-msgstr "Дата розрахункового листа (необов’язково)"
-
-msgid "If left blank, the creation date is used."
-msgstr "Якщо залишити поле порожнім, буде використано дату створення."
 
 #: features/compliance/models.py:20
 msgid "certificate"
@@ -1954,8 +1945,9 @@ msgid "Yes/No"
 msgstr "Так/Ні"
 
 #: features/intake/models.py:19 features/logistics/forms.py:135
-#: templates/pages/equipment_stock.html:46 templates/pages/ledger.html:50
-#: templates/pages/ledger.html:105
+#: templates/pages/equipment_stock.html:46
+#: templates/partials/ledger_activity.html:8
+#: templates/partials/ledger_activity.html:26
 msgid "Date"
 msgstr "Дата"
 
@@ -2160,9 +2152,9 @@ msgstr "Посилання"
 msgid "Supplier"
 msgstr "Постачальник"
 
-#: features/logistics/forms.py:110 templates/pages/ledger.html:38
-#: templates/pages/payslips.html:23 templates/pages/transport_trends.html:44
-#: templates/pages/wages.html:41 templates/panels/advances_ledger.html:32
+#: features/logistics/forms.py:110 templates/pages/ledger.html:39
+#: templates/pages/transport_trends.html:44 templates/pages/wages.html:41
+#: templates/panels/advances_ledger.html:33
 msgid "Note"
 msgstr "Нотатка"
 
@@ -2738,7 +2730,7 @@ msgstr "шаблони повідомлень"
 msgid "Queued"
 msgstr "У черзі"
 
-#: features/messaging/models.py:31 templates/pages/payslips.html:33
+#: features/messaging/models.py:31 templates/pages/payslips.html:35
 msgid "Sent"
 msgstr "Надіслано"
 
@@ -2799,57 +2791,86 @@ msgstr "Повідомлення надіслано."
 msgid "Message failed: %(error)s"
 msgstr "Помилка повідомлення: %(error)s"
 
-#: features/payslips/models.py:22 features/wage_ledger/models.py:19
+#: features/payslips/forms.py:15
+msgid "no email!"
+msgstr "немає ел. пошти!"
+
+#: features/payslips/forms.py:20 templates/pages/ledger.html:21
+#: templates/pages/payslips.html:35 templates/pages/person_detail.html:8
+#: templates/pages/person_detail.html:232 templates/pages/wages.html:38
+#: templates/partials/ledger_activity.html:8
+#: templates/partials/ledger_activity.html:26
+#: templates/partials/ledger_cycle.html:16
+msgid "Person"
+msgstr "Особа"
+
+#: features/payslips/forms.py:23
+msgid "Payslip date (optional)"
+msgstr "Дата розрахункового листа (необов’язково)"
+
+#: features/payslips/forms.py:24
+msgid "If left blank, the creation date is used."
+msgstr "Якщо залишити поле порожнім, буде використано дату створення."
+
+#: features/payslips/forms.py:32
+msgid "Period (YYYY-MM)"
+msgstr "Період (РРРР-ММ)"
+
+#: features/payslips/forms.py:33
+msgid "Net amount (EUR)"
+msgstr "Чиста сума (EUR)"
+
+#: features/payslips/models.py:23 features/wage_ledger/models.py:19
 msgid "period"
 msgstr "період"
 
-#: features/payslips/models.py:23 features/wage_ledger/models.py:23
+#: features/payslips/models.py:24 features/wage_ledger/models.py:23
 msgid "Use the YYYY-MM format."
 msgstr "Використовуйте формат РРРР-ММ."
 
-#: features/payslips/models.py:26
+#: features/payslips/models.py:27
 msgid "net amount"
 msgstr "чиста сума"
 
-#: features/payslips/models.py:33 features/wage_ledger/models.py:41
+#: features/payslips/models.py:35 features/wage_ledger/models.py:41
 msgid "created by"
 msgstr "створив"
 
-#: features/payslips/models.py:36
+#: features/payslips/models.py:38
 msgid "sent"
 msgstr "надіслано"
 
-#: features/payslips/models.py:37
+#: features/payslips/models.py:39
 msgid "sent to"
 msgstr "надіслано на"
 
-#: features/payslips/models.py:40
+#: features/payslips/models.py:42
 msgid "sent by"
 msgstr "надіслав"
 
-#: features/payslips/models.py:44
+#: features/payslips/models.py:46
 msgid "payslip"
 msgstr "розрахунковий лист"
 
-#: features/payslips/models.py:45
+#: features/payslips/models.py:47
 msgid "payslips"
 msgstr "розрахункові листи"
 
-#: features/payslips/providers.py:15 templates/pages/payslips.html:33
-#: tests/test_wage_ledger.py:95
+#: features/payslips/providers.py:15 templates/pages/payslips.html:35
+#: tests/test_wage_ledger.py:96
 msgid "Recorded net payslip"
 msgstr "Зареєстрована чиста сума в розрахунковому листі"
 
-#: features/payslips/services.py:133
+#: features/payslips/services.py:149
 msgid "This person has no email address on file."
 msgstr "У цієї особи немає зареєстрованої електронної адреси."
 
-#: features/payslips/services.py:139
+#: features/payslips/services.py:155
 #, python-format
 msgid "Payslip %(period)s"
 msgstr "Розрахунковий лист %(period)s"
 
-#: features/payslips/services.py:141
+#: features/payslips/services.py:157
 #, python-format
 msgid ""
 "Your payslip for %(period)s is attached as an encrypted PDF.\n"
@@ -2858,7 +2879,7 @@ msgstr ""
 "У вкладенні ваш розрахунковий лист за %(period)s у зашифрованому PDF.\n"
 "Пароль ви отримаєте окремо — його ніколи не надсилають електронною поштою."
 
-#: features/payslips/services.py:151 features/payslips/services.py:155
+#: features/payslips/services.py:167 features/payslips/services.py:171
 msgid ""
 "Unable to send the payslip email. Check the recipient address and mail "
 "configuration."
@@ -2866,11 +2887,11 @@ msgstr ""
 "Не вдалося надіслати розрахунковий лист електронною поштою. Перевірте адресу "
 "одержувача та налаштування пошти."
 
-#: features/payslips/views.py:28
+#: features/payslips/views.py:30
 msgid "Payslip recorded."
 msgstr "Розрахунковий лист збережено."
 
-#: features/payslips/views.py:54
+#: features/payslips/views.py:63
 #, python-format
 msgid ""
 "Payslip emailed to %(to)s. One-time password (tell the worker by phone/"
@@ -2903,7 +2924,7 @@ msgstr "записи про зарплату"
 msgid "A wage is already recorded for this person and period."
 msgstr "Для цієї особи та періоду зарплату вже зареєстровано."
 
-#: features/wage_ledger/providers.py:17 tests/test_wage_ledger.py:94
+#: features/wage_ledger/providers.py:17 tests/test_wage_ledger.py:95
 msgid "Recorded gross wage"
 msgstr "Зареєстрована валова зарплата"
 
@@ -3160,10 +3181,11 @@ msgstr "Керування проживанням"
 
 # --- compliance ---
 #: templates/pages/accommodation_form.html:9
-#: templates/pages/equipment_form.html:10 templates/pages/ledger.html:123
-#: templates/pages/room_form.html:9 templates/pages/transport_trends.html:22
+#: templates/pages/equipment_form.html:10 templates/pages/room_form.html:9
+#: templates/pages/transport_trends.html:22
 #: templates/pages/trials_queue.html:25
 #: templates/partials/confirm_dialog.html:12
+#: templates/partials/ledger_activity.html:44
 msgid "Cancel"
 msgstr "Скасувати"
 
@@ -3221,7 +3243,7 @@ msgstr "Виконавець (ел. пошта містить)"
 
 # --- projects UI ---
 #: templates/pages/audit_log.html:17 templates/pages/audit_log.html:41
-#: templates/pages/payslips.html:33 templates/pages/transport_trends.html:44
+#: templates/pages/payslips.html:35 templates/pages/transport_trends.html:44
 msgid "Action"
 msgstr "Дія"
 
@@ -3254,8 +3276,8 @@ msgstr "Коли"
 msgid "Actor"
 msgstr "Виконавець"
 
-#: templates/pages/audit_log.html:42 templates/pages/ledger.html:39
-#: templates/pages/payslips.html:24
+#: templates/pages/audit_log.html:42 templates/pages/ledger.html:40
+#: templates/pages/payslips.html:26
 msgid "Record"
 msgstr "Записати"
 
@@ -3705,11 +3727,13 @@ msgstr "Фінансові місяці"
 msgid "No financial months."
 msgstr "Немає фінансових місяців."
 
-#: templates/pages/finance_summary.html:39 templates/pages/ledger.html:68
+#: templates/pages/finance_summary.html:39
+#: templates/partials/ledger_cycle.html:5
 msgid "Year"
 msgstr "Рік"
 
-#: templates/pages/finance_summary.html:42 templates/pages/ledger.html:71
+#: templates/pages/finance_summary.html:42
+#: templates/partials/ledger_cycle.html:8
 msgid "Month"
 msgstr "Місяць"
 
@@ -3772,146 +3796,28 @@ msgstr "Далі"
 msgid "Advances & deductions"
 msgstr "Аванси та утримання"
 
-#: templates/pages/ledger.html:17 templates/panels/advances_ledger.html:33
+#: templates/pages/ledger.html:18 templates/panels/advances_ledger.html:34
 msgid "Record entry"
 msgstr "Внести запис"
 
-#: templates/pages/ledger.html:20 templates/pages/ledger.html:50
-#: templates/pages/ledger.html:79 templates/pages/ledger.html:105
-#: templates/pages/payslips.html:17 templates/pages/payslips.html:33
-#: templates/pages/person_detail.html:8 templates/pages/person_detail.html:232
-#: templates/pages/wages.html:38
-msgid "Person"
-msgstr "Особа"
-
-#: templates/pages/ledger.html:24
+#: templates/pages/ledger.html:25
 msgid "Company / project"
 msgstr "Компанія / проєкт"
 
-#: templates/pages/ledger.html:29 templates/panels/advances_ledger.html:23
+#: templates/pages/ledger.html:30 templates/panels/advances_ledger.html:24
 msgid "Entry type"
 msgstr "Тип запису"
 
-#: templates/pages/ledger.html:33 templates/pages/ledger.html:105
-#: templates/panels/advances_ledger.html:27
+#: templates/pages/ledger.html:34 templates/panels/advances_ledger.html:28
 #: templates/panels/blacklist_case.html:10
 #: templates/panels/blacklist_case.html:33
+#: templates/partials/ledger_activity.html:26
 msgid "Category"
 msgstr "Категорія"
 
-#: templates/pages/ledger.html:37 templates/panels/advances_ledger.html:31
+#: templates/pages/ledger.html:38 templates/panels/advances_ledger.html:32
 msgid "Amount (EUR)"
 msgstr "Сума (EUR)"
-
-#: templates/pages/ledger.html:45
-msgid "Thursday summary"
-msgstr "Четверговий підсумок"
-
-#: templates/pages/ledger.html:46
-#, python-format
-msgid ""
-"Cut-off %(cutoff)s — open advances for Friday cash distribution. Later "
-"entries roll to next week."
-msgstr ""
-"Відсічення %(cutoff)s — відкриті аванси для видачі готівки в п’ятницю. "
-"Пізніші записи переносяться на наступний тиждень."
-
-# --- compliance ---
-#: templates/pages/ledger.html:50
-msgid "Company"
-msgstr "Компанія"
-
-#: templates/pages/ledger.html:50 templates/pages/ledger.html:105
-msgid "Amount"
-msgstr "Сума"
-
-#: templates/pages/ledger.html:56
-msgid "Total"
-msgstr "Разом"
-
-#: templates/pages/ledger.html:59 templates/pages/ledger.html:86
-msgid "Download CSV"
-msgstr "Завантажити CSV"
-
-#: templates/pages/ledger.html:61
-msgid "No open advances before this week's cut-off."
-msgstr "До відсічення цього тижня немає відкритих авансів."
-
-#: templates/pages/ledger.html:66
-#, python-format
-msgid "Cycle %(start)s → %(end)s"
-msgstr "Цикл %(start)s → %(end)s"
-
-#: templates/pages/ledger.html:74
-msgid "Show"
-msgstr "Показати"
-
-#: templates/pages/ledger.html:79
-msgid "To deduct"
-msgstr "До утримання"
-
-#: templates/pages/ledger.html:79
-msgid "To add"
-msgstr "До доплати"
-
-#: templates/pages/ledger.html:79
-msgid "Net pay effect"
-msgstr "Чистий вплив на зарплату"
-
-#: templates/pages/ledger.html:93
-msgid ""
-"This locks every open entry of the window into the cycle; locked entries can "
-"only be corrected by reversal."
-msgstr ""
-"Блокує всі відкриті записи вікна в цикл; заблоковані записи можна виправити "
-"лише сторно."
-
-#: templates/pages/ledger.html:93
-msgid "Include open entries in cycle"
-msgstr "Включити відкриті записи в цикл"
-
-#: templates/pages/ledger.html:94
-msgid "This marks the whole cycle as settled with pay."
-msgstr "Позначає весь цикл як погашений із зарплатою."
-
-#: templates/pages/ledger.html:94
-msgid "Mark cycle settled"
-msgstr "Позначити цикл погашеним"
-
-#: templates/pages/ledger.html:98
-msgid "No entries in this cycle window."
-msgstr "У цьому вікні циклу немає записів."
-
-#: templates/pages/ledger.html:103
-msgid "Entries"
-msgstr "Записи"
-
-#: templates/pages/ledger.html:105
-msgid "Type"
-msgstr "Тип"
-
-#: templates/pages/ledger.html:105
-msgid "Settlement"
-msgstr "Розрахунок"
-
-#: templates/pages/ledger.html:121
-msgid ""
-"This records a reversal entry with the opposite pay effect; the original "
-"stays in the ledger."
-msgstr ""
-"Записує сторно-запис із протилежним впливом на зарплату; оригінал "
-"залишається в книзі."
-
-#: templates/pages/ledger.html:121
-msgid "Reverse"
-msgstr "Сторнувати"
-
-#: templates/pages/ledger.html:123
-msgid ""
-"This cancels the open ledger entry; it will no longer count against pay."
-msgstr ""
-"Скасовує відкритий запис у книзі; він більше не враховуватиметься щодо "
-"зарплати."
 
 # --- login ---
 #: templates/pages/login.html:4 templates/pages/login.html:10
@@ -3948,36 +3854,28 @@ msgstr ""
 msgid "Record payslip"
 msgstr "Внести розрахунковий лист"
 
-#: templates/pages/payslips.html:19
-msgid "no email!"
-msgstr "немає ел. пошти!"
-
-#: templates/pages/payslips.html:21
-msgid "Period (YYYY-MM)"
-msgstr "Період (РРРР-ММ)"
-
-#: templates/pages/payslips.html:22
-msgid "Net amount (EUR)"
-msgstr "Чиста сума (EUR)"
-
-#: templates/pages/payslips.html:30
+#: templates/pages/payslips.html:32
 msgid "Recorded payslips"
 msgstr "Збережені розрахункові листи"
 
-#: templates/pages/payslips.html:33
+#: templates/pages/payslips.html:35
 #: templates/partials/person_finance_overview.html:10
 msgid "Calendar month"
 msgstr "Календарний місяць"
 
-#: templates/pages/payslips.html:45
+#: templates/pages/payslips.html:35
+msgid "Issue date"
+msgstr "Дата видачі"
+
+#: templates/pages/payslips.html:48
 msgid "Resend (new password)"
 msgstr "Надіслати знову (новий пароль)"
 
-#: templates/pages/payslips.html:45
+#: templates/pages/payslips.html:48
 msgid "Send encrypted PDF"
 msgstr "Надіслати зашифрований PDF"
 
-#: templates/pages/payslips.html:51
+#: templates/pages/payslips.html:54
 msgid "No payslips recorded."
 msgstr "Немає збережених розрахункових листів."
 
@@ -4435,7 +4333,8 @@ msgid ""
 msgstr ""
 "Зареєструйте валову зарплату, зароблену за кожен календарний місяць. Це "
 "значення відображається поруч з окремо зареєстрованою чистою сумою з "
-"розрахункового листа; система не обчислює законодавчі відрахування із зарплати."
+"розрахункового листа; система не обчислює законодавчі відрахування із "
+"зарплати."
 
 #: templates/pages/wages.html:15 templates/pages/wages.html:27
 msgid "Record gross wage"
@@ -4461,11 +4360,19 @@ msgstr "Валові зарплати не зареєстровані."
 msgid "Money"
 msgstr "Гроші"
 
-#: templates/panels/advances_ledger.html:6
+#: templates/panels/advances_ledger.html:5
+msgid ""
+"Cash advances and deductions against this person's pay, settled through the "
+"weekly ledger cycle."
+msgstr ""
+"Готівкові аванси та відрахування із зарплати цієї особи, що розраховуються "
+"у щотижневому циклі обліку."
+
+#: templates/panels/advances_ledger.html:7
 msgid "Open balance against pay"
 msgstr "Відкритий залишок щодо зарплати"
 
-#: templates/panels/advances_ledger.html:15
+#: templates/panels/advances_ledger.html:16
 msgid "No ledger entries yet."
 msgstr "Записів у книзі поки немає."
 
@@ -4513,7 +4420,14 @@ msgstr "Погодження"
 msgid "Activation checklist"
 msgstr "Контрольний список активації"
 
-#: templates/panels/checklists_items.html:7
+#: templates/panels/checklists_items.html:5
+msgid ""
+"Items marked critical must all be ticked before this person can be activated."
+msgstr ""
+"Усі пункти, позначені як критичні, мають бути відмічені, перш ніж цю особу "
+"можна буде активувати."
+
+#: templates/panels/checklists_items.html:8
 #, python-format
 msgid "%(n)s critical item open — activation is blocked."
 msgid_plural "%(n)s critical items open — activation is blocked."
@@ -4521,7 +4435,7 @@ msgstr[0] "%(n)s критичний пункт відкритий — актив
 msgstr[1] "%(n)s критичні пункти відкриті — активацію заблоковано."
 msgstr[2] "%(n)s критичних пунктів відкрито — активацію заблоковано."
 
-#: templates/panels/checklists_items.html:9
+#: templates/panels/checklists_items.html:10
 msgid "All critical items are complete."
 msgstr "Усі критичні пункти виконано."
 
@@ -4643,13 +4557,125 @@ msgstr "Ви справді хочете це зробити?"
 msgid "Yes, proceed"
 msgstr "Так, продовжити"
 
+#: templates/partials/ledger_activity.html:3
+msgid "Thursday summary"
+msgstr "Четверговий підсумок"
+
+#: templates/partials/ledger_activity.html:4
+#, python-format
+msgid ""
+"Cut-off %(cutoff)s — open advances for Friday cash distribution. Later "
+"entries roll to next week."
+msgstr ""
+"Відсічення %(cutoff)s — відкриті аванси для видачі готівки в п’ятницю. "
+"Пізніші записи переносяться на наступний тиждень."
+
+# --- compliance ---
+#: templates/partials/ledger_activity.html:8
+msgid "Company"
+msgstr "Компанія"
+
+#: templates/partials/ledger_activity.html:8
+#: templates/partials/ledger_activity.html:26
+msgid "Amount"
+msgstr "Сума"
+
+#: templates/partials/ledger_activity.html:14
+msgid "Total"
+msgstr "Разом"
+
+#: templates/partials/ledger_activity.html:17
+#: templates/partials/ledger_cycle.html:23
+msgid "Download CSV"
+msgstr "Завантажити CSV"
+
+#: templates/partials/ledger_activity.html:19
+msgid "No open advances before this week's cut-off."
+msgstr "До відсічення цього тижня немає відкритих авансів."
+
+#: templates/partials/ledger_activity.html:24
+msgid "Entries"
+msgstr "Записи"
+
+#: templates/partials/ledger_activity.html:26
+msgid "Type"
+msgstr "Тип"
+
+#: templates/partials/ledger_activity.html:26
+msgid "Settlement"
+msgstr "Розрахунок"
+
+#: templates/partials/ledger_activity.html:42
+msgid ""
+"This records a reversal entry with the opposite pay effect; the original "
+"stays in the ledger."
+msgstr ""
+"Записує сторно-запис із протилежним впливом на зарплату; оригінал "
+"залишається в книзі."
+
+#: templates/partials/ledger_activity.html:42
+msgid "Reverse"
+msgstr "Сторнувати"
+
+#: templates/partials/ledger_activity.html:44
+msgid ""
+"This cancels the open ledger entry; it will no longer count against pay."
+msgstr ""
+"Скасовує відкритий запис у книзі; він більше не враховуватиметься щодо "
+"зарплати."
+
+#: templates/partials/ledger_cycle.html:3
+#, python-format
+msgid "Cycle %(start)s → %(end)s"
+msgstr "Цикл %(start)s → %(end)s"
+
+#: templates/partials/ledger_cycle.html:11
+msgid "Show"
+msgstr "Показати"
+
+#: templates/partials/ledger_cycle.html:16
+msgid "To deduct"
+msgstr "До утримання"
+
+#: templates/partials/ledger_cycle.html:16
+msgid "To add"
+msgstr "До доплати"
+
+#: templates/partials/ledger_cycle.html:16
+msgid "Net pay effect"
+msgstr "Чистий вплив на зарплату"
+
+#: templates/partials/ledger_cycle.html:30
+msgid ""
+"This locks every open entry of the window into the cycle; locked entries can "
+"only be corrected by reversal."
+msgstr ""
+"Блокує всі відкриті записи вікна в цикл; заблоковані записи можна виправити "
+"лише сторно."
+
+#: templates/partials/ledger_cycle.html:30
+msgid "Include open entries in cycle"
+msgstr "Включити відкриті записи в цикл"
+
+#: templates/partials/ledger_cycle.html:31
+msgid "This marks the whole cycle as settled with pay."
+msgstr "Позначає весь цикл як погашений із зарплатою."
+
+#: templates/partials/ledger_cycle.html:31
+msgid "Mark cycle settled"
+msgstr "Позначити цикл погашеним"
+
+#: templates/partials/ledger_cycle.html:35
+msgid "No entries in this cycle window."
+msgstr "У цьому вікні циклу немає записів."
+
 # --- dashboard ---
 #: templates/partials/person_finance_overview.html:4
 msgid "Wage and payslip overview"
 msgstr "Огляд зарплати та розрахункового листа"
 
 #: templates/partials/person_finance_overview.html:5
-#: tests/test_wage_ledger.py:97
+#: tests/test_wage_ledger.py:98
 msgid ""
 "Both columns are recorded source values for the same calendar month. Gross "
 "wage is not converted into net pay here; taxes, levies, and other statutory "

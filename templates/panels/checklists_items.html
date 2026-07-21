@@ -2,6 +2,7 @@
 <section class="panel workflow-panel" id="activation-checklist">
   <p class="eyebrow">{% trans "Approvals" %}</p>
   <h2>{% trans "Activation checklist" %}</h2>
+  <p class="muted">{% trans "Items marked critical must all be ticked before this person can be activated." %}</p>
 
   {% if panel.checklist_missing_critical %}
     <p class="muted">{% blocktrans count n=panel.checklist_missing_critical %}{{ n }} critical item open — activation is blocked.{% plural %}{{ n }} critical items open — activation is blocked.{% endblocktrans %}</p>

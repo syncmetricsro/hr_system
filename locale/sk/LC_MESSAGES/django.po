@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-20 21:50+0200\n"
+"POT-Creation-Date: 2026-07-21 21:01+0200\n"
 "Language: sk\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -237,7 +237,7 @@ msgstr "potvrdené"
 #: features/logistics/models.py:164 features/logistics/models.py:250
 #: features/logistics/models.py:310 features/logistics/models.py:389
 #: features/messaging/models.py:17 features/messaging/models.py:45
-#: features/payslips/models.py:35 features/wage_ledger/models.py:43
+#: features/payslips/models.py:37 features/wage_ledger/models.py:43
 msgid "created"
 msgstr "vytvorené"
 
@@ -759,7 +759,7 @@ msgstr "aktualizované"
 #: features/blacklist/models.py:105 features/checklists/models.py:57
 #: features/compliance/models.py:12 features/intake/models.py:106
 #: features/logistics/models.py:112 features/logistics/models.py:196
-#: features/messaging/models.py:35 features/payslips/models.py:19
+#: features/messaging/models.py:35 features/payslips/models.py:20
 #: features/wage_ledger/models.py:16
 msgid "person"
 msgstr "osoba"
@@ -1004,7 +1004,7 @@ msgstr "výsledok"
 #: core/projects/models.py:135 features/advances/models.py:83
 #: features/checklists/models.py:68 features/finance/models.py:33
 #: features/logistics/models.py:245 features/logistics/models.py:384
-#: features/payslips/models.py:30 features/wage_ledger/models.py:34
+#: features/payslips/models.py:31 features/wage_ledger/models.py:34
 msgid "note"
 msgstr "poznámka"
 
@@ -1285,7 +1285,7 @@ msgstr "kategória"
 msgid "amount"
 msgstr "suma"
 
-#: features/advances/models.py:73 features/payslips/models.py:29
+#: features/advances/models.py:73 features/payslips/models.py:30
 #: features/wage_ledger/models.py:33
 msgid "currency"
 msgstr "mena"
@@ -1571,8 +1571,8 @@ msgstr "šablóny kontrolných zoznamov"
 msgid "template"
 msgstr "šablóna"
 
-#: features/checklists/models.py:39 templates/panels/checklists_items.html:29
-#: templates/panels/checklists_items.html:34
+#: features/checklists/models.py:39 templates/panels/checklists_items.html:30
+#: templates/panels/checklists_items.html:35
 msgid "critical"
 msgstr "kritické"
 
@@ -1629,18 +1629,9 @@ msgid "Activation blocked by open checklist items: %(items)s"
 msgstr ""
 "Aktivácia je zablokovaná otvorenými položkami kontrolného zoznamu: %(items)s"
 
-#: features/compliance/models.py:15
+#: features/compliance/models.py:15 features/payslips/models.py:32
 msgid "issue date"
 msgstr "dátum vydania"
-
-msgid "Issue date"
-msgstr "Dátum vystavenia"
-
-msgid "Payslip date (optional)"
-msgstr "Dátum výplatnej pásky (voliteľné)"
-
-msgid "If left blank, the creation date is used."
-msgstr "Ak pole necháte prázdne, použije sa dátum vytvorenia."
 
 #: features/compliance/models.py:20
 msgid "certificate"
@@ -1953,8 +1944,9 @@ msgid "Yes/No"
 msgstr "Áno/Nie"
 
 #: features/intake/models.py:19 features/logistics/forms.py:135
-#: templates/pages/equipment_stock.html:46 templates/pages/ledger.html:50
-#: templates/pages/ledger.html:105
+#: templates/pages/equipment_stock.html:46
+#: templates/partials/ledger_activity.html:8
+#: templates/partials/ledger_activity.html:26
 msgid "Date"
 msgstr "Dátum"
 
@@ -2159,9 +2151,9 @@ msgstr "Referencia"
 msgid "Supplier"
 msgstr "Dodávateľ"
 
-#: features/logistics/forms.py:110 templates/pages/ledger.html:38
-#: templates/pages/payslips.html:23 templates/pages/transport_trends.html:44
-#: templates/pages/wages.html:41 templates/panels/advances_ledger.html:32
+#: features/logistics/forms.py:110 templates/pages/ledger.html:39
+#: templates/pages/transport_trends.html:44 templates/pages/wages.html:41
+#: templates/panels/advances_ledger.html:33
 msgid "Note"
 msgstr "Poznámka"
 
@@ -2734,7 +2726,7 @@ msgstr "šablóny správ"
 msgid "Queued"
 msgstr "Vo fronte"
 
-#: features/messaging/models.py:31 templates/pages/payslips.html:33
+#: features/messaging/models.py:31 templates/pages/payslips.html:35
 msgid "Sent"
 msgstr "Odoslané"
 
@@ -2795,57 +2787,86 @@ msgstr "Správa odoslaná."
 msgid "Message failed: %(error)s"
 msgstr "Správa zlyhala: %(error)s"
 
-#: features/payslips/models.py:22 features/wage_ledger/models.py:19
+#: features/payslips/forms.py:15
+msgid "no email!"
+msgstr "chýba e-mail!"
+
+#: features/payslips/forms.py:20 templates/pages/ledger.html:21
+#: templates/pages/payslips.html:35 templates/pages/person_detail.html:8
+#: templates/pages/person_detail.html:232 templates/pages/wages.html:38
+#: templates/partials/ledger_activity.html:8
+#: templates/partials/ledger_activity.html:26
+#: templates/partials/ledger_cycle.html:16
+msgid "Person"
+msgstr "Osoba"
+
+#: features/payslips/forms.py:23
+msgid "Payslip date (optional)"
+msgstr "Dátum výplatnej pásky (voliteľné)"
+
+#: features/payslips/forms.py:24
+msgid "If left blank, the creation date is used."
+msgstr "Ak pole necháte prázdne, použije sa dátum vytvorenia."
+
+#: features/payslips/forms.py:32
+msgid "Period (YYYY-MM)"
+msgstr "Obdobie (RRRR-MM)"
+
+#: features/payslips/forms.py:33
+msgid "Net amount (EUR)"
+msgstr "Čistá suma (EUR)"
+
+#: features/payslips/models.py:23 features/wage_ledger/models.py:19
 msgid "period"
 msgstr "obdobie"
 
-#: features/payslips/models.py:23 features/wage_ledger/models.py:23
+#: features/payslips/models.py:24 features/wage_ledger/models.py:23
 msgid "Use the YYYY-MM format."
 msgstr "Použite formát RRRR-MM."
 
-#: features/payslips/models.py:26
+#: features/payslips/models.py:27
 msgid "net amount"
 msgstr "čistá suma"
 
-#: features/payslips/models.py:33 features/wage_ledger/models.py:41
+#: features/payslips/models.py:35 features/wage_ledger/models.py:41
 msgid "created by"
 msgstr "vytvoril"
 
-#: features/payslips/models.py:36
+#: features/payslips/models.py:38
 msgid "sent"
 msgstr "odoslané"
 
-#: features/payslips/models.py:37
+#: features/payslips/models.py:39
 msgid "sent to"
 msgstr "odoslané na"
 
-#: features/payslips/models.py:40
+#: features/payslips/models.py:42
 msgid "sent by"
 msgstr "odoslal"
 
-#: features/payslips/models.py:44
+#: features/payslips/models.py:46
 msgid "payslip"
 msgstr "výplatná páska"
 
-#: features/payslips/models.py:45
+#: features/payslips/models.py:47
 msgid "payslips"
 msgstr "výplatné pásky"
 
-#: features/payslips/providers.py:15 templates/pages/payslips.html:33
-#: tests/test_wage_ledger.py:95
+#: features/payslips/providers.py:15 templates/pages/payslips.html:35
+#: tests/test_wage_ledger.py:96
 msgid "Recorded net payslip"
 msgstr "Zaznamenaná čistá mzda z výplatnej pásky"
 
-#: features/payslips/services.py:133
+#: features/payslips/services.py:149
 msgid "This person has no email address on file."
 msgstr "Táto osoba nemá evidovanú e-mailovú adresu."
 
-#: features/payslips/services.py:139
+#: features/payslips/services.py:155
 #, python-format
 msgid "Payslip %(period)s"
 msgstr "Výplatná páska %(period)s"
 
-#: features/payslips/services.py:141
+#: features/payslips/services.py:157
 #, python-format
 msgid ""
 "Your payslip for %(period)s is attached as an encrypted PDF.\n"
@@ -2854,7 +2875,7 @@ msgstr ""
 "V prílohe je vaša výplatná páska za %(period)s ako šifrované PDF.\n"
 "Heslo dostanete samostatne — nikdy sa neposiela e-mailom."
 
-#: features/payslips/services.py:151 features/payslips/services.py:155
+#: features/payslips/services.py:167 features/payslips/services.py:171
 msgid ""
 "Unable to send the payslip email. Check the recipient address and mail "
 "configuration."
@@ -2862,11 +2883,11 @@ msgstr ""
 "Výplatnú pásku sa nepodarilo odoslať e-mailom. Skontrolujte adresu príjemcu "
 "a nastavenie pošty."
 
-#: features/payslips/views.py:28
+#: features/payslips/views.py:30
 msgid "Payslip recorded."
 msgstr "Výplatná páska uložená."
 
-#: features/payslips/views.py:54
+#: features/payslips/views.py:63
 #, python-format
 msgid ""
 "Payslip emailed to %(to)s. One-time password (tell the worker by phone/"
@@ -2899,7 +2920,7 @@ msgstr "mzdové záznamy"
 msgid "A wage is already recorded for this person and period."
 msgstr "Pre túto osobu a obdobie už je mzda zaznamenaná."
 
-#: features/wage_ledger/providers.py:17 tests/test_wage_ledger.py:94
+#: features/wage_ledger/providers.py:17 tests/test_wage_ledger.py:95
 msgid "Recorded gross wage"
 msgstr "Zaznamenaná hrubá mzda"
 
@@ -3156,10 +3177,11 @@ msgstr "Správa ubytovania"
 
 # --- compliance ---
 #: templates/pages/accommodation_form.html:9
-#: templates/pages/equipment_form.html:10 templates/pages/ledger.html:123
-#: templates/pages/room_form.html:9 templates/pages/transport_trends.html:22
+#: templates/pages/equipment_form.html:10 templates/pages/room_form.html:9
+#: templates/pages/transport_trends.html:22
 #: templates/pages/trials_queue.html:25
 #: templates/partials/confirm_dialog.html:12
+#: templates/partials/ledger_activity.html:44
 msgid "Cancel"
 msgstr "Zrušiť"
 
@@ -3217,7 +3239,7 @@ msgstr "Aktér (e-mail obsahuje)"
 
 # --- projects UI ---
 #: templates/pages/audit_log.html:17 templates/pages/audit_log.html:41
-#: templates/pages/payslips.html:33 templates/pages/transport_trends.html:44
+#: templates/pages/payslips.html:35 templates/pages/transport_trends.html:44
 msgid "Action"
 msgstr "Akcia"
 
@@ -3250,8 +3272,8 @@ msgstr "Kedy"
 msgid "Actor"
 msgstr "Aktér"
 
-#: templates/pages/audit_log.html:42 templates/pages/ledger.html:39
-#: templates/pages/payslips.html:24
+#: templates/pages/audit_log.html:42 templates/pages/ledger.html:40
+#: templates/pages/payslips.html:26
 msgid "Record"
 msgstr "Uložiť"
 
@@ -3702,11 +3724,13 @@ msgstr "Finančné mesiace"
 msgid "No financial months."
 msgstr "Žiadne finančné mesiace."
 
-#: templates/pages/finance_summary.html:39 templates/pages/ledger.html:68
+#: templates/pages/finance_summary.html:39
+#: templates/partials/ledger_cycle.html:5
 msgid "Year"
 msgstr "Rok"
 
-#: templates/pages/finance_summary.html:42 templates/pages/ledger.html:71
+#: templates/pages/finance_summary.html:42
+#: templates/partials/ledger_cycle.html:8
 msgid "Month"
 msgstr "Mesiac"
 
@@ -3769,144 +3793,28 @@ msgstr "Ďalej"
 msgid "Advances & deductions"
 msgstr "Zálohy a zrážky"
 
-#: templates/pages/ledger.html:17 templates/panels/advances_ledger.html:33
+#: templates/pages/ledger.html:18 templates/panels/advances_ledger.html:34
 msgid "Record entry"
 msgstr "Zaznamenať položku"
 
-#: templates/pages/ledger.html:20 templates/pages/ledger.html:50
-#: templates/pages/ledger.html:79 templates/pages/ledger.html:105
-#: templates/pages/payslips.html:17 templates/pages/payslips.html:33
-#: templates/pages/person_detail.html:8 templates/pages/person_detail.html:232
-#: templates/pages/wages.html:38
-msgid "Person"
-msgstr "Osoba"
-
-#: templates/pages/ledger.html:24
+#: templates/pages/ledger.html:25
 msgid "Company / project"
 msgstr "Firma / projekt"
 
-#: templates/pages/ledger.html:29 templates/panels/advances_ledger.html:23
+#: templates/pages/ledger.html:30 templates/panels/advances_ledger.html:24
 msgid "Entry type"
 msgstr "Typ záznamu"
 
-#: templates/pages/ledger.html:33 templates/pages/ledger.html:105
-#: templates/panels/advances_ledger.html:27
+#: templates/pages/ledger.html:34 templates/panels/advances_ledger.html:28
 #: templates/panels/blacklist_case.html:10
 #: templates/panels/blacklist_case.html:33
+#: templates/partials/ledger_activity.html:26
 msgid "Category"
 msgstr "Kategória"
 
-#: templates/pages/ledger.html:37 templates/panels/advances_ledger.html:31
+#: templates/pages/ledger.html:38 templates/panels/advances_ledger.html:32
 msgid "Amount (EUR)"
 msgstr "Suma (EUR)"
-
-#: templates/pages/ledger.html:45
-msgid "Thursday summary"
-msgstr "Štvrtkový súhrn"
-
-#: templates/pages/ledger.html:46
-#, python-format
-msgid ""
-"Cut-off %(cutoff)s — open advances for Friday cash distribution. Later "
-"entries roll to next week."
-msgstr ""
-"Uzávierka %(cutoff)s — otvorené zálohy na piatkovú výplatu hotovosti. "
-"Neskoršie záznamy sa presúvajú na ďalší týždeň."
-
-# --- compliance ---
-#: templates/pages/ledger.html:50
-msgid "Company"
-msgstr "Firma"
-
-#: templates/pages/ledger.html:50 templates/pages/ledger.html:105
-msgid "Amount"
-msgstr "Suma"
-
-#: templates/pages/ledger.html:56
-msgid "Total"
-msgstr "Spolu"
-
-#: templates/pages/ledger.html:59 templates/pages/ledger.html:86
-msgid "Download CSV"
-msgstr "Stiahnuť CSV"
-
-#: templates/pages/ledger.html:61
-msgid "No open advances before this week's cut-off."
-msgstr "Pred uzávierkou tohto týždňa nie sú žiadne otvorené zálohy."
-
-#: templates/pages/ledger.html:66
-#, python-format
-msgid "Cycle %(start)s → %(end)s"
-msgstr "Cyklus %(start)s → %(end)s"
-
-#: templates/pages/ledger.html:74
-msgid "Show"
-msgstr "Zobraziť"
-
-#: templates/pages/ledger.html:79
-msgid "To deduct"
-msgstr "Na zrazenie"
-
-#: templates/pages/ledger.html:79
-msgid "To add"
-msgstr "Na pripočítanie"
-
-#: templates/pages/ledger.html:79
-msgid "Net pay effect"
-msgstr "Čistý vplyv na mzdu"
-
-#: templates/pages/ledger.html:93
-msgid ""
-"This locks every open entry of the window into the cycle; locked entries can "
-"only be corrected by reversal."
-msgstr ""
-"Uzamkne všetky otvorené záznamy okna do cyklu; uzamknuté záznamy možno "
-"opraviť len stornom."
-
-#: templates/pages/ledger.html:93
-msgid "Include open entries in cycle"
-msgstr "Zahrnúť otvorené záznamy do cyklu"
-
-#: templates/pages/ledger.html:94
-msgid "This marks the whole cycle as settled with pay."
-msgstr "Označí celý cyklus ako vysporiadaný so mzdou."
-
-#: templates/pages/ledger.html:94
-msgid "Mark cycle settled"
-msgstr "Označiť cyklus ako vysporiadaný"
-
-#: templates/pages/ledger.html:98
-msgid "No entries in this cycle window."
-msgstr "V tomto cykle nie sú žiadne záznamy."
-
-#: templates/pages/ledger.html:103
-msgid "Entries"
-msgstr "Záznamy"
-
-#: templates/pages/ledger.html:105
-msgid "Type"
-msgstr "Typ"
-
-#: templates/pages/ledger.html:105
-msgid "Settlement"
-msgstr "Vysporiadanie"
-
-#: templates/pages/ledger.html:121
-msgid ""
-"This records a reversal entry with the opposite pay effect; the original "
-"stays in the ledger."
-msgstr ""
-"Zaznamená storno záznam s opačným vplyvom na mzdu; pôvodný záznam ostáva v "
-"knihe."
-
-#: templates/pages/ledger.html:121
-msgid "Reverse"
-msgstr "Stornovať"
-
-#: templates/pages/ledger.html:123
-msgid ""
-"This cancels the open ledger entry; it will no longer count against pay."
-msgstr "Zruší otvorený záznam v knihe; už sa nebude započítavať voči mzde."
 
 # --- login ---
 #: templates/pages/login.html:4 templates/pages/login.html:10
@@ -3943,36 +3851,28 @@ msgstr ""
 msgid "Record payslip"
 msgstr "Zaznamenať výplatnú pásku"
 
-#: templates/pages/payslips.html:19
-msgid "no email!"
-msgstr "chýba e-mail!"
-
-#: templates/pages/payslips.html:21
-msgid "Period (YYYY-MM)"
-msgstr "Obdobie (RRRR-MM)"
-
-#: templates/pages/payslips.html:22
-msgid "Net amount (EUR)"
-msgstr "Čistá suma (EUR)"
-
-#: templates/pages/payslips.html:30
+#: templates/pages/payslips.html:32
 msgid "Recorded payslips"
 msgstr "Uložené výplatné pásky"
 
-#: templates/pages/payslips.html:33
+#: templates/pages/payslips.html:35
 #: templates/partials/person_finance_overview.html:10
 msgid "Calendar month"
 msgstr "Kalendárny mesiac"
 
-#: templates/pages/payslips.html:45
+#: templates/pages/payslips.html:35
+msgid "Issue date"
+msgstr "Dátum vystavenia"
+
+#: templates/pages/payslips.html:48
 msgid "Resend (new password)"
 msgstr "Odoslať znova (nové heslo)"
 
-#: templates/pages/payslips.html:45
+#: templates/pages/payslips.html:48
 msgid "Send encrypted PDF"
 msgstr "Odoslať šifrované PDF"
 
-#: templates/pages/payslips.html:51
+#: templates/pages/payslips.html:54
 msgid "No payslips recorded."
 msgstr "Žiadne uložené výplatné pásky."
 
@@ -4425,8 +4325,8 @@ msgid ""
 "displayed beside the independently recorded net payslip; the system does not "
 "derive statutory payroll deductions."
 msgstr ""
-"Zaznamenajte hrubú mzdu zarobenú za každý kalendárny mesiac. Táto hodnota "
-"sa zobrazuje vedľa samostatne zaznamenanej čistej mzdy z výplatnej pásky; "
+"Zaznamenajte hrubú mzdu zarobenú za každý kalendárny mesiac. Táto hodnota sa "
+"zobrazuje vedľa samostatne zaznamenanej čistej mzdy z výplatnej pásky; "
 "systém nevypočítava zákonné mzdové zrážky."
 
 #: templates/pages/wages.html:15 templates/pages/wages.html:27
@@ -4453,11 +4353,19 @@ msgstr "Nie sú zaznamenané žiadne hrubé mzdy."
 msgid "Money"
 msgstr "Peniaze"
 
-#: templates/panels/advances_ledger.html:6
+#: templates/panels/advances_ledger.html:5
+msgid ""
+"Cash advances and deductions against this person's pay, settled through the "
+"weekly ledger cycle."
+msgstr ""
+"Hotovostné zálohy a zrážky voči mzde tejto osoby, vyrovnávané v týždennom "
+"cykle knihy záloh."
+
+#: templates/panels/advances_ledger.html:7
 msgid "Open balance against pay"
 msgstr "Otvorený zostatok voči mzde"
 
-#: templates/panels/advances_ledger.html:15
+#: templates/panels/advances_ledger.html:16
 msgid "No ledger entries yet."
 msgstr "Zatiaľ žiadne záznamy v knihe."
 
@@ -4504,7 +4412,14 @@ msgstr "Schvaľovanie"
 msgid "Activation checklist"
 msgstr "Aktivačný kontrolný zoznam"
 
-#: templates/panels/checklists_items.html:7
+#: templates/panels/checklists_items.html:5
+msgid ""
+"Items marked critical must all be ticked before this person can be activated."
+msgstr ""
+"Všetky položky označené ako kritické musia byť odškrtnuté, kým túto osobu "
+"možno aktivovať."
+
+#: templates/panels/checklists_items.html:8
 #, python-format
 msgid "%(n)s critical item open — activation is blocked."
 msgid_plural "%(n)s critical items open — activation is blocked."
@@ -4512,7 +4427,7 @@ msgstr[0] "%(n)s kritická položka je otvorená — aktivácia je zablokovaná.
 msgstr[1] "%(n)s kritické položky sú otvorené — aktivácia je zablokovaná."
 msgstr[2] "%(n)s kritických položiek je otvorených — aktivácia je zablokovaná."
 
-#: templates/panels/checklists_items.html:9
+#: templates/panels/checklists_items.html:10
 msgid "All critical items are complete."
 msgstr "Všetky kritické položky sú splnené."
 
@@ -4634,13 +4549,123 @@ msgstr "Naozaj to chcete urobiť?"
 msgid "Yes, proceed"
 msgstr "Áno, pokračovať"
 
+#: templates/partials/ledger_activity.html:3
+msgid "Thursday summary"
+msgstr "Štvrtkový súhrn"
+
+#: templates/partials/ledger_activity.html:4
+#, python-format
+msgid ""
+"Cut-off %(cutoff)s — open advances for Friday cash distribution. Later "
+"entries roll to next week."
+msgstr ""
+"Uzávierka %(cutoff)s — otvorené zálohy na piatkovú výplatu hotovosti. "
+"Neskoršie záznamy sa presúvajú na ďalší týždeň."
+
+# --- compliance ---
+#: templates/partials/ledger_activity.html:8
+msgid "Company"
+msgstr "Firma"
+
+#: templates/partials/ledger_activity.html:8
+#: templates/partials/ledger_activity.html:26
+msgid "Amount"
+msgstr "Suma"
+
+#: templates/partials/ledger_activity.html:14
+msgid "Total"
+msgstr "Spolu"
+
+#: templates/partials/ledger_activity.html:17
+#: templates/partials/ledger_cycle.html:23
+msgid "Download CSV"
+msgstr "Stiahnuť CSV"
+
+#: templates/partials/ledger_activity.html:19
+msgid "No open advances before this week's cut-off."
+msgstr "Pred uzávierkou tohto týždňa nie sú žiadne otvorené zálohy."
+
+#: templates/partials/ledger_activity.html:24
+msgid "Entries"
+msgstr "Záznamy"
+
+#: templates/partials/ledger_activity.html:26
+msgid "Type"
+msgstr "Typ"
+
+#: templates/partials/ledger_activity.html:26
+msgid "Settlement"
+msgstr "Vysporiadanie"
+
+#: templates/partials/ledger_activity.html:42
+msgid ""
+"This records a reversal entry with the opposite pay effect; the original "
+"stays in the ledger."
+msgstr ""
+"Zaznamená storno záznam s opačným vplyvom na mzdu; pôvodný záznam ostáva v "
+"knihe."
+
+#: templates/partials/ledger_activity.html:42
+msgid "Reverse"
+msgstr "Stornovať"
+
+#: templates/partials/ledger_activity.html:44
+msgid ""
+"This cancels the open ledger entry; it will no longer count against pay."
+msgstr "Zruší otvorený záznam v knihe; už sa nebude započítavať voči mzde."
+
+#: templates/partials/ledger_cycle.html:3
+#, python-format
+msgid "Cycle %(start)s → %(end)s"
+msgstr "Cyklus %(start)s → %(end)s"
+
+#: templates/partials/ledger_cycle.html:11
+msgid "Show"
+msgstr "Zobraziť"
+
+#: templates/partials/ledger_cycle.html:16
+msgid "To deduct"
+msgstr "Na zrazenie"
+
+#: templates/partials/ledger_cycle.html:16
+msgid "To add"
+msgstr "Na pripočítanie"
+
+#: templates/partials/ledger_cycle.html:16
+msgid "Net pay effect"
+msgstr "Čistý vplyv na mzdu"
+
+#: templates/partials/ledger_cycle.html:30
+msgid ""
+"This locks every open entry of the window into the cycle; locked entries can "
+"only be corrected by reversal."
+msgstr ""
+"Uzamkne všetky otvorené záznamy okna do cyklu; uzamknuté záznamy možno "
+"opraviť len stornom."
+
+#: templates/partials/ledger_cycle.html:30
+msgid "Include open entries in cycle"
+msgstr "Zahrnúť otvorené záznamy do cyklu"
+
+#: templates/partials/ledger_cycle.html:31
+msgid "This marks the whole cycle as settled with pay."
+msgstr "Označí celý cyklus ako vysporiadaný so mzdou."
+
+#: templates/partials/ledger_cycle.html:31
+msgid "Mark cycle settled"
+msgstr "Označiť cyklus ako vysporiadaný"
+
+#: templates/partials/ledger_cycle.html:35
+msgid "No entries in this cycle window."
+msgstr "V tomto cykle nie sú žiadne záznamy."
+
 # --- dashboard ---
 #: templates/partials/person_finance_overview.html:4
 msgid "Wage and payslip overview"
 msgstr "Prehľad mzdy a výplatnej pásky"
 
 #: templates/partials/person_finance_overview.html:5
-#: tests/test_wage_ledger.py:97
+#: tests/test_wage_ledger.py:98
 msgid ""
 "Both columns are recorded source values for the same calendar month. Gross "
 "wage is not converted into net pay here; taxes, levies, and other statutory "
