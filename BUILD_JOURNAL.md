@@ -1,5 +1,40 @@
 # Build Journal
 
+## 2026-07-21 - Hungarian catalog fuzzy-match cleanup + panel help text
+
+- Root-caused a user report of "mislabeled" CorvinumEU panels: the Corvinum
+  ledger/checklist/advances panels were already fully and correctly
+  translated. The actual defect was 47 entries in
+  `locale/hu/LC_MESSAGES/django.po` left `#, fuzzy` from a prior `msgmerge`
+  run that paired new English msgids with unrelated stale Hungarian text —
+  the exact failure mode this file's own Gotchas section warns about.
+  Concentrated in `features/logistics` (equipment/accommodation, reused by
+  CorvinumEU) and 2 in `core/people`. About a third were substantively wrong
+  (e.g. a stock-count message read as a candidate-scheduling message and
+  dropped its `%(available)s` placeholder; a date field read as "currency";
+  `EquipmentStockLot`'s `initial_quantity`/`remaining_quantity` and
+  `initial_value`/`remaining_value` all collapsed to the same generic
+  Hungarian word). Hand-corrected and cleared every fuzzy flag; none were
+  bulk-stripped.
+- Added missing help text under the checklist and advances panel titles
+  (`templates/panels/checklists_items.html`, `templates/panels/
+  advances_ledger.html`), matching the explanatory-paragraph pattern already
+  used in `templates/partials/ledger_activity.html`. Considered renaming
+  "Thursday summary" for clarity but kept it — it's the established product
+  term for this exact weekly cash-advance process, referenced throughout
+  `docs/platform/corvinumeu-peopleops-design.md` and the demo script.
+- Re-extracted all three catalogs (`scripts/compile_messages.sh --extract`)
+  for the 2 new help-text msgids and recompiled `.mo`; translated the new
+  strings in hu/sk/uk. Verified via diff that extraction touched no other
+  msgid content (0 removed, only the 2 additions), just `#:` source-comment
+  reordering.
+- **AI-drafted translations**: per `docs/i18n-seeded-data.md`,
+  native-speaker review of Hungarian (and the SK/UK spot-checks) remains the
+  standing pre-demo task — not claimed as final sign-off here.
+- **Deferred**: `locale/sk` and `locale/uk` each independently carry the
+  same 47 fuzzy msgids (identical upstream `msgmerge` run). Not fixed in
+  this slice — flagged as a follow-up of the same bug class.
+
 ## 2026-07-21 - Corvinum ledger panel-order correction
 
 - Corrected the first compact-ledger composition after staging review: the

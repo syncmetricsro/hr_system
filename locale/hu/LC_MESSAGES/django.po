@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-20 21:50+0200\n"
+"POT-Creation-Date: 2026-07-21 21:01+0200\n"
 "Language: hu\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -237,7 +237,7 @@ msgstr "megerősítve"
 #: features/logistics/models.py:164 features/logistics/models.py:250
 #: features/logistics/models.py:310 features/logistics/models.py:389
 #: features/messaging/models.py:17 features/messaging/models.py:45
-#: features/payslips/models.py:35 features/wage_ledger/models.py:43
+#: features/payslips/models.py:37 features/wage_ledger/models.py:43
 msgid "created"
 msgstr "létrehozva"
 
@@ -612,10 +612,8 @@ msgid "Disability type"
 msgstr "Fogyatékosság típusa"
 
 #: core/people/forms.py:61
-#, fuzzy
-#| msgid "Entry medical date cannot be in the future."
 msgid "Date of birth cannot be in the future."
-msgstr "Belépő orvosi dátuma nem lehet jövőbeli."
+msgstr "A születési dátum nem lehet jövőbeli."
 
 # --- lifecycle status labels ---
 #: core/people/models.py:12 templates/pages/dashboard.html:21
@@ -759,7 +757,7 @@ msgstr "frissítve"
 #: features/blacklist/models.py:105 features/checklists/models.py:57
 #: features/compliance/models.py:12 features/intake/models.py:106
 #: features/logistics/models.py:112 features/logistics/models.py:196
-#: features/messaging/models.py:35 features/payslips/models.py:19
+#: features/messaging/models.py:35 features/payslips/models.py:20
 #: features/wage_ledger/models.py:16
 msgid "person"
 msgstr "személy"
@@ -779,10 +777,8 @@ msgstr ""
 "feltételeket."
 
 #: core/people/services.py:36
-#, fuzzy
-#| msgid "Approve charge"
 msgid "Approaching age 18"
-msgstr "Levonás jóváhagyása"
+msgstr "Hamarosan 18 éves"
 
 #: core/people/services.py:37
 msgid "This person turns 18 within 30 days."
@@ -1004,7 +1000,7 @@ msgstr "eredmény"
 #: core/projects/models.py:135 features/advances/models.py:83
 #: features/checklists/models.py:68 features/finance/models.py:33
 #: features/logistics/models.py:245 features/logistics/models.py:384
-#: features/payslips/models.py:30 features/wage_ledger/models.py:34
+#: features/payslips/models.py:31 features/wage_ledger/models.py:34
 msgid "note"
 msgstr "megjegyzés"
 
@@ -1285,7 +1281,7 @@ msgstr "kategória"
 msgid "amount"
 msgstr "összeg"
 
-#: features/advances/models.py:73 features/payslips/models.py:29
+#: features/advances/models.py:73 features/payslips/models.py:30
 #: features/wage_ledger/models.py:33
 msgid "currency"
 msgstr "pénznem"
@@ -1572,8 +1568,8 @@ msgstr "ellenőrzőlista-sablonok"
 msgid "template"
 msgstr "sablon"
 
-#: features/checklists/models.py:39 templates/panels/checklists_items.html:29
-#: templates/panels/checklists_items.html:34
+#: features/checklists/models.py:39 templates/panels/checklists_items.html:30
+#: templates/panels/checklists_items.html:35
 msgid "critical"
 msgstr "kritikus"
 
@@ -1630,18 +1626,9 @@ msgstr "%(person)s · %(count)s kritikus tétel"
 msgid "Activation blocked by open checklist items: %(items)s"
 msgstr "Az aktiválást nyitott ellenőrzőlista-tételek blokkolják: %(items)s"
 
-#: features/compliance/models.py:15
+#: features/compliance/models.py:15 features/payslips/models.py:32
 msgid "issue date"
 msgstr "kiállítás dátuma"
-
-msgid "Issue date"
-msgstr "Kiállítás dátuma"
-
-msgid "Payslip date (optional)"
-msgstr "A bérjegyzék dátuma (nem kötelező)"
-
-msgid "If left blank, the creation date is used."
-msgstr "Ha üresen marad, a létrehozás dátumát használjuk."
 
 #: features/compliance/models.py:20
 msgid "certificate"
@@ -1954,8 +1941,9 @@ msgid "Yes/No"
 msgstr "Igen/Nem"
 
 #: features/intake/models.py:19 features/logistics/forms.py:135
-#: templates/pages/equipment_stock.html:46 templates/pages/ledger.html:50
-#: templates/pages/ledger.html:105
+#: templates/pages/equipment_stock.html:46
+#: templates/partials/ledger_activity.html:8
+#: templates/partials/ledger_activity.html:26
 msgid "Date"
 msgstr "Dátum"
 
@@ -2133,10 +2121,8 @@ msgid "Release all occupants before deactivating this location."
 msgstr "A szállás kikapcsolása előtt költöztessen ki minden lakót."
 
 #: features/logistics/forms.py:59
-#, fuzzy
-#| msgid "effective date"
 msgid "Effective month"
-msgstr "hatálybalépés dátuma"
+msgstr "Érvényesség hónapja"
 
 #: features/logistics/forms.py:88
 msgid "Capacity cannot be lower than current occupancy."
@@ -2147,10 +2133,8 @@ msgid "Release all occupants before deactivating this room."
 msgstr "A szoba kikapcsolása előtt költöztessen ki minden lakót."
 
 #: features/logistics/forms.py:107
-#, fuzzy
-#| msgid "received"
 msgid "Received on"
-msgstr "beérkezett"
+msgstr "Beérkezés dátuma"
 
 #: features/logistics/forms.py:108
 msgid "Reference"
@@ -2160,9 +2144,9 @@ msgstr "Hivatkozás"
 msgid "Supplier"
 msgstr "Beszállító"
 
-#: features/logistics/forms.py:110 templates/pages/ledger.html:38
-#: templates/pages/payslips.html:23 templates/pages/transport_trends.html:44
-#: templates/pages/wages.html:41 templates/panels/advances_ledger.html:32
+#: features/logistics/forms.py:110 templates/pages/ledger.html:39
+#: templates/pages/transport_trends.html:44 templates/pages/wages.html:41
+#: templates/panels/advances_ledger.html:33
 msgid "Note"
 msgstr "Megjegyzés"
 
@@ -2178,10 +2162,8 @@ msgid "Quantity"
 msgstr "Mennyiség"
 
 #: features/logistics/forms.py:116
-#, fuzzy
-#| msgid "normalized value"
 msgid "Total value"
-msgstr "normalizált érték"
+msgstr "Teljes érték"
 
 #: features/logistics/forms.py:126
 msgid "Complete the item, quantity, and total value."
@@ -2213,20 +2195,16 @@ msgid "The adjustment cannot be zero."
 msgstr "A korrekció nem lehet nulla."
 
 #: features/logistics/forms.py:150
-#, fuzzy
-#| msgid "A reason is required when this is not applicable."
 msgid "A value is required when adding stock."
-msgstr "Ha nem alkalmazható, indoklás szükséges."
+msgstr "Készlet hozzáadásakor érték megadása kötelező."
 
 #: features/logistics/models.py:37
 msgid "accommodations"
 msgstr "szállások"
 
 #: features/logistics/models.py:49
-#, fuzzy
-#| msgid "effective date"
 msgid "effective month"
-msgstr "hatálybalépés dátuma"
+msgstr "érvényesség hónapja"
 
 #: features/logistics/models.py:50 features/logistics/models.py:78
 msgid "capacity"
@@ -2344,10 +2322,8 @@ msgstr "visszaadás ideje"
 
 # --- projects UI ---
 #: features/logistics/models.py:224 features/logistics/models.py:241
-#, fuzzy
-#| msgid "Operations"
 msgid "operation key"
-msgstr "Műveletek"
+msgstr "műveleti kulcs"
 
 #: features/logistics/models.py:226
 msgid "issued stock value"
@@ -2366,10 +2342,8 @@ msgid "equipment issues"
 msgstr "felszerelés-kiadások"
 
 #: features/logistics/models.py:242 features/logistics/models.py:348
-#, fuzzy
-#| msgid "received"
 msgid "received on"
-msgstr "beérkezett"
+msgstr "beérkezés dátuma"
 
 #: features/logistics/models.py:243
 msgid "reference"
@@ -2380,26 +2354,20 @@ msgid "supplier"
 msgstr "beszállító"
 
 #: features/logistics/models.py:262
-#, fuzzy
-#| msgid "received"
 msgid "receipt"
-msgstr "beérkezett"
+msgstr "bevételezés"
 
 #: features/logistics/models.py:270
-#, fuzzy
-#| msgid "normalized value"
 msgid "total value"
-msgstr "normalizált érték"
+msgstr "teljes érték"
 
 #: features/logistics/models.py:280
 msgid "Receipt"
 msgstr "Bevételezés"
 
 #: features/logistics/models.py:281
-#, fuzzy
-#| msgid "Issued"
 msgid "Issue"
-msgstr "Kiadva"
+msgstr "Kiadás"
 
 #: features/logistics/models.py:282
 #: templates/panels/logistics_equipment.html:21
@@ -2407,82 +2375,56 @@ msgid "Return"
 msgstr "Visszavétel"
 
 #: features/logistics/models.py:283
-#, fuzzy
-#| msgid "settlement"
 msgid "Adjustment"
-msgstr "elszámolás"
+msgstr "Korrekció"
 
 #: features/logistics/models.py:292
-#, fuzzy
-#| msgid "entry type"
 msgid "movement type"
-msgstr "tétel típusa"
+msgstr "mozgás típusa"
 
 #: features/logistics/models.py:294
-#, fuzzy
-#| msgid "currency"
 msgid "occurred on"
-msgstr "pénznem"
+msgstr "mozgás dátuma"
 
 #: features/logistics/models.py:295
-#, fuzzy
-#| msgid "quantity"
 msgid "quantity delta"
-msgstr "mennyiség"
+msgstr "mennyiségváltozás"
 
 #: features/logistics/models.py:296
-#, fuzzy
-#| msgid "value"
 msgid "value delta"
-msgstr "érték"
+msgstr "értékváltozás"
 
 #: features/logistics/models.py:299
-#, fuzzy
-#| msgid "Create link"
 msgid "receipt line"
-msgstr "Link létrehozása"
+msgstr "bevételezési sor"
 
 #: features/logistics/models.py:303
-#, fuzzy
-#| msgid "Issued"
 msgid "issue"
-msgstr "Kiadva"
+msgstr "kiadás"
 
 #: features/logistics/models.py:342
-#, fuzzy
-#| msgid "inbound message"
 msgid "inbound movement"
-msgstr "bejövő üzenet"
+msgstr "bejövő mozgás"
 
 #: features/logistics/models.py:349
-#, fuzzy
-#| msgid "quantity"
 msgid "initial quantity"
-msgstr "mennyiség"
+msgstr "kezdő mennyiség"
 
 #: features/logistics/models.py:350
-#, fuzzy
-#| msgid "Equipment value"
 msgid "initial value"
-msgstr "Felszerelés értéke"
+msgstr "kezdő érték"
 
 #: features/logistics/models.py:351
-#, fuzzy
-#| msgid "quantity"
 msgid "remaining quantity"
-msgstr "mennyiség"
+msgstr "fennmaradó mennyiség"
 
 #: features/logistics/models.py:352
-#, fuzzy
-#| msgid "normalized value"
 msgid "remaining value"
-msgstr "normalizált érték"
+msgstr "fennmaradó érték"
 
 #: features/logistics/models.py:361
-#, fuzzy
-#| msgid "outbound message"
 msgid "outbound movement"
-msgstr "kimenő üzenet"
+msgstr "kimenő mozgás"
 
 #: features/logistics/models.py:365
 msgid "lot"
@@ -2573,10 +2515,9 @@ msgid "Room is at full capacity."
 msgstr "A szoba megtelt."
 
 #: features/logistics/services.py:393
-#, fuzzy, python-format
-#| msgid "Only available candidates can be scheduled."
+#, python-format
 msgid "Only %(available)s units are available in stock."
-msgstr "Csak elérhető jelöltek ütemezhetők."
+msgstr "Csak %(available)s egység érhető el a készleten."
 
 #: features/logistics/services.py:435
 msgid "Receipt quantities must be at least one."
@@ -2624,16 +2565,12 @@ msgid "Room updated."
 msgstr "A szoba frissítve."
 
 #: features/logistics/views.py:276
-#, fuzzy
-#| msgid "Accommodation rate override saved"
 msgid "Accommodation cost period saved."
-msgstr "Egyedi díj mentve."
+msgstr "A költségidőszak mentve."
 
 #: features/logistics/views.py:278
-#, fuzzy
-#| msgid "Review accommodation occupancy"
 msgid "Review the accommodation cost details."
-msgstr "Szálláskihasználtság áttekintése"
+msgstr "Ellenőrizze a költségidőszak adatait."
 
 #: features/logistics/views.py:288
 msgid "Room rate saved."
@@ -2649,10 +2586,8 @@ msgid "Rate override saved."
 msgstr "Egyedi díj mentve."
 
 #: features/logistics/views.py:312
-#, fuzzy
-#| msgid "Accommodation updated."
 msgid "Worker accommodation payment saved."
-msgstr "A szállás frissítve."
+msgstr "A dolgozó havi befizetése mentve."
 
 #: features/logistics/views.py:328
 msgid "Room assigned."
@@ -2663,22 +2598,16 @@ msgid "Room released."
 msgstr "Szoba felszabadítva."
 
 #: features/logistics/views.py:406
-#, fuzzy
-#| msgid "No payslips recorded."
 msgid "Stock receipt recorded."
-msgstr "Nincs rögzített bérjegyzék."
+msgstr "A készletbevételezés rögzítve."
 
 #: features/logistics/views.py:427
-#, fuzzy
-#| msgid "outcome recorded by"
 msgid "Stock adjustment recorded."
-msgstr "eredményt rögzítette"
+msgstr "A készletkorrekció rögzítve."
 
 #: features/logistics/views.py:431
-#, fuzzy
-#| msgid "Review the trial details and try again."
 msgid "Review the stock adjustment and try again."
-msgstr "Ellenőrizze a próbanap adatait, majd próbálja újra."
+msgstr "Ellenőrizze a készletkorrekció adatait, majd próbálja újra."
 
 #: features/logistics/views.py:440
 msgid "Equipment item created."
@@ -2693,10 +2622,8 @@ msgid "Equipment issued."
 msgstr "Felszerelés kiadva."
 
 #: features/logistics/views.py:477
-#, fuzzy
-#| msgid "equipment issue"
 msgid "Invalid equipment issue."
-msgstr "felszerelés-kiadás"
+msgstr "Érvénytelen felszerelés-kiadás."
 
 #: features/logistics/views.py:487
 msgid "Equipment returned."
@@ -2739,7 +2666,7 @@ msgstr "üzenetsablonok"
 msgid "Queued"
 msgstr "Sorban áll"
 
-#: features/messaging/models.py:31 templates/pages/payslips.html:33
+#: features/messaging/models.py:31 templates/pages/payslips.html:35
 msgid "Sent"
 msgstr "Elküldve"
 
@@ -2800,57 +2727,86 @@ msgstr "Üzenet elküldve."
 msgid "Message failed: %(error)s"
 msgstr "Üzenet sikertelen: %(error)s"
 
-#: features/payslips/models.py:22 features/wage_ledger/models.py:19
+#: features/payslips/forms.py:15
+msgid "no email!"
+msgstr "nincs e-mail!"
+
+#: features/payslips/forms.py:20 templates/pages/ledger.html:21
+#: templates/pages/payslips.html:35 templates/pages/person_detail.html:8
+#: templates/pages/person_detail.html:232 templates/pages/wages.html:38
+#: templates/partials/ledger_activity.html:8
+#: templates/partials/ledger_activity.html:26
+#: templates/partials/ledger_cycle.html:16
+msgid "Person"
+msgstr "Személy"
+
+#: features/payslips/forms.py:23
+msgid "Payslip date (optional)"
+msgstr "A bérjegyzék dátuma (nem kötelező)"
+
+#: features/payslips/forms.py:24
+msgid "If left blank, the creation date is used."
+msgstr "Ha üresen marad, a létrehozás dátumát használjuk."
+
+#: features/payslips/forms.py:32
+msgid "Period (YYYY-MM)"
+msgstr "Időszak (ÉÉÉÉ-HH)"
+
+#: features/payslips/forms.py:33
+msgid "Net amount (EUR)"
+msgstr "Nettó összeg (EUR)"
+
+#: features/payslips/models.py:23 features/wage_ledger/models.py:19
 msgid "period"
 msgstr "időszak"
 
-#: features/payslips/models.py:23 features/wage_ledger/models.py:23
+#: features/payslips/models.py:24 features/wage_ledger/models.py:23
 msgid "Use the YYYY-MM format."
 msgstr "Használja az ÉÉÉÉ-HH formátumot."
 
-#: features/payslips/models.py:26
+#: features/payslips/models.py:27
 msgid "net amount"
 msgstr "nettó összeg"
 
-#: features/payslips/models.py:33 features/wage_ledger/models.py:41
+#: features/payslips/models.py:35 features/wage_ledger/models.py:41
 msgid "created by"
 msgstr "létrehozta"
 
-#: features/payslips/models.py:36
+#: features/payslips/models.py:38
 msgid "sent"
 msgstr "elküldve"
 
-#: features/payslips/models.py:37
+#: features/payslips/models.py:39
 msgid "sent to"
 msgstr "címzett"
 
-#: features/payslips/models.py:40
+#: features/payslips/models.py:42
 msgid "sent by"
 msgstr "küldte"
 
-#: features/payslips/models.py:44
+#: features/payslips/models.py:46
 msgid "payslip"
 msgstr "bérjegyzék"
 
-#: features/payslips/models.py:45
+#: features/payslips/models.py:47
 msgid "payslips"
 msgstr "bérjegyzékek"
 
-#: features/payslips/providers.py:15 templates/pages/payslips.html:33
-#: tests/test_wage_ledger.py:95
+#: features/payslips/providers.py:15 templates/pages/payslips.html:35
+#: tests/test_wage_ledger.py:96
 msgid "Recorded net payslip"
 msgstr "Rögzített nettó bérjegyzék"
 
-#: features/payslips/services.py:133
+#: features/payslips/services.py:149
 msgid "This person has no email address on file."
 msgstr "Ennek a személynek nincs rögzített e-mail-címe."
 
-#: features/payslips/services.py:139
+#: features/payslips/services.py:155
 #, python-format
 msgid "Payslip %(period)s"
 msgstr "Bérjegyzék %(period)s"
 
-#: features/payslips/services.py:141
+#: features/payslips/services.py:157
 #, python-format
 msgid ""
 "Your payslip for %(period)s is attached as an encrypted PDF.\n"
@@ -2859,7 +2815,7 @@ msgstr ""
 "Mellékeljük a(z) %(period)s időszak bérjegyzékét titkosított PDF-ként.\n"
 "A jelszót külön kapja meg — e-mailben soha nem küldjük."
 
-#: features/payslips/services.py:151 features/payslips/services.py:155
+#: features/payslips/services.py:167 features/payslips/services.py:171
 msgid ""
 "Unable to send the payslip email. Check the recipient address and mail "
 "configuration."
@@ -2867,11 +2823,11 @@ msgstr ""
 "A bérjegyzék e-mailben történő elküldése nem sikerült. Ellenőrizze a címzett "
 "címét és a levelezési beállításokat."
 
-#: features/payslips/views.py:28
+#: features/payslips/views.py:30
 msgid "Payslip recorded."
 msgstr "Bérjegyzék rögzítve."
 
-#: features/payslips/views.py:54
+#: features/payslips/views.py:63
 #, python-format
 msgid ""
 "Payslip emailed to %(to)s. One-time password (tell the worker by phone/"
@@ -2904,7 +2860,7 @@ msgstr "bérbejegyzések"
 msgid "A wage is already recorded for this person and period."
 msgstr "Ehhez a személyhez és időszakhoz már rögzítettek bért."
 
-#: features/wage_ledger/providers.py:17 tests/test_wage_ledger.py:94
+#: features/wage_ledger/providers.py:17 tests/test_wage_ledger.py:95
 msgid "Recorded gross wage"
 msgstr "Rögzített bruttó bér"
 
@@ -3015,10 +2971,8 @@ msgstr "Csak kimutatáshoz — a munkavállalóktól semmi nem kerül levonásra
 
 #: templates/pages/accommodation_costs.html:8
 #: templates/pages/equipment_stock.html:21
-#, fuzzy
-#| msgid "Record month"
 msgid "Report month"
-msgstr "Hónap rögzítése"
+msgstr "Jelentés hónapja"
 
 #: templates/pages/accommodation_costs.html:8
 #: templates/pages/accommodation_list.html:23 templates/pages/audit_log.html:29
@@ -3036,10 +2990,8 @@ msgstr "Állandó költség"
 
 #: templates/pages/accommodation_costs.html:11
 #: templates/pages/accommodation_costs.html:20
-#, fuzzy
-#| msgid "Workers"
 msgid "Worker payments"
-msgstr "Dolgozók"
+msgstr "Dolgozói befizetések"
 
 #: templates/pages/accommodation_costs.html:12
 #: templates/pages/accommodation_costs.html:20
@@ -3056,20 +3008,16 @@ msgid "Missing cost period"
 msgstr "Hiányzó költségidőszak"
 
 #: templates/pages/accommodation_costs.html:18
-#, fuzzy
-#| msgid "capacity"
 msgid "Capacity"
-msgstr "kapacitás"
+msgstr "Kapacitás"
 
 #: templates/pages/accommodation_costs.html:18
 msgid "Occupied bed-days"
 msgstr "Foglalt ágy-napok"
 
 #: templates/pages/accommodation_costs.html:19
-#, fuzzy
-#| msgid "Assigned cost"
 msgid "Occupied cost"
-msgstr "Hozzárendelt költség"
+msgstr "Kihasznált költség"
 
 #: templates/pages/accommodation_costs.html:22
 #: templates/pages/accommodation_list.html:40
@@ -3093,26 +3041,20 @@ msgid "Add room"
 msgstr "Szoba hozzáadása"
 
 #: templates/pages/accommodation_detail.html:17
-#, fuzzy
-#| msgid "Monthly rate"
 msgid "Monthly reporting"
-msgstr "Havi díj"
+msgstr "Havi jelentés"
 
 #: templates/pages/accommodation_detail.html:18
 msgid "Per-head cost periods"
 msgstr "Egy főre jutó költség időszakai"
 
 #: templates/pages/accommodation_detail.html:21
-#, fuzzy
-#| msgid "Save override"
 msgid "Save cost period"
-msgstr "Felülírás mentése"
+msgstr "Költségidőszak mentése"
 
 #: templates/pages/accommodation_detail.html:23
-#, fuzzy
-#| msgid "Decision recorded."
 msgid "No cost period recorded."
-msgstr "Döntés rögzítve."
+msgstr "Nincs rögzített költségidőszak."
 
 #: templates/pages/accommodation_detail.html:26
 msgid "This location is inactive and cannot receive new assignments."
@@ -3159,10 +3101,11 @@ msgstr "Szálláskezelés"
 
 # --- compliance ---
 #: templates/pages/accommodation_form.html:9
-#: templates/pages/equipment_form.html:10 templates/pages/ledger.html:123
-#: templates/pages/room_form.html:9 templates/pages/transport_trends.html:22
+#: templates/pages/equipment_form.html:10 templates/pages/room_form.html:9
+#: templates/pages/transport_trends.html:22
 #: templates/pages/trials_queue.html:25
 #: templates/partials/confirm_dialog.html:12
+#: templates/partials/ledger_activity.html:44
 msgid "Cancel"
 msgstr "Törlés"
 
@@ -3220,7 +3163,7 @@ msgstr "Végrehajtó (e-mail tartalmazza)"
 
 # --- projects UI ---
 #: templates/pages/audit_log.html:17 templates/pages/audit_log.html:41
-#: templates/pages/payslips.html:33 templates/pages/transport_trends.html:44
+#: templates/pages/payslips.html:35 templates/pages/transport_trends.html:44
 msgid "Action"
 msgstr "Művelet"
 
@@ -3253,8 +3196,8 @@ msgstr "Mikor"
 msgid "Actor"
 msgstr "Végrehajtó"
 
-#: templates/pages/audit_log.html:42 templates/pages/ledger.html:39
-#: templates/pages/payslips.html:24
+#: templates/pages/audit_log.html:42 templates/pages/ledger.html:40
+#: templates/pages/payslips.html:26
 msgid "Record"
 msgstr "Rögzítés"
 
@@ -3528,10 +3471,8 @@ msgid "Catalogue"
 msgstr "Katalógus"
 
 #: templates/pages/equipment_stock.html:14
-#, fuzzy
-#| msgid "Exit to Available"
 msgid "Units available"
-msgstr "Kilépés Elérhető állapotba"
+msgstr "Elérhető egységek"
 
 #: templates/pages/equipment_stock.html:15
 msgid "Current stock value"
@@ -3543,10 +3484,8 @@ msgid "Closing value"
 msgstr "Záróérték"
 
 #: templates/pages/equipment_stock.html:25
-#, fuzzy
-#| msgid "Equipment value"
 msgid "Opening value"
-msgstr "Felszerelés értéke"
+msgstr "Nyitóérték"
 
 #: templates/pages/equipment_stock.html:35
 #: templates/panels/logistics_equipment.html:7
@@ -3581,10 +3520,8 @@ msgid "Receipt lines"
 msgstr "Bevételezési sorok"
 
 #: templates/pages/equipment_stock_receive.html:11
-#, fuzzy
-#| msgid "Record week"
 msgid "Record receipt"
-msgstr "Hét rögzítése"
+msgstr "Bevételezés rögzítése"
 
 #: templates/pages/feedback_form.html:16
 msgid "Thank you for your feedback."
@@ -3708,11 +3645,13 @@ msgstr "Pénzügyi hónapok"
 msgid "No financial months."
 msgstr "Nincs pénzügyi hónap."
 
-#: templates/pages/finance_summary.html:39 templates/pages/ledger.html:68
+#: templates/pages/finance_summary.html:39
+#: templates/partials/ledger_cycle.html:5
 msgid "Year"
 msgstr "Év"
 
-#: templates/pages/finance_summary.html:42 templates/pages/ledger.html:71
+#: templates/pages/finance_summary.html:42
+#: templates/partials/ledger_cycle.html:8
 msgid "Month"
 msgstr "Hónap"
 
@@ -3775,144 +3714,28 @@ msgstr "Tovább"
 msgid "Advances & deductions"
 msgstr "Előlegek és levonások"
 
-#: templates/pages/ledger.html:17 templates/panels/advances_ledger.html:33
+#: templates/pages/ledger.html:18 templates/panels/advances_ledger.html:34
 msgid "Record entry"
 msgstr "Tétel rögzítése"
 
-#: templates/pages/ledger.html:20 templates/pages/ledger.html:50
-#: templates/pages/ledger.html:79 templates/pages/ledger.html:105
-#: templates/pages/payslips.html:17 templates/pages/payslips.html:33
-#: templates/pages/person_detail.html:8 templates/pages/person_detail.html:232
-#: templates/pages/wages.html:38
-msgid "Person"
-msgstr "Személy"
-
-#: templates/pages/ledger.html:24
+#: templates/pages/ledger.html:25
 msgid "Company / project"
 msgstr "Cég / projekt"
 
-#: templates/pages/ledger.html:29 templates/panels/advances_ledger.html:23
+#: templates/pages/ledger.html:30 templates/panels/advances_ledger.html:24
 msgid "Entry type"
 msgstr "Tétel típusa"
 
-#: templates/pages/ledger.html:33 templates/pages/ledger.html:105
-#: templates/panels/advances_ledger.html:27
+#: templates/pages/ledger.html:34 templates/panels/advances_ledger.html:28
 #: templates/panels/blacklist_case.html:10
 #: templates/panels/blacklist_case.html:33
+#: templates/partials/ledger_activity.html:26
 msgid "Category"
 msgstr "Kategória"
 
-#: templates/pages/ledger.html:37 templates/panels/advances_ledger.html:31
+#: templates/pages/ledger.html:38 templates/panels/advances_ledger.html:32
 msgid "Amount (EUR)"
 msgstr "Összeg (EUR)"
-
-#: templates/pages/ledger.html:45
-msgid "Thursday summary"
-msgstr "Csütörtöki összesítő"
-
-#: templates/pages/ledger.html:46
-#, python-format
-msgid ""
-"Cut-off %(cutoff)s — open advances for Friday cash distribution. Later "
-"entries roll to next week."
-msgstr ""
-"Zárás: %(cutoff)s — nyitott előlegek a pénteki készpénzosztáshoz. A későbbi "
-"tételek a következő hétre kerülnek."
-
-# --- compliance ---
-#: templates/pages/ledger.html:50
-msgid "Company"
-msgstr "Cég"
-
-#: templates/pages/ledger.html:50 templates/pages/ledger.html:105
-msgid "Amount"
-msgstr "Összeg"
-
-#: templates/pages/ledger.html:56
-msgid "Total"
-msgstr "Összesen"
-
-#: templates/pages/ledger.html:59 templates/pages/ledger.html:86
-msgid "Download CSV"
-msgstr "CSV letöltése"
-
-#: templates/pages/ledger.html:61
-msgid "No open advances before this week's cut-off."
-msgstr "Az e heti zárás előtt nincs nyitott előleg."
-
-#: templates/pages/ledger.html:66
-#, python-format
-msgid "Cycle %(start)s → %(end)s"
-msgstr "Ciklus: %(start)s → %(end)s"
-
-#: templates/pages/ledger.html:74
-msgid "Show"
-msgstr "Megjelenítés"
-
-#: templates/pages/ledger.html:79
-msgid "To deduct"
-msgstr "Levonandó"
-
-#: templates/pages/ledger.html:79
-msgid "To add"
-msgstr "Hozzáadandó"
-
-#: templates/pages/ledger.html:79
-msgid "Net pay effect"
-msgstr "Nettó bérhatás"
-
-#: templates/pages/ledger.html:93
-msgid ""
-"This locks every open entry of the window into the cycle; locked entries can "
-"only be corrected by reversal."
-msgstr ""
-"A ciklusba zárja az ablak összes nyitott tételét; a zárolt tételek csak "
-"sztornóval javíthatók."
-
-#: templates/pages/ledger.html:93
-msgid "Include open entries in cycle"
-msgstr "Nyitott tételek ciklusba sorolása"
-
-#: templates/pages/ledger.html:94
-msgid "This marks the whole cycle as settled with pay."
-msgstr "Az egész ciklust bérrel rendezettként jelöli."
-
-#: templates/pages/ledger.html:94
-msgid "Mark cycle settled"
-msgstr "Ciklus rendezettként jelölése"
-
-#: templates/pages/ledger.html:98
-msgid "No entries in this cycle window."
-msgstr "Ebben a ciklusablakban nincs tétel."
-
-#: templates/pages/ledger.html:103
-msgid "Entries"
-msgstr "Tételek"
-
-#: templates/pages/ledger.html:105
-msgid "Type"
-msgstr "Típus"
-
-#: templates/pages/ledger.html:105
-msgid "Settlement"
-msgstr "Elszámolás"
-
-#: templates/pages/ledger.html:121
-msgid ""
-"This records a reversal entry with the opposite pay effect; the original "
-"stays in the ledger."
-msgstr ""
-"Sztornótételt rögzít ellentétes bérhatással; az eredeti tétel a főkönyvben "
-"marad."
-
-#: templates/pages/ledger.html:121
-msgid "Reverse"
-msgstr "Sztornó"
-
-#: templates/pages/ledger.html:123
-msgid ""
-"This cancels the open ledger entry; it will no longer count against pay."
-msgstr "Törli a nyitott főkönyvi tételt; többé nem számít bele a bérbe."
 
 # --- login ---
 #: templates/pages/login.html:4 templates/pages/login.html:10
@@ -3949,36 +3772,28 @@ msgstr ""
 msgid "Record payslip"
 msgstr "Bérjegyzék rögzítése"
 
-#: templates/pages/payslips.html:19
-msgid "no email!"
-msgstr "nincs e-mail!"
-
-#: templates/pages/payslips.html:21
-msgid "Period (YYYY-MM)"
-msgstr "Időszak (ÉÉÉÉ-HH)"
-
-#: templates/pages/payslips.html:22
-msgid "Net amount (EUR)"
-msgstr "Nettó összeg (EUR)"
-
-#: templates/pages/payslips.html:30
+#: templates/pages/payslips.html:32
 msgid "Recorded payslips"
 msgstr "Rögzített bérjegyzékek"
 
-#: templates/pages/payslips.html:33
+#: templates/pages/payslips.html:35
 #: templates/partials/person_finance_overview.html:10
 msgid "Calendar month"
 msgstr "Naptári hónap"
 
-#: templates/pages/payslips.html:45
+#: templates/pages/payslips.html:35
+msgid "Issue date"
+msgstr "Kiállítás dátuma"
+
+#: templates/pages/payslips.html:48
 msgid "Resend (new password)"
 msgstr "Újraküldés (új jelszó)"
 
-#: templates/pages/payslips.html:45
+#: templates/pages/payslips.html:48
 msgid "Send encrypted PDF"
 msgstr "Titkosított PDF küldése"
 
-#: templates/pages/payslips.html:51
+#: templates/pages/payslips.html:54
 msgid "No payslips recorded."
 msgstr "Nincs rögzített bérjegyzék."
 
@@ -4435,8 +4250,8 @@ msgid ""
 "displayed beside the independently recorded net payslip; the system does not "
 "derive statutory payroll deductions."
 msgstr ""
-"Rögzítse az egyes naptári hónapokban megszerzett bruttó bért. Ez az érték "
-"az önállóan rögzített nettó bérjegyzék mellett jelenik meg; a rendszer nem "
+"Rögzítse az egyes naptári hónapokban megszerzett bruttó bért. Ez az érték az "
+"önállóan rögzített nettó bérjegyzék mellett jelenik meg; a rendszer nem "
 "számítja ki a törvényes bérlevonásokat."
 
 #: templates/pages/wages.html:15 templates/pages/wages.html:27
@@ -4463,11 +4278,19 @@ msgstr "Nincs rögzített bruttó bér."
 msgid "Money"
 msgstr "Pénz"
 
-#: templates/panels/advances_ledger.html:6
+#: templates/panels/advances_ledger.html:5
+msgid ""
+"Cash advances and deductions against this person's pay, settled through the "
+"weekly ledger cycle."
+msgstr ""
+"Készpénzelőlegek és levonások e személy béréből, amelyeket a heti "
+"főkönyvi ciklus rendez."
+
+#: templates/panels/advances_ledger.html:7
 msgid "Open balance against pay"
 msgstr "Nyitott egyenleg a bérrel szemben"
 
-#: templates/panels/advances_ledger.html:15
+#: templates/panels/advances_ledger.html:16
 msgid "No ledger entries yet."
 msgstr "Még nincsenek főkönyvi tételek."
 
@@ -4515,14 +4338,21 @@ msgstr "Jóváhagyások"
 msgid "Activation checklist"
 msgstr "Aktiválási ellenőrzőlista"
 
-#: templates/panels/checklists_items.html:7
+#: templates/panels/checklists_items.html:5
+msgid ""
+"Items marked critical must all be ticked before this person can be activated."
+msgstr ""
+"A kritikusként megjelölt tételeket mind be kell pipálni, mielőtt ez a "
+"személy aktiválható."
+
+#: templates/panels/checklists_items.html:8
 #, python-format
 msgid "%(n)s critical item open — activation is blocked."
 msgid_plural "%(n)s critical items open — activation is blocked."
 msgstr[0] "%(n)s kritikus tétel nyitott — az aktiválás blokkolva van."
 msgstr[1] "%(n)s kritikus tétel nyitott — az aktiválás blokkolva van."
 
-#: templates/panels/checklists_items.html:9
+#: templates/panels/checklists_items.html:10
 msgid "All critical items are complete."
 msgstr "Minden kritikus tétel teljesítve."
 
@@ -4544,22 +4374,16 @@ msgid "Reusable — return to stock"
 msgstr "Újrahasználható — vissza a készletbe"
 
 #: templates/panels/logistics_equipment.html:19
-#, fuzzy
-#| msgid "Damage recovered"
 msgid "Damaged or retired"
-msgstr "Megtérült károk"
+msgstr "Sérült vagy selejtezett"
 
 #: templates/panels/logistics_equipment.html:25
-#, fuzzy
-#| msgid ""
-#| "This flags the item as unreturned and opens a manager charge review at "
-#| "its current value."
 msgid ""
 "This flags the item as unreturned and opens a manager charge review at its "
 "issued stock value."
 msgstr ""
 "Vissza nem adottként jelöli a tételt, és menedzseri terhelés-"
-"felülvizsgálatot nyit az aktuális értékén."
+"felülvizsgálatot nyit a kiadáskori készletértéken."
 
 #: templates/panels/logistics_equipment.html:25
 msgid "Flag unreturned"
@@ -4580,17 +4404,13 @@ msgid "Release room"
 msgstr "Szoba felszabadítása"
 
 #: templates/panels/logistics_room.html:20
-#, fuzzy
-#| msgid "Save rate"
 msgid "Save payment"
-msgstr "Díj mentése"
+msgstr "Befizetés mentése"
 
 # --- dashboard ---
 #: templates/panels/logistics_room.html:22
-#, fuzzy
-#| msgid "rate override"
 msgid "Legacy rate override"
-msgstr "egyedi díj"
+msgstr "Korábbi egyedi díj"
 
 #: templates/panels/logistics_room.html:25
 msgid "Rate override"
@@ -4645,13 +4465,123 @@ msgstr "Biztosan meg akarja tenni?"
 msgid "Yes, proceed"
 msgstr "Igen, folytatás"
 
+#: templates/partials/ledger_activity.html:3
+msgid "Thursday summary"
+msgstr "Csütörtöki összesítő"
+
+#: templates/partials/ledger_activity.html:4
+#, python-format
+msgid ""
+"Cut-off %(cutoff)s — open advances for Friday cash distribution. Later "
+"entries roll to next week."
+msgstr ""
+"Zárás: %(cutoff)s — nyitott előlegek a pénteki készpénzosztáshoz. A későbbi "
+"tételek a következő hétre kerülnek."
+
+# --- compliance ---
+#: templates/partials/ledger_activity.html:8
+msgid "Company"
+msgstr "Cég"
+
+#: templates/partials/ledger_activity.html:8
+#: templates/partials/ledger_activity.html:26
+msgid "Amount"
+msgstr "Összeg"
+
+#: templates/partials/ledger_activity.html:14
+msgid "Total"
+msgstr "Összesen"
+
+#: templates/partials/ledger_activity.html:17
+#: templates/partials/ledger_cycle.html:23
+msgid "Download CSV"
+msgstr "CSV letöltése"
+
+#: templates/partials/ledger_activity.html:19
+msgid "No open advances before this week's cut-off."
+msgstr "Az e heti zárás előtt nincs nyitott előleg."
+
+#: templates/partials/ledger_activity.html:24
+msgid "Entries"
+msgstr "Tételek"
+
+#: templates/partials/ledger_activity.html:26
+msgid "Type"
+msgstr "Típus"
+
+#: templates/partials/ledger_activity.html:26
+msgid "Settlement"
+msgstr "Elszámolás"
+
+#: templates/partials/ledger_activity.html:42
+msgid ""
+"This records a reversal entry with the opposite pay effect; the original "
+"stays in the ledger."
+msgstr ""
+"Sztornótételt rögzít ellentétes bérhatással; az eredeti tétel a főkönyvben "
+"marad."
+
+#: templates/partials/ledger_activity.html:42
+msgid "Reverse"
+msgstr "Sztornó"
+
+#: templates/partials/ledger_activity.html:44
+msgid ""
+"This cancels the open ledger entry; it will no longer count against pay."
+msgstr "Törli a nyitott főkönyvi tételt; többé nem számít bele a bérbe."
+
+#: templates/partials/ledger_cycle.html:3
+#, python-format
+msgid "Cycle %(start)s → %(end)s"
+msgstr "Ciklus: %(start)s → %(end)s"
+
+#: templates/partials/ledger_cycle.html:11
+msgid "Show"
+msgstr "Megjelenítés"
+
+#: templates/partials/ledger_cycle.html:16
+msgid "To deduct"
+msgstr "Levonandó"
+
+#: templates/partials/ledger_cycle.html:16
+msgid "To add"
+msgstr "Hozzáadandó"
+
+#: templates/partials/ledger_cycle.html:16
+msgid "Net pay effect"
+msgstr "Nettó bérhatás"
+
+#: templates/partials/ledger_cycle.html:30
+msgid ""
+"This locks every open entry of the window into the cycle; locked entries can "
+"only be corrected by reversal."
+msgstr ""
+"A ciklusba zárja az ablak összes nyitott tételét; a zárolt tételek csak "
+"sztornóval javíthatók."
+
+#: templates/partials/ledger_cycle.html:30
+msgid "Include open entries in cycle"
+msgstr "Nyitott tételek ciklusba sorolása"
+
+#: templates/partials/ledger_cycle.html:31
+msgid "This marks the whole cycle as settled with pay."
+msgstr "Az egész ciklust bérrel rendezettként jelöli."
+
+#: templates/partials/ledger_cycle.html:31
+msgid "Mark cycle settled"
+msgstr "Ciklus rendezettként jelölése"
+
+#: templates/partials/ledger_cycle.html:35
+msgid "No entries in this cycle window."
+msgstr "Ebben a ciklusablakban nincs tétel."
+
 # --- dashboard ---
 #: templates/partials/person_finance_overview.html:4
 msgid "Wage and payslip overview"
 msgstr "Bér- és bérjegyzék-áttekintés"
 
 #: templates/partials/person_finance_overview.html:5
-#: tests/test_wage_ledger.py:97
+#: tests/test_wage_ledger.py:98
 msgid ""
 "Both columns are recorded source values for the same calendar month. Gross "
 "wage is not converted into net pay here; taxes, levies, and other statutory "

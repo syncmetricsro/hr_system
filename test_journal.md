@@ -1,5 +1,26 @@
 # Test Journal
 
+## 2026-07-21 - Hungarian catalog fuzzy-match cleanup + panel help text
+
+- Added `tests/test_i18n_catalog.py`: 14 regression assertions (not
+  jober_only — catalog content is shared) asserting the corrected Hungarian
+  text for the must-fix bucket of the 47 formerly-fuzzy entries via
+  `translation.override("hu")`/`gettext`, plus a dedicated check that
+  `EquipmentStockLot`'s initial/remaining quantity and value fields no
+  longer collapse to the same Hungarian word, and that the 2 new panel
+  help-text strings translate to non-empty text. Focused run: **14 passed**.
+- Full unit suite in the test container: **408 passed, 5 skipped**. Ruff
+  (`core features clients config tests`): clean. `git diff --check`: clean.
+- Corvinum-flags lane (`scripts/test_corvinum.sh`, `-m "not jober_only"`
+  against the `corvinum` DB): **240 passed, 8 skipped, 133 deselected**.
+- Catalog health: `grep -c '^#, fuzzy' locale/hu/LC_MESSAGES/django.po` → 0
+  (was 47). `scripts/compile_messages.sh --extract` diff confirmed 0 msgids
+  removed across hu/sk/uk, only the 2 new help-text msgids added — all other
+  churn was `#:` source-line-comment reordering. `.mo` files recompiled and
+  committed alongside `.po`. sk/uk each still carry their own independent
+  47-entry fuzzy backlog (same upstream bug, not fixed here — see
+  BUILD_JOURNAL follow-up note).
+
 ## 2026-07-21 - Corvinum ledger panel-order correction
 
 - Updated the Manager render regression to require Record entry and Cycle in
