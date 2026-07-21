@@ -1,5 +1,23 @@
 # Deployment Journal
 
+## 2026-07-21 - Corvinum ledger panel-order correction deployed
+
+- Merged corrective PR **#83** and deployed application revision **`819f28b`**
+  to `corvinum-staging` as `jober-platform:corvinum-demo-819f28b` (local image
+  digest
+  `sha256:23eba197426d31cf351bfaad6d9b8feac950f8268ed3749483937c8318472477`).
+- This template-only replacement puts the compact Cycle card beside Record
+  entry and the larger Thursday summary + Entries card full-width below. No
+  migration or seed refresh was required; `migrate --check` passed.
+- Dokku uptime and port checks passed. A runtime template assertion confirmed
+  Cycle precedes Activity and the activity partial still contains both summary
+  and Entries. Public HTTPS health, login/secure CSRF, fingerprinted CSS,
+  X-Frame-Options, and HSTS checks passed. Logs contain normal Gunicorn startup
+  output only.
+- The previous `corvinum-demo-07cd2a1` image remains the immediate rollback
+  target. The known Dokku default-bridge warning remains non-blocking host
+  maintenance.
+
 ## 2026-07-21 - Corvinum payslip-date and ledger-layout release
 
 - Merged PR **#81** and deployed application revision **`07cd2a1`** to the
