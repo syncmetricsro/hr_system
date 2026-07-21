@@ -4,6 +4,8 @@ import datetime as dt
 from decimal import Decimal
 
 import pytest
+from django.conf import settings
+from django.urls import reverse
 from django.utils import timezone
 
 from core.people.models import Person
@@ -28,6 +30,10 @@ from features.advances.services import (
 )
 
 pytestmark = pytest.mark.django_db
+ledger_ui = pytest.mark.skipif(
+    not settings.FEATURE_FLAGS.get("advances", False),
+    reason="Advance ledger UI is not mounted for this client",
+)
 
 
 @pytest.fixture
@@ -155,3 +161,28 @@ def test_open_balance(person, manager):
     record_entry(person, entry_type=EntryType.PAY_ADDITION, category="travel_fuel",
                  amount=Decimal("30"), actor=manager)
     assert open_balance(person) == Decimal("70")
+
+
+@ledger_ui
+def test_ledger_page_groups_entry_form_with_summary_and_entries(client, person, manager):
+    record_entry(
+        person,
+        entry_type=EntryType.CASH_ADVANCE,
+        category="cash_advance",
+        amount=Decimal("100"),
+        actor=manager,
+        entry_date=dt.date(2026, 7, 15),
+    )
+    client.force_login(manager)
+
+    response = client.get(reverse("ledger_overview"), {"year": 2026, "month": 7})
+    body = response.content.decode()
+
+    assert response.status_code == 200
+    workspace = body.index('class="ledger-workspace')
+    form = body.index('class="ledger-entry-form"')
+    activity = body.index('ledger-activity-panel')
+    entries = body.index('class="ledger-entries"')
+    activity_end = body.index("</article>", activity)
+    cycle = body.index('class="panel ledger-cycle"')
+    assert workspace < form < activity < entries < activity_end < cycle

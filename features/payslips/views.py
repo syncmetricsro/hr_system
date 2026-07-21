@@ -1,40 +1,49 @@
 from __future__ import annotations
 
 from django.contrib import messages
-from django.core.exceptions import PermissionDenied, ValidationError
+from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import gettext as _
 
 from core.accounts.permissions import Action, can, require_action
-from core.people.models import Person
+from features.payslips.forms import PayslipForm
 from features.payslips.models import Payslip
 from features.payslips.services import PayslipError, record_payslip, send_payslip
 
 
 @require_action(Action.PAYSLIP_VIEW)
 def payslip_list(request):
+    may_manage = can(request.user, Action.PAYSLIP_MANAGE)
     if request.method == "POST":
-        if not can(request.user, Action.PAYSLIP_MANAGE):
+        if not may_manage:
             raise PermissionDenied("Role is not permitted to manage payslips")
-        person = get_object_or_404(Person, pk=request.POST.get("person"))
-        try:
+        form = PayslipForm(request.POST)
+        if form.is_valid():
             record_payslip(
-                person,
-                period=request.POST.get("period", "").strip(),
-                net_amount=request.POST.get("net_amount"),
-                note=request.POST.get("note", "").strip(),
+                form.cleaned_data["person"],
+                period=form.cleaned_data["period"],
+                net_amount=form.cleaned_data["net_amount"],
+                note=form.cleaned_data["note"],
+                issue_date=form.cleaned_data["issue_date"],
                 actor=request.user,
             )
             messages.success(request, _("Payslip recorded."))
-        except ValidationError as exc:
-            messages.error(request, "; ".join(exc.messages))
-        return redirect("payslip_list")
+            return redirect("payslip_list")
+        status = 400
+    else:
+        form = PayslipForm() if may_manage else None
+        status = 200
 
-    return render(request, "pages/payslips.html", {
-        "payslips": Payslip.objects.select_related("person")[:100],
-        "people": Person.objects.order_by("last_name", "first_name"),
-        "may_manage": can(request.user, Action.PAYSLIP_MANAGE),
-    })
+    return render(
+        request,
+        "pages/payslips.html",
+        {
+            "payslips": Payslip.objects.select_related("person")[:100],
+            "form": form,
+            "may_manage": may_manage,
+        },
+        status=status,
+    )
 
 
 @require_action(Action.PAYSLIP_MANAGE)

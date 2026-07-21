@@ -1,5 +1,31 @@
 # Build Journal
 
+## 2026-07-21 - Corvinum ledger workspace compaction
+
+- Reworked the Corvinum ledger into a desktop workspace: the entry form uses a
+  compact two-column field grid beside one activity panel, while tablet/mobile
+  layouts retain a single-column workflow.
+- Merged the Thursday cash-distribution summary and selected-cycle Entries into
+  that activity panel. Cycle totals, filters, CSV, inclusion, and settlement
+  actions remain in their own shorter full-width panel below.
+- Kept all ledger services, calculations, permissions, exports, confirmation
+  flows, and settlement behavior unchanged. Wide entry tables still scroll
+  inside their panel rather than widening the page.
+
+## 2026-07-21 - Corvinum payslip issue date
+
+- Added a server-owned issue date to payslip records. Managers may enter it
+  when recording a payslip or leave it blank to use the Europe/Bratislava
+  creation date; it is intentionally independent of the payroll month.
+- Existing rows are backfilled from their localized creation timestamp. The
+  resolved date is included in structured audit metadata and shown to Manager
+  and Observer users in the responsive Recorded payslips table.
+- Kept the encrypted PDF, email naming/content, and person wage-versus-payslip
+  overview unchanged. Jober receives only the compatible schema migration;
+  its payslip feature remains disabled.
+- Added deterministic fictional issue dates to the Corvinum seed and updated
+  the presenter route to explain period versus issue date.
+
 ## 2026-07-20 - Corvinum wage and payslip source overview
 
 - Reconciled the safe wage-ledger slice from the preserved branch onto current

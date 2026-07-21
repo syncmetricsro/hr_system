@@ -380,11 +380,17 @@ data.
 ### 12. Encrypted payslip delivery - 4 minutes
 
 1. Open **Payslips** and inspect Eszter's same seeded `2026-06` and `2026-07` net
-   values. This confirms that the person overview reads the payslip record; it
-   does not copy or calculate the displayed number.
+   values. Point out the separate **Issue date** column: the fictional June
+   payslip was issued on `2026-07-05`, while the July payslip was issued on
+   `2026-07-20`. The issue date describes the document and does not redefine
+   its calendar-month payroll period. This also confirms that the person
+   overview reads the payslip record; it does not copy or calculate the
+   displayed number.
 2. If creation itself must be demonstrated, use a different fictional person
-   and an unused period. Do not overwrite or duplicate Eszter's numeric
-   checkpoint rows.
+   and an unused period. The **Payslip date (optional)** field accepts any
+   valid date independently of the selected period. Leave it blank once to
+   demonstrate that the server records the local creation date. Do not
+   overwrite or duplicate Eszter's numeric checkpoint rows.
 3. On persistent staging, if the intended Marek/period row already exists, do
    not create it again. Use that row's **Resend (new password)** action. The
    database allows one payslip per person and period.

@@ -1634,6 +1634,15 @@ msgstr ""
 msgid "issue date"
 msgstr "дата видачі"
 
+msgid "Issue date"
+msgstr "Дата видачі"
+
+msgid "Payslip date (optional)"
+msgstr "Дата розрахункового листа (необов’язково)"
+
+msgid "If left blank, the creation date is used."
+msgstr "Якщо залишити поле порожнім, буде використано дату створення."
+
 #: features/compliance/models.py:20
 msgid "certificate"
 msgstr "сертифікат"

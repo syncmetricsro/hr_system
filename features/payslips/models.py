@@ -5,6 +5,7 @@ from decimal import Decimal
 from django.conf import settings
 from django.core.validators import MinValueValidator, RegexValidator
 from django.db import models
+from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 
@@ -28,6 +29,7 @@ class Payslip(models.Model):
     )
     currency = models.CharField(_("currency"), max_length=3, default="EUR")
     note = models.CharField(_("note"), max_length=200, blank=True)
+    issue_date = models.DateField(_("issue date"), default=timezone.localdate)
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL,
         related_name="+", verbose_name=_("created by"),

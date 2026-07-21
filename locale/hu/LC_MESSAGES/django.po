@@ -1634,6 +1634,15 @@ msgstr "Az aktiválást nyitott ellenőrzőlista-tételek blokkolják: %(items)s
 msgid "issue date"
 msgstr "kiállítás dátuma"
 
+msgid "Issue date"
+msgstr "Kiállítás dátuma"
+
+msgid "Payslip date (optional)"
+msgstr "A bérjegyzék dátuma (nem kötelező)"
+
+msgid "If left blank, the creation date is used."
+msgstr "Ha üresen marad, a létrehozás dátumát használjuk."
+
 #: features/compliance/models.py:20
 msgid "certificate"
 msgstr "tanúsítvány"

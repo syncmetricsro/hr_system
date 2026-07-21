@@ -250,6 +250,8 @@ def test_corvinum_ledger_groups_controls_and_keeps_tables_aligned(page):
         const button = filter.querySelector('button').getBoundingClientRect();
         const summary = document.querySelector('.ledger-cycle-summary').getBoundingClientRect();
         const entries = document.querySelector('.ledger-entries .ledger-table').getBoundingClientRect();
+        const activity = document.querySelector('.ledger-activity-panel');
+        const cyclePanel = document.querySelector('.ledger-cycle');
         return {
           display: getComputedStyle(filter).display,
           labels: filter.querySelectorAll('.field-mini').length,
@@ -257,6 +259,9 @@ def test_corvinum_ledger_groups_controls_and_keeps_tables_aligned(page):
           aligned: inputs.every((input) => Math.abs(input.bottom - button.bottom) <= 1),
           summaryWidth: summary.width,
           entriesWidth: entries.width,
+          summaryAndEntriesMerged: activity.contains(document.querySelector('.ledger-summary-table'))
+            && activity.contains(document.querySelector('.ledger-entries')),
+          entriesRemovedFromCycle: !cyclePanel.contains(document.querySelector('.ledger-entries')),
           overflow: document.documentElement.scrollWidth - innerWidth,
         };
       }
@@ -267,6 +272,8 @@ def test_corvinum_ledger_groups_controls_and_keeps_tables_aligned(page):
     assert desktop["aligned"]
     assert desktop["summaryWidth"] == 832
     assert desktop["entriesWidth"] > desktop["summaryWidth"]
+    assert desktop["summaryAndEntriesMerged"]
+    assert desktop["entriesRemovedFromCycle"]
     assert desktop["overflow"] == 0
 
     page.set_viewport_size({"width": 375, "height": 667})
@@ -313,3 +320,22 @@ def test_corvinum_wage_and_payslip_sources_are_aligned_and_responsive(page):
       })
     """)
     assert layout == {"pageOverflow": 0, "overviewScrolls": True}
+
+    page.goto(f"{base_url()}/sk/payslips/")
+    page.wait_for_load_state("networkidle")
+    expect(page.get_by_role("heading", name="Výplatné pásky", exact=True)).to_be_visible()
+    payslip_table = page.locator(".data-table").last
+    expect(payslip_table.locator("thead th")).to_have_count(5)
+    expect(payslip_table).to_contain_text("2026-07-20")
+    expect(payslip_table).to_contain_text("2026-07-05")
+    payslip_layout = page.evaluate("""
+      () => ({
+        pageOverflow: document.documentElement.scrollWidth - innerWidth,
+        tableScrolls: document.querySelector(
+          '.data-table-scroll'
+        ).scrollWidth > document.querySelector(
+          '.data-table-scroll'
+        ).clientWidth,
+      })
+    """)
+    assert payslip_layout == {"pageOverflow": 0, "tableScrolls": True}
