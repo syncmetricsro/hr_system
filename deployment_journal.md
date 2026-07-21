@@ -1,5 +1,30 @@
 # Deployment Journal
 
+## 2026-07-21 - Hungarian catalog fuzzy-match cleanup deployed (both apps)
+
+- Merged PR **#85** and deployed application revision **`c6d5785`** to both
+  `corvinum-staging` and `jober-staging` as the shared image
+  `jober-platform:demo-c6d5785`, streamed via `git:load-image` (no VPS-side
+  build, no secrets in the image). Deployed to both apps since the fix
+  touches `features/logistics`/`core/people` (shared by both clients), not
+  just the CorvinumEU-only checklist/advances panel help text.
+- `corvinum-staging`: `migrate --noinput` reported no pending migrations.
+  `jober-staging`: applied `payslips.0002_payslip_issue_date`, which had not
+  yet landed there from an earlier Corvinum-only release — additive,
+  non-destructive, no data affected.
+- Both Dokku containers passed `ps:report` (running) and `/healthz/` (200).
+  The full HTTPS smoke suite (`scripts/deploy_smoke.sh --https`) passed for
+  both: healthz, login page + CSRF, fingerprinted static CSS,
+  X-Frame-Options, HSTS.
+- Manually confirmed the Hungarian catalog loads cleanly on both live apps
+  post-recompile: `/hu/` renders `Bejelentkezés · CorvinumEU PeopleOps` and
+  `Bejelentkezés · Jober` respectively at HTTP 200 with a valid CSRF token —
+  no corruption from the 47 hand-edited `.po` entries.
+- No reseed run (translation/help-text content change only, no new seed
+  data). Previous image tags (`jober-platform:corvinum-demo-819f28b` and
+  `jober-platform:jober-demo-64d30ac`) remain the rollback targets for their
+  respective apps via `git:from-image`.
+
 ## 2026-07-21 - Corvinum ledger panel-order correction deployed
 
 - Merged corrective PR **#83** and deployed application revision **`819f28b`**
