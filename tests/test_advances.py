@@ -181,8 +181,8 @@ def test_ledger_page_groups_entry_form_with_summary_and_entries(client, person, 
     assert response.status_code == 200
     workspace = body.index('class="ledger-workspace')
     form = body.index('class="ledger-entry-form"')
+    cycle = body.index('class="panel ledger-cycle"')
+    workspace_end = body.index("</section>", cycle)
     activity = body.index('ledger-activity-panel')
     entries = body.index('class="ledger-entries"')
-    activity_end = body.index("</article>", activity)
-    cycle = body.index('class="panel ledger-cycle"')
-    assert workspace < form < activity < entries < activity_end < cycle
+    assert workspace < form < cycle < workspace_end < activity < entries

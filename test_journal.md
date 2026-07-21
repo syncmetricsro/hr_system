@@ -1,5 +1,16 @@
 # Test Journal
 
+## 2026-07-21 - Corvinum ledger panel-order correction
+
+- Updated the Manager render regression to require Record entry and Cycle in
+  the same workspace, followed by the combined Thursday summary + Entries
+  panel. Focused advance-ledger slice: **11 passed**.
+- Browser coverage now asserts the Cycle card is inside and above the activity
+  panel, while summary/Entries remain merged and Entries remain outside Cycle.
+  Complete isolated Playwright suite: **43 passed** at desktop and mobile.
+- Ruff and `git diff --check` pass. This correction is template-only and adds
+  no schema, service, dependency, or translation change.
+
 ## 2026-07-21 - Corvinum ledger workspace layout
 
 - Added a Manager render regression proving the compact entry form precedes a
