@@ -252,6 +252,7 @@ def test_corvinum_ledger_groups_controls_and_keeps_tables_aligned(page):
         const entries = document.querySelector('.ledger-entries .ledger-table').getBoundingClientRect();
         const activity = document.querySelector('.ledger-activity-panel');
         const cyclePanel = document.querySelector('.ledger-cycle');
+        const workspace = document.querySelector('.ledger-workspace');
         return {
           display: getComputedStyle(filter).display,
           labels: filter.querySelectorAll('.field-mini').length,
@@ -262,6 +263,9 @@ def test_corvinum_ledger_groups_controls_and_keeps_tables_aligned(page):
           summaryAndEntriesMerged: activity.contains(document.querySelector('.ledger-summary-table'))
             && activity.contains(document.querySelector('.ledger-entries')),
           entriesRemovedFromCycle: !cyclePanel.contains(document.querySelector('.ledger-entries')),
+          cycleInWorkspace: workspace.contains(cyclePanel) && !workspace.contains(activity),
+          cycleBeforeActivity: cyclePanel.getBoundingClientRect().top
+            < activity.getBoundingClientRect().top,
           overflow: document.documentElement.scrollWidth - innerWidth,
         };
       }
@@ -274,6 +278,8 @@ def test_corvinum_ledger_groups_controls_and_keeps_tables_aligned(page):
     assert desktop["entriesWidth"] > desktop["summaryWidth"]
     assert desktop["summaryAndEntriesMerged"]
     assert desktop["entriesRemovedFromCycle"]
+    assert desktop["cycleInWorkspace"]
+    assert desktop["cycleBeforeActivity"]
     assert desktop["overflow"] == 0
 
     page.set_viewport_size({"width": 375, "height": 667})

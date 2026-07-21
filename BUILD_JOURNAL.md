@@ -1,5 +1,15 @@
 # Build Journal
 
+## 2026-07-21 - Corvinum ledger panel-order correction
+
+- Corrected the first compact-ledger composition after staging review: the
+  smaller Cycle card now occupies the desktop column beside Record entry, and
+  the larger Thursday summary + Entries card spans the full row below.
+- Kept document order aligned with visual and keyboard order by extracting the
+  cycle and activity cards into template partials rather than applying CSS-only
+  reordering. Tablet/mobile order is Record entry, Cycle, then activity.
+- No ledger data, calculations, permissions, exports, or actions changed.
+
 ## 2026-07-21 - Corvinum ledger workspace compaction
 
 - Reworked the Corvinum ledger into a desktop workspace: the entry form uses a
