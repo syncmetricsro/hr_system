@@ -1,5 +1,27 @@
 # Deployment Journal
 
+## 2026-07-21 - Corvinum payslip-date and ledger-layout release
+
+- Merged PR **#81** and deployed application revision **`07cd2a1`** to the
+  isolated `corvinum-staging` app as
+  `jober-platform:corvinum-demo-07cd2a1` (local image digest
+  `sha256:5fa5853360ef639c7c76aa3a73fc7820db845e5d930cc150f65549d6a23f6b48`).
+  The production image was built locally without runtime credentials and
+  streamed directly to Dokku; the VPS did not build application source.
+- Dokku's replacement container passed uptime and port-8000 checks. Applied
+  `payslips.0002_payslip_issue_date`, ran Django's system check, and refreshed
+  the idempotent fictional Corvinum seed so Eszter's June/July issue-date
+  fixtures are `2026-07-05` and `2026-07-20`.
+- Runtime assertions confirmed payslips and advances remain ON, transport
+  remains OFF, and both the payslip and ledger routes resolve. The deployed
+  release adds optional payslip issue dates and the compact ledger workspace;
+  it does not change PDF content or ledger calculations.
+- The public HTTPS smoke suite passed health, login/secure CSRF, fingerprinted
+  CSS, X-Frame-Options, and HSTS at
+  `https://corvinum-staging.80.211.210.46.sslip.io`. Application logs contain
+  only normal Gunicorn startup output. The known Dokku default-bridge
+  deprecation warning remains non-blocking host maintenance.
+
 ## 2026-07-21 - Latest Jober thin client deployed
 
 - Deployed application revision **`64d30ac`** to the isolated
