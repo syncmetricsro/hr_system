@@ -1,5 +1,23 @@
 # Deployment Journal
 
+## 2026-07-21 - Latest Jober thin client deployed
+
+- Deployed application revision **`64d30ac`** to the isolated
+  `jober-staging` app as `jober-platform:jober-demo-64d30ac` (local image
+  digest `sha256:8c680fbb48e50a265b9f8776f7abb9ac650d93902e20ae7a427eafe3dde73c8a`).
+  The image was built locally without runtime credentials and streamed directly
+  to Dokku; the VPS did not build application source.
+- Dokku's replacement container passed uptime and port-8000 checks. Jober's
+  migration set was already current and `manage.py check` reported no issues.
+  Existing fictional staging records were preserved; no routine reseed ran.
+- Runtime assertions confirmed the Jober boundary: transport OFF,
+  profitability and warehouse stock ON, and the Corvinum-only wage ledger both
+  uninstalled and unrouted.
+- The public HTTPS smoke suite passed health, login/secure CSRF, fingerprinted
+  CSS, X-Frame-Options, and HSTS at
+  `https://jober-staging.80.211.210.46.sslip.io`. The known Dokku
+  default-bridge deprecation warning remains non-blocking host maintenance.
+
 ## 2026-07-20 - Corvinum wage release staging-data reconciliation
 
 - The first PR #77 staging release applied `wage_ledger.0001` and passed the
