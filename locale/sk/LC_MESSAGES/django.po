@@ -1633,6 +1633,15 @@ msgstr ""
 msgid "issue date"
 msgstr "dátum vydania"
 
+msgid "Issue date"
+msgstr "Dátum vystavenia"
+
+msgid "Payslip date (optional)"
+msgstr "Dátum výplatnej pásky (voliteľné)"
+
+msgid "If left blank, the creation date is used."
+msgstr "Ak pole necháte prázdne, použije sa dátum vytvorenia."
+
 #: features/compliance/models.py:20
 msgid "certificate"
 msgstr "certifikát"

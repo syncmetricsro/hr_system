@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from datetime import date
 from decimal import Decimal
 
 import pytest
@@ -147,8 +148,10 @@ def test_corvinum_demo_pay_sources_are_exact_and_idempotent():
         ("2026-06", Decimal("1920.00")),
     ]
     assert list(
-        Payslip.objects.filter(person=worker).values_list("period", "net_amount")
+        Payslip.objects.filter(person=worker).values_list(
+            "period", "net_amount", "issue_date"
+        )
     ) == [
-        ("2026-07", Decimal("1540.00")),
-        ("2026-06", Decimal("1450.00")),
+        ("2026-07", Decimal("1540.00"), date(2026, 7, 20)),
+        ("2026-06", Decimal("1450.00"), date(2026, 7, 5)),
     ]

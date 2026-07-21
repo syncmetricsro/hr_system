@@ -14,13 +14,15 @@
   <h2>{% trans "Record payslip" %}</h2>
   <form class="stack" method="post" action="{% url 'payslip_list' %}">
     {% csrf_token %}
-    <label><span>{% trans "Person" %}</span>
-      <select name="person" required>
-        {% for p in people %}<option value="{{ p.pk }}">{{ p }}{% if not p.email %} — {% trans "no email!" %}{% endif %}</option>{% endfor %}
-      </select></label>
-    <label><span>{% trans "Period (YYYY-MM)" %}</span><input type="text" name="period" pattern="\d{4}-\d{2}" placeholder="2026-07" required></label>
-    <label><span>{% trans "Net amount (EUR)" %}</span><input type="number" name="net_amount" min="0.01" step="0.01" required></label>
-    <label><span>{% trans "Note" %}</span><input type="text" name="note"></label>
+    {% if form.non_field_errors %}<div class="form-errors">{{ form.non_field_errors }}</div>{% endif %}
+    {% for field in form %}
+      <label>
+        <span>{{ field.label }}</span>
+        {{ field }}
+        {% if field.help_text %}<small class="muted">{{ field.help_text }}</small>{% endif %}
+        {{ field.errors }}
+      </label>
+    {% endfor %}
     <button class="button button-primary" type="submit">{% trans "Record" %}</button>
   </form>
 </section>
@@ -30,12 +32,13 @@
   <h2>{% trans "Recorded payslips" %}</h2>
   <div class="data-table-scroll">
   <table class="data-table">
-    <thead><tr><th scope="col">{% trans "Person" %}</th><th scope="col">{% trans "Calendar month" %}</th><th scope="col">{% trans "Recorded net payslip" %}</th><th scope="col">{% trans "Sent" %}</th>{% if may_manage %}<th scope="col">{% trans "Action" %}</th>{% endif %}</tr></thead>
+    <thead><tr><th scope="col">{% trans "Person" %}</th><th scope="col">{% trans "Calendar month" %}</th><th scope="col">{% trans "Issue date" %}</th><th scope="col">{% trans "Recorded net payslip" %}</th><th scope="col">{% trans "Sent" %}</th>{% if may_manage %}<th scope="col">{% trans "Action" %}</th>{% endif %}</tr></thead>
     <tbody>
       {% for slip in payslips %}
         <tr>
           <td>{{ slip.person }}</td>
           <td>{{ slip.period }}</td>
+          <td>{{ slip.issue_date|date:"Y-m-d" }}</td>
           <td>{{ slip.net_amount }} {{ slip.currency }}</td>
           <td>{% if slip.sent_at %}{{ slip.sent_at|date:"Y-m-d H:i" }} → {{ slip.sent_to }}{% else %}—{% endif %}</td>
           {% if may_manage %}<td>
@@ -48,7 +51,7 @@
           </td>{% endif %}
         </tr>
       {% empty %}
-        <tr><td colspan="{% if may_manage %}5{% else %}4{% endif %}" class="muted">{% trans "No payslips recorded." %}</td></tr>
+        <tr><td colspan="{% if may_manage %}6{% else %}5{% endif %}" class="muted">{% trans "No payslips recorded." %}</td></tr>
       {% endfor %}
     </tbody>
   </table>

@@ -28,7 +28,15 @@ class PayslipError(Exception):
     pass
 
 
-def record_payslip(person, *, period: str, net_amount, note: str = "", actor=None):
+def record_payslip(
+    person,
+    *,
+    period: str,
+    net_amount,
+    note: str = "",
+    issue_date=None,
+    actor=None,
+):
     """Create a payslip record (audited — a pay amount must never appear
     without an audit trail; conformance finding 2026-07-11)."""
     from django.db import transaction
@@ -41,13 +49,21 @@ def record_payslip(person, *, period: str, net_amount, note: str = "", actor=Non
             period=period,
             net_amount=net_amount or None,
             note=note,
+            issue_date=issue_date or timezone.localdate(),
             created_by=actor if getattr(actor, "is_authenticated", False) else None,
         )
         payslip.full_clean()
         payslip.save()
         record_event(
             actor, "payslip.recorded", target=person,
-            reason=f"{period} {payslip.net_amount} {payslip.currency}",
+            reason=(
+                f"{period} {payslip.net_amount} {payslip.currency} "
+                f"issued {payslip.issue_date.isoformat()}"
+            ),
+            issue_date=payslip.issue_date.isoformat(),
+            period=period,
+            net_amount=str(payslip.net_amount),
+            currency=payslip.currency,
         )
     return payslip
 

@@ -1,5 +1,36 @@
 # Test Journal
 
+## 2026-07-21 - Corvinum ledger workspace layout
+
+- Added a Manager render regression proving the compact entry form precedes a
+  single activity panel containing Entries, with the cycle card following as a
+  separate section. Focused advance-ledger slice: **11 passed**.
+- Updated the Corvinum desktop/mobile browser regression to verify Thursday
+  summary and Entries share one panel, Entries no longer belongs to the cycle
+  panel, table alignment is preserved, mobile entry scrolling remains local,
+  and document overflow remains zero.
+- Complete isolated Playwright suite: **43 passed**. Ruff and
+  `git diff --check` pass; no model, migration, service, or translation change
+  was required for this presentation-only adjustment.
+
+## 2026-07-21 - Corvinum payslip issue date
+
+- Added coverage for explicit, blank-default, out-of-period, and future issue
+  dates; malformed form input; Bratislava-local legacy-date conversion;
+  structured audit metadata; Manager/Observer rendering; RBAC isolation; and
+  deterministic idempotent Corvinum fixtures.
+- Focused Corvinum payslip/wage slice: **18 passed**. Complete Corvinum lane:
+  **225 passed, 8 skipped, 133 deselected**. Complete Jober lane: **394 passed,
+  4 skipped**; the three payslip UI cases skip because Jober does not mount the
+  disabled feature, while shared model/service coverage remains active.
+- Complete isolated Playwright suite: **43 passed**. The Corvinum 375x667
+  scenario verifies both fictional issue dates, five observer-visible columns,
+  panel-owned horizontal scrolling, and no document-level overflow.
+- Ruff, `git diff --check`, Python compilation, migration consistency under
+  both client settings, and SK/HU/UK catalog loading pass. Catalogs were built
+  dependency-free in the pinned test image because the available images lack
+  `msgfmt` and current repository policy forbids ad-hoc OS package installs.
+
 ## 2026-07-20 - Corvinum wage/payslip reconciliation
 
 - Added unit coverage for positive Decimal validation, person/month uniqueness,

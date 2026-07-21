@@ -111,10 +111,10 @@ class Command(BaseCommand):
         # Two independently recorded source series aligned by calendar month.
         # These are fictional presentation values, not client payroll figures.
         pay_rows = [
-            ("2026-06", Decimal("1920.00"), Decimal("1450.00")),
-            ("2026-07", Decimal("2050.00"), Decimal("1540.00")),
+            ("2026-06", Decimal("1920.00"), Decimal("1450.00"), dt.date(2026, 7, 5)),
+            ("2026-07", Decimal("2050.00"), Decimal("1540.00"), dt.date(2026, 7, 20)),
         ]
-        for period, gross_amount, net_amount in pay_rows:
+        for period, gross_amount, net_amount, issue_date in pay_rows:
             if not WageEntry.objects.filter(person=candidate, period=period).exists():
                 record_wage(
                     candidate,
@@ -129,7 +129,12 @@ class Command(BaseCommand):
                     period=period,
                     net_amount=net_amount,
                     note="Fictional net payslip source value",
+                    issue_date=issue_date,
                     actor=hradmin,
+                )
+            else:
+                Payslip.objects.filter(person=candidate, period=period).update(
+                    issue_date=issue_date
                 )
 
         self.stdout.write(self.style.SUCCESS(

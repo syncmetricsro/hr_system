@@ -12,10 +12,11 @@
 {% can 'ledger.enter' as may_enter %}
 {% can 'export.approved' as may_export %}
 
+<section class="ledger-workspace{% if not may_enter %} ledger-workspace-readonly{% endif %}">
 {% if may_enter %}
-<section class="panel">
+<article class="panel ledger-entry-panel">
   <h2>{% trans "Record entry" %}</h2>
-  <form class="stack" method="post" action="{% url 'ledger_record' %}">
+  <form class="ledger-entry-form" method="post" action="{% url 'ledger_record' %}">
     {% csrf_token %}
     <label><span>{% trans "Person" %}</span>
       <select name="person" required>
@@ -38,10 +39,10 @@
     <label><span>{% trans "Note" %}</span><input type="text" name="note"></label>
     <button class="button button-primary" type="submit">{% trans "Record" %}</button>
   </form>
-</section>
+</article>
 {% endif %}
 
-<section class="panel">
+<article class="panel ledger-activity-panel">
   <h2>{% trans "Thursday summary" %}</h2>
   <p class="muted">{% blocktrans with cutoff=summary.cutoff|date:"Y-m-d H:i" %}Cut-off {{ cutoff }} — open advances for Friday cash distribution. Later entries roll to next week.{% endblocktrans %}</p>
   {% if summary.entries %}
@@ -60,6 +61,41 @@
   {% else %}
     <p class="muted">{% trans "No open advances before this week's cut-off." %}</p>
   {% endif %}
+
+  {% if cycle.entries %}
+    <div class="ledger-entries">
+    <h3>{% trans "Entries" %}</h3>
+    <table class="ledger-table ledger-entry-table">
+      <thead><tr><th>{% trans "Person" %}</th><th>{% trans "Date" %}</th><th>{% trans "Type" %}</th><th>{% trans "Category" %}</th><th>{% trans "Amount" %}</th><th>{% trans "Settlement" %}</th><th></th></tr></thead>
+      <tbody>
+        {% for e in cycle.entries %}
+          <tr>
+            <td>{{ e.person }}</td>
+            <td>{{ e.entry_date|date:"Y-m-d" }}</td>
+            <td>{{ e.get_entry_type_display }}</td>
+            <td>{{ e.get_category_display }}</td>
+            <td>{{ e.amount }} €</td>
+            <td>{{ e.get_settlement_status_display }}</td>
+            <td>
+              {% if may_enter %}
+                <form method="post" action="{% url 'ledger_entry_action' e.pk %}" class="people-search">
+                  {% csrf_token %}
+                  <input type="hidden" name="next" value="{% url 'ledger_overview' %}?year={{ cycle_year }}&month={{ cycle_month }}">
+                  {% if e.is_locked %}
+                    <button class="button button-secondary" type="submit" name="action" value="reverse" data-confirm="{% trans 'This records a reversal entry with the opposite pay effect; the original stays in the ledger.' %}">{% trans "Reverse" %}</button>
+                  {% elif e.settlement_status == "open" %}
+                    <button class="button button-secondary" type="submit" name="action" value="cancel" data-confirm="{% trans 'This cancels the open ledger entry; it will no longer count against pay.' %}">{% trans "Cancel" %}</button>
+                  {% endif %}
+                </form>
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    </div>
+  {% endif %}
+</article>
 </section>
 
 <section class="panel ledger-cycle">
@@ -98,38 +134,5 @@
     <p class="muted">{% trans "No entries in this cycle window." %}</p>
   {% endif %}
 
-  {% if cycle.entries %}
-    <div class="ledger-entries">
-    <h3>{% trans "Entries" %}</h3>
-    <table class="ledger-table ledger-entry-table">
-      <thead><tr><th>{% trans "Person" %}</th><th>{% trans "Date" %}</th><th>{% trans "Type" %}</th><th>{% trans "Category" %}</th><th>{% trans "Amount" %}</th><th>{% trans "Settlement" %}</th><th></th></tr></thead>
-      <tbody>
-        {% for e in cycle.entries %}
-          <tr>
-            <td>{{ e.person }}</td>
-            <td>{{ e.entry_date|date:"Y-m-d" }}</td>
-            <td>{{ e.get_entry_type_display }}</td>
-            <td>{{ e.get_category_display }}</td>
-            <td>{{ e.amount }} €</td>
-            <td>{{ e.get_settlement_status_display }}</td>
-            <td>
-              {% if may_enter %}
-                <form method="post" action="{% url 'ledger_entry_action' e.pk %}" class="people-search">
-                  {% csrf_token %}
-                  <input type="hidden" name="next" value="{% url 'ledger_overview' %}?year={{ cycle_year }}&month={{ cycle_month }}">
-                  {% if e.is_locked %}
-                    <button class="button button-secondary" type="submit" name="action" value="reverse" data-confirm="{% trans 'This records a reversal entry with the opposite pay effect; the original stays in the ledger.' %}">{% trans "Reverse" %}</button>
-                  {% elif e.settlement_status == "open" %}
-                    <button class="button button-secondary" type="submit" name="action" value="cancel" data-confirm="{% trans 'This cancels the open ledger entry; it will no longer count against pay.' %}">{% trans "Cancel" %}</button>
-                  {% endif %}
-                </form>
-              {% endif %}
-            </td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-    </div>
-  {% endif %}
 </section>
 {% endblock %}
