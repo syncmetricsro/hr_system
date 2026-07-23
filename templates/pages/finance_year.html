@@ -1,5 +1,5 @@
 {% extends "layouts/base.html" %}
-{% load i18n %}
+{% load i18n static %}
 
 {% block title %}{% trans "Finance" %} {{ year }} · {{ BRAND_NAME }}{% endblock %}
 
@@ -28,10 +28,34 @@
   <article class="metric-card"><span>{% trans "Net" %}</span><strong>{{ totals.net }} EUR</strong></article>
 </section>
 
+{% if trend_chart_data.labels %}
+<section class="panel">
+  <p class="eyebrow">{% trans "Financial months" %}</p>
+  <h2>{% trans "Monthly trend" %}</h2>
+  {{ trend_chart_data|json_script:"chart-data-finance-year-trend" }}
+  <figure class="chart-figure">
+    <figcaption>{% blocktrans %}Revenue, cost, and net by month in {{ year }}{% endblocktrans %}</figcaption>
+    <div class="chart-canvas-wrap">
+      <canvas data-chart="trend" data-chart-data="chart-data-finance-year-trend"
+              data-label-revenue="{% trans 'Revenue' %}" data-label-cost="{% trans 'Cost' %}"
+              data-label-net="{% trans 'Net' %}"
+              role="img" aria-label="{% trans 'Monthly revenue, cost, and net trend chart' %}"></canvas>
+    </div>
+  </figure>
+</section>
+{% endif %}
+
 <section class="two-column">
   <div class="panel">
     <p class="eyebrow">{% trans "Per-project results" %}</p>
     <h2>{{ year }}</h2>
+    {% if project_results %}
+      {{ project_chart_data|json_script:"chart-data-finance-year-project" }}
+      <div class="chart-canvas-wrap chart-canvas-wrap--compact">
+        <canvas data-chart="diverging" data-chart-data="chart-data-finance-year-project"
+                role="img" aria-label="{% trans 'Net result by project chart' %}"></canvas>
+      </div>
+    {% endif %}
     <dl class="detail-grid">
       {% for p in project_results %}
         <div><dt>{{ p.name }}</dt><dd class="amount{% if p.net < 0 %} amount-neg{% endif %}">{{ p.net }} EUR</dd></div>
@@ -65,4 +89,9 @@
     {% endfor %}
   </ul>
 </section>
+{% endblock %}
+
+{% block scripts %}
+<script defer src="{% static 'vendor/chart.min.js' %}"></script>
+<script defer src="{% static 'src/js/charts.js' %}"></script>
 {% endblock %}

@@ -3,7 +3,7 @@ from __future__ import annotations
 from decimal import Decimal
 
 from django.db import transaction
-from django.db.models import Sum
+from django.db.models import Count, Q, Sum
 
 from core.audit.services import record_event
 from features.finance.models import (
@@ -146,6 +146,35 @@ def project_totals(year=None):
     return rows
 
 
+def monthly_totals(year=None) -> list[dict]:
+    """Company results per calendar month, oldest first (a trend series — unlike
+    yearly_totals' newest-first drill-down list, don't reverse this to match).
+    ``all_locked`` is True only when every contributing project-month for that
+    bucket is locked, for a filled-vs-hollow point style, not a gate."""
+    qs = FinancialMonth.objects.filter(project__financial_reporting_eligible=True)
+    if year is not None:
+        qs = qs.filter(year=year)
+    rows = []
+    for r in (
+        qs.values("year", "month")
+        .annotate(
+            revenue=Sum("revenue"),
+            cost=Sum("cost"),
+            locked_count=Count("pk", filter=Q(is_locked=True)),
+            total_count=Count("pk"),
+        )
+        .order_by("year", "month")
+    ):
+        revenue = r["revenue"] or Decimal("0")
+        cost = r["cost"] or Decimal("0")
+        rows.append({
+            "year": r["year"], "month": r["month"],
+            "revenue": revenue, "cost": cost, "net": revenue - cost,
+            "all_locked": r["total_count"] > 0 and r["locked_count"] == r["total_count"],
+        })
+    return rows
+
+
 def yearly_totals():
     """Company results rolled up per year (newest first)."""
     rows = []
@@ -188,6 +217,14 @@ def company_totals(year=None):
     revenue = agg["revenue"] or Decimal("0")
     cost = agg["cost"] or Decimal("0")
     return {"revenue": revenue, "cost": cost, "net": revenue - cost}
+
+
+def margin_pct(totals: dict) -> Decimal:
+    """Net as a percentage of revenue, for the margin gauge — zero-guarded,
+    not a hardcoded/estimated figure."""
+    if not totals["revenue"]:
+        return Decimal("0")
+    return (totals["net"] / totals["revenue"] * 100).quantize(Decimal("0.1"))
 
 
 def regional_totals(year=None):

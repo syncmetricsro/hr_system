@@ -13,7 +13,12 @@ import pytest
 
 from core.accounts.permissions import Action, can
 from features.finance.models import FinancialMonth
-from features.finance.services import FinanceError, company_totals, record_financial_month
+from features.finance.services import (
+    FinanceError,
+    company_totals,
+    monthly_totals,
+    record_financial_month,
+)
 from core.projects.models import Project
 
 pytestmark = pytest.mark.django_db
@@ -59,6 +64,65 @@ def test_locked_month_rejected(setup):
     m.save(update_fields=["is_locked"])
     with pytest.raises(FinanceError):
         record_financial_month(p1, 2026, 5, "12000", "5000", actor=actor)
+
+
+def test_monthly_totals_aggregates_across_projects(setup):
+    actor, p1, p2 = setup
+    record_financial_month(p1, 2026, 5, "18000", "12000", actor=actor)
+    record_financial_month(p2, 2026, 5, "9000", "7000", actor=actor)
+    record_financial_month(p1, 2026, 6, "10000", "4000", actor=actor)
+    rows = monthly_totals()
+    assert len(rows) == 2
+    may = next(r for r in rows if r["month"] == 5)
+    assert may["year"] == 2026
+    assert may["revenue"] == Decimal("27000")
+    assert may["cost"] == Decimal("19000")
+    assert may["net"] == Decimal("8000")
+
+
+def test_monthly_totals_is_ascending_unlike_yearly_totals(setup):
+    actor, p1, _ = setup
+    record_financial_month(p1, 2026, 6, "1000", "500", actor=actor)
+    record_financial_month(p1, 2025, 12, "1000", "500", actor=actor)
+    rows = monthly_totals()
+    assert [(r["year"], r["month"]) for r in rows] == [(2025, 12), (2026, 6)]
+
+
+def test_monthly_totals_excludes_ineligible_projects(setup):
+    actor, p1, p2 = setup
+    p2.financial_reporting_eligible = False
+    p2.save(update_fields=["financial_reporting_eligible"])
+    record_financial_month(p1, 2026, 5, "18000", "12000", actor=actor)
+    record_financial_month(p2, 2026, 5, "9000", "7000", actor=actor)
+    rows = monthly_totals()
+    assert len(rows) == 1
+    assert rows[0]["revenue"] == Decimal("18000")
+
+
+def test_monthly_totals_scoped_to_year(setup):
+    actor, p1, _ = setup
+    record_financial_month(p1, 2025, 12, "1000", "500", actor=actor)
+    record_financial_month(p1, 2026, 1, "2000", "500", actor=actor)
+    rows = monthly_totals(year=2026)
+    assert len(rows) == 1
+    assert rows[0]["month"] == 1
+
+
+def test_monthly_totals_all_locked_true_only_when_every_row_locked(setup):
+    actor, p1, p2 = setup
+    m1 = record_financial_month(p1, 2026, 5, "18000", "12000", actor=actor)
+    record_financial_month(p2, 2026, 5, "9000", "7000", actor=actor)
+    rows = monthly_totals()
+    assert rows[0]["all_locked"] is False
+
+    m1.is_locked = True
+    m1.save(update_fields=["is_locked"])
+    rows = monthly_totals()
+    assert rows[0]["all_locked"] is False
+
+    FinancialMonth.objects.filter(year=2026, month=5).update(is_locked=True)
+    rows = monthly_totals()
+    assert rows[0]["all_locked"] is True
 
 
 def test_finance_rbac(django_user_model):

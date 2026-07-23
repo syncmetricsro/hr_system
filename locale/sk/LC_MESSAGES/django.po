@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-21 21:01+0200\n"
+"POT-Creation-Date: 2026-07-23 21:34+0200\n"
 "Language: sk\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -71,6 +71,7 @@ msgstr "Hlavná navigácia"
 # --- people list / detail ---
 #: clients/corvinum_eu/templates/layouts/base.html:44
 #: templates/pages/people_list.html:8 templates/pages/reports.html:23
+#: templates/pages/reports.html:45
 msgid "Workforce"
 msgstr "Pracovná sila"
 
@@ -126,7 +127,7 @@ msgid "Reviews"
 msgstr "Kontroly"
 
 #: clients/corvinum_eu/templates/layouts/base.html:64
-#: templates/panels/logistics_equipment.html:49
+#: templates/panels/logistics_equipment.html:54
 msgid "Manage equipment catalogue"
 msgstr "Spravovať katalóg vybavenia"
 
@@ -156,7 +157,7 @@ msgid "Audit"
 msgstr "Audit"
 
 #: clients/corvinum_eu/templates/layouts/base.html:88
-#: templates/layouts/base.html:73
+#: templates/layouts/base.html:73 templates/pages/feedback_form.html:17
 msgid "Language"
 msgstr "Jazyk"
 
@@ -253,19 +254,19 @@ msgstr "TOTP zariadenie"
 msgid "TOTP devices"
 msgstr "TOTP zariadenia"
 
-#: core/accounts/views.py:52
+#: core/accounts/views.py:53
 msgid "Your role requires two-factor authentication — set it up now."
 msgstr "Vaša rola vyžaduje dvojfaktorové overenie — nastavte si ho teraz."
 
-#: core/accounts/views.py:55
+#: core/accounts/views.py:56
 msgid "Invalid email or password."
 msgstr "Nesprávny e-mail alebo heslo."
 
-#: core/accounts/views.py:90 core/accounts/views.py:113
+#: core/accounts/views.py:91 core/accounts/views.py:114
 msgid "Invalid code."
 msgstr "Neplatný kód."
 
-#: core/accounts/views.py:111
+#: core/accounts/views.py:112
 msgid "Two-factor authentication enabled."
 msgstr "Dvojfaktorové overenie zapnuté."
 
@@ -619,7 +620,7 @@ msgstr "Dátum vstupnej lekárskej prehliadky nemôže byť v budúcnosti."
 
 # --- lifecycle status labels ---
 #: core/people/models.py:12 templates/pages/dashboard.html:21
-#: templates/panels/logistics_equipment.html:42
+#: templates/panels/logistics_equipment.html:47
 msgid "Available"
 msgstr "Dostupný"
 
@@ -841,8 +842,8 @@ msgid "Only available candidates can be scheduled."
 msgstr "Naplánovať možno iba dostupných uchádzačov."
 
 #: core/projects/forms.py:23 core/projects/forms.py:43
-#: templates/pages/feedback_inbox.html:25
-#: templates/pages/finance_summary.html:34
+#: templates/pages/feedback_inbox.html:31
+#: templates/pages/finance_summary.html:67
 #: templates/pages/person_detail.html:30 templates/pages/project_detail.html:8
 #: templates/pages/transport_trends.html:31
 #: templates/pages/transport_trends.html:44
@@ -857,7 +858,7 @@ msgid "Arrival time"
 msgstr "Čas príchodu"
 
 #: core/projects/forms.py:30 core/projects/forms.py:50
-#: features/logistics/forms.py:32
+#: features/logistics/forms.py:33
 msgid "Operational note"
 msgstr "Prevádzková poznámka"
 
@@ -1702,15 +1703,15 @@ msgstr "K dispozícii je spätná väzba od pracovníkov"
 msgid "%(count)s feedback submissions in the inbox"
 msgstr "%(count)s podnetov v schránke spätnej väzby"
 
-#: features/feedback/views.py:31
+#: features/feedback/views.py:33
 msgid "Message is required."
 msgstr "Správa je povinná."
 
-#: features/feedback/views.py:56
+#: features/feedback/views.py:62
 msgid "Feedback link created."
 msgstr "Odkaz na spätnú väzbu vytvorený."
 
-#: features/feedback/views.py:58
+#: features/feedback/views.py:64
 msgid "Label is required."
 msgstr "Označenie je povinné."
 
@@ -1838,7 +1839,9 @@ msgstr "finančné mesiace"
 
 #: features/finance/models.py:60 templates/pages/finance_month_detail.html:33
 #: templates/pages/finance_summary.html:15
-#: templates/pages/finance_summary.html:48 templates/pages/finance_year.html:27
+#: templates/pages/finance_summary.html:28
+#: templates/pages/finance_summary.html:81 templates/pages/finance_year.html:27
+#: templates/pages/finance_year.html:40
 #: templates/panels/finance_company_totals.html:7
 msgid "Cost"
 msgstr "Náklady"
@@ -1846,7 +1849,9 @@ msgstr "Náklady"
 #: features/finance/models.py:61 features/finance/models.py:73
 #: templates/pages/finance_month_detail.html:32
 #: templates/pages/finance_summary.html:14
-#: templates/pages/finance_summary.html:45 templates/pages/finance_year.html:26
+#: templates/pages/finance_summary.html:28
+#: templates/pages/finance_summary.html:78 templates/pages/finance_year.html:26
+#: templates/pages/finance_year.html:40
 #: templates/panels/finance_company_totals.html:6
 msgid "Revenue"
 msgstr "Príjmy"
@@ -1887,23 +1892,23 @@ msgstr "finančná položka"
 msgid "finance line items"
 msgstr "finančné položky"
 
-#: features/finance/views.py:106
+#: features/finance/views.py:131
 msgid "Saved and recalculated."
 msgstr "Uložené a prepočítané."
 
-#: features/finance/views.py:108 features/finance/views.py:154
+#: features/finance/views.py:133 features/finance/views.py:179
 msgid "Invalid input."
 msgstr "Neplatný vstup."
 
-#: features/finance/views.py:117
+#: features/finance/views.py:142
 msgid "Month locked."
 msgstr "Mesiac uzamknutý."
 
-#: features/finance/views.py:127
+#: features/finance/views.py:152
 msgid "Month reopened."
 msgstr "Mesiac znovu otvorený."
 
-#: features/finance/views.py:152
+#: features/finance/views.py:177
 msgid "Financial month saved."
 msgstr "Finančný mesiac uložený."
 
@@ -1943,7 +1948,7 @@ msgstr "Dlhý text"
 msgid "Yes/No"
 msgstr "Áno/Nie"
 
-#: features/intake/models.py:19 features/logistics/forms.py:135
+#: features/intake/models.py:19 features/logistics/forms.py:166
 #: templates/pages/equipment_stock.html:46
 #: templates/partials/ledger_activity.html:8
 #: templates/partials/ledger_activity.html:26
@@ -2119,74 +2124,90 @@ msgstr "Reflexná vesta"
 msgid "Safety helmet"
 msgstr "Ochranná prilba"
 
-#: features/logistics/forms.py:53
+#: features/logistics/forms.py:48
+msgid "Capacity (beds)"
+msgstr "Kapacita (lôžka)"
+
+#: features/logistics/forms.py:51
+msgid "Per-head monthly cost (EUR)"
+msgstr "Mesačný náklad na osobu (EUR)"
+
+#: features/logistics/forms.py:72
+msgid ""
+"Enter both capacity and per-head cost to record a cost period, or leave both "
+"blank."
+msgstr ""
+"Zadajte kapacitu aj náklad na osobu, aby sa zaznamenalo nákladové obdobie, "
+"alebo ponechajte obe polia prázdne."
+
+#: features/logistics/forms.py:84
 msgid "Release all occupants before deactivating this location."
 msgstr "Pred deaktiváciou tohto ubytovania uvoľnite všetkých ubytovaných."
 
-#: features/logistics/forms.py:59
+#: features/logistics/forms.py:90
 #, fuzzy
 #| msgid "effective date"
 msgid "Effective month"
 msgstr "dátum účinnosti"
 
-#: features/logistics/forms.py:88
+#: features/logistics/forms.py:119
 msgid "Capacity cannot be lower than current occupancy."
 msgstr "Kapacita nemôže byť nižšia ako aktuálna obsadenosť."
 
-#: features/logistics/forms.py:90
+#: features/logistics/forms.py:121
 msgid "Release all occupants before deactivating this room."
 msgstr "Pred deaktiváciou tejto izby uvoľnite všetkých ubytovaných."
 
-#: features/logistics/forms.py:107
+#: features/logistics/forms.py:138
 #, fuzzy
 #| msgid "received"
 msgid "Received on"
 msgstr "prijaté"
 
-#: features/logistics/forms.py:108
+#: features/logistics/forms.py:139
 msgid "Reference"
 msgstr "Referencia"
 
-#: features/logistics/forms.py:109
+#: features/logistics/forms.py:140
 msgid "Supplier"
 msgstr "Dodávateľ"
 
-#: features/logistics/forms.py:110 templates/pages/ledger.html:39
+#: features/logistics/forms.py:141 templates/pages/ledger.html:39
 #: templates/pages/transport_trends.html:44 templates/pages/wages.html:41
 #: templates/panels/advances_ledger.html:33
 msgid "Note"
 msgstr "Poznámka"
 
-#: features/logistics/forms.py:114 features/logistics/forms.py:134
+#: features/logistics/forms.py:145 features/logistics/forms.py:165
 #: templates/pages/equipment_stock.html:45
-#: templates/panels/logistics_equipment.html:41
+#: templates/panels/logistics_equipment.html:46
 msgid "Item"
 msgstr "Položka"
 
-#: features/logistics/forms.py:115 templates/pages/equipment_stock.html:34
-#: templates/panels/logistics_equipment.html:44
+#: features/logistics/forms.py:146 templates/pages/equipment_stock.html:34
+#: templates/panels/logistics_equipment.html:49
 msgid "Quantity"
 msgstr "Množstvo"
 
-#: features/logistics/forms.py:116
+#: features/logistics/forms.py:147
 #, fuzzy
 #| msgid "normalized value"
 msgid "Total value"
 msgstr "normalizovaná hodnota"
 
-#: features/logistics/forms.py:126
+#: features/logistics/forms.py:157
 msgid "Complete the item, quantity, and total value."
 msgstr "Vyplňte položku, množstvo a celkovú hodnotu."
 
-#: features/logistics/forms.py:136 templates/pages/equipment_stock.html:47
+#: features/logistics/forms.py:167 templates/pages/equipment_stock.html:47
 msgid "Quantity adjustment"
 msgstr "Úprava množstva"
 
-#: features/logistics/forms.py:137 templates/pages/equipment_stock.html:48
+#: features/logistics/forms.py:168 templates/pages/equipment_stock.html:48
 msgid "Value for positive adjustment"
 msgstr "Hodnota pri kladnej úprave"
 
-#: features/logistics/forms.py:138 templates/pages/audit_log.html:43
+#: features/logistics/forms.py:169 templates/pages/audit_log.html:44
 #: templates/pages/blacklist_queue.html:23
 #: templates/pages/blacklist_queue.html:28
 #: templates/pages/equipment_stock.html:49
@@ -2199,11 +2220,11 @@ msgstr "Hodnota pri kladnej úprave"
 msgid "Reason"
 msgstr "Dôvod"
 
-#: features/logistics/forms.py:148
+#: features/logistics/forms.py:179
 msgid "The adjustment cannot be zero."
 msgstr "Úprava nemôže byť nulová."
 
-#: features/logistics/forms.py:150
+#: features/logistics/forms.py:181
 #, fuzzy
 #| msgid "A reason is required when this is not applicable."
 msgid "A value is required when adding stock."
@@ -2273,6 +2294,7 @@ msgid "equipment items"
 msgstr "položky výbavy"
 
 #: features/logistics/models.py:176
+#: templates/panels/logistics_equipment.html:14
 msgid "Issued"
 msgstr "Vydané"
 
@@ -2393,7 +2415,7 @@ msgid "Issue"
 msgstr "Vydané"
 
 #: features/logistics/models.py:282
-#: templates/panels/logistics_equipment.html:21
+#: templates/panels/logistics_equipment.html:29
 msgid "Return"
 msgstr "Vrátiť"
 
@@ -2445,25 +2467,25 @@ msgstr "Vydané"
 msgid "inbound movement"
 msgstr "prichádzajúca správa"
 
-#: features/logistics/models.py:349
+#: features/logistics/models.py:349 tests/test_i18n_catalog.py:42
 #, fuzzy
 #| msgid "quantity"
 msgid "initial quantity"
 msgstr "množstvo"
 
-#: features/logistics/models.py:350
+#: features/logistics/models.py:350 tests/test_i18n_catalog.py:43
 #, fuzzy
 #| msgid "Equipment value"
 msgid "initial value"
 msgstr "Hodnota vybavenia"
 
-#: features/logistics/models.py:351
+#: features/logistics/models.py:351 tests/test_i18n_catalog.py:42
 #, fuzzy
 #| msgid "quantity"
 msgid "remaining quantity"
 msgstr "množstvo"
 
-#: features/logistics/models.py:352
+#: features/logistics/models.py:352 tests/test_i18n_catalog.py:43
 #, fuzzy
 #| msgid "normalized value"
 msgid "remaining value"
@@ -2593,119 +2615,119 @@ msgstr "Pre tento projekt a týždeň už existuje záznam dopravy."
 msgid "Choose whether the returned equipment is reusable or retired."
 msgstr "Vyberte, či je vrátené vybavenie znovu použiteľné alebo vyradené."
 
-#: features/logistics/views.py:195
+#: features/logistics/views.py:202
 msgid "Accommodation created. Add rooms to make it assignable."
 msgstr ""
 "Ubytovanie bolo vytvorené. Pridajte izby, aby ho bolo možné prideľovať."
 
-#: features/logistics/views.py:207
+#: features/logistics/views.py:214
 msgid "Accommodation updated."
 msgstr "Ubytovanie bolo aktualizované."
 
-#: features/logistics/views.py:224
+#: features/logistics/views.py:231
 msgid "Room created."
 msgstr "Izba bola vytvorená."
 
-#: features/logistics/views.py:238
+#: features/logistics/views.py:245
 msgid "Room updated."
 msgstr "Izba bola aktualizovaná."
 
-#: features/logistics/views.py:276
+#: features/logistics/views.py:283
 #, fuzzy
 #| msgid "Accommodation rate override saved"
 msgid "Accommodation cost period saved."
 msgstr "Úprava sadzby uložená."
 
-#: features/logistics/views.py:278
+#: features/logistics/views.py:285
 #, fuzzy
 #| msgid "Review accommodation occupancy"
 msgid "Review the accommodation cost details."
 msgstr "Skontrolovať obsadenosť ubytovania"
 
-#: features/logistics/views.py:288
+#: features/logistics/views.py:295
 msgid "Room rate saved."
 msgstr "Sadzba izby uložená."
 
-#: features/logistics/views.py:290 features/logistics/views.py:302
-#: features/logistics/views.py:314
+#: features/logistics/views.py:297 features/logistics/views.py:309
+#: features/logistics/views.py:321
 msgid "Invalid amount."
 msgstr "Neplatná suma."
 
-#: features/logistics/views.py:300
+#: features/logistics/views.py:307
 msgid "Rate override saved."
 msgstr "Úprava sadzby uložená."
 
-#: features/logistics/views.py:312
+#: features/logistics/views.py:319
 #, fuzzy
 #| msgid "Accommodation updated."
 msgid "Worker accommodation payment saved."
 msgstr "Ubytovanie bolo aktualizované."
 
-#: features/logistics/views.py:328
+#: features/logistics/views.py:335
 msgid "Room assigned."
 msgstr "Izba pridelená."
 
-#: features/logistics/views.py:339
+#: features/logistics/views.py:346
 msgid "Room released."
 msgstr "Izba uvoľnená."
 
-#: features/logistics/views.py:406
+#: features/logistics/views.py:413
 #, fuzzy
 #| msgid "No payslips recorded."
 msgid "Stock receipt recorded."
 msgstr "Žiadne uložené výplatné pásky."
 
-#: features/logistics/views.py:427
+#: features/logistics/views.py:434
 #, fuzzy
 #| msgid "outcome recorded by"
 msgid "Stock adjustment recorded."
 msgstr "výsledok zaznamenal"
 
-#: features/logistics/views.py:431
+#: features/logistics/views.py:438
 #, fuzzy
 #| msgid "Review the trial details and try again."
 msgid "Review the stock adjustment and try again."
 msgstr "Skontrolujte údaje skúšobného dňa a skúste to znova."
 
-#: features/logistics/views.py:440
+#: features/logistics/views.py:447
 msgid "Equipment item created."
 msgstr "Položka vybavenia vytvorená."
 
-#: features/logistics/views.py:457
+#: features/logistics/views.py:464
 msgid "Equipment item updated."
 msgstr "Položka vybavenia aktualizovaná."
 
-#: features/logistics/views.py:475
+#: features/logistics/views.py:482
 msgid "Equipment issued."
 msgstr "Vybavenie vydané."
 
-#: features/logistics/views.py:477
+#: features/logistics/views.py:484
 #, fuzzy
 #| msgid "equipment issue"
 msgid "Invalid equipment issue."
 msgstr "výdaj výbavy"
 
-#: features/logistics/views.py:487
+#: features/logistics/views.py:494
 msgid "Equipment returned."
 msgstr "Vybavenie vrátené."
 
-#: features/logistics/views.py:499
+#: features/logistics/views.py:506
 msgid "Flagged for deduction review."
 msgstr "Označené na kontrolu zrážky."
 
-#: features/logistics/views.py:522
+#: features/logistics/views.py:529
 msgid "Review recorded."
 msgstr "Kontrola zaznamenaná."
 
-#: features/logistics/views.py:538 features/logistics/views.py:554
+#: features/logistics/views.py:545 features/logistics/views.py:561
 msgid "Transport week recorded."
 msgstr "Týždeň dopravy zaznamenaný."
 
-#: features/logistics/views.py:540
+#: features/logistics/views.py:547
 msgid "Review the transport details and try again."
 msgstr "Skontrolujte údaje o doprave a skúste to znova."
 
-#: features/logistics/views.py:577
+#: features/logistics/views.py:584
 msgid "Transport record updated."
 msgstr "Záznam dopravy bol aktualizovaný."
 
@@ -2951,8 +2973,8 @@ msgid "Finance"
 msgstr "Financie"
 
 # --- feedback ---
-#: templates/layouts/base.html:65 templates/pages/feedback_form.html:7
-#: templates/pages/feedback_form.html:14
+#: templates/layouts/base.html:65 templates/pages/feedback_form.html:8
+#: templates/pages/feedback_form.html:27
 msgid "Feedback"
 msgstr "Spätná väzba"
 
@@ -3039,7 +3061,7 @@ msgid "Report month"
 msgstr "Zaznamenať mesiac"
 
 #: templates/pages/accommodation_costs.html:8
-#: templates/pages/accommodation_list.html:23 templates/pages/audit_log.html:29
+#: templates/pages/accommodation_list.html:23 templates/pages/audit_log.html:30
 #: templates/pages/equipment_catalog.html:22
 #: templates/pages/equipment_stock.html:22 templates/pages/project_list.html:21
 #: templates/pages/transport_trends.html:37
@@ -3066,6 +3088,10 @@ msgstr "Strata z voľných lôžok"
 
 #: templates/pages/accommodation_costs.html:13
 #: templates/pages/accommodation_costs.html:21
+#: templates/pages/finance_summary.html:37
+#: templates/pages/finance_summary.html:44
+#: templates/panels/finance_company_totals.html:12
+#: templates/panels/finance_company_totals.html:15
 msgid "Margin"
 msgstr "Marža"
 
@@ -3237,64 +3263,68 @@ msgstr ""
 msgid "Actor (email contains)"
 msgstr "Aktér (e-mail obsahuje)"
 
+#: templates/pages/audit_log.html:17
+msgid "Worker (name contains)"
+msgstr "Pracovník (obsahuje meno)"
+
 # --- projects UI ---
-#: templates/pages/audit_log.html:17 templates/pages/audit_log.html:41
+#: templates/pages/audit_log.html:18 templates/pages/audit_log.html:42
 #: templates/pages/payslips.html:35 templates/pages/transport_trends.html:44
 msgid "Action"
 msgstr "Akcia"
 
 # --- projects UI ---
-#: templates/pages/audit_log.html:19
+#: templates/pages/audit_log.html:20
 msgid "All actions"
 msgstr "Všetky akcie"
 
-#: templates/pages/audit_log.html:22
+#: templates/pages/audit_log.html:23
 msgid "Record type"
 msgstr "Typ záznamu"
 
-#: templates/pages/audit_log.html:24
+#: templates/pages/audit_log.html:25
 msgid "All records"
 msgstr "Všetky záznamy"
 
-#: templates/pages/audit_log.html:27
+#: templates/pages/audit_log.html:28
 msgid "From"
 msgstr "Od"
 
-#: templates/pages/audit_log.html:28
+#: templates/pages/audit_log.html:29
 msgid "To"
 msgstr "Do"
 
-#: templates/pages/audit_log.html:39
+#: templates/pages/audit_log.html:40
 msgid "When"
 msgstr "Kedy"
 
-#: templates/pages/audit_log.html:40
+#: templates/pages/audit_log.html:41
 msgid "Actor"
 msgstr "Aktér"
 
-#: templates/pages/audit_log.html:42 templates/pages/ledger.html:40
+#: templates/pages/audit_log.html:43 templates/pages/ledger.html:40
 #: templates/pages/payslips.html:26
 msgid "Record"
 msgstr "Uložiť"
 
-#: templates/pages/audit_log.html:50
+#: templates/pages/audit_log.html:51
 msgid "system"
 msgstr "systém"
 
-#: templates/pages/audit_log.html:56
+#: templates/pages/audit_log.html:57
 msgid "No audit events match the filter."
 msgstr "Filtru nezodpovedajú žiadne auditné udalosti."
 
-#: templates/pages/audit_log.html:64
+#: templates/pages/audit_log.html:65
 msgid "Newer"
 msgstr "Novšie"
 
-#: templates/pages/audit_log.html:65
+#: templates/pages/audit_log.html:66
 #, python-format
 msgid "Page %(n)s of %(total)s"
 msgstr "Strana %(n)s z %(total)s"
 
-#: templates/pages/audit_log.html:66
+#: templates/pages/audit_log.html:67
 msgid "Older"
 msgstr "Staršie"
 
@@ -3454,7 +3484,7 @@ msgstr ""
 "nemožno ich vybrať pre nové vydanie."
 
 #: templates/pages/equipment_catalog.html:35
-#: templates/panels/logistics_equipment.html:12
+#: templates/panels/logistics_equipment.html:21
 msgid "Unit price"
 msgstr "Jednotková cena"
 
@@ -3494,9 +3524,12 @@ msgstr ""
 #: templates/pages/equipment_reviews.html:14
 #: templates/pages/finance_summary.html:13
 #: templates/pages/finance_summary.html:21
-#: templates/pages/finance_summary.html:57
-#: templates/pages/finance_summary.html:71
-#: templates/pages/finance_summary.html:83 templates/pages/finance_year.html:25
+#: templates/pages/finance_summary.html:36
+#: templates/pages/finance_summary.html:54
+#: templates/pages/finance_summary.html:90
+#: templates/pages/finance_summary.html:111
+#: templates/pages/finance_summary.html:123
+#: templates/pages/finance_year.html:25
 #: templates/pages/transport_trends.html:51
 #: templates/panels/finance_company_totals.html:3
 msgid "Company total"
@@ -3603,24 +3636,48 @@ msgstr "Riadky príjmu"
 msgid "Record receipt"
 msgstr "Zaznamenať týždeň"
 
-#: templates/pages/feedback_form.html:16
+#: templates/pages/feedback_form.html:24
+msgid "Go"
+msgstr "Prejsť"
+
+#: templates/pages/feedback_form.html:29
 msgid "Thank you for your feedback."
 msgstr "Ďakujeme za vašu spätnú väzbu."
 
-#: templates/pages/feedback_form.html:22
-msgid "Rating (1-5)"
-msgstr "Hodnotenie (1-5)"
+#: templates/pages/feedback_form.html:31
+msgid ""
+"Your answers are anonymous and go straight to your manager — nothing here is "
+"linked back to your name."
+msgstr ""
+"Vaše odpovede sú anonymné a smerujú priamo k vášmu manažérovi — nič tu nie "
+"je spojené s vaším menom."
 
-#: templates/pages/feedback_form.html:26
-msgid "Your feedback"
-msgstr "Vaša spätná väzba"
+#: templates/pages/feedback_form.html:36
+msgid "How would you rate your experience?"
+msgstr "Ako by ste ohodnotili svoju skúsenosť?"
 
-#: templates/pages/feedback_form.html:29
+#: templates/pages/feedback_form.html:38
+msgid "1 = poor, 5 = excellent. Optional."
+msgstr "1 = zlé, 5 = výborné. Nepovinné."
+
+#: templates/pages/feedback_form.html:41
+msgid "What would you like to tell us?"
+msgstr "Čo by ste nám chceli povedať?"
+
+#: templates/pages/feedback_form.html:42
+msgid ""
+"For example: how your accommodation, equipment, or project assignment are "
+"working out, and anything that should change."
+msgstr ""
+"Napríklad: ako vám vyhovuje ubytovanie, vybavenie alebo pracovné zaradenie, "
+"a čo by sa malo zmeniť."
+
+#: templates/pages/feedback_form.html:44
 msgid "Submit"
 msgstr "Odoslať"
 
 #: templates/pages/feedback_inbox.html:4 templates/pages/feedback_inbox.html:9
-#: templates/pages/feedback_inbox.html:33
+#: templates/pages/feedback_inbox.html:39
 msgid "Feedback inbox"
 msgstr "Schránka spätnej väzby"
 
@@ -3636,24 +3693,28 @@ msgstr "Verejné odkazy"
 msgid "Feedback links"
 msgstr "Odkazy na spätnú väzbu"
 
-#: templates/pages/feedback_inbox.html:24
+#: templates/pages/feedback_inbox.html:20
+msgid "Show QR code"
+msgstr "Zobraziť QR kód"
+
+#: templates/pages/feedback_inbox.html:30
 msgid "Label"
 msgstr "Označenie"
 
-#: templates/pages/feedback_inbox.html:29
+#: templates/pages/feedback_inbox.html:35
 msgid "Create link"
 msgstr "Vytvoriť odkaz"
 
-#: templates/pages/feedback_inbox.html:41
+#: templates/pages/feedback_inbox.html:47
 msgid "Link"
 msgstr "Odkaz"
 
-#: templates/pages/feedback_inbox.html:45
+#: templates/pages/feedback_inbox.html:51
 msgid "No feedback yet."
 msgstr "Zatiaľ žiadna spätná väzba."
 
 #: templates/pages/finance_month_detail.html:8
-#: templates/pages/finance_summary.html:25 templates/pages/finance_year.html:62
+#: templates/pages/finance_summary.html:58 templates/pages/finance_year.html:86
 msgid "Locked"
 msgstr "Uzamknuté"
 
@@ -3682,9 +3743,11 @@ msgstr "Uzamknúť mesiac"
 
 #: templates/pages/finance_month_detail.html:34
 #: templates/pages/finance_summary.html:16
-#: templates/pages/finance_summary.html:25
-#: templates/pages/finance_summary.html:87 templates/pages/finance_year.html:28
-#: templates/pages/finance_year.html:62
+#: templates/pages/finance_summary.html:29
+#: templates/pages/finance_summary.html:58
+#: templates/pages/finance_summary.html:127
+#: templates/pages/finance_year.html:28 templates/pages/finance_year.html:41
+#: templates/pages/finance_year.html:86
 #: templates/panels/finance_company_totals.html:8
 msgid "Net"
 msgstr "Čisté"
@@ -3698,7 +3761,7 @@ msgid "Save & recalculate"
 msgstr "Uložiť a prepočítať"
 
 #: templates/pages/finance_month_detail.html:60
-#: templates/pages/finance_summary.html:58 templates/pages/finance_year.html:45
+#: templates/pages/finance_summary.html:91 templates/pages/finance_year.html:69
 msgid "Group breakdown"
 msgstr "Rozpis podľa skupín"
 
@@ -3706,57 +3769,102 @@ msgstr "Rozpis podľa skupín"
 msgid "By group"
 msgstr "Podľa skupiny"
 
+#: templates/pages/finance_month_detail.html:66
+#: templates/pages/finance_summary.html:96
+msgid "Net result by finance group chart"
+msgstr "Graf čistého výsledku podľa finančnej skupiny"
+
 #: templates/pages/finance_summary.html:10 templates/pages/people_list.html:16
 #: templates/pages/project_list.html:12
 msgid "Export"
 msgstr "Export"
 
-#: templates/pages/finance_summary.html:22 templates/pages/finance_year.html:58
+#: templates/pages/finance_summary.html:22 templates/pages/finance_year.html:34
+msgid "Monthly trend"
+msgstr "Mesačný trend"
+
+#: templates/pages/finance_summary.html:25
+msgid "Revenue, cost, and net by month"
+msgstr "Príjmy, náklady a čisté podľa mesiacov"
+
+#: templates/pages/finance_summary.html:30 templates/pages/finance_year.html:42
+msgid "Monthly revenue, cost, and net trend chart"
+msgstr "Graf mesačného trendu príjmov, nákladov a čistého výsledku"
+
+#: templates/pages/finance_summary.html:39
+#, python-format
+msgid "Margin gauge: %(margin_pct)s%% of revenue"
+msgstr "Ukazovateľ marže: %(margin_pct)s %% z príjmov"
+
+#: templates/pages/finance_summary.html:41
+msgid "Net as a share of revenue"
+msgstr "Čisté ako podiel z príjmov"
+
+#: templates/pages/finance_summary.html:46
+msgid "margin"
+msgstr "marža"
+
+#: templates/pages/finance_summary.html:55 templates/pages/finance_year.html:33
+#: templates/pages/finance_year.html:82
 msgid "Financial months"
 msgstr "Finančné mesiace"
 
-#: templates/pages/finance_summary.html:27
-#: templates/pages/finance_summary.html:77
-#: templates/pages/finance_summary.html:89
-#: templates/pages/finance_summary.html:102
-#: templates/pages/finance_year.html:20 templates/pages/finance_year.html:39
-#: templates/pages/finance_year.html:64
+#: templates/pages/finance_summary.html:60
+#: templates/pages/finance_summary.html:117
+#: templates/pages/finance_summary.html:129
+#: templates/pages/finance_summary.html:142
+#: templates/pages/finance_year.html:20 templates/pages/finance_year.html:63
+#: templates/pages/finance_year.html:88
 msgid "No financial months."
 msgstr "Žiadne finančné mesiace."
 
-#: templates/pages/finance_summary.html:39
+#: templates/pages/finance_summary.html:72
 #: templates/partials/ledger_cycle.html:5
 msgid "Year"
 msgstr "Rok"
 
-#: templates/pages/finance_summary.html:42
+#: templates/pages/finance_summary.html:75
 #: templates/partials/ledger_cycle.html:8
 msgid "Month"
 msgstr "Mesiac"
 
-#: templates/pages/finance_summary.html:51
+#: templates/pages/finance_summary.html:84
 msgid "Record month"
 msgstr "Zaznamenať mesiac"
 
-#: templates/pages/finance_summary.html:63 templates/pages/finance_year.html:51
+#: templates/pages/finance_summary.html:103
+#: templates/pages/finance_year.html:75
 msgid "No line items yet."
 msgstr "Zatiaľ žiadne položky."
 
-#: templates/pages/finance_summary.html:72 templates/pages/finance_year.html:33
+#: templates/pages/finance_summary.html:112
+#: templates/pages/finance_year.html:50
 msgid "Per-project results"
 msgstr "Výsledky podľa projektu"
 
-#: templates/pages/finance_summary.html:84 templates/pages/finance_year.html:8
+#: templates/pages/finance_summary.html:124 templates/pages/finance_year.html:8
 msgid "Yearly results"
 msgstr "Ročné výsledky"
 
-#: templates/pages/finance_summary.html:96 templates/pages/finance_year.html:14
+#: templates/pages/finance_summary.html:136
+#: templates/pages/finance_year.html:14
 msgid "Regional roll-up"
 msgstr "Regionálny súhrn"
 
-#: templates/pages/finance_summary.html:97 templates/pages/finance_year.html:15
+#: templates/pages/finance_summary.html:137
+#: templates/pages/finance_year.html:15
+#: templates/panels/finance_company_totals.html:19
 msgid "Profit/loss by region"
 msgstr "Zisk/strata podľa regiónu"
+
+#: templates/pages/finance_year.html:37
+#, python-format
+msgid "Revenue, cost, and net by month in %(year)s"
+msgstr "Príjmy, náklady a čisté podľa mesiacov v roku %(year)s"
+
+#: templates/pages/finance_year.html:56
+msgid "Net result by project chart"
+msgstr "Graf čistého výsledku podľa projektu"
 
 #: templates/pages/intake_panel.html:4 templates/pages/intake_panel.html:8
 #: templates/pages/person_form.html:8
@@ -4191,6 +4299,26 @@ msgstr "Neaktívni podľa dôvodu"
 msgid "No inactive people."
 msgstr "Žiadni neaktívni ľudia."
 
+#: templates/pages/reports.html:46
+msgid "Projects and assigned personnel"
+msgstr "Projekty a pridelení pracovníci"
+
+#: templates/pages/reports.html:50
+msgid "Active headcount per project"
+msgstr "Aktívny počet pracovníkov podľa projektu"
+
+#: templates/pages/reports.html:53
+msgid "Active headcount per project chart"
+msgstr "Graf aktívneho počtu pracovníkov podľa projektu"
+
+#: templates/pages/reports.html:63
+msgid "No one currently assigned."
+msgstr "Momentálne nie je nikto pridelený."
+
+#: templates/pages/reports.html:69
+msgid "No active projects."
+msgstr "Žiadne aktívne projekty."
+
 #: templates/pages/room_form.html:14
 msgid "Save room"
 msgstr "Uložiť izbu"
@@ -4353,7 +4481,7 @@ msgstr "Nie sú zaznamenané žiadne hrubé mzdy."
 msgid "Money"
 msgstr "Peniaze"
 
-#: templates/panels/advances_ledger.html:5
+#: templates/panels/advances_ledger.html:5 tests/test_i18n_catalog.py:52
 msgid ""
 "Cash advances and deductions against this person's pay, settled through the "
 "weekly ledger cycle."
@@ -4412,7 +4540,7 @@ msgstr "Schvaľovanie"
 msgid "Activation checklist"
 msgstr "Aktivačný kontrolný zoznam"
 
-#: templates/panels/checklists_items.html:5
+#: templates/panels/checklists_items.html:5 tests/test_i18n_catalog.py:49
 msgid ""
 "Items marked critical must all be ticked before this person can be activated."
 msgstr ""
@@ -4439,21 +4567,29 @@ msgstr "Skontrolovať financie spoločnosti"
 msgid "Open the finance summary for revenue, costs, and net results."
 msgstr "Otvorte finančný súhrn príjmov, nákladov a čistého výsledku."
 
-#: templates/panels/logistics_equipment.html:17
+#: templates/panels/finance_company_totals.html:16
+msgid "Margin gauge"
+msgstr "Ukazovateľ marže"
+
+#: templates/panels/finance_company_totals.html:22
+msgid "Net result by region chart"
+msgstr "Graf čistého výsledku podľa regiónu"
+
+#: templates/panels/logistics_equipment.html:25
 msgid "Return disposition"
 msgstr "Spôsob vrátenia"
 
-#: templates/panels/logistics_equipment.html:18
+#: templates/panels/logistics_equipment.html:26
 msgid "Reusable — return to stock"
 msgstr "Znovu použiteľné — vrátiť do skladu"
 
-#: templates/panels/logistics_equipment.html:19
+#: templates/panels/logistics_equipment.html:27
 #, fuzzy
 #| msgid "Damage recovered"
 msgid "Damaged or retired"
 msgstr "Vymožené škody"
 
-#: templates/panels/logistics_equipment.html:25
+#: templates/panels/logistics_equipment.html:33
 #, fuzzy
 #| msgid ""
 #| "This flags the item as unreturned and opens a manager charge review at "
@@ -4465,11 +4601,11 @@ msgstr ""
 "Označí položku ako nevrátenú a otvorí manažérsku kontrolu úhrady v jej "
 "aktuálnej hodnote."
 
-#: templates/panels/logistics_equipment.html:25
+#: templates/panels/logistics_equipment.html:33
 msgid "Flag unreturned"
 msgstr "Označiť ako nevrátené"
 
-#: templates/panels/logistics_equipment.html:45
+#: templates/panels/logistics_equipment.html:50
 msgid "Issue equipment"
 msgstr "Vydať vybavenie"
 
@@ -4687,6 +4823,12 @@ msgstr "Svetlá"
 #: templates/partials/theme_picker.html:6
 msgid "Dark"
 msgstr "Tmavá"
+
+#~ msgid "Rating (1-5)"
+#~ msgstr "Hodnotenie (1-5)"
+
+#~ msgid "Your feedback"
+#~ msgstr "Vaša spätná väzba"
 
 #~ msgid "Period"
 #~ msgstr "Obdobie"

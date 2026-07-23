@@ -1,6 +1,7 @@
 {% load static i18n %}
+{% get_current_language as CURRENT_LANGUAGE %}
 <!doctype html>
-<html lang="{{ LANGUAGE_CODE|default:'sk' }}">
+<html lang="{{ CURRENT_LANGUAGE|default:'sk' }}">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,22 +10,36 @@
   </head>
   <body>
     <main class="app-shell">
-      <section class="login-panel">
+      <section class="login-panel feedback-panel">
+        <form class="language-switch" action="{% url 'set_language' %}" method="post">
+          {% csrf_token %}
+          <input type="hidden" name="next" value="{{ request.path }}">
+          <label class="sr-only" for="feedback-language-select">{% trans "Language" %}</label>
+          <select id="feedback-language-select" name="language" onchange="this.form.submit()">
+            {% get_available_languages as LANGUAGES %}
+            {% for code, name in LANGUAGES %}
+              <option value="{{ code }}"{% if code == CURRENT_LANGUAGE %} selected{% endif %}>{{ name }}</option>
+            {% endfor %}
+          </select>
+          <noscript><button class="button" type="submit">{% trans "Go" %}</button></noscript>
+        </form>
         <p class="eyebrow">{{ BRAND_NAME }}</p>
         <h1>{% trans "Feedback" %}</h1>
         {% if submitted %}
           <p>{% trans "Thank you for your feedback." %}</p>
         {% else %}
+          <p class="muted">{% trans "Your answers are anonymous and go straight to your manager — nothing here is linked back to your name." %}</p>
           {% if error %}<p class="form-error">{{ error }}</p>{% endif %}
           <form class="stack" method="post" action=".">
             {% csrf_token %}
             <label>
-              <span>{% trans "Rating (1-5)" %}</span>
+              <span>{% trans "How would you rate your experience?" %}</span>
               <input type="number" name="rating" min="1" max="5">
+              <small class="muted">{% trans "1 = poor, 5 = excellent. Optional." %}</small>
             </label>
             <label>
-              <span>{% trans "Your feedback" %}</span>
-              <textarea name="message"></textarea>
+              <span>{% trans "What would you like to tell us?" %}</span>
+              <textarea name="message" placeholder="{% trans 'For example: how your accommodation, equipment, or project assignment are working out, and anything that should change.' %}"></textarea>
             </label>
             <button class="button button-primary" type="submit">{% trans "Submit" %}</button>
           </form>

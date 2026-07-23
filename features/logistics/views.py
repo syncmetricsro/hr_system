@@ -192,6 +192,13 @@ def accommodation_create(request: HttpRequest) -> HttpResponse:
     if request.method == "POST" and form.is_valid():
         accommodation = form.save(commit=False)
         save_accommodation(accommodation, actor=request.user)
+        capacity = form.cleaned_data.get("capacity")
+        per_head_cost = form.cleaned_data.get("per_head_cost")
+        if capacity is not None and per_head_cost is not None:
+            set_accommodation_cost_period(
+                accommodation, effective_month=timezone.localdate(),
+                capacity=capacity, per_head_cost=per_head_cost, actor=request.user,
+            )
         messages.success(request, _("Accommodation created. Add rooms to make it assignable."))
         return redirect("accommodation_detail", pk=accommodation.pk)
     return TemplateResponse(request, "pages/accommodation_form.html", {"form": form})

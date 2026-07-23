@@ -19,6 +19,7 @@ they are never renamed or renumbered per client.
 ## docs/ root
 | Doc | Owner | Purpose |
 |---|---|---|
+| `i18n-workflow.md` | Platform | How to edit/compile/add/retrieve template & code translations (SK/HU/UK) |
 | `i18n-seeded-data.md` | Platform | How seeded catalog data stays localized (db_trans + catalog_i18n) |
 | `session-summary-2026-07-16.md` | Platform | Consolidated product, demo, staging, testing, and remaining-gates handoff for the implementation session |
 

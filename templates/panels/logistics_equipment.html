@@ -8,25 +8,30 @@
     <ul class="plain-list">
       {% for issue in panel.issued_equipment %}
         <li>
-          {{ issue.item.name|db_trans }} {{ issue.item.size }} × {{ issue.quantity }}
-          {% if not panel.stock_enabled %}<span class="equipment-unit-price">{% trans "Unit price" %}: {{ issue.item.unit_price }} EUR</span>{% endif %}
-          {% if issue.review_status == 'none' %}
-            {% if may_equip %}
-              <form class="inline-form" method="post" action="{% url 'return_equipment' issue.pk %}">
-                {% csrf_token %}
-                {% if panel.stock_enabled %}<select name="disposition" required aria-label="{% trans 'Return disposition' %}">
-                  <option value="restock">{% trans "Reusable — return to stock" %}</option>
-                  <option value="retire">{% trans "Damaged or retired" %}</option>
-                </select>{% endif %}
-                <button class="button button-secondary" type="submit">{% trans "Return" %}</button>
-              </form>
-              <form class="inline-form" method="post" action="{% url 'flag_unreturned' issue.pk %}">
-                {% csrf_token %}
-                <button class="button button-secondary" type="submit" data-confirm="{% trans 'This flags the item as unreturned and opens a manager charge review at its issued stock value.' %}">{% trans "Flag unreturned" %}</button>
-              </form>
+          <div class="equipment-issue-row">
+            <span>{{ issue.item.name|db_trans }} {{ issue.item.size }} × {{ issue.quantity }}</span>
+            {% if issue.review_status == 'none' %}
+              <span class="badge badge-neutral">{% trans "Issued" %}</span>
+            {% elif issue.review_status == 'waived' %}
+              <span class="badge badge-success">{{ issue.get_review_status_display }}</span>
+            {% else %}
+              <span class="badge">{{ issue.get_review_status_display }}{% if issue.charge_amount %} · {{ issue.charge_amount }} EUR{% endif %}</span>
             {% endif %}
-          {% else %}
-            <span class="badge">{{ issue.get_review_status_display }}{% if issue.charge_amount %} · {{ issue.charge_amount }} EUR{% endif %}</span>
+          </div>
+          {% if not panel.stock_enabled %}<span class="equipment-unit-price">{% trans "Unit price" %}: {{ issue.item.unit_price }} EUR</span>{% endif %}
+          {% if issue.review_status == 'none' and may_equip %}
+            <form class="inline-form" method="post" action="{% url 'return_equipment' issue.pk %}">
+              {% csrf_token %}
+              {% if panel.stock_enabled %}<select name="disposition" required aria-label="{% trans 'Return disposition' %}">
+                <option value="restock">{% trans "Reusable — return to stock" %}</option>
+                <option value="retire">{% trans "Damaged or retired" %}</option>
+              </select>{% endif %}
+              <button class="button button-secondary" type="submit">{% trans "Return" %}</button>
+            </form>
+            <form class="inline-form" method="post" action="{% url 'flag_unreturned' issue.pk %}">
+              {% csrf_token %}
+              <button class="button button-secondary" type="submit" data-confirm="{% trans 'This flags the item as unreturned and opens a manager charge review at its issued stock value.' %}">{% trans "Flag unreturned" %}</button>
+            </form>
           {% endif %}
         </li>
       {% endfor %}

@@ -62,6 +62,21 @@ def test_filters_by_actor_and_action(client, users, events):
     assert "test A" in body and "test B" not in body
 
 
+def test_filters_by_target_worker(client, users, events):
+    other_person = Person.objects.create(first_name="Other", last_name="Worker")
+    record_event(users["coordinator"], "person.status_changed", target=other_person, reason="test C")
+
+    client.force_login(users["manager"])
+
+    resp = client.get(reverse("audit_log"), {"worker": "audit subject"})
+    body = resp.content.decode()
+    assert "test A" in body and "test C" not in body
+
+    resp = client.get(reverse("audit_log"), {"worker": "other"})
+    body = resp.content.decode()
+    assert "test C" in body and "test A" not in body
+
+
 @pytest.mark.parametrize(
     ("language", "expected"),
     [

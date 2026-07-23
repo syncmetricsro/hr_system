@@ -1,5 +1,5 @@
 {% extends "layouts/base.html" %}
-{% load i18n rbac %}
+{% load i18n rbac static %}
 
 {% block title %}{% trans "Finance" %} · {{ BRAND_NAME }}{% endblock %}
 
@@ -15,6 +15,39 @@
   <article class="metric-card"><span>{% trans "Cost" %}</span><strong>-{{ totals.cost }} EUR</strong></article>
   <article class="metric-card"><span>{% trans "Net" %}</span><strong>{{ totals.net }} EUR</strong></article>
 </section>
+
+<div class="grid-2">
+  <section class="panel">
+    <p class="eyebrow">{% trans "Company total" %}</p>
+    <h2>{% trans "Monthly trend" %}</h2>
+    {{ trend_chart_data|json_script:"chart-data-finance-summary-trend" }}
+    <figure class="chart-figure">
+      <figcaption>{% trans "Revenue, cost, and net by month" %}</figcaption>
+      <div class="chart-canvas-wrap">
+        <canvas data-chart="trend" data-chart-data="chart-data-finance-summary-trend"
+                data-label-revenue="{% trans 'Revenue' %}" data-label-cost="{% trans 'Cost' %}"
+                data-label-net="{% trans 'Net' %}"
+                role="img" aria-label="{% trans 'Monthly revenue, cost, and net trend chart' %}"></canvas>
+      </div>
+    </figure>
+  </section>
+
+  <section class="panel">
+    <p class="eyebrow">{% trans "Company total" %}</p>
+    <h2>{% trans "Margin" %}</h2>
+    {{ gauge_chart_data|json_script:"chart-data-finance-summary-gauge" }}
+    {% blocktrans asvar gauge_aria_label %}Margin gauge: {{ margin_pct }}% of revenue{% endblocktrans %}
+    <figure class="chart-figure">
+      <figcaption>{% trans "Net as a share of revenue" %}</figcaption>
+      <div class="chart-canvas-wrap chart-canvas-wrap--gauge">
+        <canvas data-chart="gauge" data-chart-data="chart-data-finance-summary-gauge"
+                data-label-margin="{% trans 'Margin' %}"
+                role="img" aria-label="{{ gauge_aria_label }}"></canvas>
+        <div class="chart-gauge-value" aria-hidden="true">{{ margin_pct }}%<small>{% trans "margin" %}</small></div>
+      </div>
+    </figure>
+  </section>
+</div>
 
 <div class="grid-2">
   <section class="panel">
@@ -56,6 +89,13 @@
   <section class="panel">
     <p class="eyebrow">{% trans "Company total" %}</p>
     <h2>{% trans "Group breakdown" %}</h2>
+    {% if groups %}
+      {{ group_chart_data|json_script:"chart-data-finance-summary-group" }}
+      <div class="chart-canvas-wrap chart-canvas-wrap--compact">
+        <canvas data-chart="diverging" data-chart-data="chart-data-finance-summary-group"
+                role="img" aria-label="{% trans 'Net result by finance group chart' %}"></canvas>
+      </div>
+    {% endif %}
     <dl class="detail-grid">
       {% for g in groups %}
         <div><dt>{{ g.label }}</dt><dd class="amount{% if g.net < 0 %} amount-neg{% else %} amount-pos{% endif %}">{{ g.net }} EUR</dd></div>
@@ -103,4 +143,9 @@
     {% endfor %}
   </dl>
 </section>
+{% endblock %}
+
+{% block scripts %}
+<script defer src="{% static 'vendor/chart.min.js' %}"></script>
+<script defer src="{% static 'src/js/charts.js' %}"></script>
 {% endblock %}

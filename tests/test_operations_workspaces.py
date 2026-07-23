@@ -8,7 +8,7 @@ from django.utils.translation import gettext
 from core.audit.models import AuditEvent
 from core.people.models import LifecycleStatus, Person
 from core.projects.models import Project, TrialAssignment
-from features.logistics.models import Accommodation, Room
+from features.logistics.models import Accommodation, AccommodationCostPeriod, Room
 from features.logistics.services import assign_room
 
 pytestmark = [pytest.mark.django_db, pytest.mark.jober_only]
@@ -123,6 +123,31 @@ def test_manager_creates_location_and_room_but_coordinator_cannot(client, operat
 
     client.force_login(coordinator)
     assert client.get(reverse("room_edit", args=[Room.objects.get().pk])).status_code == 403
+
+
+def test_accommodation_create_with_capacity_and_cost_records_a_cost_period(client, operations):
+    manager, *_ = operations
+    client.force_login(manager)
+    response = client.post(reverse("accommodation_create"), {
+        "name": "Residence West", "address": "Nitra 3", "notes": "",
+        "is_active": "on", "capacity": 10, "per_head_cost": "42.50",
+    })
+    assert response.status_code == 302
+    accommodation = Accommodation.objects.get(name="Residence West")
+    period = AccommodationCostPeriod.objects.get(accommodation=accommodation)
+    assert period.capacity == 10
+    assert str(period.per_head_cost) == "42.50"
+
+
+def test_accommodation_create_rejects_only_one_of_capacity_or_cost(client, operations):
+    manager, *_ = operations
+    client.force_login(manager)
+    response = client.post(reverse("accommodation_create"), {
+        "name": "Residence Half-filled", "address": "", "notes": "",
+        "is_active": "on", "capacity": 10,
+    })
+    assert response.status_code == 200
+    assert not Accommodation.objects.filter(name="Residence Half-filled").exists()
 
 
 def test_occupied_room_cannot_be_deactivated_or_shrunk(client, operations):

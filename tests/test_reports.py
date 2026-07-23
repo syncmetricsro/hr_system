@@ -1,11 +1,14 @@
 from __future__ import annotations
 
+import json
+import re
+
 import pytest
 from django.urls import reverse
 from django.utils import translation
 
 from core.people.models import LifecycleStatus, Person
-from core.projects.models import Project
+from core.projects.models import Project, ProjectAssignment
 
 pytestmark = pytest.mark.django_db
 
@@ -82,3 +85,34 @@ def test_finance_section_visible_to_observer(client, make_user):
     with translation.override("sk"):
         body = client.get(reverse("reports")).content.decode("utf-8")
     assert "Celkový súčet firmy" in body
+
+
+def test_projects_and_personnel_section_shows_headcount_and_names(client, make_user, settings):
+    project = Project.objects.create(name="DHL", code="DHLBA", is_active=True)
+    empty_project = Project.objects.create(name="WEBASTO", code="WEB", is_active=True)
+    person = Person.objects.create(first_name="Olha", last_name="Kovalenko")
+    ProjectAssignment.objects.create(person=person, project=project)
+    client.force_login(make_user("manager"))
+    # CorvinumEU doesn't configure "en" (sk/hu only) — same fallback already
+    # used above in test_reports_use_action_oriented_structured_tooltips.
+    language = "en" if "en" in dict(settings.LANGUAGES) else "sk"
+    expected_heading = {
+        "en": "Projects and assigned personnel", "sk": "Projekty a pridelení pracovníci",
+    }[language]
+    with translation.override(language):
+        body = client.get(reverse("reports")).content.decode("utf-8")
+
+    assert expected_heading in body
+    assert "Olha Kovalenko" in body
+    assert 'data-chart="magnitude"' in body
+
+    match = re.search(
+        r'<script id="chart-data-reports-projects" type="application/json">(.*?)</script>',
+        body, re.DOTALL,
+    )
+    assert match
+    payload = json.loads(match.group(1))
+    assert project.name in payload["labels"]
+    assert empty_project.name in payload["labels"]
+    assert payload["headcount"][payload["labels"].index(project.name)] == 1
+    assert payload["headcount"][payload["labels"].index(empty_project.name)] == 0

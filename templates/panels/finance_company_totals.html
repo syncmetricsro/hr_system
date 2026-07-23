@@ -7,4 +7,18 @@
     <div><dt>{% trans "Cost" %}</dt><dd>-{{ panel.finance.cost }} EUR</dd></div>
     <div><dt>{% trans "Net" %}</dt><dd>{{ panel.finance.net }} EUR</dd></div>
   </dl>
+  {{ panel.gauge_chart_data|json_script:"chart-data-reports-finance-gauge" }}
+  {{ panel.regional_chart_data|json_script:"chart-data-reports-finance-regional" }}
+  <p class="eyebrow">{% trans "Margin" %}</p>
+  <div class="chart-canvas-wrap chart-canvas-wrap--compact">
+    <canvas data-chart="gauge" data-chart-data="chart-data-reports-finance-gauge"
+            data-label-margin="{% trans 'Margin' %}"
+            role="img" aria-label="{% trans 'Margin gauge' %}"></canvas>
+    <div class="chart-gauge-value" aria-hidden="true">{{ panel.margin_pct }}%</div>
+  </div>
+  <p class="eyebrow">{% trans "Profit/loss by region" %}</p>
+  <div class="chart-canvas-wrap chart-canvas-wrap--compact">
+    <canvas data-chart="diverging" data-chart-data="chart-data-reports-finance-regional"
+            role="img" aria-label="{% trans 'Net result by region chart' %}"></canvas>
+  </div>
 </a>

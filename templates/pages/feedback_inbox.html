@@ -13,8 +13,14 @@
   <p class="eyebrow">{% trans "Public links" %}</p>
   <h2>{% trans "Feedback links" %}</h2>
   <ul class="plain-list">
-    {% for l in links %}
-      <li>{{ l.label }} — <code>{{ request.scheme }}://{{ request.get_host }}{% url 'feedback_form' l.token %}</code></li>
+    {% for item in links %}
+      <li>
+        {{ item.link.label }} — <code>{{ item.url }}</code>
+        <details>
+          <summary>{% trans "Show QR code" %}</summary>
+          <div class="qr-plate">{{ item.qr_svg|safe }}</div>
+        </details>
+      </li>
     {% empty %}
       <li>—</li>
     {% endfor %}

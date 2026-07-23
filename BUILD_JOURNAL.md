@@ -1,5 +1,300 @@
 # Build Journal
 
+## 2026-07-23 - Hungarian payslip terminology
+
+- Standardized CorvinumEU's payslip workflow on `Bérlap`: navigation,
+  recording form, optional issue-date label, recorded table, audit labels,
+  email copy, and wage-versus-payslip overview.
+- Kept the separate advances/deductions ledger named `Előlegek és levonások`
+  so users no longer have to distinguish two finance workflows both labelled
+  with variants of `bérjegyzék`.
+- Added catalog-level regression coverage for the four primary workflow
+  labels. This is translation-only and does not alter payroll calculations,
+  period uniqueness, PDF content, or ledger behavior.
+
+## 2026-07-23 - Finance + Reports: charts (backlog slice 8/9, expanded scope)
+
+User explicitly asked for this slice to be "big, sophisticated, and usable"
+rather than the plan's original minimal sketch — scope was re-planned from
+scratch with 3 research agents + 1 design-review agent, then every claim
+independently re-verified (services.py, `reports()`, `vendor/MANIFEST.md`,
+`verify_vendor_assets.py`, theme.js, app.css, `docs/adr/`, CorvinumEU's
+`INSTALLED_APPS`) before writing code. Full design/governance rationale is
+in `docs/adr/0025-chartjs-visualizations.md`; highlights below.
+
+- **New capability, not just visualization**: `monthly_totals(year=None)`
+  in `features/finance/services.py` — the only company-wide monthly
+  (not yearly) revenue/cost/net time series that existed anywhere.
+  Ascending order (a trend), deliberately not matching `yearly_totals()`'s
+  newest-first convention. `all_locked` flag per bucket for a future
+  filled-vs-hollow point treatment.
+- **Vendored Chart.js 4.5.1** (MIT) per AGENTS.md §3.2 — live-fetched
+  (read-only) the actual jsdelivr UMD bundle and GitHub LICENSE to pin a
+  real version/hash rather than a placeholder; stripped a trailing
+  `//# sourceMappingURL=...` comment (the map itself isn't vendored,
+  matching htmx/alpine shipping no map) — **this one required a real
+  fix**: leaving it in made `collectstatic` fail the Docker build outright
+  (whitenoise refuses to publish a JS file whose referenced map is
+  missing). `docs/adr/0025-...md` records the alternatives rejected (D3,
+  ECharts, uPlot) and why.
+- **Ran the project's own `dataviz` skill's validator** against this
+  product's actual color tokens before writing any chart code — found
+  that `--success`/`--danger` (already used everywhere for signed money
+  in text) **fail** the six-checks validator in dark mode specifically
+  (CVD separation 5.4, below the legal floor; lightness out of band) even
+  though they pass in light mode. Rather than replicate a known-bad pair
+  into a new surface, added 3 new chart-only tokens (`--chart-positive`,
+  `--chart-negative`, `--chart-net`) — light mode aliases the existing
+  tokens (already pass), dark mode gets bespoke validated values found by
+  iterating the actual validator script, not by eyeballing hex codes.
+  `--success`/`--danger` themselves are untouched — fixing them globally
+  is a much bigger, separate piece of work, out of scope here.
+- **Chart placement** (additive everywhere, tables/dl's kept): monthly
+  trend line + margin half-doughnut gauge + group-breakdown diverging bar
+  on `finance_summary.html`; monthly trend + per-project diverging bar on
+  `finance_year.html`; group-breakdown diverging bar on
+  `finance_month_detail.html` (zero new backend — reuses the `groups`
+  context already there); a new "Projects and assigned personnel"
+  section directly in `core/ui/views.py::reports()` (core-owned data, not
+  the feature-panel registry) with a headcount-per-project bar plus a
+  real per-project people list; the existing `finance_company_totals`
+  Reports panel extended in place (not duplicated) with a compact gauge +
+  regional bar, since `features.finance` isn't even installed for
+  CorvinumEU so the extension carries zero client-branching risk.
+- **`static/src/js/charts.js`** (new): reads chart colors from CSS custom
+  properties at build time, destroys+rebuilds tracked charts on the
+  existing `themechange` event (Chart.js doesn't self-repaint on a CSS
+  change). A custom inline value-label plugin (no `chartjs-plugin-
+  datalabels` — staying to exactly one new vendored file) draws bar-tip
+  and line-end labels per the dataviz skill's mark spec. **Found and
+  fixed during its own first render**: labels for a bar/point near the
+  auto-scaled axis extreme overlapped the y-axis category labels or
+  clipped at the canvas edge — fixed with a `paddedRange()` helper that
+  adds proportional headroom to the numeric scale (not just a fixed pixel
+  canvas pad), confirmed by re-screenshotting before/after.
+- **`core/ui/chart_data.py`** (new, core not feature — `core/ui/views.py`
+  needs the same `{labels, net}` shaping as finance's views, and core
+  can't import features): `net_bar_payload()`, the one payload shape
+  reused across group/project/region (~5 call sites); other shapes
+  (trend, gauge, magnitude) are each used once or twice and stay inlined
+  per view rather than being abstracted.
+- Data hand-off via Django's `json_script` filter (auto-serializes
+  `Decimal` as a JSON string, no manual coercion) — never hand-rolled
+  inline `<script>` JSON interpolation.
+- New `{% block scripts %}` added to **both** `templates/layouts/base.html`
+  and `clients/corvinum_eu/templates/layouts/base.html` (confirmed
+  CorvinumEU has its own separate base template) so Chart.js loads only
+  on the pages that actually render a canvas — never globally alongside
+  htmx/Alpine/app.js.
+- **Found and fixed via a real corvinum-lane test run, not by inspection**:
+  a new Reports test hardcoded `translation.override("en")`, but
+  CorvinumEU's `LANGUAGES` only configures sk/hu — no "en" — which 404'd
+  under that lane. Fixed by reusing the exact fallback pattern already
+  established two tests above it in the same file
+  (`"en" if "en" in dict(settings.LANGUAGES) else "sk"`), rather than
+  inventing a new one.
+
+## 2026-07-23 - Apartments: base cost + capacity at creation (backlog slice 7/9)
+
+- Design pass (with user 2026-07-23) rejected the plan's original
+  assumption of auto-generating N placeholder `Room` rows for "number of
+  rooms (beds)". Found that base cost and bed count already live together
+  on one existing record, `AccommodationCostPeriod` (`capacity` ×
+  `per_head_cost`, `features/logistics/models.py:44-70`) — previously only
+  enterable *after* creation via a second form on the detail page. Reused
+  that record wholesale instead of inventing new Room-generation behavior.
+- `AccommodationForm` (`features/logistics/forms.py`) gained two optional,
+  non-model fields — `capacity` and `per_head_cost` — dropped from the
+  form entirely when editing (`__init__` deletes them if `instance.pk` is
+  set), so the edit form is untouched: no bare inputs that would silently
+  do nothing. Added a `clean()` check requiring both-or-neither so a
+  half-filled pair fails loudly instead of quietly creating nothing.
+- `accommodation_create` (`features/logistics/views.py`) calls the
+  existing `set_accommodation_cost_period()` service (idempotent
+  `update_or_create` keyed on accommodation+month) when both fields are
+  present, defaulting `effective_month` to the current month — no new
+  service code, no template change (`accommodation_form.html` already
+  iterates `{% for field in form %}` generically).
+- Verified functionally against the dev app, not just unit tests: created
+  with both fields filled (cost period recorded, visible on the detail
+  page), with only one filled (form re-renders with the validation error,
+  nothing created), and confirmed the edit form shows neither field.
+- New labels ("Capacity (beds)", "Per-head monthly cost (EUR)") both
+  fuzzy-matched on extraction (paired with unrelated prior "capacity"/
+  "Capacity"/"per-head monthly cost" strings in all three catalogs) — the
+  same failure mode as every other slice this session; corrected and
+  cleared the fuzzy flags rather than accepting the guess.
+- Added `test_accommodation_create_with_capacity_and_cost_records_a_cost_period`
+  and `test_accommodation_create_rejects_only_one_of_capacity_or_cost` to
+  `tests/test_operations_workspaces.py`. Note for future editors: my first
+  attempt at this edit mis-split the existing
+  `test_manager_creates_location_and_room_but_coordinator_cannot` test
+  (inserted before its actual last line, which I hadn't seen because an
+  earlier `Read` call was window-truncated) — caught by the test run
+  itself (a `Room.DoesNotExist` in the wrong test), fixed before commit.
+
+## 2026-07-23 - Warehouse equipment issuing runbook scenario (backlog slice 6/9)
+
+- Docs-only. Added `### 6. Equipment issuing and deduction review` to
+  `docs/deployment/jober-demo-runbook.md`'s headline sequence, following
+  the existing numbered-section presenter-script format (sections 1-5):
+  issue an item as Coordinator → flag unreturned → switch to Manager →
+  approve or waive in Equipment reviews, calling out the slice-5 badge
+  colors (neutral/warning/success) as the demo's actual point.
+- Chose a runbook entry over a new Playwright test because e2e coverage
+  of the issue/return/flag actions is already thin (only the review
+  *queue* page has e2e coverage — `tests/e2e/test_feature_pages.py:79-82,
+  133-136`) and this is explicitly a "show it to the client" ask, i.e. a
+  human presenter walkthrough, not a regression check.
+- Removed "equipment recovery review" from the `## Supporting flow`
+  fallback list since it's now a full headline section rather than an
+  if-time-allows extra — avoids the same flow being listed twice.
+- Verified every button/page label referenced in the new section
+  (Flag unreturned, Equipment reviews, Approve charge, Waive) against the
+  actual template strings — all match verbatim, so the script won't send
+  a presenter looking for a button that reads differently.
+
+## 2026-07-23 - Warehouse: better visual for "Issue" (backlog slice 5/9)
+
+- `templates/panels/logistics_equipment.html`'s issued-items list
+  (person-detail page) previously only badged the deduction-review state
+  (`review_status != 'none'`, plain `<span class="badge">`) — a currently
+  issued item with no review was bare text, indistinguishable at a glance
+  from the deduction-review states.
+- Every issued row now gets a status badge: neutral "Issued" (no review),
+  the existing warning badge for "Pending review"/"Charge approved", and a
+  new success-colored badge for "Waived". Added `.badge-neutral` and
+  `.badge-success` variants (`static/src/css/app.css`) reusing the
+  existing `--n100/--n300/--n700` and `--success/--success-soft` tokens
+  already defined for both themes — no new colors invented. Added
+  `.equipment-issue-row` (flex, space-between, wraps) to lay out item name
+  + badge on one line without a new template-wide layout change.
+- The "Issued" label needed no new translation — it already existed as
+  the `EquipmentIssueStatus.ISSUED` model choice label, so `{% trans
+  "Issued" %}` reuses the existing sk/hu/uk catalog entries verbatim
+  (confirmed via extraction diff: no new msgid, no fuzzy).
+- Verified visually (not just markup review): seeded three issued rows on
+  one person covering all three states (none/pending/waived — waived
+  required a raw ORM tweak since stock-tracked issuance blocked a second
+  real `issue_equipment()` call without prior stock receipt) and took a
+  full-page Playwright screenshot logged in as manager. All three badges
+  render with distinct colors and correct labels/charge amounts; the
+  return/flag-unreturned actions still only show for the un-reviewed row.
+
+## 2026-07-23 - Audit log: filter by target worker (backlog slice 4/9)
+
+- `core/audit/views.py::audit_log` gained a `worker` GET filter: resolves
+  the entered text against `Person.search_name__contains` (same pattern
+  as `core/people/views.py::people_list`'s existing name search, reusing
+  the precomputed indexed field rather than a fresh `icontains` on two
+  columns), then narrows `AuditEvent` to `target_type="Person"` with
+  `target_id` in the matched people's pks.
+- Confirmed this covers every action the user asked for ("edited,
+  recruited, fired, blacklisted a worker") without needing to also match
+  on `metadata`: `person.created`/`person.updated`/`person.archived`/
+  `person.recycled` all audit with `target=person` directly, and
+  blacklisting goes through `Person.set_status()` which independently
+  audits `person.lifecycle_changed` with `target=self` — so even though
+  `features/blacklist/services.py`'s own `blacklist.decided` event targets
+  the case (not the person), the person-targeted lifecycle event already
+  captures "this worker was blacklisted" for the new filter.
+- Added the input to `templates/pages/audit_log.html` next to the existing
+  actor/action/date filters, and threaded `worker` through both
+  pagination links (previously missing `worker` broke the query string on
+  page 2+ for any active filter, not just this new one — same in-line
+  pattern the actor/action/target/date filters already used).
+- New label "Worker (name contains)" — extraction fuzzy-matched it against
+  unrelated prior strings in all three catalogs (sk→"Workers", hu→"Worker
+  payments", uk→"Workers"), the exact failure mode the repo's i18n gotchas
+  section warns about. Hand-corrected all three and cleared the fuzzy
+  flags rather than accepting the guess.
+- Added `tests/test_audit_log_page.py::test_filters_by_target_worker`:
+  two people, one event each, asserts the filter narrows to the matching
+  person only in both directions.
+
+## 2026-07-23 - Fixed pre-existing CorvinumEU ledger e2e failure
+
+- Root-caused the e2e failure flagged in the slice-1 entry below:
+  `test_corvinum_shell.py::test_corvinum_ledger_groups_controls_and_keeps_tables_aligned`
+  asserts `.ledger-summary-table` and `.ledger-entries` both render inside
+  `.ledger-activity-panel` (`templates/partials/ledger_activity.html`).
+  Both are conditionally rendered (`{% if summary.entries %}` /
+  `{% if cycle.entries %}`), and the Thursday-summary half went missing.
+- Cause: `clients/corvinum_eu/demo/management/commands/seed_corvinum_demo.py`
+  seeds an illustrative open cash advance with `created_at` = real
+  wall-clock time at seed. `features/advances/services.py:thursday_summary`
+  only shows cash advances created up to *this week's* Thursday 14:00
+  (Europe/Bratislava, C-Q2) — anything created later rolls to next week
+  and never retro-inserts. The demo images got rebuilt/reseeded on a
+  Thursday afternoon (past the 14:00 cutoff), so the seeded advance rolled
+  out of the current week and the summary table simply didn't render —
+  not just an e2e artifact, a real person spinning up the demo on a
+  Thursday afternoon would see "No open advances" instead of the intended
+  example.
+- Fix: after creating the cash-advance entry, if its `created_at` lands
+  after `week_cutoff(today)`, pin it one hour earlier via a direct
+  queryset `.update()` (bypasses `auto_now_add`) so it's always inside the
+  current week's window regardless of what day/time the demo is seeded.
+- Verified live: inspected the seeded `LedgerEntry` rows and the rendered
+  `/hu/ledger/?year=2026&month=8` HTML directly (via `corvinum_app.sh`)
+  before and after the fix — summary table now present both times seeding
+  ran after the cutoff.
+
+## 2026-07-23 - Feedback form language picker + desktop layout/copy (backlog slices 2-3/9)
+
+- **Slice 2 (language picker)**: `templates/pages/feedback_form.html` (public,
+  unauthenticated, outside `i18n_patterns`) now embeds the same
+  `language-switch` form pattern already used in `layouts/base.html`'s
+  header, posting to the existing `set_language` view
+  (`core/ui/views.py`, name `set_language`) with `next` pointed back at
+  `request.path`. No new view code: `LocaleMiddleware` already honors the
+  session/cookie language on unprefixed routes (URL-prefix detection is
+  just the first check, not the only one), and the custom `set_language`
+  wrapper's URL-prefix-translation step is a no-op here since
+  `/feedback/<token>/`'s first path segment ("feedback") never matches a
+  language code. Verified end-to-end with a real POST + cookie jar against
+  the dev app: switching to `hu` persists across the next request and
+  renders `<html lang="hu">` with translated copy.
+- **Slice 3 (desktop layout + copy)**: added a `.feedback-panel` class
+  (`static/src/css/app.css`) so the page uses `clamp(440px, 60vw, 760px)`
+  instead of the shared `.login-panel`'s fixed 440px — addresses "looks
+  small on desktop" while leaving `.login-panel` itself (real login page)
+  untouched. Rewrote the form copy: an anonymous-and-goes-to-your-manager
+  intro line, a rating question with a 1=poor/5=excellent hint, and a
+  message prompt with example placeholder text. Added `label small {
+  font-weight: 400 }` so hint text doesn't inherit the bold label style.
+  Checked visually with Playwright screenshots at 1440px and 390px
+  viewports (both clean, no overflow) before extracting/translating copy.
+- New copy ("Go", the anonymous-answers line, the rating question + hint,
+  the message question + placeholder) extracted and translated sk/hu/uk;
+  diff confirmed no fuzzy flags on the new strings (an unrelated
+  pre-existing fuzzy entry on `equipment_stock_receive.html`'s "Record
+  receipt" was left alone — out of scope).
+
+## 2026-07-23 - Feedback invitation QR code (backlog slice 1/9)
+
+- First slice of a 9-item manual-QA backlog filed by the user (feedback,
+  finance, warehouse, equipment, audit, reports, apartments, messaging —
+  broken into a sliced plan, one branch per item).
+- Feedback invitation links (`FeedbackLink`, `features/feedback/views.py`)
+  now render an inline SVG QR code of the public form URL alongside the
+  existing raw-URL text, behind a `<details>`/`<summary>` disclosure per
+  link on `feedback_inbox.html` so the list stays scannable with many links.
+- Lifted the existing 2FA QR helper (`core/accounts/views.py:_qr_svg`,
+  ADR 0024/segno, previously private to that view) into a shared
+  `core/ui/qr.py:qr_svg()` — both 2FA enrollment and feedback invitations
+  now call the same helper instead of duplicating the segno call.
+- New copy ("Show QR code") extracted/translated (sk/hu/uk) via
+  `scripts/compile_messages.sh --extract`; diff confirmed no fuzzy flag,
+  only the one new msgid plus source-line churn.
+- **Found, not fixed (out of scope for this slice)**: the full Playwright
+  e2e suite has one consistent failure —
+  `test_corvinum_shell.py::test_corvinum_ledger_groups_controls_and_keeps_tables_aligned`
+  (`summaryAndEntriesMerged` assertion) — reproduced twice on this branch
+  and confirmed present on a clean `main` worktree with none of this
+  slice's changes, so it predates this work. Flagging for a separate fix;
+  not addressed here.
+
 ## 2026-07-21 - Hungarian catalog fuzzy-match cleanup + panel help text
 
 - Root-caused a user report of "mislabeled" CorvinumEU panels: the Corvinum

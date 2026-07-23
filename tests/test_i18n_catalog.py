@@ -9,6 +9,10 @@ from django.utils.translation import gettext
 # by an automated msgmerge run (see CLAUDE.md's "msgmerge fuzzy matches" note).
 # Shared logistics/people catalog content — not Jober- or Corvinum-specific.
 MUST_FIX_HU = {
+    "Payslips": "Bérlapok",
+    "Record payslip": "Bérlap rögzítése",
+    "Payslip date (optional)": "Bérlap kiállítási dátuma (nem kötelező)",
+    "Recorded payslips": "Rögzített bérlapok",
     "Date of birth cannot be in the future.": "A születési dátum nem lehet jövőbeli.",
     "Approaching age 18": "Hamarosan 18 éves",
     "occurred on": "mozgás dátuma",

@@ -85,12 +85,12 @@ def test_setup_page_embeds_qr_svg(client, user):
 
 
 def test_qr_svg_helper_is_deterministic_per_uri():
-    from core.accounts.views import _qr_svg
+    from core.ui.qr import qr_svg
 
-    svg = _qr_svg("otpauth://totp/X:a@b?secret=ABC&issuer=X")
+    svg = qr_svg("otpauth://totp/X:a@b?secret=ABC&issuer=X")
     assert svg.startswith("<svg") and "</svg>" in svg
-    assert svg == _qr_svg("otpauth://totp/X:a@b?secret=ABC&issuer=X")
-    assert svg != _qr_svg("otpauth://totp/X:a@b?secret=DIFFERENT&issuer=X")
+    assert svg == qr_svg("otpauth://totp/X:a@b?secret=ABC&issuer=X")
+    assert svg != qr_svg("otpauth://totp/X:a@b?secret=DIFFERENT&issuer=X")
 
 
 def test_setup_confirm_flow(client, user):

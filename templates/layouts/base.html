@@ -100,5 +100,6 @@
     {% if user.is_authenticated %}{% include "notifications/panel.html" %}{% endif %}
     {% include "partials/tooltip.html" %}
     {% include "partials/confirm_dialog.html" %}
+    {% block scripts %}{% endblock %}
   </body>
 </html>
