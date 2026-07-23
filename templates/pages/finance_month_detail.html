@@ -1,5 +1,5 @@
 {% extends "layouts/base.html" %}
-{% load i18n nav %}
+{% load i18n nav static %}
 
 {% block title %}{{ month.project.code }} {{ month.year }}-{{ month.month }} · {{ BRAND_NAME }}{% endblock %}
 
@@ -59,6 +59,13 @@
   <aside class="panel">
     <p class="eyebrow">{% trans "Group breakdown" %}</p>
     <h2>{% trans "By group" %}</h2>
+    {% if groups %}
+      {{ group_chart_data|json_script:"chart-data-finance-month-group" }}
+      <div class="chart-canvas-wrap chart-canvas-wrap--compact">
+        <canvas data-chart="diverging" data-chart-data="chart-data-finance-month-group"
+                role="img" aria-label="{% trans 'Net result by finance group chart' %}"></canvas>
+      </div>
+    {% endif %}
     <dl class="detail-grid">
       {% for g in groups %}
         <div><dt>{{ g.label }}</dt><dd class="amount{% if g.net < 0 %} amount-neg{% else %} amount-pos{% endif %}">{{ g.net }} EUR</dd></div>
@@ -68,4 +75,9 @@
     </dl>
   </aside>
 </section>
+{% endblock %}
+
+{% block scripts %}
+<script defer src="{% static 'vendor/chart.min.js' %}"></script>
+<script defer src="{% static 'src/js/charts.js' %}"></script>
 {% endblock %}

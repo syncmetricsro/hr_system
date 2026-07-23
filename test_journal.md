@@ -1,5 +1,168 @@
 # Test Journal
 
+## 2026-07-23 - Hungarian payslip terminology
+
+- Added parameterized catalog assertions for `Payslips`, `Record payslip`,
+  `Payslip date (optional)`, and `Recorded payslips`.
+- Reconciled-backlog verification from the exact pre-merge worktree:
+  - Full Jober unit lane: **425 passed, 5 skipped**.
+  - CorvinumEU feature-isolation lane: **246 passed, 9 skipped,
+    135 deselected**.
+  - Full Playwright lane: **48 passed**.
+  - Ruff: clean; no-Node policy check: passed; vendor SHA-256 verification:
+    passed.
+  - Migration consistency: no changes detected under both client settings;
+    Django system checks: clean under both settings.
+  - Production image build and clean-database migration/seed completed as
+    part of `scripts/playwright_e2e.sh`.
+
+## 2026-07-23 - Finance + Reports: charts (backlog slice 8/9, expanded scope)
+
+- `tests/test_finance.py`: 5 new tests for `monthly_totals()` — cross-project
+  aggregation, ascending order (explicitly asserted, distinct from
+  `yearly_totals`), `financial_reporting_eligible=False` exclusion,
+  `year=` scoping, `all_locked` true only when every contributing row is
+  locked.
+- New `tests/test_finance_charts.py` (4 tests): renders `finance_summary`/
+  `finance_year`/`finance_month_detail` via the test client, asserts
+  `<canvas data-chart="...">` presence per expected chart type, and
+  regex-extracts + JSON-parses each `json_script` block to check the
+  actual payload values (no HTML-parsing lib added — matches this repo's
+  existing stdlib-only test conventions). Also asserts the trend chart is
+  entirely absent (not just empty) on a year with zero financial months.
+- `tests/test_reports.py`: 1 new test for the projects/personnel section
+  (headcount, assigned person name, canvas presence, `json_script`
+  payload correctness). **First attempt failed under the corvinum-flags
+  lane** (404 — CorvinumEU's `LANGUAGES` has no "en", only sk/hu, so a
+  hardcoded `translation.override("en")` broke language-prefixed
+  routing); fixed by reusing the existing conditional-language fallback
+  already established elsewhere in the same file, then reran both lanes
+  to confirm.
+- New `tests/e2e/test_finance_charts.py` (5 tests): canvas presence for
+  all four chart archetypes across the four chart-bearing pages, plus a
+  genuine (not brittle) theme-toggle check reading a live Chart.js
+  instance's dataset color via `Chart.getChart(canvas)` before/after
+  `page.select_option("[data-theme-select]", "dark")` — proves the
+  `themechange` destroy-and-rebuild logic actually recolors a running
+  chart, not just that a canvas exists.
+- Full unit suite: **421 passed, 5 skipped** (was 411 — 10 new tests).
+  Ruff (`core features clients config tests`): clean.
+  `tests/test_dependency_direction.py` (already in the suite) confirms
+  the new `core/ui/chart_data.py` feature→core import direction is clean.
+- Corvinum-flags lane: **242 passed, 9 skipped, 135 deselected** (after
+  the language-fallback fix above; first run had 1 failure).
+- Full Playwright e2e suite: **48 passed** (was 43 — the 5 new chart
+  tests), including the live theme-color-change assertion.
+- `scripts/verify_vendor_assets.py` run directly (not just via CI):
+  passed, confirming the recorded Chart.js hash matches the committed
+  file before either ever reaches CI.
+- Manual verification beyond automated tests: full-page screenshots of
+  the finance summary and reports pages in both light and dark theme:
+  found and fixed 2 real rendering bugs neither the unit nor e2e
+  assertions would have caught — (1) `collectstatic`/whitenoise failing
+  the Docker build entirely over Chart.js's dangling sourcemap reference,
+  and (2) direct value-labels overlapping axis text / clipping at the
+  canvas edge for values near the auto-scaled extreme. Both confirmed
+  fixed via before/after screenshots, not just re-reading the code.
+
+## 2026-07-23 - Apartments: base cost + capacity at creation (backlog slice 7/9)
+
+- Added 2 tests to `tests/test_operations_workspaces.py`: both-fields-filled
+  records a cost period with the right capacity/amount; only-one-filled
+  is rejected with no accommodation created (form re-render, not a 500).
+- Full unit suite: **411 passed, 5 skipped** (was 409 — the 2 new tests).
+  Ruff: clean.
+- Corvinum-flags lane: **241 passed, 8 skipped, 135 deselected** (was 133
+  deselected — the 2 new tests are in a `jober_only`-marked file, correctly
+  excluded from this lane, same as every other test in that file).
+- Manual functional verification against the dev app via Playwright
+  (not just unit tests): both-filled → cost period appears on the
+  accommodation detail page; only-one-filled → validation error shown,
+  Playwright confirms via `Accommodation.objects.filter(...).exists()`
+  is False; edit form confirmed to omit both fields.
+
+## 2026-07-23 - Warehouse equipment issuing runbook scenario (backlog slice 6/9)
+
+- No code changed, no tests run — this slice only adds a presenter runbook
+  section (`docs/deployment/jober-demo-runbook.md`). Cross-checked every
+  UI label it references against the live templates instead (see
+  BUILD_JOURNAL entry).
+
+## 2026-07-23 - Warehouse: better visual for "Issue" (backlog slice 5/9)
+
+- No new automated test added (CSS/template-only, no new Python logic;
+  existing `test_equipment_review.py`/`test_equipment_ledger_link.py`
+  cover the underlying service behavior and don't assert on markup).
+- Full unit suite: **409 passed, 5 skipped** (unchanged count — confirms
+  nothing broke). Ruff: clean. Corvinum-flags lane: **241 passed, 8
+  skipped, 133 deselected** (unchanged).
+- Manually verified with a real Playwright screenshot against the dev app
+  (logged in as manager, person-detail page) with three issued items
+  covering all three badge states simultaneously — confirms the visual
+  distinction the slice was meant to deliver, not just that markup is
+  well-formed.
+
+## 2026-07-23 - Audit log: filter by target worker (backlog slice 4/9)
+
+- Added `test_filters_by_target_worker` to `tests/test_audit_log_page.py`:
+  creates a second `Person` + audit event, asserts `?worker=` narrows to
+  only the matching person's row in both directions (not marked
+  `jober_only` — audit filtering is shared platform behavior).
+- Full unit suite in the test container: **409 passed, 5 skipped** (was
+  408 — the one new test). Ruff (`core features clients config tests`):
+  clean.
+- Corvinum-flags lane (`scripts/test_corvinum.sh`): **241 passed, 8
+  skipped, 133 deselected** (was 240 — the new test runs there too).
+- Manually verified against the dev app (not just the unit test) with real
+  seeded data: `?worker=Kovalenko` returned exactly the one audit row for
+  that person and none of another seeded person's rows, and vice versa
+  with `?worker=Tashkentov`.
+
+## 2026-07-23 - Fixed pre-existing CorvinumEU ledger e2e failure
+
+- No new test added — this fixes production seed behavior
+  (`seed_corvinum_demo.py`), covered by the existing e2e assertion rather
+  than a new one.
+- Full Playwright e2e suite (`scripts/playwright_e2e.sh`): **43 passed**
+  (was 42 passed/1 failed before the fix). Confirmed the fix by inspecting
+  live `LedgerEntry.created_at` values and the rendered ledger page via
+  `scripts/corvinum_app.sh` before and after, not just by rerunning e2e.
+- Corvinum/advances/ledger-focused unit slice
+  (`pytest -k "corvinum or advances or ledger"`): **30 passed, 2 skipped**
+  — confirms the `created_at` backdate in the seed doesn't break any
+  existing advances-ledger assertion (cutoff/cycle/inclusion/reversal
+  tests all still pass against the adjusted timestamp).
+
+## 2026-07-23 - Feedback form language picker + desktop layout/copy (backlog slices 2-3/9)
+
+- No new automated tests added for these two slices (language switch reuses
+  the already-tested `set_language` view; layout/copy changes are static
+  markup). Verified manually instead: a real POST-based language switch
+  against the running dev app (cookie jar round-trip confirmed `hu`
+  persists and renders correctly), plus Playwright screenshots at 1440px
+  and 390px viewports for the layout/copy changes.
+- Full unit suite + ruff + corvinum-flags lane not re-run separately for
+  these two slices (template/CSS/copy-only changes, no Python logic
+  touched); will re-run the complete set once all 9 backlog slices are
+  done, per the user's request to hold off on committing until then.
+
+## 2026-07-23 - Feedback invitation QR code (backlog slice 1/9)
+
+- Updated `tests/test_totp.py::test_qr_svg_helper_is_deterministic_per_uri`
+  to import the relocated `core.ui.qr.qr_svg` (was
+  `core.accounts.views._qr_svg`) — same assertions, no behavior change.
+- Full unit suite in the test container: **408 passed, 5 skipped**. Ruff
+  (`core features clients config tests`): clean.
+- Corvinum-flags lane (`scripts/test_corvinum.sh`): **240 passed, 8
+  skipped, 133 deselected**.
+- Full Playwright e2e suite (`scripts/playwright_e2e.sh`): **42 passed, 1
+  failed** (run twice, same result both times). The failure —
+  `test_corvinum_shell.py::test_corvinum_ledger_groups_controls_and_keeps_tables_aligned`
+  — reproduces identically on a clean `main` worktree with none of this
+  slice's changes applied, so it's a pre-existing issue unrelated to
+  feedback/QR work, not a regression from this slice. Not investigated
+  further here — flagged for its own fix.
+
 ## 2026-07-21 - Hungarian catalog fuzzy-match cleanup + panel help text
 
 - Added `tests/test_i18n_catalog.py`: 14 regression assertions (not

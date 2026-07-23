@@ -124,23 +124,40 @@ textarea:focus-visible {
 }
 
 .brand-mark {
-  width: 34px;
-  height: 34px;
-  display: inline-grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 3px;
-  padding: 5px;
-  background: var(--ink);
-  border-radius: 999px;
-  box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--brand) 45%, transparent);
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface-strong);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  overflow: hidden;
 }
 
-.brand-mark span {
+.brand-logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: var(--radius-sm);
+}
+
+.login-hero-wrap {
+  width: 100%;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+  background: color-mix(in srgb, var(--surface-strong) 92%, #000);
+}
+
+.login-hero-img {
+  width: 100%;
+  height: auto;
+  max-height: 480px;
+  object-fit: cover;
+  object-position: center;
   display: block;
-  min-width: 0;
-  min-height: 0;
-  background: var(--brand);
-  border-radius: 2px;
 }
 
 .brand-mark span:nth-child(2),
@@ -1144,9 +1161,9 @@ textarea:focus-visible {
 .login-stage {
   min-height: calc(100vh - var(--topbar-height));
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(280px, 360px);
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 380px);
   gap: 24px;
-  align-items: stretch;
+  align-items: center;
   padding: 28px;
 }
 
@@ -1156,10 +1173,10 @@ textarea:focus-visible {
 }
 
 .login-visual {
-  min-height: 540px;
-  display: grid;
-  grid-template-rows: auto 1fr;
-  gap: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 20px;
   padding: 24px;
   border: 1px solid var(--line);
   border-radius: var(--radius);

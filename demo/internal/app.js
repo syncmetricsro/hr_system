@@ -582,7 +582,7 @@
       <header class="topbar">
         <button class="brand ghost-button" data-action="go-step" data-step="1" aria-label="Go to dashboard">
           <span class="brand-mark" aria-hidden="true">
-            <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+            <img src="assets/${state.client === "jober" ? "jober-logo.png" : "corvinum-logo.png"}" alt="${escapeHtml(theme.wordmark)}" class="brand-logo-img">
           </span>
           <span class="brand-text">
             <span class="brand-name">${escapeHtml(theme.wordmark)}</span>

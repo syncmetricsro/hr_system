@@ -1,5 +1,5 @@
 {% extends "layouts/base.html" %}
-{% load i18n nav %}
+{% load i18n nav static %}
 
 {% block title %}{% trans "Reports" %} · {{ BRAND_NAME }}{% endblock %}
 
@@ -40,4 +40,39 @@
 
   {% for panel in report_panels %}{% include panel.template %}{% endfor %}
 </section>
+
+<section class="panel">
+  <p class="eyebrow">{% trans "Workforce" %}</p>
+  <h2>{% trans "Projects and assigned personnel" %}</h2>
+  {% if projects_with_headcount %}
+    {{ projects_chart_data|json_script:"chart-data-reports-projects" }}
+    <figure class="chart-figure">
+      <figcaption>{% trans "Active headcount per project" %}</figcaption>
+      <div class="chart-canvas-wrap">
+        <canvas data-chart="magnitude" data-chart-data="chart-data-reports-projects"
+                role="img" aria-label="{% trans 'Active headcount per project chart' %}"></canvas>
+      </div>
+    </figure>
+  {% endif %}
+  <div class="field-list">
+    {% for row in projects_with_headcount %}
+      <article class="field-card">
+        <div>
+          <h3><a href="{% url 'project_detail' row.project.pk %}">{{ row.project.name }}</a></h3>
+          <p>
+            {% for a in row.people %}{{ a.person }}{% if not forloop.last %}, {% endif %}{% empty %}{% trans "No one currently assigned." %}{% endfor %}
+          </p>
+        </div>
+        <strong>{{ row.headcount }}</strong>
+      </article>
+    {% empty %}
+      <p>{% trans "No active projects." %}</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script defer src="{% static 'vendor/chart.min.js' %}"></script>
+<script defer src="{% static 'src/js/charts.js' %}"></script>
 {% endblock %}

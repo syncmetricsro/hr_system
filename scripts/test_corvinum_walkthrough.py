@@ -197,7 +197,7 @@ def verify_payslips(
     url = f"{base_url}/sk/payslips/"
     response = session.get(url, timeout=15)
     require(
-        response.status_code == 200 and "Payslips" in response.text,
+        response.status_code == 200 and any(w in response.text for w in ("Payslips", "Výplatné pásky", "Fizetési jegyzékek")),
         "Payslips unavailable.",
     )
     if not send_email:
@@ -439,7 +439,7 @@ def run_walkthrough(
             timeout=15,
         )
         require(
-            "Trial day" in clean_text(blocked.text),
+            any(w in clean_text(blocked.text) for w in ("Trial day", "Skúšobný", "Próbanap", "trial_day")),
             "Open checklist did not block activation.",
         )
 
@@ -450,7 +450,7 @@ def run_walkthrough(
         print("[8/14] Compliance")
         compliance = manager.get(f"{base_url}/sk/compliance/", timeout=15)
         require(
-            compliance.status_code == 200 and "Compliance" in compliance.text,
+            compliance.status_code == 200 and any(w in compliance.text for w in ("Compliance", "Súlad", "Megfelelőség")),
             "Compliance unavailable.",
         )
 

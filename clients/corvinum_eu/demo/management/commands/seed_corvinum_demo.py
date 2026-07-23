@@ -10,7 +10,7 @@ from core.accounts.models import Role, User
 from core.people.models import Person
 from core.projects.models import Project
 from features.advances.models import EntryType, LedgerCategory, LedgerEntry
-from features.advances.services import record_entry
+from features.advances.services import record_entry, week_cutoff
 from features.checklists.models import ChecklistItemTemplate, ChecklistTemplate
 from features.logistics.models import EquipmentItem
 from features.logistics.services import flag_unreturned, issue_equipment, review_deduction
@@ -97,10 +97,21 @@ class Command(BaseCommand):
         # Ledger rhythm (§5.10): an open advance for the Thursday summary,
         # travel money, and the equipment deduction from the hook above.
         if not LedgerEntry.objects.filter(person=worker, entry_type=EntryType.CASH_ADVANCE).exists():
-            record_entry(
+            advance = record_entry(
                 worker, entry_type=EntryType.CASH_ADVANCE, category=LedgerCategory.CASH_ADVANCE,
                 amount=Decimal("100.00"), actor=hradmin, project=alfa, note="cash Friday",
             )
+            # Cash advances after this week's Thursday 14:00 roll to next
+            # week and never retro-insert (C-Q2) — so seeding this demo on a
+            # Thursday afternoon would silently drop it from the Thursday
+            # summary the seed comment above promises. Pin it just inside
+            # this week's window so the summary always has something to show,
+            # regardless of what day/time the demo happens to be seeded.
+            cutoff = week_cutoff(dt.date.today())
+            if advance.created_at > cutoff:
+                LedgerEntry.objects.filter(pk=advance.pk).update(
+                    created_at=cutoff - dt.timedelta(hours=1)
+                )
         if not LedgerEntry.objects.filter(person=worker, category=LedgerCategory.TRAVEL_FUEL).exists():
             record_entry(
                 worker, entry_type=EntryType.PAY_ADDITION, category=LedgerCategory.TRAVEL_FUEL,

@@ -10,12 +10,15 @@ from django.views.decorators.http import require_POST
 
 from core.accounts.permissions import Action, require_action
 from core.accounts.permissions import can as user_can
+from core.ui.chart_data import net_bar_payload
 from features.finance.models import FinanceCategory, FinanceCategoryKind, FinancialMonth
 from features.finance.services import (
     FinanceError,
     company_totals,
     group_breakdown,
     lock_month,
+    margin_pct,
+    monthly_totals,
     normalize_source_amount,
     project_totals,
     recompute_month,
@@ -29,20 +32,37 @@ from features.finance.services import (
 from core.projects.models import Project
 
 
+def _trend_chart_data(rows: list[dict]) -> dict:
+    return {
+        "labels": [f"{r['year']}-{r['month']:02d}" for r in rows],
+        "revenue": [r["revenue"] for r in rows],
+        "cost": [-r["cost"] for r in rows],
+        "net": [r["net"] for r in rows],
+        "locked": [r["all_locked"] for r in rows],
+    }
+
+
 @require_action(Action.FINANCE_VIEW_SUMMARY)
 def finance_summary(request: HttpRequest) -> HttpResponse:
     months = FinancialMonth.objects.select_related("project")
+    totals = company_totals()
+    groups = group_breakdown()
+    margin = margin_pct(totals)
     return TemplateResponse(
         request,
         "pages/finance_summary.html",
         {
             "months": months.filter(project__financial_reporting_eligible=True),
-            "totals": company_totals(),
-            "groups": group_breakdown(),
+            "totals": totals,
+            "margin_pct": margin,
+            "groups": groups,
             "project_results": project_totals(),
             "regional_results": regional_totals(),
             "years": yearly_totals(),
             "projects": Project.objects.filter(is_active=True, financial_reporting_eligible=True),
+            "trend_chart_data": _trend_chart_data(monthly_totals()),
+            "gauge_chart_data": {**totals, "margin_pct": margin},
+            "group_chart_data": net_bar_payload(groups),
         },
     )
 
@@ -52,6 +72,7 @@ def finance_year(request: HttpRequest, year: int) -> HttpResponse:
     months = FinancialMonth.objects.select_related("project").filter(
         year=year, project__financial_reporting_eligible=True
     )
+    project_results = project_totals(year)
     return TemplateResponse(
         request,
         "pages/finance_year.html",
@@ -60,8 +81,10 @@ def finance_year(request: HttpRequest, year: int) -> HttpResponse:
             "months": months,
             "totals": company_totals(year),
             "groups": group_breakdown(list(months)),
-            "project_results": project_totals(year),
+            "project_results": project_results,
             "regional_results": regional_totals(year),
+            "trend_chart_data": _trend_chart_data(monthly_totals(year)),
+            "project_chart_data": net_bar_payload(project_results, label_key="name"),
         },
     )
 
@@ -76,15 +99,17 @@ def finance_month_detail(request: HttpRequest, pk: int) -> HttpResponse:
     }
     rows = [{"category": c, "amount": amounts.get(c.id, "")} for c in categories]
     can_manage = user_can(request.user, Action.FINANCE_MANAGE)
+    groups = group_breakdown([month])
     return TemplateResponse(
         request,
         "pages/finance_month_detail.html",
         {
             "month": month,
             "rows": rows,
-            "groups": group_breakdown([month]),
+            "groups": groups,
             "can_manage": can_manage,
             "editable": can_manage and not month.is_locked,
+            "group_chart_data": net_bar_payload(groups),
         },
     )
 

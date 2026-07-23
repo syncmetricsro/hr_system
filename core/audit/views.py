@@ -16,6 +16,7 @@ from django.shortcuts import render
 from core.accounts.permissions import Action, require_action
 from core.audit.models import AuditEvent
 from core.audit.presentation import audit_action_label
+from core.people.models import Person
 
 PAGE_SIZE = 50
 
@@ -43,6 +44,13 @@ def audit_log(request: HttpRequest) -> HttpResponse:
     if target:
         events = events.filter(target_type__iexact=target)
 
+    worker = request.GET.get("worker", "").strip()
+    if worker:
+        person_ids = Person.objects.filter(search_name__contains=worker.lower()).values_list(
+            "pk", flat=True
+        )
+        events = events.filter(target_type="Person", target_id__in=[str(pk) for pk in person_ids])
+
     date_from = _parse_date(request.GET.get("from", ""))
     if date_from:
         events = events.filter(created_at__date__gte=date_from)
@@ -62,6 +70,7 @@ def audit_log(request: HttpRequest) -> HttpResponse:
             "actor": actor,
             "action": action,
             "target": target,
+            "worker": worker,
             "from": request.GET.get("from", ""),
             "to": request.GET.get("to", ""),
         },

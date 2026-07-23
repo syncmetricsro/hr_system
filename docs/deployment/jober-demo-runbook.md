@@ -99,12 +99,36 @@ uses fictional numbers only. `HV 202510.xlsx` remains a specification source,
 not seed data; its `202510` filename versus `November 2025` sheet label is still
 an open client question.
 
+### 6. Equipment issuing and deduction review
+
+Sign in as Coordinator and open a fictional worker (e.g. **Olha**).
+
+- In the Equipment panel, issue an item and point out the new neutral
+  **Issued** badge next to it — issued items are now visually distinct from
+  items under charge review, at a glance.
+- Attempt **Flag unreturned** on the issued item. Confirm the badge changes
+  to the warning-colored **Pending review** badge, showing the charge
+  amount at the item's issued stock value.
+- Switch to Manager and open **Equipment reviews**. Show the outstanding
+  total and the queued item, then either:
+  - **Approve charge** — back on the worker's page, the badge stays
+    warning-colored ("Charge approved · amount"), signaling the recovery
+    is recorded but not yet settled; or
+  - **Waive** — the badge turns success-green ("Waived"), showing the
+    review is resolved with no charge.
+
+Talking point: approving only records the charge for manual recovery — no
+payroll deduction is ever executed automatically. The badge coloring is the
+whole point of this slice: issued (neutral), pending (warning, needs a
+decision), waived (success, resolved) are now distinguishable without
+reading the text.
+
 ## Supporting flow
 
 If time allows, show the existing trial-readiness-activation flow, compliance
-alerts, blacklist warning/manager decision, equipment recovery review, role
-switching, and optional SMS. Readiness now requires medical, gear, and the
-accommodation decision only; transport is not a pillar for Jober.
+alerts, blacklist warning/manager decision, role switching, and optional SMS.
+Readiness now requires medical, gear, and the accommodation decision only;
+transport is not a pillar for Jober.
 
 ## Deferred, do not present as delivered
 

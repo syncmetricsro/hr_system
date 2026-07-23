@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from decimal import Decimal
 from uuid import uuid4
 
 from django import forms
@@ -37,10 +38,40 @@ class TransportWeekForm(forms.ModelForm):
 
 
 class AccommodationForm(forms.ModelForm):
+    """``capacity``/``per_head_cost`` are not model fields — filling both in on
+    creation records an initial ``AccommodationCostPeriod`` for the current
+    month (features/logistics/views.py::accommodation_create), the same data
+    entered later, one step earlier. Left off ``accommodation_edit`` to avoid
+    a bare pair of inputs on the edit form that silently do nothing."""
+
+    capacity = forms.IntegerField(
+        label=_("Capacity (beds)"), required=False, min_value=1,
+    )
+    per_head_cost = forms.DecimalField(
+        label=_("Per-head monthly cost (EUR)"), required=False, min_value=Decimal("0"),
+        decimal_places=2, widget=forms.NumberInput(attrs={"step": "0.01", "min": "0"}),
+    )
+
     class Meta:
         model = Accommodation
         fields = ("name", "address", "notes", "is_active")
         widgets = {"notes": forms.Textarea(attrs={"rows": 3})}
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.instance.pk:
+            del self.fields["capacity"]
+            del self.fields["per_head_cost"]
+
+    def clean(self):
+        cleaned = super().clean()
+        capacity = cleaned.get("capacity")
+        per_head_cost = cleaned.get("per_head_cost")
+        if "capacity" in self.fields and (capacity is None) != (per_head_cost is None):
+            raise forms.ValidationError(
+                _("Enter both capacity and per-head cost to record a cost period, or leave both blank.")
+            )
+        return cleaned
 
     def clean_is_active(self):
         active = self.cleaned_data["is_active"]

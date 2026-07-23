@@ -16,7 +16,7 @@ from core.accounts.models import Role
 from core.ui import registry
 from core.people.models import LifecycleStatus, Person
 from core.people.services import inactive_by_reason
-from core.projects.models import Project, TrialAssignment, TrialOutcome
+from core.projects.models import AssignmentStatus, Project, TrialAssignment, TrialOutcome
 
 
 def healthz(_request: HttpRequest) -> HttpResponse:
@@ -79,6 +79,20 @@ def reports(request: HttpRequest) -> TemplateResponse:
             "reason": translated_reason
         }
         row["tooltip_body"] = _("Open People filtered to this inactive reason.")
+    projects_with_headcount = [
+        {
+            "project": project,
+            "headcount": project.assignments.filter(status=AssignmentStatus.ACTIVE).count(),
+            "people": project.assignments.filter(status=AssignmentStatus.ACTIVE)
+            .select_related("person")
+            .order_by("person__last_name"),
+        }
+        for project in Project.objects.filter(is_active=True).order_by("name")
+    ]
+    projects_chart_data = {
+        "labels": [row["project"].name for row in projects_with_headcount],
+        "headcount": [row["headcount"] for row in projects_with_headcount],
+    }
     return TemplateResponse(
         request,
         "pages/reports.html",
@@ -89,6 +103,8 @@ def reports(request: HttpRequest) -> TemplateResponse:
             "has_trials": has_trials,
             "status_counts": status_counts,
             "inactive_by_reason": inactive_reason_counts,
+            "projects_with_headcount": projects_with_headcount,
+            "projects_chart_data": projects_chart_data,
             # Feature contributions (registered via the core registry).
             "report_tiles": registry.report_tiles(request),
             "report_panels": registry.report_panels(request),

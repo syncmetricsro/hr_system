@@ -976,7 +976,7 @@
       <header class="topbar">
         <button class="brand ghost-button" data-action="go-step" data-step="1" aria-label="Go to dashboard">
           <span class="brand-mark" aria-hidden="true">
-            <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+            <img src="assets/logo.png" alt="CorvinumEU" class="brand-logo-img">
           </span>
           <span class="brand-text">
             <span class="brand-name">${escapeHtml(brand.wordmark)}</span>
@@ -1203,6 +1203,9 @@
             <p class="eyebrow">${escapeHtml(t("Presenter entry"))}</p>
             <h1 class="login-title">${escapeHtml(brand.wordmark)} ${escapeHtml(t("workforce control"))}</h1>
             <p class="page-lede">${escapeHtml(t("A static meeting prototype for staffing requests, people, shifts, transport, documents, and risk gates."))}</p>
+          </div>
+          <div class="login-hero-wrap">
+            <img src="assets/hero.png" alt="CorvinumEU Operations" class="login-hero-img">
           </div>
           <div class="login-route">
             <div class="route-block"><span class="muted">Request</span><strong>12</strong><span>Workers to Nitra</span></div>
