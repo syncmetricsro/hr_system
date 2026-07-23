@@ -1,5 +1,30 @@
 # Deployment Journal
 
+## 2026-07-23 - Reconciled demo backlog deployed (both apps)
+
+- Merged PR **#87** and deployed application revision **`b9d0fb1`** to
+  `jober-staging` and `corvinum-staging` as the shared image
+  `jober-platform:demo-b9d0fb1` (digest
+  `sha256:2ab3f1deea0e49cc19aa6fd90ae551f19105fdd7b2f19ba4bb3486f8dbdb1051`).
+  The image was built locally from pinned dependencies and verified vendored
+  assets, then streamed with `git:load-image`; no VPS-side source build or
+  build-time secret access occurred.
+- Both databases reported no pending migrations and both Django system checks
+  passed. Refreshed only CorvinumEU's idempotent fictional seed because this
+  release makes its Thursday-summary cutoff fixture deterministic; existing
+  Jober staging data was preserved.
+- Runtime assertions confirmed Jober profitability, feedback, equipment stock,
+  and the fingerprinted Chart.js asset are active while transport and the wage
+  ledger remain off. CorvinumEU retains payslips, advances, and wage ledger,
+  keeps profitability/feedback/transport off, and loads the Hungarian
+  `Bérlapok` payslip label.
+- Both Dokku processes passed replacement-container uptime and port checks.
+  The full HTTPS smoke suite passed health, login/CSRF, fingerprinted static
+  CSS, X-Frame-Options, and HSTS for both public staging URLs.
+- The known Dokku default-bridge deprecation warning remains non-blocking host
+  maintenance. The prior shared image `jober-platform:demo-c6d5785` remains
+  the immediate rollback target for both apps.
+
 ## 2026-07-21 - Hungarian catalog fuzzy-match cleanup deployed (both apps)
 
 - Merged PR **#85** and deployed application revision **`c6d5785`** to both
