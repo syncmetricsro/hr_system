@@ -62,7 +62,7 @@ Highlights: 0008 RBAC model · 0016 whitenoise · 0019 Twilio-via-stdlib ·
 | Doc | Owner | Purpose |
 |---|---|---|
 | `playwright-test-environment-note.md` | Platform | e2e environment notes |
-| `avatar-design.md` | Platform | Worker/admin avatar design — implemented 2026-07-24, except default art (placeholder pending real illustrated assets) |
+| `avatar-design.md` | Platform | Worker/admin avatar design — fully implemented 2026-07-25, including illustrated per-role default art |
 | `pill-system-design.md` | Platform | Worker status pill, certificate-validity icons, Compliance/Reviews nav badges — fully implemented 2026-07-24 |
 | `certificate-upload-design.md` | Platform | Certificate document upload (forklift/crane/welding), RBAC, validation — implemented 2026-07-24 |
 | `feedback-flyer-design.md` | Platform | Downloadable PDF+QR flyer for feedback links, Cyrillic-capable via a vendored font (ADR 0028) — implemented 2026-07-24 |

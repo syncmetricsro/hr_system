@@ -1,5 +1,43 @@
 # Test Journal
 
+## 2026-07-25 - Illustrated default avatar art landed (avatar-design.md §1)
+
+- `tests/test_avatars.py`: replaced the single placeholder test with 10
+  tests covering the new behavior - worker default renders for a `Person`
+  with no photo; each of the 4 admin roles renders its own matching
+  default for a `User` with no photo (parametrized); and, the important
+  one, a new `test_default_avatar_file_is_actually_discoverable_by_
+  staticfiles` (parametrized over all 5 roles) that calls Django's real
+  `staticfiles.finders.find()` instead of only checking that `{% static %}`
+  produced a URL string.
+- **This is the test that would have caught the real deployment bug this
+  slice found, if it had existed first**: the files were initially placed
+  at `core/static/core/avatars/` (matching this doc's own original,
+  never-verified spec), which `STATICFILES_DIRS` never scans. `{% static
+  %}` doesn't check file existence, so the first version of these tests
+  passed cleanly - `find()` correctly returned `None` for the wrong path
+  once added, catching it immediately. Files moved to `static/avatars/`,
+  test re-confirmed with `find()` returning a real path, and independently
+  reconfirmed by inspecting the actual built Docker image's filesystem
+  (not the bind-mounted dev container).
+- Full verification against the real dev Postgres:
+  - Ruff: clean.
+  - `manage.py check`: clean (no model changes this slice).
+  - Full Jober unit lane: **537 passed, 5 skipped** (532 baseline + 5 new
+    discoverability tests; the earlier 528→532 delta was the placeholder-
+    test replacement itself).
+  - CorvinumEU feature-isolation lane: **335 passed, 10 skipped, 143
+    deselected** (+5 vs. baseline - the new tests are all client-agnostic).
+  - Full Playwright e2e lane (both clients): **50 passed** - re-run since
+    the navbar avatar renders on every page in both shells.
+  - Live verification against the actual rebuilt (non-bind-mounted)
+    runtime image: `docker exec` confirmed all 5 `.webp` files present
+    under `/app/static/avatars/` and correctly fingerprinted by
+    `collectstatic` into `/app/staticfiles/`; real Playwright screenshots
+    confirmed the worker default renders on every worker-list row on both
+    clients, and each of the four admin-role navbar avatars shows its own
+    distinct, correct color when logged in as that role.
+
 ## 2026-07-25 - GitHub application CI gate
 
 - Added a containerized GitHub gate with separate `Quality and unit tests` and

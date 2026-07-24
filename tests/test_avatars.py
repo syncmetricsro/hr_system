@@ -174,13 +174,38 @@ def test_manager_can_remove_worker_avatar(client, make_user):
 
 # --- {% avatar %} template tag ----------------------------------------------
 
-def test_avatar_tag_renders_placeholder_when_no_photo():
+def test_avatar_tag_renders_worker_default_for_person_with_no_photo():
     from core.ui.templatetags.avatars import avatar
 
     person = Person(first_name="No", last_name="Photo")
     html = avatar(person, size="md")
-    assert "avatar-placeholder" in html
-    assert "<img" not in html
+    assert "<img" in html
+    assert "default_worker.webp" in html
+
+
+@pytest.mark.parametrize("role", ["recruiter", "coordinator", "manager", "observer"])
+def test_avatar_tag_renders_matching_role_default_for_user_with_no_photo(make_user, role):
+    from core.ui.templatetags.avatars import avatar
+
+    user = make_user(role, email=f"nophoto-{role}@demo.jober.test")
+    html = avatar(user, size="md")
+    assert "<img" in html
+    assert f"default_{role}.webp" in html
+
+
+@pytest.mark.parametrize(
+    "role", ["worker", "recruiter", "coordinator", "manager", "observer"]
+)
+def test_default_avatar_file_is_actually_discoverable_by_staticfiles(role):
+    """{% static %} builds a URL string without checking the file exists -
+    this is the real check. Catches the exact mistake this feature shipped
+    with once already: the files were first placed under core/static/core/
+    avatars/, which STATICFILES_DIRS never scans (only the top-level
+    static/ dir and each client's static/ dir) - `static()` still happily
+    returned a URL for a file nothing would ever actually serve."""
+    from django.contrib.staticfiles.finders import find
+
+    assert find(f"avatars/default_{role}.webp") is not None
 
 
 def test_avatar_tag_renders_image_when_photo_present(make_user):

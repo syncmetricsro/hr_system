@@ -1,14 +1,30 @@
 # Avatars — workers and admin roles
 
-Status: **Implemented 2026-07-24**, with one deliberate exception: the
-illustrated per-role default art (§1) was never delivered, so the no-photo
-fallback is a plain placeholder circle (`.avatar-placeholder`,
-`core/ui/templatetags/avatars.py`), not the illustrated art this doc
-originally specified — the user chose to wait for real art rather than
-build a stand-in design. Everything else below is built as designed:
-Pillow (ADR 0027), local filesystem storage, `Person.avatar`/`User.avatar`,
-upload validation, RBAC, and the navbar/worker-list/person-detail template
-surface, for both Jober and CorvinumEU.
+Status: **Fully implemented 2026-07-25**, including §1's illustrated
+per-role default art (delivered 2026-07-25 via the user's own image
+generation, followed by chroma-key removal and exact flat-color
+normalization — verified pixel-for-pixel against the §1 palette before
+integration: 1024×1024 RGBA, true alpha transparency outside the circle,
+circle fill and silhouette fill both exact hex matches, no gradient/noise).
+Delivered as PNG, processed (resized to 256×256, re-encoded WebP) and
+shipped at `static/avatars/default_{role}.webp` — **not**
+`core/static/core/avatars/` as this doc originally specified, which was
+never actually checked against `STATICFILES_DIRS` (`config/settings/
+base.py`, which only scans the top-level `static/` dir and each client's
+own `static/` dir) and would have silently 404'd in production; caught
+before shipping by adding a test that calls Django's real
+`staticfiles.finders.find()` instead of only checking that `{% static %}`
+produces a URL string (`{% static %}` doesn't verify the file exists).
+The Dockerfile also needed its own new `COPY static/avatars
+/app/static/avatars` line — it copies `static/` subdirectories
+individually, not the whole tree, the same class of gap the DejaVu font
+vendoring hit earlier this session. `core/ui/templatetags/avatars.py`'s
+placeholder branch is gone entirely; the no-photo case now always renders
+an `<img>` pointing at the role-appropriate default (Person → worker;
+User → their own role), same as an uploaded photo. Everything else was
+already built as designed: Pillow (ADR 0027), local filesystem storage,
+`Person.avatar`/`User.avatar`, upload validation, RBAC, and the navbar/
+worker-list/person-detail template surface, for both Jober and CorvinumEU.
 
 ## Why this doc exists
 
@@ -218,12 +234,7 @@ fixed circular container (`.avatar avatar--sm/md/lg` CSS classes).
   already env-overridable in both `config/settings/production.py` and
   `clients/corvinum_eu/production.py` for when that mount exists, but the
   actual Dokku/nginx configuration is a deployment-time step, not code.
-- Confirm final default-avatar art (this doc's §1 prompt/palette are a
-  starting brief, not signed off) and land the five illustrated static
-  assets — the current placeholder (`.avatar-placeholder`, a plain
-  neutral circle) is a deliberate, temporary stand-in built to unblock
-  the rest of the feature, not a design decision. Swapping in real art
-  only requires changing `core/ui/templatetags/avatars.py`'s placeholder
-  branch — the upload/storage pipeline doesn't change.
+- ~~Confirm final default-avatar art and land the five illustrated static
+  assets~~ — done 2026-07-25, `static/avatars/default_{role}.webp`.
 - Decide whether the off-site backup target answering D6 also covers the
   media volume, or whether avatars get a separate backup story.

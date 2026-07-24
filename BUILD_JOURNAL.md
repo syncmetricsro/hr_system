@@ -1,5 +1,47 @@
 # Build Journal
 
+## 2026-07-25 - Illustrated default avatar art landed (avatar-design.md §1)
+
+Closes the one deliberate exception left open from the avatar feature: the
+illustrated per-role default art. The user generated all five (worker +
+4 admin roles) via their own image-generation tool, then chroma-keyed and
+color-normalized them, and handed over 1024×1024 RGBA PNGs.
+
+- Verified independently before integrating, not just trusted "validated":
+  exact dimensions, true alpha transparency at the corners, and the circle/
+  silhouette fills checked pixel-for-pixel against §1's palette
+  (`#4A6FA5`/`#2F9E8F`/`#C9922B`/`#6B4E9E`/`#6B7280` circles, `#F5F5F0`
+  silhouette) - all five were exact hex matches, not just visually close.
+- Processed with Pillow (resize to 256×256, re-encode WebP) and shipped as
+  `static/avatars/default_{role}.webp`.
+- **Real gap caught before shipping, not after**: this doc's own §1
+  originally specified `core/static/core/avatars/` as the destination -
+  never actually checked against `STATICFILES_DIRS`
+  (`config/settings/base.py`), which only scans the top-level `static/`
+  directory and each client's own `static/` directory, not `core/static/`.
+  `{% static %}` happily built a URL string for the wrong path anyway (it
+  doesn't verify the file exists), so the first version of the test suite
+  passed cleanly while the feature would have silently 404'd every default
+  avatar in production. Caught by asking "would this actually survive a
+  real Docker build," not by re-reading the code - moved the files to
+  `static/avatars/`, and confirmed the fix by inspecting the actual built
+  image's filesystem (`docker exec` into a freshly rebuilt `jober-dev-app`,
+  not a bind-mounted dev container) rather than trusting the passing test.
+  Also needed its own new `Dockerfile` `COPY static/avatars
+  /app/static/avatars` line - the Dockerfile copies `static/` subdirectories
+  individually, the exact same class of gap the DejaVu font vendoring hit
+  earlier this session for `vendor/fonts/`.
+- `core/ui/templatetags/avatars.py`'s placeholder branch (a plain gray
+  circle, `.avatar-placeholder`) is gone entirely - the no-photo case now
+  always renders an `<img>` at the role-appropriate default, same code path
+  as an uploaded photo. `Person` always gets the worker default (no `.role`
+  field); `User` gets the default matching their own role.
+- Verified live on both clients: the worker default renders correctly on
+  every worker-list row on both Jober and CorvinumEU (same shared
+  template/tag, no client-specific branching needed), and each of the four
+  admin roles' navbar avatar shows its own distinct color when logged in
+  as that role.
+
 ## 2026-07-25 - GitHub application CI gate
 
 - Added `.github/workflows/application-ci.yml` for pull requests and pushes to
