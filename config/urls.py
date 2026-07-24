@@ -33,6 +33,8 @@ app_routes = [
     path("admin/", admin.site.urls),
     path("", views.dashboard, name="dashboard"),
     path("reports/", views.reports, name="reports"),
+    path("help/", views.help_index, name="help_index"),
+    path("help/<slug:slug>/", views.help_article, name="help_article"),
     path("audit/", audit_views.audit_log, name="audit_log"),
     path("notifications/", notification_views.notification_panel, name="notification_panel"),
     path("notifications/dismiss/", notification_views.notification_dismiss, name="notification_dismiss"),
@@ -40,11 +42,15 @@ app_routes = [
     path("odhlasenie/", account_views.logout_view, name="logout"),
     path("2fa/verify/", account_views.two_factor_verify, name="two_factor_verify"),
     path("2fa/setup/", account_views.two_factor_setup, name="two_factor_setup"),
+    path("account/avatar/", account_views.avatar_upload, name="avatar_upload"),
+    path("account/avatar/remove/", account_views.avatar_remove, name="avatar_remove"),
     path("people/", people_views.people_list, name="people_list"),
     path("people/new/", people_views.person_create, name="person_create"),
     path("people/age-warning/", people_views.person_age_warning, name="person_age_warning"),
     path("people/<int:pk>/", people_views.person_detail, name="person_detail"),
     path("people/<int:pk>/edit/", people_views.person_edit, name="person_edit"),
+    path("people/<int:pk>/avatar/", people_views.person_avatar_upload, name="person_avatar_upload"),
+    path("people/<int:pk>/avatar/remove/", people_views.person_avatar_remove, name="person_avatar_remove"),
     path("people/<int:person_pk>/archive/", people_views.archive_person, name="archive_person"),
     path("people/<int:person_pk>/recycle/", people_views.recycle_person, name="recycle_person"),
     path("projects/", project_views.project_list, name="project_list"),
@@ -164,6 +170,13 @@ if _feature_on("compliance", "documents"):
 
     app_routes += [
         path("compliance/", compliance_views.compliance_list, name="compliance_list"),
+        path(
+            "people/<int:person_pk>/certificates/add/",
+            compliance_views.certificate_create,
+            name="certificate_create",
+        ),
+        path("certificates/<int:pk>/edit/", compliance_views.certificate_edit, name="certificate_edit"),
+        path("certificates/<int:pk>/delete/", compliance_views.certificate_delete, name="certificate_delete"),
     ]
 
 if _feature_on("blacklist", "duplicate_blacklist"):
@@ -222,6 +235,15 @@ if _feature_on("feedback", "feedback"):
     app_routes += [
         path("feedback/", feedback_views.feedback_inbox, name="feedback_inbox"),
         path("feedback/links/new/", feedback_views.feedback_link_create, name="feedback_link_create"),
+        path("feedback/links/<int:pk>/pdf/", feedback_views.feedback_link_pdf, name="feedback_link_pdf"),
     ]
 
 urlpatterns += i18n_patterns(*app_routes)
+
+if settings.DEBUG:
+    # Local/dev only - production serves /media/ via an nginx alias straight
+    # to the Dokku-mounted volume, never through this Django process
+    # (docs/product/avatar-design.md).
+    from django.conf.urls.static import static
+
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

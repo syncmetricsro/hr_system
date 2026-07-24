@@ -1,5 +1,5 @@
 {% extends "layouts/base.html" %}
-{% load i18n rbac static %}
+{% load i18n rbac static icons %}
 
 {% block title %}{% trans "Finance" %} · {{ BRAND_NAME }}{% endblock %}
 
@@ -7,7 +7,7 @@
 <section class="page-head">
   <p class="eyebrow">{% trans "Reports" %}</p>
   <h1>{% trans "Finance" %}</h1>
-  <a class="button button-secondary" href="{% url 'export_finance' %}">{% trans "Export" %}</a>
+  <a class="button button-secondary" href="{% url 'export_finance' %}">{% icon "export" %}{% trans "Export" %}</a>
 </section>
 
 <section class="dashboard-grid" aria-label="{% trans 'Company total' %}">
@@ -81,7 +81,7 @@
         <label class="field-mini">{% trans "Cost" %}
           <input type="number" step="0.01" name="cost" value="0">
         </label>
-        <button class="button button-primary" type="submit">{% trans "Record month" %}</button>
+        <button class="button button-primary" type="submit">{% icon "add" %}{% trans "Record month" %}</button>
       </form>
     {% endif %}
   </section>
@@ -133,11 +133,18 @@
 </div>
 
 <section class="panel">
-  <p class="eyebrow">{% trans "Regional roll-up" %}</p>
-  <h2>{% trans "Profit/loss by region" %}</h2>
+  <p class="eyebrow">{% trans "Office roll-up" %}</p>
+  <h2>{% trans "Profit/loss by office" %}</h2>
+  {% if regional_results %}
+    {{ regional_chart_data|json_script:"chart-data-finance-summary-regional" }}
+    <div class="chart-canvas-wrap chart-canvas-wrap--compact">
+      <canvas data-chart="diverging" data-chart-data="chart-data-finance-summary-regional"
+              role="img" aria-label="{% trans 'Net result by office chart' %}"></canvas>
+    </div>
+  {% endif %}
   <dl class="detail-grid">
-    {% for region in regional_results %}
-      <div><dt>{{ region.region }}</dt><dd class="amount{% if region.net < 0 %} amount-neg{% else %} amount-pos{% endif %}">{{ region.net }} EUR</dd></div>
+    {% for office in regional_results %}
+      <div><dt>{{ office.office }}</dt><dd class="amount{% if office.net < 0 %} amount-neg{% else %} amount-pos{% endif %}">{{ office.net }} EUR</dd></div>
     {% empty %}
       <div><dd>{% trans "No financial months." %}</dd></div>
     {% endfor %}

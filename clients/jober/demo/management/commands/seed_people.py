@@ -6,6 +6,7 @@ from django.core.management.base import BaseCommand
 from django.utils import timezone
 
 from core.accounts.models import User
+from core.offices.models import Office
 from core.people.models import LifecycleStatus, Person
 from core.projects.models import Project
 from core.projects.services import activate_on_project, schedule_trial
@@ -13,10 +14,26 @@ from core.projects.services import activate_on_project, schedule_trial
 # Fictional data only — no real worker PII before the legal gate.
 DEMO_DOMAIN = "demo.jober.test"
 
+# The three offices Jober licensed from SyncMetric s.r.o. (ADR 0026 Phase
+# A). Seeded here — a Jober-only management command — rather than in a
+# core/offices migration: core.offices is installed by every client (it's
+# a generic mechanism, like Project.office was before this), but these
+# specific office names are Jober business data, not something CorvinumEU
+# or any future client should get seeded into its own database just
+# because it shares the same core app.
+OFFICES = [
+    {"name": "Velký Meder", "code": "VM", "country": "SK"},
+    {"name": "Győr", "code": "GYR", "country": "HU"},
+    {"name": "Dunajská Streda", "code": "DS", "country": "SK"},
+]
+
+# office_code refers to the OFFICES rows created below — assignment is an
+# arbitrary but sensible demo spread across the three licensed offices,
+# not a claim about where these fictional clients actually operate.
 PROJECTS = [
-    {"name": "DHL Bratislava", "code": "DHLBA", "office": "Bratislava", "partner": "DHL", "region": "Megyer"},
-    {"name": "WEBASTO", "code": "WEB", "office": "Nitra", "partner": "Webasto", "region": "DS"},
-    {"name": "CARGO", "code": "CARGO", "office": "Bratislava", "partner": "Cargo", "region": "Megyer"},
+    {"name": "DHL Bratislava", "code": "DHLBA", "office_code": "VM", "partner": "DHL"},
+    {"name": "WEBASTO", "code": "WEB", "office_code": "GYR", "partner": "Webasto"},
+    {"name": "CARGO", "code": "CARGO", "office_code": "DS", "partner": "Cargo"},
 ]
 
 # (first, last, status, has_disability)
@@ -34,16 +51,39 @@ class Command(BaseCommand):
     help = "Create fictional projects, people, and one assignment for local/staging demos."
 
     def handle(self, *args, **options):
+        for spec in OFFICES:
+            Office.objects.get_or_create(code=spec["code"], defaults=spec)
+        self.stdout.write(f"Offices: {Office.objects.filter(code__in=[o['code'] for o in OFFICES]).count()}")
+
         recruiter = User.objects.filter(email=f"naborar@{DEMO_DOMAIN}").first()
         coordinator = User.objects.filter(email=f"koordinator@{DEMO_DOMAIN}").first()
+        manager = User.objects.filter(email=f"manazer@{DEMO_DOMAIN}").first()
 
         projects = {}
         for spec in PROJECTS:
-            project, _ = Project.objects.update_or_create(code=spec["code"], defaults=spec)
+            office_code = spec["office_code"]
+            defaults = {k: v for k, v in spec.items() if k != "office_code"}
+            defaults["office"] = Office.objects.filter(code=office_code).first()
+            project, _ = Project.objects.update_or_create(code=spec["code"], defaults=defaults)
             if coordinator:
                 project.responsible_coordinators.add(coordinator)
             projects[spec["code"]] = project
         self.stdout.write(f"Projects: {len(projects)}")
+
+        # Give the demo staff membership in exactly one office (ADR 0026 Phase
+        # A) — deliberately NOT all three, so the demo actually shows the
+        # restriction working (a manager's Finance page differs visibly from
+        # the Observer's all-offices executive view, rather than looking
+        # identical because every demo account happened to span every office).
+        velky_meder = Office.objects.filter(code="VM").first()
+        if recruiter and velky_meder:
+            recruiter.offices.set([velky_meder])
+        if coordinator and velky_meder:
+            coordinator.offices.set([velky_meder])
+        if manager and velky_meder:
+            manager.offices.set([velky_meder])
+        # Observer intentionally gets no office membership — cross-office
+        # visibility is a role bypass (user_office_scope), not a membership.
 
         for first, last, status, disabled in PEOPLE:
             person, created = Person.objects.get_or_create(

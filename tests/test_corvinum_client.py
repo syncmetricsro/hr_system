@@ -175,6 +175,25 @@ def test_corvinum_sidebar_uses_only_self_hosted_icon_glyphs():
     assert used <= available
 
 
+def test_icons_dict_material_names_are_all_in_the_corvinum_subset():
+    """Guards the {% icon %} tag (core/ui/icons.py), not just hardcoded
+    base.html usages - a "material" entry missing from icon-names.txt would
+    silently render its raw ligature text instead of a glyph on CorvinumEU
+    (docs/product/pill-system-design.md §2's forklift/construction/factory/
+    medical_services/badge additions are exactly what this would have
+    missed if it only checked base.html)."""
+    from core.ui.icons import ICONS
+
+    available = set(
+        (REPO / "clients/corvinum_eu/static/corvinum/fonts/icon-names.txt")
+        .read_text(encoding="utf-8")
+        .splitlines()
+    )
+    used = {entry["material"] for entry in ICONS.values() if entry.get("material")}
+    missing = used - available
+    assert not missing, f"ICONS entries missing from the CorvinumEU font subset: {missing}"
+
+
 @pytest.mark.parametrize("language", ("sk", "hu", "uk"))
 def test_equipment_catalogue_controls_are_translated(language):
     with override(language):

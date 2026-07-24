@@ -37,7 +37,7 @@ def test_finance_summary_and_month_detail(page):
     page.get_by_role("heading", name="Finance", exact=True).wait_for()
     page.get_by_role("heading", name="Group breakdown").wait_for()
     page.get_by_role("heading", name="Per-project results").wait_for()
-    page.get_by_role("heading", name="Profit/loss by region").wait_for()
+    page.get_by_role("heading", name="Profit/loss by office").wait_for()
     # Drill into a seeded financial month.
     page.locator("a[href*='/finance/month/']").first.click()
     page.wait_for_load_state("networkidle")

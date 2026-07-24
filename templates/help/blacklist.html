@@ -1,0 +1,19 @@
+{% extends "help/_base.html" %}
+{% load i18n %}
+
+{% block help_title %}{% trans "Blacklist: proposing and deciding a case" %}{% endblock %}
+{% block help_heading %}{% trans "Blacklist: proposing and deciding a case" %}{% endblock %}
+
+{% block help_content %}
+  <h2>{% trans "What the blacklist is for" %}</h2>
+  <p>{% blocktrans %}The blacklist prevents a specific person from being re-entered into the system after a serious issue — it's a last-resort control, decided case by case, not an automatic outcome of any other action.{% endblocktrans %}</p>
+
+  <h2>{% trans "Proposing a case" %}</h2>
+  <p>{% blocktrans %}A Coordinator or Manager proposes a case against a person, choosing a category and writing a reason. A proposed case is not yet in effect — it sits in the review queue until a Manager decides it.{% endblocktrans %}</p>
+
+  <h2>{% trans "Deciding a case" %}</h2>
+  <p>{% blocktrans %}A Manager reviews each proposed case and either approves it — which blocks that person from re-entry — or rejects it, which discards the proposal without blocking anyone. Every decision is recorded with who made it and why.{% endblocktrans %}</p>
+
+  <h2>{% trans "Matching" %}</h2>
+  <p>{% blocktrans %}New intake candidates are automatically checked against approved blacklist entries using a privacy-preserving matching technique, so a returning blocked person is flagged before they're re-added, without the system storing their raw identifying details in a searchable form.{% endblocktrans %}</p>
+{% endblock %}

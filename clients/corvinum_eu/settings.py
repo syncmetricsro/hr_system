@@ -20,6 +20,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "core.accounts",
     "core.audit",
+    "core.offices",
     "core.people",
     "core.projects",
     "core.retention",
@@ -69,6 +70,7 @@ BRAND_MARK = "CE"
 BRAND_LOGO = "corvinum/brand/corvinum-logo-v1.webp"
 CLIENT_DEFAULT_THEME = "dark"
 CLIENT_THEME_STORAGE_KEY = "corvinum-theme"
+ICON_BACKEND = "material_symbols"
 
 # corvinum.eu design language layered over the shared shell (§7.0; C-Q8
 # dark-default pending confirmation). The client static dir is collected by

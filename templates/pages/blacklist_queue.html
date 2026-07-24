@@ -1,5 +1,5 @@
 {% extends "layouts/base.html" %}
-{% load i18n nav %}
+{% load i18n nav icons %}
 
 {% block title %}{% trans "Blacklist" %} · {{ BRAND_NAME }}{% endblock %}
 
@@ -26,8 +26,8 @@
       <form class="people-search" method="post" action="{% url 'blacklist_decide' case.pk %}">
         {% csrf_token %}
         <input type="text" name="reason" aria-label="{% trans 'Reason' %}" placeholder="{% trans 'Reason' %}">
-        <button class="button button-primary" type="submit" name="decision" value="approve" data-confirm="{% trans 'This approves the blacklist case: the person becomes Blacklisted and future re-entry attempts will be flagged.' %}">{% trans "Approve" %}</button>
-        <button class="button button-secondary" type="submit" name="decision" value="reject" data-confirm="{% trans 'This rejects the proposed blacklist case and closes it.' %}">{% trans "Reject" %}</button>
+        <button class="button button-primary" type="submit" name="decision" value="approve" data-confirm="{% trans 'This approves the blacklist case: the person becomes Blacklisted and future re-entry attempts will be flagged.' %}">{% icon "approve" %}{% trans "Approve" %}</button>
+        <button class="button button-secondary" type="submit" name="decision" value="reject" data-confirm="{% trans 'This rejects the proposed blacklist case and closes it.' %}">{% icon "reject" %}{% trans "Reject" %}</button>
       </form>
     </article>
   {% empty %}

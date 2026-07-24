@@ -1,5 +1,376 @@
 # Test Journal
 
+## 2026-07-24 - In-app Help area (help-area-design.md)
+
+- New `tests/test_help.py` (24 tests, 2 marked `jober_only` for the
+  uk-specific assertions - CorvinumEU's `LANGUAGES` doesn't include
+  Ukrainian at all, a pre-existing client policy unrelated to this
+  feature, not something to work around): the index requires login but is
+  visible to every one of the four roles with no RBAC distinction; the
+  index links every group and every article; **every one of the 9 article
+  slugs actually renders** (parametrized over `ARTICLE_TEMPLATES`, so a
+  future article added to the registry without a matching template fails
+  immediately instead of silently 404ing); an unknown slug is a real 404;
+  the nav tab appears on an ordinary page for every role; translated
+  titles/group-labels render correctly in SK, HU, and (Jober-only) UK; a
+  sanity check that English content stays in English under
+  `translation.override("en")` (this repo's tests default to Slovak).
+- **Real test bug found and fixed, not a fluke**: the first version
+  hardcoded `/uk/help/...` paths in two tests without considering that
+  CorvinumEU's `LANGUAGES` setting only offers sk/hu - those two tests
+  passed under the Jober lane but 404'd under `scripts/test_corvinum.sh`.
+  Fixed by splitting the uk-specific assertions into their own
+  `@pytest.mark.jober_only` tests, keeping the shared sk/hu checks
+  unmarked so they still verify cross-client correctness.
+- Full verification against the real dev Postgres:
+  - Ruff: clean.
+  - `manage.py check` / `makemigrations --check --dry-run`: clean (no
+    model changes - this feature has no database model at all).
+  - Full Jober unit lane: **528 passed, 5 skipped** (504 pill-system-Phase-2
+    baseline + 24 new tests in `tests/test_help.py`).
+  - CorvinumEU feature-isolation lane: **326 passed, 10 skipped, 143
+    deselected** (+22 vs. the pill-system-Phase-2 baseline of 304 - 24 new
+    tests minus the 2 correctly-deselected `jober_only` ones).
+  - Full Playwright e2e lane (both clients): **50 passed** - re-run since
+    this slice added a nav tab rendered on every single page in both
+    shells.
+  - Live verification via real Playwright screenshots: the English Help
+    index (3×3 topic grid) and a full article page; a complete Ukrainian
+    article page end to end (nav, breadcrumb, heading, and body prose all
+    correctly translated, not just the title); the CorvinumEU sidebar's
+    Slovak Help entry with the reused `info` icon rendering correctly via
+    the previously-regenerated font subset.
+
+## 2026-07-24 - Certificate-validity icons — pill system Phase 2 (pill-system-design.md §2)
+
+- `tests/test_pills.py` grew from 19 to 29 tests: `most_relevant_certificate`
+  (soonest-expiring valid wins; falls back to most-expired when nothing's
+  valid; a no-expiry certificate counts as valid but a genuinely soon-
+  expiring dated one still wins over it); `certificate_badges` (none when
+  no certificates, groups by category with correct per-category severity,
+  picks the renewed row over an old one in the same category); the generic
+  `register_person_badges`/`person_badges` registry in isolation; end-to-
+  end rendering on both the worker list and person-detail page, including
+  a person with zero certificates showing no badge markup at all.
+- New `test_icons_dict_material_names_are_all_in_the_corvinum_subset`
+  (`tests/test_corvinum_client.py`) - checks every `core/ui/icons.py`
+  `ICONS` entry's `"material"` value against `icon-names.txt`, not just
+  hardcoded `base.html` usages the pre-existing test covered. This is the
+  test that would have caught the whole feature shipping broken on
+  CorvinumEU if the font subset hadn't actually been expanded.
+  `tests/test_theme.py`'s hardcoded nav-icon-sprite symbol count updated
+  29 → 34 for the 5 new Jober SVG symbols (an expected, deliberate bump,
+  not a regression).
+- **Real test-isolation bug found and fixed during this slice, not
+  pre-existing**: the first version of the new registry test called
+  `register_person_badges(...)` directly with no cleanup, permanently
+  polluting the module-level list for the rest of the pytest process -
+  `test_no_certificate_badges_shown_when_person_has_none` failed only when
+  run *after* the polluting test in full-file order (passed in isolation,
+  which is what made it non-obvious at first). Root-caused by comparing
+  isolated-test vs. full-file-order runs, not guessed at. Fixed with
+  `monkeypatch.setattr(registry_module, "_person_badges", [])` to scope the
+  test's registration; confirmed fixed by re-running the full file twice.
+- Full verification against the real dev Postgres:
+  - Ruff: clean (including catching and fixing one genuine unused-variable
+    lint in a new test, unrelated to the isolation bug).
+  - `manage.py check` / `makemigrations --check --dry-run`: clean.
+  - Full Jober unit lane: **504 passed, 5 skipped** (493 baseline + 11 net
+    new: 10 in `test_pills.py`, 1 in `test_corvinum_client.py`).
+  - CorvinumEU feature-isolation lane: **304 passed, 10 skipped, 141
+    deselected** (+11 vs. baseline - the new tests are all client-agnostic
+    core/registry behavior, none `jober_only`).
+  - Full Playwright e2e lane (both clients): **50 passed** - re-run twice
+    this slice (once after the initial code changes, once after the font
+    subset regeneration), since both touched shared templates/assets
+    rendered on every page.
+  - `python3 scripts/verify_vendor_assets.py`: passes with the new
+    CorvinumEU font-subset hash entry.
+  - Live verification against freshly rebuilt (non-bind-mounted) images on
+    **both** clients via real Playwright screenshots: zoomed crops
+    confirmed Available (blue) vs. Working (green) status dots and
+    expired (red) vs. expiring (amber) certificate icons are genuinely
+    distinguishable at actual worker-list size; a temporary CorvinumEU
+    certificate (inserted via `manage.py shell`, cleaned up after)
+    confirmed the regenerated font subset renders `forklift` and
+    `medical_services` as correctly-shaped, correctly-tinted glyphs in a
+    real browser - not just verified by glyph count, by actually looking
+    at the rendered icon.
+
+## 2026-07-24 - Downloadable feedback PDF+QR flyer (feedback-flyer-design.md, ADR 0028)
+
+- New tests added to `tests/test_feedback.py` (11 total in the file now, 6
+  new; the file already module-skips under CorvinumEU since `feedback` isn't
+  installed there, so only the 4 view-level tests are marked `jober_only`
+  for clarity - the 2 `qr_pdf()`-only unit tests don't touch RBAC/client
+  policy and would pass under either client if the module weren't already
+  skipped): `qr_pdf()` produces a genuine single-page PDF with a Cyrillic
+  label that round-trips through `pypdf.extract_text()` as real characters
+  (not tofu/garbage - a meaningful assertion given the whole point of ADR
+  0028 was Cyrillic support); renders correctly with an empty label; the
+  view - manager 200 with correct `Content-Type`/`Content-Disposition`
+  headers (token-based filename), recruiter 403, anonymous redirected; the
+  inbox template includes the new download link.
+- Full verification against the real dev Postgres:
+  - Ruff: clean.
+  - `manage.py check` / `makemigrations --check --dry-run`: clean (no
+    model changes this slice).
+  - Full Jober unit lane: **493 passed, 5 skipped** (487 baseline + 6 new
+    tests in `tests/test_feedback.py`).
+  - CorvinumEU feature-isolation lane: **293 passed, 10 skipped, 141
+    deselected** - unchanged from baseline, correctly: the whole
+    `test_feedback.py` module skips under CorvinumEU (feature flag off),
+    so neither a regression nor new coverage was expected there.
+  - Full Playwright e2e lane (both clients): **50 passed** - re-run because
+    this slice edited the production `Dockerfile` (new `COPY vendor/fonts`
+    line), not because of template/nav surface (no existing e2e spec
+    touches `feedback_inbox.html`).
+  - `scripts/verify_vendor_assets.py`: passes with the three new
+    `vendor/fonts/*` entries.
+  - Live end-to-end verification against the actual built runtime image
+    (`scripts/dev_app.sh rebuild`, not a bind-mounted dev override) caught
+    a real gap before it shipped: `qr_pdf()` initially failed inside the
+    container because the `Dockerfile` never copied `vendor/fonts/` into
+    the runtime image (it copies specific named directories, no wildcard) -
+    unit tests never would have caught this since they bind-mount the
+    whole repo. Fixed, rebuilt, reconfirmed via `docker exec` calling
+    `qr_pdf()` directly, then via a full Playwright browser download
+    against the real running app, rendered to PNG with `pdftoppm` for a
+    visual check of both the QR code and the Cyrillic label text.
+
+## 2026-07-24 - Status pills + nav attention badges (pill-system-design.md §1/§3)
+
+- New `tests/test_pills.py` (19 tests, none `jober_only` — status tones and
+  badge logic are all client-agnostic core/registry behavior): `{% status_pill
+  %}` tone mapping parametrized across all 5 `LifecycleStatus` values (dot
+  variant) plus the label variant's visible text (under `translation.override
+  ("en")` - Slovak is the test default per this repo's known gotcha);
+  `compliance_badge`/`reviews_badge` providers directly - no alerts, alerts
+  present (severe vs. amber), anonymous request (the regression this slice
+  found - asserts `None`, not a crash), and RBAC gating (coordinator lacks
+  `equipment.review_deduction`); the generic `register_nav_badge`/`nav_badge`
+  registry functions in isolation (first non-`None` provider wins, unknown
+  slot returns `None`); end-to-end page rendering - person-detail shows the
+  labeled pill, worker-list shows the dot, nav shows/hides the compliance
+  badge based on real alert state, and the anonymous login page renders
+  clean with no badge markup and no DB error.
+- Full verification against the real dev Postgres:
+  - Ruff: clean.
+  - `makemigrations --check --dry-run`: no changes (this slice is
+    template/CSS/registry only, no model changes).
+  - Full Jober unit lane: **487 passed, 5 skipped** (468 baseline + 19 new).
+  - CorvinumEU feature-isolation lane: **293 passed, 10 skipped, 141
+    deselected** (+19 vs. baseline - all 19 new tests run and pass under
+    CorvinumEU too, confirming the feature is genuinely core/shared, not
+    accidentally Jober-only).
+  - Full Playwright e2e lane (`scripts/playwright_e2e.sh`, both clients):
+    **50 passed** - re-run in full (not skipped) since this slice touched
+    both `layouts/base.html` files, unlike the certificate slice which
+    didn't touch shared nav markup.
+  - Live visual verification via Playwright screenshots against the
+    rebuilt dev app (not just automated assertions): status-pill dot color
+    genuinely distinguishes Available (blue) from Working (green) at real
+    worker-list size, zoomed crop inspected pixel-by-pixel; person-detail
+    labeled pill readable in both light and dark theme via the app's own
+    theme picker (not a hand-rolled class flip); CorvinumEU sidebar badge
+    correctly absent with the demo's real zero-alert data, then correctly
+    present and properly corner-positioned (including rail/icon-only mode
+    reasoning) after inserting one test person directly and cleaning it up
+    afterward.
+
+## 2026-07-24 - Certificate document uploads implemented (certificate-upload-design.md)
+
+- New `tests/test_certificates.py` (19 tests, only 3 marked `jober_only` —
+  the recruiter/coordinator/observer RBAC cases that assert against
+  Jober's specific role grants; the rest run and pass under both clients):
+  `process_certificate_document` downscales oversized images while
+  preserving aspect ratio (no center-crop, unlike avatars — asserted with a
+  3200×2000 source scaled to 2000×1250, not just "doesn't crash"), leaves
+  small images untouched, accepts a real minimal PDF (built with
+  `features.payslips.services._simple_pdf`, the same hand-rolled-PDF helper
+  already used for payslip tests) and rejects a garbage one, rejects
+  non-image/non-PDF bytes/SVG/oversized input, and genuinely strips
+  embedded EXIF; create/edit/delete RBAC (recruiter and coordinator 302,
+  observer 403); upload with no document is allowed; an invalid document
+  shows a form error and persists nothing (not a partial row); document
+  replace via edit; audit-event sequencing (`certificate.uploaded` then
+  `certificate.replaced`) and delete-event metadata (person/category/name
+  survive even though the row itself is gone by the time the event is
+  written); the person-detail panel renders a certificate's name and hides
+  the "Add certificate" control from an observer.
+- Full verification against the real dev Postgres:
+  - Ruff: clean.
+  - `makemigrations compliance`: one clean migration, no unexpected diffs.
+  - Full Jober unit lane: **468 passed, 5 skipped** (449 baseline + 19 new).
+  - CorvinumEU feature-isolation lane (`scripts/test_corvinum.sh`): **274
+    passed, 10 skipped, 141 deselected** (+16 passed vs. the avatar-slice
+    baseline of 258 — the non-`jober_only` certificate tests, plus a couple
+    of non-`jober_only` avatar tests not previously counted, run and pass
+    under CorvinumEU too).
+  - `scripts/dev_app.sh rebuild`: migration applied cleanly against the
+    live dev DB, demo scenario seeded without error; spot-checked via
+    `manage.py shell` that the seeded certificate row exists with the
+    expected person/name.
+  - e2e not re-run this slice — no template/URL surface touched that the
+    existing Playwright specs assert on beyond what unit/view tests already
+    cover (person-detail panel rendering, RBAC-gated button visibility).
+
+## 2026-07-24 - Avatar system implemented (ADR 0027 + avatar-design.md)
+
+- New `tests/test_avatars.py` (15 tests, not `jober_only` except the 3
+  worker-avatar RBAC tests which assert against Jober's specific role
+  grants): `process_avatar_upload` re-encodes to a 512×512 WebP, rejects
+  non-image bytes/SVG/oversized input, and genuinely strips embedded EXIF
+  (a real `Image.Exif()` tag was set and confirmed gone, not just assumed
+  absent); own-avatar upload/remove including an anonymous-user rejection
+  case and audit-event ordering (`user.avatar_added` then
+  `user.avatar_replaced` on a second upload); worker-avatar RBAC
+  (recruiter/manager 302, coordinator 403); the `{% avatar %}` tag's two
+  render branches (placeholder vs. `<img>`).
+- **Real regression caught by the full e2e run, not by the new unit
+  tests**: `test_jober_notification_center_fits_phone_viewport` failed
+  after the navbar avatar addition (`scrollWidth` 405 vs expected 375).
+  Root-caused with a live Playwright diagnostic script against the
+  running dev app (walked every element's bounding rect at 375px width)
+  rather than guessing from the CSS alone — found `.header-account`'s
+  pre-existing `flex-shrink: 0` had no mobile override, so it never
+  shrank to the viewport once the avatar elements added enough width to
+  cross the threshold. Fixed with a scoped mobile-only override, verified
+  fixed with the same diagnostic script before re-running the suite.
+- Full verification, pinned test container + rebuilt `jober-test:phase4`
+  (now has Pillow importable) against a real dev Postgres:
+  - Ruff: clean.
+  - `python manage.py check` / `makemigrations --check --dry-run`: clean.
+  - Full Jober unit lane: **449 passed, 5 skipped** (434 baseline + 15
+    new).
+  - CorvinumEU feature-isolation lane: **258 passed, 10 skipped, 138
+    deselected** (+12 passed vs. baseline — the non-`jober_only` avatar
+    tests run and pass under CorvinumEU too, confirming the feature is
+    genuinely core, not accidentally Jober-only).
+  - Full Playwright e2e lane: **50 passed** after the mobile-overflow fix
+    (same count as the prior slice — no new e2e tests added here; the
+    regression was in an existing test, not a coverage gap).
+
+## 2026-07-24 - Richer finance demo data (Jan-Jul 2026); three new design docs
+
+- No new tests — this slice only touched a demo-data seed command and
+  documentation. Verified directly instead:
+  - Ran `python manage.py seed_finance` against the dev database and
+    queried `finance_financialmonth` directly: CARGO now has 7 rows
+    (2026-01 through 2026-07, previously zero), DHLBA and WEB each have 8
+    (the original Nov 2025 row plus the new 7-month 2026 series).
+  - Ruff: clean.
+  - Full Jober unit lane: **434 passed, 5 skipped** (unchanged — no test
+    fixtures reference the demo seed command).
+  - CorvinumEU feature-isolation lane: **246 passed, 10 skipped, 135
+    deselected** (unaffected, as expected — CorvinumEU doesn't install
+    `features.finance`).
+
+## 2026-07-24 - Office-scoped finance RBAC + executive dashboard (ADR 0026 Phase A)
+
+- New `tests/test_office_scoping.py` (9 tests): `user_office_scope()`
+  returns `None` for Observer and the right queryset for a scoped manager;
+  a manager's Finance page shows only their office (verified both via
+  rendered HTML and the underlying scoped service call, not just page
+  text); Observer's executive page shows all offices and the multi-series
+  trend chart's series match every office; a manager gets 403 viewing or
+  recording against another office's month/project by direct
+  URL/POST, and 200 for their own; Observer can view any office's month
+  detail; `offices=None` genuinely means unfiltered — a project with no
+  office assigned still appears for Observer, confirming it isn't treated
+  as "all offices" (which would incorrectly exclude it).
+- `tests/e2e/test_finance_charts.py`: two new tests — Observer sees the
+  `office-trend` canvas and a live Chart.js instance attached to it; a
+  manager's rendered Finance page contains their own office's name but
+  not the other two.
+- Fixed collateral fallout from the new office-scope guard (expected,
+  not regressions): `test_finance_charts.py`, `test_finance_lineitems.py`,
+  `test_finance_workbook.py` (also renamed its `regional_totals` import/
+  assertions to `office_totals`), and `test_nav_active.py`'s
+  `test_finance_tab_active_on_month_detail` all created bare `Project`/
+  manager fixtures with no office — each now creates a real `Office` and
+  assigns the actor to it, rather than weakening the guard.
+- `test_corvinum_client.py::test_corvinum_client_boots` and
+  `test_smoke_client.py::test_core_boots_without_any_feature_or_client`
+  caught a real omission on first run: `core.offices` was added to
+  `config/settings/base.py`'s `INSTALLED_APPS` but not to
+  `clients/corvinum_eu/settings.py` or `clients/_smoke/settings.py`, both
+  of which fully replace the base list rather than extend it (same
+  pattern as `core.people`/`core.projects`). Fixed by adding it to both;
+  these two tests are exactly why that gap didn't ship silently.
+- A second real e2e failure caught on first run:
+  `test_feature_pages.py::test_finance_summary_and_month_detail` waited on
+  a "Profit/loss by region" heading that no longer exists — updated to
+  "Profit/loss by office" alongside the earlier rename.
+- Full verification, pinned test container against a real dev Postgres:
+  - Ruff: clean.
+  - `python manage.py check` and `makemigrations --check --dry-run`:
+    clean (no missing migrations after all model changes).
+  - Full Jober unit lane: **434 passed, 5 skipped** (425 baseline + 9 new
+    `test_office_scoping.py` tests, no regressions).
+  - CorvinumEU feature-isolation lane: **246 passed, 10 skipped, 135
+    deselected** (+1 skip vs. baseline — the new office-scoping test file
+    correctly self-skips, `features.finance` isn't installed for
+    CorvinumEU).
+  - Full Playwright e2e lane: **50 passed** (48 baseline + 2 new tests in
+    `test_finance_charts.py`) after the heading-text fix above.
+
+## 2026-07-24 - Move regional finance chart from Reports to Finance; correct §8.1
+
+- `tests/test_reports.py`: `test_finance_section_visible_to_observer`
+  renamed to `test_finance_section_not_shown_to_observer_either` and its
+  assertion flipped (finance content no longer appears on Reports for
+  *any* role, including Observer) — the old assertion's premise became
+  false once the panel was deleted, not a regression.
+  `test_finance_section_hidden_from_recruiter` kept as-is (still true) but
+  its comment updated to reflect the real reason (moved away entirely,
+  not role-gated).
+- `tests/test_finance_charts.py`: extended
+  `test_finance_summary_renders_expected_canvases_and_trend_data` with an
+  assertion that the new `chart-data-finance-summary-regional` json_script
+  renders with the expected aggregated region/net values, confirming the
+  move landed rather than the data just disappearing.
+- `tests/e2e/test_finance_charts.py`: fixed a real strict-mode Playwright
+  failure caught during verification — `test_finance_summary_renders_
+  all_three_chart_types` used an unqualified
+  `canvas[data-chart="diverging"]` locator, which now matches *two*
+  canvases on the Finance page (group breakdown + the newly-added
+  regional chart) and fails Playwright's strict-mode uniqueness check.
+  Switched to `data-chart-data`-qualified locators for both.
+- Full verification in the pinned test container against a real dev
+  Postgres:
+  - Ruff (`core features clients config templates tests`): clean.
+  - Full Jober unit lane: **425 passed, 5 skipped** (same count as before
+    — one test removed/renamed, one assertion added elsewhere, net zero).
+  - CorvinumEU feature-isolation lane: **246 passed, 9 skipped, 135
+    deselected** — identical to the pre-change baseline, confirming no
+    cross-client impact.
+  - Full Playwright e2e lane: **48 passed** after the locator fix above.
+
+## 2026-07-24 - Shared icon system + expanded tooltip coverage
+
+- Updated `tests/test_theme.py::test_jober_navigation_uses_accessible_client_owned_icons`:
+  the sprite's expected `<symbol id="nav-icon-...">` count went from 14 to
+  29 (14 nav icons + 15 new action icons) — an intentional expansion, not
+  a regression; the test's other assertions (specific known icons present,
+  no Material Symbols leakage into Jober's markup) were left unchanged and
+  still pass.
+- Full verification run against a real dev Postgres container:
+  - Ruff (`core features clients config templates`): clean.
+  - `python manage.py check`: no issues.
+  - Full Jober unit lane: **425 passed, 5 skipped** (was 1 failed before
+    the test-count fix above; no other regressions).
+  - CorvinumEU feature-isolation lane: **246 passed, 9 skipped,
+    135 deselected**.
+  - Full Playwright e2e lane: **48 passed**, including
+    `tests/e2e/test_tooltips.py` (3 passed) and the CorvinumEU shell suite
+    — confirms both clients render correctly with the new icon backend
+    live.
+- No new tests added for the icon tag itself beyond the existing sprite
+  regression guard above — the rollout is presentation-only (markup/CSS),
+  and existing view tests already exercise every changed template's
+  render path.
+
 ## 2026-07-23 - Hungarian payslip terminology
 
 - Added parameterized catalog assertions for `Payslips`, `Record payslip`,

@@ -35,6 +35,7 @@ BRAND_MARK = "JB"
 BRAND_LOGO = "jober/brand/jober-logo.svg"
 CLIENT_DEFAULT_THEME = "light"
 CLIENT_THEME_STORAGE_KEY = "jober-theme"
+ICON_BACKEND = "svg_sprite"
 
 # Distinct cookie names per client: both demo apps live on one host
 # (localhost:8000/:8001) and browsers scope cookies by host, ignoring ports —

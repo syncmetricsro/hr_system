@@ -11,7 +11,7 @@ from django.utils import timezone
 from core.accounts.models import User
 from features.blacklist.models import BlacklistCategory
 from features.blacklist.services import decide_case, propose_case
-from features.compliance.models import Certificate
+from features.compliance.models import Certificate, CertificateCategory
 from features.finance.models import FinanceCategory, FinanceCategoryKind, FinancialMonth
 from features.finance.services import recompute_month, set_line_item
 from features.logistics.models import EquipmentItem
@@ -109,9 +109,18 @@ class Command(BaseCommand):
         # --- Compliance: an expiring certificate -------------------------------
         if olha and not olha.certificates.exists():
             Certificate.objects.create(
-                person=olha, name="Forklift licence",
+                person=olha, name="Forklift licence", category=CertificateCategory.FORKLIFT,
                 issue_date=today - timedelta(days=350),
                 expiry_date=today + timedelta(days=15),
+            )
+
+        # --- Compliance: an expired certificate (pill-system-design.md §2 demo) -
+        mira = Person.objects.filter(first_name="Mira", last_name="Novakova").first()
+        if mira and not mira.certificates.exists():
+            Certificate.objects.create(
+                person=mira, name="Medical fitness check", category=CertificateCategory.HEALTH,
+                issue_date=today - timedelta(days=400),
+                expiry_date=today - timedelta(days=10),
             )
 
         # --- Blacklist: an approved (blacklisted) person for the re-entry demo --

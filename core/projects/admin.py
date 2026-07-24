@@ -12,9 +12,9 @@ from core.projects.models import (
 
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
-    list_display = ("name", "code", "region", "office", "is_active", "financial_reporting_eligible")
+    list_display = ("name", "code", "office", "is_active", "financial_reporting_eligible")
     list_filter = ("is_active", "office")
-    search_fields = ("name", "code", "partner", "region")
+    search_fields = ("name", "code", "partner")
     filter_horizontal = ("responsible_coordinators",)
 
 

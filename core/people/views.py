@@ -14,6 +14,7 @@ from django.views.decorators.http import require_POST
 
 from core.accounts.permissions import Action, require_action
 from core.audit.services import record_event
+from core.media import AvatarUploadError, process_avatar_upload
 from core.people.forms import PersonForm
 from core.accounts.permissions import can as user_can
 from core.people.models import InactiveReason, LifecycleError, LifecycleStatus, Person
@@ -54,7 +55,7 @@ def people_list(request: HttpRequest) -> TemplateResponse:
     status = (request.GET.get("status") or "").strip()
     inactive_reason = (request.GET.get("inactive_reason") or "").strip()
     inactive_reasons = InactiveReason.objects.all()
-    people = Person.objects.filter(is_archived=False)
+    people = Person.objects.filter(is_archived=False).prefetch_related("certificates")
     if query:
         people = people.filter(search_name__contains=query.lower())
     if status in LifecycleStatus.values:
@@ -235,4 +236,43 @@ def recycle_person(request: HttpRequest, person_pk: int) -> HttpResponse:
         messages.success(request, _("Recycled to Available."))
     except LifecycleError as exc:
         messages.error(request, str(exc))
+    return redirect("person_detail", pk=person.pk)
+
+
+@require_POST
+@require_action(Action.INTAKE_CREATE_EDIT)
+def person_avatar_upload(request: HttpRequest, pk: int) -> HttpResponse:
+    """Staff-uploaded (docs/product/avatar-design.md) - Person has no login
+    of its own, so this is staff acting on their behalf, gated the same as
+    other person-record edits rather than a new fine-grained action."""
+    person = get_object_or_404(Person, pk=pk)
+    uploaded = request.FILES.get("avatar")
+    if not uploaded:
+        messages.error(request, _("No file was selected."))
+        return redirect("person_detail", pk=person.pk)
+    try:
+        processed = process_avatar_upload(uploaded)
+    except AvatarUploadError as exc:
+        messages.error(request, str(exc))
+        return redirect("person_detail", pk=person.pk)
+
+    had_avatar = bool(person.avatar)
+    person.avatar.save("avatar.webp", processed, save=True)
+    record_event(
+        request.user,
+        "person.avatar_replaced" if had_avatar else "person.avatar_added",
+        target=person,
+    )
+    messages.success(request, _("Avatar updated."))
+    return redirect("person_detail", pk=person.pk)
+
+
+@require_POST
+@require_action(Action.INTAKE_CREATE_EDIT)
+def person_avatar_remove(request: HttpRequest, pk: int) -> HttpResponse:
+    person = get_object_or_404(Person, pk=pk)
+    if person.avatar:
+        person.avatar.delete(save=True)
+        record_event(request.user, "person.avatar_removed", target=person)
+        messages.success(request, _("Avatar removed."))
     return redirect("person_detail", pk=person.pk)

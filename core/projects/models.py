@@ -12,8 +12,14 @@ class Project(models.Model):
     name = models.CharField(_("name"), max_length=200)
     partner = models.CharField(_("partner"), max_length=200, blank=True)
     code = models.CharField(_("code"), max_length=50, unique=True)
-    office = models.CharField(_("office"), max_length=100, blank=True)
-    region = models.CharField(_("region"), max_length=100, blank=True)
+    office = models.ForeignKey(
+        "offices.Office",
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True,
+        related_name="projects",
+        verbose_name=_("office"),
+    )
     is_active = models.BooleanField(_("active"), default=True)
     # project <-> coordinator is many-to-many (e.g. DHL BA has three coordinators).
     responsible_coordinators = models.ManyToManyField(

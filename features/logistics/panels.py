@@ -18,7 +18,12 @@ from features.logistics.models import (
     RoomAssignment,
     RoomAssignmentStatus,
 )
-from features.logistics.services import equipment_stock_balance, issued_equipment_value, stock_ledger_enabled
+from features.logistics.services import (
+    equipment_stock_balance,
+    issued_equipment_value,
+    pending_deduction_reviews,
+    stock_ledger_enabled,
+)
 
 
 def room_panel(request, person):
@@ -75,6 +80,17 @@ def occupancy_tile(request):
             "Open accommodation costs, occupied places, and assigned costs."
         )
     return tile
+
+
+def reviews_badge(request):
+    if not flag_enabled("equipment"):
+        return None
+    if not user_can(request.user, Action.EQUIPMENT_REVIEW_DEDUCTION):
+        return None
+    count = pending_deduction_reviews()["issues"].count()
+    if not count:
+        return None
+    return {"count": count, "severe": False}
 
 
 def equipment_value_tile(request):

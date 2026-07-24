@@ -43,10 +43,14 @@ def test_people_tab_active_on_people_pages(manager_client):
 
 
 def test_finance_tab_active_on_month_detail(manager_client):
+    from core.accounts.models import User
+    from core.offices.models import Office
     from features.finance.models import FinancialMonth
     from core.projects.models import Project
 
-    project = Project.objects.create(name="DHL", code="DHLBA")
+    office = Office.objects.create(name="Test Office", code="TESTOFF", country="SK")
+    User.objects.get(email="nav@demo.jober.test").offices.set([office])
+    project = Project.objects.create(name="DHL", code="DHLBA", office=office)
     month = FinancialMonth.objects.create(project=project, year=2026, month=5)
     html = manager_client.get(f"/en/finance/month/{month.pk}/").content.decode()
     assert _active_hrefs(html) == ["/en/finance/"]

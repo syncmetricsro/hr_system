@@ -15,10 +15,11 @@ class UserAdmin(BaseUserAdmin):
     search_fields = ("email", "first_name", "last_name")
     fieldsets = (
         (None, {"fields": ("email", "password")}),
-        (_("Profile"), {"fields": ("first_name", "last_name", "role")}),
+        (_("Profile"), {"fields": ("first_name", "last_name", "role", "offices")}),
         (_("Permissions"), {"fields": ("is_active", "is_staff", "is_superuser", "groups", "user_permissions")}),
         (_("Dates"), {"fields": ("last_login", "date_joined")}),
     )
+    filter_horizontal = ("groups", "user_permissions", "offices")
     add_fieldsets = (
         (None, {
             "classes": ("wide",),

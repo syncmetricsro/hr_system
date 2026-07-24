@@ -1,5 +1,5 @@
 {% extends "layouts/base.html" %}
-{% load i18n rbac %}
+{% load i18n rbac icons avatars %}
 
 {% block title %}{% trans "People" %} · {{ BRAND_NAME }}{% endblock %}
 
@@ -9,11 +9,11 @@
   <h1>{% trans "People" %}</h1>
   {% can 'intake.create_edit' as may_add %}
   {% if may_add %}
-    <a class="button button-primary" href="{% url 'intake_start' %}">{% trans "Add person" %}</a>
+    <a class="button button-primary" href="{% url 'intake_start' %}">{% icon "add" %}{% trans "Add person" %}</a>
   {% endif %}
   {% can 'export.approved' as may_export %}
   {% if may_export %}
-    <a class="button button-secondary" href="{% url 'export_people' %}">{% trans "Export" %}</a>
+    <a class="button button-secondary" href="{% url 'export_people' %}">{% icon "export" %}{% trans "Export" %}</a>
   {% endif %}
   <form class="people-search" method="get" action="{% url 'people_list' %}">
     <input type="search" name="q" value="{{ query }}" placeholder="{% trans 'Search by name' %}" aria-label="{% trans 'Search by name' %}">
@@ -39,9 +39,16 @@
 <section class="field-list" aria-label="{% trans 'People' %}">
   {% for person in people %}
     <a class="field-card person-row" href="{% url 'person_detail' person.pk %}" data-tooltip="{% trans 'Details' %}">
-      <div>
-        <h3>{{ person }}</h3>
-        <p>{% trans "Status" %}: {{ person.get_lifecycle_status_display }}</p>
+      <div class="person-row-main">
+        <span class="avatar-stack">
+          {% avatar person size="md" %}
+          {% status_pill person size="dot" %}
+        </span>
+        {% person_badges person as cert_badges %}
+        <div>
+          <h3>{{ person }}{% if cert_badges %}<span class="cert-badges">{% for badge in cert_badges %}<span class="{% if badge.severity %}cert-badge-{{ badge.severity }}{% endif %}" data-tooltip="{{ badge.tooltip }}">{% icon badge.icon size="sm" %}</span>{% endfor %}</span>{% endif %}</h3>
+          <p>{% trans "Status" %}: {{ person.get_lifecycle_status_display }}</p>
+        </div>
       </div>
     </a>
   {% empty %}

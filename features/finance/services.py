@@ -76,12 +76,17 @@ def recompute_month(month, *, actor=None):
     return month
 
 
-def group_breakdown(months=None) -> list[dict]:
+def group_breakdown(months=None, offices=None) -> list[dict]:
     """Per-group result (revenue - cost) across line items — for the manager's
-    transport/accommodation/overhead view. Dynamic over the given months (or all)."""
+    transport/accommodation/overhead view. Dynamic over the given months (or
+    all). ``offices=None`` (ADR 0026 Phase A) means unrestricted (Observer) —
+    never "all offices," since a real all-offices filter would exclude any
+    project with no office assigned yet."""
     qs = FinanceLineItem.objects.all()
     if months is not None:
         qs = qs.filter(month__in=months)
+    if offices is not None:
+        qs = qs.filter(month__project__office__in=offices)
     by_group: dict[str, dict] = {}
     for row in qs.values("category__group", "category__kind").annotate(total=Sum("amount")):
         group = row["category__group"]
@@ -124,15 +129,18 @@ def reopen_month(month, *, reason, actor=None):
     return month
 
 
-def project_totals(year=None):
+def project_totals(year=None, offices=None):
     """Per-project results (revenue, cost, net) — dynamic over all months or one
-    year. Costs/revenues never hardcoded; every project is included."""
+    year. Costs/revenues never hardcoded; every project is included.
+    ``offices=None`` (ADR 0026 Phase A) means unrestricted (Observer)."""
     qs = FinancialMonth.objects.filter(project__financial_reporting_eligible=True)
     if year is not None:
         qs = qs.filter(year=year)
+    if offices is not None:
+        qs = qs.filter(project__office__in=offices)
     rows = []
     for r in (
-        qs.values("project_id", "project__name", "project__code", "project__region")
+        qs.values("project_id", "project__name", "project__code", "project__office__name")
         .annotate(revenue=Sum("revenue"), cost=Sum("cost"))
         .order_by("project__name")
     ):
@@ -140,20 +148,23 @@ def project_totals(year=None):
         cost = r["cost"] or Decimal("0")
         rows.append({
             "project_id": r["project_id"], "name": r["project__name"],
-            "code": r["project__code"], "region": r["project__region"],
+            "code": r["project__code"], "office": r["project__office__name"],
             "revenue": rev, "cost": cost, "net": rev - cost,
         })
     return rows
 
 
-def monthly_totals(year=None) -> list[dict]:
+def monthly_totals(year=None, offices=None) -> list[dict]:
     """Company results per calendar month, oldest first (a trend series — unlike
     yearly_totals' newest-first drill-down list, don't reverse this to match).
     ``all_locked`` is True only when every contributing project-month for that
-    bucket is locked, for a filled-vs-hollow point style, not a gate."""
+    bucket is locked, for a filled-vs-hollow point style, not a gate.
+    ``offices=None`` (ADR 0026 Phase A) means unrestricted (Observer)."""
     qs = FinancialMonth.objects.filter(project__financial_reporting_eligible=True)
     if year is not None:
         qs = qs.filter(year=year)
+    if offices is not None:
+        qs = qs.filter(project__office__in=offices)
     rows = []
     for r in (
         qs.values("year", "month")
@@ -175,11 +186,15 @@ def monthly_totals(year=None) -> list[dict]:
     return rows
 
 
-def yearly_totals():
-    """Company results rolled up per year (newest first)."""
+def yearly_totals(offices=None):
+    """Company results rolled up per year (newest first).
+    ``offices=None`` (ADR 0026 Phase A) means unrestricted (Observer)."""
+    qs = FinancialMonth.objects.filter(project__financial_reporting_eligible=True)
+    if offices is not None:
+        qs = qs.filter(project__office__in=offices)
     rows = []
     for r in (
-        FinancialMonth.objects.filter(project__financial_reporting_eligible=True).values("year")
+        qs.values("year")
         .annotate(revenue=Sum("revenue"), cost=Sum("cost"))
         .order_by("-year")
     ):
@@ -207,12 +222,17 @@ def record_financial_month(project, year, month, revenue, cost, *, actor=None, n
     return obj
 
 
-def company_totals(year=None):
+def company_totals(year=None, offices=None):
     """Dynamic grand totals over every project/month (never hardcoded). Pass
-    ``year`` to scope to a single year for the yearly rollup."""
+    ``year`` to scope to a single year for the yearly rollup.
+    ``offices=None`` (ADR 0026 Phase A) means unrestricted (Observer) —
+    never "all offices," since that would exclude projects with no office
+    assigned yet."""
     qs = FinancialMonth.objects.filter(project__financial_reporting_eligible=True)
     if year is not None:
         qs = qs.filter(year=year)
+    if offices is not None:
+        qs = qs.filter(project__office__in=offices)
     agg = qs.aggregate(revenue=Sum("revenue"), cost=Sum("cost"))
     revenue = agg["revenue"] or Decimal("0")
     cost = agg["cost"] or Decimal("0")
@@ -227,21 +247,53 @@ def margin_pct(totals: dict) -> Decimal:
     return (totals["net"] / totals["revenue"] * 100).quantize(Decimal("0.1"))
 
 
-def regional_totals(year=None):
-    """Workbook-aligned roll-up by the project's configurable region."""
+def office_totals(year=None, offices=None):
+    """Roll-up by the project's real ``Office`` (ADR 0026 Phase A — replaces
+    the old region-based roll-up now that ``Project.office`` is a real FK).
+    ``offices=None`` means unrestricted (Observer); a scoped caller (manager,
+    coordinator, recruiter) passes the offices they belong to."""
     qs = FinancialMonth.objects.filter(project__financial_reporting_eligible=True)
     if year is not None:
         qs = qs.filter(year=year)
+    if offices is not None:
+        qs = qs.filter(project__office__in=offices)
     rows = []
-    for row in qs.values("project__region").annotate(
+    for row in qs.values("project__office__name").annotate(
         revenue=Sum("revenue"), cost=Sum("cost")
-    ).order_by("project__region"):
+    ).order_by("project__office__name"):
         revenue = row["revenue"] or Decimal("0")
         cost = row["cost"] or Decimal("0")
         rows.append({
-            "region": row["project__region"] or "Unassigned",
+            "office": row["project__office__name"] or "Unassigned",
             "revenue": revenue,
             "cost": -cost,
             "net": revenue - cost,
+        })
+    return rows
+
+
+def office_monthly_totals(year=None, offices=None) -> list[dict]:
+    """Per-office monthly trend (ADR 0026 Phase A) — the data source for the
+    executive dashboard's multi-series chart (one line per office). Rows are
+    one per (year, month, office) bucket, oldest first, matching
+    ``monthly_totals``'s ordering convention. ``offices=None`` means
+    unrestricted (Observer)."""
+    qs = FinancialMonth.objects.filter(project__financial_reporting_eligible=True)
+    if year is not None:
+        qs = qs.filter(year=year)
+    if offices is not None:
+        qs = qs.filter(project__office__in=offices)
+    rows = []
+    for r in (
+        qs.values("year", "month", "project__office__name")
+        .annotate(revenue=Sum("revenue"), cost=Sum("cost"))
+        .order_by("year", "month", "project__office__name")
+    ):
+        revenue = r["revenue"] or Decimal("0")
+        cost = r["cost"] or Decimal("0")
+        rows.append({
+            "year": r["year"], "month": r["month"],
+            "office": r["project__office__name"] or "Unassigned",
+            "revenue": revenue, "cost": cost, "net": revenue - cost,
         })
     return rows

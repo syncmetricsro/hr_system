@@ -24,6 +24,14 @@
       negative: cssVar("--chart-negative"),
       net: cssVar("--chart-net"),
       font: cssVar("--font-body"),
+      // Fixed categorical order (dataviz skill) — one slot per office. Never
+      // cycle or reassign these by rank; a 4th office needs its own
+      // validated slot, not an extension of this list.
+      categorical: [
+        cssVar("--chart-office-1"),
+        cssVar("--chart-office-2"),
+        cssVar("--chart-office-3"),
+      ],
     };
   }
 
@@ -160,6 +168,40 @@
     });
   }
 
+  // Generic N-series line chart (one line per named entity, e.g. one per
+  // office) — unlike buildTrendChart, which always plots exactly
+  // Revenue/Cost/Net, this takes an arbitrary `series: [{label, data}, …]`
+  // payload. Colors are assigned from the fixed categorical order
+  // (dataviz skill) by position, never cycled past what's validated —
+  // a 4th series with no slot falls back to the muted grid color rather
+  // than an unvalidated color.
+  function buildMultiSeriesTrendChart(canvas, data, colors) {
+    var labels = data.labels || [];
+    var series = data.series || [];
+    var opts = baseOptions(colors);
+    opts.plugins.legend.display = true;
+    opts.interaction = { mode: "index", intersect: false };
+    opts.elements = { point: { radius: 3, hoverRadius: 5, borderWidth: 2, borderColor: colors.surface } };
+    return new Chart(canvas, {
+      type: "line",
+      data: {
+        labels: labels,
+        datasets: series.map(function (s, i) {
+          var color = colors.categorical[i] || colors.grid;
+          return {
+            label: s.label,
+            data: toNumbers(s.data),
+            borderColor: color,
+            backgroundColor: color,
+            borderWidth: 2,
+            tension: 0.15,
+          };
+        }),
+      },
+      options: opts,
+    });
+  }
+
   function buildDivergingBarChart(canvas, data, colors) {
     var netValues = toNumbers(data.net);
     var opts = baseOptions(colors);
@@ -277,6 +319,7 @@
     gauge: buildGaugeChart,
     diverging: buildDivergingBarChart,
     magnitude: buildMagnitudeBarChart,
+    "office-trend": buildMultiSeriesTrendChart,
   };
 
   function buildOne(canvas) {

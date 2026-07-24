@@ -65,6 +65,64 @@ def test_inbox_manager_only(client, link, make_user):
     assert "hi" in body
 
 
+def test_qr_pdf_produces_a_single_page_pdf_with_extractable_cyrillic_text():
+    import io
+
+    from pypdf import PdfReader
+
+    from core.ui.qr import qr_pdf
+
+    pdf_bytes = qr_pdf("https://example.test/feedback/abc123", label="Зворотній зв'язок")
+    assert pdf_bytes[:5] == b"%PDF-"
+    reader = PdfReader(io.BytesIO(pdf_bytes))
+    assert len(reader.pages) == 1
+    text = reader.pages[0].extract_text()
+    assert "Зворотній зв'язок" in text
+    assert "https://example.test/feedback/abc123" in text
+
+
+def test_qr_pdf_without_label_still_renders_the_url():
+    import io
+
+    from pypdf import PdfReader
+
+    from core.ui.qr import qr_pdf
+
+    pdf_bytes = qr_pdf("https://example.test/feedback/xyz", label="")
+    reader = PdfReader(io.BytesIO(pdf_bytes))
+    assert "https://example.test/feedback/xyz" in reader.pages[0].extract_text()
+
+
+@pytest.mark.jober_only
+def test_manager_can_download_flyer_pdf(client, link, make_user):
+    client.force_login(make_user("manager"))
+    resp = client.get(reverse("feedback_link_pdf", args=[link.pk]))
+    assert resp.status_code == 200
+    assert resp["Content-Type"] == "application/pdf"
+    assert resp["Content-Disposition"] == f'attachment; filename="feedback-{link.token}.pdf"'
+    assert resp.content[:5] == b"%PDF-"
+
+
+@pytest.mark.jober_only
+def test_recruiter_cannot_download_flyer_pdf(client, link, make_user):
+    client.force_login(make_user("recruiter"))
+    resp = client.get(reverse("feedback_link_pdf", args=[link.pk]))
+    assert resp.status_code == 403
+
+
+@pytest.mark.jober_only
+def test_anonymous_cannot_download_flyer_pdf(client, link):
+    resp = client.get(reverse("feedback_link_pdf", args=[link.pk]))
+    assert resp.status_code == 302
+
+
+@pytest.mark.jober_only
+def test_inbox_shows_download_pdf_link(client, link, make_user):
+    client.force_login(make_user("manager"))
+    body = client.get(reverse("feedback_inbox")).content.decode("utf-8")
+    assert reverse("feedback_link_pdf", args=[link.pk]) in body
+
+
 def test_purge_feedback_command(link):
     from django.core.management import call_command
 

@@ -10,6 +10,7 @@ class LogisticsConfig(AppConfig):
         # Feature -> core registrations (ADR 0021).
         from core.ui.registry import (
             register_exit_relevance,
+            register_nav_badge,
             register_person_panel,
             register_report_tile,
         )
@@ -18,6 +19,7 @@ class LogisticsConfig(AppConfig):
             equipment_value_tile,
             holds_resources,
             occupancy_tile,
+            reviews_badge,
             room_panel,
         )
         from features.logistics.services import exit_reconcile
@@ -29,6 +31,7 @@ class LogisticsConfig(AppConfig):
         register_exit_relevance(holds_resources)
         register_report_tile(occupancy_tile, order=20)
         register_report_tile(equipment_value_tile, order=30)
+        register_nav_badge("reviews", reviews_badge)
         from core.notifications.registry import register_alert_provider
         from features.logistics.notifications import logistics_notification_provider
 
