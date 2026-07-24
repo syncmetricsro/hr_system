@@ -1,5 +1,42 @@
 # Deployment Journal
 
+## 2026-07-24 - Avatars, certificates, pill system, feedback flyer, Help area deployed (both apps)
+
+- Merged PR **#89** and deployed application revision **`43da54c`** to
+  `jober-staging` and `corvinum-staging` as the shared image
+  `jober-platform:demo-43da54c` (digest
+  `sha256:5a707691a08fc15ad38a4402320f0abb31f4093a49b145ab2ea25198d9b9ea1a`).
+  The image was built locally from pinned dependencies (including the new
+  Pillow and fpdf2/fonttools/defusedxml runtime deps, ADRs 0027/0028) with
+  vendored assets verified (`scripts/verify_vendor_assets.py`, including the
+  new DejaVu Sans font and the regenerated CorvinumEU Material Symbols
+  subset), then streamed with `git:load-image`; no VPS-side source build or
+  build-time secret access occurred.
+- Both apps applied the same six new migrations cleanly (`offices.0001_initial`,
+  `accounts.0003_user_offices`, `accounts.0004_user_avatar`,
+  `compliance.0002_certificate_category_certificate_document`,
+  `people.0005_person_avatar`, `projects.0006_remove_project_region_alter_project_office`).
+  Notably, only `offices.0001_initial` (schema) ran against CorvinumEU's
+  database, not a seed-data migration — confirming in production-like
+  conditions the mid-session fix that keeps Jober-specific office names out
+  of CorvinumEU's database (the seed data lives only in
+  `clients/jober/demo/management/commands/seed_people.py`, a Jober-only
+  management command, never in a migration).
+- Re-ran two idempotent seeds on `jober-staging` only, matching this
+  release's actual content: `seed_people` (creates the 3 real offices this
+  release's RBAC foundation depends on) and `seed_demo_scenario` (adds
+  Mira Novakova's expired Health certificate, so the new certificate-
+  validity icons have a second category/severity to show in the demo, not
+  just Olha's pre-existing forklift one). No CorvinumEU reseed — this
+  release doesn't touch CorvinumEU's seed data.
+- Both Dokku processes passed `ps:report` (running) and
+  `scripts/deploy_smoke.sh --https` (healthz, login page + CSRF,
+  fingerprinted static CSS, X-Frame-Options, HSTS) — verified independently
+  from both the agent session and the owner's own terminal.
+- The prior shared image `jober-platform:demo-b9d0fb1` remains the immediate
+  rollback target for both apps via `git:from-image`. The known Dokku
+  default-bridge deprecation warning remains non-blocking host maintenance.
+
 ## 2026-07-23 - Reconciled demo backlog deployed (both apps)
 
 - Merged PR **#87** and deployed application revision **`b9d0fb1`** to
