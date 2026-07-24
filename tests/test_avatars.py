@@ -29,10 +29,12 @@ def make_user(django_user_model):
         return django_user_model.objects.create_user(
             email=email or f"{role}@demo.jober.test", password="x", role=role
         )
+
     return _make
 
 
 # --- process_avatar_upload -------------------------------------------------
+
 
 def test_process_avatar_upload_reencodes_as_square_webp():
     processed = process_avatar_upload(_uploaded_jpeg(size=(1200, 800)))
@@ -68,7 +70,9 @@ def test_process_avatar_upload_strips_exif():
     exif[271] = "TestCameraMake"  # Make tag - stands in for GPS/other metadata
     buffer = io.BytesIO()
     Image.new("RGB", (400, 300), (10, 20, 30)).save(buffer, format="JPEG", exif=exif)
-    source = SimpleUploadedFile("with_exif.jpg", buffer.getvalue(), content_type="image/jpeg")
+    source = SimpleUploadedFile(
+        "with_exif.jpg", buffer.getvalue(), content_type="image/jpeg"
+    )
 
     processed = process_avatar_upload(source)
     with Image.open(io.BytesIO(processed.read())) as result:
@@ -76,6 +80,7 @@ def test_process_avatar_upload_strips_exif():
 
 
 # --- Own avatar (User self-service) ----------------------------------------
+
 
 def test_user_can_upload_own_avatar(client, make_user):
     user = make_user("recruiter")
@@ -124,12 +129,14 @@ def test_avatar_upload_records_added_then_replaced_audit_events(client, make_use
     client.post(reverse("avatar_upload"), {"avatar": _uploaded_jpeg(), "next": "/en/"})
     actions = list(
         AuditEvent.objects.filter(actor=user, action__startswith="user.avatar_")
-        .order_by("pk").values_list("action", flat=True)
+        .order_by("pk")
+        .values_list("action", flat=True)
     )
     assert actions == ["user.avatar_added", "user.avatar_replaced"]
 
 
 # --- Worker avatar (staff-uploaded) -----------------------------------------
+
 
 @pytest.mark.jober_only  # role grants below are asserted against Jober's policy
 def test_recruiter_can_upload_worker_avatar(client, make_user):
@@ -164,7 +171,9 @@ def test_manager_can_remove_worker_avatar(client, make_user):
     person = Person.objects.create(first_name="Olha", last_name="Kovalenko")
     manager = make_user("manager")
     client.force_login(manager)
-    client.post(reverse("person_avatar_upload", args=[person.pk]), {"avatar": _uploaded_jpeg()})
+    client.post(
+        reverse("person_avatar_upload", args=[person.pk]), {"avatar": _uploaded_jpeg()}
+    )
     person.refresh_from_db()
     assert person.avatar
     client.post(reverse("person_avatar_remove", args=[person.pk]))
@@ -173,6 +182,7 @@ def test_manager_can_remove_worker_avatar(client, make_user):
 
 
 # --- {% avatar %} template tag ----------------------------------------------
+
 
 def test_avatar_tag_renders_worker_default_for_person_with_no_photo():
     from core.ui.templatetags.avatars import avatar
@@ -184,7 +194,9 @@ def test_avatar_tag_renders_worker_default_for_person_with_no_photo():
 
 
 @pytest.mark.parametrize("role", ["recruiter", "coordinator", "manager", "observer"])
-def test_avatar_tag_renders_matching_role_default_for_user_with_no_photo(make_user, role):
+def test_avatar_tag_renders_matching_role_default_for_user_with_no_photo(
+    make_user, role
+):
     from core.ui.templatetags.avatars import avatar
 
     user = make_user(role, email=f"nophoto-{role}@demo.jober.test")

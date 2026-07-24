@@ -70,14 +70,21 @@ def status_pill(person, size: str = "dot") -> SafeString:
     """
     status = getattr(person, "lifecycle_status", None)
     tone = _STATUS_TONES.get(status, "neutral")
-    label = person.get_lifecycle_status_display() if hasattr(person, "get_lifecycle_status_display") else ""
+    label = (
+        person.get_lifecycle_status_display()
+        if hasattr(person, "get_lifecycle_status_display")
+        else ""
+    )
     if size == "label":
         return format_html(
-            '<span class="status-pill status-pill-label status-pill-{}">{}</span>', tone, label
+            '<span class="status-pill status-pill-label status-pill-{}">{}</span>',
+            tone,
+            label,
         )
     return format_html(
         '<span class="status-pill status-pill-dot status-pill-{}" aria-hidden="true" data-tooltip="{}"></span>',
-        tone, label,
+        tone,
+        label,
     )
 
 
