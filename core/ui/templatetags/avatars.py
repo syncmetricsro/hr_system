@@ -1,23 +1,34 @@
 from __future__ import annotations
 
 from django.template import Library
+from django.templatetags.static import static
 from django.utils.html import format_html
 from django.utils.safestring import SafeString
 
 register = Library()
 
+# Illustrated per-role default avatars (docs/product/avatar-design.md §1),
+# generated 2026-07-25 - static/avatars/default_{role}.webp (STATICFILES_DIRS
+# only scans the top-level static/ dir - NOT core/static/ - and the
+# Dockerfile copies static/ subdirectories individually, so this needs its
+# own COPY line there too). Person has no .role field, so it always gets
+# the "worker" default.
+_DEFAULT_AVATAR_ROLES = {"recruiter", "coordinator", "manager", "observer"}
+
+
+def _default_avatar_url(obj) -> str:
+    role = getattr(obj, "role", None)
+    if role not in _DEFAULT_AVATAR_ROLES:
+        role = "worker"
+    return static(f"avatars/default_{role}.webp")
+
 
 @register.simple_tag
 def avatar(obj, size: str = "sm") -> SafeString:
     """Render an avatar for a Person or User: uploaded photo if present,
-    else a plain placeholder circle.
-
-    The placeholder is deliberately minimal (no illustration, no initials,
-    no color-coding) - docs/product/avatar-design.md's illustrated
-    per-role default art was never delivered, and the user chose to wait
-    for the real art rather than build a stand-in design now. When it
-    lands, only this function's placeholder branch needs to change - the
-    upload/storage pipeline is unaffected either way.
+    else an illustrated per-role default (docs/product/avatar-design.md) -
+    a worker silhouette for a Person, or the matching role-colored
+    silhouette for a User (recruiter/coordinator/manager/observer).
 
     Usage: ``{% avatar person_or_user size="md" %}``.
     """
@@ -27,7 +38,7 @@ def avatar(obj, size: str = "sm") -> SafeString:
             '<img class="avatar avatar-{}" src="{}" alt="">', size, photo.url
         )
     return format_html(
-        '<span class="avatar avatar-{} avatar-placeholder" aria-hidden="true"></span>', size
+        '<img class="avatar avatar-{}" src="{}" alt="">', size, _default_avatar_url(obj)
     )
 
 
@@ -59,14 +70,21 @@ def status_pill(person, size: str = "dot") -> SafeString:
     """
     status = getattr(person, "lifecycle_status", None)
     tone = _STATUS_TONES.get(status, "neutral")
-    label = person.get_lifecycle_status_display() if hasattr(person, "get_lifecycle_status_display") else ""
+    label = (
+        person.get_lifecycle_status_display()
+        if hasattr(person, "get_lifecycle_status_display")
+        else ""
+    )
     if size == "label":
         return format_html(
-            '<span class="status-pill status-pill-label status-pill-{}">{}</span>', tone, label
+            '<span class="status-pill status-pill-label status-pill-{}">{}</span>',
+            tone,
+            label,
         )
     return format_html(
         '<span class="status-pill status-pill-dot status-pill-{}" aria-hidden="true" data-tooltip="{}"></span>',
-        tone, label,
+        tone,
+        label,
     )
 
 

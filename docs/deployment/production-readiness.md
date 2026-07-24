@@ -4,7 +4,93 @@ Tracks what must be true before the Jober app serves real users/data, and the
 state of each gate. "Ready" = verified; "Open" = not done / needs a human or an
 external input. Update this whenever a gate changes state.
 
-Last updated: 2026-06-29
+Last updated: 2026-07-25
+
+## Pre-production review findings (2026-07-25)
+
+A cross-cutting review of the deployed staging state (both apps, live
+inspection — not just static code reading) found the items below. None are
+fixed by writing this list; each stays open until its own fix lands and is
+verified the same way (live inspection, not just "the code looks right").
+Recommended order: lock down staging/provider access first, then implement
+protected persistent media, then schedule backups, then finish office
+scoping, then establish CI and reconcile the stale backlog docs (item 9,
+including this file's own pre-2026-07-25 rows below, which predate several
+features shipped since — e.g. Dokku staging is live, not "blocked/open" as
+those rows still say).
+
+1. **Critical — public demo credentials can reach live Twilio.** The repo is
+   public and publishes the Jober staging URL/password in `CLAUDE.md`;
+   Jober staging currently has Twilio configured, and Recruiter/Coordinator/
+   Manager can send SMS through `features/messaging/views.py`. Disable
+   provider credentials on public staging, or put staging behind access
+   control, then rotate demo passwords.
+2. **Critical — uploaded media is not durable or served in production.**
+   Neither Dokku app has a storage mount. Django only serves `/media/` under
+   `DEBUG` (`config/urls.py`); production has no nginx alias yet. Avatars
+   and certificate files uploaded to staging today will not survive a
+   redeploy, and their URLs 404 right now.
+3. **Critical — the planned media-serving design would expose certificate
+   documents publicly.** `templates/panels/compliance_certificates.html`
+   links directly to `certificate.document.url`; a bare nginx `/media/`
+   alias (the design `avatar-design.md`/`certificate-upload-design.md`
+   sketched) would serve that with no auth check at all — a UUID filename
+   is obscurity, not authorization. Certificates need an authenticated,
+   permission-checked download view; avatars need an explicit privacy
+   decision (are they meant to be as-public-as-a-photo-badge, or not).
+4. **High — neither PostgreSQL service has scheduled backups.** Live
+   inspection shows no backup schedule on `pg-jober-staging` or
+   `pg-corvinum-staging`. Tracked below under "DB backups / restore" since
+   2026-06-29; still open.
+5. **High — office scoping protects Finance only.** People, Projects,
+   Reports, Compliance, Logistics, notifications, and exports remain
+   company-wide (e.g. `core/ui/views.py::reports` queries every person/
+   project unfiltered). Acknowledged as Phase B scope in ADR 0026, but once
+   real multi-office data exists this is a privacy boundary, not polish —
+   re-prioritize ADR 0026 Phase B accordingly.
+6. **High — media replacement leaves old PII files behind.** Avatar/
+   certificate replacement (`core/accounts/views.py`,
+   `features/compliance/services.py`) saves the new upload but never
+   deletes the file it replaced — only an explicit *remove* deletes the
+   *current* file. Every past replacement leaves an orphaned file with no
+   remaining reference, and no cleanup path exists yet (this is the same
+   "no hard-delete/anonymization hook" gap `avatar-design.md`'s open items
+   already flagged, now confirmed to also apply to routine replacement, not
+   just erasure).
+7. ~~**Medium — no real GitHub CI gate.**~~ **Fixed** (per user, 2026-07-25).
+8. **Medium — upload dimension checks happen after full image decoding.**
+   `core/media.py`'s avatar and certificate handlers call `image.load()`
+   before enforcing the 8000px cap — decompression-bomb protection is
+   weaker than it looks, since the image is already fully decoded in
+   memory by the time the size check runs. Reorder to check dimensions from
+   header/metadata before a full `load()`.
+9. **Medium — backlog documentation is materially stale.**
+   `docs/platform/client-feature-matrix.md` still lists age warnings and
+   warehouse stock as unimplemented and Jober transport as enabled; this
+   file's own pre-2026-07-25 rows still say Dokku staging/TLS are
+   unavailable. Zero open GitHub issues means there's no separate
+   executable backlog to fall back on either — this file (and
+   `docs/platform/client-feature-matrix.md`) needs a real reconciliation
+   pass against current `main`, not just this list of new findings.
+10. **Low — client Help content leaks unsupported features.** CorvinumEU
+    users can read the Jober-only Feedback/profitability/accommodation/
+    transport Help articles even though CorvinumEU has none of those
+    features enabled. Already acknowledged as a known follow-up in
+    `help-area-design.md`.
+11. **Decision needed — old `agent/corvinum-wage-ledger` branch.** Confirmed
+    still present (local + remote), 5 commits ahead of `main`, containing a
+    unique `AdvanceRecovery` model and derived-net behavior not on `main`.
+    Do not merge it wholesale — it may conflict with the agreed recorded-
+    gross/independent-net wage-ledger boundary. Needs an explicit accept-or-
+    reject decision, then delete the branch either way rather than leaving
+    it stale.
+
+Status at the time of this review: `main` clean at `948aff0`; both staging
+apps running the latest deploy and passing fresh HTTPS smoke checks (528
+Jober unit tests, 326 CorvinumEU tests, 50 Playwright tests; ruff, vendor
+hashes, no-Node check, Django checks, and migration consistency all green).
+None of that verifies the 11 items above — they're gaps the standard test/
+smoke suite doesn't cover.
 
 ## Serving & runtime
 

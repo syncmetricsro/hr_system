@@ -341,18 +341,14 @@ svg.icon {
 }
 
 /* Avatars (docs/product/avatar-design.md) - {% avatar %} tag,
-   core/ui/templatetags/avatars.py. .avatar-placeholder is deliberately
-   plain (no illustration/initials) pending the real default art. */
+   core/ui/templatetags/avatars.py. Uploaded photo or an illustrated
+   per-role default (core/static/core/avatars/) - always an <img>. */
 .avatar {
   display: inline-block;
   flex: none;
   border-radius: 50%;
   object-fit: cover;
   vertical-align: middle;
-}
-
-.avatar-placeholder {
-  background: var(--n300);
 }
 
 .avatar-form,
