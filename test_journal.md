@@ -1,5 +1,25 @@
 # Test Journal
 
+## 2026-07-25 - GitHub application CI gate
+
+- Added a containerized GitHub gate with separate `Quality and unit tests` and
+  `Browser end-to-end tests` jobs. The quality runner exercises vendor hashes,
+  no-Node policy, full-codebase Ruff lint plus changed-file formatting, both
+  Django/client settings, migrations, both unit lanes, and the production-image
+  boundary; browser coverage reuses the full two-client Playwright script.
+- Local gate development caught two runner assumptions before publication:
+  Ruff formatting initially tried to create a cache in the non-root
+  bind-mounted workspace, and upload tests initially tried to write to that
+  read-only bind mount. Formatting now runs without cache, and each Django test
+  container receives an ephemeral no-exec `/app/media` tmpfs.
+- Full local result: vendor/no-Node and production-image checks passed; Ruff
+  lint passed; no Python files changed in this slice, so the incremental format
+  set was empty; both Django checks and both migration checks passed; Jober
+  **528 passed, 5 skipped**; CorvinumEU **326 passed, 10 skipped, 143
+  deselected**; full two-client Playwright **50 passed**.
+- The GitHub run remains the final proof because the defect being fixed is the
+  absence of a repository-hosted gate.
+
 ## 2026-07-24 - In-app Help area (help-area-design.md)
 
 - New `tests/test_help.py` (24 tests, 2 marked `jober_only` for the

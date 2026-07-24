@@ -1,5 +1,19 @@
 # Build Journal
 
+## 2026-07-25 - GitHub application CI gate
+
+- Added `.github/workflows/application-ci.yml` for pull requests and pushes to
+  `main`, with read-only repository permission, exact-revision checkout, run
+  cancellation, explicit timeouts, and no third-party GitHub Actions.
+- Added `scripts/ci_quality.sh`, which builds from the committed digest/hash
+  pins, verifies vendored assets and the npm-free boundary, checks Ruff
+  lint across the codebase and formatting on changed Python files, checks
+  Django and migration consistency under both client settings, runs both unit
+  test lanes against isolated PostgreSQL containers, and verifies the
+  production image excludes test/browser/Node tooling.
+- Kept the full existing `scripts/playwright_e2e.sh` as a separate required
+  browser check. Neither CI job receives Doppler or provider credentials.
+
 ## 2026-07-24 - In-app Help area (help-area-design.md)
 
 Sixth and final planned backlog item this session (multi-office Phase B
