@@ -13,6 +13,12 @@ EXPECTED = {
     "static/vendor/licenses/alpine-LICENSE.md": "08b7502da6e7aa1d0bbdc97d220fbf669b9366c61bd0f072238283c89bc4773a",
     "static/vendor/chart.min.js": "84d0e233daba702b8f77d669d8c137cad36d441a10f200b6f2d3ab553bdfcf6b",
     "static/vendor/licenses/chartjs-LICENSE": "41a84aa2caba645f966a18d9c2056b73e6d3a81d80bc0046bc0011a2634d4cce",
+    "vendor/fonts/DejaVuSans.ttf": "7da195a74c55bef988d0d48f9508bd5d849425c1770dba5d7bfc6ce9ed848954",
+    "vendor/fonts/DejaVuSans-Bold.ttf": "e6476c1b80502924294eed40894c5b18e06c181444ca953e5334262df9c27724",
+    "vendor/fonts/dejavu-LICENSE": "7a083b136e64d064794c3419751e5c7dd10d2f64c108fe5ba161eae5e5958a93",
+    "clients/corvinum_eu/static/corvinum/fonts/material-symbols-outlined-subset.woff2": (
+        "c001760477fca76d60185e50923d6b9f4bb0f1e91af38cf3843b5801571ebfa1"
+    ),
 }
 
 

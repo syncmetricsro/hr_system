@@ -11,11 +11,11 @@
 </section>
 
 <section class="panel">
-  <p class="eyebrow">{% trans "Regional roll-up" %}</p>
-  <h2>{% trans "Profit/loss by region" %}</h2>
+  <p class="eyebrow">{% trans "Office roll-up" %}</p>
+  <h2>{% trans "Profit/loss by office" %}</h2>
   <dl class="detail-grid">
-    {% for region in regional_results %}
-      <div><dt>{{ region.region }}</dt><dd class="amount{% if region.net < 0 %} amount-neg{% else %} amount-pos{% endif %}">{{ region.net }} EUR</dd></div>
+    {% for office in regional_results %}
+      <div><dt>{{ office.office }}</dt><dd class="amount{% if office.net < 0 %} amount-neg{% else %} amount-pos{% endif %}">{{ office.net }} EUR</dd></div>
     {% empty %}
       <div><dd>{% trans "No financial months." %}</dd></div>
     {% endfor %}

@@ -5,6 +5,8 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
+from core.media import avatar_upload_path
+
 
 class LifecycleStatus(models.TextChoices):
     """The one canonical person lifecycle status (plan §9.1)."""
@@ -64,6 +66,12 @@ class Person(models.Model):
     nationality = models.CharField(_("nationality"), max_length=100, blank=True)
     preferred_language = models.CharField(
         _("preferred language"), max_length=10, blank=True
+    )
+    # Staff-uploaded (docs/product/avatar-design.md) - Person has no login of
+    # its own, so there's no worker self-service path; see core.media for the
+    # upload_to/validation pipeline shared with User.avatar.
+    avatar = models.ImageField(
+        _("avatar"), upload_to=avatar_upload_path, blank=True, null=True
     )
 
     # Disability: flag only, no documents (phase1-open-questions Q1).

@@ -1,5 +1,5 @@
 {% extends "layouts/base.html" %}
-{% load i18n %}
+{% load i18n icons %}
 
 {% block title %}{% trans "Transport trends" %} · {{ BRAND_NAME }}{% endblock %}
 
@@ -7,7 +7,7 @@
 <section class="page-head">
   <p class="eyebrow">{% trans "Logistics" %}</p>
   <h1>{% trans "Transport trends" %}</h1>
-  {% if may_record %}<a class="button button-primary" href="?create=1">{% trans "Record transport week" %}</a>{% endif %}
+  {% if may_record %}<a class="button button-primary" href="?create=1">{% icon "add" %}{% trans "Record transport week" %}</a>{% endif %}
 </section>
 
 {% if form %}
@@ -18,7 +18,7 @@
     {% csrf_token %}{{ form.non_field_errors }}
     {% for field in form %}<label>{{ field.label }}{{ field }}{{ field.errors }}</label>{% endfor %}
     <div class="action-row">
-      <button class="button button-primary" type="submit">{% trans "Save transport record" %}</button>
+      <button class="button button-primary" type="submit">{% icon "save" %}{% trans "Save transport record" %}</button>
       <a class="button button-secondary" href="{% url 'transport_trends' %}">{% trans "Cancel" %}</a>
     </div>
   </form>
@@ -42,7 +42,7 @@
   <p class="eyebrow">{% trans "Records" %}</p>
   <h2>{% trans "Transport weeks" %}</h2>
   <div class="table-wrap"><table><thead><tr><th>{% trans "Project" %}</th><th>{% trans "Week start" %}</th><th>{% trans "Headcount" %}</th><th>{% trans "Note" %}</th>{% if may_record %}<th>{% trans "Action" %}</th>{% endif %}</tr></thead>
-    <tbody>{% for record in records %}<tr><td>{{ record.project.name }}</td><td>{{ record.week_start }}</td><td>{{ record.headcount }}</td><td>{{ record.note|default:"—" }}</td>{% if may_record %}<td><a class="button button-secondary" href="?edit={{ record.pk }}">{% trans "Edit" %}</a></td>{% endif %}</tr>{% empty %}<tr><td colspan="5">{% trans "No transport records match these filters." %}</td></tr>{% endfor %}</tbody>
+    <tbody>{% for record in records %}<tr><td>{{ record.project.name }}</td><td>{{ record.week_start }}</td><td>{{ record.headcount }}</td><td>{{ record.note|default:"—" }}</td>{% if may_record %}<td><a class="button button-secondary" href="?edit={{ record.pk }}">{% icon "edit" %}{% trans "Edit" %}</a></td>{% endif %}</tr>{% empty %}<tr><td colspan="5">{% trans "No transport records match these filters." %}</td></tr>{% endfor %}</tbody>
   </table></div>
 </section>
 

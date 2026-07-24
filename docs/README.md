@@ -23,11 +23,14 @@ they are never renamed or renumbered per client.
 | `i18n-seeded-data.md` | Platform | How seeded catalog data stays localized (db_trans + catalog_i18n) |
 | `session-summary-2026-07-16.md` | Platform | Consolidated product, demo, staging, testing, and remaining-gates handoff for the implementation session |
 
-## docs/adr/ — Platform (shared decision log, 0001–0024)
+## docs/adr/ — Platform (shared decision log, 0001–0028)
 Highlights: 0008 RBAC model · 0016 whitenoise · 0019 Twilio-via-stdlib ·
 0020 white-label sequencing · 0021 Stage B extraction (EXECUTED) ·
 0022 Stage C CorvinumEU thin client (EXECUTED) · 0023 payslips/encrypted PDF ·
-0024 segno QR.
+0024 segno QR · 0025 Chart.js visualizations · 0026 office-scoped RBAC
+(Partially Accepted, Phase A executed, amends 0008 — Jober multi-office) ·
+0027 Pillow for avatar images (ACCEPTED) · 0028 fpdf2 for the feedback flyer
+(ACCEPTED).
 
 ## docs/platform/ — Platform
 | Doc | Purpose |
@@ -59,11 +62,17 @@ Highlights: 0008 RBAC model · 0016 whitenoise · 0019 Twilio-via-stdlib ·
 | Doc | Owner | Purpose |
 |---|---|---|
 | `playwright-test-environment-note.md` | Platform | e2e environment notes |
+| `avatar-design.md` | Platform | Worker/admin avatar design — implemented 2026-07-24, except default art (placeholder pending real illustrated assets) |
+| `pill-system-design.md` | Platform | Worker status pill, certificate-validity icons, Compliance/Reviews nav badges — fully implemented 2026-07-24 |
+| `certificate-upload-design.md` | Platform | Certificate document upload (forklift/crane/welding), RBAC, validation — implemented 2026-07-24 |
+| `feedback-flyer-design.md` | Platform | Downloadable PDF+QR flyer for feedback links, Cyrillic-capable via a vendored font (ADR 0028) — implemented 2026-07-24 |
+| `help-area-design.md` | Platform | In-app Help section (nav tab, 9 articles, full SK/HU/UK i18n) — implemented 2026-07-24; per-client article filtering by feature flag noted as a follow-up |
 | `notification-center.md` | Platform | Floating alerts/updates behavior, privacy, refresh, and extension contract |
 | `client-themes.md` | Platform | Light/Dark/System behavior, client defaults, persistence, and palette ownership |
 | `contextual-tooltips.md` | Platform | Hover/focus help, coverage, touch behavior, and content safety |
 | `jober-phase1-open-questions.md`, `jober-phase3-4-open-questions.md` | Jober | Client Q&A rounds (answered) |
 | `jober-open-decisions.md`, `jober-risk-blockers.md` | Jober | Open decisions / blockers |
+| `jober-multi-office-scoping.md` | Jober | Multi-office (Velký Meder/Győr/Dunajská Streda) RBAC impact analysis — Phase A implemented, Phase B design only (revisits ADR 0008) |
 | `jober-demo-inventory.md`, `jober-demo-to-django-map.md`, `jober-removed-feature-inventory.md`, `jober-source-register.md` | Jober | Build-era inventories and source register |
 | `corvinum-open-questions.md` | CorvinumEU | C-Q1…C-Q16 build defaults awaiting client confirmation |
 

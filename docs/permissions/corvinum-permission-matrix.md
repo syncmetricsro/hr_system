@@ -23,6 +23,7 @@ Legend: ✅ permitted · — denied
 | `intake.create_edit` | ✅ | — | ✅ | — |
 | `intake.assign_trial` | ✅ | ✅ | ✅ | — |
 | `person.recycle_available` | ✅ | ✅ | ✅ | — |
+| `certificate.manage` (create/replace/delete a certificate document) | ✅ | ✅ | ✅ | — |
 | `person.archive` | — | — | ✅ | — |
 | `project.assign` | — | ✅ | ✅ | — |
 | `trial.record_outcome` | — | ✅ | ✅ | — |

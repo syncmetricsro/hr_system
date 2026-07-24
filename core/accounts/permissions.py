@@ -26,6 +26,7 @@ class Action(str, Enum):
     INTAKE_CREATE_EDIT = "intake.create_edit"
     INTAKE_ASSIGN_TRIAL = "intake.assign_trial"
     PERSON_RECYCLE_AVAILABLE = "person.recycle_available"
+    CERTIFICATE_MANAGE = "certificate.manage"
     PERSON_ARCHIVE = "person.archive"
     SMS_SEND = "sms.send"
 
@@ -108,6 +109,27 @@ def can_read_internal(user) -> bool:
         return True
     # Future narrower split would be wired here once Jober confirms the scope.
     return True
+
+
+def user_office_scope(user):
+    """Offices this user's data access is limited to (ADR 0026 Phase A).
+
+    Returns ``None`` for Observer — a deliberate "unrestricted" sentinel,
+    not a queryset of every ``Office``: filtering by ``office__in=<all
+    offices>`` would still exclude any record whose office is unset
+    (``None``), which is not the same as "no filter." Callers must treat
+    ``None`` as "don't filter," not iterate it.
+
+    For every other role, returns ``user.offices.all()`` — a manager,
+    coordinator, or recruiter sees only the office(s) they belong to.
+    """
+    from core.offices.models import Office
+
+    if user is None or not user.is_authenticated:
+        return Office.objects.none()
+    if getattr(user, "role", None) == Role.OBSERVER or getattr(user, "is_superuser", False):
+        return None
+    return user.offices.all()
 
 
 def require_action(action: Action) -> Callable:

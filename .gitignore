@@ -26,3 +26,4 @@ vite.config.*
 
 test-artifacts/
 backups/
+_font_subset_work/

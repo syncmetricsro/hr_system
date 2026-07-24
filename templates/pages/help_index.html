@@ -1,0 +1,24 @@
+{% extends "layouts/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Help" %} · {{ BRAND_NAME }}{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <p class="eyebrow">{% trans "Documentation" %}</p>
+  <h1>{% trans "Help" %}</h1>
+</section>
+
+<section class="grid-2" aria-label="{% trans 'Help topics' %}">
+  {% for group in help_groups %}
+    <div class="panel">
+      <p class="eyebrow">{{ group.label }}</p>
+      <ul class="plain-list">
+        {% for article in group.articles %}
+          <li><a href="{% url 'help_article' article.slug %}">{{ article.title }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endfor %}
+</section>
+{% endblock %}

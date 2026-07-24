@@ -23,6 +23,10 @@ AUDIT_ACTION_LABELS = {
     "blacklist.decided": _("Blacklist decision recorded"),
     "blacklist.proposed": _("Blacklist case proposed"),
     "blacklist.removed": _("Removed from blacklist"),
+    "certificate.deleted": _("Certificate deleted"),
+    "certificate.replaced": _("Certificate document replaced"),
+    "certificate.updated": _("Certificate updated"),
+    "certificate.uploaded": _("Certificate uploaded"),
     "checklist.item_ticked": _("Checklist item completed"),
     "checklist.item_unticked": _("Checklist item reopened"),
     "equipment.catalog_created": _("Equipment item created"),
@@ -46,6 +50,9 @@ AUDIT_ACTION_LABELS = {
     "payslip.recorded": _("Payslip recorded"),
     "payslip.sent": _("Payslip sent"),
     "person.archived": _("Person archived"),
+    "person.avatar_added": _("Avatar added"),
+    "person.avatar_removed": _("Avatar removed"),
+    "person.avatar_replaced": _("Avatar replaced"),
     "person.created": _("Person added"),
     "person.exited": _("Exit completed"),
     "person.lifecycle_changed": _("Status changed"),
@@ -58,6 +65,9 @@ AUDIT_ACTION_LABELS = {
     "transport.week_recorded": _("Transport week recorded"),
     "trial.outcome_recorded": _("Trial outcome recorded"),
     "trial.scheduled": _("Trial scheduled"),
+    "user.avatar_added": _("Avatar added"),
+    "user.avatar_removed": _("Avatar removed"),
+    "user.avatar_replaced": _("Avatar replaced"),
 }
 
 

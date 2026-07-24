@@ -65,6 +65,7 @@ COPY locale /app/locale
 COPY templates /app/templates
 COPY static/vendor /app/static/vendor
 COPY static/src/js /app/static/src/js
+COPY vendor/fonts /app/vendor/fonts
 COPY --from=tailwind /app/static/dist/css/app.css /app/static/dist/css/app.css
 
 RUN test -f static/dist/css/app.css \

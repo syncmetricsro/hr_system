@@ -75,16 +75,18 @@ def test_finance_section_hidden_from_recruiter(client, make_user):
     client.force_login(make_user("recruiter"))
     with translation.override("sk"):
         body = client.get(reverse("reports")).content.decode("utf-8")
-    # Finance section heading should not appear for a role without finance.view_summary
+    # Finance moved to its own Finance page entirely - never on Reports, for any role.
     assert "Celkový súčet firmy" not in body
 
 
 @pytest.mark.jober_only  # Jober grants/lifecycle/features
-def test_finance_section_visible_to_observer(client, make_user):
+def test_finance_section_not_shown_to_observer_either(client, make_user):
     client.force_login(make_user("observer"))
     with translation.override("sk"):
         body = client.get(reverse("reports")).content.decode("utf-8")
-    assert "Celkový súčet firmy" in body
+    # Even the role with full finance access sees no finance content on Reports -
+    # it's exclusively on the Finance page now (features/finance/views.py::finance_summary).
+    assert "Celkový súčet firmy" not in body
 
 
 def test_projects_and_personnel_section_shows_headcount_and_names(client, make_user, settings):

@@ -1,5 +1,5 @@
 {% extends "layouts/base.html" %}
-{% load i18n rbac %}
+{% load i18n rbac icons %}
 
 {% block title %}{% trans "Projects" %} · {{ BRAND_NAME }}{% endblock %}
 
@@ -9,7 +9,7 @@
   <h1>{% trans "Projects" %}</h1>
   {% can 'export.approved' as may_export %}
   {% if may_export %}
-    <a class="button button-secondary" href="{% url 'export_projects' %}">{% trans "Export" %}</a>
+    <a class="button button-secondary" href="{% url 'export_projects' %}">{% icon "export" %}{% trans "Export" %}</a>
   {% endif %}
   <form class="people-search" method="get" action="{% url 'project_list' %}">
     <label class="sr-only" for="project-status-filter">{% trans "Project status" %}</label>

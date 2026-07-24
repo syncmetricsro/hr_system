@@ -1,0 +1,43 @@
+{% load i18n rbac icons %}
+<section class="panel workflow-panel">
+  <p class="eyebrow">{% trans "Compliance" %}</p>
+  <h2>{% trans "Certificates" %}</h2>
+  {% can 'certificate.manage' as may_manage %}
+  {% if panel.certificates %}
+    <ul class="plain-list">
+      {% for certificate in panel.certificates %}
+        <li>
+          <div class="equipment-issue-row">
+            <span>{{ certificate.get_category_display }} — {{ certificate.name }}</span>
+            {% if certificate.severity == "expired" %}
+              <span class="badge">{% trans "Expired" %}</span>
+            {% elif certificate.severity == "expiring" %}
+              <span class="badge">{% trans "Expiring soon" %}</span>
+            {% elif certificate.expiry_date %}
+              <span class="badge badge-success">{% trans "Valid" %}</span>
+            {% endif %}
+          </div>
+          <span class="equipment-unit-price">
+            {% if certificate.issue_date %}{% trans "Issued" %}: {{ certificate.issue_date }}{% endif %}
+            {% if certificate.expiry_date %} · {% trans "Expires" %}: {{ certificate.expiry_date }}{% endif %}
+            {% if certificate.document %} · <a href="{{ certificate.document.url }}" target="_blank" rel="noopener">{% trans "View document" %}</a>{% endif %}
+          </span>
+          {% if may_manage %}
+            <div class="inline-form">
+              <a class="button button-secondary" href="{% url 'certificate_edit' certificate.pk %}" data-tooltip="{% trans 'Edit this certificate or replace its document' %}">{% icon "edit" size="sm" %}{% trans "Edit" %}</a>
+              <form method="post" action="{% url 'certificate_delete' certificate.pk %}">
+                {% csrf_token %}
+                <button class="icon-button" type="submit" data-confirm="{% trans 'Delete this certificate and its document?' %}">{% icon "delete" size="sm" %}</button>
+              </form>
+            </div>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>—</p>
+  {% endif %}
+  {% if may_manage %}
+    <a class="button button-primary" href="{% url 'certificate_create' panel.person.pk %}" data-tooltip="{% trans 'Add a new certificate, licence, or document for this worker' %}">{% icon "add" size="sm" %}{% trans "Add certificate" %}</a>
+  {% endif %}
+</section>

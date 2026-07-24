@@ -27,7 +27,10 @@ def test_finance_summary_renders_all_three_chart_types(page):
     page.wait_for_load_state("networkidle")
     page.locator('canvas[data-chart="trend"]').wait_for()
     page.locator('canvas[data-chart="gauge"]').wait_for()
-    page.locator('canvas[data-chart="diverging"]').wait_for()
+    # Two diverging charts render here now: group breakdown and the
+    # regional chart (moved from the Reports page's now-deleted panel).
+    page.locator('canvas[data-chart-data="chart-data-finance-summary-group"]').wait_for()
+    page.locator('canvas[data-chart-data="chart-data-finance-summary-regional"]').wait_for()
     # A live Chart.js instance is attached, not just an empty <canvas>.
     assert page.evaluate(
         "!!Chart.getChart(document.querySelector('canvas[data-chart=\"trend\"]'))"
@@ -56,6 +59,28 @@ def test_reports_renders_headcount_chart(page):
     page.goto(f"{base_url()}/en/")
     page.wait_for_load_state("networkidle")
     page.locator('canvas[data-chart="magnitude"]').wait_for()
+
+
+def test_observer_sees_executive_page_with_office_trend_chart(page):
+    _login(page, local_part="pozorovatel")
+    page.goto(f"{base_url()}/en/finance/")
+    page.wait_for_load_state("networkidle")
+    page.locator('canvas[data-chart="office-trend"]').wait_for()
+    page.locator('canvas[data-chart="gauge"]').wait_for()
+    page.locator('canvas[data-chart-data="chart-data-finance-executive-office"]').wait_for()
+    assert page.evaluate(
+        "!!Chart.getChart(document.querySelector('canvas[data-chart=\"office-trend\"]'))"
+    )
+
+
+def test_manager_finance_page_does_not_show_other_offices(page):
+    _login(page)
+    page.goto(f"{base_url()}/en/finance/")
+    page.wait_for_load_state("networkidle")
+    body = page.content()
+    assert "Velký Meder" in body
+    assert "Győr" not in body
+    assert "Dunajská Streda" not in body
 
 
 def test_chart_colors_update_live_on_theme_toggle(page):

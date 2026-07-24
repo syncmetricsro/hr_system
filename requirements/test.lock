@@ -12,8 +12,14 @@ charset-normalizer==3.4.7 \
     --hash=sha256:5649fd1c7bade02f320a462fdefd0b4bd3ce036065836d4f42e0de958038e116
 cryptography==49.0.0 \
     --hash=sha256:cbc77da8c523d5abd028635ba850a6966fcee2c82e2bf65a41d1d8afe0f98be9
+defusedxml==0.7.1 \
+    --hash=sha256:a352e7e428770286cc899e2542b6cdaedb2b4953ff269a210103ec58f6198a61
 Django==6.0.6 \
     --hash=sha256:25148b1194c47c2e685e5f5e9c5d59c78b075dfd282cb9618861ba6c1708f4d2
+fonttools==4.63.0 \
+    --hash=sha256:58dc6bb86a78d782f00f9190ca02c119cf5bbe2807536e361e18d42019f877d8
+fpdf2==2.8.7 \
+    --hash=sha256:d391fc508a3ce02fc43a577c830cda4fe6f37646f2d143d489839940932fbc19
 greenlet==3.5.1 \
     --hash=sha256:add5217d68b31130f0beca584d7fef4878327d2e31642b66618a14eef312b63b
 gunicorn==26.0.0 \
@@ -24,6 +30,8 @@ iniconfig==2.3.0 \
     --hash=sha256:f631c04d2c48c52b84d0d0549c99ff3859c98df65b3101406327ecc7d53fbf12
 packaging==26.2 \
     --hash=sha256:5fc45236b9446107ff2415ce77c807cee2862cb6fac22b8a73826d0693b0980e
+pillow==12.3.0 \
+    --hash=sha256:78cb2c6865a35ab8ff8b75fd122f6033b92a62c82801110e48ddd6c936a45d91
 playwright==1.60.0 \
     --hash=sha256:1c2bfae7884fb3fb05b853290eab8f343d524e5016f2f1def702acbbdf14c93e
 pluggy==1.6.0 \

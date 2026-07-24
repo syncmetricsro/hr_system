@@ -1,4 +1,4 @@
-{% load i18n rbac nav %}
+{% load i18n rbac nav icons %}
 {% can 'blacklist.decide' as may_bl_decide %}
 <section class="panel workflow-panel">
   <p class="eyebrow">{% trans "Risk" %}</p>
@@ -17,14 +17,14 @@
       <form class="people-search" method="post" action="{% url 'blacklist_decide' panel.blacklist_case.pk %}">
         {% csrf_token %}
         <input type="text" name="reason" aria-label="{% trans 'Reason' %}" placeholder="{% trans 'Reason' %}">
-        <button class="button button-primary" type="submit" name="decision" value="approve" data-confirm="{% trans 'This approves the blacklist case: the person becomes Blacklisted and future re-entry attempts will be flagged.' %}">{% trans "Approve" %}</button>
-        <button class="button button-secondary" type="submit" name="decision" value="reject" data-confirm="{% trans 'This rejects the proposed blacklist case and closes it.' %}">{% trans "Reject" %}</button>
+        <button class="button button-primary" type="submit" name="decision" value="approve" data-confirm="{% trans 'This approves the blacklist case: the person becomes Blacklisted and future re-entry attempts will be flagged.' %}">{% icon "approve" %}{% trans "Approve" %}</button>
+        <button class="button button-secondary" type="submit" name="decision" value="reject" data-confirm="{% trans 'This rejects the proposed blacklist case and closes it.' %}">{% icon "reject" %}{% trans "Reject" %}</button>
       </form>
     {% elif panel.blacklist_case.status == 'approved' and may_bl_decide %}
       <form class="people-search" method="post" action="{% url 'blacklist_remove' panel.blacklist_case.pk %}">
         {% csrf_token %}
         <input type="text" name="reason" required aria-label="{% trans 'Reason' %}" placeholder="{% trans 'Reason' %}">
-        <button class="button button-secondary" type="submit" data-confirm="{% trans 'This removes the person from the blacklist; re-entry checks will no longer match them.' %}">{% trans "Remove from blacklist" %}</button>
+        <button class="button button-secondary" type="submit" data-confirm="{% trans 'This removes the person from the blacklist; re-entry checks will no longer match them.' %}">{% icon "recycle" %}{% trans "Remove from blacklist" %}</button>
       </form>
     {% endif %}
   {% elif panel.can_propose_blacklist %}
@@ -37,7 +37,7 @@
       <label><span>{% trans "Reason" %}</span><input type="text" name="reason"></label>
       <label><span>{% trans "ID number (optional, hashed)" %}</span><input type="text" name="identifier" autocomplete="off"></label>
       <label><span>{% trans "Mother's maiden name (optional, hashed)" %}</span><input type="text" name="mothers_maiden_name" autocomplete="off"></label>
-      <button class="button button-secondary" type="submit">{% trans "Propose blacklist" %}</button>
+      <button class="button button-secondary" type="submit">{% icon "add" %}{% trans "Propose blacklist" %}</button>
     </form>
   {% endif %}
 </section>

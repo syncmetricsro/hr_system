@@ -1,0 +1,85 @@
+{% extends "layouts/base.html" %}
+{% load i18n static %}
+
+{% block title %}{% trans "Finance" %} · {{ BRAND_NAME }}{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <p class="eyebrow">{% trans "Executive overview" %}</p>
+  <h1>{% trans "Finance" %}</h1>
+  <a class="button button-secondary" href="{% url 'export_finance' %}">{% trans "Export" %}</a>
+</section>
+
+<section class="dashboard-grid" aria-label="{% trans 'Company total' %}">
+  <article class="metric-card"><span>{% trans "Revenue" %}</span><strong>{{ totals.revenue }} EUR</strong></article>
+  <article class="metric-card"><span>{% trans "Cost" %}</span><strong>-{{ totals.cost }} EUR</strong></article>
+  <article class="metric-card"><span>{% trans "Net" %}</span><strong>{{ totals.net }} EUR</strong></article>
+</section>
+
+<div class="grid-2">
+  <section class="panel">
+    <p class="eyebrow">{% trans "All offices" %}</p>
+    <h2>{% trans "Monthly trend by office" %}</h2>
+    {{ office_trend_chart_data|json_script:"chart-data-finance-executive-trend" }}
+    <figure class="chart-figure">
+      <figcaption>{% trans "Net result by month, one line per office" %}</figcaption>
+      <div class="chart-canvas-wrap">
+        <canvas data-chart="office-trend" data-chart-data="chart-data-finance-executive-trend"
+                role="img" aria-label="{% trans 'Net result by month, one line per office' %}"></canvas>
+      </div>
+    </figure>
+  </section>
+
+  <section class="panel">
+    <p class="eyebrow">{% trans "Company total" %}</p>
+    <h2>{% trans "Margin" %}</h2>
+    {{ gauge_chart_data|json_script:"chart-data-finance-executive-gauge" }}
+    {% blocktrans asvar gauge_aria_label %}Margin gauge: {{ margin_pct }}% of revenue{% endblocktrans %}
+    <figure class="chart-figure">
+      <figcaption>{% trans "Net as a share of revenue" %}</figcaption>
+      <div class="chart-canvas-wrap chart-canvas-wrap--gauge">
+        <canvas data-chart="gauge" data-chart-data="chart-data-finance-executive-gauge"
+                data-label-margin="{% trans 'Margin' %}"
+                role="img" aria-label="{{ gauge_aria_label }}"></canvas>
+        <div class="chart-gauge-value" aria-hidden="true">{{ margin_pct }}%<small>{% trans "margin" %}</small></div>
+      </div>
+    </figure>
+  </section>
+</div>
+
+<section class="panel">
+  <p class="eyebrow">{% trans "All offices" %}</p>
+  <h2>{% trans "Profit/loss by office" %}</h2>
+  {% if office_results %}
+    {{ office_chart_data|json_script:"chart-data-finance-executive-office" }}
+    <div class="chart-canvas-wrap chart-canvas-wrap--compact">
+      <canvas data-chart="diverging" data-chart-data="chart-data-finance-executive-office"
+              role="img" aria-label="{% trans 'Net result by office chart' %}"></canvas>
+    </div>
+  {% endif %}
+  <dl class="detail-grid">
+    {% for office in office_results %}
+      <div><dt>{{ office.office }}</dt><dd class="amount{% if office.net < 0 %} amount-neg{% else %} amount-pos{% endif %}">{{ office.net }} EUR</dd></div>
+    {% empty %}
+      <div><dd>{% trans "No financial months." %}</dd></div>
+    {% endfor %}
+  </dl>
+</section>
+
+<section class="panel">
+  <p class="eyebrow">{% trans "Company total" %}</p>
+  <h2>{% trans "Yearly results" %}</h2>
+  <ul class="plain-list">
+    {% for y in years %}
+      <li><a href="{% url 'finance_year' y.year %}">{{ y.year }}</a> — {% trans "Net" %}: <span class="amount{% if y.net < 0 %} amount-neg{% endif %}">{{ y.net }} EUR</span></li>
+    {% empty %}
+      <li>{% trans "No financial months." %}</li>
+    {% endfor %}
+  </ul>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script defer src="{% static 'vendor/chart.min.js' %}"></script>
+<script defer src="{% static 'src/js/charts.js' %}"></script>
+{% endblock %}

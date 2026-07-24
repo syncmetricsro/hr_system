@@ -1,0 +1,16 @@
+{% extends "help/_base.html" %}
+{% load i18n %}
+
+{% block help_title %}{% trans "Feedback: links, QR codes, and submissions" %}{% endblock %}
+{% block help_heading %}{% trans "Feedback: links, QR codes, and submissions" %}{% endblock %}
+
+{% block help_content %}
+  <h2>{% trans "Creating a feedback link" %}</h2>
+  <p>{% blocktrans %}A feedback link is a tokenized, public web address — no worker account or login involved — optionally tied to a specific project. Each link gets its own QR code automatically, so it can be shared as a URL or scanned from a printed flyer.{% endblocktrans %}</p>
+
+  <h2>{% trans "The printable flyer" %}</h2>
+  <p>{% blocktrans %}Next to each link's on-screen QR code, "Download PDF" produces a one-page, printable flyer combining the QR code with the link's label — ready to print and post somewhere workers will see it.{% endblocktrans %}</p>
+
+  <h2>{% trans "Reviewing submissions" %}</h2>
+  <p>{% blocktrans %}Submissions are anonymous and appear in the Feedback inbox, newest first, each showing its message, an optional rating, and which link it came from. Only Managers can view the inbox. Submissions are retained for a limited window and purged automatically after that.{% endblocktrans %}</p>
+{% endblock %}

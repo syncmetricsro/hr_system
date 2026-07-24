@@ -45,7 +45,7 @@ def projects_csv(request: HttpRequest) -> HttpResponse:
             project.code,
             project.name,
             project.partner,
-            project.office,
+            project.office.name if project.office else "",
             "yes" if project.is_active else "no",
             "yes" if project.financial_reporting_eligible else "no",
             project.assignments.filter(status=AssignmentStatus.ACTIVE).count(),

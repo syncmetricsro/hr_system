@@ -9,7 +9,7 @@ from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
 
 from core.accounts.permissions import Action, require_action
-from core.ui.qr import qr_svg
+from core.ui.qr import qr_pdf, qr_svg
 from features.feedback.models import FeedbackLink, FeedbackSubmission
 from core.projects.models import Project
 from core.audit.services import record_event
@@ -51,6 +51,19 @@ def feedback_inbox(request: HttpRequest) -> HttpResponse:
             "projects": Project.objects.filter(is_active=True),
         },
     )
+
+
+@require_action(Action.FEEDBACK_VIEW)
+def feedback_link_pdf(request: HttpRequest, pk: int) -> HttpResponse:
+    """Downloadable, printable one-page flyer (QR + label + URL) for a
+    feedback link - staff print it and post it where workers will see it
+    (docs/product/feedback-flyer-design.md)."""
+    link = get_object_or_404(FeedbackLink, pk=pk)
+    url = request.build_absolute_uri(reverse("feedback_form", args=[link.token]))
+    pdf_bytes = qr_pdf(url, label=link.label)
+    response = HttpResponse(pdf_bytes, content_type="application/pdf")
+    response["Content-Disposition"] = f'attachment; filename="feedback-{link.token}.pdf"'
+    return response
 
 
 @require_POST

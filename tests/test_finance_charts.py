@@ -13,6 +13,7 @@ if not django_apps.is_installed("features.finance"):
 
 from django.urls import reverse
 
+from core.offices.models import Office
 from features.finance.models import FinanceCategory, FinanceCategoryKind, FinanceGroup, FinancialMonth
 from features.finance.services import record_financial_month, set_line_item
 from core.projects.models import Project
@@ -34,8 +35,10 @@ def setup(django_user_model):
     actor = django_user_model.objects.create_user(
         email="m@demo.jober.test", password="x", role="manager"
     )
-    p1 = Project.objects.create(name="DHL", code="DHLBA")
-    p2 = Project.objects.create(name="WEBASTO", code="WEB")
+    office = Office.objects.create(name="Test Office", code="TESTOFF", country="SK")
+    actor.offices.set([office])
+    p1 = Project.objects.create(name="DHL", code="DHLBA", office=office)
+    p2 = Project.objects.create(name="WEBASTO", code="WEB", office=office)
     month1 = record_financial_month(p1, 2026, 5, "18000", "12000", actor=actor)
     record_financial_month(p2, 2026, 5, "9000", "7000", actor=actor)
     wage = FinanceCategory.objects.create(
@@ -69,6 +72,12 @@ def test_finance_summary_renders_expected_canvases_and_trend_data(client, setup)
 
     group = extract_json_script(body, "chart-data-finance-summary-group")
     assert "labels" in group and "net" in group
+
+    # Regional diverging chart moved here from the Reports/Overview page
+    # (features/finance/panels.py::company_totals_panel, now deleted).
+    regional = extract_json_script(body, "chart-data-finance-summary-regional")
+    assert regional["labels"] == ["Test Office"]
+    assert Decimal(regional["net"][0]) == Decimal("8000")
 
 
 def test_finance_year_renders_trend_and_project_charts(client, setup):

@@ -1,6 +1,16 @@
+import os
+
 from clients.jober.settings import *  # noqa: F403
 
 DEBUG = False
+
+# Points at the Dokku persistent-storage mount in real deployments
+# (docs/product/avatar-design.md — `dokku storage:mount <app>
+# /var/lib/dokku/data/storage/<app>-media:/app/media`, served by an nginx
+# alias, never through this Django process). Defaults to the base setting
+# so local/staging smoke runs without the mount still work.
+if os.environ.get("MEDIA_ROOT"):
+    MEDIA_ROOT = os.environ["MEDIA_ROOT"]  # noqa: F405
 
 SECURE_SSL_REDIRECT = env_bool("DJANGO_SECURE_SSL_REDIRECT", True)  # noqa: F405
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")

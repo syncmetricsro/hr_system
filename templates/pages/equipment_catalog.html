@@ -1,5 +1,5 @@
 {% extends "layouts/base.html" %}
-{% load i18n nav %}
+{% load i18n nav icons %}
 
 {% block title %}{% trans "Equipment catalogue" %} · {{ BRAND_NAME }}{% endblock %}
 
@@ -7,8 +7,8 @@
 <section class="page-head">
   <p class="eyebrow">{% trans "Logistics" %}</p>
   <h1>{% trans "Equipment catalogue" %}</h1>
-  <a class="button button-primary" href="{% url 'equipment_create' %}">{% trans "Add equipment item" %}</a>
-  {% if stock_enabled %}<a class="button button-secondary" href="{% url 'equipment_stock' %}">{% trans "Warehouse stock" %}</a>{% endif %}
+  <a class="button button-primary" href="{% url 'equipment_create' %}">{% icon "add" %}{% trans "Add equipment item" %}</a>
+  {% if stock_enabled %}<a class="button button-secondary" href="{% url 'equipment_stock' %}">{% icon "warehouse" %}{% trans "Warehouse stock" %}</a>{% endif %}
 </section>
 
 <section class="panel workflow-panel">
@@ -33,7 +33,7 @@
         {% if not item.is_active %}<span class="badge">{% trans "Inactive" %}</span>{% endif %}
       </div>
       <dl><div><dt>{% trans "Unit price" %}</dt><dd>{{ item.unit_price }} EUR</dd></div></dl>
-      <a class="button button-secondary" href="{% url 'equipment_edit' item.pk %}">{% trans "Edit" %}</a>
+      <a class="button button-secondary" href="{% url 'equipment_edit' item.pk %}">{% icon "edit" %}{% trans "Edit" %}</a>
     </article>
   {% empty %}
     <p>{% trans "No equipment items found." %}</p>

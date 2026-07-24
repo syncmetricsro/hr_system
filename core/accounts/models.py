@@ -5,6 +5,8 @@ from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from core.media import avatar_upload_path
+
 
 class Role(models.TextChoices):
     """The four fixed internal roles. No per-user permission matrices (plan §8)."""
@@ -56,6 +58,18 @@ class User(AbstractUser):
         max_length=20,
         choices=Role.choices,
         default=Role.OBSERVER,
+    )
+    offices = models.ManyToManyField(
+        "offices.Office",
+        related_name="staff",
+        blank=True,
+        verbose_name=_("offices"),
+    )
+    # Self-service (docs/product/avatar-design.md) - same trust boundary as
+    # changing your own password, guarded by request.user.pk == target.pk,
+    # not a role check.
+    avatar = models.ImageField(
+        _("avatar"), upload_to=avatar_upload_path, blank=True, null=True
     )
 
     USERNAME_FIELD = "email"

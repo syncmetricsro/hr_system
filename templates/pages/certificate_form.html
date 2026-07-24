@@ -1,0 +1,22 @@
+{% extends "layouts/base.html" %}
+{% load i18n %}
+
+{% block title %}{% if certificate %}{% trans "Edit certificate" %}{% else %}{% trans "Add certificate" %}{% endif %} · {{ BRAND_NAME }}{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <p class="eyebrow">{{ person }}</p>
+  <h1>{% if certificate %}{% trans "Edit certificate" %}{% else %}{% trans "Add certificate" %}{% endif %}</h1>
+  <a class="button button-secondary" href="{% url 'person_detail' person.pk %}">{% trans "Cancel" %}</a>
+</section>
+<section class="panel workflow-panel">
+  <form class="stack" method="post" enctype="multipart/form-data">{% csrf_token %}{{ form.non_field_errors }}
+    {% for field in form %}<label>{{ field.label }}{{ field }}{{ field.errors }}</label>{% endfor %}
+    <label>{% trans "Document" %}
+      <input type="file" name="document" accept="image/jpeg,image/png,image/webp,application/pdf">
+    </label>
+    {% if certificate.document %}<p class="eyebrow"><a href="{{ certificate.document.url }}" target="_blank" rel="noopener">{% trans "Current document" %}</a> — {% trans "uploading a new file replaces it" %}</p>{% endif %}
+    <button class="button button-primary" type="submit">{% trans "Save certificate" %}</button>
+  </form>
+</section>
+{% endblock %}

@@ -1,5 +1,5 @@
 {% extends "layouts/base.html" %}
-{% load i18n %}
+{% load i18n icons %}
 
 {% block title %}{{ heading }} · {{ BRAND_NAME }}{% endblock %}
 
@@ -15,7 +15,7 @@
     {% csrf_token %}
     {{ form.as_p }}
     <div id="age-warning" aria-live="polite">{% include "partials/person_age_warning.html" %}</div>
-    <button class="button button-primary" type="submit">{% trans "Save" %}</button>
+    <button class="button button-primary" type="submit">{% icon "save" %}{% trans "Save" %}</button>
   </form>
 </section>
 {% endblock %}

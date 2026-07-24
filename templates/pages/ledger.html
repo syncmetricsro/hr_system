@@ -1,5 +1,5 @@
 {% extends "layouts/base.html" %}
-{% load i18n rbac %}
+{% load i18n rbac icons %}
 
 {% block title %}{% trans "Advances & deductions" %} · {{ BRAND_NAME }}{% endblock %}
 
@@ -37,7 +37,7 @@
       </select></label>
     <label><span>{% trans "Amount (EUR)" %}</span><input type="number" name="amount" min="0.01" step="0.01" required></label>
     <label><span>{% trans "Note" %}</span><input type="text" name="note"></label>
-    <button class="button button-primary" type="submit">{% trans "Record" %}</button>
+    <button class="button button-primary" type="submit">{% icon "add" %}{% trans "Record" %}</button>
   </form>
 </article>
 {% endif %}

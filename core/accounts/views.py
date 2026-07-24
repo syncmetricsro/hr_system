@@ -12,10 +12,14 @@ from django.views.decorators.http import require_http_methods
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect
 from django.utils import timezone
+from django.utils.http import url_has_allowed_host_and_scheme
+from django.views.decorators.http import require_POST
 
 from core.accounts import totp as totp_lib
 from core.audit.services import record_event
+from core.media import AvatarUploadError, process_avatar_upload
 from core.notifications.services import start_notification_session
 from core.ui.qr import qr_svg
 
@@ -128,3 +132,47 @@ def two_factor_setup(request: HttpRequest) -> HttpResponse:
         "pages/two_factor_setup.html",
         {"device": device, "uri": uri, "qr_svg": qr_svg(uri), "error": error},
     )
+
+
+def _safe_next(request: HttpRequest) -> str:
+    """Same open-redirect guard already used by notification_dismiss
+    (core/notifications/views.py) - a posted `next` value must resolve to
+    this host or it's ignored."""
+    from django.urls import reverse
+
+    next_url = request.POST.get("next", "")
+    if not url_has_allowed_host_and_scheme(next_url, allowed_hosts={request.get_host()}):
+        next_url = reverse("reports")
+    return next_url
+
+
+@login_required
+@require_POST
+def avatar_upload(request: HttpRequest) -> HttpResponse:
+    """Self-service own-avatar upload (docs/product/avatar-design.md) - same
+    trust boundary as changing your own password, no Action needed."""
+    uploaded = request.FILES.get("avatar")
+    if not uploaded:
+        messages.error(request, _("No file was selected."))
+        return redirect(_safe_next(request))
+    try:
+        processed = process_avatar_upload(uploaded)
+    except AvatarUploadError as exc:
+        messages.error(request, str(exc))
+        return redirect(_safe_next(request))
+
+    had_avatar = bool(request.user.avatar)
+    request.user.avatar.save("avatar.webp", processed, save=True)
+    record_event(request.user, "user.avatar_replaced" if had_avatar else "user.avatar_added", target=request.user)
+    messages.success(request, _("Avatar updated."))
+    return redirect(_safe_next(request))
+
+
+@login_required
+@require_POST
+def avatar_remove(request: HttpRequest) -> HttpResponse:
+    if request.user.avatar:
+        request.user.avatar.delete(save=True)
+        record_event(request.user, "user.avatar_removed", target=request.user)
+        messages.success(request, _("Avatar removed."))
+    return redirect(_safe_next(request))

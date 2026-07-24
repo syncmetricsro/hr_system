@@ -29,6 +29,7 @@ from features.finance.services import (
     set_line_item,
     yearly_totals,
 )
+from core.offices.models import Office
 from core.projects.models import Project
 
 pytestmark = pytest.mark.django_db
@@ -39,7 +40,9 @@ def setup(django_user_model):
     actor = django_user_model.objects.create_user(
         email="m@demo.jober.test", password="x", role="manager"
     )
-    project = Project.objects.create(name="DHL", code="DHLBA")
+    office = Office.objects.create(name="Test Office", code="TESTOFF", country="SK")
+    actor.offices.set([office])
+    project = Project.objects.create(name="DHL", code="DHLBA", office=office)
     month = FinancialMonth.objects.create(project=project, year=2026, month=5)
     wage = FinanceCategory.objects.create(
         label="Gross wage", kind=FinanceCategoryKind.COST, group=FinanceGroup.LABOUR

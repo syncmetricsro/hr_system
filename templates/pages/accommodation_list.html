@@ -1,5 +1,5 @@
 {% extends "layouts/base.html" %}
-{% load i18n rbac %}
+{% load i18n rbac icons %}
 
 {% block title %}{% trans "Accommodation" %} · {{ BRAND_NAME }}{% endblock %}
 
@@ -9,7 +9,7 @@
   <h1>{% trans "Accommodation" %}</h1>
   {% can 'accommodation.manage' as may_costs %}
   {% if may_costs %}<a class="button button-secondary" href="{% url 'accommodation_costs' %}">{% trans "Cost report" %}</a>{% endif %}
-  {% if can_manage %}<a class="button button-primary" href="{% url 'accommodation_create' %}">{% trans "Create location" %}</a>{% endif %}
+  {% if can_manage %}<a class="button button-primary" href="{% url 'accommodation_create' %}">{% icon "add" %}{% trans "Create location" %}</a>{% endif %}
 </section>
 
 <section class="panel workflow-panel">

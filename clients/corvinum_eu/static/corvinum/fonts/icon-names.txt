@@ -42,3 +42,8 @@ verified
 verified_user
 work_off
 workspace_premium
+medical_services
+forklift
+construction
+factory
+badge

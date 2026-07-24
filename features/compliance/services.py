@@ -3,10 +3,14 @@ from __future__ import annotations
 import datetime as dt
 
 from django.conf import settings
+from django.db import transaction
 
 from core.accounts.models import Role
+from core.audit.services import record_event
+from core.media import process_certificate_document
 from core.people.models import LifecycleStatus, Person
 from core.projects.models import AssignmentStatus
+from features.compliance.models import Certificate
 
 # Severity ranking for sorting (worst first).
 _RANK = {"expired": 0, "missing": 1, "expiring": 2}
@@ -29,6 +33,22 @@ def _severity(expiry: dt.date, today: dt.date, alert_days: int) -> str | None:
     if expiry <= today + dt.timedelta(days=alert_days):
         return "expiring"
     return None
+
+
+def most_relevant_certificate(certs: list[Certificate], today: dt.date) -> Certificate:
+    """When a person holds more than one certificate in the same category
+    (renewal history), pick the one whose icon should represent that
+    category (docs/product/pill-system-design.md §2): the soonest-expiring
+    non-expired row if one exists, else the most severe (most-expired) row.
+    A certificate with no expiry date never expires, so it counts as valid;
+    among several valid rows, a dated one sorts before an undated one only
+    if it's the sole valid option's deciding factor - undated rows are
+    never "urgent" so they never win over a soon-expiring dated row.
+    """
+    valid = [c for c in certs if c.expiry_date is None or c.expiry_date >= today]
+    if valid:
+        return min(valid, key=lambda c: c.expiry_date or dt.date.max)
+    return min(certs, key=lambda c: c.expiry_date)
 
 
 def compliance_alerts(viewer=None) -> list[dict]:
@@ -76,3 +96,55 @@ def compliance_alerts(viewer=None) -> list[dict]:
 
     alerts.sort(key=lambda a: (_RANK[a["severity"]], a["due"] or dt.date.min))
     return alerts
+
+
+# --- Certificate document CRUD (docs/product/certificate-upload-design.md) -
+
+@transaction.atomic
+def save_certificate(certificate: Certificate, *, actor, uploaded_file=None, creating: bool) -> Certificate:
+    """Save a certificate's metadata and, if given, its document — audited as
+    a single event covering whichever changed (§5). Raises
+    ``CertificateUploadError`` if ``uploaded_file`` fails validation; nothing
+    is persisted in that case.
+    """
+    replacing_document = bool(uploaded_file)
+    if uploaded_file:
+        content, ext = process_certificate_document(uploaded_file)
+    certificate.save()
+    if uploaded_file:
+        certificate.document.save(f"cert.{ext}", content, save=True)
+
+    if creating:
+        action = "certificate.uploaded"
+    elif replacing_document:
+        action = "certificate.replaced"
+    else:
+        action = "certificate.updated"
+    record_event(
+        actor,
+        action,
+        target=certificate,
+        person=certificate.person_id,
+        category=certificate.category,
+        name=certificate.name,
+    )
+    return certificate
+
+
+def delete_certificate(certificate: Certificate, *, actor) -> None:
+    person_id = certificate.person_id
+    category = certificate.category
+    name = certificate.name
+    pk = certificate.pk
+    if certificate.document:
+        certificate.document.delete(save=False)
+    certificate.delete()
+    record_event(
+        actor,
+        "certificate.deleted",
+        target=None,
+        certificate_id=pk,
+        person=person_id,
+        category=category,
+        name=name,
+    )

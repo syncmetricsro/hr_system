@@ -1,16 +1,45 @@
 {% extends "layouts/base.html" %}
-{% load i18n rbac nav %}
+{% load i18n rbac nav icons avatars %}
 
 {% block title %}{{ person }} · {{ BRAND_NAME }}{% endblock %}
 
 {% block content %}
 <section class="page-head">
+  {% can 'intake.create_edit' as may_edit %}
+  {% if may_edit %}
+    <form class="avatar-form" action="{% url 'person_avatar_upload' person.pk %}" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <label class="avatar-upload-label" data-tooltip="{% trans 'Change this person\'s avatar' %}">
+        {% avatar person size="lg" %}
+        {% status_pill person size="label" %}
+        <input type="file" name="avatar" accept="image/jpeg,image/png,image/webp" onchange="this.form.submit()" class="sr-only">
+      </label>
+    </form>
+    {% if person.avatar %}
+      <form action="{% url 'person_avatar_remove' person.pk %}" method="post">
+        {% csrf_token %}
+        <button class="icon-button" type="submit" data-confirm="{% trans 'Remove this avatar?' %}">{% icon "delete" size="sm" %}</button>
+      </form>
+    {% endif %}
+  {% else %}
+    <span class="avatar-stack">
+      {% avatar person size="lg" %}
+      {% status_pill person size="label" %}
+    </span>
+  {% endif %}
+  {% person_badges person as cert_badges %}
+  {% if cert_badges %}
+    <span class="cert-badges">
+      {% for badge in cert_badges %}
+        <span class="{% if badge.severity %}cert-badge-{{ badge.severity }}{% endif %}" data-tooltip="{{ badge.tooltip }}">{% icon badge.icon size="md" %}</span>
+      {% endfor %}
+    </span>
+  {% endif %}
   <p class="eyebrow">{% trans "Person" %} · {{ person.get_lifecycle_status_display }}</p>
   <h1>{{ person }}</h1>
   <a class="button button-secondary" href="{% url 'people_list' %}">{% trans "Back to people" %}</a>
-  {% can 'intake.create_edit' as may_edit %}
   {% if may_edit %}
-    <a class="button button-secondary" href="{% url 'person_edit' person.pk %}">{% trans "Edit" %}</a>
+    <a class="button button-secondary" href="{% url 'person_edit' person.pk %}">{% icon "edit" %}{% trans "Edit" %}</a>
   {% endif %}
 </section>
 
@@ -52,15 +81,15 @@
       <div class="action-row">
         <form method="post" action="{% url 'trial_outcome' pending_trial.pk %}">
           {% csrf_token %}<input type="hidden" name="outcome" value="pass">
-          <button class="button button-secondary" type="submit">{% trans "Pass" %}</button>
+          <button class="button button-secondary" type="submit" data-tooltip="{% trans 'Marks the trial as passed and moves the person toward readiness for activation.' %}">{% icon "approve" %}{% trans "Pass" %}</button>
         </form>
         <form method="post" action="{% url 'trial_outcome' pending_trial.pk %}">
           {% csrf_token %}<input type="hidden" name="outcome" value="fail">
-          <button class="button button-secondary" type="submit">{% trans "Fail" %}</button>
+          <button class="button button-secondary" type="submit" data-tooltip="{% trans 'Marks the trial as failed. The person will need a new trial before activation.' %}">{% icon "reject" %}{% trans "Fail" %}</button>
         </form>
         <form method="post" action="{% url 'trial_outcome' pending_trial.pk %}">
           {% csrf_token %}<input type="hidden" name="outcome" value="no_show">
-          <button class="button button-secondary" type="submit">{% trans "No-show" %}</button>
+          <button class="button button-secondary" type="submit" data-tooltip="{% trans 'Records that the person did not show up for the trial.' %}">{% trans "No-show" %}</button>
         </form>
       </div>
     {% else %}
@@ -121,12 +150,12 @@
         <label{% if readiness_future_medical_date %} class="readiness-field-error"{% endif %}>{% trans "Entry medical date" %}
           <input type="date" name="entry_medical_date" value="{{ readiness.entry_medical_date|date:'Y-m-d' }}">
         </label>
-        <button class="button button-secondary" type="submit">{% trans "Save readiness" %}</button>
+        <button class="button button-secondary" type="submit">{% icon "save" %}{% trans "Save readiness" %}</button>
       </form>
       <form class="activate-form" method="post" action="{% url 'activate_person' person.pk %}">
         {% csrf_token %}
         <input type="hidden" name="project" value="{{ passed_trial.project.pk }}">
-        <button class="button button-primary" type="submit">{% trans "Activate (Working)" %}</button>
+        <button class="button button-primary" type="submit" data-tooltip="{% trans 'Activates the person into Working status on this project.' %}">{% trans "Activate (Working)" %}</button>
         {% if is_ready %}
           <span class="eyebrow">{% trans "Ready to activate" %}</span>
         {% else %}
@@ -206,9 +235,9 @@
     {% if person.inactive_since %} · {% trans "Since" %} {{ person.inactive_since }}{% endif %}
   </p>
   {% if can_recycle %}
-    <form method="post" action="{% url 'recycle_person' person.pk %}">
+    <form method="post" action="{% url 'recycle_person' person.pk %}" data-confirm="{% trans 'This reactivates the person from Inactive, setting their status to Available.' %}">
       {% csrf_token %}
-      <button class="button button-primary" type="submit">{% trans "Recycle to Available" %}</button>
+      <button class="button button-primary" type="submit">{% icon "recycle" %}{% trans "Recycle to Available" %}</button>
     </form>
   {% endif %}
 </section>
@@ -222,7 +251,7 @@
   <form class="people-search" method="post" action="{% url 'archive_person' person.pk %}" data-confirm="{% trans 'This archives the person from the operational list. It does not delete their record, audit history, or blacklist protection.' %}">
     {% csrf_token %}
     <input type="text" name="reason" required aria-label="{% trans 'Archive reason' %}" placeholder="{% trans 'Archive reason' %}">
-    <button class="button button-secondary" type="submit">{% trans "Archive person" %}</button>
+    <button class="button button-secondary" type="submit">{% icon "archive" %}{% trans "Archive person" %}</button>
   </form>
 </section>
 {% endif %}

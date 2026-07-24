@@ -11,6 +11,7 @@ Slots:
 - form extensions — extra intake-form fields + post-create handlers
 - exit relevance  — "does this person still hold feature resources?" checks
 - finance series  — period-keyed person money data merged by core
+- person badges   — small icon row beside a person's avatar (list + detail)
 """
 
 from __future__ import annotations
@@ -36,6 +37,12 @@ _report_tiles: list[dict] = []
 _report_panels: list[dict] = []
 # Each provider returns a label and period -> (Decimal, currency) values.
 _person_finance_series: list[dict] = []
+# Keyed by nav-tab slot ("compliance", "reviews", ...); each entry:
+# {"context": fn(request) -> {"count": int, "severe": bool}|None, "order": int}
+_nav_badges: dict[str, list[dict]] = {}
+# Each: {"context": fn(request, person) -> list[dict]|None, "order": int}.
+# Each returned dict: {"icon": str, "tooltip": str, "severity": "expired"|"expiring"|None}
+_person_badges: list[dict] = []
 
 
 def register_person_banner(template: str, context, order: int = 100) -> None:
@@ -76,6 +83,44 @@ def register_person_finance_series(provider, order: int = 100) -> None:
     entry = {"provider": provider, "order": order}
     if entry not in _person_finance_series:
         _person_finance_series.append(entry)
+
+
+def register_nav_badge(slot: str, context, order: int = 100) -> None:
+    """Register an attention-count provider for a nav tab (docs/product/
+    pill-system-design.md §3), e.g. ``register_nav_badge("compliance", ...)``.
+    ``context(request) -> {"count": int, "severe": bool} | None``."""
+    entry = {"context": context, "order": order}
+    bucket = _nav_badges.setdefault(slot, [])
+    if entry not in bucket:
+        bucket.append(entry)
+
+
+def register_person_badges(context, order: int = 100) -> None:
+    """Register a small-icon-row provider for a person, shown on both the
+    worker list and the person-detail header (docs/product/
+    pill-system-design.md §2's deferred Phase 2 - the list-row slot that
+    didn't exist when §1/§3 shipped). ``context(request, person) ->
+    list[{"icon": str, "tooltip": str, "severity": str|None}] | None``."""
+    entry = {"context": context, "order": order}
+    if entry not in _person_badges:
+        _person_badges.append(entry)
+
+
+def person_badges(request, person) -> list[dict]:
+    badges: list[dict] = []
+    for entry in sorted(_person_badges, key=lambda e: e["order"]):
+        result = entry["context"](request, person)
+        if result:
+            badges.extend(result)
+    return badges
+
+
+def nav_badge(request, slot: str) -> dict | None:
+    for entry in sorted(_nav_badges.get(slot, []), key=lambda e: e["order"]):
+        ctx = entry["context"](request)
+        if ctx is not None:
+            return ctx
+    return None
 
 
 def _render_slot(slot: list[dict], request, person) -> list[dict]:

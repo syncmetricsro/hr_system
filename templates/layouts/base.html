@@ -1,4 +1,4 @@
-{% load static i18n rbac nav %}
+{% load static i18n rbac nav avatars icons %}
 {% get_current_language as DOCUMENT_LANGUAGE %}
 <!doctype html>
 <html class="theme-{{ CLIENT_DEFAULT_THEME }}" lang="{{ DOCUMENT_LANGUAGE|default:'sk' }}" data-theme-default="{{ CLIENT_DEFAULT_THEME }}" data-theme-storage-key="{{ CLIENT_THEME_STORAGE_KEY }}">
@@ -35,19 +35,20 @@
         {% flag_on 'recruitment_trials' as has_trials %}
         {% if has_trials %}<a class="folder-tab {% nav_active 'trials_queue' %}" href="{% url 'trials_queue' %}" data-tooltip="{% trans 'Field' %}"><svg class="nav-icon" aria-hidden="true"><use href="#nav-icon-field"></use></svg><span>{% trans "Field" %}</span></a>{% endif %}
         {% flag_on 'documents' as has_documents %}
-        {% if has_documents %}<a class="folder-tab {% nav_active 'compliance_list' %}" href="{% url 'compliance_list' %}" data-tooltip="{% trans 'Compliance' %}"><svg class="nav-icon" aria-hidden="true"><use href="#nav-icon-compliance"></use></svg><span>{% trans "Compliance" %}</span></a>{% endif %}
+        {% if has_documents %}<a class="folder-tab {% nav_active 'compliance_list' %}" href="{% url 'compliance_list' %}" data-tooltip="{% trans 'Compliance' %}"><svg class="nav-icon" aria-hidden="true"><use href="#nav-icon-compliance"></use></svg><span>{% trans "Compliance" %}</span>{% nav_badge "compliance" %}</a>{% endif %}
         {% flag_on 'accommodation' as has_accommodation %}
         {% if has_accommodation %}<a class="folder-tab {% nav_active 'accommodation_list' 'accommodation_detail' 'accommodation_costs' %}" href="{% url 'accommodation_list' %}" data-tooltip="{% trans 'Accommodation' %}"><svg class="nav-icon" aria-hidden="true"><use href="#nav-icon-accommodation"></use></svg><span>{% trans "Accommodation" %}</span></a>{% endif %}
         {% flag_on 'transport' as has_transport %}
         {% if has_transport %}<a class="folder-tab {% nav_active 'transport_trends' %}" href="{% url 'transport_trends' %}" data-tooltip="{% trans 'Transport' %}"><svg class="nav-icon" aria-hidden="true"><use href="#nav-icon-transport"></use></svg><span>{% trans "Transport" %}</span></a>{% endif %}
         <a class="folder-tab {% nav_active 'dashboard' 'reports' %}" href="{% url 'reports' %}" data-tooltip="{% trans 'Reports' %}"><svg class="nav-icon" aria-hidden="true"><use href="#nav-icon-reports"></use></svg><span>{% trans "Reports" %}</span></a>
+        <a class="folder-tab {% nav_active 'help_index' 'help_article' %}" href="{% url 'help_index' %}" data-tooltip="{% trans 'Help' %}"><svg class="nav-icon" aria-hidden="true"><use href="#nav-icon-help"></use></svg><span>{% trans "Help" %}</span></a>
         {% can 'audit.view' as may_audit %}
         {% if may_audit %}<a class="folder-tab {% nav_active 'audit_log' %}" href="{% url 'audit_log' %}" data-tooltip="{% trans 'Audit' %}"><svg class="nav-icon" aria-hidden="true"><use href="#nav-icon-audit"></use></svg><span>{% trans "Audit" %}</span></a>{% endif %}
         {% can 'equipment.review_deduction' as may_equip_review %}
         {% flag_on 'equipment' as has_equipment %}
-        {% if may_equip_review and has_equipment %}<a class="folder-tab {% nav_active 'equipment_reviews' %}" href="{% url 'equipment_reviews' %}" data-tooltip="{% trans 'Reviews' %}"><svg class="nav-icon" aria-hidden="true"><use href="#nav-icon-reviews"></use></svg><span>{% trans "Reviews" %}</span></a>{% endif %}
+        {% if may_equip_review and has_equipment %}<a class="folder-tab {% nav_active 'equipment_reviews' %}" href="{% url 'equipment_reviews' %}" data-tooltip="{% trans 'Reviews' %}"><svg class="nav-icon" aria-hidden="true"><use href="#nav-icon-reviews"></use></svg><span>{% trans "Reviews" %}</span>{% nav_badge "reviews" %}</a>{% endif %}
         {% can 'equipment.view_stock' as may_view_stock %}
-        {% if may_view_stock and has_equipment %}<a class="folder-tab {% nav_active 'equipment_stock' 'equipment_stock_receive' %}" href="{% url 'equipment_stock' %}" data-tooltip="{% trans 'Warehouse stock' %}"><svg class="nav-icon" aria-hidden="true"><use href="#nav-icon-reviews"></use></svg><span>{% trans "Warehouse" %}</span></a>{% endif %}
+        {% if may_view_stock and has_equipment %}<a class="folder-tab {% nav_active 'equipment_stock' 'equipment_stock_receive' %}" href="{% url 'equipment_stock' %}" data-tooltip="{% trans 'Warehouse stock' %}"><svg class="nav-icon" aria-hidden="true"><use href="#nav-icon-warehouse"></use></svg><span>{% trans "Warehouse" %}</span></a>{% endif %}
         {% can 'blacklist.decide' as may_blacklist %}
         {% flag_on 'duplicate_blacklist' as has_blacklist %}
         {% if may_blacklist and has_blacklist %}<a class="folder-tab {% nav_active 'blacklist_queue' %}" href="{% url 'blacklist_queue' %}" data-tooltip="{% trans 'Blacklist' %}"><svg class="nav-icon" aria-hidden="true"><use href="#nav-icon-blacklist"></use></svg><span>{% trans "Blacklist" %}</span></a>{% endif %}
@@ -79,6 +80,21 @@
           </select>
         </form>
         {% if user.is_authenticated %}
+          <form class="avatar-form" action="{% url 'avatar_upload' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ request.path }}">
+            <label class="avatar-upload-label" data-tooltip="{% trans 'Change your avatar' %}">
+              {% avatar user size="sm" %}
+              <input type="file" name="avatar" accept="image/jpeg,image/png,image/webp" onchange="this.form.submit()" class="sr-only">
+            </label>
+          </form>
+          {% if user.avatar %}
+            <form class="avatar-remove-form" action="{% url 'avatar_remove' %}" method="post">
+              {% csrf_token %}
+              <input type="hidden" name="next" value="{{ request.path }}">
+              <button class="icon-button" type="submit" data-confirm="{% trans 'Remove your avatar?' %}">{% icon "delete" size="sm" %}</button>
+            </form>
+          {% endif %}
           <span class="account-role" aria-label="{% trans 'Role' %}">{{ user.get_role_display }}</span>
           <form class="logout-form" action="{% url 'logout' %}" method="post">
             {% csrf_token %}

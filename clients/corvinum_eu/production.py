@@ -4,9 +4,15 @@ CorvinumEU client settings. Used by ``scripts/corvinum_app.sh`` (local demo
 over plain HTTP with the secure flags relaxed via env) and later by the real
 deployment (flags left at their secure defaults)."""
 
+import os
+
 from clients.corvinum_eu.settings import *  # noqa: F403
 
 DEBUG = False
+
+# Same Dokku persistent-storage mount pattern as config/settings/production.py.
+if os.environ.get("MEDIA_ROOT"):
+    MEDIA_ROOT = os.environ["MEDIA_ROOT"]  # noqa: F405
 
 SECURE_SSL_REDIRECT = env_bool("DJANGO_SECURE_SSL_REDIRECT", True)  # noqa: F405
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")

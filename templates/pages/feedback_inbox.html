@@ -1,5 +1,5 @@
 {% extends "layouts/base.html" %}
-{% load i18n %}
+{% load i18n icons %}
 
 {% block title %}{% trans "Feedback inbox" %} · {{ BRAND_NAME }}{% endblock %}
 
@@ -16,6 +16,7 @@
     {% for item in links %}
       <li>
         {{ item.link.label }} — <code>{{ item.url }}</code>
+        <a class="button button-secondary" href="{% url 'feedback_link_pdf' item.link.pk %}" data-tooltip="{% trans 'Download a printable PDF flyer with this QR code' %}">{% icon "export" size="sm" %}{% trans "Download PDF" %}</a>
         <details>
           <summary>{% trans "Show QR code" %}</summary>
           <div class="qr-plate">{{ item.qr_svg|safe }}</div>
@@ -32,7 +33,7 @@
       <option value="">—</option>
       {% for p in projects %}<option value="{{ p.pk }}">{{ p.name }}</option>{% endfor %}
     </select>
-    <button class="button button-primary" type="submit">{% trans "Create link" %}</button>
+    <button class="button button-primary" type="submit">{% icon "add" %}{% trans "Create link" %}</button>
   </form>
 </section>
 

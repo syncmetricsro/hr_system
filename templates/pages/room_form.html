@@ -1,5 +1,5 @@
 {% extends "layouts/base.html" %}
-{% load i18n %}
+{% load i18n icons %}
 
 {% block title %}{% if room %}{% trans "Edit room" %}{% else %}{% trans "Add room" %}{% endif %} · {{ BRAND_NAME }}{% endblock %}
 {% block content %}
@@ -11,7 +11,7 @@
 <section class="panel workflow-panel">
   <form class="stack" method="post">{% csrf_token %}{{ form.non_field_errors }}
     {% for field in form %}<label>{{ field.label }}{{ field }}{{ field.errors }}</label>{% endfor %}
-    <button class="button button-primary" type="submit">{% trans "Save room" %}</button>
+    <button class="button button-primary" type="submit">{% icon "save" %}{% trans "Save room" %}</button>
   </form>
 </section>
 {% endblock %}

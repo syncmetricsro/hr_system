@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "core.accounts",
     "core.audit",
+    "core.offices",
     "core.people",
     "core.projects",
     "core.retention",
@@ -126,6 +127,14 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 # One artifact serves every client (§12.4), so collectstatic must gather all
 # client static dirs regardless of which client settings module built it.
 STATICFILES_DIRS = [BASE_DIR / "static"] + sorted((BASE_DIR / "clients").glob("*/static"))
+
+# User-uploaded avatars (docs/product/avatar-design.md). Local filesystem in
+# every environment; production points this at a Dokku persistent-storage
+# mount served by nginx directly, never through Gunicorn/WhiteNoise (the
+# latter snapshots its manifest at process start, so uploads after boot
+# wouldn't be found). Overridden in config/settings/production.py.
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 

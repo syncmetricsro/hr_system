@@ -1,5 +1,5 @@
 {% extends "layouts/base.html" %}
-{% load i18n rbac %}
+{% load i18n rbac icons %}
 
 {% block title %}{{ project.name }} · {{ BRAND_NAME }}{% endblock %}
 
@@ -62,7 +62,7 @@
       {% csrf_token %}
       <input type="date" name="week_start" aria-label="{% trans 'Week start' %}">
       <input type="number" name="headcount" value="0" min="0" aria-label="{% trans 'Headcount' %}">
-      <button class="button button-primary" type="submit">{% trans "Record week" %}</button>
+      <button class="button button-primary" type="submit">{% icon "add" %}{% trans "Record week" %}</button>
     </form>
   {% endif %}
 </section>{% endif %}

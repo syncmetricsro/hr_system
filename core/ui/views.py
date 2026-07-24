@@ -4,7 +4,7 @@ from urllib.parse import urlsplit
 
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
-from django.http import HttpRequest, HttpResponse
+from django.http import Http404, HttpRequest, HttpResponse
 from django.template.response import TemplateResponse
 from django.urls import translate_url
 from django.utils.translation import gettext as _
@@ -14,6 +14,7 @@ from django.views.i18n import set_language as django_set_language
 
 from core.accounts.models import Role
 from core.ui import registry
+from core.ui.help import ARTICLE_TEMPLATES, HELP_GROUPS
 from core.people.models import LifecycleStatus, Person
 from core.people.services import inactive_by_reason
 from core.projects.models import AssignmentStatus, Project, TrialAssignment, TrialOutcome
@@ -116,3 +117,19 @@ def reports(request: HttpRequest) -> TemplateResponse:
 def dashboard(request: HttpRequest) -> HttpResponse:
     """Compatibility route for the former separate Overview page."""
     return reports(request)
+
+
+@login_required
+def help_index(request: HttpRequest) -> TemplateResponse:
+    """Landing page grouping Help articles by module - unconditional, no
+    Action/flag gate (docs/product/help-area-design.md): every role needs
+    documentation regardless of what else they can see."""
+    return TemplateResponse(request, "pages/help_index.html", {"help_groups": HELP_GROUPS})
+
+
+@login_required
+def help_article(request: HttpRequest, slug: str) -> TemplateResponse:
+    template = ARTICLE_TEMPLATES.get(slug)
+    if template is None:
+        raise Http404
+    return TemplateResponse(request, template, {"slug": slug})

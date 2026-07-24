@@ -1,0 +1,15 @@
+{% extends "layouts/base.html" %}
+{% load i18n %}
+
+{% block title %}{% block help_title %}{% trans "Help" %}{% endblock %} · {{ BRAND_NAME }}{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <p class="eyebrow"><a href="{% url 'help_index' %}">{% trans "Help" %}</a></p>
+  <h1>{% block help_heading %}{% endblock %}</h1>
+</section>
+
+<section class="panel help-article">
+  {% block help_content %}{% endblock %}
+</section>
+{% endblock %}

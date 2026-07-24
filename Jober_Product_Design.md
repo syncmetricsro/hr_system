@@ -453,12 +453,32 @@ Do not implement per-user permission matrices in the MVP.
 
 ## 8.1 Visibility principle
 
-Jober's confirmed preference is broad internal read visibility:
+**Target design (2026-07-24, not yet implemented — see status note below):**
+Jober now operates three physical offices (Velký Meder, Győr, Dunajská
+Streda). Offices are access boundaries, not just filters:
 
-- internal roles may view ordinary operational records across all offices;
-- offices are filters and reporting fields, not access boundaries;
-- roles restrict which actions may be performed;
+- an office's recruiter/coordinator/manager staff cannot see another
+  office's people, projects, or financial data;
+- Observer (the company owner/CEO) is the sole role that sees across all
+  offices;
+- roles still restrict which actions may be performed, orthogonally to
+  the office boundary above;
 - every sensitive change is audited.
+
+Full design: `docs/product/jober-multi-office-scoping.md` (data model,
+RBAC mechanics, office principals who can invite staff and assign their
+office(s)); the formal decision record is `docs/adr/0026-office-scoped-
+rbac.md` (**Status: Proposed** — not yet built). Until that ADR is
+activated and implemented, the previous rule below still describes actual
+system behavior; this section states where the product is headed, not
+what's live today.
+
+**Previous rule (superseded by the above once ADR 0026 activates):**
+Jober's earlier confirmed preference was broad internal read visibility —
+internal roles could view ordinary operational records across all
+offices, offices were filters and reporting fields rather than access
+boundaries, roles restricted which actions could be performed, and every
+sensitive change was audited.
 
 Privacy and legal exceptions still apply:
 

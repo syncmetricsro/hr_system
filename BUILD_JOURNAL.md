@@ -1,5 +1,566 @@
 # Build Journal
 
+## 2026-07-24 - In-app Help area (help-area-design.md)
+
+Sixth and final planned backlog item this session (multi-office Phase B
+remains, explicitly out of scope — its own large platform change per ADR
+0026). Asked whether to scope down to a 4-article starter set or build the
+full 8-module set the design doc lists; the user chose the full set.
+
+- New `core/ui/help.py` (article registry, no DB model — hand-authored
+  templates was already decided against Markdown to avoid a new PyPI
+  dependency) plus `help_index`/`help_article` views
+  (`core/ui/views.py`), mounted unconditionally in `config/urls.py` — no
+  `Action` or `flag_on` gate, per the design doc's explicit "every role
+  needs documentation" call.
+- New nav tab, right after Reports, in both shells: a new `nav-icon-help`
+  SVG symbol for Jober; CorvinumEU reuses its already-subsetted `info`
+  Material Symbol rather than triggering another font-subset regeneration
+  for one icon (the pill-system-design.md §2 pipeline from earlier this
+  session).
+- 9 article templates (`templates/help/*.html`) extending a shared
+  `templates/help/_base.html` wrapper, plus a grouped `help_index.html`
+  landing page (`.grid-2`, auto-wrapping — not `.two-column`, which is a
+  fixed 2-panel layout unsuited to 9 groups).
+- **Real translation volume, done properly**: 72 new msgids (39 headings/
+  titles, 33 paragraphs) hand-translated into SK/HU/UK, not machine-
+  translated, as one combined authoring+translation pass per the design
+  doc's own "a partially-translated Help section would be worse than not
+  having one" guidance. `scripts/compile_messages.sh --extract`'s
+  `msgmerge` step fuzzy-matched several new strings against unrelated
+  existing ones (e.g. "Getting started" initially inherited the Slovak
+  translation of an unrelated pre-existing "started" msgid) — caught and
+  fixed per CLAUDE.md's documented fuzzy-match caution, not accepted
+  blind. Applied via `polib` (installed transiently for this one-off
+  authoring task, not an app dependency) rather than hand-editing ~250
+  `.po` entries across 3 files, which would have been impractical to do
+  reliably by hand given gettext's line-wrapping conventions.
+- **Real cross-client nuance caught during live verification, documented
+  as a follow-up rather than silently shipped**: every Help article is
+  visible on every client regardless of that client's feature flags —
+  CorvinumEU sees the Feedback article even though it has no Feedback tab
+  at all (`feedback: False`). The content is accurate, just not relevant
+  to that reader. Per-client article filtering wasn't in the original
+  design doc's scope; noted there as a real, separable follow-up.
+- **Real test-isolation lesson applied preemptively**: given the pills
+  feature's registry-pollution bug earlier this session, the Help
+  registry (`core/ui/help.py`) was deliberately built as static, immutable
+  module-level data (not a mutable registration API tests could leave
+  polluted) — nothing to monkeypatch, nothing to leak between tests.
+- Verified live on both clients with real Playwright screenshots: the
+  English index and a full article page, plus a complete Ukrainian
+  article page (Jober-only language) rendering correctly end to end, and
+  the CorvinumEU sidebar's Slovak-translated Help entry with the reused
+  `info` icon.
+
+## 2026-07-24 - Certificate-validity icons — pill system Phase 2 (pill-system-design.md §2)
+
+Fifth backlog item this session, closing out `pill-system-design.md` fully.
+Two real pieces of new engineering beyond straightforward feature wiring:
+
+- **New generic registry slot**: `register_person_badges`/`person_badges`
+  (`core/ui/registry.py`) plus a `{% person_badges person as badges %}`
+  template tag (`core/ui/templatetags/avatars.py`) — the "extra content in
+  a worker-list row" extension point that didn't exist when §1/§3 shipped.
+  Used identically on the worker list (dot-sized icons,
+  `core/people/views.py::people_list`, now `.prefetch_related("certificates")`)
+  and the person-detail header (larger icons) - one slot, two render sites,
+  matching how `{% avatar %}`/`{% status_pill %}` already work.
+  `features/compliance/panels.py::certificate_badges` groups certificates
+  by category and picks the most relevant row per category via new
+  `features/compliance/services.py::most_relevant_certificate` (soonest-
+  expiring valid row, else most-expired - a no-expiry certificate counts as
+  valid but never "wins" over a genuinely soon-expiring one).
+- **Real font-engineering detour**: CorvinumEU's Material Symbols webfont
+  is a hand-picked 44-glyph subset with nothing medical/forklift/welding-
+  adjacent. Asked whether to reuse an imperfect existing glyph or properly
+  expand the subset, the user chose the latter. New
+  `scripts/subset_corvinum_icons.py` downloads the official Google variable
+  font, pins it to the shipped "24pt Regular" instance (FILL=0, GRAD=0,
+  opsz=24, `wght` stays variable - matches the currently-shipped file's
+  `fvar` exactly), and - the actual finding - prunes the GSUB
+  `LigatureSubst` table at the Python data-structure level *before*
+  subsetting. A plain `fonttools subset --text=medical_services` pull, on
+  this font, retains the entire same-first-letter ligature group (66
+  glyphs for one word; the full 49-name target list ballooned to 3335
+  glyphs) because `LigatureSubst` groups every ligature sharing a first
+  input glyph into one `LigatureSet`, and fonttools' text-driven closure
+  can't prune within it. Manually filtering `ligatures[first_glyph]` down
+  to only the target words first, then re-subsetting, reproduced the
+  shipped file exactly for its existing 44 icons (70 glyphs, byte-for-byte
+  glyph-count match) before adding the 5 new ones (75 total). New mapping:
+  `medical_services` and `forklift` are genuine exact-name matches in
+  Material Symbols; `construction`/`factory` are the closest available
+  stand-ins for crane/welding (no dedicated icons exist for either -
+  acceptable since every icon carries a tooltip naming the actual
+  certificate). New `vendor/fonts`-style provenance entry in
+  `vendor/MANIFEST.md` (Apache-2.0, source URL, regeneration script, hash)
+  even though this asset lives under `clients/corvinum_eu/static/` rather
+  than `vendor/` - it's the first properly hash-pinned entry for a font
+  that previously had none (BUILD_JOURNAL 2026-07-15: "copied from the
+  prototype").
+- **New regression guard**: `test_icons_dict_material_names_are_all_in_the_corvinum_subset`
+  (`tests/test_corvinum_client.py`) - the pre-existing icon-subset test only
+  checked hardcoded `base.html` usages, not the generic `{% icon %}` tag's
+  `ICONS` dict (`core/ui/icons.py`), which is exactly what this feature's
+  5 new entries are. A future icon added to `ICONS` without a matching
+  font-subset entry now fails a test instead of silently rendering raw
+  ligature text on CorvinumEU.
+- New `.badge-danger` CSS class (this doc's own open item) plus
+  `.cert-badges`/`.cert-badge-expired`/`.cert-badge-expiring` for icon
+  tinting - no class needed for valid/no-expiry, which inherits ambient
+  ink color.
+- Demo data: a second certificate (Mira Novakova, expired Health check)
+  added to `seed_demo_scenario.py` so the demo shows two different
+  category icons in two different severity tints.
+- **Real test-isolation bug caught by the new suite, not a fluke**: an
+  early version of the new registry test called `register_person_badges`
+  with a throwaway lambda and no cleanup, permanently polluting the
+  module-level `_person_badges` list for the rest of the pytest session -
+  every person on every subsequent test's rendered page picked up a phantom
+  badge. Fixed with `monkeypatch.setattr` to scope the registration to the
+  single test, verified by re-running the full file (order-dependent
+  failure gone).
+- Verified live on both clients with real Playwright screenshots against
+  freshly rebuilt (not bind-mounted) images: zoomed crops confirmed the
+  status-pill/cert-icon colors are genuinely distinguishable at real size,
+  and - the meaningful check - a temporary CorvinumEU certificate row
+  rendered both new icons correctly shaped and correctly tinted through the
+  regenerated font subset in an actual browser, not just a glyph-count
+  sanity check.
+
+## 2026-07-24 - Downloadable feedback PDF+QR flyer (feedback-flyer-design.md, ADR 0028)
+
+Fourth backlog item this session. The design doc's original plan was a
+dependency-free hand-rolled PDF (extending `_simple_pdf()`'s technique),
+explicitly flagging that approach can't support Cyrillic text. Given that
+tradeoff, the user chose real font embedding over a Latin-only flyer —
+which turned into a real supply-chain decision, not just a code change.
+
+- **New dependency, ADR 0028**: `fpdf2==2.8.7` plus its two genuinely-new
+  runtime deps `fonttools==4.63.0` and `defusedxml==0.7.1` (its third dep,
+  Pillow, was already pinned via ADR 0027 — no version bump needed).
+  Confirmed via the PyPI JSON metadata (not just search-result summaries)
+  that fpdf2's `uharfbuzz` dependency some sources mention is test-only
+  upstream, not a runtime requirement. All three cooldown-clear (fpdf2
+  ~5 months, fonttools ~2 months, defusedxml since 2021). Downloading
+  against the existing pinned `.in` files confirmed **zero** unrelated
+  transitive drift this time (unlike Pillow's addition) - both lock diffs
+  are purely additive. `jober-test:phase4` rebuilt so the pinned test image
+  actually has the new imports.
+- **New vendored asset**: DejaVu Sans 2.37 (Regular + Bold TTF,
+  `vendor/fonts/`) for fpdf2 to embed - broad Unicode coverage including
+  Cyrillic, stable since 2016 (no ongoing release-churn supply-chain
+  exposure for a pinned asset). Downloaded archive's MD5 verified against
+  the officially published value *before* extracting; SHA-256 values in
+  `vendor/MANIFEST.md`/`scripts/verify_vendor_assets.py` computed directly
+  from the extracted files. AGENTS.md §3.2 names htmx/Alpine specifically
+  but the same discipline was applied here since the font is needed at
+  request time (unlike the Tailwind CLI, which is build-only and
+  deliberately not committed).
+- **Real gap caught before it shipped**: the production `Dockerfile`
+  copies specific directories into the runtime image (`core`, `features`,
+  `clients`, `config`, `locale`, `templates`, `static/vendor`,
+  `static/src/js`) - no wildcard `COPY .`. The new `vendor/fonts/` wasn't
+  in that list. Unit/CorvinumEU-lane tests never would have caught this
+  (they bind-mount the whole repo into the test container), so this was
+  only found by explicitly testing against the *actual built* runtime
+  image (`scripts/dev_app.sh rebuild`, then `docker exec` calling
+  `qr_pdf()` directly inside the container with no bind mount) - confirmed
+  missing, added the `COPY vendor/fonts /app/vendor/fonts` line, rebuilt,
+  reconfirmed working.
+- `core/ui/qr.py` gains `qr_pdf(data, *, label="")` alongside the existing
+  `qr_svg()` - same segno matrix, walked into `fpdf2` `rect()` fills
+  (much simpler than the original no-dependency plan's raw `re f` content-
+  stream operators, now that a real PDF library is in play) plus label/URL
+  text set in the vendored DejaVu font.
+- New `features/feedback/views.py::feedback_link_pdf`, gated
+  `@require_action(Action.FEEDBACK_VIEW)` (same as `feedback_inbox`),
+  returning `Content-Disposition: attachment; filename="feedback-<token>.pdf"`
+  - uses the link's token, not its free-text label, for the filename (a
+  small, deliberate deviation from the design doc's literal suggestion,
+  since a label could contain characters unsafe for a filename/header).
+  "Download PDF" button added to `feedback_inbox.html` next to each link's
+  existing on-screen QR toggle, using `{% icon "export" %}`.
+- Verified live end-to-end via a Playwright download (not just unit
+  assertions): logged in, clicked the real button, downloaded the actual
+  PDF from the running app, rendered it to PNG with `pdftoppm` and visually
+  confirmed the QR code and label; separately extracted embedded Cyrillic
+  text back out with `pypdf` and confirmed it round-trips as real glyphs,
+  not placeholder boxes.
+
+## 2026-07-24 - Status pills + nav attention badges (pill-system-design.md §1/§3)
+
+Third backlog item this session. Scoped down from the full three-part
+`pill-system-design.md` to §1 (worker status pill) + §3 (Compliance/Reviews
+nav badges) — §2 (certificate-validity icons) needs a new list-row registry
+slot that doesn't exist yet and was cut to its own deferred Phase 2, same
+phasing precedent as the avatar feature's deferred illustrated-art Phase 2.
+
+- New `--info`/`--info-soft` CSS tokens (`static/src/css/app.css`, both
+  themes) for the `AVAILABLE` status — reused the already dataviz-validated
+  `--chart-office-1` blue (`#2a78d6` light / `#3987e5` dark) rather than
+  deriving a new color; confirmed via the dataviz skill's validator that it
+  doesn't introduce any new CVD/lightness failure against either client's
+  existing (and already slightly-imperfect, pre-existing, out-of-scope)
+  success/warning/danger trio, light and dark, both clients' actual hex
+  values.
+- New `{% status_pill person size="dot"/"label" %}` tag
+  (`core/ui/templatetags/avatars.py`, same module as `{% avatar %}`) plus
+  `.avatar-stack`/`.status-pill*` CSS — a colored dot on the worker-list
+  thumbnail, a labeled pill on the person-detail header, overlapping the
+  avatar's bottom edge. Never rendered for a `User`'s own avatar (navbar) -
+  `lifecycle_status` is a `Person` concept only, matching the design doc.
+- New generic nav-badge registry slot (`register_nav_badge`/`nav_badge`,
+  `core/ui/registry.py`) so `core/ui/templatetags/nav.py` never imports
+  `features.*` directly — features register their own count provider from
+  `apps.py` instead, same pattern as `register_report_tile`/
+  `register_person_panel`. Compliance (`compliance_badge`) and Logistics
+  (`reviews_badge`) both register into it; wired into both clients' nav
+  (`.folder-tab`/Jober, `.sb-item`/CorvinumEU sidebar including rail mode)
+  inside the exact same `{% if %}` gates the tabs themselves already use, so
+  the badge never queries for a role/client that wouldn't see the tab.
+- **Real bug caught by the existing unit suite, not the new tests**: both
+  `layouts/base.html` files render the nav (and therefore call the badge
+  tag) even on the anonymous login page. The first cut of `compliance_badge`
+  had no auth guard, which broke three unrelated, non-`django_db`-marked
+  tests (`test_theme.py`, `test_tooltips.py`) that render the login page
+  without a DB fixture — and would have run a real `compliance_alerts()`
+  query against `AnonymousUser` on every login-page load in production.
+  Fixed with an `is_authenticated` guard at the top of `compliance_badge`
+  (mirroring how `can()` already short-circuits for `reviews_badge`).
+- One new `.notification-count-warning` CSS variant (amber, reusing the
+  existing `--warning` token) alongside the pre-existing `-alert`/`-update`
+  pills — Reviews is always this tone, Compliance uses it when no alert is
+  `expired`/`missing`.
+- Verified live against the running dev app with Playwright screenshots
+  (not just unit assertions): status-pill tone correctly distinguishes
+  `info` (blue, Available) from `success` (green, Working) at actual
+  worker-list dot size, in both light and dark theme; nav badge renders and
+  is correctly positioned on both Jober's folder-tab and CorvinumEU's
+  sidebar (including confirming it's correctly *absent* when CorvinumEU's
+  demo data has zero alerts, then correctly present after inserting one).
+
+## 2026-07-24 - Certificate document uploads implemented (certificate-upload-design.md)
+
+Second backlog item built end-to-end this session, unblocked by the avatar
+slice landing first (shares `MEDIA_ROOT`/Pillow/ADR 0027 — no new dependency
+approval needed here; `pypdf`, used for the PDF half, already shipped for
+payslips). Matches `docs/product/certificate-upload-design.md` exactly, plus
+pulls in `pill-system-design.md`'s `Certificate.category` field in the same
+migration since the upload form needed a category selector anyway.
+
+- `features/compliance/models.py`: `CertificateCategory` (`HEALTH`/
+  `FORKLIFT`/`CRANE`/`WELDING`/`OTHER`, default `OTHER`) and
+  `Certificate.document` (`FileField`) added in one migration
+  (`0002_certificate_category_certificate_document`). Docstring corrected —
+  no longer "metadata only, no file storage".
+- New certificate-specific functions in `core/media.py`, alongside (not
+  replacing) the avatar ones: `certificate_upload_path` and
+  `process_certificate_document`. Deliberately different from avatar
+  processing in two ways the design doc called out — no center-crop (a
+  legal document must stay legible, so only aspect-ratio-preserving
+  downscale above a 2000px cap) and dual format support (JPEG/PNG/WebP via
+  the same Pillow decode-verify-strip-EXIF-by-reencode pipeline as avatars,
+  or PDF via `pypdf.PdfReader(...).pages`, stored unmodified once
+  validated — pypdf has no drawing/re-encode API, so PDFs aren't
+  re-processed the way images are).
+- RBAC: new `Action.CERTIFICATE_MANAGE`, granted to
+  `{RECRUITER, COORDINATOR, MANAGER}` in both `clients/jober/policies.py`
+  and `clients/corvinum_eu/policies.py` (mirrors `INTAKE_ASSIGN_TRIAL`/
+  `PERSON_RECYCLE_AVAILABLE`'s exact grant set, per the design doc's
+  precedent-matching rationale) — both permission matrix docs updated in
+  the same commit.
+- New `features/compliance/forms.py` (`CertificateForm`: category/name/
+  dates only — the file input is handled outside the `ModelForm`, same
+  pattern as avatar uploads) and `features/compliance/services.py`
+  additions (`save_certificate`, `delete_certificate`, both audited via
+  `record_event`: `certificate.uploaded`/`replaced`/`updated`/`deleted`,
+  all four labels added to `core/audit/presentation.py`'s translated map).
+- Surfaced as a new person-detail panel
+  (`templates/panels/compliance_certificates.html`), registered via
+  `register_person_panel` in `features/compliance/apps.py` — not a template
+  hand-edit, uses the existing `person_panels` slot (ADR 0021 Stage B).
+  Full-page create/edit form (`templates/pages/certificate_form.html`,
+  multipart) mirrors `equipment_form.html`'s established pattern.
+- Demo seed (`seed_demo_scenario.py`) updated to tag Olha's existing
+  "Forklift licence" row with `category=FORKLIFT` — a fresh environment
+  will show it correctly; the long-lived local dev DB kept its
+  pre-migration row at the default `OTHER` since the seed step is
+  idempotent and the row already existed (expected, not a bug).
+
+## 2026-07-24 - Avatar system implemented (ADR 0027 + avatar-design.md)
+
+The first backlog item actually built from planning, not just designed —
+matches `docs/product/avatar-design.md` with one deliberate exception:
+the illustrated per-role default art was never delivered, so the
+no-photo fallback is a plain placeholder circle, not the illustrated art
+originally specified; the user chose to wait for real art rather than
+build a stand-in design now, and the placeholder is structured so
+swapping in real art later only touches
+`core/ui/templatetags/avatars.py`'s one placeholder branch.
+
+- **New dependency, approved and added properly**: `docs/adr/0027-
+  pillow-avatar-images.md` — Pillow 12.3.0 (released 2026-07-01, clear of
+  the 3-day cooldown). Adding it re-resolved three unrelated transitive
+  packages (`asgiref`, `typing_extensions`, and `charset-normalizer` in
+  `test.lock` only) to newer point releases; all three pinned back to
+  their vetted versions in both `.in` files so the actual lock diffs are
+  Pillow-only, matching ADR 0016's exact precedent for this situation.
+  Rebuilt `jober-test:phase4` (built from `Dockerfile.playwright-python`)
+  so the pinned test image actually has Pillow importable, not just the
+  lock file listing it.
+- New `core/media.py` (shared by `Person.avatar` and `User.avatar`, not
+  duplicated per app): `avatar_upload_path` (UUID filenames, always
+  `.webp`) and `process_avatar_upload` — decode-and-verify, reject
+  anything not JPEG/PNG/WebP (SVG included), cap input size/dimensions,
+  center-crop, resize to 512px, re-encode as WebP. EXIF is dropped by
+  construction (re-encoding from decoded pixels, not copied source
+  bytes) rather than a separate strip step.
+- `MEDIA_ROOT`/`MEDIA_URL` added to `config/settings/base.py` (never
+  existed before); both clients' `production.py` accept a `MEDIA_ROOT`
+  env override for the eventual Dokku volume mount without a code
+  change. Local/dev serves `/media/` via Django's own `DEBUG`-gated
+  static serve in `config/urls.py`.
+- RBAC exactly as designed: own avatar is self-service
+  (`request.user.pk == target.pk`, no `Action`); worker avatar reuses the
+  existing `Action.INTAKE_CREATE_EDIT` rather than a new fine-grained
+  action.
+- New shared `{% avatar obj size="sm/md/lg" %}` tag
+  (`core/ui/templatetags/avatars.py`) wired into the navbar (own avatar,
+  both clients — CorvinumEU's sidebar already had an initials-based
+  `.sb-avatar` fallback, deliberately preserved as CorvinumEU's own
+  fallback rather than overridden with the generic placeholder), the
+  worker list, and the person-detail header.
+- Every add/replace/remove audited via `core.audit.services.record_event`
+  with new, already-translated action labels
+  (`core/audit/presentation.py`).
+- **Real bug caught by the e2e suite, not guessed at**: the mobile phone-
+  viewport test failed after the navbar changes — `.header-account` had
+  `flex-shrink: 0` in its base rule with no override in the mobile media
+  query, so it refused to shrink to the viewport and the Sign-out button
+  overflowed 30px past the edge. Fixed with a targeted mobile-only
+  `flex-shrink: 1; max-width: 100%` override, confirmed with a live
+  Playwright diagnostic script (not just re-running the suite blind)
+  before treating it as fixed.
+- 15 new tests (`tests/test_avatars.py`): upload validation (valid image
+  re-encodes to 512×512 WebP, non-image/SVG/oversized all rejected, real
+  embedded EXIF confirmed stripped), own-avatar self-service including
+  anonymous rejection and audit-event sequencing (added → replaced),
+  worker-avatar RBAC (recruiter/manager can, coordinator can't - 403),
+  and the template tag's two render branches.
+
+## 2026-07-24 - Richer finance demo data (Jan-Jul 2026); three new design docs
+
+- `features/finance/management/commands/seed_finance.py`: expanded from 2
+  `FinancialMonth` rows total (Nov 2025 only, missing CARGO entirely) to a
+  full Jan-Jul 2026 year-to-date series across all three projects/offices
+  — 21 new rows, plus the original Nov 2025 pair kept for year-over-year
+  contrast. Each project gets a distinct growth curve (DHLBA/Velký Meder:
+  steady ~3%/month growth; WEB/Győr: a mid-year dip and recovery;
+  CARGO/Dunajská Streda: a fast ramp-up, reflecting a newer project) so
+  the executive dashboard's multi-series office-trend chart (built
+  earlier this session) actually shows three differently-shaped lines
+  instead of parallel copies. Each month also gets a small line-item
+  breakdown (a fixed cost-category split per project, reused across all 7
+  months) so the Group-breakdown chart and month-detail drill-in are
+  populated too, not just top-line totals.
+- Three new planning-only design docs, matching the avatar/pill/
+  certificate-upload pattern (nothing built beyond the demo data above):
+  - `docs/product/feedback-flyer-design.md` — a downloadable PDF+QR flyer
+    for feedback links. Key finding: needs **no new dependency** — segno's
+    QR matrix can be walked to emit PDF vector-rectangle fill operators
+    directly into a hand-written PDF (the same technique
+    `features/payslips/services.py::_simple_pdf()` already uses), so
+    `pypdf` isn't even needed for drawing, only (if ever) for features
+    payslips already uses it for (encryption). Flags a real constraint
+    plainly instead of glossing over it: PDF's standard base fonts don't
+    cover Cyrillic, so a Ukrainian-language flyer isn't achievable without
+    embedding a real font resource — a materially bigger, separate
+    decision.
+  - `docs/product/help-area-design.md` — a new in-app Help section.
+    Confirmed with the user: hand-authored Django templates (no Markdown
+    dependency, avoids an AGENTS.md §3.1 ADR), and full SK/HU/UK
+    translation from day one — flagged explicitly as a real translation
+    workload given the existing `.po` catalogs are already ~4800-4900
+    lines each of short labels, and help prose is a different scale of
+    content entirely.
+  - Audit `reason` i18n: turned out to already be half-solved on
+    investigation — `action` labels are fully translated today via
+    `AUDIT_ACTION_LABELS` (`core/audit/presentation.py`); `reason` is
+    genuinely free text (user-typed or interpolated) with no closed
+    vocabulary `gettext` can address. User chose to document this as an
+    accepted limitation rather than build anything — added a short
+    section to `docs/i18n-workflow.md` rather than a new design doc, so
+    the distinction isn't re-litigated as if it were still open.
+
+## 2026-07-24 - Correction: office seed data was leaking into CorvinumEU's database
+
+User asked "hopefully these changes were only applied to the jober thin
+client" about the previous slice — a fair challenge that caught a real
+issue. The *behavioral* changes (office-scoped finance queries, the
+executive dashboard, the 403 guard) genuinely are Jober-only in effect,
+since they all live in `features/finance/`, which CorvinumEU doesn't
+install. But `core/offices/migrations/0002_seed_offices.py` seeded the
+three real office names (Velký Meder, Győr, Dunajská Streda) via a Django
+migration — and `core.offices` was added to every client's
+`INSTALLED_APPS` (correctly, as a generic mechanism, same as
+`core.people`). Migrations have no per-client conditional, so that
+migration would have inserted Jober's specific office names into
+CorvinumEU's database too, just because it shares the app — Jober
+business data leaking into an unrelated client's schema, even though
+nothing in CorvinumEU's UI would ever display or use it.
+
+- Deleted `core/offices/migrations/0002_seed_offices.py`.
+- Moved the office seeding into `clients/jober/demo/management/commands/
+  seed_people.py` (already Jober-only) — `Office.objects.get_or_create(...)`
+  for the three offices, run before projects are assigned to them.
+- Updated `tests/test_office_scoping.py`'s fixture to create its own
+  `Office` rows directly (the migration-seeded ones it previously relied
+  on no longer exist).
+- Updated ADR 0026's execution note to state the mechanism explicitly:
+  `core/offices` stays empty by default for every client; only Jober's own
+  seed command ever populates it.
+- **Verified with an actual query, not just re-running tests**: migrated a
+  fresh scratch database under `clients.corvinum_eu.settings` and queried
+  `offices_office` directly — 0 rows, confirming the fix, not just
+  inferring it from green test output.
+
+## 2026-07-24 - Office-scoped finance RBAC + executive dashboard (ADR 0026 Phase A)
+
+Actual implementation of ADR 0026's finance-relevant slice, on the user's
+explicit request for the full platform change (phased — see the ADR's
+execution note for what's Phase A vs still-pending Phase B).
+
+- New `core/offices` app: `Office(name, code, country)`, seeded via a data
+  migration with Jober's three licensed offices (Velký Meder/VM/SK, Győr/
+  GYR/HU, Dunajská Streda/DS/SK). Registered in every client's
+  `INSTALLED_APPS` that fully replaces the base list (`corvinum_eu`,
+  `_smoke`) — a core app, not Jober-only code, mirroring `core.people`/
+  `core.projects`.
+- `Project.office` is now a real FK (was free-text `office`/`region`
+  `CharField`s). Migrated as an explicit `RemoveField`+`AddField`, not
+  Django's auto-generated `AlterField` — there's no sensible cast from
+  arbitrary strings to a FK, so this is a deliberate drop-and-recreate.
+  Demo seed data reassigned to real offices (DHLBA→Velký Meder, WEBASTO→
+  Győr, CARGO→Dunajská Streda) since the old "Bratislava"/"Nitra" strings
+  were fictional placeholders with no real-office correspondence.
+- `User.offices` M2M (not a single FK — staff can work at multiple
+  offices, per the earlier session's amendment). Demo staff (recruiter/
+  coordinator/manager) seeded to Velký Meder only, deliberately not all
+  three, so the demo actually shows the restriction working.
+- `core.accounts.permissions.user_office_scope(user)`: returns `None` for
+  Observer — a genuine "unrestricted" sentinel, not an all-offices
+  queryset (which would incorrectly exclude any record with no office
+  assigned yet). Every finance service function
+  (`company_totals`/`monthly_totals`/`yearly_totals`/`project_totals`/
+  `group_breakdown`/the renamed `office_totals`, plus new
+  `office_monthly_totals`) takes `offices=None` with the same meaning.
+- `finance_summary` view branches by role at the same URL: Observer gets a
+  new executive dashboard (`templates/pages/finance_executive.html` —
+  company totals, per-office breakdown, a new multi-series monthly-trend
+  chart); every other `finance.view_summary` role gets the existing page,
+  now scoped to their own office(s) only.
+- Closed a real bypass: `finance_month_detail`/`_save`/`_lock`/`_reopen`
+  and `finance_record` now 403 a non-Observer acting on another office's
+  month/project, even via a guessed PK or crafted POST — not just hidden
+  from the UI dropdown.
+- New Chart.js builder (`office-trend`, `static/src/js/charts.js`) — a
+  generic N-series line chart (one line per office), unlike the existing
+  `trend` builder which is hardcoded to exactly Revenue/Cost/Net. Colors
+  come from a new fixed categorical palette (`--chart-office-1/2/3`)
+  picked and validated with the project's `dataviz` skill for this exact
+  3-series all-pairs case, in both themes — light mode carries a
+  contrast WARN on one slot, satisfied by the chart's own legend +
+  accompanying office-breakdown table (the skill's required "relief").
+- Fixed test fixtures across `test_finance_charts.py`,
+  `test_finance_lineitems.py`, `test_finance_workbook.py`, and
+  `test_nav_active.py` that created bare `Project`/manager fixtures with
+  no office — the new scope guard correctly rejected them, so each was
+  given a real office and matching user membership rather than the guard
+  being loosened.
+- Updated `docs/adr/0026-office-scoped-rbac.md` (Status: Partially
+  Accepted, execution note added) and
+  `docs/product/jober-multi-office-scoping.md` to reflect exactly what's
+  built (Phase A) vs still pending (Phase B: Person/Accommodation office
+  fields, equipment-stock split, the principal/invitation subsystem, and
+  the remaining ~13 ad hoc RBAC call sites outside finance).
+
+## 2026-07-24 - Move regional finance chart from Reports to Finance; correct §8.1
+
+- The "office financial chart" on Reports/Overview turned out to be
+  `features/finance/panels.py::company_totals_panel` (registered onto the
+  Reports page via `register_report_panel`) — a linked card showing a
+  margin gauge and a profit/loss-by-region diverging chart. Region is the
+  closest existing concept to "office" today (`Project.region`); the real
+  `Office` model is still just a design doc (`docs/product/jober-multi-
+  office-scoping.md`, ADR 0026 — not implemented).
+- Moved the regional diverging chart into the existing "Regional roll-up"
+  section of `templates/pages/finance_summary.html` (which already had
+  the same `regional_totals()` data as a chartless table) — added
+  `regional_chart_data` to `finance_summary`'s view context
+  (`features/finance/views.py`), mirroring the existing `group_chart_data`
+  pattern exactly.
+- Deleted the now-dead `features/finance/panels.py` and
+  `templates/panels/finance_company_totals.html`, and removed
+  `FinanceConfig.ready()`'s report-panel registration entirely — per the
+  user's choice, Reports/Overview shows **no** finance content at all now,
+  for any role including Observer, not even a lightweight tile.
+- Corrected `Jober_Product_Design.md` §8.1 ("Visibility principle"), which
+  literally said "offices are filters and reporting fields, not access
+  boundaries" — the opposite of the office-isolation principle now wanted,
+  and in direct contradiction with ADR 0026. The old wording is kept
+  underneath as the accurate *current* behavior (ADR 0026 is still
+  Proposed, not activated) so the doc doesn't overclaim a design that
+  isn't built yet.
+- `AGENTS.md` has similar stale RBAC wording but was deliberately left
+  untouched this pass — it's binding scope/security/supply-chain
+  authority and warrants its own deliberate correction.
+
+## 2026-07-24 - Shared icon system + expanded tooltip coverage
+
+- New `{% icon "name" %}` template tag (`core/ui/templatetags/icons.py`,
+  vocabulary in `core/ui/icons.py`) resolves one icon concept to each
+  client's own existing mechanism — Jober's inline SVG sprite
+  (`templates/partials/jober_nav_icons.html`) or CorvinumEU's Material
+  Symbols web font — via a new per-client `ICON_BACKEND` setting. Icons
+  had been confined entirely to the two nav shells until now; this is the
+  first time page-body buttons get icons at all, in either client.
+- Vocabulary checked against CorvinumEU's existing font subset
+  (`icon-names.txt`) before adding anything, specifically to avoid a
+  silent new build-time dependency (font re-subsetting would need its own
+  AGENTS.md §3.1 approval). `search`/`filter`/`back`/`sign-out` were
+  deliberately excluded — no matching glyph exists in the current subset,
+  and those buttons stay text-only rather than getting a mismatched icon.
+- Added 15 new SVG symbols to Jober's sprite (`add`, `edit`, `delete`,
+  `archive`, `recycle`, `approve`, `reject`, `export`, `issue`, `receive`,
+  `adjust`, `save`, `invite`, `promote`, `warehouse`) and a matching
+  `.icon`/`.icon-sm`/`.icon-md` CSS family; fixed `nav-icon-reviews` being
+  reused for both the Reviews and Warehouse nav tabs (Warehouse now has
+  its own symbol).
+- Rolled icons + targeted tooltips out across all remaining page/panel
+  templates (people, projects, compliance, logistics/equipment,
+  accommodation, transport, finance, ledger, payslips, feedback,
+  blacklist). Tooltip coverage follows the existing documented minimalism
+  rule (`docs/product/contextual-tooltips.md`) — icon-only and
+  consequential/state-changing actions get one, plain labeled Save/Cancel/
+  Back buttons don't. Icons themselves went broad by design, independent
+  of that rule.
+- Fixed a real pre-existing gap found along the way: `person_detail.html`'s
+  "Recycle to Available" button had no `data-confirm`, unlike its sibling
+  exit-action buttons which already had one (and thus an implicit
+  tooltip) — added the missing confirm text and the `recycle` icon.
+- This also completes a documentation arc from the same session: design
+  docs for avatars, worker status/certificate pills, certificate uploads,
+  and Jober's multi-office RBAC (with a follow-up amendment for
+  multi-office staff + office principals) were written as planning-only
+  deliverables (`docs/product/avatar-design.md`,
+  `docs/product/pill-system-design.md`,
+  `docs/product/certificate-upload-design.md`,
+  `docs/product/jober-multi-office-scoping.md`, `docs/adr/0026-...md`) —
+  none of those are implemented yet; only this icon/tooltip slice touched
+  code.
+
 ## 2026-07-23 - Hungarian payslip terminology
 
 - Standardized CorvinumEU's payslip workflow on `Bérlap`: navigation,

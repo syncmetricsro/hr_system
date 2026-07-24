@@ -1,5 +1,5 @@
 {% extends "layouts/base.html" %}
-{% load i18n nav static %}
+{% load i18n nav static icons %}
 
 {% block title %}{{ month.project.code }} {{ month.year }}-{{ month.month }} · {{ BRAND_NAME }}{% endblock %}
 
@@ -17,12 +17,12 @@
       <form class="people-search" method="post" action="{% url 'finance_month_reopen' month.pk %}" data-confirm="{% trans 'This reopens the locked month for editing; the reopening is audited with your reason.' %}">
         {% csrf_token %}
         <input type="text" name="reason" required aria-label="{% trans 'Reason' %}" placeholder="{% trans 'Reason' %}">
-        <button class="button button-secondary" type="submit">{% trans "Reopen month" %}</button>
+        <button class="button button-secondary" type="submit">{% icon "recycle" %}{% trans "Reopen month" %}</button>
       </form>
     {% else %}
       <form method="post" action="{% url 'finance_month_lock' month.pk %}" data-confirm="{% trans 'This locks the month; line items become read-only until a manager reopens it.' %}">
         {% csrf_token %}
-        <button class="button button-secondary" type="submit">{% trans "Lock month" %}</button>
+        <button class="button button-secondary" type="submit">{% icon "archive" %}{% trans "Lock month" %}</button>
       </form>
     {% endif %}
   </section>
@@ -47,7 +47,7 @@
             <input type="number" step="0.01" name="cat_{{ row.category.pk }}" value="{{ row.amount }}">
           </label>
         {% endfor %}
-        <button class="button button-primary" type="submit">{% trans "Save & recalculate" %}</button>
+        <button class="button button-primary" type="submit">{% icon "save" %}{% trans "Save & recalculate" %}</button>
       </form>
     {% else %}
       <dl class="detail-grid">

@@ -1,0 +1,21 @@
+{% extends "help/_base.html" %}
+{% load i18n %}
+
+{% block help_title %}{% trans "Getting started" %}{% endblock %}
+{% block help_heading %}{% trans "Getting started" %}{% endblock %}
+
+{% block help_content %}
+  <p>{% blocktrans %}This app tracks workers from first contact through active work and, eventually, exit — plus the projects, accommodation, equipment, compliance, and money that go along the way. The navigation bar groups these into tabs; which tabs you see depends on your role.{% endblocktrans %}</p>
+
+  <h2>{% trans "Finding your way around" %}</h2>
+  <p>{% blocktrans %}People is almost always the starting point: search or filter the list, then open a worker's detail page to see their status, project, documents, and history in one place. Projects, Compliance, and the other tabs each focus on one slice of the operation — Reports pulls the headline numbers from all of them onto a single overview page.{% endblocktrans %}</p>
+
+  <h2>{% trans "Roles" %}</h2>
+  <p>{% blocktrans %}Four roles exist: Recruiter (intake and candidate routing), Coordinator (day-to-day field operations — assignments, readiness, equipment), Manager/Administrator (approvals and everything Recruiter/Coordinator can do), and Observer (read-only, for oversight). A hidden button on a page usually means your role doesn't have that permission, not that the feature is broken.{% endblocktrans %}</p>
+
+  <h2>{% trans "Statuses and colors" %}</h2>
+  <p>{% blocktrans %}A worker's lifecycle status (Available, Trial day, Working, Inactive, Blacklisted) shows as a colored dot next to their photo — green for Working, amber for Trial day, blue for Available, gray for Inactive, red for Blacklisted. The same color language shows up on certificate icons and notification badges throughout the app: green/amber/red generally mean good / needs attention soon / needs attention now.{% endblocktrans %}</p>
+
+  <h2>{% trans "Getting help" %}</h2>
+  <p>{% blocktrans %}Hovering (or tapping, on a touch device) most buttons and tiles shows a short tooltip explaining what it does. This Help section covers whole workflows end to end — use the topic list to find the module you're working in.{% endblocktrans %}</p>
+{% endblock %}

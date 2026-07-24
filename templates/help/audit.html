@@ -1,0 +1,16 @@
+{% extends "help/_base.html" %}
+{% load i18n %}
+
+{% block help_title %}{% trans "Audit: what's logged and why" %}{% endblock %}
+{% block help_heading %}{% trans "Audit: what's logged and why" %}{% endblock %}
+
+{% block help_content %}
+  <h2>{% trans "What gets recorded" %}</h2>
+  <p>{% blocktrans %}Every sensitive or write action in the app — creating or editing a person, changing a lifecycle status, issuing equipment, locking a financial month, deciding a blacklist case, and many more — is recorded as an audit event: who did it, what it was, and when.{% endblocktrans %}</p>
+
+  <h2>{% trans "Append-only" %}</h2>
+  <p>{% blocktrans %}Audit events cannot be edited or deleted once written, by design — the audit trail is a permanent record, not a working document.{% endblocktrans %}</p>
+
+  <h2>{% trans "Reading the log" %}</h2>
+  <p>{% blocktrans %}The Audit tab, visible to roles with audit access, lists events newest first with the actor, action, and target. An action's label is always shown in your current language; any free-text reason attached to an event is shown exactly as it was typed, in whatever language the person who wrote it used.{% endblocktrans %}</p>
+{% endblock %}
