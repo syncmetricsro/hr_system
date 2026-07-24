@@ -109,6 +109,15 @@ scripts/check_production_image.sh jober-platform:phase0
 scripts/playwright_smoke.sh
 ```
 
+GitHub runs the same containerized policy through
+`.github/workflows/application-ci.yml`: `scripts/ci_quality.sh` covers
+dependency/vendor integrity, no-Node checks, full-codebase Ruff lint,
+incremental formatting, both client unit lanes, migration consistency, and the
+production image; `scripts/playwright_e2e.sh`
+covers the full two-client browser lane. The workflow deliberately performs a
+minimal authenticated `git fetch` instead of using the Node-based
+`actions/checkout` runtime.
+
 Local PostgreSQL:
 
 ```bash

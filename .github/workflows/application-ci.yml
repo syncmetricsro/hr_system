@@ -1,0 +1,72 @@
+name: Application CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: application-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    name: Quality and unit tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      # Deliberately avoid actions/checkout: this repository's build policy
+      # prohibits adding a Node-based action runtime to the CI supply chain.
+      - name: Check out exact revision without Actions
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          set -euo pipefail
+          auth="$(printf 'x-access-token:%s' "$GH_TOKEN" | base64 -w0)"
+          git init "$GITHUB_WORKSPACE"
+          cd "$GITHUB_WORKSPACE"
+          git remote add origin "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY.git"
+          git -c "http.extraheader=AUTHORIZATION: basic $auth" \
+            fetch --no-tags --depth=1 origin "$GITHUB_SHA"
+          if [[ "$BASE_SHA" =~ ^[0-9a-f]{40}$ ]] \
+            && [[ "$BASE_SHA" != "0000000000000000000000000000000000000000" ]]; then
+            git -c "http.extraheader=AUTHORIZATION: basic $auth" \
+              fetch --no-tags --depth=1 origin "$BASE_SHA"
+          fi
+          git checkout --detach "$GITHUB_SHA"
+          unset auth
+
+      - name: Run quality and unit gate
+        env:
+          CI_BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: scripts/ci_quality.sh
+
+  browser:
+    name: Browser end-to-end tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - name: Check out exact revision without Actions
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          auth="$(printf 'x-access-token:%s' "$GH_TOKEN" | base64 -w0)"
+          git init "$GITHUB_WORKSPACE"
+          cd "$GITHUB_WORKSPACE"
+          git remote add origin "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY.git"
+          git -c "http.extraheader=AUTHORIZATION: basic $auth" \
+            fetch --no-tags --depth=1 origin "$GITHUB_SHA"
+          git checkout --detach "$GITHUB_SHA"
+          unset auth
+
+      - name: Run both-client browser gate
+        run: scripts/playwright_e2e.sh
