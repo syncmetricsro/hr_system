@@ -343,6 +343,17 @@ class EquipmentStockReceipt(models.Model):
     reference = models.CharField(_("reference"), max_length=120, blank=True)
     supplier = models.CharField(_("supplier"), max_length=200, blank=True)
     note = models.CharField(_("note"), max_length=300, blank=True)
+    # Office scoping (ADR 0026 Phase B): stock is received into one physical
+    # warehouse. This is the source of truth the lot/movement/allocation
+    # office fields below are denormalized from.
+    office = models.ForeignKey(
+        "offices.Office",
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True,
+        related_name="stock_receipts",
+        verbose_name=_("office"),
+    )
     recorded_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,
@@ -413,6 +424,21 @@ class EquipmentStockMovement(models.Model):
     occurred_on = models.DateField(_("occurred on"))
     quantity_delta = models.IntegerField(_("quantity delta"))
     value_delta = models.DecimalField(_("value delta"), max_digits=12, decimal_places=2)
+    # Office scoping (ADR 0026 Phase B). Denormalized from the receipt (inbound)
+    # or the lot drawn from (outbound) deliberately: balance/report aggregate
+    # over this table in one .values().annotate(), and inbound rows reach their
+    # office via stock_lot while outbound rows reach it via allocations__lot -
+    # two different join paths that can't be combined into one clean filter.
+    # A flat column keeps those aggregates a single-table filter, matching
+    # finance's `office__in=` shape.
+    office = models.ForeignKey(
+        "offices.Office",
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True,
+        related_name="stock_movements",
+        verbose_name=_("office"),
+    )
     receipt_line = models.ForeignKey(
         EquipmentStockReceiptLine,
         on_delete=models.PROTECT,
@@ -481,6 +507,17 @@ class EquipmentStockLot(models.Model):
         verbose_name=_("item"),
     )
     received_on = models.DateField(_("received on"))
+    # Office scoping (ADR 0026 Phase B): the warehouse this batch physically
+    # sits in. FIFO consumption only ever draws from lots matching the
+    # consuming office - there is no cross-office draw (ADR decision point 6).
+    office = models.ForeignKey(
+        "offices.Office",
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True,
+        related_name="stock_lots",
+        verbose_name=_("office"),
+    )
     initial_quantity = models.PositiveIntegerField(_("initial quantity"))
     initial_value = models.DecimalField(
         _("initial value"), max_digits=12, decimal_places=2
@@ -506,6 +543,15 @@ class EquipmentStockAllocation(models.Model):
         on_delete=models.PROTECT,
         related_name="allocations",
         verbose_name=_("lot"),
+    )
+    # Office scoping (ADR 0026 Phase B): denormalized from the lot drawn from.
+    office = models.ForeignKey(
+        "offices.Office",
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True,
+        related_name="stock_allocations",
+        verbose_name=_("office"),
     )
     quantity = models.PositiveIntegerField(
         _("quantity"), validators=[MinValueValidator(1)]

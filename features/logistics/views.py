@@ -64,6 +64,7 @@ from features.logistics.services import (
     stock_ledger_enabled,
     update_transport_week,
 )
+from core.offices.models import Office
 from core.people.models import Person
 from core.projects.models import Project
 
@@ -487,14 +488,18 @@ def equipment_stock(request: HttpRequest) -> TemplateResponse:
     except (TypeError, ValueError):
         year, month = today.year, today.month
         month_value = f"{year:04d}-{month:02d}"
+    scope = user_office_scope(request.user)
     return TemplateResponse(
         request,
         "pages/equipment_stock.html",
         {
-            "balance": equipment_stock_balance(),
-            "report": equipment_month_report(year, month),
+            "balance": equipment_stock_balance(offices=scope),
+            "report": equipment_month_report(year, month, offices=scope),
             "month_value": month_value,
             "can_manage": user_can(request.user, Action.EQUIPMENT_MANAGE_STOCK),
+            # The adjustment form is hand-written in the template (not a
+            # rendered Form), so it needs the pickable offices explicitly.
+            "adjust_offices": Office.objects.all() if scope is None else scope,
         },
     )
 
@@ -502,7 +507,9 @@ def equipment_stock(request: HttpRequest) -> TemplateResponse:
 @require_action(Action.EQUIPMENT_MANAGE_STOCK)
 def equipment_stock_receive(request: HttpRequest) -> HttpResponse:
     form = StockReceiptForm(
-        request.POST or None, initial={"received_on": timezone.localdate()}
+        request.POST or None,
+        initial={"received_on": timezone.localdate()},
+        user=request.user,
     )
     lines = StockReceiptLineFormSet(request.POST or None, prefix="lines")
     if request.method == "POST" and form.is_valid() and lines.is_valid():
@@ -520,6 +527,7 @@ def equipment_stock_receive(request: HttpRequest) -> HttpResponse:
                 reference=form.cleaned_data["reference"],
                 note=form.cleaned_data["note"],
                 actor=request.user,
+                office=form.cleaned_data.get("office"),
             )
             messages.success(request, _("Stock receipt recorded."))
             return redirect("equipment_stock")
@@ -536,7 +544,7 @@ def equipment_stock_receive(request: HttpRequest) -> HttpResponse:
 @require_POST
 @require_action(Action.EQUIPMENT_MANAGE_STOCK)
 def equipment_stock_adjust(request: HttpRequest) -> HttpResponse:
-    form = StockAdjustmentForm(request.POST)
+    form = StockAdjustmentForm(request.POST, user=request.user)
     if form.is_valid():
         try:
             adjust_stock(
@@ -546,6 +554,7 @@ def equipment_stock_adjust(request: HttpRequest) -> HttpResponse:
                 value=form.cleaned_data["value"],
                 reason=form.cleaned_data["reason"],
                 actor=request.user,
+                office=form.cleaned_data.get("office"),
             )
             messages.success(request, _("Stock adjustment recorded."))
         except LogisticsWorkflowError as exc:
