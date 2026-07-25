@@ -1,5 +1,53 @@
 # Build Journal
 
+## 2026-07-25 - Office-scoped RBAC Phase B, Slice 2: People, Projects, Reports, Exports scoped + detail-view 403s
+
+Slice 2 of 7. Applies the schema from Slice 1 as a real access boundary,
+not just a filter: `.filter(office__in=scope)` on every list/aggregate
+query, plus a hard 403 (mirroring finance's `_assert_month_in_scope`) on
+direct/URL-guessed access to another office's `Person`/`Project` detail
+or mutation views.
+
+- `core/people/views.py`: `people_list` filtered; a new
+  `_assert_person_in_scope` guards `person_detail`, `person_edit`,
+  `archive_person`, `recycle_person`, `person_avatar_upload/remove` — not
+  just the read view, every mutation that takes a `person_pk` directly.
+- `core/projects/views.py`: `project_list` filtered; `_assert_project_in_scope`
+  guards `project_detail`, `trial_outcome`; `_assert_person_in_scope` +
+  `_assert_project_in_scope` together guard `assign_trial`,
+  `readiness_update`, `exit_view`, `activate_person` (both the person and
+  the project argument, since either can be an independent cross-office
+  guess). `_trial_queue_context`'s pending-trials queue is now
+  office-filtered for every non-Observer role, not just Coordinator.
+- `core/projects/forms.py::operable_projects()` gained the office filter
+  on top of its existing coordinator filter — this also newly restricts
+  Manager (previously unrestricted there) to their own office(s),
+  matching the ADR's "if role is not observer" rule.
+- `core/ui/views.py::reports()` and `core/ui/exports.py` (`people_csv`,
+  `projects_csv`) scoped — the CSV export gap the ADR flagged as
+  pre-existing (zero recruiter/coordinator scoping, independent of
+  multi-office) is now closed. `core/people/services.py::inactive_by_reason`
+  gained an `offices=None` kwarg mirroring finance's convention.
+- **Fixed two real behavior changes surfaced by e2e, not test-only
+  workarounds**: `person_detail`'s trial-assignment project dropdown
+  (`active_projects` context var) was still `Project.objects.filter(is_
+  active=True)` unfiltered — switched to the now-scoped
+  `operable_projects()`, since offering a cross-office project in a
+  `<select>` that the backend will now correctly 403 is a real UX bug, not
+  just a test fixture problem. Also moved the demo's one INACTIVE person
+  (Bohdan) from Dunajská Streda to Velký Meder in `seed_people.py`: the
+  seeded staff accounts are all VM-scoped, so VM needs its own
+  representative of every interesting lifecycle state for demo
+  walkthroughs to keep working — Tran (DS) and Farrukh (GYR) alone already
+  prove cross-office data is correctly hidden.
+- `docs/permissions/jober-permission-matrix.md`'s stale "Offices are
+  filters, not access boundaries" line rewritten to describe the real
+  ADR 0026 boundary.
+- Verified: 583 Jober unit tests / 5 skipped, 380 CorvinumEU / 10 skipped
+  / 144 deselected (new office-scoping tests carry no `jober_only` marker
+  and run for real there), 50 Playwright e2e (caught and fixed the two
+  real issues above), ruff check + format clean.
+
 ## 2026-07-25 - Office-scoped RBAC Phase B, Slice 1: `Person.office`/`Accommodation.office` schema + a critical CorvinumEU-safety fix
 
 Production-readiness review item #5: office scoping (ADR 0026) only

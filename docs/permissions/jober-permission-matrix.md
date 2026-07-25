@@ -8,10 +8,17 @@ This document is the human-readable mirror of `clients/jober/policies.py`
 ## Model
 
 - **Four fixed roles**, no per-user permission matrices (plan §8, ADR 0008).
-- **Reads are broad** by default: any authenticated internal role may read
-  ordinary operational records. Offices are filters, not access boundaries.
-  This is governed by the single switch `BROAD_INTERNAL_READS`
-  (env `JOBER_BROAD_INTERNAL_READS`, default on) so the still-open GDPR
+- **Reads are broad within a user's office scope.** Any authenticated
+  internal role may read ordinary operational records belonging to the
+  office(s) they're a member of (`User.offices`); Observer bypasses office
+  scoping entirely and sees every office. This is a real access boundary
+  for non-Observer roles as of ADR 0026 (`core/accounts/permissions.py::
+  user_office_scope`) — not just a display filter — with a hard 403 on
+  direct access to another office's record (e.g. Finance, People, Projects
+  detail views). The broad-within-scope *role* default (any role can read
+  any record type, subject to the office boundary above) is governed by
+  the single switch `BROAD_INTERNAL_READS` (env
+  `JOBER_BROAD_INTERNAL_READS`, default on) so the still-open GDPR
   recruiter/coordinator read-scope decision can be narrowed later without a
   hardcoded split (`docs/product/jober-open-decisions.md`).
 - **Roles restrict actions** (writes) and **sensitive reads**. Those are the

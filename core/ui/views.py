@@ -13,11 +13,17 @@ from django.views.i18n import LANGUAGE_QUERY_PARAMETER
 from django.views.i18n import set_language as django_set_language
 
 from core.accounts.models import Role
+from core.accounts.permissions import user_office_scope
 from core.ui import registry
 from core.ui.help import ARTICLE_TEMPLATES, HELP_GROUPS
 from core.people.models import LifecycleStatus, Person
 from core.people.services import inactive_by_reason
-from core.projects.models import AssignmentStatus, Project, TrialAssignment, TrialOutcome
+from core.projects.models import (
+    AssignmentStatus,
+    Project,
+    TrialAssignment,
+    TrialOutcome,
+)
 
 
 def healthz(_request: HttpRequest) -> HttpResponse:
@@ -45,7 +51,10 @@ def set_language(request: HttpRequest) -> HttpResponse:
 
     path = urlsplit(location).path
     source_language = path.lstrip("/").split("/", 1)[0].lower()
-    if source_language not in configured_languages or source_language == target_language:
+    if (
+        source_language not in configured_languages
+        or source_language == target_language
+    ):
         return response
 
     with override(source_language):
@@ -58,11 +67,18 @@ def set_language(request: HttpRequest) -> HttpResponse:
 @login_required
 def reports(request: HttpRequest) -> TemplateResponse:
     """The single operational overview and drill-down reporting surface."""
+    scope = user_office_scope(request.user)
     people = Person.objects.filter(is_archived=False)
+    if scope is not None:
+        people = people.filter(office__in=scope)
     has_trials = registry.flag_enabled("recruitment_trials")
     pending_trials = TrialAssignment.objects.filter(outcome=TrialOutcome.PENDING)
+    if scope is not None:
+        pending_trials = pending_trials.filter(project__office__in=scope)
     if getattr(request.user, "role", None) == Role.COORDINATOR:
-        pending_trials = pending_trials.filter(project__responsible_coordinators=request.user)
+        pending_trials = pending_trials.filter(
+            project__responsible_coordinators=request.user
+        )
     status_counts = [
         {
             "value": value,
@@ -73,22 +89,27 @@ def reports(request: HttpRequest) -> TemplateResponse:
         }
         for value, label in LifecycleStatus.choices
     ]
-    inactive_reason_counts = inactive_by_reason()
+    inactive_reason_counts = inactive_by_reason(offices=scope)
     for row in inactive_reason_counts:
         translated_reason = _(str(row["label"]))
         row["tooltip_heading"] = _("View inactive people: %(reason)s") % {
             "reason": translated_reason
         }
         row["tooltip_body"] = _("Open People filtered to this inactive reason.")
+    scoped_active_projects = Project.objects.filter(is_active=True)
+    if scope is not None:
+        scoped_active_projects = scoped_active_projects.filter(office__in=scope)
     projects_with_headcount = [
         {
             "project": project,
-            "headcount": project.assignments.filter(status=AssignmentStatus.ACTIVE).count(),
+            "headcount": project.assignments.filter(
+                status=AssignmentStatus.ACTIVE
+            ).count(),
             "people": project.assignments.filter(status=AssignmentStatus.ACTIVE)
             .select_related("person")
             .order_by("person__last_name"),
         }
-        for project in Project.objects.filter(is_active=True).order_by("name")
+        for project in scoped_active_projects.order_by("name")
     ]
     projects_chart_data = {
         "labels": [row["project"].name for row in projects_with_headcount],
@@ -98,7 +119,7 @@ def reports(request: HttpRequest) -> TemplateResponse:
         request,
         "pages/reports.html",
         {
-            "active_projects": Project.objects.filter(is_active=True).count(),
+            "active_projects": scoped_active_projects.count(),
             "total_people": people.count(),
             "pending_trials": pending_trials.count(),
             "has_trials": has_trials,
@@ -124,7 +145,9 @@ def help_index(request: HttpRequest) -> TemplateResponse:
     """Landing page grouping Help articles by module - unconditional, no
     Action/flag gate (docs/product/help-area-design.md): every role needs
     documentation regardless of what else they can see."""
-    return TemplateResponse(request, "pages/help_index.html", {"help_groups": HELP_GROUPS})
+    return TemplateResponse(
+        request, "pages/help_index.html", {"help_groups": HELP_GROUPS}
+    )
 
 
 @login_required

@@ -4,7 +4,7 @@ import csv
 
 from django.http import HttpRequest, HttpResponse
 
-from core.accounts.permissions import Action, require_action
+from core.accounts.permissions import Action, require_action, user_office_scope
 from core.people.models import Person
 from core.projects.models import AssignmentStatus, Project
 
@@ -21,33 +21,63 @@ def csv_response(filename: str) -> tuple[HttpResponse, "csv._writer"]:
 @require_action(Action.EXPORT_APPROVED)
 def people_csv(request: HttpRequest) -> HttpResponse:
     response, writer = csv_response("people.csv")
-    writer.writerow(["last_name", "first_name", "status", "current_project", "owning_recruiter", "rehire_eligible"])
+    writer.writerow(
+        [
+            "last_name",
+            "first_name",
+            "status",
+            "current_project",
+            "owning_recruiter",
+            "rehire_eligible",
+        ]
+    )
     people = Person.objects.filter(is_archived=False).select_related("owning_recruiter")
+    scope = user_office_scope(request.user)
+    if scope is not None:
+        people = people.filter(office__in=scope)
     for person in people:
         assignment = person.current_assignment()
-        writer.writerow([
-            person.last_name,
-            person.first_name,
-            person.get_lifecycle_status_display(),
-            assignment.project.name if assignment else "",
-            person.owning_recruiter.email if person.owning_recruiter else "",
-            "yes" if person.rehire_eligible else "no",
-        ])
+        writer.writerow(
+            [
+                person.last_name,
+                person.first_name,
+                person.get_lifecycle_status_display(),
+                assignment.project.name if assignment else "",
+                person.owning_recruiter.email if person.owning_recruiter else "",
+                "yes" if person.rehire_eligible else "no",
+            ]
+        )
     return response
 
 
 @require_action(Action.EXPORT_APPROVED)
 def projects_csv(request: HttpRequest) -> HttpResponse:
     response, writer = csv_response("projects.csv")
-    writer.writerow(["code", "name", "partner", "office", "active", "financial_reporting", "active_workers"])
-    for project in Project.objects.all():
-        writer.writerow([
-            project.code,
-            project.name,
-            project.partner,
-            project.office.name if project.office else "",
-            "yes" if project.is_active else "no",
-            "yes" if project.financial_reporting_eligible else "no",
-            project.assignments.filter(status=AssignmentStatus.ACTIVE).count(),
-        ])
+    writer.writerow(
+        [
+            "code",
+            "name",
+            "partner",
+            "office",
+            "active",
+            "financial_reporting",
+            "active_workers",
+        ]
+    )
+    projects = Project.objects.all()
+    scope = user_office_scope(request.user)
+    if scope is not None:
+        projects = projects.filter(office__in=scope)
+    for project in projects:
+        writer.writerow(
+            [
+                project.code,
+                project.name,
+                project.partner,
+                project.office.name if project.office else "",
+                "yes" if project.is_active else "no",
+                "yes" if project.financial_reporting_eligible else "no",
+                project.assignments.filter(status=AssignmentStatus.ACTIVE).count(),
+            ]
+        )
     return response

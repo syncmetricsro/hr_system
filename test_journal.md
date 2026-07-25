@@ -1,5 +1,42 @@
 # Test Journal
 
+## 2026-07-25 - Office-scoped RBAC Phase B, Slice 2: People, Projects, Reports, Exports scoped + detail-view 403s
+
+- `tests/test_people_office_scoping.py` (9 tests): list hides/shows per
+  scope, Observer sees all, hard 403 on cross-office `person_detail` /
+  `archive_person` / `recycle_person`, positive controls, CSV export
+  scoped, CorvinumEU-lane (no marker) proving the list is unaffected with
+  zero `Office` rows.
+- `tests/test_projects_office_scoping.py` (17 tests): list/detail/CSV
+  export scoping mirroring the people tests; `operable_projects()`
+  excludes another office even for Manager; trials queue hides another
+  office's pending trial (asserted against `resp.context["trials"]`, not
+  the raw HTML body, since the shared notification panel also surfaces
+  person names and would give a false pass/fail); hard 403 on
+  `trial_outcome`, `assign_trial`, `readiness_update`, `exit_person`,
+  `activate_person` for a cross-office person/project.
+- `tests/test_reports_office_scoping.py` (3 tests): reports page scoped
+  for Manager, full for Observer, unaffected for CorvinumEU.
+- **e2e caught two real issues, not test-infrastructure noise**:
+  `test_dashboard_tooltips_...` failed because the demo's only INACTIVE
+  person (Bohdan) was seeded in Dunajská Streda, invisible to the
+  VM-scoped demo manager, so the tooltip's inactive-reason link no longer
+  existed on the page - fixed by reseeding Bohdan into VM (a real demo-
+  data decision, not a workaround: the seeded staff accounts are all
+  VM-scoped, so VM needs its own inactive-person example). `test_jober_
+  notification_center_...` failed because `person_detail`'s trial-
+  assignment project `<select>` was still built from every active project
+  unfiltered - the browser's default (first) selection was a project
+  outside the manager's scope, and the now-correct 403 broke a flow that
+  used to silently succeed cross-office. Fixed by scoping that dropdown
+  through `operable_projects()`, the same helper `_trial_queue_context`
+  already used - a real UX bug the browser test caught that no unit test
+  would have (unit tests choose the project explicitly; the browser
+  submits whatever `<option>` is first).
+- Full verification: 583 Jober unit / 5 skipped, 380 CorvinumEU / 10
+  skipped / 144 deselected, 50 Playwright e2e (green after the two fixes
+  above), ruff check + format clean.
+
 ## 2026-07-25 - Office-scoped RBAC Phase B, Slice 1: `Person.office`/`Accommodation.office` schema + CorvinumEU-safety fix
 
 - `tests/test_office_scope_helper.py` (2 tests, no client marker — must
