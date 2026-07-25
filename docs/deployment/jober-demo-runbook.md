@@ -36,8 +36,9 @@ missing data.
 2. Open <http://localhost:8000> and sign in as
    `manazer@demo.jober.test` / `demo-jober-2026`.
 3. Confirm: the header badge reads **Velký Meder**; Dashboard shows Warehouse
-   stock and Accommodation occupancy; Projects lists **only DHL Bratislava**;
-   and no Transport navigation or project card is present.
+   stock and Accommodation occupancy; Projects lists **DHL Bratislava and
+   Minit** (Velký Meder's two, not all six); and no Transport navigation or
+   project card is present.
 4. Run `scripts/playwright_e2e.sh` and rehearse the issue/return and finance
    edits once. Never use real worker data or the supplied client workbook.
 
@@ -53,7 +54,10 @@ account can see**, so switching accounts is now part of the demo, not a detour:
 
 Seeded people, so you know who should be visible to whom: **Olha, Diana, Mira,
 Bohdan, Ivan** are Velký Meder; **Farrukh** is Győr; **Tran** is Dunajská
-Streda. Projects: DHL Bratislava = VM, WEBASTO = GYR, CARGO = DS.
+Streda. Six projects, two per office: **DHL Bratislava + Minit** (Velký
+Meder), **WEBASTO + Mevis 080** (Győr), **CARGO + RLS 067** (Dunajská
+Streda) — so each office's P&L is a real roll-up of two contracts, not a
+restatement of one.
 
 ## Headline sequence
 
@@ -68,14 +72,15 @@ Signed in as **Manager** (`manazer@`, Velký Meder):
   office bounding everything on screen.
 - **People** lists Olha, Diana, Mira, Bohdan and Ivan. Farrukh (Győr) and Tran
   (Dunajská Streda) are absent — not filtered in the UI, never queried.
-- **Projects** shows only DHL Bratislava.
+- **Projects** shows DHL Bratislava and Minit — Velký Meder's two. The
+  other four, in Győr and Dunajská Streda, are not listed.
 - **Warehouse** shows Velký Meder's stock only.
 
 Then show that it is a real boundary, not a filter:
 
 - Note the project id of DHL Bratislava, then edit the URL to a Győr or
-  Dunajská Streda project (or person). The server returns **403 Forbidden** —
-  guessing a URL does not work.
+  Dunajská Streda project (WEBASTO, Mevis 080, CARGO, RLS 067) or person. The
+  server returns **403 Forbidden** — guessing a URL does not work.
 
 Now switch to **Observer** (`pozorovatel@`):
 
@@ -183,6 +188,26 @@ Now switch to **Observer** and reopen Finance. This is the moment to show the
 **executive dashboard** — a different page, Observer-only, with all three
 offices rolled up side by side and a multi-series trend chart comparing them.
 Manager sees one office; the owner sees the company.
+
+For the CEO specifically, this is the slide that matters. On a freshly seeded
+stack the three offices land clearly differently across Jan–Jul 2026:
+
+| Office | Revenue | Net |
+|---|---|---|
+| Velký Meder | ~€165 300 | ~€46 100 |
+| Győr | ~€117 730 | ~€20 060 |
+| Dunajská Streda | ~€85 150 | ~€11 270 |
+
+Six contracts sit behind those three lines, each with its own shape — DHL
+Bratislava grows steadily, Minit peaks over summer, WEBASTO dips and recovers,
+Mevis 080 is flat, CARGO ramps fast, RLS 067 slowly declines. Say that out
+loud: the roll-up is a real sum of differently-behaving contracts, not one
+project restated.
+
+The year view also carries **Nov–Dec 2025** for all six projects, so there is a
+prior-year tail to compare against. Point out that 2025's smaller total
+(~€90 900) is two months, not a bad year — per-month it runs ~€45k against
+2026's ~€52.6k, which is the growth story.
 
 Export CSV and show the detailed period, **office**, project, category, kind,
 group, and signed-amount rows, followed by explicit per-office (`office_summary`)

@@ -1,5 +1,32 @@
 # Build Journal
 
+## 2026-07-25 - Richer demo finance data for the CEO walkthrough
+
+The executive dashboard had 21 months across three single-project offices,
+each month carrying ~6 line items. For a CEO demo that reads as a toy.
+
+- **Six projects, two per office** (`DHLBA`+`MINIT` / `WEB`+`MEVIS` /
+  `CARGO`+`RLS`), which is what makes "Profit/loss by office" a real roll-up
+  instead of a restatement of one project. Each has its own revenue curve -
+  steady grower, summer-peaking, dips-and-recovers, flat, fast ramp, slow
+  decline - so the trend chart shows six differently-shaped contracts behind
+  three office lines.
+- **Per-project cost and revenue splits** replacing the shared five-category
+  template. All ten finance groups are now populated, and accommodation and
+  damage carry *both* sides (accommodation costs EUR 35.6k against 20k
+  recharged; damage 3.2k against 5.4k recovered) - so the group breakdown is
+  a story rather than a row of cost bars.
+- **Nov-Dec 2025 backfilled for all six projects**, replacing a two-project
+  single-month stub that made the year view read as "EUR 24 400 for all of
+  2025" next to 2026's 368k. Both years now run through one shared
+  `_apply_splits()` helper reading the same tables, so they cannot drift
+  apart in category depth again - which is exactly how the old stub got thin.
+- Result: 54 months, 738 line items, all six projects and all three offices
+  present in both years. 2025 (~EUR 45k/month) into 2026 (~52.6k/month)
+  reads as growth.
+- The runbook's finance step now carries the per-office figures and states
+  plainly that 2025's smaller total is two months, not a bad year.
+
 ## 2026-07-25 - Office-less people belong to their owning recruiter
 
 A decision the office-scoping work forced into the open. Intake only infers
