@@ -1,5 +1,41 @@
 # Build Journal
 
+## 2026-07-25 - Office-scoped RBAC Phase B, Slice 4: Logistics (accommodation + transport) scoped
+
+Slice 4 of 7. Accommodation and transport are the last two read surfaces
+before the equipment-stock ledger (slice 5, the big one).
+
+- `features/logistics/views.py::accommodation_list` and
+  `_transport_context` (both the chart-data `rows` queryset and the
+  `records` table) filtered by office. Transport was a one-hop
+  `project__office__in=scope`, identical in shape to finance's Phase A
+  pattern, since `TransportWeek.project` already existed.
+- `features/logistics/forms.py::transport_projects()` gained the office
+  filter on top of its existing coordinator filter.
+- New `_assert_accommodation_in_scope` / `_assert_person_in_scope` guards
+  give the same hard-403 treatment slice 2 gave People/Projects, across
+  every accommodation-and-room surface that takes a pk directly:
+  `accommodation_detail`, `accommodation_edit`, `room_create`,
+  `room_edit`, `accommodation_cost_period`, `set_room_rate_view`,
+  `set_assignment_rate_view`, `set_assignment_payment_view`,
+  `assign_room_view` (both the person *and* the room's accommodation, as
+  either can be an independent cross-office guess), `release_room_view`.
+- **Caught the same class of bug slice 2's e2e run surfaced, this time by
+  looking for it rather than waiting to be bitten**:
+  `features/logistics/forms.py::assignable_rooms()` built the room
+  `<select>` on the person card from every active room company-wide, with
+  no user argument at all. A cross-office room would have been offered in
+  a dropdown that `assign_room_view` now correctly 403s. Gained a `user=`
+  parameter scoped via `accommodation__office__in`; its single caller
+  (`features/logistics/panels.py::room_panel`) now passes `request.user`.
+- Verified: 605 Jober unit tests / 6 skipped, 397 CorvinumEU / 10 skipped
+  / 150 deselected, 50 Playwright e2e, ruff check + format clean.
+- Note on the verification: the host OS crashed mid-run on the first
+  attempt, taking out all containers and the scratchpad. Every lane was
+  re-run from scratch afterwards (fresh test databases, fresh image
+  builds) rather than trusting the partial pre-crash results - the Jober
+  count reproduced exactly.
+
 ## 2026-07-25 - Office-scoped RBAC Phase B, Slice 3: Compliance, Checklists, Notifications scoped
 
 Slice 3 of 7. Extends office scoping to the three surfaces that surface

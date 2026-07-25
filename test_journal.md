@@ -1,5 +1,32 @@
 # Test Journal
 
+## 2026-07-25 - Office-scoped RBAC Phase B, Slice 4: Logistics (accommodation + transport) scoped
+
+- `tests/test_logistics_office_scoping.py` (12 tests), deliberately split
+  into two groups by what can actually run per client:
+  - **HTTP accommodation tests** (6, `@pytest.mark.jober_only`): list
+    hides/shows per scope, Observer sees all, hard 403 on cross-office
+    `accommodation_detail` and `accommodation_edit`, same-office positive
+    control, Observer positive control. Marked Jober-only because the
+    `accommodation` feature flag is off for CorvinumEU entirely
+    (`clients/corvinum_eu/settings.py`, "rejected in interview") - those
+    URLs don't exist there, so a CorvinumEU-lane HTTP test would fail on
+    `NoReverseMatch`, not prove anything about scoping.
+  - **Pure-function tests** (6, unmarked, so they run in *both* lanes):
+    `transport_projects()` and `assignable_rooms()` each get a
+    manager-scoped case, an Observer-sees-all case, and a
+    zero-`Office`-rows CorvinumEU case. These give real cross-client
+    coverage of the scoping logic itself without depending on whether the
+    corresponding *pages* are routable for that client - a better fit here
+    than marking the whole file `jober_only`, which would have left the
+    CorvinumEU behaviour of this slice completely untested.
+- Full verification: 605 Jober unit / 6 skipped, 397 CorvinumEU / 10
+  skipped / 150 deselected, 50 Playwright e2e, ruff check + format clean.
+- The host OS crashed partway through the first verification pass, losing
+  all containers and test logs. Every lane was re-run from scratch (new
+  test databases, rebuilt images) rather than reporting the interrupted
+  run's partial output; the Jober unit count reproduced identically.
+
 ## 2026-07-25 - Office-scoped RBAC Phase B, Slice 3: Compliance, Checklists, Notifications scoped
 
 - `tests/test_compliance_office_scoping.py` (6 tests): `compliance_alerts()`

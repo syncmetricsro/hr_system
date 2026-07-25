@@ -32,8 +32,10 @@ def room_panel(request, person):
     return {
         "current_room": person.room_assignments.filter(
             status=RoomAssignmentStatus.ACTIVE
-        ).select_related("room__accommodation").first(),
-        "rooms": assignable_rooms(),
+        )
+        .select_related("room__accommodation")
+        .first(),
+        "rooms": assignable_rooms(request.user),
     }
 
 
@@ -42,9 +44,11 @@ def equipment_panel(request, person):
         return None
     stock_enabled = stock_ledger_enabled()
     items = list(EquipmentItem.objects.filter(is_active=True))
-    available = {
-        row["item_id"]: row["quantity"] for row in equipment_stock_balance()["rows"]
-    } if stock_enabled else {}
+    available = (
+        {row["item_id"]: row["quantity"] for row in equipment_stock_balance()["rows"]}
+        if stock_enabled
+        else {}
+    )
     for item in items:
         item.available_quantity = available.get(item.pk, 0)
     return {
@@ -102,7 +106,9 @@ def equipment_value_tile(request):
         if user_can(request.user, Action.EQUIPMENT_VIEW_STOCK):
             tile["url"] = reverse("equipment_stock")
             tile["tooltip_heading"] = _("Review warehouse stock")
-            tile["tooltip_body"] = _("Open current quantities, value, and monthly stock movements.")
+            tile["tooltip_body"] = _(
+                "Open current quantities, value, and monthly stock movements."
+            )
         return tile
     tile = {"label": _("Equipment value"), "value": f"{issued_equipment_value()} EUR"}
     if user_can(request.user, Action.EQUIPMENT_REVIEW_DEDUCTION):
