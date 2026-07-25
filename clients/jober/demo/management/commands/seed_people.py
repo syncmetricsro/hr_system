@@ -36,24 +36,32 @@ PROJECTS = [
     {"name": "CARGO", "code": "CARGO", "office_code": "DS", "partner": "Cargo"},
 ]
 
-# (first, last, status, has_disability)
+# (first, last, status, has_disability, office_code) — office_code spreads
+# people across all three offices (not all-VM) so office scoping (ADR 0026
+# Phase B) is visibly demonstrated in the demo, matching the same principle
+# already applied to project/staff office assignment above. Farrukh's office
+# matches his pending trial at WEBASTO (Győr), not his eventual home office.
 PEOPLE = [
-    ("Olha", "Kovalenko", LifecycleStatus.WORKING, False),
-    ("Farrukh", "Tashkentov", LifecycleStatus.AVAILABLE, False),
-    ("Tran", "Van Minh", LifecycleStatus.AVAILABLE, False),
-    ("Diana", "Horvathova", LifecycleStatus.AVAILABLE, True),
-    ("Bohdan", "Melnyk", LifecycleStatus.INACTIVE, False),
-    ("Mira", "Novakova", LifecycleStatus.AVAILABLE, False),
+    ("Olha", "Kovalenko", LifecycleStatus.WORKING, False, "VM"),
+    ("Farrukh", "Tashkentov", LifecycleStatus.AVAILABLE, False, "GYR"),
+    ("Tran", "Van Minh", LifecycleStatus.AVAILABLE, False, "DS"),
+    ("Diana", "Horvathova", LifecycleStatus.AVAILABLE, True, "VM"),
+    ("Bohdan", "Melnyk", LifecycleStatus.INACTIVE, False, "DS"),
+    ("Mira", "Novakova", LifecycleStatus.AVAILABLE, False, "VM"),
 ]
 
 
 class Command(BaseCommand):
-    help = "Create fictional projects, people, and one assignment for local/staging demos."
+    help = (
+        "Create fictional projects, people, and one assignment for local/staging demos."
+    )
 
     def handle(self, *args, **options):
         for spec in OFFICES:
             Office.objects.get_or_create(code=spec["code"], defaults=spec)
-        self.stdout.write(f"Offices: {Office.objects.filter(code__in=[o['code'] for o in OFFICES]).count()}")
+        self.stdout.write(
+            f"Offices: {Office.objects.filter(code__in=[o['code'] for o in OFFICES]).count()}"
+        )
 
         recruiter = User.objects.filter(email=f"naborar@{DEMO_DOMAIN}").first()
         coordinator = User.objects.filter(email=f"koordinator@{DEMO_DOMAIN}").first()
@@ -64,7 +72,9 @@ class Command(BaseCommand):
             office_code = spec["office_code"]
             defaults = {k: v for k, v in spec.items() if k != "office_code"}
             defaults["office"] = Office.objects.filter(code=office_code).first()
-            project, _ = Project.objects.update_or_create(code=spec["code"], defaults=defaults)
+            project, _ = Project.objects.update_or_create(
+                code=spec["code"], defaults=defaults
+            )
             if coordinator:
                 project.responsible_coordinators.add(coordinator)
             projects[spec["code"]] = project
@@ -85,7 +95,8 @@ class Command(BaseCommand):
         # Observer intentionally gets no office membership — cross-office
         # visibility is a role bypass (user_office_scope), not a membership.
 
-        for first, last, status, disabled in PEOPLE:
+        for first, last, status, disabled, office_code in PEOPLE:
+            office = Office.objects.filter(code=office_code).first()
             person, created = Person.objects.get_or_create(
                 first_name=first,
                 last_name=last,
@@ -94,15 +105,23 @@ class Command(BaseCommand):
                     "has_disability": disabled,
                     "disability_type": "reduced mobility" if disabled else "",
                     # WORKING is reached via an assignment below, not directly.
-                    "lifecycle_status": status if status != LifecycleStatus.WORKING else LifecycleStatus.AVAILABLE,
+                    "lifecycle_status": status
+                    if status != LifecycleStatus.WORKING
+                    else LifecycleStatus.AVAILABLE,
+                    "office": office,
                 },
             )
+            if not created and person.office_id != (office.id if office else None):
+                person.office = office
+                person.save(update_fields=["office", "updated_at"])
             if created and status == LifecycleStatus.WORKING:
                 activate_on_project(
                     person, projects["DHLBA"], actor=coordinator, reason="demo seed"
                 )
 
-        underage = Person.objects.filter(first_name="Mira", last_name="Novakova").first()
+        underage = Person.objects.filter(
+            first_name="Mira", last_name="Novakova"
+        ).first()
         if underage:
             underage.date_of_birth = timezone.localdate().replace(
                 year=timezone.localdate().year - 17
@@ -112,16 +131,22 @@ class Command(BaseCommand):
         # A lifecycle label alone does not populate the operational queue. Keep
         # one real pending TrialAssignment so the demo exercises the same UI and
         # service path staff use.
-        farrukh = Person.objects.filter(first_name="Farrukh", last_name="Tashkentov").first()
+        farrukh = Person.objects.filter(
+            first_name="Farrukh", last_name="Tashkentov"
+        ).first()
         if farrukh and not farrukh.trials.exists():
             if farrukh.lifecycle_status == LifecycleStatus.TRIAL_DAY:
                 # Repair databases created by the older incomplete seed.
                 farrukh.lifecycle_status = LifecycleStatus.AVAILABLE
                 farrukh.save(update_fields=["lifecycle_status", "updated_at"])
             schedule_trial(
-                farrukh, projects["WEB"], actor=coordinator,
+                farrukh,
+                projects["WEB"],
+                actor=coordinator,
                 scheduled_for=timezone.now() + timedelta(days=2),
                 note="Demo arrival at the main gate",
             )
 
-        self.stdout.write(self.style.SUCCESS(f"People seeded: {Person.objects.count()} total"))
+        self.stdout.write(
+            self.style.SUCCESS(f"People seeded: {Person.objects.count()} total")
+        )

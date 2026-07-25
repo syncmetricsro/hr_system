@@ -35,17 +35,23 @@ def _parsed_birth_date(value):
 
 
 def _form_age_warning(form: PersonForm):
-    raw = form.data.get("date_of_birth") if form.is_bound else form.initial.get("date_of_birth")
+    raw = (
+        form.data.get("date_of_birth")
+        if form.is_bound
+        else form.initial.get("date_of_birth")
+    )
     return age_warning(_parsed_birth_date(raw))
 
 
 def _configure_age_warning(form: PersonForm) -> None:
-    form.fields["date_of_birth"].widget.attrs.update({
-        "hx-get": reverse("person_age_warning"),
-        "hx-trigger": "change",
-        "hx-target": "#age-warning",
-        "hx-include": "[name='date_of_birth']",
-    })
+    form.fields["date_of_birth"].widget.attrs.update(
+        {
+            "hx-get": reverse("person_age_warning"),
+            "hx-trigger": "change",
+            "hx-target": "#age-warning",
+            "hx-include": "[name='date_of_birth']",
+        }
+    )
 
 
 @login_required
@@ -65,9 +71,10 @@ def people_list(request: HttpRequest) -> TemplateResponse:
     if status == LifecycleStatus.INACTIVE:
         if inactive_reason == "none":
             people = people.filter(inactive_reason__isnull=True)
-        elif inactive_reason.isdecimal() and inactive_reasons.filter(
-            pk=int(inactive_reason)
-        ).exists():
+        elif (
+            inactive_reason.isdecimal()
+            and inactive_reasons.filter(pk=int(inactive_reason)).exists()
+        ):
             people = people.filter(inactive_reason_id=int(inactive_reason))
         else:
             inactive_reason = ""
@@ -90,7 +97,7 @@ def people_list(request: HttpRequest) -> TemplateResponse:
 @require_action(Action.INTAKE_CREATE_EDIT)
 def person_create(request: HttpRequest) -> HttpResponse:
     if request.method == "POST":
-        form = PersonForm(request.POST)
+        form = PersonForm(request.POST, user=request.user)
         if form.is_valid():
             person = form.save(commit=False)
             person.owning_recruiter = request.user
@@ -103,12 +110,15 @@ def person_create(request: HttpRequest) -> HttpResponse:
                 extension.post_create(request, person, form.cleaned_data)
             return redirect("person_detail", pk=person.pk)
     else:
-        form = PersonForm()
+        form = PersonForm(user=request.user)
     _configure_age_warning(form)
     return TemplateResponse(
-        request, "pages/person_form.html",
+        request,
+        "pages/person_form.html",
         {
-            "form": form, "form_action": reverse("person_create"), "heading": _("Add person"),
+            "form": form,
+            "form_action": reverse("person_create"),
+            "heading": _("Add person"),
             "age_warning": _form_age_warning(form),
         },
     )
@@ -118,19 +128,22 @@ def person_create(request: HttpRequest) -> HttpResponse:
 def person_edit(request: HttpRequest, pk: int) -> HttpResponse:
     person = get_object_or_404(Person, pk=pk)
     if request.method == "POST":
-        form = PersonForm(request.POST, instance=person)
+        form = PersonForm(request.POST, instance=person, user=request.user)
         if form.is_valid():
             form.save()
             record_event(request.user, "person.updated", target=person)
             messages.success(request, _("Person updated."))
             return redirect("person_detail", pk=person.pk)
     else:
-        form = PersonForm(instance=person)
+        form = PersonForm(instance=person, user=request.user)
     _configure_age_warning(form)
     return TemplateResponse(
-        request, "pages/person_form.html",
+        request,
+        "pages/person_form.html",
         {
-            "form": form, "form_action": reverse("person_edit", args=[person.pk]), "heading": _("Edit person"),
+            "form": form,
+            "form_action": reverse("person_edit", args=[person.pk]),
+            "heading": _("Edit person"),
             "age_warning": age_warning(person.date_of_birth),
         },
     )
@@ -140,7 +153,11 @@ def person_edit(request: HttpRequest, pk: int) -> HttpResponse:
 def person_detail(request: HttpRequest, pk: int) -> TemplateResponse:
     person = get_object_or_404(Person, pk=pk)
     assignment = person.current_assignment()
-    pending_trial = person.trials.filter(outcome=TrialOutcome.PENDING).select_related("project").first()
+    pending_trial = (
+        person.trials.filter(outcome=TrialOutcome.PENDING)
+        .select_related("project")
+        .first()
+    )
     # A passed trial with no pending trial means the person is in the readiness step.
     passed_trial = (
         person.trials.filter(outcome=TrialOutcome.PASS).order_by("-created_at").first()
@@ -155,15 +172,26 @@ def person_detail(request: HttpRequest, pk: int) -> TemplateResponse:
     if in_readiness:
         readiness = get_or_create_readiness(person, passed_trial.project)
         readiness_issues = readiness_blockers(readiness)
-        if readiness.entry_medical_date and readiness.entry_medical_date > timezone.localdate():
-            readiness_issues.append({"field": "entry_medical_date", "label": _("Entry medical date"), "message": _("Review this future date.")})
+        if (
+            readiness.entry_medical_date
+            and readiness.entry_medical_date > timezone.localdate()
+        ):
+            readiness_issues.append(
+                {
+                    "field": "entry_medical_date",
+                    "label": _("Entry medical date"),
+                    "message": _("Review this future date."),
+                }
+            )
     return TemplateResponse(
         request,
         "pages/person_detail.html",
         {
             "person": person,
             "age_warning": age_warning(person.date_of_birth),
-            "transport_enabled": getattr(settings, "FEATURE_FLAGS", {}).get("transport", True),
+            "transport_enabled": getattr(settings, "FEATURE_FLAGS", {}).get(
+                "transport", True
+            ),
             "assignment": assignment,
             "show_sensitive": can_view_sensitive(request.user, person),
             "history": person_history(person),
@@ -173,7 +201,9 @@ def person_detail(request: HttpRequest, pk: int) -> TemplateResponse:
             "readiness": readiness,
             "readiness_issues": readiness_issues,
             "readiness_future_medical_date": bool(
-                readiness and readiness.entry_medical_date and readiness.entry_medical_date > timezone.localdate()
+                readiness
+                and readiness.entry_medical_date
+                and readiness.entry_medical_date > timezone.localdate()
             ),
             "is_ready": readiness.is_ready() if readiness else False,
             "PillarState": PillarState,
@@ -184,7 +214,8 @@ def person_detail(request: HttpRequest, pk: int) -> TemplateResponse:
             "person_finance_overview": registry.person_finance_overview(
                 request, person
             ),
-            "can_exit": user_can(request.user, Action.EXIT_RECONCILE) and (
+            "can_exit": user_can(request.user, Action.EXIT_RECONCILE)
+            and (
                 person.lifecycle_status == LifecycleStatus.WORKING
                 or registry.exit_relevant(person)
             ),
@@ -195,8 +226,7 @@ def person_detail(request: HttpRequest, pk: int) -> TemplateResponse:
                 and user_can(request.user, Action.PERSON_RECYCLE_AVAILABLE)
             ),
             "can_archive": (
-                not person.is_archived
-                and user_can(request.user, Action.PERSON_ARCHIVE)
+                not person.is_archived and user_can(request.user, Action.PERSON_ARCHIVE)
             ),
         },
     )
@@ -223,7 +253,9 @@ def archive_person(request: HttpRequest, person_pk: int) -> HttpResponse:
     """
     person = get_object_or_404(Person, pk=person_pk)
     person.archive(actor=request.user, reason=request.POST.get("reason", ""))
-    messages.success(request, _("Person archived. Blacklist protection remains in place."))
+    messages.success(
+        request, _("Person archived. Blacklist protection remains in place.")
+    )
     return redirect("people_list")
 
 
@@ -232,7 +264,9 @@ def archive_person(request: HttpRequest, person_pk: int) -> HttpResponse:
 def recycle_person(request: HttpRequest, person_pk: int) -> HttpResponse:
     person = get_object_or_404(Person, pk=person_pk)
     try:
-        recycle_to_available(person, actor=request.user, reason=request.POST.get("reason", ""))
+        recycle_to_available(
+            person, actor=request.user, reason=request.POST.get("reason", "")
+        )
         messages.success(request, _("Recycled to Available."))
     except LifecycleError as exc:
         messages.error(request, str(exc))

@@ -1,5 +1,56 @@
 # Build Journal
 
+## 2026-07-25 - Office-scoped RBAC Phase B, Slice 1: `Person.office`/`Accommodation.office` schema + a critical CorvinumEU-safety fix
+
+Production-readiness review item #5: office scoping (ADR 0026) only
+protected Finance ("Phase A"). This is Slice 1 of a 7-slice program
+completing Phase B (People, Projects, Reports, Compliance, Logistics,
+Notifications, exports, the equipment-stock ledger, and the office-
+principal/staff-invitation subsystem — all confirmed in scope, not
+deferred, per the user's explicit "complete solution" call).
+
+- **Found and fixed a real bug before it could ship**, not called out in
+  the original review: `user_office_scope()` (`core/accounts/
+  permissions.py`) returned `user.offices.all()` for any non-Observer —
+  for CorvinumEU (which never populates `Office`/`User.offices` at all)
+  that's always an *empty* queryset, not `None`. Every `.filter(office__
+  in=scope)` call the later slices add would have silently returned zero
+  rows for every CorvinumEU Manager/Coordinator/Recruiter, everywhere.
+  Fixed with a data-driven (not client-branching) check: `if not Office.
+  objects.exists(): return None` before the membership return — safe for
+  Jober (always has 3 seeded offices) and correct for CorvinumEU. This is
+  the load-bearing prerequisite every later slice depends on.
+- `Person.office` and `Accommodation.office` — new nullable FKs
+  (`core/people/models.py`, `features/logistics/models.py`), migrations
+  `core/people/migrations/0006_person_office.py` and `features/logistics/
+  migrations/0010_accommodation_office.py`. `Room` inherits its
+  accommodation's office transitively, no separate field.
+- `PersonForm`/`AccommodationForm` gained a scoped `office` field (new
+  `user=` kwarg): offered choices are the acting user's own offices
+  (all offices for Observer/superuser or installs with none at all),
+  defaulted when the user belongs to exactly one. `person_create`/
+  `person_edit`/`accommodation_create`/`accommodation_edit` thread
+  `user=request.user` through.
+- `features/intake/services.py::complete_intake` infers a new person's
+  office from the recruiter's own office membership when unambiguous
+  (exactly one office); left unset otherwise, correctable later via
+  `person_edit` — chosen over adding an intake questionnaire field, since
+  that would couple the static `SELECT` catalog to `Office.code` strings
+  for no real benefit (offices are permanently capped at 3).
+- Demo seed data updated: `seed_people.py` spreads the six seeded people
+  across all three offices (not all-VM) so office scoping is visibly
+  demonstrated, not just schema nobody can see; `seed_logistics.py`'s
+  single accommodation matches its housed worker's office.
+- New tests: `tests/test_office_scope_helper.py` (the CorvinumEU-safety
+  regression guard, no client marker), `tests/test_person_office.py`,
+  `tests/test_accommodation_office.py` — form scoping/defaults, intake
+  inference, and an explicit CorvinumEU-lane case per file proving the
+  office field stays optional and empty there, not broken.
+- Verified: 554 Jober unit tests / 5 skipped, 351 CorvinumEU / 10 skipped
+  / 144 deselected, 50 Playwright e2e (both demo apps rebuilt and reseeded
+  cleanly with the new office logic), `manage.py makemigrations --check`
+  clean, ruff check + format clean on every touched file.
+
 ## 2026-07-25 - Audit `reason` translation gap closed for fixed-vocabulary literals
 
 `docs/i18n-workflow.md` had documented `reason` as a full "accepted

@@ -25,7 +25,12 @@ class LifecycleStatus(models.TextChoices):
 
 # Fields restricted to: owning recruiter, responsible coordinator, managers,
 # observers (plan §8.1 + phase1-open-questions Q4). See apps.people.permissions.
-SENSITIVE_FIELDS = ("date_of_birth", "place_of_birth", "has_disability", "disability_type")
+SENSITIVE_FIELDS = (
+    "date_of_birth",
+    "place_of_birth",
+    "has_disability",
+    "disability_type",
+)
 
 
 class LifecycleError(Exception):
@@ -89,8 +94,12 @@ class Person(models.Model):
     # Inactive metadata (Q5): structured reason + since-date, set when marked
     # Inactive and cleared on recycle back to Available.
     inactive_reason = models.ForeignKey(
-        InactiveReason, on_delete=models.SET_NULL, null=True, blank=True,
-        related_name="people", verbose_name=_("inactive reason"),
+        InactiveReason,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="people",
+        verbose_name=_("inactive reason"),
     )
     inactive_since = models.DateField(_("inactive since"), null=True, blank=True)
 
@@ -106,12 +115,26 @@ class Person(models.Model):
     )
     rehire_eligible = models.BooleanField(_("rehire eligible"), default=True)
 
+    # Office scoping (ADR 0026 Phase B): the primary key a worker's visibility
+    # is scoped by, set at intake and independent of project assignment so
+    # benched/between-placement people still have a resolvable office.
+    office = models.ForeignKey(
+        "offices.Office",
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True,
+        related_name="people",
+        verbose_name=_("office"),
+    )
+
     # Archive metadata
     is_archived = models.BooleanField(_("archived"), default=False)
     archived_at = models.DateTimeField(_("archived at"), null=True, blank=True)
 
     # Search
-    search_name = models.CharField(_("search name"), max_length=255, db_index=True, blank=True)
+    search_name = models.CharField(
+        _("search name"), max_length=255, db_index=True, blank=True
+    )
 
     created_at = models.DateTimeField(_("created"), auto_now_add=True)
     updated_at = models.DateTimeField(_("updated"), auto_now=True)
@@ -169,7 +192,9 @@ class Person(models.Model):
 
     def current_assignment(self):
         """The single active project assignment, if any (plan §11.4)."""
-        return self.assignments.filter(status="active").select_related("project").first()
+        return (
+            self.assignments.filter(status="active").select_related("project").first()
+        )
 
     def responsible_coordinator_ids(self) -> set[int]:
         """IDs of coordinators responsible via the current project assignment."""
@@ -187,5 +212,7 @@ class Person(models.Model):
             return
         self.is_archived = True
         self.archived_at = timezone.now()
-        self.save(update_fields=["is_archived", "archived_at", "updated_at", "search_name"])
+        self.save(
+            update_fields=["is_archived", "archived_at", "updated_at", "search_name"]
+        )
         record_event(actor, "person.archived", target=self, reason=reason)

@@ -122,12 +122,24 @@ def user_office_scope(user):
 
     For every other role, returns ``user.offices.all()`` — a manager,
     coordinator, or recruiter sees only the office(s) they belong to.
+
+    If no ``Office`` rows exist at all (CorvinumEU's permanent condition —
+    it never populates the office-scoping feature), scoping is inapplicable
+    and every non-Observer role is also unrestricted. Without this check,
+    every non-Observer CorvinumEU user's ``offices.all()`` would be an
+    *empty* queryset rather than ``None`` — "restricted to nothing" instead
+    of "no filter" — silently hiding every record from them everywhere this
+    helper is used.
     """
     from core.offices.models import Office
 
     if user is None or not user.is_authenticated:
         return Office.objects.none()
-    if getattr(user, "role", None) == Role.OBSERVER or getattr(user, "is_superuser", False):
+    if getattr(user, "role", None) == Role.OBSERVER or getattr(
+        user, "is_superuser", False
+    ):
+        return None
+    if not Office.objects.exists():
         return None
     return user.offices.all()
 
@@ -142,7 +154,9 @@ def require_action(action: Action) -> Callable:
             if user is None or not user.is_authenticated:
                 return redirect_to_login(request.get_full_path())
             if not can(user, action):
-                raise PermissionDenied(f"Role is not permitted to perform: {action.value}")
+                raise PermissionDenied(
+                    f"Role is not permitted to perform: {action.value}"
+                )
             return view(request, *args, **kwargs)
 
         return wrapped

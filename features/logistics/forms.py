@@ -8,10 +8,16 @@ from django.db.models import Count, F, Q
 from django.utils.translation import gettext_lazy as _
 
 from core.accounts.models import Role
+from core.accounts.permissions import user_office_scope
+from core.offices.models import Office
 from core.projects.models import Project
 from features.logistics.models import (
-    Accommodation, AccommodationCostPeriod, EquipmentItem, Room,
-    RoomAssignmentStatus, TransportWeek,
+    Accommodation,
+    AccommodationCostPeriod,
+    EquipmentItem,
+    Room,
+    RoomAssignmentStatus,
+    TransportWeek,
 )
 
 
@@ -45,23 +51,34 @@ class AccommodationForm(forms.ModelForm):
     a bare pair of inputs on the edit form that silently do nothing."""
 
     capacity = forms.IntegerField(
-        label=_("Capacity (beds)"), required=False, min_value=1,
+        label=_("Capacity (beds)"),
+        required=False,
+        min_value=1,
     )
     per_head_cost = forms.DecimalField(
-        label=_("Per-head monthly cost (EUR)"), required=False, min_value=Decimal("0"),
-        decimal_places=2, widget=forms.NumberInput(attrs={"step": "0.01", "min": "0"}),
+        label=_("Per-head monthly cost (EUR)"),
+        required=False,
+        min_value=Decimal("0"),
+        decimal_places=2,
+        widget=forms.NumberInput(attrs={"step": "0.01", "min": "0"}),
     )
 
     class Meta:
         model = Accommodation
-        fields = ("name", "address", "notes", "is_active")
+        fields = ("name", "address", "office", "notes", "is_active")
         widgets = {"notes": forms.Textarea(attrs={"rows": 3})}
+        labels = {"office": _("Office")}
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, user=None, **kwargs):
         super().__init__(*args, **kwargs)
         if self.instance.pk:
             del self.fields["capacity"]
             del self.fields["per_head_cost"]
+        scope = user_office_scope(user)
+        offices = Office.objects.all() if scope is None else scope
+        self.fields["office"].queryset = offices
+        if scope is not None and not self.initial.get("office") and scope.count() == 1:
+            self.fields["office"].initial = scope.first()
 
     def clean(self):
         cleaned = super().clean()
@@ -69,25 +86,31 @@ class AccommodationForm(forms.ModelForm):
         per_head_cost = cleaned.get("per_head_cost")
         if "capacity" in self.fields and (capacity is None) != (per_head_cost is None):
             raise forms.ValidationError(
-                _("Enter both capacity and per-head cost to record a cost period, or leave both blank.")
+                _(
+                    "Enter both capacity and per-head cost to record a cost period, or leave both blank."
+                )
             )
         return cleaned
 
     def clean_is_active(self):
         active = self.cleaned_data["is_active"]
         if (
-            not active and self.instance.pk
+            not active
+            and self.instance.pk
             and self.instance.rooms.filter(
                 assignments__status=RoomAssignmentStatus.ACTIVE
             ).exists()
         ):
-            raise forms.ValidationError(_("Release all occupants before deactivating this location."))
+            raise forms.ValidationError(
+                _("Release all occupants before deactivating this location.")
+            )
         return active
 
 
 class AccommodationCostPeriodForm(forms.ModelForm):
     effective_month = forms.DateField(
-        label=_("Effective month"), input_formats=["%Y-%m"],
+        label=_("Effective month"),
+        input_formats=["%Y-%m"],
         widget=forms.DateInput(format="%Y-%m", attrs={"type": "month"}),
     )
 
@@ -107,7 +130,9 @@ class RoomForm(forms.ModelForm):
     class Meta:
         model = Room
         fields = ("label", "capacity", "monthly_rate", "is_active")
-        widgets = {"monthly_rate": forms.NumberInput(attrs={"step": "0.01", "min": "0"})}
+        widgets = {
+            "monthly_rate": forms.NumberInput(attrs={"step": "0.01", "min": "0"})
+        }
 
     def clean(self):
         cleaned = super().clean()
@@ -116,9 +141,13 @@ class RoomForm(forms.ModelForm):
         occupancy = self.instance.occupancy()
         capacity = cleaned.get("capacity")
         if capacity is not None and capacity < occupancy:
-            self.add_error("capacity", _("Capacity cannot be lower than current occupancy."))
+            self.add_error(
+                "capacity", _("Capacity cannot be lower than current occupancy.")
+            )
         if cleaned.get("is_active") is False and occupancy:
-            self.add_error("is_active", _("Release all occupants before deactivating this room."))
+            self.add_error(
+                "is_active", _("Release all occupants before deactivating this room.")
+            )
         return cleaned
 
 
@@ -135,16 +164,22 @@ class EquipmentItemForm(forms.ModelForm):
 
 class StockReceiptForm(forms.Form):
     operation_key = forms.UUIDField(widget=forms.HiddenInput, initial=uuid4)
-    received_on = forms.DateField(label=_("Received on"), widget=forms.DateInput(attrs={"type": "date"}))
+    received_on = forms.DateField(
+        label=_("Received on"), widget=forms.DateInput(attrs={"type": "date"})
+    )
     reference = forms.CharField(label=_("Reference"), max_length=120, required=False)
     supplier = forms.CharField(label=_("Supplier"), max_length=200, required=False)
     note = forms.CharField(label=_("Note"), max_length=300, required=False)
 
 
 class StockReceiptLineForm(forms.Form):
-    item = forms.ModelChoiceField(label=_("Item"), queryset=EquipmentItem.objects.none(), required=False)
+    item = forms.ModelChoiceField(
+        label=_("Item"), queryset=EquipmentItem.objects.none(), required=False
+    )
     quantity = forms.IntegerField(label=_("Quantity"), min_value=1, required=False)
-    total_value = forms.DecimalField(label=_("Total value"), min_value=0, decimal_places=2, required=False)
+    total_value = forms.DecimalField(
+        label=_("Total value"), min_value=0, decimal_places=2, required=False
+    )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -152,20 +187,39 @@ class StockReceiptLineForm(forms.Form):
 
     def clean(self):
         cleaned = super().clean()
-        values = (cleaned.get("item"), cleaned.get("quantity"), cleaned.get("total_value"))
-        if any(value not in (None, "") for value in values) and not all(value not in (None, "") for value in values):
-            raise forms.ValidationError(_("Complete the item, quantity, and total value."))
+        values = (
+            cleaned.get("item"),
+            cleaned.get("quantity"),
+            cleaned.get("total_value"),
+        )
+        if any(value not in (None, "") for value in values) and not all(
+            value not in (None, "") for value in values
+        ):
+            raise forms.ValidationError(
+                _("Complete the item, quantity, and total value.")
+            )
         return cleaned
 
 
-StockReceiptLineFormSet = forms.formset_factory(StockReceiptLineForm, extra=4, max_num=12)
+StockReceiptLineFormSet = forms.formset_factory(
+    StockReceiptLineForm, extra=4, max_num=12
+)
 
 
 class StockAdjustmentForm(forms.Form):
-    item = forms.ModelChoiceField(label=_("Item"), queryset=EquipmentItem.objects.none())
-    occurred_on = forms.DateField(label=_("Date"), widget=forms.DateInput(attrs={"type": "date"}))
+    item = forms.ModelChoiceField(
+        label=_("Item"), queryset=EquipmentItem.objects.none()
+    )
+    occurred_on = forms.DateField(
+        label=_("Date"), widget=forms.DateInput(attrs={"type": "date"})
+    )
     quantity_delta = forms.IntegerField(label=_("Quantity adjustment"))
-    value = forms.DecimalField(label=_("Value for positive adjustment"), min_value=0, decimal_places=2, required=False)
+    value = forms.DecimalField(
+        label=_("Value for positive adjustment"),
+        min_value=0,
+        decimal_places=2,
+        required=False,
+    )
     reason = forms.CharField(label=_("Reason"), max_length=300)
 
     def __init__(self, *args, **kwargs):
@@ -183,10 +237,16 @@ class StockAdjustmentForm(forms.Form):
 
 
 def assignable_rooms():
-    return Room.objects.filter(
-        is_active=True, accommodation__is_active=True,
-    ).annotate(
-        active_occupancy=Count(
-            "assignments", filter=Q(assignments__status=RoomAssignmentStatus.ACTIVE)
+    return (
+        Room.objects.filter(
+            is_active=True,
+            accommodation__is_active=True,
         )
-    ).filter(active_occupancy__lt=F("capacity")).select_related("accommodation")
+        .annotate(
+            active_occupancy=Count(
+                "assignments", filter=Q(assignments__status=RoomAssignmentStatus.ACTIVE)
+            )
+        )
+        .filter(active_occupancy__lt=F("capacity"))
+        .select_related("accommodation")
+    )

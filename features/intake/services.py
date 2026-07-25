@@ -21,8 +21,14 @@ NEGATIVE = "__negative__"
 
 # stable_keys mapped straight onto Person on completion.
 _DIRECT_FIELDS = (
-    "first_name", "last_name", "email", "phone", "address", "nationality",
-    "preferred_language", "place_of_birth",
+    "first_name",
+    "last_name",
+    "email",
+    "phone",
+    "address",
+    "nationality",
+    "preferred_language",
+    "place_of_birth",
 )
 
 
@@ -106,7 +112,9 @@ def save_panel(intake, post, *, actor=None, http_request=None) -> dict:
     # Pass 2: applicability + validation.
     errors: dict[str, str] = {}
     for q in questions:
-        if q.conditional_on and not _parent_positive(q.conditional_on, parsed, existing):
+        if q.conditional_on and not _parent_positive(
+            q.conditional_on, parsed, existing
+        ):
             continue  # not applicable -> skip
         value, _normalized, _negative = parsed[q.stable_key]
         if q.requires_typed_negative and not value:
@@ -125,7 +133,10 @@ def save_panel(intake, post, *, actor=None, http_request=None) -> dict:
     # for this final submission; it must never become a raw IntakeAnswer.
     transient_values: dict[str, str] = {}
     for q in questions:
-        applicable = not (q.conditional_on and not _parent_positive(q.conditional_on, parsed, existing))
+        applicable = not (
+            q.conditional_on
+            and not _parent_positive(q.conditional_on, parsed, existing)
+        )
         if not applicable:
             continue
         value, normalized, _negative = parsed[q.stable_key]
@@ -138,7 +149,9 @@ def save_panel(intake, post, *, actor=None, http_request=None) -> dict:
             defaults={
                 "value": value,
                 "normalized_value": normalized,
-                "answered_by": actor if getattr(actor, "is_authenticated", False) else None,
+                "answered_by": actor
+                if getattr(actor, "is_authenticated", False)
+                else None,
             },
         )
 
@@ -156,7 +169,9 @@ def save_panel(intake, post, *, actor=None, http_request=None) -> dict:
 
 
 @transaction.atomic
-def complete_intake(intake, *, actor=None, http_request=None, transient_values=None) -> Person:
+def complete_intake(
+    intake, *, actor=None, http_request=None, transient_values=None
+) -> Person:
     amap = answers_map(intake)
 
     def val(key: str) -> str:
@@ -166,12 +181,18 @@ def complete_intake(intake, *, actor=None, http_request=None, transient_values=N
     def positive(key: str) -> bool:
         return _is_positive_existing(amap.get(key))
 
+    # Office scoping (ADR 0026 Phase B): infer from the recruiter's own office
+    # membership when unambiguous. A recruiter working zero or multiple
+    # offices leaves this unset (nullable field) — correctable later via
+    # person_edit rather than forcing an intake-time choice.
+    recruiter_offices = list(intake.recruiter.offices.all()) if intake.recruiter else []
     person = Person(
         owning_recruiter=intake.recruiter,
         lifecycle_status=LifecycleStatus.AVAILABLE,
         has_disability=positive("disability"),
         disability_type=val("disability_type"),
         date_of_birth=parse_date(val("date_of_birth")) or None,
+        office=recruiter_offices[0] if len(recruiter_offices) == 1 else None,
     )
     for field in _DIRECT_FIELDS:
         setattr(person, field, val(field))

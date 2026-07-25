@@ -17,8 +17,14 @@ from django.views.decorators.http import require_POST
 from core.accounts.permissions import Action, require_action
 from core.accounts.permissions import can as user_can
 from features.logistics.forms import (
-    AccommodationCostPeriodForm, AccommodationForm, EquipmentItemForm, RoomForm, StockAdjustmentForm,
-    StockReceiptForm, StockReceiptLineFormSet, TransportWeekForm,
+    AccommodationCostPeriodForm,
+    AccommodationForm,
+    EquipmentItemForm,
+    RoomForm,
+    StockAdjustmentForm,
+    StockReceiptForm,
+    StockReceiptLineFormSet,
+    TransportWeekForm,
     transport_projects,
 )
 from features.logistics.models import (
@@ -73,7 +79,9 @@ def _transport_context(request, *, form=None, editing=None):
     """Weekly transport headcount trends per project + company total (plan §11.10).
 
     Rendered as dependency-free CSS bars (no JS charting library)."""
-    weeks = sorted(set(TransportWeek.objects.values_list("week_start", flat=True)))[-12:]
+    weeks = sorted(set(TransportWeek.objects.values_list("week_start", flat=True)))[
+        -12:
+    ]
     rows = TransportWeek.objects.filter(week_start__in=weeks).select_related("project")
 
     by_project: dict = defaultdict(dict)
@@ -90,14 +98,22 @@ def _transport_context(request, *, form=None, editing=None):
 
     series = []
     for project, week_map in by_project.items():
-        series.append({
-            "project": project,
-            "weeks": [
-                {"week": w, "headcount": week_map.get(w, 0), "pct": pct(week_map.get(w, 0), max_headcount)}
-                for w in weeks
-            ],
-        })
-    company = [{"week": w, "total": totals[w], "pct": pct(totals[w], max_total)} for w in weeks]
+        series.append(
+            {
+                "project": project,
+                "weeks": [
+                    {
+                        "week": w,
+                        "headcount": week_map.get(w, 0),
+                        "pct": pct(week_map.get(w, 0), max_headcount),
+                    }
+                    for w in weeks
+                ],
+            }
+        )
+    company = [
+        {"week": w, "total": totals[w], "pct": pct(totals[w], max_total)} for w in weeks
+    ]
     records = TransportWeek.objects.select_related("project")
     project_filter = (request.GET.get("project") or "").strip()
     week_from = (request.GET.get("week_from") or "").strip()
@@ -116,10 +132,18 @@ def _transport_context(request, *, form=None, editing=None):
         week_to = ""
     may_record = user_can(request.user, Action.TRANSPORT_RECORD)
     return {
-        "series": series, "company": company, "records": records[:100],
-        "projects": transport_projects(request.user) if may_record else Project.objects.filter(is_active=True),
-        "project_filter": project_filter, "week_from": week_from, "week_to": week_to,
-        "may_record": may_record, "form": form, "editing": editing,
+        "series": series,
+        "company": company,
+        "records": records[:100],
+        "projects": transport_projects(request.user)
+        if may_record
+        else Project.objects.filter(is_active=True),
+        "project_filter": project_filter,
+        "week_from": week_from,
+        "week_to": week_to,
+        "may_record": may_record,
+        "form": form,
+        "editing": editing,
     }
 
 
@@ -127,7 +151,9 @@ def _transport_context(request, *, form=None, editing=None):
 def transport_trends(request: HttpRequest) -> TemplateResponse:
     form = None
     editing = None
-    if request.GET.get("create") == "1" and user_can(request.user, Action.TRANSPORT_RECORD):
+    if request.GET.get("create") == "1" and user_can(
+        request.user, Action.TRANSPORT_RECORD
+    ):
         form = TransportWeekForm(user=request.user)
     edit_value = (request.GET.get("edit") or "").strip()
     if edit_value.isdigit() and user_can(request.user, Action.TRANSPORT_RECORD):
@@ -136,7 +162,8 @@ def transport_trends(request: HttpRequest) -> TemplateResponse:
         )
         form = TransportWeekForm(user=request.user, instance=editing)
     return TemplateResponse(
-        request, "pages/transport_trends.html",
+        request,
+        "pages/transport_trends.html",
         _transport_context(request, form=form, editing=editing),
     )
 
@@ -147,7 +174,9 @@ def accommodation_list(request: HttpRequest) -> TemplateResponse:
     query = (request.GET.get("q") or "").strip()
     status = (request.GET.get("status") or "active").strip()
     if query:
-        accommodations = accommodations.filter(Q(name__icontains=query) | Q(address__icontains=query))
+        accommodations = accommodations.filter(
+            Q(name__icontains=query) | Q(address__icontains=query)
+        )
     if status == "active":
         accommodations = accommodations.filter(is_active=True)
     elif status == "inactive":
@@ -155,10 +184,14 @@ def accommodation_list(request: HttpRequest) -> TemplateResponse:
     else:
         status = "all"
     return TemplateResponse(
-        request, "pages/accommodation_list.html", {
-            "accommodations": accommodations, "query": query, "status_filter": status,
+        request,
+        "pages/accommodation_list.html",
+        {
+            "accommodations": accommodations,
+            "query": query,
+            "status_filter": status,
             "can_manage": user_can(request.user, Action.ACCOMMODATION_MANAGE),
-        }
+        },
     )
 
 
@@ -172,7 +205,9 @@ def accommodation_detail(request: HttpRequest, pk: int) -> TemplateResponse:
             "accommodation": accommodation,
             "rooms": accommodation.rooms.all(),
             "cost_periods": accommodation.cost_periods.all(),
-            "cost_form": AccommodationCostPeriodForm(initial={"effective_month": timezone.localdate().replace(day=1)}),
+            "cost_form": AccommodationCostPeriodForm(
+                initial={"effective_month": timezone.localdate().replace(day=1)}
+            ),
             "can_manage": user_can(request.user, Action.ACCOMMODATION_MANAGE),
         },
     )
@@ -182,13 +217,17 @@ def _model_values(instance, fields):
     values = {}
     for field in fields:
         value = getattr(instance, field)
-        values[field] = value if value is None or isinstance(value, (str, int, float, bool)) else str(value)
+        values[field] = (
+            value
+            if value is None or isinstance(value, (str, int, float, bool))
+            else str(value)
+        )
     return values
 
 
 @require_action(Action.ACCOMMODATION_MANAGE)
 def accommodation_create(request: HttpRequest) -> HttpResponse:
-    form = AccommodationForm(request.POST or None)
+    form = AccommodationForm(request.POST or None, user=request.user)
     if request.method == "POST" and form.is_valid():
         accommodation = form.save(commit=False)
         save_accommodation(accommodation, actor=request.user)
@@ -196,10 +235,15 @@ def accommodation_create(request: HttpRequest) -> HttpResponse:
         per_head_cost = form.cleaned_data.get("per_head_cost")
         if capacity is not None and per_head_cost is not None:
             set_accommodation_cost_period(
-                accommodation, effective_month=timezone.localdate(),
-                capacity=capacity, per_head_cost=per_head_cost, actor=request.user,
+                accommodation,
+                effective_month=timezone.localdate(),
+                capacity=capacity,
+                per_head_cost=per_head_cost,
+                actor=request.user,
             )
-        messages.success(request, _("Accommodation created. Add rooms to make it assignable."))
+        messages.success(
+            request, _("Accommodation created. Add rooms to make it assignable.")
+        )
         return redirect("accommodation_detail", pk=accommodation.pk)
     return TemplateResponse(request, "pages/accommodation_form.html", {"form": form})
 
@@ -208,13 +252,16 @@ def accommodation_create(request: HttpRequest) -> HttpResponse:
 def accommodation_edit(request: HttpRequest, pk: int) -> HttpResponse:
     accommodation = get_object_or_404(Accommodation, pk=pk)
     old = _model_values(accommodation, ("name", "address", "notes", "is_active"))
-    form = AccommodationForm(request.POST or None, instance=accommodation)
+    form = AccommodationForm(
+        request.POST or None, instance=accommodation, user=request.user
+    )
     if request.method == "POST" and form.is_valid():
         save_accommodation(form.save(commit=False), actor=request.user, old=old)
         messages.success(request, _("Accommodation updated."))
         return redirect("accommodation_detail", pk=accommodation.pk)
     return TemplateResponse(
-        request, "pages/accommodation_form.html",
+        request,
+        "pages/accommodation_form.html",
         {"form": form, "accommodation": accommodation},
     )
 
@@ -231,7 +278,9 @@ def room_create(request: HttpRequest, accommodation_pk: int) -> HttpResponse:
         messages.success(request, _("Room created."))
         return redirect("accommodation_detail", pk=accommodation.pk)
     return TemplateResponse(
-        request, "pages/room_form.html", {"form": form, "accommodation": accommodation},
+        request,
+        "pages/room_form.html",
+        {"form": form, "accommodation": accommodation},
     )
 
 
@@ -245,7 +294,8 @@ def room_edit(request: HttpRequest, pk: int) -> HttpResponse:
         messages.success(request, _("Room updated."))
         return redirect("accommodation_detail", pk=room.accommodation_id)
     return TemplateResponse(
-        request, "pages/room_form.html",
+        request,
+        "pages/room_form.html",
         {"form": form, "accommodation": room.accommodation, "room": room},
     )
 
@@ -264,20 +314,22 @@ def accommodation_costs(request: HttpRequest) -> TemplateResponse:
         month_value = f"{year:04d}-{month:02d}"
     context = accommodation_month_report(year, month)
     context["month_value"] = month_value
-    return TemplateResponse(
-        request, "pages/accommodation_costs.html", context
-    )
+    return TemplateResponse(request, "pages/accommodation_costs.html", context)
 
 
 @require_POST
 @require_action(Action.ACCOMMODATION_MANAGE)
-def accommodation_cost_period(request: HttpRequest, accommodation_pk: int) -> HttpResponse:
+def accommodation_cost_period(
+    request: HttpRequest, accommodation_pk: int
+) -> HttpResponse:
     accommodation = get_object_or_404(Accommodation, pk=accommodation_pk)
     form = AccommodationCostPeriodForm(request.POST)
     if form.is_valid():
         set_accommodation_cost_period(
-            accommodation, effective_month=form.cleaned_data["effective_month"],
-            capacity=form.cleaned_data["capacity"], per_head_cost=form.cleaned_data["per_head_cost"],
+            accommodation,
+            effective_month=form.cleaned_data["effective_month"],
+            capacity=form.cleaned_data["capacity"],
+            per_head_cost=form.cleaned_data["per_head_cost"],
             actor=request.user,
         )
         messages.success(request, _("Accommodation cost period saved."))
@@ -303,7 +355,9 @@ def set_room_rate_view(request: HttpRequest, pk: int) -> HttpResponse:
 def set_assignment_rate_view(request: HttpRequest, pk: int) -> HttpResponse:
     assignment = get_object_or_404(RoomAssignment, pk=pk)
     try:
-        set_assignment_rate(assignment, request.POST.get("rate_override"), actor=request.user)
+        set_assignment_rate(
+            assignment, request.POST.get("rate_override"), actor=request.user
+        )
         messages.success(request, _("Rate override saved."))
     except (ValueError, ArithmeticError) as exc:
         messages.error(request, str(exc) or _("Invalid amount."))
@@ -315,7 +369,11 @@ def set_assignment_rate_view(request: HttpRequest, pk: int) -> HttpResponse:
 def set_assignment_payment_view(request: HttpRequest, pk: int) -> HttpResponse:
     assignment = get_object_or_404(RoomAssignment, pk=pk)
     try:
-        set_assignment_payment(assignment, request.POST.get("worker_payment_monthly") or 0, actor=request.user)
+        set_assignment_payment(
+            assignment,
+            request.POST.get("worker_payment_monthly") or 0,
+            actor=request.user,
+        )
         messages.success(request, _("Worker accommodation payment saved."))
     except (ValueError, ArithmeticError) as exc:
         messages.error(request, str(exc) or _("Invalid amount."))
@@ -329,7 +387,9 @@ def assign_room_view(request: HttpRequest, person_pk: int) -> HttpResponse:
     room = get_object_or_404(Room, pk=request.POST.get("room"))
     try:
         assign_room(
-            person, room, actor=request.user,
+            person,
+            room,
+            actor=request.user,
             worker_payment_monthly=request.POST.get("worker_payment_monthly") or 0,
         )
         messages.success(request, _("Room assigned."))
@@ -365,7 +425,9 @@ def equipment_catalog(request: HttpRequest) -> TemplateResponse:
         request,
         "pages/equipment_catalog.html",
         {
-            "items": items, "query": query, "status_filter": status,
+            "items": items,
+            "query": query,
+            "status_filter": status,
             "stock_enabled": stock_ledger_enabled(),
         },
     )
@@ -396,26 +458,34 @@ def equipment_stock(request: HttpRequest) -> TemplateResponse:
 
 @require_action(Action.EQUIPMENT_MANAGE_STOCK)
 def equipment_stock_receive(request: HttpRequest) -> HttpResponse:
-    form = StockReceiptForm(request.POST or None, initial={"received_on": timezone.localdate()})
+    form = StockReceiptForm(
+        request.POST or None, initial={"received_on": timezone.localdate()}
+    )
     lines = StockReceiptLineFormSet(request.POST or None, prefix="lines")
     if request.method == "POST" and form.is_valid() and lines.is_valid():
         prepared = [
-            row for row in (line.cleaned_data for line in lines)
+            row
+            for row in (line.cleaned_data for line in lines)
             if row.get("item") is not None
         ]
         try:
             receive_stock(
-                received_on=form.cleaned_data["received_on"], lines=prepared,
+                received_on=form.cleaned_data["received_on"],
+                lines=prepared,
                 operation_key=form.cleaned_data["operation_key"],
-                supplier=form.cleaned_data["supplier"], reference=form.cleaned_data["reference"],
-                note=form.cleaned_data["note"], actor=request.user,
+                supplier=form.cleaned_data["supplier"],
+                reference=form.cleaned_data["reference"],
+                note=form.cleaned_data["note"],
+                actor=request.user,
             )
             messages.success(request, _("Stock receipt recorded."))
             return redirect("equipment_stock")
         except LogisticsWorkflowError as exc:
             form.add_error(None, exc)
     return TemplateResponse(
-        request, "pages/equipment_stock_receive.html", {"form": form, "lines": lines},
+        request,
+        "pages/equipment_stock_receive.html",
+        {"form": form, "lines": lines},
         status=400 if request.method == "POST" else 200,
     )
 
@@ -427,9 +497,12 @@ def equipment_stock_adjust(request: HttpRequest) -> HttpResponse:
     if form.is_valid():
         try:
             adjust_stock(
-                form.cleaned_data["item"], form.cleaned_data["quantity_delta"],
-                occurred_on=form.cleaned_data["occurred_on"], value=form.cleaned_data["value"],
-                reason=form.cleaned_data["reason"], actor=request.user,
+                form.cleaned_data["item"],
+                form.cleaned_data["quantity_delta"],
+                occurred_on=form.cleaned_data["occurred_on"],
+                value=form.cleaned_data["value"],
+                reason=form.cleaned_data["reason"],
+                actor=request.user,
             )
             messages.success(request, _("Stock adjustment recorded."))
         except LogisticsWorkflowError as exc:
@@ -474,9 +547,16 @@ def issue_equipment_view(request: HttpRequest, person_pk: int) -> HttpResponse:
     person = get_object_or_404(Person, pk=person_pk)
     item = get_object_or_404(EquipmentItem, pk=request.POST.get("item"), is_active=True)
     try:
-        operation_key = UUID(request.POST["operation_key"]) if request.POST.get("operation_key") else None
+        operation_key = (
+            UUID(request.POST["operation_key"])
+            if request.POST.get("operation_key")
+            else None
+        )
         issue_equipment(
-            person, item, request.POST.get("quantity", 1), actor=request.user,
+            person,
+            item,
+            request.POST.get("quantity", 1),
+            actor=request.user,
             operation_key=operation_key,
         )
         messages.success(request, _("Equipment issued."))
@@ -490,7 +570,9 @@ def issue_equipment_view(request: HttpRequest, person_pk: int) -> HttpResponse:
 def return_equipment_view(request: HttpRequest, issue_pk: int) -> HttpResponse:
     issue = get_object_or_404(EquipmentIssue, pk=issue_pk)
     try:
-        return_equipment(issue, actor=request.user, disposition=request.POST.get("disposition"))
+        return_equipment(
+            issue, actor=request.user, disposition=request.POST.get("disposition")
+        )
         messages.success(request, _("Equipment returned."))
     except LogisticsWorkflowError as exc:
         messages.error(request, str(exc))
@@ -523,8 +605,10 @@ def review_deduction_view(request: HttpRequest, issue_pk: int) -> HttpResponse:
     issue = get_object_or_404(EquipmentIssue, pk=issue_pk)
     try:
         review_deduction(
-            issue, request.POST.get("decision"),
-            actor=request.user, note=request.POST.get("note", ""),
+            issue,
+            request.POST.get("decision"),
+            actor=request.user,
+            note=request.POST.get("note", ""),
         )
         messages.success(request, _("Review recorded."))
     except DeductionReviewError as exc:
@@ -536,11 +620,16 @@ def review_deduction_view(request: HttpRequest, issue_pk: int) -> HttpResponse:
 @require_action(Action.TRANSPORT_RECORD)
 def record_transport_view(request: HttpRequest, project_pk: int) -> HttpResponse:
     project = get_object_or_404(transport_projects(request.user), pk=project_pk)
-    form = TransportWeekForm({**request.POST.dict(), "project": project.pk}, user=request.user)
+    form = TransportWeekForm(
+        {**request.POST.dict(), "project": project.pk}, user=request.user
+    )
     if form.is_valid():
         record_transport_week(
-            project, form.cleaned_data["week_start"], form.cleaned_data["headcount"],
-            actor=request.user, note=form.cleaned_data["note"],
+            project,
+            form.cleaned_data["week_start"],
+            form.cleaned_data["headcount"],
+            actor=request.user,
+            note=form.cleaned_data["note"],
         )
         messages.success(request, _("Transport week recorded."))
     else:
@@ -555,22 +644,30 @@ def transport_create(request: HttpRequest) -> HttpResponse:
     if form.is_valid():
         try:
             create_transport_week(
-                project=form.cleaned_data["project"], week_start=form.cleaned_data["week_start"],
-                headcount=form.cleaned_data["headcount"], note=form.cleaned_data["note"], actor=request.user,
+                project=form.cleaned_data["project"],
+                week_start=form.cleaned_data["week_start"],
+                headcount=form.cleaned_data["headcount"],
+                note=form.cleaned_data["note"],
+                actor=request.user,
             )
             messages.success(request, _("Transport week recorded."))
             return redirect("transport_trends")
         except LogisticsWorkflowError as exc:
             form.add_error(None, exc)
     return TemplateResponse(
-        request, "pages/transport_trends.html", _transport_context(request, form=form), status=400,
+        request,
+        "pages/transport_trends.html",
+        _transport_context(request, form=form),
+        status=400,
     )
 
 
 @require_POST
 @require_action(Action.TRANSPORT_RECORD)
 def transport_edit(request: HttpRequest, pk: int) -> HttpResponse:
-    week = get_object_or_404(TransportWeek, pk=pk, project__in=transport_projects(request.user))
+    week = get_object_or_404(
+        TransportWeek, pk=pk, project__in=transport_projects(request.user)
+    )
     form = TransportWeekForm(request.POST, user=request.user, instance=week)
     if form.is_valid():
         try:
@@ -578,14 +675,20 @@ def transport_edit(request: HttpRequest, pk: int) -> HttpResponse:
             # so the service can audit the persisted old values accurately.
             week.refresh_from_db()
             update_transport_week(
-                week, project=form.cleaned_data["project"], week_start=form.cleaned_data["week_start"],
-                headcount=form.cleaned_data["headcount"], note=form.cleaned_data["note"], actor=request.user,
+                week,
+                project=form.cleaned_data["project"],
+                week_start=form.cleaned_data["week_start"],
+                headcount=form.cleaned_data["headcount"],
+                note=form.cleaned_data["note"],
+                actor=request.user,
             )
             messages.success(request, _("Transport record updated."))
             return redirect("transport_trends")
         except LogisticsWorkflowError as exc:
             form.add_error(None, exc)
     return TemplateResponse(
-        request, "pages/transport_trends.html",
-        _transport_context(request, form=form, editing=week), status=400,
+        request,
+        "pages/transport_trends.html",
+        _transport_context(request, form=form, editing=week),
+        status=400,
     )
