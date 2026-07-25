@@ -8,9 +8,12 @@ from django.core.management.base import BaseCommand
 from django.utils import timezone
 
 from core.accounts.models import User
+from core.offices.models import Office
 from features.logistics.models import Accommodation, EquipmentItem, Room
 from features.logistics.services import (
-    assign_room, receive_stock, set_accommodation_cost_period,
+    assign_room,
+    receive_stock,
+    set_accommodation_cost_period,
 )
 from core.people.models import LifecycleStatus, Person
 
@@ -18,34 +21,54 @@ DEMO_DOMAIN = "demo.jober.test"
 
 
 class Command(BaseCommand):
-    help = "Seed fictional accommodation, rooms (with rates), and the equipment catalog."
+    help = (
+        "Seed fictional accommodation, rooms (with rates), and the equipment catalog."
+    )
 
     def handle(self, *args, **options):
         coordinator = User.objects.filter(email=f"koordinator@{DEMO_DOMAIN}").first()
 
+        # Matches the office of the worker housed here (Olha, on DHLBA/VM) —
+        # None on any install with no Office rows (e.g. CorvinumEU), which is
+        # the correct/safe default there.
+        velky_meder = Office.objects.filter(code="VM").first()
         accommodation, _ = Accommodation.objects.get_or_create(
-            name="Ubytovňa Nitra", defaults={"address": "Nitra 1", "is_active": True}
+            name="Ubytovňa Nitra",
+            defaults={"address": "Nitra 1", "is_active": True, "office": velky_meder},
         )
+        if accommodation.office_id != (velky_meder.id if velky_meder else None):
+            accommodation.office = velky_meder
+            accommodation.save(update_fields=["office"])
         room, _ = Room.objects.get_or_create(
-            accommodation=accommodation, label="101",
+            accommodation=accommodation,
+            label="101",
             defaults={"capacity": 2, "monthly_rate": "180.00"},
         )
         Room.objects.get_or_create(
-            accommodation=accommodation, label="102",
+            accommodation=accommodation,
+            label="102",
             defaults={"capacity": 2, "monthly_rate": "180.00"},
         )
-        working = Person.objects.filter(lifecycle_status=LifecycleStatus.WORKING).first()
+        working = Person.objects.filter(
+            lifecycle_status=LifecycleStatus.WORKING
+        ).first()
         if working and not working.room_assignments.exists():
             assignment = assign_room(
-                working, room, actor=coordinator, worker_payment_monthly=Decimal("125.00")
+                working,
+                room,
+                actor=coordinator,
+                worker_payment_monthly=Decimal("125.00"),
             )
             assignment.start_date = timezone.localdate().replace(day=15)
             assignment.save(update_fields=["start_date"])
 
         month_start = timezone.localdate().replace(day=1)
         set_accommodation_cost_period(
-            accommodation, effective_month=month_start, capacity=4,
-            per_head_cost=Decimal("180.00"), actor=coordinator,
+            accommodation,
+            effective_month=month_start,
+            capacity=4,
+            per_head_cost=Decimal("180.00"),
+            actor=coordinator,
         )
 
         items = []
@@ -62,7 +85,8 @@ class Command(BaseCommand):
         receive_stock(
             received_on=month_start - timedelta(days=4),
             operation_key=uuid5(NAMESPACE_URL, "jober-demo-stock-opening-v1"),
-            reference="DEMO-DAC-001", supplier="Fictional Safety Supply",
+            reference="DEMO-DAC-001",
+            supplier="Fictional Safety Supply",
             lines=[
                 {"item": items[0], "quantity": 10, "total_value": Decimal("410.00")},
                 {"item": items[1], "quantity": 20, "total_value": Decimal("150.00")},

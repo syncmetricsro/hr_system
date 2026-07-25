@@ -1,5 +1,36 @@
 # Test Journal
 
+## 2026-07-25 - Office-scoped RBAC Phase B, Slice 1: `Person.office`/`Accommodation.office` schema + CorvinumEU-safety fix
+
+- `tests/test_office_scope_helper.py` (2 tests, no client marker — must
+  pass identically under Jober and CorvinumEU settings): proves the fixed
+  `user_office_scope()` is unrestricted (`None`) when zero `Office` rows
+  exist anywhere (CorvinumEU's permanent condition), and still correctly
+  fail-closed (empty queryset, not `None`) for a Jober user genuinely
+  belonging to zero of the offices that do exist.
+- `tests/test_person_office.py` (7 tests): `PersonForm`'s office field
+  defaults to the user's single office, offers only the user's offices
+  when they have several, offers every office to Observer, stays
+  optional/empty with no Office rows at all (CorvinumEU case); intake
+  completion sets `Person.office` from an unambiguous single-office
+  recruiter and leaves it unset for a multi-office one.
+- `tests/test_accommodation_office.py` (3 tests): the equivalent
+  `AccommodationForm` scoping/default/CorvinumEU-empty cases.
+- Regression run: `tests/test_intake.py`, `tests/test_person_edit.py`,
+  `tests/test_person_card.py`, `tests/test_accommodation_month_report.py`,
+  `tests/test_accommodation_pricing.py`, `tests/test_demo_scenario.py` —
+  all pass unchanged with the new nullable fields and form `user=` kwarg.
+- Full verification: 554 Jober unit / 5 skipped (+12 net-new vs. the
+  543-test baseline before this slice — `test_office_scoping.py`'s
+  existing 8 plus the three new files' 12 minus overlap), 351 CorvinumEU
+  lane / 10 skipped / 144 deselected (the new office-scoping tests carry
+  no `jober_only` marker and run for real there, proving the fix works —
+  not just "the CorvinumEU lane still passes because nothing touched it"),
+  50 Playwright e2e (both demo apps rebuilt from a fresh image and
+  reseeded, confirming the seed-script changes work against a real build,
+  not just the dev bind-mount), `manage.py makemigrations --check`
+  clean, ruff check + format clean.
+
 ## 2026-07-25 - Audit `reason` translation gap closed for fixed-vocabulary literals
 
 - `tests/test_audit_log_page.py`: added
