@@ -1,6 +1,6 @@
 # Permission Matrix — Jober
 
-Last updated: 2026-07-20
+Last updated: 2026-07-25
 
 This document is the human-readable mirror of `clients/jober/policies.py`
 (`ACTION_ROLES`; the `Action` enum lives in `core/accounts/permissions.py`). When you change one, change the other in the same commit.
@@ -79,14 +79,29 @@ Legend: ✅ permitted · — denied
 
 DOB, place of birth, disability flag/type, and identifiers are **not** a flat
 role grant — visibility depends on the viewer's relationship to that person
-(phase1-open-questions Q4). Implemented as `apps.people.permissions.can_view_sensitive`:
-visible to **managers, observers, the owning recruiter, and the person's
-responsible coordinator(s)**; hidden from unconnected recruiters/coordinators.
+(phase1-open-questions Q4). Implemented as
+`core.people.permissions.can_view_sensitive`: visible to **managers,
+observers, the owning recruiter, and the person's responsible
+coordinator(s)**; hidden from unconnected recruiters/coordinators.
+
+This sits *inside* the office boundary: a manager cannot see another office's
+person at all, sensitive fields or otherwise. And a person with **no** office
+is visible only to their owning recruiter (plus Observer) — see
+`core/offices/scoping.py::may_see_person`.
 
 ## Notes per role
 
-- **Recruiter** — owns intake while it is theirs; routes candidates to trial
-  days; recycles Available people; sends approved SMS; sees that a blacklist
+> Every role note below describes what that role may do **within its own
+> office(s)** (ADR 0026). Office membership (`User.offices`) is the outer
+> boundary; the role rules are what applies inside it. Observer is the only
+> role that spans offices, by role bypass rather than membership. Blacklist is
+> the deliberate exception: matching and visibility stay company-wide.
+
+- **Recruiter** — office set at intake from their own membership when
+  unambiguous; a person left without an office is visible to that recruiter
+  and nobody else (`core/offices/scoping.py`). Owns intake while it is theirs;
+  routes candidates to trial days; recycles Available people; sends approved
+  SMS; sees that a blacklist
   warning exists but not the restricted reason. Cannot record trial outcomes,
   complete readiness, approve Working, or manage projects/catalogs/users/finance.
 - **Coordinator** — schedules and records project trials, then handles
@@ -95,13 +110,17 @@ responsible coordinator(s)**; hidden from unconnected recruiters/coordinators.
   Coordinators may assign existing rooms but cannot create or edit accommodation
   locations or room catalogue records.
   Cannot approve Working, manage users, decide blacklist, or view feedback.
-- **Manager/Administrator** — all permitted reads plus every management action,
-  including finance, users, blacklist decisions, audit, and exports.
+- **Manager/Administrator** — within their office(s), all permitted reads plus
+  every management action, including finance, users, blacklist decisions,
+  audit, and exports. Not company-wide: another office's person, project,
+  accommodation or financial month returns 403, and lists/aggregates/exports
+  cover their own office only.
   Accommodation management includes creating, editing, and deactivating
   locations and rooms; occupied catalogue records cannot be deactivated.
-- **Observer** — read-only: approved dashboards/lists, warehouse stock, approved financial
-  summaries, exports only where explicitly allowed. No operational/financial
-  writes.
+- **Observer** — the only cross-office role: sees all three offices and lands
+  on the Observer-only executive finance dashboard. Read-only: approved
+  dashboards/lists, warehouse stock, approved financial summaries, exports
+  only where explicitly allowed. No operational/financial writes.
 
 ## Scope of this slice (Phase 1 foundation)
 

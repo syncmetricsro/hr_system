@@ -1,5 +1,42 @@
 # Build Journal
 
+## 2026-07-25 - Documentation caught up with office scoping (behaviour truth)
+
+Seven PRs of office scoping shipped while the documents kept describing the
+system as it was before. Several statements were not merely stale but
+actively false.
+
+- **`CLAUDE.md`'s RBAC convention is the important one.** It said nothing
+  about office scoping, so the next agent adding a list view would have
+  silently reintroduced the leaks this programme spent seven PRs closing. It
+  now spells out five concrete requirements: filter through
+  `user_office_scope` treating `None` as unrestricted (never "all offices" -
+  an all-offices queryset still drops rows whose office is unset); use
+  `core/offices/scoping.py` for `Person` rather than a bare `office__in`;
+  403-guard any view taking an object pk, because filtering a list does not
+  stop someone typing another office's URL; remember aggregates count (a
+  dashboard tile summing every office's rooms shipped once); and keep
+  blacklist company-wide.
+- Also refreshed `CLAUDE.md`'s state-of-project block, its badly stale test
+  baseline (276+22 -> ~654/~425/50), and a note that only `pozorovatel@` sees
+  all three offices, since agents use those accounts to verify and would
+  otherwise read scoped results as missing data.
+- `Jober_Product_Design.md` carried the single most misleading line in the
+  repo - *"Office never gates visibility in the MVP"* - in the file CLAUDE.md
+  designates as product truth. Reversed, along with "no office-level data
+  isolation", the "not yet implemented" banner, the ADR "Status: Proposed"
+  paragraph, and the User model's "optional home office".
+- `docs/permissions/jober-permission-matrix.md`: office boundary stated once
+  above the per-role notes rather than repeated; Manager explicitly no longer
+  company-wide; Observer named as the only cross-office role; the office-less
+  person rule recorded; stale `apps.people` path fixed. CorvinumEU's matrix
+  gains one clause explaining that ADR 0026 is a no-op there because it never
+  creates `Office` rows.
+- `notification-center.md` (managers were documented as company-wide; the
+  provider contract's "object scope" now names office scope) and
+  `operations-data-entry.md` (trials/transport/accommodation were all
+  office-blind).
+
 ## 2026-07-25 - Richer demo finance data for the CEO walkthrough
 
 The executive dashboard had 21 months across three single-project offices,

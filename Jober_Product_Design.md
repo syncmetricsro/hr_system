@@ -112,7 +112,8 @@ Design for:
 - approximately 30–35 internal users;
 - at least 5,000 historical person records;
 - multiple Jober offices sharing one central company database;
-- no office-level data isolation;
+- ~~no office-level data isolation~~ — **superseded 2026-07-25**: office
+  isolation is implemented and enforced (ADR 0026 Phases A+B);
 - mobile coordinator usage in the field;
 - Hungarian, Slovak, and Ukrainian interfaces;
 - broad operational read visibility across internal roles;
@@ -453,7 +454,7 @@ Do not implement per-user permission matrices in the MVP.
 
 ## 8.1 Visibility principle
 
-**Target design (2026-07-24, not yet implemented — see status note below):**
+**Target design (2026-07-24) — IMPLEMENTED 2026-07-25 (ADR 0026 Phases A+B):**
 Jober now operates three physical offices (Velký Meder, Győr, Dunajská
 Streda). Offices are access boundaries, not just filters:
 
@@ -468,12 +469,12 @@ Streda). Offices are access boundaries, not just filters:
 Full design: `docs/product/jober-multi-office-scoping.md` (data model,
 RBAC mechanics, office principals who can invite staff and assign their
 office(s)); the formal decision record is `docs/adr/0026-office-scoped-
-rbac.md` (**Status: Proposed** — not yet built). Until that ADR is
-activated and implemented, the previous rule below still describes actual
-system behavior; this section states where the product is headed, not
-what's live today.
+rbac.md` (**Status: Accepted — Phases A and B executed**). This section
+describes live behaviour. The one part still unbuilt is the
+office-principal / staff-invitation subsystem (ADR 0026 §3a): office
+membership is currently set by seed or admin, not self-service.
 
-**Previous rule (superseded by the above once ADR 0026 activates):**
+**Previous rule (HISTORY — superseded by ADR 0026 on 2026-07-24/25):**
 Jober's earlier confirmed preference was broad internal read visibility —
 internal roles could view ordinary operational records across all
 offices, offices were filters and reporting fields rather than access
@@ -724,7 +725,8 @@ Important records include:
 - preferred language;
 - active state;
 - invitation state;
-- optional home office.
+- `offices` — many-to-many to `Office`; the office(s) whose data this user
+  may see. Empty for Observer, who spans all offices by role bypass.
 
 ### Office
 
@@ -732,7 +734,12 @@ Important records include:
 - code;
 - active state.
 
-Office never gates visibility in the MVP.
+**Office gates visibility.** (This line previously read "Office never gates
+visibility in the MVP" — reversed by ADR 0026 on 2026-07-24/25.) Every
+non-Observer role sees only its own office(s); cross-office access to a
+record returns 403. Blacklist is the deliberate exception: matching and
+visibility stay company-wide so a person blocked at one office is caught at
+all three.
 
 ## 11.2 Person
 

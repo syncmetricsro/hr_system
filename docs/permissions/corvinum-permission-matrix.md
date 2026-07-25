@@ -11,7 +11,7 @@ features CorvinumEU never mounts (SMS, accommodation, transport, finance P&L,
 feedback).
 
 Roles: the core four; CorvinumEU's "HR Admin" maps to **Manager/Admin**
-(C-Q9, ADR 0022). Reads are broad per ADR 0008; superusers pass every check.
+(C-Q9, ADR 0022). Reads are broad per ADR 0008; superusers pass every check. ADR 0026 adds office scoping platform-wide, but it is a **no-op here**: CorvinumEU is single-site and never creates `Office` rows, so `user_office_scope` returns its unrestricted sentinel and no queryset is narrowed.
 2FA (TOTP) is **required for managers** (`TWO_FACTOR_REQUIRED_ROLES`).
 
 Legend: ✅ permitted · — denied
