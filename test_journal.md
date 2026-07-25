@@ -1,5 +1,21 @@
 # Test Journal
 
+## 2026-07-25 - Guarding the finance seed's split invariant
+
+- `tests/test_finance_seed_splits.py` (15 tests) pins something that fails
+  silently: `recompute_month()` derives a month's revenue/cost **from its line
+  items**, so the figures in the monthly tables are only the initial record.
+  A split summing to 0.98 raises nothing - it just seeds every month 2%
+  cheaper than the table claims, and the demo shows numbers nobody wrote.
+  Each per-project cost and revenue split is asserted to sum to exactly
+  `Decimal("1.00")`.
+- Also pinned: every seeded project has both splits (a missing one is a
+  KeyError at seed time - better caught here than in front of the client);
+  2025 and 2026 cover the same six projects, since the year-on-year
+  comparison is only honest if they do; and each project's Dec-2025 figure
+  sits below its Jan-2026 one so the trend reads as growth - with RLS 067
+  excepted, as the deliberately declining contract.
+
 ## 2026-07-25 - Office badge overflowed the phone viewport (caught by a docs-only PR)
 
 - `test_jober_notification_center_fits_phone_viewport` failed on a

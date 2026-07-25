@@ -30,10 +30,17 @@ OFFICES = [
 # office_code refers to the OFFICES rows created below — assignment is an
 # arbitrary but sensible demo spread across the three licensed offices,
 # not a claim about where these fictional clients actually operate.
+# Two projects per office, so the finance "Profit/loss by office" roll-up is a
+# real sum rather than a restatement of a single project. Names follow the
+# vocabulary of Jober's own workbook (Jober_Finance_Specs.md §2) so the demo
+# reads as familiar to them; the figures behind them are fictional.
 PROJECTS = [
     {"name": "DHL Bratislava", "code": "DHLBA", "office_code": "VM", "partner": "DHL"},
+    {"name": "Minit", "code": "MINIT", "office_code": "VM", "partner": "Minit"},
     {"name": "WEBASTO", "code": "WEB", "office_code": "GYR", "partner": "Webasto"},
+    {"name": "Mevis 080", "code": "MEVIS", "office_code": "GYR", "partner": "Mevis"},
     {"name": "CARGO", "code": "CARGO", "office_code": "DS", "partner": "Cargo"},
+    {"name": "RLS 067", "code": "RLS", "office_code": "DS", "partner": "RLS"},
 ]
 
 # (first, last, status, has_disability, office_code) — office_code spreads
