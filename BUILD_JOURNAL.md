@@ -1,5 +1,51 @@
 # Build Journal
 
+## 2026-07-25 - Audit `reason` translation gap closed for fixed-vocabulary literals
+
+`docs/i18n-workflow.md` had documented `reason` as a full "accepted
+limitation" — free text, not translatable, same tradeoff as any changelog.
+On re-check that turned out to be only mostly true: `core/audit/models.py`'s
+`reason` field is genuinely free text at most call sites, but several
+(`core/people/services.py`, `core/projects/services.py`,
+`features/logistics/services.py`, `features/blacklist/services.py`) pass a
+fixed English literal as a default (`reason or "activation"`,
+`reason="superseded"`, etc.) — a real closed vocabulary hiding inside a free
+`TextField`.
+
+- Added `AUDIT_REASON_LABELS` + `audit_reason_label()` to
+  `core/audit/presentation.py`, mirroring the existing
+  `AUDIT_ACTION_LABELS`/`audit_action_label()` pattern exactly: translate at
+  **display time** based on the viewer's active locale, not at write time
+  (which would incorrectly bake in the *actor's* language into the stored
+  event). Unmatched reasons — the genuine free text — pass through
+  unchanged.
+- `core/audit/views.py`'s `audit_log` view now resolves
+  `event.reason_label` per paginated row, same as `event.action_label`;
+  `templates/pages/audit_log.html` renders `reason_label` instead of the
+  raw `reason`.
+- Also found and fixed 12 action codes that had never been added to
+  `AUDIT_ACTION_LABELS` (accommodation.cost_period_set/created/updated/
+  worker_payment_set, equipment.stock_adjusted/received, room.created/
+  updated, transport.week_created/updated, trial.updated, wage.recorded) —
+  these were falling back to the auto-generated readable label instead of
+  a real translation.
+- Extraction picked up 25/24/25 (SK/HU/UK) new-or-changed fuzzy matches —
+  most were the new audit strings fuzzy-pairing to unrelated existing
+  msgids (e.g. `"Trial no-show"` matched against `"Trials"`,
+  `"Added to blacklist"` matched against its near-opposite
+  `"Removed from blacklist"`); a few were incidental to prior unrelated
+  template wording changes (`equipment_stock.html`, `payslips.html`,
+  `logistics_equipment.html`) that had never been re-extracted. Reviewed
+  and hand-translated every one per the CLAUDE.md fuzzy-match caution
+  rather than trusting `msgmerge`'s guess.
+- `docs/i18n-workflow.md`'s audit section rewritten from "`reason`
+  deliberately is not [translated]" to "`reason` is partially translated" —
+  the accepted-limitation framing was accurate for the free-text majority
+  but wrong for this fixed-literal minority.
+- Verified: 543 Jober unit tests + 5 skipped, 340 CorvinumEU tests + 10
+  skipped/144 deselected, full Playwright e2e — all green; `ruff check` and
+  `ruff format --check` clean.
+
 ## 2026-07-25 - Illustrated default avatar art landed (avatar-design.md §1)
 
 Closes the one deliberate exception left open from the avatar feature: the

@@ -15,7 +15,7 @@ from django.shortcuts import render
 
 from core.accounts.permissions import Action, require_action
 from core.audit.models import AuditEvent
-from core.audit.presentation import audit_action_label
+from core.audit.presentation import audit_action_label, audit_reason_label
 from core.people.models import Person
 
 PAGE_SIZE = 50
@@ -46,10 +46,12 @@ def audit_log(request: HttpRequest) -> HttpResponse:
 
     worker = request.GET.get("worker", "").strip()
     if worker:
-        person_ids = Person.objects.filter(search_name__contains=worker.lower()).values_list(
-            "pk", flat=True
+        person_ids = Person.objects.filter(
+            search_name__contains=worker.lower()
+        ).values_list("pk", flat=True)
+        events = events.filter(
+            target_type="Person", target_id__in=[str(pk) for pk in person_ids]
         )
-        events = events.filter(target_type="Person", target_id__in=[str(pk) for pk in person_ids])
 
     date_from = _parse_date(request.GET.get("from", ""))
     if date_from:
@@ -61,23 +63,36 @@ def audit_log(request: HttpRequest) -> HttpResponse:
     page = Paginator(events, PAGE_SIZE).get_page(request.GET.get("page"))
     for event in page:
         event.action_label = audit_action_label(event.action)
+        event.reason_label = audit_reason_label(event.reason)
 
-    known_actions = AuditEvent.objects.order_by("action").values_list("action", flat=True).distinct()
+    known_actions = (
+        AuditEvent.objects.order_by("action")
+        .values_list("action", flat=True)
+        .distinct()
+    )
 
-    return render(request, "pages/audit_log.html", {
-        "page": page,
-        "filters": {
-            "actor": actor,
-            "action": action,
-            "target": target,
-            "worker": worker,
-            "from": request.GET.get("from", ""),
-            "to": request.GET.get("to", ""),
+    return render(
+        request,
+        "pages/audit_log.html",
+        {
+            "page": page,
+            "filters": {
+                "actor": actor,
+                "action": action,
+                "target": target,
+                "worker": worker,
+                "from": request.GET.get("from", ""),
+                "to": request.GET.get("to", ""),
+            },
+            # Values remain immutable action codes; only their displayed labels are
+            # localized. Distinct values keep the filter dropdowns honest.
+            "known_actions": [
+                {"value": value, "label": audit_action_label(value)}
+                for value in known_actions
+            ],
+            "known_targets": AuditEvent.objects.exclude(target_type="")
+            .order_by("target_type")
+            .values_list("target_type", flat=True)
+            .distinct(),
         },
-        # Values remain immutable action codes; only their displayed labels are
-        # localized. Distinct values keep the filter dropdowns honest.
-        "known_actions": [
-            {"value": value, "label": audit_action_label(value)} for value in known_actions
-        ],
-        "known_targets": AuditEvent.objects.exclude(target_type="").order_by("target_type").values_list("target_type", flat=True).distinct(),
-    })
+    )
