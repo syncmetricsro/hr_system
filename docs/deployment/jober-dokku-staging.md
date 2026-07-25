@@ -106,6 +106,16 @@ for command in seed_demo seed_people seed_logistics seed_questionnaire seed_fina
 done
 ```
 
+> **Office scoping (ADR 0026, 2026-07-25).** A staging database seeded
+> *before* that date predates per-office data: its equipment stock sits in a
+> single pre-split pooled receipt (`office=None`, invisible to every scoped
+> role and visible only to Observer), and some seeded people have no office
+> and so are visible only to their owning recruiter. Re-running the seed
+> commands above repairs those rows in place — they are idempotent and now
+> include repair paths — but a full reset is cleaner if the database is
+> disposable. Without this, per-office warehouse figures and the blacklist
+> walkthrough will not match `docs/deployment/jober-demo-runbook.md`.
+
 There is no `seed_jober_demo` command in this repository. Do not make seeding
 part of an automatic release phase.
 Static files are baked into the image at build time (`collectstatic`) and served

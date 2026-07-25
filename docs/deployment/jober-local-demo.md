@@ -17,7 +17,7 @@ Docker image plus PostgreSQL and publishes the app at **http://localhost:8000**.
 ## Prerequisites
 
 - Docker installed and running (`docker --version`).
-- Run commands from the repository root (`/home/disane/Development/HR_System`).
+- Run commands from the repository root (the directory containing `manage.py`).
 
 ## Start
 
@@ -33,16 +33,20 @@ the logins. Open **http://localhost:8000**.
 
 All demo accounts use the password **`demo-jober-2026`**:
 
-| Role | Email |
-|---|---|
-| Manager / Administrator | `manazer@demo.jober.test` |
-| Recruiter | `naborar@demo.jober.test` |
-| Coordinator | `koordinator@demo.jober.test` |
-| Observer | `pozorovatel@demo.jober.test` |
+| Role | Email | Office |
+|---|---|---|
+| Manager / Administrator | `manazer@demo.jober.test` | Velký Meder |
+| Recruiter | `naborar@demo.jober.test` | Velký Meder |
+| Coordinator | `koordinator@demo.jober.test` | Velký Meder |
+| Observer | `pozorovatel@demo.jober.test` | all three |
 
-Tip for demos: the **Manager** account sees the most (e.g. the "Spravovať
-projekty" action); the **Observer** account is read-only — a good before/after to
-show role-based access.
+Tip for demos: there are now **two** access dimensions to show. By *role*, the
+**Manager** account gets the most actions (e.g. "Spravovať projekty") while the
+**Observer** is read-only. By *office*, the first three accounts see only Velký
+Meder's people, projects, warehouse and finance — the Observer is the only
+account that sees all three offices. The office bounding the current view is
+named in the header badge, so a scoped list is never mistaken for an empty
+database.
 
 ## Other commands
 

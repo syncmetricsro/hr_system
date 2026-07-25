@@ -1,13 +1,27 @@
 # Multi-office scoping (Velký Meder, Győr, Dunajská Streda)
 
-Status: **Phase A implemented 2026-07-24** (`Office` model, `Project`/
-`User` scoping, and full office-scoped Finance — see `docs/adr/0026-
-office-scoped-rbac.md`'s execution note for exactly what's built).
-**Phase B is still design-only**: `Person.office`, `Accommodation.office`,
-the equipment-stock split, and the office-principal/staff-invitation
-subsystem (§3a below) remain as designed here, not yet built. Jober-owned
-content (CorvinumEU is confirmed single-site and unaffected), hence the
-`jober-` prefix per `docs/README.md`'s naming convention.
+Status: **Implemented** — Phase A 2026-07-24, Phase B 2026-07-25. Office
+scoping now covers People, Projects, Reports, exports, Compliance,
+Checklists, Notifications, accommodation, transport, finance and the
+equipment stock ledger (split into per-office warehouses), with hard 403s
+on cross-office access and an office badge in the shell. See
+`docs/adr/0026-office-scoped-rbac.md`'s two execution notes for exactly
+what was built and for three decisions taken during implementation that
+differ from the design below.
+
+**Only §3a remains design-only**: the office-principal / staff-invitation
+subsystem, deferred by the owner as separable from office scoping itself.
+
+Jober-owned content (CorvinumEU is confirmed single-site and unaffected),
+hence the `jober-` prefix per `docs/README.md`'s naming convention.
+
+> **Reading note.** Everything from "Why this doc exists" to §4 was written
+> *before* implementation and describes the pre-change codebase in the
+> present tense ("Project already carries office and region fields",
+> "equipment stock is currently one pooled ledger"). It is kept as the
+> impact analysis it was, not rewritten into a description of today's
+> system — but read those sections as history. Where the shipped design
+> diverges from the sketch, the divergence is flagged inline.
 
 ## Why this doc exists
 
@@ -123,6 +137,14 @@ the difference between clients is data, not code, consistent with ADR
 | Finance (`FinancialMonth`/`FinanceLineItem`) | **No new FK.** Already keys off `Project`, and totals are "summed dynamically... never hardcoded" per the model's own docstring — office-level aggregates are `GROUP BY project__office` at query time. |
 | Blacklist | **Deliberately untouched.** No office FK anywhere in `features/blacklist/` — matching and visibility stay company-wide. |
 
+> **Resolved.** The offices keep fully independent warehouses; FIFO never
+> draws across them, and an office short on stock raises rather than
+> borrowing. Cross-office transfer stays out of scope. `EquipmentStockReceipt`
+> carries the office, denormalised onto lot, allocation **and movement** —
+> the last beyond this doc's field list, because the balance/report
+> aggregate runs over movements in one query and inbound/outbound rows
+> reach their office by different join paths.
+
 **Equipment is the largest piece.** Today's `EquipmentStockMovement`/`Lot`/
 `Allocation` are a single pooled FIFO ledger keyed only by `item`, with no
 site concept at all — adding `office` means the valuation/allocation logic
@@ -161,13 +183,21 @@ into, rather than each one growing its own `if user.office` check
 independently — this is the actual architectural change ADR 0008 needs to
 account for.
 
+> **As shipped, this differs.** `user_office_scope` returns **`None`** for
+> an unrestricted caller, not "all offices": filtering by
+> `office__in=<every office>` would still exclude records whose office is
+> unset, which is not the same as "no filter". It also returns `None` when
+> no `Office` rows exist at all, so CorvinumEU is unaffected. A second
+> helper module, `core/offices/scoping.py`, carries the `Person`-specific
+> rule that an office-less person belongs to their owning recruiter.
+
 **Observer bypasses office-scoping entirely** — a role check, the same way
 `can()` already special-cases roles today, not a "belongs to all offices"
 assignment.
 
-**One pre-existing gap, worth closing in the same pass**: `core/
-ui/exports.py`'s CSV export currently has **zero** recruiter/coordinator
-scoping — it's a fully global export today, independent of multi-office.
+**One pre-existing gap, worth closing in the same pass** (closed
+2026-07-25): `core/ui/exports.py`'s CSV export currently has **zero**
+recruiter/coordinator scoping — it's a fully global export today, independent of multi-office.
 Once the office-scope helper exists, wiring the export through it fixes a
 real existing hole, not just a new multi-office concern — worth calling
 out explicitly since it's the highest-risk leak vector once real
