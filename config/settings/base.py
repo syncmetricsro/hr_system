@@ -81,6 +81,7 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "core.ui.context_processors.brand",
+                "core.offices.context_processors.office_scope",
                 "core.notifications.context_processors.notification_center",
             ],
         },
@@ -102,7 +103,9 @@ DATABASES = {
 }
 
 AUTH_PASSWORD_VALIDATORS = [
-    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
+    {
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
+    },
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
     {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
@@ -126,7 +129,9 @@ STATIC_URL = "static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 # One artifact serves every client (§12.4), so collectstatic must gather all
 # client static dirs regardless of which client settings module built it.
-STATICFILES_DIRS = [BASE_DIR / "static"] + sorted((BASE_DIR / "clients").glob("*/static"))
+STATICFILES_DIRS = [BASE_DIR / "static"] + sorted(
+    (BASE_DIR / "clients").glob("*/static")
+)
 
 # User-uploaded avatars (docs/product/avatar-design.md). Local filesystem in
 # every environment; production points this at a Dokku persistent-storage
@@ -190,20 +195,22 @@ FEATURE_FLAGS = {
     "recruitment_trials": True,
     "intake": True,
     "worker_messaging": True,
-    "documents": True,        # compliance certificates
+    "documents": True,  # compliance certificates
     "feedback": True,
     "duplicate_blacklist": True,
-    "profitability": True,    # finance
-    "checklists": False,      # CorvinumEU feature (ADR 0022); a client opts in
-    "advances": False,        # CorvinumEU feature (ADR 0022); a client opts in
-    "payslips": False,        # CorvinumEU feature (ADR 0023); a client opts in
+    "profitability": True,  # finance
+    "checklists": False,  # CorvinumEU feature (ADR 0022); a client opts in
+    "advances": False,  # CorvinumEU feature (ADR 0022); a client opts in
+    "payslips": False,  # CorvinumEU feature (ADR 0023); a client opts in
 }
 CLIENT_POLICIES = os.getenv("CLIENT_POLICIES", "core.accounts.default_policies")
 
 # Email delivery (ADR 0023 payslips). Default is Django's SMTP backend —
 # real deployments configure the SMTP host via env/Doppler; the local demo
 # scripts point this at the console backend instead.
-EMAIL_BACKEND = os.getenv("DJANGO_EMAIL_BACKEND", "django.core.mail.backends.smtp.EmailBackend")
+EMAIL_BACKEND = os.getenv(
+    "DJANGO_EMAIL_BACKEND", "django.core.mail.backends.smtp.EmailBackend"
+)
 EMAIL_HOST = os.getenv("DJANGO_EMAIL_HOST", "localhost")
 EMAIL_PORT = int(os.getenv("DJANGO_EMAIL_PORT", "587"))
 EMAIL_HOST_USER = os.getenv("DJANGO_EMAIL_HOST_USER", "")
@@ -227,10 +234,21 @@ LOGGING = {
     "handlers": {
         "console": {"class": "logging.StreamHandler", "formatter": "console"},
     },
-    "root": {"handlers": ["console"], "level": os.getenv("DJANGO_LOG_LEVEL", "WARNING")},
+    "root": {
+        "handlers": ["console"],
+        "level": os.getenv("DJANGO_LOG_LEVEL", "WARNING"),
+    },
     "loggers": {
-        "django.request": {"handlers": ["console"], "level": "ERROR", "propagate": False},
-        "django.security": {"handlers": ["console"], "level": "WARNING", "propagate": False},
+        "django.request": {
+            "handlers": ["console"],
+            "level": "ERROR",
+            "propagate": False,
+        },
+        "django.security": {
+            "handlers": ["console"],
+            "level": "WARNING",
+            "propagate": False,
+        },
     },
 }
 

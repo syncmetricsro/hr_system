@@ -486,6 +486,35 @@ svg.icon {
   text-overflow: ellipsis;
 }
 
+/* Office-scope badge (ADR 0026 Phase B). Shares the role pill's shape so the
+   two read as one identity cluster, but carries an accent tint: the point is
+   that a scoped user can *see* which office bounds their view, rather than
+   inferring it from a short list. */
+.account-office {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  max-width: 14rem;
+  padding: var(--space-1) var(--space-3);
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+  border-radius: var(--radius-full);
+  color: var(--accent-strong);
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Cross-office roles get the neutral treatment: "All offices" is the absence
+   of a restriction, so it should not shout like a scoped badge does. */
+.account-office-all {
+  background: var(--n100);
+  border-color: var(--line);
+  color: var(--n700);
+}
+
 .logout-form {
   display: inline-flex;
 }

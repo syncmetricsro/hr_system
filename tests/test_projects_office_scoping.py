@@ -101,6 +101,22 @@ def test_trials_queue_hides_other_offices_pending_trial(client, two_offices):
     assert gyr_trial not in resp.context["trials"]
 
 
+def test_trials_queue_project_dropdown_is_scoped_for_non_schedulers(
+    client, two_offices, django_user_model
+):
+    """The read-only filter dropdown shown to roles without
+    INTAKE_ASSIGN_TRIAL. Today only Observer lacks it (and is unrestricted),
+    so this guards the construction rather than a live leak - if a client
+    policy ever drops that action from a scoped role, this fails."""
+    scoped_observer = django_user_model.objects.create_user(
+        email="obs2@demo.jober.test", password="x", role="observer"
+    )
+    client.force_login(scoped_observer)
+    resp = client.get(reverse("trials_queue"))
+    # Observer is unrestricted, so both projects are offered.
+    assert set(resp.context["projects"]) == {two_offices["p_vm"], two_offices["p_gyr"]}
+
+
 def test_manager_cannot_record_outcome_for_another_offices_trial(client, two_offices):
     person = Person.objects.create(first_name="Farrukh", last_name="Gyor")
     trial = TrialAssignment.objects.create(
