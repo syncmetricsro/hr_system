@@ -5,6 +5,7 @@ from uuid import UUID
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.db.models import Q
@@ -14,7 +15,7 @@ from django.utils.translation import gettext as _
 from django.utils.dateparse import parse_date
 from django.views.decorators.http import require_POST
 
-from core.accounts.permissions import Action, require_action
+from core.accounts.permissions import Action, require_action, user_office_scope
 from core.accounts.permissions import can as user_can
 from features.logistics.forms import (
     AccommodationCostPeriodForm,
@@ -74,15 +75,34 @@ def _valid_date(value: str) -> bool:
         return False
 
 
+def _assert_accommodation_in_scope(
+    request: HttpRequest, accommodation: Accommodation
+) -> None:
+    """ADR 0026 Phase B: a non-Observer can't view/act on another office's
+    accommodation by guessing a URL, mirroring finance's _assert_month_in_scope."""
+    scope = user_office_scope(request.user)
+    if scope is not None and not scope.filter(pk=accommodation.office_id).exists():
+        raise PermissionDenied("This accommodation belongs to another office.")
+
+
+def _assert_person_in_scope(request: HttpRequest, person: Person) -> None:
+    scope = user_office_scope(request.user)
+    if scope is not None and not scope.filter(pk=person.office_id).exists():
+        raise PermissionDenied("This person belongs to another office.")
+
+
 @login_required
 def _transport_context(request, *, form=None, editing=None):
     """Weekly transport headcount trends per project + company total (plan §11.10).
 
     Rendered as dependency-free CSS bars (no JS charting library)."""
+    scope = user_office_scope(request.user)
     weeks = sorted(set(TransportWeek.objects.values_list("week_start", flat=True)))[
         -12:
     ]
     rows = TransportWeek.objects.filter(week_start__in=weeks).select_related("project")
+    if scope is not None:
+        rows = rows.filter(project__office__in=scope)
 
     by_project: dict = defaultdict(dict)
     totals = {week: 0 for week in weeks}
@@ -115,6 +135,8 @@ def _transport_context(request, *, form=None, editing=None):
         {"week": w, "total": totals[w], "pct": pct(totals[w], max_total)} for w in weeks
     ]
     records = TransportWeek.objects.select_related("project")
+    if scope is not None:
+        records = records.filter(project__office__in=scope)
     project_filter = (request.GET.get("project") or "").strip()
     week_from = (request.GET.get("week_from") or "").strip()
     week_to = (request.GET.get("week_to") or "").strip()
@@ -131,13 +153,14 @@ def _transport_context(request, *, form=None, editing=None):
     else:
         week_to = ""
     may_record = user_can(request.user, Action.TRANSPORT_RECORD)
+    other_projects = Project.objects.filter(is_active=True)
+    if scope is not None:
+        other_projects = other_projects.filter(office__in=scope)
     return {
         "series": series,
         "company": company,
         "records": records[:100],
-        "projects": transport_projects(request.user)
-        if may_record
-        else Project.objects.filter(is_active=True),
+        "projects": transport_projects(request.user) if may_record else other_projects,
         "project_filter": project_filter,
         "week_from": week_from,
         "week_to": week_to,
@@ -171,6 +194,9 @@ def transport_trends(request: HttpRequest) -> TemplateResponse:
 @login_required
 def accommodation_list(request: HttpRequest) -> TemplateResponse:
     accommodations = Accommodation.objects.prefetch_related("rooms")
+    scope = user_office_scope(request.user)
+    if scope is not None:
+        accommodations = accommodations.filter(office__in=scope)
     query = (request.GET.get("q") or "").strip()
     status = (request.GET.get("status") or "active").strip()
     if query:
@@ -198,6 +224,7 @@ def accommodation_list(request: HttpRequest) -> TemplateResponse:
 @login_required
 def accommodation_detail(request: HttpRequest, pk: int) -> TemplateResponse:
     accommodation = get_object_or_404(Accommodation, pk=pk)
+    _assert_accommodation_in_scope(request, accommodation)
     return TemplateResponse(
         request,
         "pages/accommodation_detail.html",
@@ -251,6 +278,7 @@ def accommodation_create(request: HttpRequest) -> HttpResponse:
 @require_action(Action.ACCOMMODATION_MANAGE)
 def accommodation_edit(request: HttpRequest, pk: int) -> HttpResponse:
     accommodation = get_object_or_404(Accommodation, pk=pk)
+    _assert_accommodation_in_scope(request, accommodation)
     old = _model_values(accommodation, ("name", "address", "notes", "is_active"))
     form = AccommodationForm(
         request.POST or None, instance=accommodation, user=request.user
@@ -269,6 +297,7 @@ def accommodation_edit(request: HttpRequest, pk: int) -> HttpResponse:
 @require_action(Action.ACCOMMODATION_MANAGE)
 def room_create(request: HttpRequest, accommodation_pk: int) -> HttpResponse:
     accommodation = get_object_or_404(Accommodation, pk=accommodation_pk)
+    _assert_accommodation_in_scope(request, accommodation)
     form = RoomForm(request.POST or None)
     form.instance.accommodation = accommodation
     if request.method == "POST" and form.is_valid():
@@ -287,6 +316,7 @@ def room_create(request: HttpRequest, accommodation_pk: int) -> HttpResponse:
 @require_action(Action.ACCOMMODATION_MANAGE)
 def room_edit(request: HttpRequest, pk: int) -> HttpResponse:
     room = get_object_or_404(Room.objects.select_related("accommodation"), pk=pk)
+    _assert_accommodation_in_scope(request, room.accommodation)
     old = _model_values(room, ("label", "capacity", "monthly_rate", "is_active"))
     form = RoomForm(request.POST or None, instance=room)
     if request.method == "POST" and form.is_valid():
@@ -323,6 +353,7 @@ def accommodation_cost_period(
     request: HttpRequest, accommodation_pk: int
 ) -> HttpResponse:
     accommodation = get_object_or_404(Accommodation, pk=accommodation_pk)
+    _assert_accommodation_in_scope(request, accommodation)
     form = AccommodationCostPeriodForm(request.POST)
     if form.is_valid():
         set_accommodation_cost_period(
@@ -341,7 +372,8 @@ def accommodation_cost_period(
 @require_POST
 @require_action(Action.ACCOMMODATION_MANAGE)
 def set_room_rate_view(request: HttpRequest, pk: int) -> HttpResponse:
-    room = get_object_or_404(Room, pk=pk)
+    room = get_object_or_404(Room.objects.select_related("accommodation"), pk=pk)
+    _assert_accommodation_in_scope(request, room.accommodation)
     try:
         set_room_rate(room, request.POST.get("monthly_rate") or 0, actor=request.user)
         messages.success(request, _("Room rate saved."))
@@ -353,7 +385,10 @@ def set_room_rate_view(request: HttpRequest, pk: int) -> HttpResponse:
 @require_POST
 @require_action(Action.ACCOMMODATION_MANAGE)
 def set_assignment_rate_view(request: HttpRequest, pk: int) -> HttpResponse:
-    assignment = get_object_or_404(RoomAssignment, pk=pk)
+    assignment = get_object_or_404(
+        RoomAssignment.objects.select_related("person"), pk=pk
+    )
+    _assert_person_in_scope(request, assignment.person)
     try:
         set_assignment_rate(
             assignment, request.POST.get("rate_override"), actor=request.user
@@ -367,7 +402,10 @@ def set_assignment_rate_view(request: HttpRequest, pk: int) -> HttpResponse:
 @require_POST
 @require_action(Action.ACCOMMODATION_MANAGE)
 def set_assignment_payment_view(request: HttpRequest, pk: int) -> HttpResponse:
-    assignment = get_object_or_404(RoomAssignment, pk=pk)
+    assignment = get_object_or_404(
+        RoomAssignment.objects.select_related("person"), pk=pk
+    )
+    _assert_person_in_scope(request, assignment.person)
     try:
         set_assignment_payment(
             assignment,
@@ -384,7 +422,11 @@ def set_assignment_payment_view(request: HttpRequest, pk: int) -> HttpResponse:
 @require_action(Action.ROOM_ASSIGN)
 def assign_room_view(request: HttpRequest, person_pk: int) -> HttpResponse:
     person = get_object_or_404(Person, pk=person_pk)
-    room = get_object_or_404(Room, pk=request.POST.get("room"))
+    _assert_person_in_scope(request, person)
+    room = get_object_or_404(
+        Room.objects.select_related("accommodation"), pk=request.POST.get("room")
+    )
+    _assert_accommodation_in_scope(request, room.accommodation)
     try:
         assign_room(
             person,
@@ -402,6 +444,7 @@ def assign_room_view(request: HttpRequest, person_pk: int) -> HttpResponse:
 @require_action(Action.ROOM_ASSIGN)
 def release_room_view(request: HttpRequest, person_pk: int) -> HttpResponse:
     person = get_object_or_404(Person, pk=person_pk)
+    _assert_person_in_scope(request, person)
     release_room(person, actor=request.user)
     messages.success(request, _("Room released."))
     return redirect("person_detail", pk=person.pk)

@@ -25,6 +25,9 @@ def transport_projects(user):
     projects = Project.objects.filter(is_active=True)
     if getattr(user, "role", None) == Role.COORDINATOR:
         projects = projects.filter(responsible_coordinators=user)
+    scope = user_office_scope(user)
+    if scope is not None:
+        projects = projects.filter(office__in=scope)
     return projects.distinct().order_by("name")
 
 
@@ -236,8 +239,8 @@ class StockAdjustmentForm(forms.Form):
         return cleaned
 
 
-def assignable_rooms():
-    return (
+def assignable_rooms(user=None):
+    rooms = (
         Room.objects.filter(
             is_active=True,
             accommodation__is_active=True,
@@ -250,3 +253,7 @@ def assignable_rooms():
         .filter(active_occupancy__lt=F("capacity"))
         .select_related("accommodation")
     )
+    scope = user_office_scope(user)
+    if scope is not None:
+        rooms = rooms.filter(accommodation__office__in=scope)
+    return rooms
