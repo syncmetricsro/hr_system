@@ -28,7 +28,8 @@ Highlights: 0008 RBAC model · 0016 whitenoise · 0019 Twilio-via-stdlib ·
 0020 white-label sequencing · 0021 Stage B extraction (EXECUTED) ·
 0022 Stage C CorvinumEU thin client (EXECUTED) · 0023 payslips/encrypted PDF ·
 0024 segno QR · 0025 Chart.js visualizations · 0026 office-scoped RBAC
-(Partially Accepted, Phase A executed, amends 0008 — Jober multi-office) ·
+(ACCEPTED, Phases A+B executed, amends 0008 — Jober multi-office;
+staff-invitation subsystem deferred) ·
 0027 Pillow for avatar images (ACCEPTED) · 0028 fpdf2 for the feedback flyer
 (ACCEPTED).
 
@@ -36,6 +37,7 @@ Highlights: 0008 RBAC model · 0016 whitenoise · 0019 Twilio-via-stdlib ·
 | Doc | Purpose |
 |---|---|
 | `extraction-matrix.md`, `extraction-plan.md` | Stage B plan of record (executed) |
+| `client-feature-matrix.md` | Per-client feature/flag comparison |
 | `corvinumeu-peopleops-design.md` | CorvinumEU product design (v0.6) — CorvinumEU-owned content, platform-hosted |
 
 ## docs/deployment/
@@ -72,7 +74,7 @@ Highlights: 0008 RBAC model · 0016 whitenoise · 0019 Twilio-via-stdlib ·
 | `contextual-tooltips.md` | Platform | Hover/focus help, coverage, touch behavior, and content safety |
 | `jober-phase1-open-questions.md`, `jober-phase3-4-open-questions.md` | Jober | Client Q&A rounds (answered) |
 | `jober-open-decisions.md`, `jober-risk-blockers.md` | Jober | Open decisions / blockers |
-| `jober-multi-office-scoping.md` | Jober | Multi-office (Velký Meder/Győr/Dunajská Streda) RBAC impact analysis — Phase A implemented, Phase B design only (revisits ADR 0008) |
+| `jober-multi-office-scoping.md` | Jober | Multi-office (Velký Meder/Győr/Dunajská Streda) RBAC impact analysis — implemented (Phases A+B); only the staff-invitation subsystem §3a remains design-only (revisits ADR 0008) |
 | `jober-demo-inventory.md`, `jober-demo-to-django-map.md`, `jober-removed-feature-inventory.md`, `jober-source-register.md` | Jober | Build-era inventories and source register |
 | `corvinum-open-questions.md` | CorvinumEU | C-Q1…C-Q16 build defaults awaiting client confirmation |
 

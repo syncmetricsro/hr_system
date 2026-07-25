@@ -142,6 +142,12 @@ for command in seed_demo seed_people seed_logistics seed_questionnaire seed_fina
 done
 ```
 
+> **Office scoping (ADR 0026, 2026-07-25).** Re-run these seeds on any
+> staging database created before that date: pre-split pooled equipment
+> stock and office-less people otherwise make per-office figures and the
+> blacklist walkthrough disagree with the demo runbook. The commands are
+> idempotent and include repair paths for existing rows.
+
 Then run the HTTPS smoke check, verify the Jober-branded login and separate
 `jober_sessionid` / `jober_csrftoken` cookies, and perform one controlled
 Twilio Virtual Phone test only if the dedicated staging credentials are ready.

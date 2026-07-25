@@ -1,9 +1,9 @@
 # ADR 0026: Office-scoped RBAC for Jober's multi-office operation
 
-Status: **Partially Accepted — Phase A EXECUTED 2026-07-24.** The
-Activation trigger below was satisfied for the finance-relevant slice of
-this decision (Jober confirmed office names and requested the full
-platform change); Phase B (below) remains pending, unbuilt.
+Status: **Accepted — Phase A EXECUTED 2026-07-24, Phase B EXECUTED
+2026-07-25.** The only part of this decision still unbuilt is the
+office-principal / staff-invitation subsystem (points 4a/4b), deferred by
+the owner as separable from office scoping itself.
 
 Date drafted: 2026-07-24
 
@@ -28,15 +28,67 @@ product decision recorded in `docs/product/jober-multi-office-scoping.md`.
 A 403 guard prevents a non-Observer from viewing or mutating another
 office's financial month by guessing a URL or crafting a POST.
 
-**Not built (Phase B, still pending, unaffected by this execution):**
-`Person.office`, `Accommodation.office`, splitting the pooled equipment
-stock ledger (decision point 2's remaining scope), the office-principal/
-staff-invitation subsystem (points 4a/4b), and rewriting the ~13 ad hoc
-RBAC call sites outside finance (compliance, checklists, notifications,
-projects, logistics, CSV export, reports tiles — point 4's remaining
-scope). Blacklist (point 3) and the office-creation ceiling (point 7)
-were always meant to be architectural invariants rather than code to
-build, and remain exactly as designed.
+**Not built at the time of Phase A (all since delivered — see the Phase B
+note below):** `Person.office`, `Accommodation.office`, splitting the
+pooled equipment stock ledger, and rewriting the ~13 ad hoc RBAC call
+sites outside finance. Blacklist (point 3) and the office-creation ceiling
+(point 7) were always meant to be architectural invariants rather than
+code to build, and remain exactly as designed.
+
+## Execution note (Phase B, 2026-07-25)
+
+Built now, across seven slices: `Person.office` and `Accommodation.office`
+(both nullable, set at intake / on the location form); office scoping
+applied to People, Projects, Reports, CSV exports, Compliance, Checklists,
+Notifications, accommodation and transport; the equipment stock ledger
+split into per-office warehouses with office-aware FIFO; and an office
+badge in the shared shell so the boundary is legible rather than merely
+enforced.
+
+Three things worth recording because they were decided *during*
+implementation rather than in this ADR:
+
+1. **`user_office_scope()` had to become data-driven.** It returned
+   `user.offices.all()` for every non-Observer, which for CorvinumEU (no
+   `Office` rows, ever) is an *empty* queryset rather than the `None`
+   sentinel — so every `.filter(office__in=scope)` added by Phase B would
+   have hidden all data from every CorvinumEU non-Observer role. It now
+   returns `None` when no offices exist at all. This was the load-bearing
+   prerequisite for the whole phase.
+2. **A person with no office belongs to their owning recruiter**
+   (`core/offices/scoping.py`). Intake only infers an office when the
+   recruiter belongs to exactly one, so multi-office recruiters create
+   office-less people; a plain `office__in` filter hid those from everyone
+   except Observer, including their own creator.
+3. **Equipment movements carry a denormalised `office`** beyond the field
+   list in the design doc, because balance/report aggregate over movements
+   in a single query and inbound rows reach their office via `stock_lot`
+   while outbound reach it via `allocations__lot` — two join paths that do
+   not combine into one clean filter.
+
+**Still not built:** the office-principal / staff-invitation subsystem
+(points 4a/4b). The owner deferred it as separable: it governs who may
+provision accounts, not who may read which office's data, and it is the
+app's first authentication-adjacent surface. Office membership is
+currently set by seed/admin.
+
+**Resolved by implementation:** the activation trigger's open question —
+whether offices share equipment stock — is answered. Each office holds a
+fully independent warehouse; FIFO never draws across offices, and an
+office short on stock raises rather than borrowing. Cross-office transfer
+remains out of scope per decision point 6.
+
+**Acceptance test met.** "No non-observer role can read another office's
+`Person`, `Project`, `Accommodation`, or equipment-stock data through any
+existing view, including exports" is now enforced and covered by
+`tests/test_people_office_scoping.py`,
+`tests/test_projects_office_scoping.py`,
+`tests/test_compliance_office_scoping.py`,
+`tests/test_logistics_office_scoping.py`,
+`tests/test_equipment_stock_office_scoping.py`,
+`tests/test_notifications_office_scoping.py` and
+`tests/test_unassigned_people_scoping.py` — including hard-403 cases on
+detail and mutation views, and CorvinumEU no-op cases in both lanes.
 
 **Revision (2026-07-24, same day, pre-activation):** the original draft
 decided staff belong to exactly one office (single FK on `User`). That is
@@ -133,10 +185,14 @@ seeding Jober's specific office names there would leak them into
 CorvinumEU's database too), and explicitly requested the full platform
 change be built rather than deferred.
 
-**Still open, blocks Phase B's equipment-stock split specifically**:
-whether the three offices share equipment stock or keep fully independent
-warehouses (informs whether transfer flows are needed once that slice is
-built) — not required for anything executed in Phase A.
+**Phase B — satisfied 2026-07-25**: the owner asked for a complete
+solution rather than the cheap wins, explicitly including the
+equipment-stock split.
+
+**~~Still open, blocks Phase B's equipment-stock split specifically~~ —
+resolved 2026-07-25**: the three offices keep **fully independent**
+warehouses. Transfer flows are consequently not needed and stay out of
+scope (decision point 6).
 
 ## Consequences
 

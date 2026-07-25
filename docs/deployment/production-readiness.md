@@ -12,12 +12,12 @@ A cross-cutting review of the deployed staging state (both apps, live
 inspection — not just static code reading) found the items below. None are
 fixed by writing this list; each stays open until its own fix lands and is
 verified the same way (live inspection, not just "the code looks right").
-Recommended order: lock down staging/provider access first, then implement
-protected persistent media, then schedule backups, then finish office
-scoping, then establish CI and reconcile the stale backlog docs (item 9,
-including this file's own pre-2026-07-25 rows below, which predate several
-features shipped since — e.g. Dokku staging is live, not "blocked/open" as
-those rows still say).
+Recommended order (updated 2026-07-25 — items 5 and 7 are now done): lock
+down staging/provider access first, then implement protected persistent
+media, then schedule backups, then reconcile the stale backlog docs
+(item 9, including this file's own pre-2026-07-25 rows below, which
+predate several features shipped since — e.g. Dokku staging is live, not
+"blocked/open" as those rows still say).
 
 1. **Critical — public demo credentials can reach live Twilio.** The repo is
    public and publishes the Jober staging URL/password in `CLAUDE.md`;
@@ -42,12 +42,20 @@ those rows still say).
    inspection shows no backup schedule on `pg-jober-staging` or
    `pg-corvinum-staging`. Tracked below under "DB backups / restore" since
    2026-06-29; still open.
-5. **High — office scoping protects Finance only.** People, Projects,
-   Reports, Compliance, Logistics, notifications, and exports remain
-   company-wide (e.g. `core/ui/views.py::reports` queries every person/
-   project unfiltered). Acknowledged as Phase B scope in ADR 0026, but once
-   real multi-office data exists this is a privacy boundary, not polish —
-   re-prioritize ADR 0026 Phase B accordingly.
+5. ~~**High — office scoping protects Finance only.**~~ **Fixed
+   2026-07-25** (ADR 0026 Phase B, PRs #95–#101). People, Projects,
+   Reports, Compliance, Checklists, notifications, accommodation,
+   transport and exports are all office-scoped, and the equipment stock
+   ledger was split from one pooled company-wide FIFO inventory into
+   independent per-office warehouses. The fix went beyond what this item
+   asked for: cross-office access to a Person/Project/Accommodation/
+   FinancialMonth detail or mutation view now returns a hard **403**
+   rather than merely being filtered out of a list, and the shell shows
+   which office bounds the current view. Two leaks found while verifying
+   completeness — a dashboard occupancy tile aggregating every office's
+   rooms, and office-less people being invisible to everyone including
+   their own recruiter — were fixed in the same programme. Blacklist
+   remains deliberately company-wide (ADR 0026 point 3).
 6. **High — media replacement leaves old PII files behind.** Avatar/
    certificate replacement (`core/accounts/views.py`,
    `features/compliance/services.py`) saves the new upload but never
@@ -123,6 +131,6 @@ smoke suite doesn't cover.
 
 | Gate | State | Notes |
 |---|---|---|
-| Action-gated RBAC with broad reads | ✅ Ready | `apps/accounts/permissions.py`, mirrored by `docs/permissions/jober-permission-matrix.md` (ADR 0008/0015). |
-| Append-only audit | ✅ Ready | `apps/audit` immutable `AuditEvent`; wired into login/logout. Extend `record_event` to every sensitive action as modules land. |
-| Recruiter/coordinator read-scope (GDPR) | ⚠️ Open | Held configurable behind `BROAD_INTERNAL_READS`; do not hardcode a split until Jober confirms. |
+| Action-gated RBAC, office-bounded reads | ✅ Ready | `core/accounts/permissions.py` + `core/offices/scoping.py`, mirrored by `docs/permissions/jober-permission-matrix.md` (ADR 0008/0015, amended by 0026). Reads are broad *within* a user's office(s); Observer spans all offices by role bypass. |
+| Append-only audit | ✅ Ready | `core/audit` immutable `AuditEvent`; wired into login/logout. Extend `record_event` to every sensitive action as modules land. |
+| Recruiter/coordinator read-scope (GDPR) | ⚠️ Open | Still held behind `BROAD_INTERNAL_READS`; do not hardcode a role split until Jober confirms. Note a *second*, independent boundary now applies regardless of that flag: office scoping (ADR 0026), which already narrows every non-Observer role to its own office(s). |
