@@ -1,5 +1,26 @@
 # Test Journal
 
+## 2026-07-25 - Office-less people belong to their owning recruiter
+
+- `tests/test_unassigned_people_scoping.py` (11 tests) pins each edge of the
+  new rule rather than just the happy path: the owning recruiter sees their
+  office-less person; **another recruiter in the same office does not**
+  (ownership, not office membership, is what grants access); a manager does
+  not; Observer does; and - the regression that matters most - a person who
+  *has* an office is still governed by office alone, so the exception cannot
+  be used to widen normal access. Queryset and object-level paths are
+  asserted to agree, and a no-offices case proves CorvinumEU is unaffected.
+- One existing test failed, correctly:
+  `test_routine_update_shown_when_record_has_no_office` from slice 3 pinned
+  the older fail-open behaviour in the notification feed. Rewritten rather
+  than deleted - it now asserts both sides of the new rule (manager does not
+  see it, owning recruiter does) with a docstring recording what it
+  supersedes and why.
+- Full verification: 639 Jober unit / 7 skipped, 425 CorvinumEU / 10 skipped
+  / 157 deselected, 50 Playwright e2e, ruff check + format clean. Both lanes
+  were run on the new test file before pushing this time, per the lesson from
+  the previous slice.
+
 ## 2026-07-25 - Office-scope badge + a leak caught by a completion sweep
 
 - `tests/test_office_scope_badge.py` (12 tests): absent with zero offices

@@ -1,5 +1,37 @@
 # Build Journal
 
+## 2026-07-25 - Office-less people belong to their owning recruiter
+
+A decision the office-scoping work forced into the open. Intake only infers
+an office when the recruiter belongs to exactly one, so a multi-office
+recruiter creates people with `office=None` - and a plain `office__in`
+filter hid those from *everyone* except Observer, including the recruiter
+who had just created them. Owner chose ownership as the middle ground over
+"visible to all" (too loose) and "keep hidden" (orphans records).
+
+- New `core/offices/scoping.py` states the rule once - `may_see_person` for
+  403 guards, `scope_people`/`people_scope_q` for querysets (the `prefix=`
+  argument handles querysets rooted elsewhere, e.g. `person__` for checklist
+  items). Eight call sites now share it instead of re-deriving the predicate,
+  and the duplicated `_assert_person_in_scope` in two modules collapsed into
+  it.
+- The notification feed had been deliberately fail-open for office-less
+  records ("convenience list, not the boundary"). That is now a *second,
+  looser* definition of the same rule, so it was tightened to match - one
+  definition beats two.
+- **Found while verifying, not while coding**: the seeded blacklist demo
+  person (Ivan) had no office, so the re-entry walkthrough 403'd for the
+  manager it is presented as. Fixing the create path alone would only have
+  helped fresh databases, because that seed block is create-only - an
+  existing demo or staging database would have kept failing. Added a repair
+  path following `seed_people.py`'s existing precedent and verified it
+  against the database that was actually broken: 403 -> 200.
+- That is the same shape as slice 5's legacy office-less stock: changing what
+  new seeds *create* does not fix databases that already exist. Worth
+  carrying into the runbook as reseed-vs-repair guidance.
+- Verified: 639 Jober unit / 7 skipped, 425 CorvinumEU / 10 skipped / 157
+  deselected, 50 Playwright e2e, ruff check + format clean.
+
 ## 2026-07-25 - Office-scope badge, a leak found by sweeping, and the i18n slice-5 missed
 
 Office scoping was fully enforced after slice 5 but completely **invisible**:

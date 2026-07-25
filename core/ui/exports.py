@@ -5,6 +5,7 @@ import csv
 from django.http import HttpRequest, HttpResponse
 
 from core.accounts.permissions import Action, require_action, user_office_scope
+from core.offices.scoping import scope_people
 from core.people.models import Person
 from core.projects.models import AssignmentStatus, Project
 
@@ -32,9 +33,7 @@ def people_csv(request: HttpRequest) -> HttpResponse:
         ]
     )
     people = Person.objects.filter(is_archived=False).select_related("owning_recruiter")
-    scope = user_office_scope(request.user)
-    if scope is not None:
-        people = people.filter(office__in=scope)
+    people = scope_people(people, request.user)
     for person in people:
         assignment = person.current_assignment()
         writer.writerow(

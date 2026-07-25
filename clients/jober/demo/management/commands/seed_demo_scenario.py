@@ -9,13 +9,18 @@ from django.core.management.base import BaseCommand
 from django.utils import timezone
 
 from core.accounts.models import User
+from core.offices.models import Office
 from features.blacklist.models import BlacklistCategory
 from features.blacklist.services import decide_case, propose_case
 from features.compliance.models import Certificate, CertificateCategory
 from features.finance.models import FinanceCategory, FinanceCategoryKind, FinancialMonth
 from features.finance.services import recompute_month, set_line_item
 from features.logistics.models import EquipmentItem
-from features.logistics.services import flag_unreturned, issue_equipment, return_equipment
+from features.logistics.services import (
+    flag_unreturned,
+    issue_equipment,
+    return_equipment,
+)
 from core.people.models import InactiveReason, LifecycleStatus, Person
 
 DEMO_DOMAIN = "demo.jober.test"
@@ -38,7 +43,9 @@ class Command(BaseCommand):
         today = timezone.localdate()
 
         # --- Finance: line items on DHLBA 2026-05 (positive convention, Q4) -----
-        month = FinancialMonth.objects.filter(project__code="DHLBA", year=2026, month=5).first()
+        month = FinancialMonth.objects.filter(
+            project__code="DHLBA", year=2026, month=5
+        ).first()
         if month and not month.is_locked and not month.line_items.exists():
             line_items = [
                 ("Gross wage", FinanceCategoryKind.COST, "9000"),
@@ -48,7 +55,9 @@ class Command(BaseCommand):
                 ("Accommodation charged", FinanceCategoryKind.REVENUE, "900"),
             ]
             for label, kind, amount in line_items:
-                category = FinanceCategory.objects.filter(label=label, kind=kind).first()
+                category = FinanceCategory.objects.filter(
+                    label=label, kind=kind
+                ).first()
                 if category:
                     set_line_item(month, category, amount, actor=manager)
             recompute_month(month, actor=manager)
@@ -60,25 +69,40 @@ class Command(BaseCommand):
             vest = EquipmentItem.objects.filter(name="High-visibility vest").first()
             if boots:
                 issue_equipment(
-                    olha, boots, 1, actor=coordinator,
+                    olha,
+                    boots,
+                    1,
+                    actor=coordinator,
                     operation_key=uuid5(NAMESPACE_URL, "jober-demo-olha-boots-v1"),
                 )
             if vest:
                 issue = issue_equipment(
-                    olha, vest, 1, actor=coordinator,
+                    olha,
+                    vest,
+                    1,
+                    actor=coordinator,
                     operation_key=uuid5(NAMESPACE_URL, "jober-demo-olha-vest-v1"),
                 )
-                flag_unreturned(issue, actor=coordinator)  # -> manager Reviews queue (Q2)
+                flag_unreturned(
+                    issue, actor=coordinator
+                )  # -> manager Reviews queue (Q2)
 
         # Returned-stock examples retain the FIFO issue value: one reusable,
         # one physically retired. Deterministic keys keep repeated seeds safe.
-        demo_returner = Person.objects.filter(first_name="Tran", last_name="Van Minh").first()
+        demo_returner = Person.objects.filter(
+            first_name="Tran", last_name="Van Minh"
+        ).first()
         helmet = EquipmentItem.objects.filter(name="Safety helmet").first()
         if demo_returner and helmet:
             for suffix, disposition in (("restock", "restock"), ("retire", "retire")):
                 issue = issue_equipment(
-                    demo_returner, helmet, 1, actor=coordinator,
-                    operation_key=uuid5(NAMESPACE_URL, f"jober-demo-return-{suffix}-v1"),
+                    demo_returner,
+                    helmet,
+                    1,
+                    actor=coordinator,
+                    operation_key=uuid5(
+                        NAMESPACE_URL, f"jober-demo-return-{suffix}-v1"
+                    ),
                 )
                 if issue.status == "issued":
                     return_equipment(issue, actor=coordinator, disposition=disposition)
@@ -104,12 +128,16 @@ class Command(BaseCommand):
         ):
             bohdan.inactive_reason = InactiveReason.objects.filter(label="Sick").first()
             bohdan.inactive_since = today - timedelta(days=20)
-            bohdan.save(update_fields=["inactive_reason", "inactive_since", "updated_at"])
+            bohdan.save(
+                update_fields=["inactive_reason", "inactive_since", "updated_at"]
+            )
 
         # --- Compliance: an expiring certificate -------------------------------
         if olha and not olha.certificates.exists():
             Certificate.objects.create(
-                person=olha, name="Forklift licence", category=CertificateCategory.FORKLIFT,
+                person=olha,
+                name="Forklift licence",
+                category=CertificateCategory.FORKLIFT,
                 issue_date=today - timedelta(days=350),
                 expiry_date=today + timedelta(days=15),
             )
@@ -118,30 +146,63 @@ class Command(BaseCommand):
         mira = Person.objects.filter(first_name="Mira", last_name="Novakova").first()
         if mira and not mira.certificates.exists():
             Certificate.objects.create(
-                person=mira, name="Medical fitness check", category=CertificateCategory.HEALTH,
+                person=mira,
+                name="Medical fitness check",
+                category=CertificateCategory.HEALTH,
                 issue_date=today - timedelta(days=400),
                 expiry_date=today - timedelta(days=10),
             )
 
         # --- Blacklist: an approved (blacklisted) person for the re-entry demo --
-        blocked = Person.objects.filter(first_name="Ivan", last_name="Zablokovaný").first()
+        # Office matters here (ADR 0026 Phase B): the blacklist re-entry
+        # walkthrough is presented as the manager, and an office-less person is
+        # visible only to their owning recruiter, so leaving it unset 403s the
+        # demo. Velký Meder = where the demo staff accounts are.
+        velky_meder = Office.objects.filter(code="VM").first()
+        blocked = Person.objects.filter(
+            first_name="Ivan", last_name="Zablokovaný"
+        ).first()
+        if blocked is not None and blocked.office_id is None and velky_meder:
+            # Repair a database seeded before offices existed - this block is
+            # otherwise create-only, so an existing demo DB would keep the 403.
+            blocked.office = velky_meder
+            blocked.save(update_fields=["office", "updated_at"])
         if blocked is None:
             blocked = Person.objects.create(
-                first_name="Ivan", last_name="Zablokovaný", owning_recruiter=recruiter
+                first_name="Ivan",
+                last_name="Zablokovaný",
+                owning_recruiter=recruiter,
+                office=velky_meder,
             )
-            category = BlacklistCategory.objects.filter(label="Fraud / dishonesty").first()
+            category = BlacklistCategory.objects.filter(
+                label="Fraud / dishonesty"
+            ).first()
             case = propose_case(
-                blocked, category=category, reason="Demo: prior fraud on site",
-                identifier=DEMO_BLACKLIST_ID, actor=manager,
+                blocked,
+                category=category,
+                reason="Demo: prior fraud on site",
+                identifier=DEMO_BLACKLIST_ID,
+                actor=manager,
             )
             decide_case(case, "approve", actor=manager)
 
         # --- Blacklist: a proposed case for the manager to decide live ---------
-        diana = Person.objects.filter(first_name="Diana", last_name="Horvathova").first()
+        diana = Person.objects.filter(
+            first_name="Diana", last_name="Horvathova"
+        ).first()
         if diana and not diana.blacklist_cases.exists():
-            category = BlacklistCategory.objects.filter(label="Repeated no-show").first()
-            propose_case(diana, category=category, reason="Demo: repeated no-shows", actor=coordinator)
+            category = BlacklistCategory.objects.filter(
+                label="Repeated no-show"
+            ).first()
+            propose_case(
+                diana,
+                category=category,
+                reason="Demo: repeated no-shows",
+                actor=coordinator,
+            )
 
-        self.stdout.write(self.style.SUCCESS(
-            f"Demo scenario seeded. Live blacklist re-entry ID: {DEMO_BLACKLIST_ID}"
-        ))
+        self.stdout.write(
+            self.style.SUCCESS(
+                f"Demo scenario seeded. Live blacklist re-entry ID: {DEMO_BLACKLIST_ID}"
+            )
+        )

@@ -13,6 +13,7 @@ from django.views.decorators.http import require_POST
 
 from core.accounts.models import Role
 from core.accounts.permissions import Action, require_action, user_office_scope
+from core.offices.scoping import may_see_person
 from core.accounts.permissions import can as user_can
 from core.people.models import InactiveReason, Person
 from core.projects.forms import TrialCreateForm, TrialEditForm, operable_projects
@@ -50,8 +51,7 @@ def _assert_project_in_scope(request: HttpRequest, project: Project) -> None:
 
 
 def _assert_person_in_scope(request: HttpRequest, person: Person) -> None:
-    scope = user_office_scope(request.user)
-    if scope is not None and not scope.filter(pk=person.office_id).exists():
+    if not may_see_person(request.user, person):
         raise PermissionDenied("This person belongs to another office.")
 
 

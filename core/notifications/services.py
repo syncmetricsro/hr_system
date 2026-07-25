@@ -101,14 +101,21 @@ def _viewer_may_see_update(user, person: Person | None, project) -> bool:
     if not role_ok:
         return False
     # ADR 0026 Phase B: an office-scoped viewer also needs the record's own
-    # office in scope. A record with no resolvable office (legacy/unassigned
-    # data) stays visible - this feed is a convenience list, not the access
-    # boundary itself (the linked detail view enforces that boundary).
+    # office in scope.
     scope = user_office_scope(user)
     if scope is None:
         return True
     record_office_id = _record_office_id(person, project)
-    return record_office_id is None or scope.filter(pk=record_office_id).exists()
+    if record_office_id is not None:
+        return scope.filter(pk=record_office_id).exists()
+    # No resolvable office. Follow the same rule the person views use
+    # (core.offices.scoping): an unassigned person is their owning
+    # recruiter's to see, nobody else's. Records with neither a person nor a
+    # project to attribute (e.g. a catalogue edit) stay visible - there is no
+    # office dimension to scope them by in the first place.
+    if person is not None:
+        return person.owning_recruiter_id == user.pk
+    return True
 
 
 def _action_fallback_url(user, action: str) -> str:
