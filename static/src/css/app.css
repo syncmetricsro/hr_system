@@ -1612,9 +1612,12 @@ select {
 }
 
 /* Below 1520px the role pill costs more nav room than it tells — the select +
-   sign-out remain, and the manager's 12 tabs must fit without clipping. */
+   sign-out remain, and the manager's 12 tabs must fit without clipping. The
+   office badge follows the same rule: it is a persistent orientation cue, not
+   worth overflowing the header for. */
 @media (max-width: 1520px) {
-  .account-role {
+  .account-role,
+  .account-office {
     display: none;
   }
 }
@@ -1687,7 +1690,8 @@ select {
     max-width: 100%;
   }
 
-  .account-role {
+  .account-role,
+  .account-office {
     display: none;
   }
 

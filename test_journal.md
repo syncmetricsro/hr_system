@@ -1,5 +1,25 @@
 # Test Journal
 
+## 2026-07-25 - Office badge overflowed the phone viewport (caught by a docs-only PR)
+
+- `test_jober_notification_center_fits_phone_viewport` failed on a
+  **Markdown-only** PR, where the code was byte-identical to `main` - which is
+  what made it obvious the bug was already merged rather than introduced by
+  that change.
+- Cause: `static/src/css/app.css` hides `.account-role` at two breakpoints
+  (<=1520px and mobile) because the role pill costs more header room than it
+  earns. The office badge added in the visibility slice sat next to it but was
+  never added to those rules, so at 375px it overflowed the header, forced
+  horizontal scroll, and pushed the notification popover out of the viewport
+  (`bounding_box()` returned `None`).
+- Why every earlier run passed: exactly one e2e test uses a phone viewport,
+  and it had not tripped in the orderings run during the badge slice or its CI.
+  A desktop-only check would never have caught this.
+- Fix: both breakpoints now hide `.account-role, .account-office` together,
+  with a comment recording that the badge follows the role pill's rule.
+- Verified: full Playwright e2e 50 passed, including the previously failing
+  phone-viewport case.
+
 ## 2026-07-25 - Office-less people belong to their owning recruiter
 
 - `tests/test_unassigned_people_scoping.py` (11 tests) pins each edge of the
