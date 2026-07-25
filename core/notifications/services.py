@@ -7,7 +7,7 @@ from django.urls import NoReverseMatch, reverse
 from django.utils.translation import gettext as _
 
 from core.accounts.models import Role
-from core.accounts.permissions import Action, can
+from core.accounts.permissions import Action, can, user_office_scope
 from core.audit.models import AuditEvent
 from core.audit.presentation import audit_action_label
 from core.notifications.models import NotificationDismissal
@@ -44,7 +44,9 @@ def _reverse(name: str, **kwargs) -> str:
 def _target_object(event: AuditEvent):
     if not event.target_type or not event.target_id:
         return None
-    candidates = [model for model in apps.get_models() if model.__name__ == event.target_type]
+    candidates = [
+        model for model in apps.get_models() if model.__name__ == event.target_type
+    ]
     if len(candidates) != 1:
         return None
     try:
@@ -70,17 +72,43 @@ def _person_and_project(target) -> tuple[Person | None, object | None]:
     return person, project
 
 
+def _record_office_id(person: Person | None, project) -> int | None:
+    if project is not None and project.office_id:
+        return project.office_id
+    if person is not None and person.office_id:
+        return person.office_id
+    return None
+
+
 def _viewer_may_see_update(user, person: Person | None, project) -> bool:
     role = getattr(user, "role", None)
     if role == Role.MANAGER:
+        role_ok = True
+    elif role == Role.RECRUITER:
+        role_ok = person is not None and person.owning_recruiter_id == user.pk
+    elif role == Role.COORDINATOR:
+        if (
+            project is not None
+            and project.responsible_coordinators.filter(pk=user.pk).exists()
+        ):
+            role_ok = True
+        else:
+            role_ok = (
+                person is not None and user.pk in person.responsible_coordinator_ids()
+            )
+    else:
+        return False
+    if not role_ok:
+        return False
+    # ADR 0026 Phase B: an office-scoped viewer also needs the record's own
+    # office in scope. A record with no resolvable office (legacy/unassigned
+    # data) stays visible - this feed is a convenience list, not the access
+    # boundary itself (the linked detail view enforces that boundary).
+    scope = user_office_scope(user)
+    if scope is None:
         return True
-    if role == Role.RECRUITER:
-        return person is not None and person.owning_recruiter_id == user.pk
-    if role == Role.COORDINATOR:
-        if project is not None and project.responsible_coordinators.filter(pk=user.pk).exists():
-            return True
-        return person is not None and user.pk in person.responsible_coordinator_ids()
-    return False
+    record_office_id = _record_office_id(person, project)
+    return record_office_id is None or scope.filter(pk=record_office_id).exists()
 
 
 def _action_fallback_url(user, action: str) -> str:
@@ -151,8 +179,13 @@ def _routine_updates(request) -> list[NotificationItem]:
 
 def _core_alerts(request) -> Iterable[NotificationItem]:
     user = request.user
+    scope = user_office_scope(user)
     if flag_enabled("recruitment_trials") and can(user, Action.TRIAL_RECORD_OUTCOME):
-        trials = TrialAssignment.objects.filter(outcome=TrialOutcome.PENDING).select_related("person", "project")
+        trials = TrialAssignment.objects.filter(
+            outcome=TrialOutcome.PENDING
+        ).select_related("person", "project")
+        if scope is not None:
+            trials = trials.filter(project__office__in=scope)
         if getattr(user, "role", None) == Role.COORDINATOR:
             trials = trials.filter(project__responsible_coordinators=user)
         for trial in trials.distinct():
@@ -169,19 +202,25 @@ def _core_alerts(request) -> Iterable[NotificationItem]:
             )
 
     if flag_enabled("recruitment_trials") and can(user, Action.READINESS_COMPLETE):
-        readiness = ReadinessRecord.objects.select_related("person", "project").filter(person__is_archived=False)
+        readiness = ReadinessRecord.objects.select_related("person", "project").filter(
+            person__is_archived=False
+        )
+        if scope is not None:
+            readiness = readiness.filter(project__office__in=scope)
         if getattr(user, "role", None) == Role.COORDINATOR:
             readiness = readiness.filter(project__responsible_coordinators=user)
         for record in readiness.distinct():
             if record.is_ready():
                 continue
-            version = ":".join([
-                record.medical_state,
-                record.gear_state,
-                record.accommodation_state,
-                record.transport_state,
-                record.updated_at.isoformat(),
-            ])
+            version = ":".join(
+                [
+                    record.medical_state,
+                    record.gear_state,
+                    record.accommodation_state,
+                    record.transport_state,
+                    record.updated_at.isoformat(),
+                ]
+            )
             yield NotificationItem(
                 key=f"readiness:{record.pk}",
                 version=version,
@@ -195,7 +234,10 @@ def _core_alerts(request) -> Iterable[NotificationItem]:
 
 
 def all_items(request) -> list[NotificationItem]:
-    if not request.user.is_authenticated or getattr(request.user, "role", None) == Role.OBSERVER:
+    if (
+        not request.user.is_authenticated
+        or getattr(request.user, "role", None) == Role.OBSERVER
+    ):
         return []
     items = [*_core_alerts(request), *alert_items(request), *_routine_updates(request)]
     return [item for item in items if item.url]
@@ -212,7 +254,10 @@ def visible_items(request) -> dict:
     visible = [item for item in items if (item.key, item.version) not in dismissed]
     alerts = sorted(
         (item for item in visible if item.category == "alert"),
-        key=lambda item: (item.severity != "danger", -(item.created_at.timestamp() if item.created_at else 0)),
+        key=lambda item: (
+            item.severity != "danger",
+            -(item.created_at.timestamp() if item.created_at else 0),
+        ),
     )
     updates = sorted(
         (item for item in visible if item.category == "update"),
@@ -231,7 +276,14 @@ def visible_items(request) -> dict:
 
 def dismiss_item(request, key: str, version: str) -> bool:
     """Dismiss only an item the server recomputes as visible to this user."""
-    match = next((item for item in all_items(request) if item.key == key and item.version == version), None)
+    match = next(
+        (
+            item
+            for item in all_items(request)
+            if item.key == key and item.version == version
+        ),
+        None,
+    )
     if match is None:
         return False
     NotificationDismissal.objects.get_or_create(

@@ -1,5 +1,41 @@
 # Build Journal
 
+## 2026-07-25 - Office-scoped RBAC Phase B, Slice 3: Compliance, Checklists, Notifications scoped
+
+Slice 3 of 7. Extends office scoping to the three surfaces that surface
+per-person alerts/updates: `features/compliance/services.py::compliance_alerts`
+(now a trivial `Person.office__in=scope` filter, no longer needing the
+fragile "current assignment" chain the pre-Slice-1 design would have
+required), `features/checklists/notifications.py` (CorvinumEU-only
+feature — Jober has `checklists` off entirely, so this is the first real
+exercise of Slice 1's CorvinumEU-safety fix under this program), and
+`core/notifications/services.py`'s `_viewer_may_see_update`/`_core_alerts`.
+
+- `_viewer_may_see_update` now ANDs an office check onto the existing
+  role logic: resolves a record's office from `project.office_id` first,
+  falling back to `person.office_id`; a record with neither (legacy/
+  unassigned data) stays visible - this feed is a convenience list, the
+  real access boundary is the linked detail view (already 403-guarded in
+  Slice 2).
+- `_core_alerts`'s `TrialAssignment`/`ReadinessRecord` queries gained the
+  uniform non-observer office filter, on top of the existing
+  Coordinator-only filter (kept as an additional AND).
+- **A calling-convention subtlety caught before it broke `tests/test_
+  compliance.py`**: `compliance_alerts(viewer=None)` is a real, pre-
+  existing "no filter" convention used by several tests and
+  `test_demo_scenario.py` - naively delegating to `user_office_scope(None)`
+  would silently scope those calls to nothing, since `user_office_scope`
+  treats `user=None` as an anonymous *web* request (fails closed). Fixed
+  by only calling `user_office_scope` when a real viewer is passed.
+- New tests carry no `jober_only` marker and were verified to actually
+  exercise the CorvinumEU-only checklist path: run once under default
+  (Jober) settings, where it correctly skips (`flag_enabled("checklists")`
+  is `False` there); run again explicitly under `--ds=clients.corvinum_
+  eu.settings`, where it executes for real and passes.
+- Verified: 593 Jober unit tests / 6 skipped (the checklist test skips
+  under Jober), 391 CorvinumEU / 10 skipped / 144 deselected, 50
+  Playwright e2e, ruff check + format clean.
+
 ## 2026-07-25 - Office-scoped RBAC Phase B, Slice 2: People, Projects, Reports, Exports scoped + detail-view 403s
 
 Slice 2 of 7. Applies the schema from Slice 1 as a real access boundary,

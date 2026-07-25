@@ -6,6 +6,7 @@ from django.conf import settings
 from django.db import transaction
 
 from core.accounts.models import Role
+from core.accounts.permissions import user_office_scope
 from core.audit.services import record_event
 from core.media import process_certificate_document
 from core.people.models import LifecycleStatus, Person
@@ -59,17 +60,24 @@ def compliance_alerts(viewer=None) -> list[dict]:
       flagged 'missing'.
     - Certificates: each certificate's expiry_date.
 
-    A coordinator sees only people on their own active projects; managers and
-    observers see all.
+    A coordinator sees only people on their own active projects; every
+    non-Observer role additionally sees only their own office(s)' people
+    (ADR 0026 Phase B) - observer sees all.
     """
     today = dt.date.today()
     alert_days = getattr(settings, "COMPLIANCE_ALERT_DAYS", 30)
     validity_months = getattr(settings, "MEDICAL_VALIDITY_MONTHS", 12)
 
-    people = (
-        Person.objects.filter(is_archived=False)
-        .prefetch_related("readiness_records", "certificates")
+    people = Person.objects.filter(is_archived=False).prefetch_related(
+        "readiness_records", "certificates"
     )
+    # viewer=None is a deliberate "no filter" calling convention (internal/
+    # test callers), distinct from user_office_scope's own None-user handling
+    # (an anonymous *web* request, which fails closed to nothing) - only
+    # delegate when a real viewer is present.
+    scope = user_office_scope(viewer) if viewer is not None else None
+    if scope is not None:
+        people = people.filter(office__in=scope)
     if viewer is not None and getattr(viewer, "role", None) == Role.COORDINATOR:
         people = people.filter(
             assignments__status=AssignmentStatus.ACTIVE,
@@ -79,20 +87,45 @@ def compliance_alerts(viewer=None) -> list[dict]:
     alerts: list[dict] = []
     for person in people:
         if person.lifecycle_status == LifecycleStatus.WORKING:
-            med_dates = [r.entry_medical_date for r in person.readiness_records.all() if r.entry_medical_date]
+            med_dates = [
+                r.entry_medical_date
+                for r in person.readiness_records.all()
+                if r.entry_medical_date
+            ]
             if not med_dates:
-                alerts.append({"person": person, "item": "Medical", "severity": "missing", "due": None})
+                alerts.append(
+                    {
+                        "person": person,
+                        "item": "Medical",
+                        "severity": "missing",
+                        "due": None,
+                    }
+                )
             else:
                 expiry = add_months(max(med_dates), validity_months)
                 severity = _severity(expiry, today, alert_days)
                 if severity:
-                    alerts.append({"person": person, "item": "Medical", "severity": severity, "due": expiry})
+                    alerts.append(
+                        {
+                            "person": person,
+                            "item": "Medical",
+                            "severity": severity,
+                            "due": expiry,
+                        }
+                    )
 
         for cert in person.certificates.all():
             if cert.expiry_date:
                 severity = _severity(cert.expiry_date, today, alert_days)
                 if severity:
-                    alerts.append({"person": person, "item": cert.name, "severity": severity, "due": cert.expiry_date})
+                    alerts.append(
+                        {
+                            "person": person,
+                            "item": cert.name,
+                            "severity": severity,
+                            "due": cert.expiry_date,
+                        }
+                    )
 
     alerts.sort(key=lambda a: (_RANK[a["severity"]], a["due"] or dt.date.min))
     return alerts
@@ -100,8 +133,11 @@ def compliance_alerts(viewer=None) -> list[dict]:
 
 # --- Certificate document CRUD (docs/product/certificate-upload-design.md) -
 
+
 @transaction.atomic
-def save_certificate(certificate: Certificate, *, actor, uploaded_file=None, creating: bool) -> Certificate:
+def save_certificate(
+    certificate: Certificate, *, actor, uploaded_file=None, creating: bool
+) -> Certificate:
     """Save a certificate's metadata and, if given, its document — audited as
     a single event covering whichever changed (§5). Raises
     ``CertificateUploadError`` if ``uploaded_file`` fails validation; nothing
