@@ -3,6 +3,7 @@ from __future__ import annotations
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.template.response import TemplateResponse
@@ -12,7 +13,7 @@ from django.utils import timezone
 from django.utils.dateparse import parse_date
 from django.views.decorators.http import require_POST
 
-from core.accounts.permissions import Action, require_action
+from core.accounts.permissions import Action, require_action, user_office_scope
 from core.audit.services import record_event
 from core.media import AvatarUploadError, process_avatar_upload
 from core.people.forms import PersonForm
@@ -21,7 +22,8 @@ from core.people.models import InactiveReason, LifecycleError, LifecycleStatus, 
 from core.people.permissions import can_view_sensitive
 from core.people.services import age_warning, person_history, recycle_to_available
 from core.ui import registry
-from core.projects.models import PillarState, Project, TrialOutcome
+from core.projects.forms import operable_projects
+from core.projects.models import PillarState, TrialOutcome
 from core.projects.services import get_or_create_readiness, readiness_blockers
 
 
@@ -43,6 +45,14 @@ def _form_age_warning(form: PersonForm):
     return age_warning(_parsed_birth_date(raw))
 
 
+def _assert_person_in_scope(request: HttpRequest, person: Person) -> None:
+    """ADR 0026 Phase B: a non-Observer can't view/edit another office's
+    person by guessing a URL, mirroring finance's _assert_month_in_scope."""
+    scope = user_office_scope(request.user)
+    if scope is not None and not scope.filter(pk=person.office_id).exists():
+        raise PermissionDenied("This person belongs to another office.")
+
+
 def _configure_age_warning(form: PersonForm) -> None:
     form.fields["date_of_birth"].widget.attrs.update(
         {
@@ -62,6 +72,9 @@ def people_list(request: HttpRequest) -> TemplateResponse:
     inactive_reason = (request.GET.get("inactive_reason") or "").strip()
     inactive_reasons = InactiveReason.objects.all()
     people = Person.objects.filter(is_archived=False).prefetch_related("certificates")
+    scope = user_office_scope(request.user)
+    if scope is not None:
+        people = people.filter(office__in=scope)
     if query:
         people = people.filter(search_name__contains=query.lower())
     if status in LifecycleStatus.values:
@@ -127,6 +140,7 @@ def person_create(request: HttpRequest) -> HttpResponse:
 @require_action(Action.INTAKE_CREATE_EDIT)
 def person_edit(request: HttpRequest, pk: int) -> HttpResponse:
     person = get_object_or_404(Person, pk=pk)
+    _assert_person_in_scope(request, person)
     if request.method == "POST":
         form = PersonForm(request.POST, instance=person, user=request.user)
         if form.is_valid():
@@ -152,6 +166,7 @@ def person_edit(request: HttpRequest, pk: int) -> HttpResponse:
 @login_required
 def person_detail(request: HttpRequest, pk: int) -> TemplateResponse:
     person = get_object_or_404(Person, pk=pk)
+    _assert_person_in_scope(request, person)
     assignment = person.current_assignment()
     pending_trial = (
         person.trials.filter(outcome=TrialOutcome.PENDING)
@@ -208,7 +223,7 @@ def person_detail(request: HttpRequest, pk: int) -> TemplateResponse:
             "is_ready": readiness.is_ready() if readiness else False,
             "PillarState": PillarState,
             "is_available": person.lifecycle_status == LifecycleStatus.AVAILABLE,
-            "active_projects": Project.objects.filter(is_active=True),
+            "active_projects": operable_projects(request.user),
             "person_banners": registry.person_banners(request, person),
             "person_panels": registry.person_panels(request, person),
             "person_finance_overview": registry.person_finance_overview(
@@ -252,6 +267,7 @@ def archive_person(request: HttpRequest, person_pk: int) -> HttpResponse:
     Retention and lawful erasure are separate controlled processes.
     """
     person = get_object_or_404(Person, pk=person_pk)
+    _assert_person_in_scope(request, person)
     person.archive(actor=request.user, reason=request.POST.get("reason", ""))
     messages.success(
         request, _("Person archived. Blacklist protection remains in place.")
@@ -263,6 +279,7 @@ def archive_person(request: HttpRequest, person_pk: int) -> HttpResponse:
 @require_action(Action.PERSON_RECYCLE_AVAILABLE)
 def recycle_person(request: HttpRequest, person_pk: int) -> HttpResponse:
     person = get_object_or_404(Person, pk=person_pk)
+    _assert_person_in_scope(request, person)
     try:
         recycle_to_available(
             person, actor=request.user, reason=request.POST.get("reason", "")
@@ -280,6 +297,7 @@ def person_avatar_upload(request: HttpRequest, pk: int) -> HttpResponse:
     of its own, so this is staff acting on their behalf, gated the same as
     other person-record edits rather than a new fine-grained action."""
     person = get_object_or_404(Person, pk=pk)
+    _assert_person_in_scope(request, person)
     uploaded = request.FILES.get("avatar")
     if not uploaded:
         messages.error(request, _("No file was selected."))
@@ -305,6 +323,7 @@ def person_avatar_upload(request: HttpRequest, pk: int) -> HttpResponse:
 @require_action(Action.INTAKE_CREATE_EDIT)
 def person_avatar_remove(request: HttpRequest, pk: int) -> HttpResponse:
     person = get_object_or_404(Person, pk=pk)
+    _assert_person_in_scope(request, person)
     if person.avatar:
         person.avatar.delete(save=True)
         record_event(request.user, "person.avatar_removed", target=person)

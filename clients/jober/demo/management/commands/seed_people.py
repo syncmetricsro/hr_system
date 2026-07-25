@@ -41,12 +41,18 @@ PROJECTS = [
 # Phase B) is visibly demonstrated in the demo, matching the same principle
 # already applied to project/staff office assignment above. Farrukh's office
 # matches his pending trial at WEBASTO (Győr), not his eventual home office.
+# Bohdan (the only INACTIVE demo person) stays in VM deliberately, alongside
+# Olha/Diana/Mira: the seeded staff accounts (manazer/naborar/koordinator)
+# are all VM-scoped, so VM needs its own representative of every interesting
+# lifecycle state - Tran (DS) and Farrukh (GYR) alone are enough to prove
+# cross-office data is hidden from those accounts without also hiding VM's
+# own inactive-reason/disability/underage demo scenarios from them.
 PEOPLE = [
     ("Olha", "Kovalenko", LifecycleStatus.WORKING, False, "VM"),
     ("Farrukh", "Tashkentov", LifecycleStatus.AVAILABLE, False, "GYR"),
     ("Tran", "Van Minh", LifecycleStatus.AVAILABLE, False, "DS"),
     ("Diana", "Horvathova", LifecycleStatus.AVAILABLE, True, "VM"),
-    ("Bohdan", "Melnyk", LifecycleStatus.INACTIVE, False, "DS"),
+    ("Bohdan", "Melnyk", LifecycleStatus.INACTIVE, False, "VM"),
     ("Mira", "Novakova", LifecycleStatus.AVAILABLE, False, "VM"),
 ]
 
