@@ -64,17 +64,38 @@ def test_routine_update_hidden_for_other_offices_record(client, two_offices):
     assert not any("Farrukh" in s for s in subjects)
 
 
-def test_routine_update_shown_when_record_has_no_office(client, two_offices):
-    unassigned = Person.objects.create(first_name="No", last_name="Office")
+def test_routine_update_for_an_office_less_person_follows_ownership(
+    client, two_offices, django_user_model
+):
+    """Superseded the original fail-open assertion here (2026-07-25): an
+    office-less person is their owning recruiter's to see, not everyone's, so
+    this feed follows the same rule as the person views rather than keeping a
+    second, looser definition."""
+    recruiter = django_user_model.objects.create_user(
+        email="rec@demo.jober.test", password="x", role="recruiter"
+    )
+    recruiter.offices.set([two_offices["velky_meder"]])
+    unassigned = Person.objects.create(
+        first_name="Unassigned", last_name="Candidate", owning_recruiter=recruiter
+    )
+
+    # The manager does not own them, so the update stays out of their feed.
     client.force_login(two_offices["manager"])
     client.get(reverse("notification_panel"))
-
     record_event(two_offices["observer"], "person.updated", target=unassigned)
-
     updates = client.get(reverse("notification_panel")).context["notification_center"][
         "updates"
     ]
-    assert any("No" in item.detail for item in updates)
+    assert not any("Unassigned" in item.detail for item in updates)
+
+    # The owning recruiter does see it.
+    client.force_login(recruiter)
+    client.get(reverse("notification_panel"))
+    record_event(two_offices["observer"], "person.updated", target=unassigned)
+    updates = client.get(reverse("notification_panel")).context["notification_center"][
+        "updates"
+    ]
+    assert any("Unassigned" in item.detail for item in updates)
 
 
 def test_core_alert_trial_outcome_scoped_to_manager_office(client, two_offices):

@@ -6,7 +6,7 @@ from django.conf import settings
 from django.db import transaction
 
 from core.accounts.models import Role
-from core.accounts.permissions import user_office_scope
+from core.offices.scoping import scope_people
 from core.audit.services import record_event
 from core.media import process_certificate_document
 from core.people.models import LifecycleStatus, Person
@@ -75,9 +75,8 @@ def compliance_alerts(viewer=None) -> list[dict]:
     # test callers), distinct from user_office_scope's own None-user handling
     # (an anonymous *web* request, which fails closed to nothing) - only
     # delegate when a real viewer is present.
-    scope = user_office_scope(viewer) if viewer is not None else None
-    if scope is not None:
-        people = people.filter(office__in=scope)
+    if viewer is not None:
+        people = scope_people(people, viewer)
     if viewer is not None and getattr(viewer, "role", None) == Role.COORDINATOR:
         people = people.filter(
             assignments__status=AssignmentStatus.ACTIVE,

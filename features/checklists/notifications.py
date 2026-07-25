@@ -6,7 +6,8 @@ from django.urls import reverse
 from django.utils.translation import gettext as _
 
 from core.accounts.models import Role
-from core.accounts.permissions import Action, can, user_office_scope
+from core.accounts.permissions import Action, can
+from core.offices.scoping import scope_people
 from core.notifications.types import NotificationItem
 from core.ui.registry import flag_enabled
 from features.checklists.models import PersonChecklistItem
@@ -20,9 +21,7 @@ def checklist_notification_provider(request):
         item_template__critical=True,
         person__is_archived=False,
     ).select_related("person", "item_template")
-    scope = user_office_scope(request.user)
-    if scope is not None:
-        open_items = open_items.filter(person__office__in=scope)
+    open_items = scope_people(open_items, request.user, prefix="person__")
     if request.user.role == Role.COORDINATOR:
         open_items = open_items.filter(
             person__assignments__status="active",

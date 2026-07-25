@@ -14,6 +14,7 @@ from django.views.i18n import set_language as django_set_language
 
 from core.accounts.models import Role
 from core.accounts.permissions import user_office_scope
+from core.offices.scoping import scope_people
 from core.ui import registry
 from core.ui.help import ARTICLE_TEMPLATES, HELP_GROUPS
 from core.people.models import LifecycleStatus, Person
@@ -68,9 +69,7 @@ def set_language(request: HttpRequest) -> HttpResponse:
 def reports(request: HttpRequest) -> TemplateResponse:
     """The single operational overview and drill-down reporting surface."""
     scope = user_office_scope(request.user)
-    people = Person.objects.filter(is_archived=False)
-    if scope is not None:
-        people = people.filter(office__in=scope)
+    people = scope_people(Person.objects.filter(is_archived=False), request.user)
     has_trials = registry.flag_enabled("recruitment_trials")
     pending_trials = TrialAssignment.objects.filter(outcome=TrialOutcome.PENDING)
     if scope is not None:

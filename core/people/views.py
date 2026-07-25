@@ -13,7 +13,8 @@ from django.utils import timezone
 from django.utils.dateparse import parse_date
 from django.views.decorators.http import require_POST
 
-from core.accounts.permissions import Action, require_action, user_office_scope
+from core.accounts.permissions import Action, require_action
+from core.offices.scoping import may_see_person, scope_people
 from core.audit.services import record_event
 from core.media import AvatarUploadError, process_avatar_upload
 from core.people.forms import PersonForm
@@ -47,9 +48,10 @@ def _form_age_warning(form: PersonForm):
 
 def _assert_person_in_scope(request: HttpRequest, person: Person) -> None:
     """ADR 0026 Phase B: a non-Observer can't view/edit another office's
-    person by guessing a URL, mirroring finance's _assert_month_in_scope."""
-    scope = user_office_scope(request.user)
-    if scope is not None and not scope.filter(pk=person.office_id).exists():
+    person by guessing a URL, mirroring finance's _assert_month_in_scope.
+    Office-less people stay visible to their owning recruiter - see
+    core.offices.scoping for why."""
+    if not may_see_person(request.user, person):
         raise PermissionDenied("This person belongs to another office.")
 
 
@@ -71,10 +73,10 @@ def people_list(request: HttpRequest) -> TemplateResponse:
     status = (request.GET.get("status") or "").strip()
     inactive_reason = (request.GET.get("inactive_reason") or "").strip()
     inactive_reasons = InactiveReason.objects.all()
-    people = Person.objects.filter(is_archived=False).prefetch_related("certificates")
-    scope = user_office_scope(request.user)
-    if scope is not None:
-        people = people.filter(office__in=scope)
+    people = scope_people(
+        Person.objects.filter(is_archived=False).prefetch_related("certificates"),
+        request.user,
+    )
     if query:
         people = people.filter(search_name__contains=query.lower())
     if status in LifecycleStatus.values:
