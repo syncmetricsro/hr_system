@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.utils import translation
 
 from core.audit.services import record_event
-from core.audit.presentation import audit_action_label
+from core.audit.presentation import audit_action_label, audit_reason_label
 from core.people.models import Person
 
 pytestmark = pytest.mark.django_db
@@ -17,14 +17,18 @@ def users(django_user_model):
     return {
         "manager": make(email="au-m@demo.jober.test", password="x", role="manager"),
         "observer": make(email="au-o@demo.jober.test", password="x", role="observer"),
-        "coordinator": make(email="au-c@demo.jober.test", password="x", role="coordinator"),
+        "coordinator": make(
+            email="au-c@demo.jober.test", password="x", role="coordinator"
+        ),
     }
 
 
 @pytest.fixture
 def events(users):
     person = Person.objects.create(first_name="Audit", last_name="Subject")
-    record_event(users["manager"], "person.status_changed", target=person, reason="test A")
+    record_event(
+        users["manager"], "person.status_changed", target=person, reason="test A"
+    )
     record_event(users["observer"], "export.approved", reason="test B")
     return person
 
@@ -64,7 +68,12 @@ def test_filters_by_actor_and_action(client, users, events):
 
 def test_filters_by_target_worker(client, users, events):
     other_person = Person.objects.create(first_name="Other", last_name="Worker")
-    record_event(users["coordinator"], "person.status_changed", target=other_person, reason="test C")
+    record_event(
+        users["coordinator"],
+        "person.status_changed",
+        target=other_person,
+        reason="test C",
+    )
 
     client.force_login(users["manager"])
 
@@ -100,6 +109,47 @@ def test_audit_filter_keeps_machine_code_and_displays_translated_label(client, u
 
     assert '<option value="room.assigned">Кімнату призначено</option>' in body
     assert "<td>Кімнату призначено</td>" in body
+
+
+@pytest.mark.parametrize(
+    ("language", "expected"),
+    [
+        ("en", "Activated onto a project"),
+        ("sk", "Aktivovaný na projekte"),
+        ("hu", "Aktiválva a projektre"),
+        ("uk", "Активовано на проєкті"),
+    ],
+)
+def test_audit_reason_labels_cover_all_ui_languages(language, expected):
+    with translation.override(language):
+        assert audit_reason_label("activation") == expected
+
+
+def test_audit_reason_label_passes_through_unknown_free_text_unchanged():
+    with translation.override("uk"):
+        assert audit_reason_label("Called in sick, replaced by another worker") == (
+            "Called in sick, replaced by another worker"
+        )
+
+
+@pytest.mark.jober_only
+def test_audit_log_page_translates_known_reason_but_not_free_text(client, users):
+    person = Person.objects.create(first_name="Reason", last_name="Test")
+    record_event(
+        users["manager"], "assignment.created", target=person, reason="activation"
+    )
+    record_event(
+        users["manager"], "person.updated", target=person, reason="Called in sick today"
+    )
+    client.force_login(users["manager"])
+
+    with translation.override("uk"):
+        body = client.get("/uk/audit/").content.decode()
+
+    assert "Активовано на проєкті" in body
+    assert "Called in sick today" in body
+    assert "activation" not in body
+
 
 def test_request_errors_reach_console_logging(settings):
     """Production-readiness: 500s must surface in container logs."""

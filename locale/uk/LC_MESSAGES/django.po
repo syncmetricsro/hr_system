@@ -5,11 +5,12 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-24 22:12+0200\n"
+"POT-Creation-Date: 2026-07-25 02:03+0200\n"
 "Language: uk\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: clients/corvinum_eu/catalog_i18n.py:12
 msgid "Personal data complete"
@@ -249,20 +250,19 @@ msgstr "секретний ключ"
 msgid "confirmed"
 msgstr "підтверджено"
 
-#: core/accounts/models.py:99 core/audit/models.py:33
-#: core/people/models.py:116 core/projects/models.py:36
-#: core/projects/models.py:92 core/projects/models.py:151
-#: core/projects/models.py:193 features/advances/models.py:92
-#: features/blacklist/models.py:66 features/blacklist/models.py:114
-#: features/checklists/models.py:23 features/compliance/models.py:33
-#: features/feedback/models.py:26 features/feedback/models.py:48
-#: features/finance/models.py:39 features/intake/models.py:32
-#: features/logistics/models.py:33 features/logistics/models.py:58
-#: features/logistics/models.py:132 features/logistics/models.py:164
-#: features/logistics/models.py:250 features/logistics/models.py:310
-#: features/logistics/models.py:389 features/messaging/models.py:17
-#: features/messaging/models.py:45 features/payslips/models.py:37
-#: features/wage_ledger/models.py:43
+#: core/accounts/models.py:99 core/audit/models.py:33 core/people/models.py:116
+#: core/projects/models.py:36 core/projects/models.py:92
+#: core/projects/models.py:151 core/projects/models.py:193
+#: features/advances/models.py:92 features/blacklist/models.py:66
+#: features/blacklist/models.py:114 features/checklists/models.py:23
+#: features/compliance/models.py:33 features/feedback/models.py:26
+#: features/feedback/models.py:48 features/finance/models.py:39
+#: features/intake/models.py:32 features/logistics/models.py:33
+#: features/logistics/models.py:58 features/logistics/models.py:132
+#: features/logistics/models.py:164 features/logistics/models.py:250
+#: features/logistics/models.py:310 features/logistics/models.py:389
+#: features/messaging/models.py:17 features/messaging/models.py:45
+#: features/payslips/models.py:37 features/wage_ledger/models.py:43
 msgid "created"
 msgstr "створено"
 
@@ -354,221 +354,295 @@ msgid "Accommodation rate override saved"
 msgstr "Змінену ставку збережено."
 
 #: core/audit/presentation.py:16
+msgid "Accommodation cost period saved"
+msgstr "Період витрат на проживання збережено"
+
+#: core/audit/presentation.py:17
+msgid "Accommodation created"
+msgstr "Житло створено"
+
+#: core/audit/presentation.py:18
 msgid "Room rate saved"
 msgstr "Ставку кімнати збережено."
 
-#: core/audit/presentation.py:17 core/people/services.py:97
+#: core/audit/presentation.py:19
+msgid "Accommodation updated"
+msgstr "Місце проживання оновлено."
+
+#: core/audit/presentation.py:20
+msgid "Worker accommodation payment saved"
+msgstr "Платіж працівника за проживання збережено"
+
+#: core/audit/presentation.py:21 core/people/services.py:97
 msgid "Assigned to project"
 msgstr "Призначено на проєкт"
 
-#: core/audit/presentation.py:18
+#: core/audit/presentation.py:22
 msgid "Project assignment ended"
 msgstr "Призначення до проєкту завершено"
 
 # --- login ---
-#: core/audit/presentation.py:19
+#: core/audit/presentation.py:23
 msgid "Signed in"
 msgstr "Вхід"
 
-#: core/audit/presentation.py:20
+#: core/audit/presentation.py:24
 msgid "Signed out"
 msgstr "Вийти"
 
-#: core/audit/presentation.py:21
+#: core/audit/presentation.py:25
 msgid "Two-factor authentication enabled"
 msgstr "Двофакторну автентифікацію ввімкнено."
 
-#: core/audit/presentation.py:22
+#: core/audit/presentation.py:26
 msgid "Two-factor authentication failed"
 msgstr "Двофакторна автентифікація не вдалася"
 
-#: core/audit/presentation.py:23
+#: core/audit/presentation.py:27
 msgid "Blacklist decision recorded"
 msgstr "Рішення записано."
 
-#: core/audit/presentation.py:24
+#: core/audit/presentation.py:28
 msgid "Blacklist case proposed"
 msgstr "Справу чорного списку подано на розгляд."
 
-#: core/audit/presentation.py:25
+#: core/audit/presentation.py:29 core/audit/presentation.py:99
 msgid "Removed from blacklist"
 msgstr "Вилучено з чорного списку."
 
-#: core/audit/presentation.py:26
-#, fuzzy
-#| msgid "certificate"
-msgid "Certificate deleted"
-msgstr "сертифікат"
-
-#: core/audit/presentation.py:27
-#, fuzzy
-#| msgid "Identity document verified"
-msgid "Certificate document replaced"
-msgstr "Документ, що посвідчує особу, перевірено"
-
-#: core/audit/presentation.py:28
-#, fuzzy
-#| msgid "certificate"
-msgid "Certificate updated"
-msgstr "сертифікат"
-
-#: core/audit/presentation.py:29
-#, fuzzy
-#| msgid "certificate"
-msgid "Certificate uploaded"
-msgstr "сертифікат"
-
 #: core/audit/presentation.py:30
+msgid "Certificate deleted"
+msgstr "Сертифікат видалено"
+
+#: core/audit/presentation.py:31
+msgid "Certificate document replaced"
+msgstr "Документ сертифіката замінено"
+
+#: core/audit/presentation.py:32
+msgid "Certificate updated"
+msgstr "Сертифікат оновлено"
+
+#: core/audit/presentation.py:33
+msgid "Certificate uploaded"
+msgstr "Сертифікат завантажено"
+
+#: core/audit/presentation.py:34
 msgid "Checklist item completed"
 msgstr "Пункт контрольного списку виконано"
 
-#: core/audit/presentation.py:31
+#: core/audit/presentation.py:35
 msgid "Checklist item reopened"
 msgstr "Пункт контрольного списку знову відкрито"
 
-#: core/audit/presentation.py:32
+#: core/audit/presentation.py:36
 msgid "Equipment item created"
 msgstr "Одиницю спорядження створено"
 
-#: core/audit/presentation.py:33
+#: core/audit/presentation.py:37
 msgid "Equipment item updated"
 msgstr "Одиницю спорядження оновлено"
 
-#: core/audit/presentation.py:34
+#: core/audit/presentation.py:38
 msgid "Equipment deduction review recorded"
 msgstr "Перевірку утримання за спорядження зафіксовано"
 
-#: core/audit/presentation.py:35
+#: core/audit/presentation.py:39
 msgid "Equipment flagged as unreturned"
 msgstr "Спорядження позначено як неповернене"
 
-#: core/audit/presentation.py:36 core/people/services.py:106
+#: core/audit/presentation.py:40 core/people/services.py:106
 msgid "Equipment issued"
 msgstr "Спорядження видано"
 
-#: core/audit/presentation.py:37
+#: core/audit/presentation.py:41
 msgid "Equipment returned"
 msgstr "Спорядження повернено."
 
-#: core/audit/presentation.py:38
+#: core/audit/presentation.py:42
+msgid "Equipment stock adjusted"
+msgstr "Запас спорядження скориговано"
+
+#: core/audit/presentation.py:43
+msgid "Equipment stock received"
+msgstr "Запас спорядження отримано"
+
+#: core/audit/presentation.py:44
 msgid "Finance line item saved"
 msgstr "Фінансову позицію збережено"
 
-#: core/audit/presentation.py:39
+#: core/audit/presentation.py:45
 msgid "Financial month locked"
 msgstr "Фінансовий місяць заблоковано"
 
-#: core/audit/presentation.py:40
+#: core/audit/presentation.py:46
 msgid "Financial month recorded"
 msgstr "Фінансовий місяць зафіксовано"
 
-#: core/audit/presentation.py:41
+#: core/audit/presentation.py:47
 msgid "Finance recalculated"
 msgstr "Зберегти та перерахувати"
 
-#: core/audit/presentation.py:42
+#: core/audit/presentation.py:48
 msgid "Financial month reopened"
 msgstr "Фінансовий місяць знову відкрито"
 
-#: core/audit/presentation.py:43
+#: core/audit/presentation.py:49
 msgid "Worker feedback received"
 msgstr "Отримано відгук працівника"
 
-#: core/audit/presentation.py:44 core/people/services.py:116
+#: core/audit/presentation.py:50 core/people/services.py:116
 msgid "Intake completed"
 msgstr "Прийом завершено"
 
-#: core/audit/presentation.py:45
+#: core/audit/presentation.py:51
 msgid "Ledger cycle marked settled"
 msgstr "Цикл реєстру позначено як розрахований"
 
-#: core/audit/presentation.py:46
+#: core/audit/presentation.py:52
 msgid "Ledger entries included in cycle"
 msgstr "Записи реєстру включено до циклу"
 
-#: core/audit/presentation.py:47
+#: core/audit/presentation.py:53
 msgid "Ledger entry cancelled"
 msgstr "Запис скасовано."
 
-#: core/audit/presentation.py:48
+#: core/audit/presentation.py:54
 msgid "Ledger entry recorded"
 msgstr "Запис у книзі збережено."
 
-#: core/audit/presentation.py:49
+#: core/audit/presentation.py:55
 msgid "Ledger entry reversed"
 msgstr "Запис реєстру сторновано"
 
-#: core/audit/presentation.py:50
+#: core/audit/presentation.py:56
 msgid "Payslip recorded"
 msgstr "Розрахунковий лист збережено."
 
-#: core/audit/presentation.py:51
+#: core/audit/presentation.py:57
 msgid "Payslip sent"
 msgstr "Розрахунковий лист надіслано"
 
-#: core/audit/presentation.py:52
+#: core/audit/presentation.py:58
 msgid "Person archived"
 msgstr "Особу архівовано"
 
-#: core/audit/presentation.py:53 core/audit/presentation.py:68
+#: core/audit/presentation.py:59 core/audit/presentation.py:79
 msgid "Avatar added"
 msgstr ""
 
-#: core/audit/presentation.py:54 core/audit/presentation.py:69
+#: core/audit/presentation.py:60 core/audit/presentation.py:80
 msgid "Avatar removed"
 msgstr ""
 
-#: core/audit/presentation.py:55 core/audit/presentation.py:70
+#: core/audit/presentation.py:61 core/audit/presentation.py:81
 msgid "Avatar replaced"
 msgstr ""
 
-#: core/audit/presentation.py:56
+#: core/audit/presentation.py:62
 msgid "Person added"
 msgstr "Особу додано."
 
-#: core/audit/presentation.py:57
+#: core/audit/presentation.py:63
 msgid "Exit completed"
 msgstr "Вихід завершено."
 
-#: core/audit/presentation.py:58 core/people/services.py:124
+#: core/audit/presentation.py:64 core/people/services.py:124
 msgid "Status changed"
 msgstr "Статус змінено"
 
-#: core/audit/presentation.py:59
+#: core/audit/presentation.py:65 core/audit/presentation.py:104
 msgid "Recycled to Available"
 msgstr "Повернено до доступних."
 
-#: core/audit/presentation.py:60
+#: core/audit/presentation.py:66
 msgid "Person updated"
 msgstr "Особу оновлено."
 
-#: core/audit/presentation.py:61
+#: core/audit/presentation.py:67
 msgid "Readiness saved"
 msgstr "Готовність збережено."
 
-#: core/audit/presentation.py:62 core/people/services.py:100
+#: core/audit/presentation.py:68 core/people/services.py:100
 msgid "Room assigned"
 msgstr "Кімнату призначено"
 
-#: core/audit/presentation.py:63
+#: core/audit/presentation.py:69
+msgid "Room created"
+msgstr "Кімнату створено."
+
+#: core/audit/presentation.py:70
 msgid "Room released"
 msgstr "Кімнату звільнено."
 
-#: core/audit/presentation.py:64
+#: core/audit/presentation.py:71
+msgid "Room updated"
+msgstr "Кімнату оновлено."
+
+#: core/audit/presentation.py:72
 msgid "Message sent"
 msgstr "Повідомлення надіслано."
 
-#: core/audit/presentation.py:65
+#: core/audit/presentation.py:73
+msgid "Transport week created"
+msgstr "Тиждень транспорту створено"
+
+#: core/audit/presentation.py:74
 msgid "Transport week recorded"
 msgstr "Тиждень транспорту записано."
 
-#: core/audit/presentation.py:66
+#: core/audit/presentation.py:75
+msgid "Transport week updated"
+msgstr "Тиждень транспорту оновлено"
+
+#: core/audit/presentation.py:76
 msgid "Trial outcome recorded"
 msgstr "Результат пробного дня записано."
 
-#: core/audit/presentation.py:67 core/people/services.py:88
+#: core/audit/presentation.py:77 core/audit/presentation.py:108
+#: core/people/services.py:88
 msgid "Trial scheduled"
 msgstr "Пробний день заплановано"
+
+#: core/audit/presentation.py:78
+msgid "Trial updated"
+msgstr "Пробний день оновлено."
+
+#: core/audit/presentation.py:82
+msgid "Gross wage recorded"
+msgstr "Валову зарплату зареєстровано."
+
+#: core/audit/presentation.py:98
+msgid "Activated onto a project"
+msgstr "Активовано на проєкті"
+
+#: core/audit/presentation.py:100
+msgid "Added to blacklist"
+msgstr "Додано до чорного списку"
+
+# --- exit / recycling ---
+#: core/audit/presentation.py:101 templates/pages/person_detail.html:209
+msgid "Exit"
+msgstr "Вихід"
+
+#: core/audit/presentation.py:102
+msgid "Readiness requirements met"
+msgstr "Вимоги готовності виконано"
+
+#: core/audit/presentation.py:103
+msgid "Room reassigned"
+msgstr "Кімнату перепризначено"
+
+#: core/audit/presentation.py:105
+msgid "Superseded by a new assignment"
+msgstr "Замінено новим призначенням"
+
+#: core/audit/presentation.py:106
+msgid "Trial failed"
+msgstr "Пробний день не пройдено"
+
+#: core/audit/presentation.py:107
+msgid "Trial no-show"
+msgstr "Не з'явився на пробний день"
 
 #: core/notifications/models.py:21
 msgid "item key"
@@ -732,9 +806,8 @@ msgstr "Працює"
 #: templates/pages/accommodation_list.html:33
 #: templates/pages/equipment_catalog.html:19
 #: templates/pages/equipment_catalog.html:33
-#: templates/pages/person_detail.html:232
-#: templates/pages/project_detail.html:8 templates/pages/project_list.html:19
-#: templates/pages/project_list.html:35
+#: templates/pages/person_detail.html:232 templates/pages/project_detail.html:8
+#: templates/pages/project_list.html:19 templates/pages/project_list.html:35
 msgid "Inactive"
 msgstr "Неактивний"
 
@@ -870,10 +943,8 @@ msgid "Under 18"
 msgstr "Молодше 18 років"
 
 #: core/people/services.py:31
-msgid ""
-"This person is under 18. Review the applicable employment requirements."
-msgstr ""
-"Цій особі менше 18 років. Перевірте відповідні умови працевлаштування."
+msgid "This person is under 18. Review the applicable employment requirements."
+msgstr "Цій особі менше 18 років. Перевірте відповідні умови працевлаштування."
 
 #: core/people/services.py:36
 #, fuzzy
@@ -1270,12 +1341,11 @@ msgid "Activated — now Working."
 msgstr "Активовано — тепер Працює."
 
 #: core/ui/help.py:14 core/ui/help.py:16 templates/help/getting-started.html:4
-#: templates/help/getting-started.html:5
+#: templates/help/getting-started.html:5 tests/test_help.py:115
 msgid "Getting started"
 msgstr "Початок роботи"
 
-#: core/ui/help.py:22 templates/help/people.html:4
-#: templates/help/people.html:5
+#: core/ui/help.py:22 templates/help/people.html:4 templates/help/people.html:5
 msgid "People: intake, lifecycle, and trials"
 msgstr "Люди: прийом, життєвий цикл і пробні дні"
 
@@ -1360,8 +1430,7 @@ msgstr "Переглянути неактивних людей: %(reason)s"
 
 #: core/ui/views.py:82
 msgid "Open People filtered to this inactive reason."
-msgstr ""
-"Відкрийте список людей, відфільтрований за цією причиною неактивності."
+msgstr "Відкрийте список людей, відфільтрований за цією причиною неактивності."
 
 #: features/advances/hooks.py:33
 #, python-format
@@ -1838,8 +1907,7 @@ msgid "Review compliance issues"
 msgstr "Переглянути проблеми відповідності"
 
 #: features/compliance/panels.py:32
-msgid ""
-"Open workers with document or medical requirements that need attention."
+msgid "Open workers with document or medical requirements that need attention."
 msgstr ""
 "Відкрийте працівників із документами або медичними вимогами, що потребують "
 "уваги."
@@ -2047,8 +2115,8 @@ msgstr "фінансові місяці"
 #: templates/pages/finance_month_detail.html:33
 #: templates/pages/finance_summary.html:15
 #: templates/pages/finance_summary.html:28
-#: templates/pages/finance_summary.html:81
-#: templates/pages/finance_year.html:27 templates/pages/finance_year.html:40
+#: templates/pages/finance_summary.html:81 templates/pages/finance_year.html:27
+#: templates/pages/finance_year.html:40
 msgid "Cost"
 msgstr "Витрати"
 
@@ -2057,8 +2125,8 @@ msgstr "Витрати"
 #: templates/pages/finance_month_detail.html:32
 #: templates/pages/finance_summary.html:14
 #: templates/pages/finance_summary.html:28
-#: templates/pages/finance_summary.html:78
-#: templates/pages/finance_year.html:26 templates/pages/finance_year.html:40
+#: templates/pages/finance_summary.html:78 templates/pages/finance_year.html:26
+#: templates/pages/finance_year.html:40
 msgid "Revenue"
 msgstr "Дохід"
 
@@ -2340,8 +2408,8 @@ msgstr "Місячна вартість на одну особу (EUR)"
 
 #: features/logistics/forms.py:72
 msgid ""
-"Enter both capacity and per-head cost to record a cost period, or leave both"
-" blank."
+"Enter both capacity and per-head cost to record a cost period, or leave both "
+"blank."
 msgstr ""
 "Введіть і місткість, і вартість на одну особу, щоб записати період витрат, "
 "або залиште обидва поля порожніми."
@@ -2734,8 +2802,7 @@ msgstr "Очікують перевірки обладнання"
 msgid "%(count)s unreturned equipment reviews"
 msgstr "%(count)s перевірок неповерненого обладнання"
 
-#: features/logistics/panels.py:75
-#: templates/pages/accommodation_detail.html:33
+#: features/logistics/panels.py:75 templates/pages/accommodation_detail.html:33
 msgid "Occupancy"
 msgstr "Заповненість"
 
@@ -3113,8 +3180,8 @@ msgid ""
 "Unable to send the payslip email. Check the recipient address and mail "
 "configuration."
 msgstr ""
-"Не вдалося надіслати розрахунковий лист електронною поштою. Перевірте адресу"
-" одержувача та налаштування пошти."
+"Не вдалося надіслати розрахунковий лист електронною поштою. Перевірте адресу "
+"одержувача та налаштування пошти."
 
 #: features/payslips/views.py:30
 msgid "Payslip recorded."
@@ -3123,8 +3190,8 @@ msgstr "Розрахунковий лист збережено."
 #: features/payslips/views.py:63
 #, python-format
 msgid ""
-"Payslip emailed to %(to)s. One-time password (tell the worker by "
-"phone/Messenger, NOT email): %(pw)s"
+"Payslip emailed to %(to)s. One-time password (tell the worker by phone/"
+"Messenger, NOT email): %(pw)s"
 msgstr ""
 "Розрахунковий лист надіслано на %(to)s. Одноразовий пароль (повідомте "
 "працівнику телефоном/через Messenger, НЕ електронною поштою): %(pw)s"
@@ -3187,8 +3254,8 @@ msgstr "Лише додавання"
 
 #: templates/help/audit.html:12
 msgid ""
-"Audit events cannot be edited or deleted once written, by design — the audit"
-" trail is a permanent record, not a working document."
+"Audit events cannot be edited or deleted once written, by design — the audit "
+"trail is a permanent record, not a working document."
 msgstr ""
 "Події аудиту неможливо редагувати чи видаляти після запису — це навмисне "
 "рішення; журнал аудиту є постійним записом, а не робочим документом."
@@ -3199,16 +3266,16 @@ msgstr "Читання журналу"
 
 #: templates/help/audit.html:15
 msgid ""
-"The Audit tab, visible to roles with audit access, lists events newest first"
-" with the actor, action, and target. An action's label is always shown in "
+"The Audit tab, visible to roles with audit access, lists events newest first "
+"with the actor, action, and target. An action's label is always shown in "
 "your current language; any free-text reason attached to an event is shown "
 "exactly as it was typed, in whatever language the person who wrote it used."
 msgstr ""
-"Вкладка «Аудит», видима для ролей із доступом до аудиту, перелічує події від"
-" найновіших, разом із виконавцем, дією та ціллю. Назва дії завжди "
-"показується вашою поточною мовою; будь-яка довільна причина, додана до "
-"події, показується точно так, як її написали, тією мовою, яку використала "
-"особа, що її написала."
+"Вкладка «Аудит», видима для ролей із доступом до аудиту, перелічує події від "
+"найновіших, разом із виконавцем, дією та ціллю. Назва дії завжди показується "
+"вашою поточною мовою; будь-яка довільна причина, додана до події, "
+"показується точно так, як її написали, тією мовою, яку використала особа, що "
+"її написала."
 
 #: templates/help/blacklist.html:8
 msgid "What the blacklist is for"
@@ -3220,8 +3287,8 @@ msgid ""
 "system after a serious issue — it's a last-resort control, decided case by "
 "case, not an automatic outcome of any other action."
 msgstr ""
-"Чорний список запобігає повторному внесенню конкретної особи в систему після"
-" серйозної проблеми — це крайній засіб, який вирішується в кожному випадку "
+"Чорний список запобігає повторному внесенню конкретної особи в систему після "
+"серйозної проблеми — це крайній засіб, який вирішується в кожному випадку "
 "окремо, а не автоматичний наслідок якоїсь іншої дії."
 
 #: templates/help/blacklist.html:11
@@ -3246,8 +3313,7 @@ msgstr "Вирішення справи"
 msgid ""
 "A Manager reviews each proposed case and either approves it — which blocks "
 "that person from re-entry — or rejects it, which discards the proposal "
-"without blocking anyone. Every decision is recorded with who made it and "
-"why."
+"without blocking anyone. Every decision is recorded with who made it and why."
 msgstr ""
 "Менеджер розглядає кожну запропоновану справу і або затверджує її — що "
 "блокує повторний прийом цієї особи, — або відхиляє, що скасовує пропозицію, "
@@ -3278,8 +3344,8 @@ msgstr "Сертифікати"
 
 #: templates/help/compliance.html:9
 msgid ""
-"A worker's certificates — health checks, forklift or crane licences, welding"
-" qualifications, and anything else — live on their person page. Recruiters, "
+"A worker's certificates — health checks, forklift or crane licences, welding "
+"qualifications, and anything else — live on their person page. Recruiters, "
 "Coordinators, and Managers can add a certificate, optionally attaching a "
 "photo or PDF of the document itself, with an issue date and expiry date."
 msgstr ""
@@ -3316,9 +3382,9 @@ msgstr "Сторінка «Відповідність»"
 #: templates/help/compliance.html:15
 msgid ""
 "The Compliance tab lists every missing, expiring, or expired requirement "
-"across all workers in one place — both certificates and entry medical checks"
-" — so nothing has to be found one worker at a time. A number badge on the "
-"tab itself shows how many issues are currently open."
+"across all workers in one place — both certificates and entry medical checks "
+"— so nothing has to be found one worker at a time. A number badge on the tab "
+"itself shows how many issues are currently open."
 msgstr ""
 "Вкладка «Відповідність» перелічує в одному місці всі відсутні, ті, що скоро "
 "закінчуються, або прострочені вимоги для всіх працівників — як сертифікати, "
@@ -3337,11 +3403,10 @@ msgid ""
 "own QR code automatically, so it can be shared as a URL or scanned from a "
 "printed flyer."
 msgstr ""
-"Посилання для зворотного зв'язку — це токенізована публічна веб-адреса — без"
-" облікового запису чи входу працівника — за бажанням прив'язана до "
-"конкретного проєкту. Кожне посилання автоматично отримує власний QR-код, тож"
-" ним можна поділитися як URL-адресою або відсканувати з надрукованої "
-"листівки."
+"Посилання для зворотного зв'язку — це токенізована публічна веб-адреса — без "
+"облікового запису чи входу працівника — за бажанням прив'язана до "
+"конкретного проєкту. Кожне посилання автоматично отримує власний QR-код, тож "
+"ним можна поділитися як URL-адресою або відсканувати з надрукованої листівки."
 
 #: templates/help/feedback.html:11
 msgid "The printable flyer"
@@ -3349,9 +3414,9 @@ msgstr "Листівка для друку"
 
 #: templates/help/feedback.html:12
 msgid ""
-"Next to each link's on-screen QR code, \"Download PDF\" produces a one-page,"
-" printable flyer combining the QR code with the link's label — ready to "
-"print and post somewhere workers will see it."
+"Next to each link's on-screen QR code, \"Download PDF\" produces a one-page, "
+"printable flyer combining the QR code with the link's label — ready to print "
+"and post somewhere workers will see it."
 msgstr ""
 "Поруч із QR-кодом кожного посилання на екрані кнопка «Завантажити PDF» "
 "створює односторінкову листівку для друку, що поєднує QR-код із назвою "
@@ -3382,11 +3447,11 @@ msgstr "Конвенція додатного знака"
 msgid ""
 "Every amount in Finance is entered and displayed as a positive number — "
 "revenue and cost both. Net (revenue minus cost) is calculated automatically "
-"wherever it's shown; it is never entered directly and never hardcoded, so it"
-" always matches its underlying line items."
+"wherever it's shown; it is never entered directly and never hardcoded, so it "
+"always matches its underlying line items."
 msgstr ""
-"Кожна сума у розділі «Фінанси» вводиться й відображається як додатне число —"
-" і дохід, і витрати. Чистий результат (дохід мінус витрати) обчислюється "
+"Кожна сума у розділі «Фінанси» вводиться й відображається як додатне число — "
+"і дохід, і витрати. Чистий результат (дохід мінус витрати) обчислюється "
 "автоматично всюди, де він показується; його ніколи не вводять напряму і не "
 "«зашивають» у код, тож він завжди відповідає своїм базовим позиціям."
 
@@ -3399,11 +3464,11 @@ msgid ""
 "A financial month belongs to one project and one calendar month, built up "
 "from individual line items by category (a revenue source, a cost category). "
 "Add or edit line items until the month reflects reality, then let the month "
-"total recompute — it's always derived from its line items, never typed in as"
-" a single number."
+"total recompute — it's always derived from its line items, never typed in as "
+"a single number."
 msgstr ""
-"Фінансовий місяць належить до одного проєкту та одного календарного місяця і"
-" формується з окремих позицій за категорією (джерело доходу, категорія "
+"Фінансовий місяць належить до одного проєкту та одного календарного місяця і "
+"формується з окремих позицій за категорією (джерело доходу, категорія "
 "витрат). Додавайте або редагуйте позиції, доки місяць не відображатиме "
 "реальність, а потім дайте перерахувати підсумок місяця — він завжди "
 "обчислюється з його позицій і ніколи не вводиться як одне число."
@@ -3430,14 +3495,14 @@ msgstr "Читання звітів"
 
 #: templates/help/finance.html:18
 msgid ""
-"The Finance tab's summary, yearly trend, and month-detail views all read the"
-" same underlying line items — a monthly trend chart, a margin gauge, and a "
+"The Finance tab's summary, yearly trend, and month-detail views all read the "
+"same underlying line items — a monthly trend chart, a margin gauge, and a "
 "category breakdown, all computed dynamically rather than stored separately, "
 "so they can never drift out of sync with each other."
 msgstr ""
 "Зведення, річний тренд і детальний перегляд місяця на вкладці «Фінанси» "
-"читають ті самі базові позиції — місячна діаграма тренду, індикатор маржі та"
-" розбивка за категоріями обчислюються динамічно, а не зберігаються окремо, "
+"читають ті самі базові позиції — місячна діаграма тренду, індикатор маржі та "
+"розбивка за категоріями обчислюються динамічно, а не зберігаються окремо, "
 "тому вони ніколи не можуть розійтися між собою."
 
 #: templates/help/getting-started.html:8
@@ -3461,9 +3526,9 @@ msgstr "Орієнтація в застосунку"
 msgid ""
 "People is almost always the starting point: search or filter the list, then "
 "open a worker's detail page to see their status, project, documents, and "
-"history in one place. Projects, Compliance, and the other tabs each focus on"
-" one slice of the operation — Reports pulls the headline numbers from all of"
-" them onto a single overview page."
+"history in one place. Projects, Compliance, and the other tabs each focus on "
+"one slice of the operation — Reports pulls the headline numbers from all of "
+"them onto a single overview page."
 msgstr ""
 "Розділ «Люди» майже завжди є відправною точкою: знайдіть або відфільтруйте "
 "список, а потім відкрийте сторінку працівника, щоб побачити в одному місці "
@@ -3471,25 +3536,24 @@ msgstr ""
 "«Відповідність» та інші зосереджені кожен на своїй частині роботи — «Звіти» "
 "збирають ключові показники з усіх них на одній оглядовій сторінці."
 
-#: templates/help/getting-started.html:13
+#: templates/help/getting-started.html:13 tests/test_help.py:116
 msgid "Roles"
 msgstr "Ролі"
 
 #: templates/help/getting-started.html:14
 msgid ""
-"Four roles exist: Recruiter (intake and candidate routing), Coordinator "
-"(day-to-day field operations — assignments, readiness, equipment), "
-"Manager/Administrator (approvals and everything Recruiter/Coordinator can "
-"do), and Observer (read-only, for oversight). A hidden button on a page "
-"usually means your role doesn't have that permission, not that the feature "
-"is broken."
+"Four roles exist: Recruiter (intake and candidate routing), Coordinator (day-"
+"to-day field operations — assignments, readiness, equipment), Manager/"
+"Administrator (approvals and everything Recruiter/Coordinator can do), and "
+"Observer (read-only, for oversight). A hidden button on a page usually means "
+"your role doesn't have that permission, not that the feature is broken."
 msgstr ""
-"Існує чотири ролі: Рекрутер (прийом і маршрутизація кандидатів), Координатор"
-" (щоденні польові операції — призначення, готовність, обладнання), "
-"Менеджер/Адміністратор (затвердження і все, що можуть Рекрутер і "
-"Координатор), та Спостерігач (лише перегляд, для нагляду). Якщо на сторінці "
-"немає якоїсь кнопки, це зазвичай означає, що ваша роль не має відповідного "
-"дозволу, а не що функція не працює."
+"Існує чотири ролі: Рекрутер (прийом і маршрутизація кандидатів), Координатор "
+"(щоденні польові операції — призначення, готовність, обладнання), Менеджер/"
+"Адміністратор (затвердження і все, що можуть Рекрутер і Координатор), та "
+"Спостерігач (лише перегляд, для нагляду). Якщо на сторінці немає якоїсь "
+"кнопки, це зазвичай означає, що ваша роль не має відповідного дозволу, а не "
+"що функція не працює."
 
 #: templates/help/getting-started.html:16
 msgid "Statuses and colors"
@@ -3498,11 +3562,11 @@ msgstr "Статуси та кольори"
 #: templates/help/getting-started.html:17
 msgid ""
 "A worker's lifecycle status (Available, Trial day, Working, Inactive, "
-"Blacklisted) shows as a colored dot next to their photo — green for Working,"
-" amber for Trial day, blue for Available, gray for Inactive, red for "
+"Blacklisted) shows as a colored dot next to their photo — green for Working, "
+"amber for Trial day, blue for Available, gray for Inactive, red for "
 "Blacklisted. The same color language shows up on certificate icons and "
-"notification badges throughout the app: green/amber/red generally mean good "
-"/ needs attention soon / needs attention now."
+"notification badges throughout the app: green/amber/red generally mean "
+"good / needs attention soon / needs attention now."
 msgstr ""
 "Статус життєвого циклу працівника (Доступний, Пробний день, Працює, "
 "Неактивний, У чорному списку) відображається кольоровою крапкою біля фото — "
@@ -3525,8 +3589,8 @@ msgid ""
 msgstr ""
 "Наведення курсора (або дотик на сенсорному пристрої) на більшість кнопок і "
 "плиток показує коротку підказку з поясненням їхньої дії. Цей розділ Довідки "
-"описує цілі робочі процеси від початку до кінця — скористайтеся списком тем,"
-" щоб знайти модуль, з яким ви зараз працюєте."
+"описує цілі робочі процеси від початку до кінця — скористайтеся списком тем, "
+"щоб знайти модуль, з яким ви зараз працюєте."
 
 #: templates/help/logistics.html:9
 msgid ""
@@ -3542,8 +3606,8 @@ msgstr ""
 
 #: templates/help/logistics.html:12
 msgid ""
-"Issuing equipment to a worker reduces available warehouse stock (where stock"
-" tracking is enabled); returning it restores that stock. An item that isn't "
+"Issuing equipment to a worker reduces available warehouse stock (where stock "
+"tracking is enabled); returning it restores that stock. An item that isn't "
 "returned can be flagged for a manager's deduction review, which decides "
 "whether to charge the worker or waive the charge — that decision, and the "
 "resulting charge if any, is recorded against the worker."
@@ -3571,8 +3635,7 @@ msgstr "Додавання працівника"
 msgid ""
 "Recruiters and Managers can add a new person from the People page. A new "
 "record starts without a lifecycle status commitment — it only becomes "
-"meaningful once the person is scheduled for a trial or assigned to a "
-"project."
+"meaningful once the person is scheduled for a trial or assigned to a project."
 msgstr ""
 "Рекрутери та Менеджери можуть додати нову особу зі сторінки «Люди». Новий "
 "запис спочатку не має закріпленого статусу життєвого циклу — він стає "
@@ -3594,8 +3657,8 @@ msgid ""
 "rather than being set directly."
 msgstr ""
 "Кожен працівник має рівно один статус життєвого циклу одночасно: Доступний "
-"(наразі не призначений), Пробний день (заплановано або триває пробний день),"
-" Працює (активно призначений на проєкт), Неактивний (призупинено, із "
+"(наразі не призначений), Пробний день (заплановано або триває пробний день), "
+"Працює (активно призначений на проєкт), Неактивний (призупинено, із "
 "зазначеною причиною), або У чорному списку (заблоковано для повторного "
 "прийому — див. статтю про чорний список). Зміни статусу відбуваються "
 "автоматично як частина інших дій — планування пробного дня, фіксація його "
@@ -3610,15 +3673,15 @@ msgstr "Пробні дні"
 msgid ""
 "Coordinators and Managers schedule a trial day from a person's detail page. "
 "After the trial, record its outcome (pass, fail, or no-show) — a pass moves "
-"the worker toward activation on the project; a fail or no-show recycles them"
-" back to Available so they remain eligible for a future opportunity without "
+"the worker toward activation on the project; a fail or no-show recycles them "
+"back to Available so they remain eligible for a future opportunity without "
 "losing their history."
 msgstr ""
 "Координатори та Менеджери планують пробний день зі сторінки деталей особи. "
-"Після пробного дня зафіксуйте його результат (успішно, неуспішно або неявка)"
-" — успішний результат наближає працівника до активації на проєкті; "
-"неуспішний результат або неявка повертають його назад у статус «Доступний», "
-"тож він залишається придатним для майбутньої можливості без втрати історії."
+"Після пробного дня зафіксуйте його результат (успішно, неуспішно або неявка) "
+"— успішний результат наближає працівника до активації на проєкті; неуспішний "
+"результат або неявка повертають його назад у статус «Доступний», тож він "
+"залишається придатним для майбутньої можливості без втрати історії."
 
 #: templates/help/people.html:17
 msgid "Readiness and activation"
@@ -3633,8 +3696,8 @@ msgid ""
 "activation button names exactly what's missing."
 msgstr ""
 "Перш ніж працівника можна активувати на проєкті, у його записі готовності "
-"мають бути виконані обов'язкові компоненти (що вважається таким компонентом,"
-" описано у статті про проєкти). Активація заблокована з конкретно вказаною "
+"мають бути виконані обов'язкові компоненти (що вважається таким компонентом, "
+"описано у статті про проєкти). Активація заблокована з конкретно вказаною "
 "причиною, доки не виконано всі обов'язкові компоненти — повідомлення про "
 "помилку біля кнопки активації точно вказує, чого бракує."
 
@@ -3645,9 +3708,9 @@ msgstr "Неактивний статус і повернення"
 #: templates/help/people.html:21
 msgid ""
 "Marking someone Inactive requires a reason and keeps their full history "
-"intact. From Inactive, a Recruiter, Coordinator, or Manager can recycle them"
-" back to Available at any time — this clears the inactive reason but does "
-"not erase anything else about the person."
+"intact. From Inactive, a Recruiter, Coordinator, or Manager can recycle them "
+"back to Available at any time — this clears the inactive reason but does not "
+"erase anything else about the person."
 msgstr ""
 "Позначення особи як Неактивної потребує причини і зберігає всю її історію "
 "незмінною. Зі статусу «Неактивний» Рекрутер, Координатор або Менеджер може "
@@ -3661,14 +3724,14 @@ msgstr "Призначення працівника"
 #: templates/help/projects.html:9
 msgid ""
 "Coordinators and Managers assign a worker to a project from the project's "
-"detail page or the worker's own record. An assignment tracks which project a"
-" person is currently placed on and feeds directly into Reports' per-project "
+"detail page or the worker's own record. An assignment tracks which project a "
+"person is currently placed on and feeds directly into Reports' per-project "
 "headcount."
 msgstr ""
 "Координатори та Менеджери призначають працівника на проєкт зі сторінки "
 "деталей проєкту або безпосередньо із запису працівника. Призначення "
-"відстежує, на якому проєкті наразі перебуває особа, і напряму враховується в"
-" кількості працівників на проєкт у розділі «Звіти»."
+"відстежує, на якому проєкті наразі перебуває особа, і напряму враховується в "
+"кількості працівників на проєкт у розділі «Звіти»."
 
 #: templates/help/projects.html:11
 msgid "Readiness pillars"
@@ -3696,9 +3759,9 @@ msgstr "Звільнення"
 
 #: templates/help/projects.html:15
 msgid ""
-"When a worker leaves a project, record their exit from the project or person"
-" page. Exiting reconciles anything they still hold — an assigned room, "
-"issued equipment — so those resources become available again, and moves the "
+"When a worker leaves a project, record their exit from the project or person "
+"page. Exiting reconciles anything they still hold — an assigned room, issued "
+"equipment — so those resources become available again, and moves the "
 "worker's status to Inactive with the exit reason on file."
 msgstr ""
 "Коли працівник залишає проєкт, зафіксуйте його звільнення зі сторінки "
@@ -3762,8 +3825,7 @@ msgstr "Закрити сповіщення"
 msgid "Problems"
 msgstr "Проблеми"
 
-#: templates/notifications/panel.html:80
-#: templates/notifications/panel.html:104
+#: templates/notifications/panel.html:80 templates/notifications/panel.html:104
 msgid "Dismiss notification"
 msgstr "Приховати сповіщення"
 
@@ -3803,10 +3865,9 @@ msgid "Report month"
 msgstr "Записати місяць"
 
 #: templates/pages/accommodation_costs.html:8
-#: templates/pages/accommodation_list.html:23
-#: templates/pages/audit_log.html:30 templates/pages/equipment_catalog.html:22
-#: templates/pages/equipment_stock.html:22
-#: templates/pages/project_list.html:21
+#: templates/pages/accommodation_list.html:23 templates/pages/audit_log.html:30
+#: templates/pages/equipment_catalog.html:22
+#: templates/pages/equipment_stock.html:22 templates/pages/project_list.html:21
 #: templates/pages/transport_trends.html:37
 #: templates/pages/trials_queue.html:41
 msgid "Filter"
@@ -4093,8 +4154,8 @@ msgid ""
 "This approves the blacklist case: the person becomes Blacklisted and future "
 "re-entry attempts will be flagged."
 msgstr ""
-"Схвалює справу чорного списку: особа потрапляє до Чорного списку, і майбутні"
-" спроби повернення будуть позначені."
+"Схвалює справу чорного списку: особа потрапляє до Чорного списку, і майбутні "
+"спроби повернення будуть позначені."
 
 #: templates/pages/blacklist_queue.html:29
 #: templates/panels/blacklist_case.html:20
@@ -4200,8 +4261,7 @@ msgstr "Переглянути активні проєкти"
 #: tests/test_tooltips.py:118
 msgid "Open active projects to review their coordinators and assignments."
 msgstr ""
-"Відкрийте активні проєкти, щоб переглянути їхніх координаторів і "
-"призначення."
+"Відкрийте активні проєкти, щоб переглянути їхніх координаторів і призначення."
 
 #: templates/pages/dashboard.html:18 templates/pages/reports.html:13
 msgid "Active projects"
@@ -4248,8 +4308,8 @@ msgstr "Назва або розмір"
 
 #: templates/pages/equipment_catalog.html:26
 msgid ""
-"Inactive items remain on past issue records but cannot be selected for a new"
-" issue."
+"Inactive items remain on past issue records but cannot be selected for a new "
+"issue."
 msgstr ""
 "Неактивні позиції залишаються в попередніх записах про видачу, але їх не "
 "можна вибрати для нової видачі."
@@ -4290,8 +4350,8 @@ msgid ""
 "Unreturned items awaiting a charge decision. Approving records the charge "
 "for recovery — no amount is deducted automatically."
 msgstr ""
-"Неповернені предмети, що очікують рішення про стягнення. Затвердження фіксує"
-" стягнення до відшкодування — жодна сума не утримується автоматично."
+"Неповернені предмети, що очікують рішення про стягнення. Затвердження фіксує "
+"стягнення до відшкодування — жодна сума не утримується автоматично."
 
 #: templates/pages/equipment_reviews.html:14
 #: templates/pages/finance_executive.html:13
@@ -4335,8 +4395,7 @@ msgstr "Затвердити стягнення"
 
 #: templates/pages/equipment_reviews.html:32
 msgid "This waives the charge; the worker will not be charged for the item."
-msgstr ""
-"Скасовує нарахування; з працівника не стягуватимуть вартість предмета."
+msgstr "Скасовує нарахування; з працівника не стягуватимуть вартість предмета."
 
 #: templates/pages/equipment_reviews.html:32
 msgid "Waive"
@@ -4397,14 +4456,10 @@ msgstr ""
 "Ця дія проводить аудитоване коригування запасів і не змінює попередні рухи."
 
 #: templates/pages/equipment_stock.html:50
-#, fuzzy
-#| msgid ""
-#| "This posts an auditable stock adjustment and cannot edit prior movements."
 msgid ""
-"This changes the recorded stock quantity for this item and cannot edit prior"
-" movements."
-msgstr ""
-"Ця дія проводить аудитоване коригування запасів і не змінює попередні рухи."
+"This changes the recorded stock quantity for this item and cannot edit prior "
+"movements."
+msgstr "Ця дія змінює облікову кількість запасів цієї позиції і не змінює попередні рухи."
 
 #: templates/pages/equipment_stock.html:50
 msgid "Post adjustment"
@@ -4430,8 +4485,8 @@ msgstr "Дякуємо за ваш відгук."
 
 #: templates/pages/feedback_form.html:31
 msgid ""
-"Your answers are anonymous and go straight to your manager — nothing here is"
-" linked back to your name."
+"Your answers are anonymous and go straight to your manager — nothing here is "
+"linked back to your name."
 msgstr ""
 "Ваші відповіді анонімні та надходять безпосередньо вашому керівнику — ніщо "
 "тут не пов'язано з вашим ім'ям."
@@ -4593,14 +4648,12 @@ msgid "No financial months."
 msgstr "Немає фінансових місяців."
 
 #: templates/pages/finance_executive.html:71
-#: templates/pages/finance_summary.html:124
-#: templates/pages/finance_year.html:8
+#: templates/pages/finance_summary.html:124 templates/pages/finance_year.html:8
 msgid "Yearly results"
 msgstr "Річні результати"
 
 #: templates/pages/finance_month_detail.html:8
-#: templates/pages/finance_summary.html:58
-#: templates/pages/finance_year.html:86
+#: templates/pages/finance_summary.html:58 templates/pages/finance_year.html:86
 msgid "Locked"
 msgstr "Заблоковано"
 
@@ -4614,13 +4667,12 @@ msgid ""
 "This reopens the locked month for editing; the reopening is audited with "
 "your reason."
 msgstr ""
-"Повторно відкриває заблокований місяць для редагування; відкриття фіксується"
-" в аудиті з вашою причиною."
+"Повторно відкриває заблокований місяць для редагування; відкриття фіксується "
+"в аудиті з вашою причиною."
 
 #: templates/pages/finance_month_detail.html:23
 msgid ""
-"This locks the month; line items become read-only until a manager reopens "
-"it."
+"This locks the month; line items become read-only until a manager reopens it."
 msgstr ""
 "Блокує місяць; позиції стають лише для читання, доки менеджер не відкриє "
 "його знову."
@@ -4638,8 +4690,7 @@ msgid "Save & recalculate"
 msgstr "Зберегти та перерахувати"
 
 #: templates/pages/finance_month_detail.html:60
-#: templates/pages/finance_summary.html:91
-#: templates/pages/finance_year.html:69
+#: templates/pages/finance_summary.html:91 templates/pages/finance_year.html:69
 msgid "Group breakdown"
 msgstr "Розподіл за групами"
 
@@ -4652,8 +4703,7 @@ msgstr "За групою"
 msgid "Net result by finance group chart"
 msgstr "Графік чистого результату за фінансовою групою"
 
-#: templates/pages/finance_summary.html:22
-#: templates/pages/finance_year.html:34
+#: templates/pages/finance_summary.html:22 templates/pages/finance_year.html:34
 msgid "Monthly trend"
 msgstr "Місячна тенденція"
 
@@ -4661,13 +4711,12 @@ msgstr "Місячна тенденція"
 msgid "Revenue, cost, and net by month"
 msgstr "Дохід, витрати та чистий результат за місяцями"
 
-#: templates/pages/finance_summary.html:30
-#: templates/pages/finance_year.html:42
+#: templates/pages/finance_summary.html:30 templates/pages/finance_year.html:42
 msgid "Monthly revenue, cost, and net trend chart"
 msgstr "Графік місячної тенденції доходу, витрат і чистого результату"
 
-#: templates/pages/finance_summary.html:55
-#: templates/pages/finance_year.html:33 templates/pages/finance_year.html:82
+#: templates/pages/finance_summary.html:55 templates/pages/finance_year.html:33
+#: templates/pages/finance_year.html:82
 msgid "Financial months"
 msgstr "Фінансові місяці"
 
@@ -4803,11 +4852,11 @@ msgstr "Оплата"
 
 #: templates/pages/payslips.html:10
 msgid ""
-"Encrypted PDF by email; the one-time password is shown here once and must be"
-" given to the worker by phone or Messenger — never by email."
+"Encrypted PDF by email; the one-time password is shown here once and must be "
+"given to the worker by phone or Messenger — never by email."
 msgstr ""
-"Зашифрований PDF електронною поштою; одноразовий пароль показується тут лише"
-" раз і його слід повідомити працівнику телефоном або в Messenger — ніколи "
+"Зашифрований PDF електронною поштою; одноразовий пароль показується тут лише "
+"раз і його слід повідомити працівнику телефоном або в Messenger — ніколи "
 "електронною поштою."
 
 #: templates/pages/payslips.html:14
@@ -4834,17 +4883,10 @@ msgid ""
 msgstr ""
 
 #: templates/pages/payslips.html:47
-#, fuzzy
-#| msgid ""
-#| "Encrypted PDF by email; the one-time password is shown here once and must be"
-#| " given to the worker by phone or Messenger — never by email."
 msgid ""
 "Emails the encrypted PDF payslip to the worker. Share the one-time password "
 "shown afterward by phone or Messenger, never by email."
-msgstr ""
-"Зашифрований PDF електронною поштою; одноразовий пароль показується тут лише"
-" раз і його слід повідомити працівнику телефоном або в Messenger — ніколи "
-"електронною поштою."
+msgstr "Надсилає зашифровану PDF розрахункову відомість працівнику електронною поштою. Одноразовий пароль, який з'явиться після цього, повідомте телефоном або в Messenger — ніколи електронною поштою."
 
 #: templates/pages/payslips.html:48
 msgid "Resend (new password)"
@@ -5011,19 +5053,13 @@ msgstr ""
 "Обмежено — видно лише менеджерам, спостерігачам, відповідальному рекрутеру "
 "та відповідальному координатору."
 
-# --- exit / recycling ---
-#: templates/pages/person_detail.html:209
-msgid "Exit"
-msgstr "Вихід"
-
 #: templates/pages/person_detail.html:210
 msgid "Exit & reconcile"
 msgstr "Вихід та звірка"
 
 #: templates/pages/person_detail.html:211
 msgid ""
-"Ends the project assignment, releases the room, and returns issued "
-"equipment."
+"Ends the project assignment, releases the room, and returns issued equipment."
 msgstr ""
 "Завершує призначення на проєкт, звільняє кімнату та повертає видане "
 "спорядження."
@@ -5066,8 +5102,7 @@ msgstr "З"
 
 #: templates/pages/person_detail.html:238
 msgid ""
-"This reactivates the person from Inactive, setting their status to "
-"Available."
+"This reactivates the person from Inactive, setting their status to Available."
 msgstr ""
 
 #: templates/pages/person_detail.html:240
@@ -5086,16 +5121,16 @@ msgstr "Архівувати особу"
 
 #: templates/pages/person_detail.html:250
 msgid ""
-"Hides this operational record from the People list. It is not a deletion and"
-" does not remove blacklist protection or audit history."
+"Hides this operational record from the People list. It is not a deletion and "
+"does not remove blacklist protection or audit history."
 msgstr ""
 "Приховує цей робочий запис зі списку людей. Це не видалення й не скасовує "
 "захист чорного списку чи історію аудиту."
 
 #: templates/pages/person_detail.html:251
 msgid ""
-"This archives the person from the operational list. It does not delete their"
-" record, audit history, or blacklist protection."
+"This archives the person from the operational list. It does not delete their "
+"record, audit history, or blacklist protection."
 msgstr ""
 "Це архівує особу з робочого списку. Її запис, історію аудиту та захист "
 "чорного списку не буде видалено."
@@ -5332,8 +5367,7 @@ msgid "Two-factor authentication is enabled for your account."
 msgstr "Двофакторну автентифікацію ввімкнено для вашого облікового запису."
 
 #: templates/pages/two_factor_setup.html:14
-msgid ""
-"Scan the QR code with your authenticator app, then confirm with a code."
+msgid "Scan the QR code with your authenticator app, then confirm with a code."
 msgstr ""
 "Відскануйте QR-код застосунком-автентифікатором, а потім підтвердьте "
 "кодом.Додайте цей обліковий запис у застосунок-автентифікатор і підтвердьте "
@@ -5364,8 +5398,8 @@ msgstr "Перевірити"
 #: templates/pages/wages.html:10
 msgid ""
 "Record the gross wage earned for each calendar month. This value is "
-"displayed beside the independently recorded net payslip; the system does not"
-" derive statutory payroll deductions."
+"displayed beside the independently recorded net payslip; the system does not "
+"derive statutory payroll deductions."
 msgstr ""
 "Зареєструйте валову зарплату, зароблену за кожен календарний місяць. Це "
 "значення відображається поруч з окремо зареєстрованою чистою сумою з "
@@ -5401,8 +5435,8 @@ msgid ""
 "Cash advances and deductions against this person's pay, settled through the "
 "weekly ledger cycle."
 msgstr ""
-"Готівкові аванси та відрахування із зарплати цієї особи, що розраховуються у"
-" щотижневому циклі обліку."
+"Готівкові аванси та відрахування із зарплати цієї особи, що розраховуються у "
+"щотижневому циклі обліку."
 
 #: templates/panels/advances_ledger.html:7
 msgid "Open balance against pay"
@@ -5417,8 +5451,8 @@ msgid ""
 "This person has an unresolved blacklist case. Activation is blocked until a "
 "manager resolves it."
 msgstr ""
-"У цієї особи є невирішена справа чорного списку. Активацію заблоковано, доки"
-" менеджер її не вирішить."
+"У цієї особи є невирішена справа чорного списку. Активацію заблоковано, доки "
+"менеджер її не вирішить."
 
 #: templates/panels/blacklist_case.html:13
 msgid "Reason is restricted."
@@ -5458,8 +5492,7 @@ msgstr "Контрольний список активації"
 
 #: templates/panels/checklists_items.html:5 tests/test_i18n_catalog.py:53
 msgid ""
-"Items marked critical must all be ticked before this person can be "
-"activated."
+"Items marked critical must all be ticked before this person can be activated."
 msgstr ""
 "Усі пункти, позначені як критичні, мають бути відмічені, перш ніж цю особу "
 "можна буде активувати."
@@ -5527,16 +5560,10 @@ msgid "Marks this item as returned and updates warehouse stock accordingly."
 msgstr ""
 
 #: templates/panels/logistics_equipment.html:33
-#, fuzzy
-#| msgid ""
-#| "This flags the item as unreturned and opens a manager charge review at its "
-#| "current value."
 msgid ""
 "This flags the item as unreturned and opens a manager charge review at its "
 "issued stock value."
-msgstr ""
-"Позначає предмет як неповернений і відкриває менеджерську перевірку "
-"нарахування за його поточною вартістю."
+msgstr "Позначає предмет як неповернений і відкриває менеджерську перевірку нарахування за вартістю виданого запасу."
 
 #: templates/panels/logistics_equipment.html:33
 msgid "Flag unreturned"
@@ -5598,8 +5625,7 @@ msgstr "Немає активної кімнати з вільними місц�
 msgid "Messaging"
 msgstr "Комунікація"
 
-#: templates/panels/messaging_sms.html:4
-#: templates/panels/messaging_sms.html:18
+#: templates/panels/messaging_sms.html:4 templates/panels/messaging_sms.html:18
 msgid "Send SMS"
 msgstr "Надіслати SMS"
 
@@ -5717,8 +5743,8 @@ msgstr "Чистий вплив на зарплату"
 
 #: templates/partials/ledger_cycle.html:30
 msgid ""
-"This locks every open entry of the window into the cycle; locked entries can"
-" only be corrected by reversal."
+"This locks every open entry of the window into the cycle; locked entries can "
+"only be corrected by reversal."
 msgstr ""
 "Блокує всі відкриті записи вікна в цикл; заблоковані записи можна виправити "
 "лише сторно."
@@ -5752,8 +5778,8 @@ msgid ""
 "payroll calculations remain outside this feature."
 msgstr ""
 "Обидва стовпці містять зареєстровані вихідні значення за той самий "
-"календарний місяць. Валова зарплата тут не перераховується в чисту; податки,"
-" внески та інші законодавчі розрахунки зарплати не входять до цієї функції."
+"календарний місяць. Валова зарплата тут не перераховується в чисту; податки, "
+"внески та інші законодавчі розрахунки зарплати не входять до цієї функції."
 
 #: templates/partials/theme_picker.html:3
 #: templates/partials/theme_picker.html:4
@@ -5828,8 +5854,8 @@ msgstr "Темна"
 #~ msgstr "Пілотна оболонка"
 
 #~ msgid ""
-#~ "The first screen verifies navigation, local scripts, and the coordinator's "
-#~ "mobile workflow without introducing final business models."
+#~ "The first screen verifies navigation, local scripts, and the "
+#~ "coordinator's mobile workflow without introducing final business models."
 #~ msgstr ""
 #~ "Перший екран перевіряє навігацію, локальні скрипти та мобільний робочий "
 #~ "процес координатора без впровадження остаточних бізнес-моделей."
@@ -5850,11 +5876,11 @@ msgstr "Темна"
 #~ msgstr "Без остаточних даних"
 
 #~ msgid ""
-#~ "This shell uses fictional values only. Real personal data arrives only after"
-#~ " the legal and security gate."
+#~ "This shell uses fictional values only. Real personal data arrives only "
+#~ "after the legal and security gate."
 #~ msgstr ""
-#~ "Ця оболонка використовує лише вигадані значення. Справжні персональні дані "
-#~ "з’являться лише після юридичного та безпекового бар’єру."
+#~ "Ця оболонка використовує лише вигадані значення. Справжні персональні "
+#~ "дані з’являться лише після юридичного та безпекового бар’єру."
 
 #~ msgid "Responsible"
 #~ msgstr "Відповідальний"

@@ -70,29 +70,32 @@ filter, with their translatable strings registered separately in each
 app's `catalog_i18n.py`. Full pattern, the list of existing registries, and
 the add-new-seeded-string checklist: **`docs/i18n-seeded-data.md`**.
 
-## Audit log: `action` is translated, `reason` deliberately is not
+## Audit log: `action` is translated, `reason` is partially translated
 
 The audit log (`core/audit/`) has two text fields that are easy to
-conflate but need opposite treatment:
+conflate but need different treatment:
 
 - **`action`** (e.g. `"finance.locked"`) is a closed, fixed set of
-  machine codes — already fully translated today via
-  `AUDIT_ACTION_LABELS` in `core/audit/presentation.py`, which maps every
-  known code to a `gettext_lazy()` string. This works because `action`
-  has the same closed-vocabulary property as the seeded catalog data
-  above. No further work needed here.
-- **`reason`** (`core/audit/models.py`, a free `TextField`) is **not**
-  a closed vocabulary — it's a mix of user-typed free text (archive/exit/
-  reopen-month/blacklist-removal reasons, typed into a plain `<input>` by
-  whoever performed the action) and programmatically-interpolated data
-  strings (e.g. amounts, periods). Neither has an enumerable set of
-  msgids to register, so it cannot go through `gettext` or the
-  `catalog_i18n.py`/`db_trans` pattern the way `action` or seeded catalog
-  data can. This is a **documented, accepted limitation**, not a gap
-  waiting to be closed: the translated `action` label already conveys
-  what happened in the viewer's language; `reason` stays supplementary,
-  untranslated context, the same tradeoff any audit/changelog system with
-  free-text notes has.
+  machine codes — fully translated via `AUDIT_ACTION_LABELS` in
+  `core/audit/presentation.py`, which maps every known code to a
+  `gettext_lazy()` string. No further work needed here.
+- **`reason`** (`core/audit/models.py`, a free `TextField`) is **mostly**
+  free text — user-typed (archive/exit/reopen-month/blacklist-removal
+  reasons, typed into a plain `<input>`) or programmatically-interpolated
+  data strings (amounts, periods) — but a handful of call sites pass one
+  of a small set of **fixed English literals** as a default reason (e.g.
+  `reason or "activation"`, `reason="superseded"`). Those are genuinely a
+  closed vocabulary, so as of 2026-07-25 they're translated the same way
+  `action` is: `AUDIT_REASON_LABELS` + `audit_reason_label()` in
+  `core/audit/presentation.py` map each known literal to a
+  `gettext_lazy()` string; anything not in that dict (the actual free
+  text) passes through unchanged. `core/audit/views.py`'s `audit_log`
+  view resolves `event.reason_label` per row (mirroring
+  `event.action_label`), and `templates/pages/audit_log.html` renders
+  `reason_label`, not the raw `reason`. When adding a new fixed-literal
+  `reason=` default anywhere in the codebase, add its English text to
+  `AUDIT_REASON_LABELS` and translate it in all three catalogs — the same
+  checklist as any other new msgid, above.
 
 ## Retrieving / verifying translation state
 

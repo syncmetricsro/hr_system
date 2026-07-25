@@ -1,5 +1,38 @@
 # Test Journal
 
+## 2026-07-25 - Audit `reason` translation gap closed for fixed-vocabulary literals
+
+- `tests/test_audit_log_page.py`: added
+  `test_audit_reason_labels_cover_all_ui_languages` (parametrized en/sk/hu/uk,
+  checks `audit_reason_label("activation")` against the real translated
+  string in each catalog), `test_audit_reason_label_passes_through_unknown_
+  free_text_unchanged` (confirms genuine free text is never mangled — the
+  function must not attempt a readable-fallback transform the way
+  `audit_action_label` does for unknown codes, since almost all reasons are
+  real free text, not stale data), and
+  `test_audit_log_page_translates_known_reason_but_not_free_text` (full
+  page-render check: a fixed-literal reason ("activation") renders
+  translated in the `uk` locale, a free-text reason ("Called in sick
+  today") renders byte-for-byte unchanged, and the raw untranslated English
+  literal never leaks into the response).
+- Also verified (not just assumed) that the 12 previously-missing
+  `AUDIT_ACTION_LABELS` entries added this slice have real translations in
+  all three catalogs — no fuzzy flags, no blank `msgstr`, no accidental
+  reuse of an unrelated `msgmerge` fuzzy match — via a one-off script over
+  the compiled `.po` files before compiling, in addition to the existing
+  `test_audit_action_labels_cover_all_ui_languages` parametrized test.
+- Full verification against the real dev Postgres:
+  - Ruff check + `ruff format --check`: both clean (the two touched `.py`
+    files, `core/audit/views.py` and `tests/test_audit_log_page.py`, needed
+    an actual `ruff format` pass — CI's format gate now fails on drift, not
+    just `ruff check`).
+  - Full Jober unit lane: **543 passed, 5 skipped**.
+  - CorvinumEU feature-isolation lane: **340 passed, 10 skipped, 144
+    deselected**.
+  - Full Playwright e2e lane (both clients): **50 passed** — re-run since
+    `templates/pages/audit_log.html` changed (the reason column now renders
+    `reason_label` instead of the raw field).
+
 ## 2026-07-25 - Illustrated default avatar art landed (avatar-design.md §1)
 
 - `tests/test_avatars.py`: replaced the single placeholder test with 10
