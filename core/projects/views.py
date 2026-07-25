@@ -142,6 +142,14 @@ def _trial_queue_context(request, *, form=None, editing=None):
     else:
         date_to = ""
     may_schedule = user_can(request.user, Action.INTAKE_ASSIGN_TRIAL)
+    # The read-only filter dropdown for roles that cannot schedule. Only
+    # Observer lacks INTAKE_ASSIGN_TRIAL in today's policies, and Observer is
+    # unrestricted anyway - but scope it regardless, so this stays correct by
+    # construction rather than by coincidence of the current role matrix
+    # (matching what _transport_context already does for its own dropdown).
+    other_projects = Project.objects.filter(is_active=True)
+    if office_scope is not None:
+        other_projects = other_projects.filter(office__in=office_scope)
     return {
         "trials": trials,
         "scoped": scoped,
@@ -149,9 +157,7 @@ def _trial_queue_context(request, *, form=None, editing=None):
         "project_filter": project_value,
         "date_from": date_from,
         "date_to": date_to,
-        "projects": operable_projects(request.user)
-        if may_schedule
-        else Project.objects.filter(is_active=True),
+        "projects": operable_projects(request.user) if may_schedule else other_projects,
         "may_schedule": may_schedule,
         "form": form,
         "editing": editing,

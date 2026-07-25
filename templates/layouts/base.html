@@ -96,6 +96,7 @@
             </form>
           {% endif %}
           <span class="account-role" aria-label="{% trans 'Role' %}">{{ user.get_role_display }}</span>
+          {% if OFFICE_SCOPE_LABEL %}<span class="account-office{% if OFFICE_SCOPE_UNRESTRICTED %} account-office-all{% endif %}" aria-label="{% trans 'Office scope' %}" data-tooltip-heading="{% trans 'Office scope' %}" data-tooltip="{% if OFFICE_SCOPE_UNRESTRICTED %}{% trans 'You can see every office. Other roles only see their own.' %}{% else %}{% trans 'You only see data belonging to this office.' %}{% endif %}">{% icon "office" size="sm" %}{{ OFFICE_SCOPE_LABEL }}</span>{% endif %}
           <form class="logout-form" action="{% url 'logout' %}" method="post">
             {% csrf_token %}
             <button class="icon-button" type="submit">{% trans "Sign out" %}</button>

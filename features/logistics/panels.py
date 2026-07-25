@@ -82,8 +82,17 @@ def holds_resources(person) -> bool:
 def occupancy_tile(request):
     if not flag_enabled("accommodation"):
         return None
-    capacity = sum(Room.objects.values_list("capacity", flat=True))
-    occupied = RoomAssignment.objects.filter(status=RoomAssignmentStatus.ACTIVE).count()
+    # ADR 0026 Phase B: an aggregate over other offices' rooms is still a read
+    # of their accommodation data - scope the tile the same as the list it
+    # links to, or a VM manager's dashboard would silently count Győr's beds.
+    scope = user_office_scope(request.user)
+    rooms = Room.objects.all()
+    assignments = RoomAssignment.objects.filter(status=RoomAssignmentStatus.ACTIVE)
+    if scope is not None:
+        rooms = rooms.filter(accommodation__office__in=scope)
+        assignments = assignments.filter(room__accommodation__office__in=scope)
+    capacity = sum(rooms.values_list("capacity", flat=True))
+    occupied = assignments.count()
     tile = {"label": _("Occupancy"), "value": f"{occupied}/{capacity}"}
     if user_can(request.user, Action.ACCOMMODATION_MANAGE):
         tile["url"] = reverse("accommodation_costs")

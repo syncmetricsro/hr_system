@@ -1,5 +1,57 @@
 # Build Journal
 
+## 2026-07-25 - Office-scope badge, a leak found by sweeping, and the i18n slice-5 missed
+
+Office scoping was fully enforced after slice 5 but completely **invisible**:
+a scoped manager just saw fewer rows, which reads identically to an empty
+database. For a demo whose whole purpose is to show separation exists, the
+strongest available evidence was a 403 page. This adds the missing signal,
+and a completion sweep turned up a real gap.
+
+- `core/offices/context_processors.py::office_scope` feeds the shared shell a
+  label: the office name for a single-office user, `"<first> +N"` for
+  multi-office, `"All offices"` for Observer/superuser, `"No office"` for
+  someone who belongs to none while offices exist (previously an unexplained
+  empty screen). Renders **nothing at all** where no offices are populated,
+  so CorvinumEU's shell is untouched - a data difference, not branching.
+- Badge added to both client shells; `.account-office` shares the role pill's
+  shape with an accent tint, and the unrestricted variant is deliberately
+  neutral (absence of a restriction shouldn't shout).
+- The `office` icon reuses assets both clients already ship - Jober's existing
+  location-pin symbol and `location_on`, already in CorvinumEU's font subset.
+  `core/ui/icons.py`'s docstring warns that expanding that subset is a new
+  build dependency needing AGENTS.md §3.1 approval, so this deliberately adds
+  neither a sprite symbol nor a font-subsetting step.
+- **Leak found by a completion sweep, not by a failing test**: asked "is item
+  #5 actually done?" and grepped every view/service for model queries lacking
+  a nearby scope guard. `features/logistics/panels.py::occupancy_tile` summed
+  capacity over *every* room company-wide and counted every active
+  assignment - a Velký Meder manager's dashboard was reporting Győr's and
+  Dunajská Streda's beds. An aggregate rather than row-level data, but still a
+  read of another office's accommodation, which is exactly what the ADR's
+  acceptance test forbids. The file had scope references elsewhere, so a
+  file-level check called it "scoped"; only a per-query sweep caught it.
+- Also hardened `_trial_queue_context`'s read-only project dropdown, which was
+  correct only by coincidence: today just Observer lacks
+  `INTAKE_ASSIGN_TRIAL` (and is unrestricted), but a client policy change
+  would have silently produced an unscoped list. Now scoped by construction,
+  matching what `_transport_context` already did.
+- **Process miss owned and fixed**: slice 5 shipped five user-facing strings
+  with no translations at all - the office-named stock error, "Receiving
+  office", both warehouse help texts, and the "set this person's office
+  first" rejection. `msgmerge` had since fuzzy-matched them to nonsense (the
+  Slovak stock error had become "Only available candidates can be
+  scheduled"). All five now translated in SK/HU/UK with the `python-format`
+  flag preserved so `msgfmt` still validates the `%(available)s`/`%(office)s`
+  placeholders. Extract-and-translate needs to be part of every slice
+  touching user-facing text, not a step remembered ad hoc.
+- A repo invariant caught a real bug in this work too: the CorvinumEU layout
+  got a multiline `{# ... #}` comment, which Django renders as visible text.
+  `test_production_templates_do_not_use_multiline_short_comments` failed
+  exactly as designed.
+- Verified: 626 Jober unit tests / 7 skipped, 417 CorvinumEU / 10 skipped /
+  152 deselected, 50 Playwright e2e, ruff check + format clean.
+
 ## 2026-07-25 - Office-scoped RBAC Phase B, Slice 5: equipment stock split into per-office warehouses
 
 Slice 5 of 7, and the largest piece of Phase B: the equipment stock ledger

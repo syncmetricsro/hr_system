@@ -32,6 +32,12 @@ ICONS: dict[str, dict[str, str]] = {
     "invite": {"svg": "invite", "material": "mail"},
     "promote": {"svg": "promote", "material": "workspace_premium"},
     "warehouse": {"svg": "warehouse", "material": "precision_manufacturing"},
+    # Office/site marker (ADR 0026 Phase B office-scope badge). Deliberately
+    # reuses assets both clients already ship - Jober's existing location-pin
+    # symbol and a ligature already present in CorvinumEU's font subset - so
+    # this adds no sprite symbol and no font-subsetting step (see module
+    # docstring: expanding the subset would be a new build dependency).
+    "office": {"svg": "field", "material": "location_on"},
     "cert-health": {"svg": "cert-health", "material": "medical_services"},
     "cert-forklift": {"svg": "cert-forklift", "material": "forklift"},
     "cert-crane": {"svg": "cert-crane", "material": "construction"},

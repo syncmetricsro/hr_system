@@ -1,4 +1,4 @@
-{% load static i18n rbac nav %}
+{% load static i18n rbac nav icons %}
 {% get_current_language as DOCUMENT_LANGUAGE %}
 {# CorvinumEU shell (Stage C8, ADR 0022): left slide-out sidebar per the #}
 {# peopleops prototype. Same blocks/URLs/gating as the shared shell — pages #}
@@ -88,6 +88,8 @@
           <span>
             <span class="sb-user-name">{{ user.get_full_name|default:user.email }}</span><br>
             <span class="sb-user-role">{{ user.get_role_display }}</span>
+            {# Renders only where offices are populated; CorvinumEU is single-site so it stays empty here. #}
+            {% if OFFICE_SCOPE_LABEL %}<br><span class="sb-user-office">{% icon "office" size="sm" %}{{ OFFICE_SCOPE_LABEL }}</span>{% endif %}
           </span>
         </div>
         <div class="sb-actions">

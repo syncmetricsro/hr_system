@@ -94,6 +94,39 @@ def test_manager_cannot_edit_another_offices_accommodation(client, two_offices):
 # coverage of the underlying scoping logic.
 
 
+def test_occupancy_tile_counts_only_the_managers_own_office(two_offices, rf):
+    """An aggregate over another office's rooms is still a read of their
+    accommodation data. Caught by a post-implementation sweep, not by the
+    original slice - the tile had no office reference at all."""
+    from features.logistics.models import RoomAssignment, RoomAssignmentStatus
+    from features.logistics.panels import occupancy_tile
+    from core.people.models import Person
+
+    vm_room = Room.objects.create(
+        accommodation=two_offices["a_vm"],
+        label="101",
+        capacity=2,
+        monthly_rate="100.00",
+    )
+    Room.objects.create(
+        accommodation=two_offices["a_gyr"],
+        label="201",
+        capacity=9,
+        monthly_rate="100.00",
+    )
+    person = Person.objects.create(first_name="Olha", last_name="VM")
+    RoomAssignment.objects.create(
+        person=person, room=vm_room, status=RoomAssignmentStatus.ACTIVE
+    )
+
+    request = rf.get("/")
+    request.user = two_offices["manager"]
+    assert occupancy_tile(request)["value"] == "1/2"  # not 1/11
+
+    request.user = two_offices["observer"]
+    assert occupancy_tile(request)["value"] == "1/11"
+
+
 def test_transport_projects_excludes_other_office_for_manager(two_offices):
     p_vm = Project.objects.create(
         name="VM Project", code="VMPROJ", office=two_offices["velky_meder"]

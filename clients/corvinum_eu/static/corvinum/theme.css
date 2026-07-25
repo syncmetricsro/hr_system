@@ -450,6 +450,21 @@ a.sb-brand:hover .brand-word { color: var(--sidebar-active); }
   white-space: nowrap;
 }
 
+/* Office-scope marker (ADR 0026 Phase B). Present for completeness — the
+   shared shell renders it only where offices are populated, and CorvinumEU
+   is single-site, so in practice this stays unrendered here. */
+.sb-user-office {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(203, 213, 225, 0.75);
+  white-space: nowrap;
+}
+
 .sb-actions { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
 .sb-actions .language-switch select {
   background: transparent;

@@ -1,5 +1,40 @@
 # Test Journal
 
+## 2026-07-25 - Office-scope badge + a leak caught by a completion sweep
+
+- `tests/test_office_scope_badge.py` (12 tests): absent with zero offices
+  (CorvinumEU), names a single office, summarises multi-office as
+  `"Győr +1"` (alphabetical, so the label is stable rather than
+  insertion-ordered), `"All offices"` for Observer with the unrestricted
+  flag set, `"No office"` for a user belonging to none, nothing for
+  anonymous; two shell-render tests through a real page; and a
+  parametrized en/sk/hu/uk translation check following the repo's
+  `translation.override` pattern.
+- **A regression test that exists because of a real leak, not a
+  hypothetical**: `test_occupancy_tile_counts_only_the_managers_own_office`
+  asserts a VM manager sees `1/2` where the Observer sees `1/11`. The tile
+  had been summing every office's rooms. Worth noting how it was found -
+  a file-level "does this module reference user_office_scope" check
+  reported `logistics/panels.py` as scoped (two of its three functions
+  were); only a per-query sweep for model access lacking a *nearby* scope
+  guard surfaced it. Blunt file-level greps are not sufficient evidence of
+  completion.
+- `test_trials_queue_project_dropdown_is_scoped_for_non_schedulers` guards
+  a construction rather than a live leak, and says so in its docstring:
+  today only Observer lacks `INTAKE_ASSIGN_TRIAL` and is unrestricted
+  anyway, so this fails only if a future client policy drops that action
+  from a scoped role.
+- i18n: five slice-5 strings were shipped untranslated and had been
+  fuzzy-matched to unrelated text; now translated in all three catalogs and
+  verified programmatically (no fuzzy flag, no empty msgstr, placeholders
+  intact) before compiling, rather than trusting `msgmerge`.
+- Full verification: 626 Jober unit / 7 skipped, 417 CorvinumEU / 10
+  skipped / 152 deselected, 50 Playwright e2e, ruff check + format clean.
+  One real failure along the way -
+  `test_production_templates_do_not_use_multiline_short_comments` rejected
+  a multiline `{# #}` comment I added to the CorvinumEU layout, which
+  Django would have rendered as visible sidebar text.
+
 ## 2026-07-25 - Office-scoped RBAC Phase B, Slice 5: equipment stock split into per-office warehouses
 
 - `tests/test_equipment_stock_office_scoping.py` (10 tests). The two that
