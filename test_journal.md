@@ -2,6 +2,21 @@
 
 ## 2026-07-25 - Guarding the finance seed's split invariant
 
+- Two real breaks found while verifying the seed expansion, neither of them
+  in the changed code's own tests:
+  - `tests/test_finance_seed_splits.py` imported the seed command at module
+    level, so on the **CorvinumEU lane** - which does not install
+    `features.finance` - it failed during *collection* and aborted all 425
+    tests rather than skipping one file. `tests/test_office_scoping.py`
+    already had the right pattern (`django_apps.is_installed` +
+    `allow_module_level=True`); copied it.
+  - `test_demo_scenario` asserted `month.cost == Decimal("9530")`, a figure
+    baked in from the old hand-written 2025 stub. Rather than swap one magic
+    number for another, it now asserts the invariant the code actually
+    guarantees - month totals equal the sum of their line items, net is the
+    difference - plus a `>= 8` line-item floor so the 2025 tail cannot
+    silently regress to a stub again.
+
 - `tests/test_finance_seed_splits.py` (15 tests) pins something that fails
   silently: `recompute_month()` derives a month's revenue/cost **from its line
   items**, so the figures in the monthly tables are only the initial record.

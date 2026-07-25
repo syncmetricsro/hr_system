@@ -4,7 +4,9 @@ import pytest
 from django.apps import apps as django_apps
 
 if not django_apps.is_installed("features.finance"):
-    pytest.skip("features.finance is not installed for this client", allow_module_level=True)
+    pytest.skip(
+        "features.finance is not installed for this client", allow_module_level=True
+    )
 
 
 import pytest
@@ -15,7 +17,10 @@ from features.blacklist.services import check_match
 from features.compliance.services import compliance_alerts
 from features.finance.models import FinancialMonth
 from features.logistics.models import (
-    DeductionReviewStatus, EquipmentIssue, EquipmentStockMovement, RoomAssignment,
+    DeductionReviewStatus,
+    EquipmentIssue,
+    EquipmentStockMovement,
+    RoomAssignment,
 )
 from core.projects.models import TrialAssignment, TrialOutcome
 from core.people.models import LifecycleStatus, Person
@@ -36,16 +41,31 @@ def _seed():
 def test_scenario_populates_every_module():
     _seed()
 
-    # Finance line items include the extraordinary row and recompute every category.
+    # Finance totals are recomputed from the line items, never stored ahead of
+    # them - so assert that relationship rather than a hardcoded figure, which
+    # is what previously broke when the seed's 2025 tail was rewritten.
     from decimal import Decimal
+
     month = FinancialMonth.objects.get(project__code="DHLBA", year=2025, month=11)
     assert month.line_items.exists()
-    assert month.cost == Decimal("9530")
-    assert month.revenue == Decimal("14600")
-    assert month.net == Decimal("5070")
+    costs = sum(
+        (i.amount for i in month.line_items.all() if i.category.kind == "cost"),
+        Decimal("0"),
+    )
+    revenues = sum(
+        (i.amount for i in month.line_items.all() if i.category.kind == "revenue"),
+        Decimal("0"),
+    )
+    assert month.cost == costs
+    assert month.revenue == revenues
+    assert month.net == revenues - costs
+    # The 2025 tail must carry the same category depth as 2026, not a stub.
+    assert month.line_items.count() >= 8
 
     # Equipment: one issued item flagged for the review queue.
-    assert EquipmentIssue.objects.filter(review_status=DeductionReviewStatus.PENDING).exists()
+    assert EquipmentIssue.objects.filter(
+        review_status=DeductionReviewStatus.PENDING
+    ).exists()
     assert EquipmentStockMovement.objects.filter(movement_type="receipt").exists()
     assert EquipmentIssue.objects.filter(return_disposition="restock").exists()
     assert EquipmentIssue.objects.filter(return_disposition="retire").exists()
@@ -62,6 +82,7 @@ def test_scenario_populates_every_module():
 
     # A proposed case is waiting in the manager queue.
     from features.blacklist.models import BlacklistCase
+
     assert BlacklistCase.objects.filter(status=BlacklistCaseStatus.PROPOSED).exists()
 
     # A compliance alert fires (expiring certificate and/or missing medical).
@@ -81,9 +102,16 @@ def test_scenario_is_idempotent():
     call_command("seed_demo_scenario")  # second run
     call_command("seed_demo_scenario")  # third run
     # No duplicate blacklisted person / fingerprints / flagged items.
-    assert Person.objects.filter(first_name="Ivan", last_name="Zablokovaný").count() == 1
+    assert (
+        Person.objects.filter(first_name="Ivan", last_name="Zablokovaný").count() == 1
+    )
     assert MatchFingerprint.objects.filter(is_active=True).count() == 1
-    assert EquipmentIssue.objects.filter(review_status=DeductionReviewStatus.PENDING).count() == 1
+    assert (
+        EquipmentIssue.objects.filter(
+            review_status=DeductionReviewStatus.PENDING
+        ).count()
+        == 1
+    )
 
 
 def test_demo_sms_phone_env_overrides_olha(monkeypatch, django_user_model):

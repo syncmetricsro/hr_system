@@ -15,6 +15,15 @@ from __future__ import annotations
 from decimal import Decimal
 
 import pytest
+from django.apps import apps as django_apps
+
+if not django_apps.is_installed("features.finance"):
+    # CorvinumEU does not install finance. Importing the seed command at module
+    # level would raise during *collection* and take the whole lane down, not
+    # just skip this file - which is exactly what it did the first time.
+    pytest.skip(
+        "features.finance is not installed for this client", allow_module_level=True
+    )
 
 from features.finance.management.commands.seed_finance import (
     COST_SPLIT,
