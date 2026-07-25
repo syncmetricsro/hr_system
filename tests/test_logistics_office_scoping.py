@@ -88,16 +88,17 @@ def test_manager_cannot_edit_another_offices_accommodation(client, two_offices):
     assert resp.status_code == 403
 
 
-# --- transport_projects() / assignable_rooms() - pure functions, no HTTP, so
-# these run under both clients regardless of whether the transport/
-# accommodation *pages* are routable there, and give real CorvinumEU-lane
-# coverage of the underlying scoping logic.
-
-
+@pytest.mark.jober_only
 def test_occupancy_tile_counts_only_the_managers_own_office(two_offices, rf):
     """An aggregate over another office's rooms is still a read of their
     accommodation data. Caught by a post-implementation sweep, not by the
-    original slice - the tile had no office reference at all."""
+    original slice - the tile had no office reference at all.
+
+    Belongs in this Jober-only group rather than with the pure functions
+    below: occupancy_tile is flag-gated on `accommodation` and returns None
+    for CorvinumEU, so it is not client-agnostic the way
+    transport_projects/assignable_rooms are.
+    """
     from features.logistics.models import RoomAssignment, RoomAssignmentStatus
     from features.logistics.panels import occupancy_tile
     from core.people.models import Person
@@ -125,6 +126,12 @@ def test_occupancy_tile_counts_only_the_managers_own_office(two_offices, rf):
 
     request.user = two_offices["observer"]
     assert occupancy_tile(request)["value"] == "1/11"
+
+
+# --- transport_projects() / assignable_rooms() - pure functions, no HTTP, so
+# these run under both clients regardless of whether the transport/
+# accommodation *pages* are routable there, and give real CorvinumEU-lane
+# coverage of the underlying scoping logic.
 
 
 def test_transport_projects_excludes_other_office_for_manager(two_offices):

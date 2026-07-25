@@ -30,10 +30,18 @@
   intact) before compiling, rather than trusting `msgmerge`.
 - Full verification: 626 Jober unit / 7 skipped, 417 CorvinumEU / 10
   skipped / 152 deselected, 50 Playwright e2e, ruff check + format clean.
-  One real failure along the way -
-  `test_production_templates_do_not_use_multiline_short_comments` rejected
-  a multiline `{# #}` comment I added to the CorvinumEU layout, which
-  Django would have rendered as visible sidebar text.
+  Two real failures along the way, both worth recording:
+  - `test_production_templates_do_not_use_multiline_short_comments`
+    rejected a multiline `{# #}` comment added to the CorvinumEU layout,
+    which Django would have rendered as visible sidebar text.
+  - **CI caught the occupancy test failing in the CorvinumEU lane** because
+    `occupancy_tile` is flag-gated on `accommodation` (off there) and
+    returns `None`. It had been filed under this module's "pure functions,
+    run in both lanes" heading without checking that this particular
+    function is client-gated. Now `jober_only` and physically moved into
+    the accommodation group so the section comment stays true. The local
+    run that "passed" had only exercised the Jober lane - **after adding
+    tests, run both lanes before pushing**, not just the default one.
 
 ## 2026-07-25 - Office-scoped RBAC Phase B, Slice 5: equipment stock split into per-office warehouses
 
