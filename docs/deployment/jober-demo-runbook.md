@@ -1,42 +1,104 @@
 # Jober amendment demo runbook
 
-> Updated 2026-07-20 for the second-interview headline pack. This is the Jober
-> client on port 8000; all people and amounts are fictional demo data.
+> Updated 2026-07-25 for office-scoped RBAC (ADR 0026 Phase B). This is the
+> Jober client on port 8000; all people and amounts are fictional demo data.
 
 This walkthrough demonstrates working Django workflows, not mock screens. Allow
-35-45 minutes and present in Slovak, switching briefly to Hungarian or Ukrainian.
+40-50 minutes and present in Slovak, switching briefly to Hungarian or Ukrainian.
+
+## Read this first: the demo is now office-scoped
+
+Jober operates three offices — **Velký Meder (VM)**, **Győr (GYR)** and
+**Dunajská Streda (DS)**. Every non-observer account now sees only its own
+office's data, and the seeded demo staff all belong to **Velký Meder**. This is
+the headline of §1 below, but it also changes what every other step shows:
+
+- Manager/Recruiter/Coordinator see one office's people, projects, warehouse,
+  accommodation, compliance and finance — **not** company totals.
+- Only the Observer sees all three offices, and Finance routes them to a
+  different, Observer-only executive dashboard.
+- The office bounding the current view is always named in the top-right badge
+  next to the role.
+
+If a figure looks "too small" during the demo, that is the scoping working, not
+missing data.
 
 ## Preparation
 
 1. Run `scripts/dev_app.sh rebuild` from the repository root. Use
    `doppler run --project hr_system --config dev -- scripts/dev_app.sh rebuild`
    only if the optional live Twilio segment will actually be shown.
+
+   **Rebuild, don't reuse.** A database seeded before 2026-07-25 keeps a
+   pre-split pooled stock receipt and office-less people, so per-office figures
+   and the blacklist step will not look right. `rebuild` reseeds from scratch;
+   re-running the seed commands on an existing database also repairs those rows.
 2. Open <http://localhost:8000> and sign in as
    `manazer@demo.jober.test` / `demo-jober-2026`.
-3. Confirm Dashboard shows Warehouse stock and Accommodation occupancy, the
-   Finance page has Megyer and DS, and no Transport navigation or project card
-   is present.
+3. Confirm: the header badge reads **Velký Meder**; Dashboard shows Warehouse
+   stock and Accommodation occupancy; Projects lists **only DHL Bratislava**;
+   and no Transport navigation or project card is present.
 4. Run `scripts/playwright_e2e.sh` and rehearse the issue/return and finance
    edits once. Never use real worker data or the supplied client workbook.
 
-Other demo accounts use the same password:
+Other demo accounts use the same password. **Office membership is what each
+account can see**, so switching accounts is now part of the demo, not a detour:
 
-| Role | Account |
-|---|---|
-| Recruiter | `naborar@demo.jober.test` |
-| Coordinator | `koordinator@demo.jober.test` |
-| Observer | `pozorovatel@demo.jober.test` |
+| Role | Account | Office |
+|---|---|---|
+| Manager | `manazer@demo.jober.test` | Velký Meder |
+| Recruiter | `naborar@demo.jober.test` | Velký Meder |
+| Coordinator | `koordinator@demo.jober.test` | Velký Meder |
+| Observer | `pozorovatel@demo.jober.test` | all three (role bypass) |
+
+Seeded people, so you know who should be visible to whom: **Olha, Diana, Mira,
+Bohdan, Ivan** are Velký Meder; **Farrukh** is Győr; **Tran** is Dunajská
+Streda. Projects: DHL Bratislava = VM, WEBASTO = GYR, CARGO = DS.
 
 ## Headline sequence
 
-### 1. Scope correction: transport removed
+### 1. Office separation
+
+The newest and most consequential change: each office's data is walled off, and
+this is enforced server-side, not hidden in the UI.
+
+Signed in as **Manager** (`manazer@`, Velký Meder):
+
+- Point at the **Velký Meder** badge beside the role in the header. That is the
+  office bounding everything on screen.
+- **People** lists Olha, Diana, Mira, Bohdan and Ivan. Farrukh (Győr) and Tran
+  (Dunajská Streda) are absent — not filtered in the UI, never queried.
+- **Projects** shows only DHL Bratislava.
+- **Warehouse** shows Velký Meder's stock only.
+
+Then show that it is a real boundary, not a filter:
+
+- Note the project id of DHL Bratislava, then edit the URL to a Győr or
+  Dunajská Streda project (or person). The server returns **403 Forbidden** —
+  guessing a URL does not work.
+
+Now switch to **Observer** (`pozorovatel@`):
+
+- The badge reads **All offices**.
+- People and Projects show all three offices' records.
+- **Finance** routes to a different page entirely — the Observer-only executive
+  dashboard, with per-office roll-ups and a multi-series trend chart comparing
+  the three offices.
+
+Talking points: the observer role is the only cross-office view, and it is a
+role bypass rather than a membership, so nobody accumulates offices by
+accident. Blacklist is the one deliberate exception — matching stays
+company-wide, so a person blocked at one office is still caught at the other
+two (§8).
+
+### 2. Scope correction: transport removed
 
 Open Projects and a project detail. Point out that transport, delivery weeks,
 vehicles, routes, and readiness requirements are absent. Existing historical
 database structures were retained for compatibility, but Jober cannot navigate
 to or create transport records.
 
-### 2. Age warning at intake
+### 3. Age warning at intake
 
 Sign in as Recruiter and create or edit a fictional person. Enter a birth date
 for someone younger than 18: the server-rendered warning appears immediately.
@@ -47,29 +109,48 @@ Submit the form to demonstrate the same warning without htmx. Open seeded
 Talking point: this is a prominent warning, not a guessed legal hard-stop. The
 business still needs to decide whether any under-age case must be blocked.
 
-### 3. Warehouse stock accounting
+### 4. Warehouse stock accounting
+
+Each office now keeps its **own warehouse**. Stock is received into one office,
+FIFO only ever draws from the worker's own office, and there is no cross-office
+transfer.
 
 Sign in as Manager and open **Warehouse**.
 
-- Show current quantity and EUR value by item and size.
+- Show current quantity and EUR value by item and size. On a freshly seeded
+  stack this is **Velký Meder's 36 units / EUR 623.50** — not a company total.
+  (Győr holds 23 / EUR 406.00 and Dunajská Streda 14 / EUR 252.00; switch to
+  Observer later to show the combined 73 / EUR 1 281.50.)
 - Filter the monthly report and explain opening, receipts, issues, returns,
-  adjustments, and closing value.
-- Open Receive stock and show quantity plus total lot value; do not submit a
-  duplicate unless demonstrating idempotency.
-- Open Olha as Coordinator and issue an item. Available quantity is visible and
-  overdraw is rejected atomically.
+  adjustments, and closing value — all for this office.
+- Open **Receive stock**. Note the **Receiving office** field: stock must land
+  in a named warehouse, and the picker offers only offices you belong to. Show
+  quantity plus total lot value; do not submit a duplicate unless demonstrating
+  idempotency.
+- The **Stock adjustment** form on the same page likewise names the office
+  whose stock is being corrected.
+- Open Olha as Coordinator and issue an item. The available quantity shown is
+  **her own office's** stock, and overdraw is rejected atomically. Attempting
+  more than Velký Meder holds fails with an error naming the office — it does
+  not quietly consume Győr's stock.
 - Return an item as either **Reusable - return to stock** or **Damaged or
-  retired**. Reusable stock becomes a new FIFO lot at its original issued value.
+  retired**. Reusable stock becomes a new FIFO lot at its original issued
+  value, back in that worker's office.
 
-The seeded history includes receipt, issue, restock, and retire examples. The
-manager recovery review snapshots FIFO issue value but does not mutate payroll.
-Jober's primary view is warehouse balance, not a per-person carried-value total.
+The seeded history includes receipt, issue, restock, and retire examples in
+every office. The manager recovery review snapshots FIFO issue value but does
+not mutate payroll. Jober's primary view is warehouse balance — now per office,
+not company-wide.
 
-### 4. Accommodation cost and margin
+### 5. Accommodation cost and margin
 
-Open **Accommodation**, then the Nitra location. Show its effective monthly
-capacity and per-head cost period. Open **Cost report**, select the current
-month, and explain:
+Accommodation is office-scoped too: the list shows only this office's
+locations, each location now carries an **Office**, and another office's
+location 403s on direct access — same boundary as People and Projects.
+
+Open **Accommodation**, then the Nitra location (Velký Meder). Show its
+effective monthly capacity and per-head cost period. Open **Cost report**,
+select the current month, and explain:
 
 - standing cost = capacity x per-head monthly cost;
 - occupied cost and worker payments use assignment-date overlap and daily
@@ -81,10 +162,12 @@ Olha is seeded from mid-month with a separate worker payment, making the
 proration visible. State explicitly that this report creates no wage,
 deduction, or recovery entry.
 
-### 5. Regional project P&L
+### 6. Profit/loss by office
 
-Open **Finance**. Show the regional roll-ups for **Megyer** and **DS**, then the
-company and per-project totals. Open the fictional Minit-style project month:
+Still as **Manager**, open **Finance**. Scroll to the *Office roll-up ·
+Profit/loss by office* panel: it lists **Velký Meder only** — a manager sees
+their own office's P&L, never the company's. Open the seeded DHL Bratislava
+month (2026-05):
 
 - costs are entered and displayed negative, revenues positive;
 - stored values remain positive magnitudes with category kind carrying meaning;
@@ -93,13 +176,22 @@ company and per-project totals. Open the fictional Minit-style project month:
   extraordinary-cost row;
 - locking prevents edits and reopening requires an audited reason.
 
-Export CSV and show detailed period, region, project, category, kind, group, and
-signed amount rows followed by explicit regional and grand summaries. The demo
-uses fictional numbers only. `HV 202510.xlsx` remains a specification source,
-not seed data; its `202510` filename versus `November 2025` sheet label is still
-an open client question.
+Try opening another office's financial month by URL, or POSTing to it: **403**.
+The boundary covers finance mutations, not just the page.
 
-### 6. Equipment issuing and deduction review
+Now switch to **Observer** and reopen Finance. This is the moment to show the
+**executive dashboard** — a different page, Observer-only, with all three
+offices rolled up side by side and a multi-series trend chart comparing them.
+Manager sees one office; the owner sees the company.
+
+Export CSV and show the detailed period, **office**, project, category, kind,
+group, and signed-amount rows, followed by explicit per-office (`office_summary`)
+and grand summaries. The export is office-scoped like everything else: the
+manager's file contains Velký Meder only. The demo uses fictional numbers only.
+`HV 202510.xlsx` remains a specification source, not seed data; its `202510`
+filename versus `November 2025` sheet label is still an open client question.
+
+### 7. Equipment issuing and deduction review
 
 Sign in as Coordinator and open a fictional worker (e.g. **Olha**).
 
@@ -109,8 +201,9 @@ Sign in as Coordinator and open a fictional worker (e.g. **Olha**).
 - Attempt **Flag unreturned** on the issued item. Confirm the badge changes
   to the warning-colored **Pending review** badge, showing the charge
   amount at the item's issued stock value.
-- Switch to Manager and open **Equipment reviews**. Show the outstanding
-  total and the queued item, then either:
+- Switch to Manager and open **Equipment reviews**. The outstanding total is
+  this office's, like every other queue. Show it and the queued item, then
+  either:
   - **Approve charge** — back on the worker's page, the badge stays
     warning-colored ("Charge approved · amount"), signaling the recovery
     is recorded but not yet settled; or
@@ -123,15 +216,33 @@ whole point of this slice: issued (neutral), pending (warning, needs a
 decision), waived (success, resolved) are now distinguishable without
 reading the text.
 
+### 8. Blacklist: the deliberate exception to office scoping
+
+Worth showing explicitly, because it is the one place separation is *not*
+applied — and that is a design decision, not an oversight.
+
+Seeded **Ivan Zablokovaný** is blacklisted (approved), and **Diana Horvathova**
+has a proposed case awaiting the manager's decision. Show the manager's
+blacklist queue and decide Diana's case live.
+
+Talking point: a candidate blocked at one office must be caught at all three,
+so blacklist matching and visibility stay company-wide by design (ADR 0026).
+Everything else — people, projects, stock, accommodation, finance — is walled
+off per office; fraud protection deliberately is not.
+
 ## Supporting flow
 
 If time allows, show the existing trial-readiness-activation flow, compliance
-alerts, blacklist warning/manager decision, role switching, and optional SMS.
-Readiness now requires medical, gear, and the accommodation decision only;
-transport is not a pillar for Jober.
+alerts, role switching, and optional SMS. Compliance and notification queues are
+office-scoped like the rest. Readiness now requires medical, gear, and the
+accommodation decision only; transport is not a pillar for Jober.
 
 ## Deferred, do not present as delivered
 
+- Office principals and staff invitations (ADR 0026 §3a): office membership is
+  currently set by seed/admin, not self-service. Designed, not built.
+- Cross-office equipment transfer: each office's warehouse is independent by
+  decision; moving stock between them is a separate, later question.
 - Telegram channel bot access and administration.
 - DAC delivery-note PDF attachment.
 - Worker-office feedback conversations and replies.
@@ -146,7 +257,10 @@ behavior also remain gated by external access and the Art. 28 DPA review.
 
 - Fictional data only; the real-data gate remains closed.
 - Confirm whether the finance period is October 2025 or November 2025.
-- Confirm whether regions can grow and whether P&L opt-out is per project.
+- Confirm whether P&L opt-out is per project. (Office growth is no longer an
+  open product question: the three licensed offices are a vendor-side ceiling
+  per ADR 0026, so a fourth is a commercial request to SyncMetric, not a
+  feature.)
 - Confirm stock backdating, adjustments, valuation corrections, and month close.
 - Confirm accommodation proration/payment semantics.
 - Confirm whether the age warning ever blocks an action.
