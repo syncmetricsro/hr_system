@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.utils.translation import gettext as _
 
 from core.accounts.models import Role
-from core.accounts.permissions import Action, can
+from core.accounts.permissions import Action, can, user_office_scope
 from core.notifications.types import NotificationItem
 from core.ui.registry import flag_enabled
 from features.checklists.models import PersonChecklistItem
@@ -20,6 +20,9 @@ def checklist_notification_provider(request):
         item_template__critical=True,
         person__is_archived=False,
     ).select_related("person", "item_template")
+    scope = user_office_scope(request.user)
+    if scope is not None:
+        open_items = open_items.filter(person__office__in=scope)
     if request.user.role == Role.COORDINATOR:
         open_items = open_items.filter(
             person__assignments__status="active",
@@ -32,16 +35,21 @@ def checklist_notification_provider(request):
     for person_items in items_by_person.values():
         person = person_items[0].person
         state = "|".join(str(item.pk) for item in person_items)
-        notifications.append(NotificationItem(
-            key=f"checklist:{person.pk}",
-            version=hashlib.sha256(state.encode()).hexdigest(),
-            category="alert",
-            severity="danger",
-            title=str(_("Activation checklist is incomplete")),
-            detail=str(_("%(person)s · %(count)s critical items") % {
-                "person": person,
-                "count": len(person_items),
-            }),
-            url=reverse("person_detail", kwargs={"pk": person.pk}),
-        ))
+        notifications.append(
+            NotificationItem(
+                key=f"checklist:{person.pk}",
+                version=hashlib.sha256(state.encode()).hexdigest(),
+                category="alert",
+                severity="danger",
+                title=str(_("Activation checklist is incomplete")),
+                detail=str(
+                    _("%(person)s · %(count)s critical items")
+                    % {
+                        "person": person,
+                        "count": len(person_items),
+                    }
+                ),
+                url=reverse("person_detail", kwargs={"pk": person.pk}),
+            )
+        )
     return notifications

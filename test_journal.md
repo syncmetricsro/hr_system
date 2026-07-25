@@ -1,5 +1,31 @@
 # Test Journal
 
+## 2026-07-25 - Office-scoped RBAC Phase B, Slice 3: Compliance, Checklists, Notifications scoped
+
+- `tests/test_compliance_office_scoping.py` (6 tests): `compliance_alerts()`
+  scoped for Manager, unrestricted for Observer, and - the one that would
+  have caught the calling-convention bug - unrestricted when called with
+  no viewer at all (`compliance_alerts()`, matching several pre-existing
+  tests' calling convention); page-level scoping; CorvinumEU-lane (no
+  marker) unaffected-with-zero-offices case.
+- `tests/test_notifications_office_scoping.py` (7 tests): routine-update
+  feed hides a cross-office record and still shows a record with no
+  resolvable office at all; `_core_alerts`' trial-outcome and readiness
+  alerts scoped to the manager's office; a checklist-notification test
+  that self-skips when `checklists` isn't enabled for the client (Jober)
+  and was explicitly verified to run for real under `--ds=clients.
+  corvinum_eu.settings` (11 passed there, vs. 10 passed + 1 skipped under
+  default Jober settings - confirms the skip guard actually gates on the
+  feature flag, not just always skipping); CorvinumEU-lane core-alerts
+  case with zero `Office` rows.
+- Regression run: `tests/test_compliance.py`, `tests/test_notifications.py`,
+  `tests/test_checklists.py`, `tests/test_demo_scenario.py`,
+  `tests/test_pills.py` - all pass unchanged, including the several
+  `compliance_alerts()` no-viewer calls that would have broken without
+  the calling-convention fix.
+- Full verification: 593 Jober unit / 6 skipped, 391 CorvinumEU / 10
+  skipped / 144 deselected, 50 Playwright e2e, ruff check + format clean.
+
 ## 2026-07-25 - Office-scoped RBAC Phase B, Slice 2: People, Projects, Reports, Exports scoped + detail-view 403s
 
 - `tests/test_people_office_scoping.py` (9 tests): list hides/shows per
