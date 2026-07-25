@@ -4,8 +4,7 @@ from django import forms
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
-from core.accounts.permissions import user_office_scope
-from core.offices.models import Office
+from core.offices.forms import apply_office_scope
 from core.ui import registry
 from core.people.models import Person
 
@@ -60,14 +59,7 @@ class PersonForm(forms.ModelForm):
         self.fields["disability_type"].widget.attrs["x-bind:disabled"] = (
             "!hasDisability"
         )
-        # Office scoping (ADR 0026 Phase B): offer only the offices the acting
-        # user themself belongs to; unrestricted roles (Observer, superuser)
-        # or installs with no offices at all (CorvinumEU) see every office.
-        scope = user_office_scope(user)
-        offices = Office.objects.all() if scope is None else scope
-        self.fields["office"].queryset = offices
-        if scope is not None and not self.initial.get("office") and scope.count() == 1:
-            self.fields["office"].initial = scope.first()
+        apply_office_scope(self, user)
 
     def clean(self):
         cleaned_data = super().clean()

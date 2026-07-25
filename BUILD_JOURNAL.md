@@ -1,5 +1,65 @@
 # Build Journal
 
+## 2026-07-25 - Office-scoped RBAC Phase B, Slice 5: equipment stock split into per-office warehouses
+
+Slice 5 of 7, and the largest piece of Phase B: the equipment stock ledger
+was one pooled, company-wide FIFO inventory with no site dimension at all.
+Splitting it is a valuation/allocation change, not a query filter.
+
+- Schema (`features/logistics/migrations/0011`): nullable `office` FK on
+  `EquipmentStockReceipt` (the source of truth - stock is received into one
+  physical warehouse), plus denormalized copies on `EquipmentStockLot`,
+  `EquipmentStockAllocation`, and `EquipmentStockMovement`.
+  **The movement column is one addition beyond the design doc's literal
+  field list**, taken deliberately: `equipment_stock_balance` aggregates over
+  movements in a single `.values().annotate()`, and inbound rows reach their
+  office via `stock_lot` while outbound rows reach it via `allocations__lot`
+  - two different join paths that don't combine into one clean filter. A flat
+  column keeps that aggregate a single-table `office__in=`, matching
+  finance's shape.
+- `_consume_fifo` now takes `office=` and, when given, only considers that
+  office's lots. An office short on stock **raises** rather than reaching
+  into another warehouse (ADR decision point 6: independent ledgers, no
+  transfer flow), and the error names the office so the operator knows whose
+  stock is short. `receive_stock`/`adjust_stock` thread it through;
+  `issue_equipment` resolves it from `person.office` and refuses to issue
+  stock-tracked gear to a person with no office set.
+- `equipment_stock_balance`/`equipment_month_report` gained `offices=None`
+  (the established "unfiltered" convention). The stock page, the person
+  card's availability numbers, and the warehouse-value report tile all pass
+  the caller's scope - showing a company-wide availability figure next to an
+  issue button that would reject it would be worse than not showing one.
+- `return_equipment` restocks into the person's *current* office. No office
+  snapshot is kept on `EquipmentIssue` (matching the design doc's field
+  list), so a person who changed office mid-issue restocks into the new one
+  - accepted as low-probability rather than adding schema.
+- Refactor taken along the way: the office-picker scoping was about to be
+  copy-pasted into a third and fourth form, so it moved into
+  `core/offices/forms.py::apply_office_scope`, and `PersonForm`/
+  `AccommodationForm` were switched over to it (covered by their existing
+  slice-1 tests).
+- Demo seed now creates one opening receipt **per office** with different
+  quantities, so the split is visibly demonstrable rather than a column
+  nobody can see. Verified against real seeded data, not just green tests:
+  Velký Meder 38 units/€672, Győr 23/€406, Dunajská Streda 15/€266; the
+  VM-scoped demo manager's stock page shows exactly VM's 38 while the
+  Observer sees everything.
+- **Legacy office-less stock, observed and left alone deliberately**: a
+  database seeded before this slice keeps its old pooled receipt with
+  `office=None`. Those rows stay invisible to every scoped manager and
+  visible to the Observer - which is the documented `offices=None` ("no
+  filter", not "all offices") semantics working correctly, and exactly what
+  the finance Phase A tests already pin down. No backfill migration: only
+  fictional data exists (the real-data gate has not opened), so reseeding a
+  fresh database is the cheaper answer, and `EquipmentStockMovement`'s
+  deliberate per-instance immutability guards make retro-assignment
+  something a data migration would have to bypass rather than a natural fix.
+- Verified: 614 Jober unit tests / 7 skipped, 407 CorvinumEU / 10 skipped /
+  150 deselected, 50 Playwright e2e (a fresh image build reseeded both demo
+  clients with the new per-office receipts), `makemigrations --check` clean,
+  ruff check + format clean. Every pre-existing equipment/stock test passes
+  unmodified - the `office=None` default preserves the pooled path exactly.
+
 ## 2026-07-25 - Office-scoped RBAC Phase B, Slice 4: Logistics (accommodation + transport) scoped
 
 Slice 4 of 7. Accommodation and transport are the last two read surfaces

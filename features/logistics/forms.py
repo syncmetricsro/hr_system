@@ -9,6 +9,7 @@ from django.utils.translation import gettext_lazy as _
 
 from core.accounts.models import Role
 from core.accounts.permissions import user_office_scope
+from core.offices.forms import apply_office_scope
 from core.offices.models import Office
 from core.projects.models import Project
 from features.logistics.models import (
@@ -77,11 +78,7 @@ class AccommodationForm(forms.ModelForm):
         if self.instance.pk:
             del self.fields["capacity"]
             del self.fields["per_head_cost"]
-        scope = user_office_scope(user)
-        offices = Office.objects.all() if scope is None else scope
-        self.fields["office"].queryset = offices
-        if scope is not None and not self.initial.get("office") and scope.count() == 1:
-            self.fields["office"].initial = scope.first()
+        apply_office_scope(self, user)
 
     def clean(self):
         cleaned = super().clean()
@@ -170,9 +167,23 @@ class StockReceiptForm(forms.Form):
     received_on = forms.DateField(
         label=_("Received on"), widget=forms.DateInput(attrs={"type": "date"})
     )
+    office = forms.ModelChoiceField(
+        label=_("Receiving office"),
+        queryset=Office.objects.none(),
+        required=False,
+        help_text=_("The warehouse this stock is received into."),
+    )
     reference = forms.CharField(label=_("Reference"), max_length=120, required=False)
     supplier = forms.CharField(label=_("Supplier"), max_length=200, required=False)
     note = forms.CharField(label=_("Note"), max_length=300, required=False)
+
+    def __init__(self, *args, user=None, **kwargs):
+        super().__init__(*args, **kwargs)
+        apply_office_scope(self, user)
+        # Where offices are in use, stock must land in a specific warehouse -
+        # an unattributed lot would be invisible to every scoped view.
+        if Office.objects.exists():
+            self.fields["office"].required = True
 
 
 class StockReceiptLineForm(forms.Form):
@@ -213,6 +224,12 @@ class StockAdjustmentForm(forms.Form):
     item = forms.ModelChoiceField(
         label=_("Item"), queryset=EquipmentItem.objects.none()
     )
+    office = forms.ModelChoiceField(
+        label=_("Office"),
+        queryset=Office.objects.none(),
+        required=False,
+        help_text=_("The warehouse whose stock is being adjusted."),
+    )
     occurred_on = forms.DateField(
         label=_("Date"), widget=forms.DateInput(attrs={"type": "date"})
     )
@@ -225,9 +242,12 @@ class StockAdjustmentForm(forms.Form):
     )
     reason = forms.CharField(label=_("Reason"), max_length=300)
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, user=None, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["item"].queryset = EquipmentItem.objects.filter(is_active=True)
+        apply_office_scope(self, user)
+        if Office.objects.exists():
+            self.fields["office"].required = True
 
     def clean(self):
         cleaned = super().clean()

@@ -7,7 +7,7 @@ from uuid import uuid4
 from django.urls import reverse
 from django.utils.translation import gettext as _
 
-from core.accounts.permissions import Action
+from core.accounts.permissions import Action, user_office_scope
 from core.accounts.permissions import can as user_can
 from core.ui.registry import flag_enabled
 from features.logistics.forms import assignable_rooms
@@ -44,8 +44,16 @@ def equipment_panel(request, person):
         return None
     stock_enabled = stock_ledger_enabled()
     items = list(EquipmentItem.objects.filter(is_active=True))
+    # Availability is the person's *own* office's stock (ADR 0026 Phase B) -
+    # that is the only warehouse issue_equipment will draw from, so showing a
+    # company-wide number here would promise stock the issue would reject.
     available = (
-        {row["item_id"]: row["quantity"] for row in equipment_stock_balance()["rows"]}
+        {
+            row["item_id"]: row["quantity"]
+            for row in equipment_stock_balance(offices=user_office_scope(request.user))[
+                "rows"
+            ]
+        }
         if stock_enabled
         else {}
     )
@@ -101,7 +109,7 @@ def equipment_value_tile(request):
     if not flag_enabled("equipment"):
         return None
     if stock_ledger_enabled():
-        balance = equipment_stock_balance()
+        balance = equipment_stock_balance(offices=user_office_scope(request.user))
         tile = {"label": _("Warehouse stock"), "value": f"{balance['value']} EUR"}
         if user_can(request.user, Action.EQUIPMENT_VIEW_STOCK):
             tile["url"] = reverse("equipment_stock")

@@ -82,17 +82,49 @@ class Command(BaseCommand):
             )
             items.append(item)
 
-        receive_stock(
-            received_on=month_start - timedelta(days=4),
-            operation_key=uuid5(NAMESPACE_URL, "jober-demo-stock-opening-v1"),
-            reference="DEMO-DAC-001",
-            supplier="Fictional Safety Supply",
-            lines=[
-                {"item": items[0], "quantity": 10, "total_value": Decimal("410.00")},
-                {"item": items[1], "quantity": 20, "total_value": Decimal("150.00")},
-                {"item": items[2], "quantity": 8, "total_value": Decimal("112.00")},
-            ],
-            actor=coordinator,
-        )
+        # One opening receipt per office rather than a single pooled one, so
+        # the demo actually exercises per-office FIFO isolation (ADR 0026
+        # Phase B) instead of just carrying an office column nobody can see.
+        # Quantities differ per office deliberately: a VM-scoped manager and
+        # the Observer see visibly different warehouse totals.
+        # Note the cross-file dependency: seed_people.py assigns each demo
+        # person an office, and issue_equipment draws only from that person's
+        # office - every office holding a worker needs stock here.
+        offices = list(Office.objects.order_by("code")) or [None]
+        per_office_quantities = {
+            "VM": (10, 20, 8),
+            "GYR": (6, 12, 5),
+            "DS": (4, 8, 3),
+        }
+        for office in offices:
+            code = office.code if office else "POOLED"
+            boots, vests, helmets = per_office_quantities.get(code, (4, 8, 3))
+            receive_stock(
+                received_on=month_start - timedelta(days=4),
+                operation_key=uuid5(
+                    NAMESPACE_URL, f"jober-demo-stock-opening-v2-{code}"
+                ),
+                reference=f"DEMO-DAC-{code}",
+                supplier="Fictional Safety Supply",
+                lines=[
+                    {
+                        "item": items[0],
+                        "quantity": boots,
+                        "total_value": Decimal("41.00") * boots,
+                    },
+                    {
+                        "item": items[1],
+                        "quantity": vests,
+                        "total_value": Decimal("7.50") * vests,
+                    },
+                    {
+                        "item": items[2],
+                        "quantity": helmets,
+                        "total_value": Decimal("14.00") * helmets,
+                    },
+                ],
+                actor=coordinator,
+                office=office,
+            )
 
         self.stdout.write(self.style.SUCCESS("Logistics demo data seeded."))

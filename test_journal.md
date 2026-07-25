@@ -1,5 +1,48 @@
 # Test Journal
 
+## 2026-07-25 - Office-scoped RBAC Phase B, Slice 5: equipment stock split into per-office warehouses
+
+- `tests/test_equipment_stock_office_scoping.py` (10 tests). The two that
+  carry the most weight:
+  - `test_fifo_only_draws_from_the_persons_own_office` - VM holds 3 units,
+    Győr holds 5 that are *newer*; a VM worker's issue must exhaust VM's lot
+    and leave Győr's at 5. Under the old pooled FIFO this would have drawn
+    across offices, so it fails loudly if the office filter is ever dropped.
+  - `test_issue_rejects_when_own_office_is_short_despite_stock_elsewhere` -
+    the no-silent-fallback guarantee: VM worker asks for 5, VM has 3, Győr
+    has 5, and the call must **raise** rather than quietly consume Győr's
+    stock. Also asserts the error names the office and that Győr's lot is
+    untouched afterwards.
+  - Plus: rejects issuing to a person with no office; balance and month
+    report scoped to one office; `offices=None` unrestricted for Observer;
+    adjustment confined to the named office; return restocks into the
+    person's current office.
+- Two dedicated no-offices cases, unmarked so they run in **both** lanes:
+  `test_pooled_ledger_still_works_when_no_offices_exist` (receive → issue →
+  balance with zero `Office` rows behaves exactly as before this slice) and
+  `test_stock_ledger_is_disabled_for_corvinum`, which self-skips under Jober
+  and was explicitly confirmed to execute for real under
+  `--ds=clients.corvinum_eu.settings` (10 passed there vs. 9 passed + 1
+  skipped under Jober - proving the guard gates on the settings module
+  rather than always skipping).
+- Regression run of every equipment-adjacent suite -
+  `test_stock_ledger.py`, `test_inventory.py`, `test_equipment_review.py`,
+  `test_equipment_ledger_link.py`, `test_person_card.py`, `test_exits.py`,
+  `test_pills.py`, `test_demo_scenario.py` (57 tests) - all pass
+  **unmodified**, confirming the new `office=None` default preserves the
+  pooled behaviour rather than requiring test churn to accommodate it.
+- Verified against real seeded data, not only via tests: ran the migrations
+  and both seed commands against the dev database and queried the resulting
+  per-office balances (VM 38/€672, GYR 23/€406, DS 15/€266) and what each
+  demo account's stock page resolves to (VM-scoped manager 38, Observer
+  111). The 111-vs-76 gap traced to a pre-slice-5 `office=None` receipt
+  still in that long-lived dev DB - the documented "unfiltered includes
+  unassigned" semantics, confirmed by querying the receipts directly rather
+  than assumed.
+- Full verification: 614 Jober unit / 7 skipped, 407 CorvinumEU / 10
+  skipped / 150 deselected, 50 Playwright e2e, `makemigrations --check`
+  clean, ruff check + format clean.
+
 ## 2026-07-25 - Office-scoped RBAC Phase B, Slice 4: Logistics (accommodation + transport) scoped
 
 - `tests/test_logistics_office_scoping.py` (12 tests), deliberately split
