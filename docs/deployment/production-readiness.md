@@ -17,12 +17,24 @@ down staging/provider access first (item 1, the only one that is urgent while
 the repo is public), then implement protected persistent media (items 2 and
 3), then schedule backups (item 4).
 
-1. **Critical — public demo credentials can reach live Twilio.** The repo is
-   public and publishes the Jober staging URL/password in `CLAUDE.md`;
-   Jober staging currently has Twilio configured, and Recruiter/Coordinator/
-   Manager can send SMS through `features/messaging/views.py`. Disable
-   provider credentials on public staging, or put staging behind access
-   control, then rotate demo passwords.
+1. 🟡 **Partly fixed 2026-07-26 — public demo credentials could reach live
+   Twilio.** The repo is public and publishes `demo-jober-2026`; Jober
+   staging has Twilio configured and Recruiter/Coordinator/Manager can send
+   SMS through `features/messaging/views.py`.
+   **Done:** all four `@demo.jober.test` accounts on `jober-staging` were
+   rotated off the published value by the owner, verified by confirming the
+   old password no longer authenticates on any of them. `seed_demo` was also
+   changed so it no longer resets an existing account's password (it did on
+   every run, so any reseed would have quietly republished the known value);
+   `--reset-passwords` forces the old behaviour and the command reports when
+   it preserves one. `CLAUDE.md` now marks the published value local-only.
+   **Still open:** the Twilio decision itself. The credentials remain live on
+   a public-URL staging app. Note that *unsetting* them is not free — with
+   them absent, `send_sms` records the message as FAILED rather than raising,
+   so the send button would look broken on screen; the demo runbook instead
+   tells the presenter to avoid it. Also still open: the value stays
+   hardcoded in `seed_demo.py` and six e2e tests, so making it env-driven is
+   the durable fix.
 2. **Critical — uploaded media is not durable or served in production.**
    Neither Dokku app has a storage mount. Django only serves `/media/` under
    `DEBUG` (`config/urls.py`); production has no nginx alias yet. Avatars
