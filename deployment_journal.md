@@ -1,5 +1,40 @@
 # Deployment Journal
 
+## 2026-07-26 - Media serving, SMS allowlist and the office-guard fixes deployed
+
+- Deployed **`197cf23`** to `jober-staging` as `jober-platform:demo-197cf23`
+  (`sha256:f24620d0...`), covering PRs #115-#118: object-level office guards,
+  permission-checked media delivery, SMS safety, and media hygiene. Built
+  locally from pinned dependencies, streamed with `git:load-image`. One
+  migration applied: `messaging.0002_alter_outboundmessage_status` (the new
+  `BLOCKED` status).
+- Set **`SMS_ALLOWED_RECIPIENTS`** on `jober-staging` from the existing
+  `DEMO_SMS_PHONE`, then restarted (a `--no-restart` config change is not live
+  until the containers are replaced - worth remembering, because the app would
+  otherwise have looked unprotected while the variable was already set).
+  Verified in the running app: an arbitrary number is **blocked**, the
+  configured handset is **allowed**, and Twilio still reports configured.
+- **The durability question is now closed with evidence rather than
+  inference.** Uploaded an avatar and a certificate document, replaced the
+  containers with `ps:restart`, and re-fetched: the file was still on disk and
+  both fetches returned 200 (370 and 4 429 bytes). `/media/<name>` returned
+  **404** in the same session, confirming there is no bypass around the
+  permission-checked views.
+- Permission behaviour verified live: a Velky Meder manager gets **403** on a
+  Gyor person's avatar, and Observer gets **404** on the same URL - permitted,
+  but no file. That ordering matters: the permission check runs before the
+  existence check, so a cross-office request cannot be used to probe whether a
+  file exists.
+- One test premise of my own was wrong and is worth recording: Observer cannot
+  upload an avatar (403), because `person_avatar_upload` requires
+  `intake.create_edit`, which the read-only role does not hold. Correct
+  behaviour; the verification script was wrong, not the app.
+- Verification artifacts were removed afterwards, so the demo still shows the
+  seeded illustrated avatars rather than solid-colour placeholders. Office
+  scoping, the Slovak headings and all five HTTPS smoke checks re-confirmed
+  after the deploy.
+- Rollback target: `jober-platform:demo-a6ad9ad`.
+
 ## 2026-07-26 - Demo passwords rotated; seed guard deployed to jober-staging
 
 - The owner rotated all four `@demo.jober.test` accounts on `jober-staging`
