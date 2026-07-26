@@ -1,5 +1,28 @@
 # Build Journal
 
+## 2026-07-26 - Backups deferred to the CorvinumEU build (with a hard trigger)
+
+Owner decision: install scheduled backups once CorvinumEU accepts the offer,
+expected shortly after the Jober demo.
+
+- **The deferral is coherent, not drift.** The missing piece is an off-site
+  host on a *different* provider, and `corvinum-basic-production.md` already
+  plans one - a Contabo Storage VPS 10 in the EU, with its DPA part of that
+  build. Installing Jober's backups first would mean buying a second
+  destination.
+- **What it costs today is small and measurable:** both databases hold
+  fictional data only, so losing one costs a reseed - about ten minutes, done
+  twice already today.
+- **Recorded a trigger that is not only CorvinumEU.** Backups must exist
+  before *either* CorvinumEU acceptance **or** the real-data gate opening for
+  any client, whichever comes first. Tying the deadline solely to a commercial
+  event would leave a path where real worker data lands first and the
+  deferral quietly becomes negligence: at that point a lost database is lost
+  personal data and a GDPR availability failure, not an inconvenience.
+- Item 4 is marked deferred rather than downgraded, and the recommended-order
+  note now says plainly that it remains the largest *risk* while no longer
+  being the largest *actionable* item.
+
 ## 2026-07-26 - One backup script for every app, not just CorvinumEU
 
 Scheduled database backups (production-readiness item 4) are the largest
