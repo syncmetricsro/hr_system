@@ -5,7 +5,7 @@ Session onboarding for coding agents. **`AGENTS.md` is the binding authority**
 overrides it. Product truth lives in `Jober_Product_Design.md` (+ `Jober_Finance_Specs.md`,
 `Jober_Messaging_Specs.md`); decisions in `docs/adr/` and `docs/product/`.
 
-## State of the project (2026-07-05)
+## State of the project (2026-07-25)
 
 - **Phases 0–4 built and merged.** All modules live: people/lifecycle, projects/
   trials/readiness, logistics (rooms+rates, equipment+deduction review,
@@ -13,6 +13,13 @@ overrides it. Product truth lives in `Jober_Product_Design.md` (+ `Jober_Finance
   (line items, lock/reopen, rollups; **positive sign convention** — amounts never
   negative, net = revenue − cost), inactive reasons + recycling, and the
   **blacklist** (HMAC matching; execution gated on pending LIA/legal text).
+- **Office-scoped RBAC is live for Jober (ADR 0026, Phases A+B).** Three
+  offices (Velký Meder/Győr/Dunajská Streda); `Person.office`,
+  `Project.office`, `Accommodation.office`, `User.offices` M2M, and a
+  per-office equipment stock ledger. Every non-Observer role sees only its
+  own office(s); Observer spans all by role bypass. See the RBAC convention
+  below before adding any queryset. Only §3a of the ADR (office principals /
+  staff invitations) is unbuilt.
 - **Fictional data only** — the real-data gate has not opened. Never real PII.
 - **Stages B and C are COMPLETE (ADR 0021 executed 2026-07-09; ADR 0022
   executed 2026-07-11 — deployment pends server names).** The repo is `core/` +
@@ -26,8 +33,9 @@ overrides it. Product truth lives in `Jober_Product_Design.md` (+ `Jober_Finance
   compliance/intake reused, 2FA on for managers, seeds in
   `clients/corvinum_eu/demo` (`seed_corvinum_demo`); open client decisions in
   `docs/product/corvinum-open-questions.md`.
-- Test baseline: **276 unit + 22 e2e**. Suite counts are tracked in
-  `test_journal.md` — update it (and `BUILD_JOURNAL.md`) with every slice.
+- Test baseline: **~654 Jober unit + ~425 CorvinumEU + 50 e2e** (2026-07-25).
+  Suite counts are tracked in `test_journal.md` — update it (and
+  `BUILD_JOURNAL.md`) with every slice.
 
 ## How to run things (no Python on the host — everything in pinned containers)
 
@@ -44,6 +52,8 @@ scripts/dev_app.sh up|down|rebuild|status|logs     # seeds demo users + full sce
 # Twilio-enabled human session:
 doppler run --project hr_system --config dev -- scripts/dev_app.sh up
 # Logins: {manazer,naborar,koordinator,pozorovatel}@demo.jober.test / demo-jober-2026
+#   manazer/naborar/koordinator are scoped to Velký Meder; only pozorovatel
+#   (Observer) sees all three offices. A "missing" record is usually scoping.
 
 # Unit tests + lint (test image built from requirements/test.lock; needs a dev DB)
 scripts/dev_db.sh up          # digest-pinned Postgres on the internal jober-dev-net
@@ -102,6 +112,25 @@ scripts/compile_messages.sh --extract   # then compile with no args
   them in each client's `policies.py`, and mirror them in that client's matrix
   (`docs/permissions/{jober,corvinum}-permission-matrix.md`). Templates
   use `{% can 'action.name' %}`; hidden buttons must have server-side checks.
+- **Office scoping is a second, orthogonal boundary (ADR 0026) — every new
+  queryset must honour it.** Role says *what* you may do; office says *whose
+  data*. Concretely, for anything you add:
+  - Filter lists/aggregates through `user_office_scope(user)`
+    (`core/accounts/permissions.py`), treating its `None` as "unrestricted" —
+    **never** as "all offices"; an all-offices queryset still excludes rows
+    whose office is unset, which is a different thing.
+  - For `Person` querysets use `core/offices/scoping.py`'s `scope_people()` /
+    `may_see_person()` instead of a bare `office__in`: an office-less person
+    belongs to their owning recruiter, and that rule lives in one place.
+  - Guard any view taking an object pk with a 403 (`_assert_*_in_scope`
+    pattern, e.g. `core/people/views.py`) — filtering a list does not stop
+    someone typing another office's URL.
+  - Aggregates count too: a dashboard tile summing every office's rooms is
+    still a cross-office read (that exact bug shipped once).
+  - Blacklist is the one deliberate exception — matching and visibility stay
+    company-wide, so a person blocked at one office is caught at all three.
+  - CorvinumEU populates no `Office` rows, so all of this is a no-op there;
+    keep it that way (data difference, never client branching).
 - **Money:** `Decimal`, stored **positive** (validators enforce), totals always
   computed dynamically — never hardcode a sum.
 - **i18n:** English msgids in code/templates; SK/HU/UK catalogs under `locale/`.

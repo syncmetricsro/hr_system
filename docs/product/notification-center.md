@@ -15,9 +15,13 @@ an email or browser-push channel.
 - Items contain only a localized action, a safe subject summary, time, and an
   authorized internal link. Audit reasons, unrestricted metadata, financial
   amounts, document identifiers, and restricted blacklist reasons are excluded.
-- Managers receive permitted company-wide work, coordinators are scoped to
-  responsible projects/workers, and recruiters are scoped to people they own.
-  Observers do not receive the operational panel in v1.
+- Coordinators are scoped to responsible projects/workers and recruiters to
+  people they own. **Managers are no longer company-wide** — as of ADR 0026
+  every non-Observer role is additionally bounded by its own office(s), so a
+  manager's feed covers their office, not the company. A record with no
+  resolvable office follows the same rule the person views use: it belongs to
+  its owning recruiter (`core/offices/scoping.py`). Observers do not receive
+  the operational panel in v1.
 
 ## Refresh and delivery
 
@@ -37,5 +41,8 @@ Feature apps register role-aware alert providers through
 `core.notifications.registry.register_alert_provider`. A provider returns
 `NotificationItem` values with an opaque stable key and a version derived from
 the underlying state. Providers must apply their feature flag, RBAC action, and
-object scope before returning an item. The server recomputes this list before
-accepting a dismissal, so posted keys never grant visibility or access.
+object scope before returning an item — and "object scope" now includes
+**office scope**: filter through `user_office_scope` / `core/offices/scoping.py`
+the same way the owning feature's own views do, or the panel becomes a way to
+read another office's records by their titles. The server recomputes this list
+before accepting a dismissal, so posted keys never grant visibility or access.
