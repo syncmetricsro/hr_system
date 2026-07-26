@@ -1,5 +1,36 @@
 # Build Journal
 
+## 2026-07-26 - Uploaded media is served, and only to people entitled to it
+
+Uploads have been silently half-broken: the Dokku volumes *are* mounted and
+`MEDIA_ROOT` resolves to `/app/media`, so files persist - but `/media/` was
+routed only under `DEBUG` and no nginx alias exists, so every uploaded avatar
+rendered as a broken image and every "View document" link 404'd. The runbook's
+warning that uploads "vanish on redeploy" was wrong on the durability half.
+
+- **The planned fix was the dangerous one.** Both design docs specified an
+  nginx alias for `/media/`. That serves every certificate scan to anyone
+  holding the URL - a UUID filename is obscurity, not authorization - which is
+  what production-readiness item 3 flagged before it was built. Reversed both
+  docs rather than leaving a sketch that a future reader would implement.
+- Files now go through `core/media_views.py`, which re-runs the checks of the
+  page they appear on: the office boundary for person avatars, plain
+  authentication for staff headshots (colleagues appear in shared queues, and
+  a headshot is not office data), and the office boundary **plus**
+  `can_view_sensitive` for certificate documents.
+- **The certificate rule is deliberately tighter than the office boundary.**
+  Whether a certificate *exists* is an ordinary broad read; a scan of
+  someone's medical or licence document is not. It reuses the rule already
+  settled for DOB and identifiers, so an unconnected recruiter in the same
+  office sees the row and gets a 403 on the file.
+- **Removed the DEBUG-only `/media/` alias too.** It meant local development
+  served uploads with no permission check while production served none, so a
+  bypass was one settings flag away and would never show up locally. There is
+  now no `/media/` route in any environment, and a test asserts it.
+- A missing file 404s instead of 500ing. That is a real case, not defensive
+  padding: a database restored from a dump taken without the media volume
+  would otherwise crash every page embedding an avatar.
+
 ## 2026-07-26 - Object-level office guards for messaging, compliance, feedback, intake
 
 ADR 0026 Phase B scoped the *list* queries across the app but left several

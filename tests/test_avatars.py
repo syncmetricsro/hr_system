@@ -221,10 +221,17 @@ def test_default_avatar_file_is_actually_discoverable_by_staticfiles(role):
 
 
 def test_avatar_tag_renders_image_when_photo_present(make_user):
+    """The tag must point at the permission-checked view, never at the raw
+    storage URL. `/media/` has no route in any environment, so emitting
+    `avatar.url` would render a broken image *and* would be the thing that
+    tempts someone into adding an nginx alias to "fix" it."""
+    from django.urls import reverse
+
     user = make_user("manager", email="withphoto@demo.jober.test")
     user.avatar.save("avatar.webp", process_avatar_upload(_uploaded_jpeg()), save=True)
     from core.ui.templatetags.avatars import avatar
 
     html = avatar(user, size="sm")
     assert "<img" in html
-    assert user.avatar.url in html
+    assert reverse("user_avatar_file", args=[user.pk]) in html
+    assert user.avatar.url not in html

@@ -78,7 +78,7 @@
             <input type="hidden" name="next" value="{{ request.path }}">
             <label class="avatar-upload-label" data-tooltip="{% trans 'Change your avatar' %}">
               {% if user.avatar %}
-                <img class="sb-avatar" src="{{ user.avatar.url }}" alt="">
+                <img class="sb-avatar" src="{% url 'user_avatar_file' user.pk %}" alt="">
               {% else %}
                 <span class="sb-avatar" aria-hidden="true">{{ user.first_name|slice:":1" }}{{ user.last_name|slice:":1" }}</span>
               {% endif %}

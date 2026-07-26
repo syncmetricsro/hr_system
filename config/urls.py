@@ -6,6 +6,7 @@ from django.urls import path
 
 from core.accounts import views as account_views
 from core.audit import views as audit_views
+from core import media_views
 from core.people import views as people_views
 from core.projects import views as project_views
 from core.ui import exports as core_exports
@@ -20,12 +21,22 @@ def _feature_on(app: str, flag: str) -> bool:
     ).get(flag, True)
 
 
-# Routes that must not be language-prefixed.
+# Routes that must not be language-prefixed. Media in particular: an
+# <img src> should not change with the active language, or every avatar is
+# re-fetched on a language switch and cached per locale for no reason.
 urlpatterns = [
     path("healthz/", views.healthz, name="healthz"),
     path("i18n/setlang/", views.set_language, name="set_language"),
     path("export/people.csv", core_exports.people_csv, name="export_people"),
     path("export/projects.csv", core_exports.projects_csv, name="export_projects"),
+    path(
+        "media/people/<int:pk>/avatar",
+        media_views.person_avatar,
+        name="person_avatar_file",
+    ),
+    path(
+        "media/users/<int:pk>/avatar", media_views.user_avatar, name="user_avatar_file"
+    ),
 ]
 
 # Language-prefixed core routes (LocaleMiddleware sets the active language).
@@ -36,8 +47,16 @@ app_routes = [
     path("help/", views.help_index, name="help_index"),
     path("help/<slug:slug>/", views.help_article, name="help_article"),
     path("audit/", audit_views.audit_log, name="audit_log"),
-    path("notifications/", notification_views.notification_panel, name="notification_panel"),
-    path("notifications/dismiss/", notification_views.notification_dismiss, name="notification_dismiss"),
+    path(
+        "notifications/",
+        notification_views.notification_panel,
+        name="notification_panel",
+    ),
+    path(
+        "notifications/dismiss/",
+        notification_views.notification_dismiss,
+        name="notification_dismiss",
+    ),
     path("prihlasenie/", account_views.login_page, name="login"),
     path("odhlasenie/", account_views.logout_view, name="logout"),
     path("2fa/verify/", account_views.two_factor_verify, name="two_factor_verify"),
@@ -46,13 +65,33 @@ app_routes = [
     path("account/avatar/remove/", account_views.avatar_remove, name="avatar_remove"),
     path("people/", people_views.people_list, name="people_list"),
     path("people/new/", people_views.person_create, name="person_create"),
-    path("people/age-warning/", people_views.person_age_warning, name="person_age_warning"),
+    path(
+        "people/age-warning/",
+        people_views.person_age_warning,
+        name="person_age_warning",
+    ),
     path("people/<int:pk>/", people_views.person_detail, name="person_detail"),
     path("people/<int:pk>/edit/", people_views.person_edit, name="person_edit"),
-    path("people/<int:pk>/avatar/", people_views.person_avatar_upload, name="person_avatar_upload"),
-    path("people/<int:pk>/avatar/remove/", people_views.person_avatar_remove, name="person_avatar_remove"),
-    path("people/<int:person_pk>/archive/", people_views.archive_person, name="archive_person"),
-    path("people/<int:person_pk>/recycle/", people_views.recycle_person, name="recycle_person"),
+    path(
+        "people/<int:pk>/avatar/",
+        people_views.person_avatar_upload,
+        name="person_avatar_upload",
+    ),
+    path(
+        "people/<int:pk>/avatar/remove/",
+        people_views.person_avatar_remove,
+        name="person_avatar_remove",
+    ),
+    path(
+        "people/<int:person_pk>/archive/",
+        people_views.archive_person,
+        name="archive_person",
+    ),
+    path(
+        "people/<int:person_pk>/recycle/",
+        people_views.recycle_person,
+        name="recycle_person",
+    ),
     path("projects/", project_views.project_list, name="project_list"),
     path("projects/<int:pk>/", project_views.project_detail, name="project_detail"),
 ]
@@ -63,15 +102,33 @@ if getattr(settings, "FEATURE_FLAGS", {}).get("recruitment_trials", True):
     app_routes += [
         path("trials/", project_views.trials_queue, name="trials_queue"),
         path("trials/create/", project_views.trial_create, name="trial_create"),
-        path("trials/<int:trial_pk>/edit/", project_views.trial_edit, name="trial_edit"),
-        path("trials/<int:trial_pk>/outcome/", project_views.trial_outcome, name="trial_outcome"),
-        path("people/<int:person_pk>/assign-trial/", project_views.assign_trial, name="assign_trial"),
-        path("people/<int:person_pk>/readiness/", project_views.readiness_update, name="readiness_update"),
+        path(
+            "trials/<int:trial_pk>/edit/", project_views.trial_edit, name="trial_edit"
+        ),
+        path(
+            "trials/<int:trial_pk>/outcome/",
+            project_views.trial_outcome,
+            name="trial_outcome",
+        ),
+        path(
+            "people/<int:person_pk>/assign-trial/",
+            project_views.assign_trial,
+            name="assign_trial",
+        ),
+        path(
+            "people/<int:person_pk>/readiness/",
+            project_views.readiness_update,
+            name="readiness_update",
+        ),
     ]
 
 # Activation/exit are core assignment workflow.
 app_routes += [
-    path("people/<int:person_pk>/activate/", project_views.activate_person, name="activate_person"),
+    path(
+        "people/<int:person_pk>/activate/",
+        project_views.activate_person,
+        name="activate_person",
+    ),
     path("people/<int:person_pk>/exit/", project_views.exit_view, name="exit_person"),
 ]
 
@@ -79,43 +136,129 @@ if _feature_on("logistics", "accommodation"):
     from features.logistics import views as logistics_views
 
     app_routes += [
-        path("accommodation/", logistics_views.accommodation_list, name="accommodation_list"),
-        path("accommodation/new/", logistics_views.accommodation_create, name="accommodation_create"),
-        path("accommodation/costs/", logistics_views.accommodation_costs, name="accommodation_costs"),
-        path("accommodation/<int:pk>/", logistics_views.accommodation_detail, name="accommodation_detail"),
-        path("accommodation/<int:pk>/edit/", logistics_views.accommodation_edit, name="accommodation_edit"),
-        path("accommodation/<int:accommodation_pk>/cost-period/", logistics_views.accommodation_cost_period, name="accommodation_cost_period"),
-        path("accommodation/<int:accommodation_pk>/rooms/new/", logistics_views.room_create, name="room_create"),
+        path(
+            "accommodation/",
+            logistics_views.accommodation_list,
+            name="accommodation_list",
+        ),
+        path(
+            "accommodation/new/",
+            logistics_views.accommodation_create,
+            name="accommodation_create",
+        ),
+        path(
+            "accommodation/costs/",
+            logistics_views.accommodation_costs,
+            name="accommodation_costs",
+        ),
+        path(
+            "accommodation/<int:pk>/",
+            logistics_views.accommodation_detail,
+            name="accommodation_detail",
+        ),
+        path(
+            "accommodation/<int:pk>/edit/",
+            logistics_views.accommodation_edit,
+            name="accommodation_edit",
+        ),
+        path(
+            "accommodation/<int:accommodation_pk>/cost-period/",
+            logistics_views.accommodation_cost_period,
+            name="accommodation_cost_period",
+        ),
+        path(
+            "accommodation/<int:accommodation_pk>/rooms/new/",
+            logistics_views.room_create,
+            name="room_create",
+        ),
         path("rooms/<int:pk>/edit/", logistics_views.room_edit, name="room_edit"),
-        path("rooms/<int:pk>/rate/", logistics_views.set_room_rate_view, name="set_room_rate"),
-        path("room-assignments/<int:pk>/rate/", logistics_views.set_assignment_rate_view, name="set_assignment_rate"),
-        path("room-assignments/<int:pk>/payment/", logistics_views.set_assignment_payment_view, name="set_assignment_payment"),
-        path("people/<int:person_pk>/assign-room/", logistics_views.assign_room_view, name="assign_room"),
-        path("people/<int:person_pk>/release-room/", logistics_views.release_room_view, name="release_room"),
+        path(
+            "rooms/<int:pk>/rate/",
+            logistics_views.set_room_rate_view,
+            name="set_room_rate",
+        ),
+        path(
+            "room-assignments/<int:pk>/rate/",
+            logistics_views.set_assignment_rate_view,
+            name="set_assignment_rate",
+        ),
+        path(
+            "room-assignments/<int:pk>/payment/",
+            logistics_views.set_assignment_payment_view,
+            name="set_assignment_payment",
+        ),
+        path(
+            "people/<int:person_pk>/assign-room/",
+            logistics_views.assign_room_view,
+            name="assign_room",
+        ),
+        path(
+            "people/<int:person_pk>/release-room/",
+            logistics_views.release_room_view,
+            name="release_room",
+        ),
     ]
 
 if _feature_on("logistics", "equipment"):
     from features.logistics import views as logistics_views
 
     app_routes += [
-        path("equipment/catalog/", logistics_views.equipment_catalog, name="equipment_catalog"),
-        path("equipment/catalog/new/", logistics_views.equipment_create, name="equipment_create"),
-        path("equipment/catalog/<int:pk>/edit/", logistics_views.equipment_edit, name="equipment_edit"),
-        path("people/<int:person_pk>/issue-equipment/", logistics_views.issue_equipment_view, name="issue_equipment"),
-        path("equipment/<int:issue_pk>/return/", logistics_views.return_equipment_view, name="return_equipment"),
-        path("equipment/<int:issue_pk>/flag/", logistics_views.flag_unreturned_view, name="flag_unreturned"),
-        path("equipment/reviews/", logistics_views.equipment_reviews, name="equipment_reviews"),
-        path("equipment/<int:issue_pk>/review/", logistics_views.review_deduction_view, name="review_deduction"),
+        path(
+            "equipment/catalog/",
+            logistics_views.equipment_catalog,
+            name="equipment_catalog",
+        ),
+        path(
+            "equipment/catalog/new/",
+            logistics_views.equipment_create,
+            name="equipment_create",
+        ),
+        path(
+            "equipment/catalog/<int:pk>/edit/",
+            logistics_views.equipment_edit,
+            name="equipment_edit",
+        ),
+        path(
+            "people/<int:person_pk>/issue-equipment/",
+            logistics_views.issue_equipment_view,
+            name="issue_equipment",
+        ),
+        path(
+            "equipment/<int:issue_pk>/return/",
+            logistics_views.return_equipment_view,
+            name="return_equipment",
+        ),
+        path(
+            "equipment/<int:issue_pk>/flag/",
+            logistics_views.flag_unreturned_view,
+            name="flag_unreturned",
+        ),
+        path(
+            "equipment/reviews/",
+            logistics_views.equipment_reviews,
+            name="equipment_reviews",
+        ),
+        path(
+            "equipment/<int:issue_pk>/review/",
+            logistics_views.review_deduction_view,
+            name="review_deduction",
+        ),
     ]
     if getattr(settings, "EQUIPMENT_STOCK_LEDGER_ENABLED", False):
         app_routes += [
-            path("equipment/stock/", logistics_views.equipment_stock, name="equipment_stock"),
             path(
-                "equipment/stock/receive/", logistics_views.equipment_stock_receive,
+                "equipment/stock/",
+                logistics_views.equipment_stock,
+                name="equipment_stock",
+            ),
+            path(
+                "equipment/stock/receive/",
+                logistics_views.equipment_stock_receive,
                 name="equipment_stock_receive",
             ),
             path(
-                "equipment/stock/adjust/", logistics_views.equipment_stock_adjust,
+                "equipment/stock/adjust/",
+                logistics_views.equipment_stock_adjust,
                 name="equipment_stock_adjust",
             ),
         ]
@@ -124,10 +267,22 @@ if _feature_on("logistics", "transport"):
     from features.logistics import views as logistics_views
 
     app_routes += [
-        path("projects/<int:project_pk>/transport/", logistics_views.record_transport_view, name="record_transport"),
+        path(
+            "projects/<int:project_pk>/transport/",
+            logistics_views.record_transport_view,
+            name="record_transport",
+        ),
         path("transport/", logistics_views.transport_trends, name="transport_trends"),
-        path("transport/create/", logistics_views.transport_create, name="transport_create"),
-        path("transport/<int:pk>/edit/", logistics_views.transport_edit, name="transport_edit"),
+        path(
+            "transport/create/",
+            logistics_views.transport_create,
+            name="transport_create",
+        ),
+        path(
+            "transport/<int:pk>/edit/",
+            logistics_views.transport_edit,
+            name="transport_edit",
+        ),
     ]
 
 if _feature_on("finance", "profitability"):
@@ -140,11 +295,29 @@ if _feature_on("finance", "profitability"):
     app_routes += [
         path("finance/", finance_views.finance_summary, name="finance_summary"),
         path("finance/record/", finance_views.record_month, name="finance_record"),
-        path("finance/year/<int:year>/", finance_views.finance_year, name="finance_year"),
-        path("finance/month/<int:pk>/", finance_views.finance_month_detail, name="finance_month_detail"),
-        path("finance/month/<int:pk>/save/", finance_views.finance_month_save, name="finance_month_save"),
-        path("finance/month/<int:pk>/lock/", finance_views.finance_month_lock, name="finance_month_lock"),
-        path("finance/month/<int:pk>/reopen/", finance_views.finance_month_reopen, name="finance_month_reopen"),
+        path(
+            "finance/year/<int:year>/", finance_views.finance_year, name="finance_year"
+        ),
+        path(
+            "finance/month/<int:pk>/",
+            finance_views.finance_month_detail,
+            name="finance_month_detail",
+        ),
+        path(
+            "finance/month/<int:pk>/save/",
+            finance_views.finance_month_save,
+            name="finance_month_save",
+        ),
+        path(
+            "finance/month/<int:pk>/lock/",
+            finance_views.finance_month_lock,
+            name="finance_month_lock",
+        ),
+        path(
+            "finance/month/<int:pk>/reopen/",
+            finance_views.finance_month_reopen,
+            name="finance_month_reopen",
+        ),
     ]
 
 if _feature_on("intake", "intake"):
@@ -159,10 +332,18 @@ if _feature_on("messaging", "worker_messaging"):
     from features.messaging import views as messaging_views
 
     urlpatterns += [
-        path("webhooks/twilio/inbound/", messaging_views.twilio_inbound, name="twilio_inbound"),
+        path(
+            "webhooks/twilio/inbound/",
+            messaging_views.twilio_inbound,
+            name="twilio_inbound",
+        ),
     ]
     app_routes += [
-        path("people/<int:person_pk>/sms/", messaging_views.send_sms_view, name="send_sms"),
+        path(
+            "people/<int:person_pk>/sms/",
+            messaging_views.send_sms_view,
+            name="send_sms",
+        ),
     ]
 
 if _feature_on("compliance", "documents"):
@@ -175,8 +356,24 @@ if _feature_on("compliance", "documents"):
             compliance_views.certificate_create,
             name="certificate_create",
         ),
-        path("certificates/<int:pk>/edit/", compliance_views.certificate_edit, name="certificate_edit"),
-        path("certificates/<int:pk>/delete/", compliance_views.certificate_delete, name="certificate_delete"),
+        path(
+            "certificates/<int:pk>/edit/",
+            compliance_views.certificate_edit,
+            name="certificate_edit",
+        ),
+        path(
+            "certificates/<int:pk>/delete/",
+            compliance_views.certificate_delete,
+            name="certificate_delete",
+        ),
+    ]
+    # Not language-prefixed: the document is the same bytes in every locale.
+    urlpatterns += [
+        path(
+            "media/certificates/<int:pk>/document",
+            media_views.certificate_document,
+            name="certificate_document",
+        ),
     ]
 
 if _feature_on("blacklist", "duplicate_blacklist"):
@@ -184,30 +381,62 @@ if _feature_on("blacklist", "duplicate_blacklist"):
 
     app_routes += [
         path("blacklist/", blacklist_views.blacklist_queue, name="blacklist_queue"),
-        path("people/<int:person_pk>/blacklist/propose/", blacklist_views.blacklist_propose, name="blacklist_propose"),
-        path("blacklist/<int:pk>/decide/", blacklist_views.blacklist_decide, name="blacklist_decide"),
-        path("blacklist/<int:pk>/remove/", blacklist_views.blacklist_remove, name="blacklist_remove"),
+        path(
+            "people/<int:person_pk>/blacklist/propose/",
+            blacklist_views.blacklist_propose,
+            name="blacklist_propose",
+        ),
+        path(
+            "blacklist/<int:pk>/decide/",
+            blacklist_views.blacklist_decide,
+            name="blacklist_decide",
+        ),
+        path(
+            "blacklist/<int:pk>/remove/",
+            blacklist_views.blacklist_remove,
+            name="blacklist_remove",
+        ),
     ]
 
 if _feature_on("checklists", "checklists"):
     from features.checklists import views as checklist_views
 
     app_routes += [
-        path("checklist/<int:item_pk>/toggle/", checklist_views.toggle_item_view, name="checklist_item_toggle"),
+        path(
+            "checklist/<int:item_pk>/toggle/",
+            checklist_views.toggle_item_view,
+            name="checklist_item_toggle",
+        ),
     ]
 
 if _feature_on("advances", "advances"):
     from features.advances import views as advances_views
 
     urlpatterns += [
-        path("export/ledger/thursday.csv", advances_views.thursday_csv, name="ledger_thursday_csv"),
-        path("export/ledger/cycle/<int:year>/<int:month>.csv", advances_views.cycle_csv, name="ledger_cycle_csv"),
+        path(
+            "export/ledger/thursday.csv",
+            advances_views.thursday_csv,
+            name="ledger_thursday_csv",
+        ),
+        path(
+            "export/ledger/cycle/<int:year>/<int:month>.csv",
+            advances_views.cycle_csv,
+            name="ledger_cycle_csv",
+        ),
     ]
     app_routes += [
         path("ledger/", advances_views.ledger_overview, name="ledger_overview"),
         path("ledger/record/", advances_views.ledger_record, name="ledger_record"),
-        path("ledger/entry/<int:pk>/action/", advances_views.ledger_entry_action, name="ledger_entry_action"),
-        path("ledger/cycle/action/", advances_views.ledger_cycle_action, name="ledger_cycle_action"),
+        path(
+            "ledger/entry/<int:pk>/action/",
+            advances_views.ledger_entry_action,
+            name="ledger_entry_action",
+        ),
+        path(
+            "ledger/cycle/action/",
+            advances_views.ledger_cycle_action,
+            name="ledger_cycle_action",
+        ),
     ]
 
 if _feature_on("payslips", "payslips"):
@@ -215,7 +444,9 @@ if _feature_on("payslips", "payslips"):
 
     app_routes += [
         path("payslips/", payslip_views.payslip_list, name="payslip_list"),
-        path("payslips/<int:pk>/send/", payslip_views.payslip_send, name="payslip_send"),
+        path(
+            "payslips/<int:pk>/send/", payslip_views.payslip_send, name="payslip_send"
+        ),
     ]
 
 if _feature_on("wage_ledger", "wage_ledger"):
@@ -230,20 +461,34 @@ if _feature_on("feedback", "feedback"):
     from features.feedback import views as feedback_views
 
     urlpatterns += [
-        path("feedback/<slug:token>/", feedback_views.feedback_form, name="feedback_form"),
+        path(
+            "feedback/<slug:token>/", feedback_views.feedback_form, name="feedback_form"
+        ),
     ]
     app_routes += [
         path("feedback/", feedback_views.feedback_inbox, name="feedback_inbox"),
-        path("feedback/links/new/", feedback_views.feedback_link_create, name="feedback_link_create"),
-        path("feedback/links/<int:pk>/pdf/", feedback_views.feedback_link_pdf, name="feedback_link_pdf"),
+        path(
+            "feedback/links/new/",
+            feedback_views.feedback_link_create,
+            name="feedback_link_create",
+        ),
+        path(
+            "feedback/links/<int:pk>/pdf/",
+            feedback_views.feedback_link_pdf,
+            name="feedback_link_pdf",
+        ),
     ]
 
 urlpatterns += i18n_patterns(*app_routes)
 
-if settings.DEBUG:
-    # Local/dev only - production serves /media/ via an nginx alias straight
-    # to the Dokku-mounted volume, never through this Django process
-    # (docs/product/avatar-design.md).
-    from django.conf.urls.static import static
-
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# There is deliberately no /media/ route, in any environment.
+#
+# It used to exist under DEBUG, which meant local development served uploads
+# with no permission check at all while production served none - so a bypass
+# was only ever a settings flag away, and nobody would notice locally. Every
+# uploaded file is now reached through core/media_views.py, which re-runs the
+# office boundary and, for certificate scans, can_view_sensitive.
+#
+# Do not add an nginx alias for MEDIA_ROOT either: a UUID filename is
+# obscurity, not authorization (production-readiness item 3). If per-request
+# cost ever matters, use X-Accel-Redirect so Django still authorizes.

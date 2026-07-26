@@ -98,8 +98,9 @@ the render will be accepted as-is.
 ## 2. Storage & serving
 
 **Decision: Django `ImageField` → local filesystem → a Dokku persistent
-volume**, served by nginx directly (bypassing Gunicorn) — not an object
-store, and not the database.
+volume**, served by a permission-checked Django view — not an object store,
+not the database, and (as of 2026-07-26) **not** a direct nginx alias; see
+the serving bullet below for why that was reversed.
 
 - New settings: `MEDIA_ROOT` / `MEDIA_URL = "/media/"` in
   `config/settings/base.py`. Neither exists today — `STORAGES["default"]`
@@ -115,13 +116,24 @@ store, and not the database.
   explicit deployment step, and the mounted directory needs to ride along
   in whichever off-site backup target answers open question D6 (currently
   scoped to DB backups only).
-- Serving: a per-app `nginx.conf.d` snippet aliasing `/media/` straight to
-  the host-mounted directory, so reads never hit the Django process.
-  **WhiteNoise is not viable for this** — per ADR 0016 it snapshots its
-  static directory into an immutable manifest at process start, so avatars
-  uploaded after boot wouldn't be found without an app restart. In
-  local/dev, Django's own `django.views.static.serve` handles `/media/`
-  under `DEBUG` — the standard Django convention, no new pattern needed.
+- ~~Serving: a per-app `nginx.conf.d` snippet aliasing `/media/` straight to
+  the host-mounted directory, so reads never hit the Django process.~~
+  **Superseded 2026-07-26 — do not do this.** A bare alias serves every file
+  to anyone holding its URL, and a UUID filename is obscurity, not
+  authorization. It would have exposed certificate *scans*, which is why
+  production-readiness item 3 flagged it before it was built.
+  **What shipped instead:** `/media/` has no route in any environment, and
+  each file is delivered by a view in `core/media_views.py` that re-runs the
+  page's own checks — the office boundary for avatars, and the office
+  boundary plus `can_view_sensitive` for certificate documents. The DEBUG-only
+  `django.views.static.serve` alias was removed too: it meant local
+  development bypassed every check while production served nothing, so a
+  bypass was one settings flag away and invisible locally.
+  If per-request cost ever matters, the upgrade path is `X-Accel-Redirect`
+  via a Dokku `nginx-includes` file — nginx sends the bytes, Django still
+  authorizes. **WhiteNoise remains not viable** either way: per ADR 0016 it
+  snapshots its static directory into an immutable manifest at process start,
+  so files uploaded after boot would not be found without a restart.
 - New dependency: **Pillow**, to validate uploads are genuine images, strip
   EXIF, center-crop, resize, and re-encode. This needs the AGENTS.md §3.1
   approval-gate treatment before it's added — modeled on ADR 0016's
@@ -228,7 +240,7 @@ fixed circular container (`.avatar avatar--sm/md/lg` CSS classes).
 
 - ~~Finalize and approve the Pillow ADR~~ — done, `docs/adr/0027-pillow-
   avatar-images.md`, Accepted 2026-07-24.
-- Add the Dokku storage-mount step and nginx `/media/` alias to
+- Add the Dokku storage-mount step (**not** an nginx `/media/` alias — see §2) to
   `docs/deployment/deployment-plan.md` (and the per-client staging docs)
   before first production deploy with avatars enabled — `MEDIA_ROOT` is
   already env-overridable in both `config/settings/production.py` and
