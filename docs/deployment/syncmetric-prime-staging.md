@@ -368,6 +368,41 @@ A backup nobody has restored is a hypothesis. Run
 the result in `deployment_journal.md`. Until that has happened, item 4 stays
 open even with a schedule running.
 
+## Rotating the PostgreSQL password
+
+Run **on the host** (`syncmetric-prime`), as a user with sudo. Executed once on
+2026-07-26; the notes below are what that attempt taught.
+
+```bash
+SVC=pg-jober-staging
+PWFILE=/var/lib/dokku/services/postgres/$SVC/PASSWORD
+sudo cp "$PWFILE" "/root/${SVC}-PASSWORD.bak"
+NEW=$(openssl rand -hex 16)
+
+sudo docker exec dokku.postgres.$SVC \
+  psql -U postgres -c "ALTER USER postgres WITH PASSWORD '$NEW';"   # expect: ALTER ROLE
+printf %s "$NEW" | sudo tee "$PWFILE" >/dev/null
+sudo dokku config:set jober-staging DB_PASSWORD="$NEW"              # <- the step that matters
+```
+
+**Do not use `postgres:unlink` + `postgres:link` for this.** This app does not
+read `DATABASE_URL` at all — `config/settings/base.py` builds the connection
+from `DB_HOST`/`DB_NAME`/`DB_USER`/`DB_PASSWORD`/`DB_PORT`. Relinking therefore
+fixes nothing, and if the plugin thinks the app is already unlinked it creates
+a *second* link under a colour alias (`DOKKU_POSTGRES_AQUA_URL`) while leaving
+a stale `DATABASE_URL` behind. That is what caused the 2026-07-26 outage.
+
+Two things to check afterwards, because a failed rotation can look successful:
+
+- `sudo dokku run jober-staging python -c "…connection.ensure_connection()…"`
+  must print `DB OK`.
+- If any command printed a DSN, confirm its password **changed**. An identical
+  password after a "successful" run means `ALTER USER` or the file write failed
+  silently — both need root, and both fail quietly without it.
+
+Recovery: restore `/root/<service>-PASSWORD.bak` over `$PWFILE`, re-run
+`ALTER USER` with that value, and `config:set DB_PASSWORD` to match.
+
 ## Rollback
 
 ```bash
