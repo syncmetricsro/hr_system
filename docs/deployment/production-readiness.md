@@ -105,7 +105,34 @@ the repo is public), then implement protected persistent media (items 2 and
     transport Help articles even though CorvinumEU has none of those
     features enabled. Already acknowledged as a known follow-up in
     `help-area-design.md`.
-11. **Decision needed — old `agent/corvinum-wage-ledger` branch.** Confirmed
+11. **High — no in-app user or credential management at all.** Confirmed
+    2026-07-26 while rotating the staging demo password: that required a
+    shell command against the Dokku host, because **no route in the
+    product can change any password.** `core/accounts/` has no `urls.py`
+    or `forms.py`; the only account routes are login, logout, the two 2FA
+    views and avatar upload/remove. `Action.USER_MANAGE` is granted to
+    Manager in both clients' `policies.py` but has no view behind it.
+    There is no self-service password change, no administrator-initiated
+    reset, no deactivation path (`User.is_active` exists and Django
+    honours it, but nothing sets it), and no way to clear a lost 2FA
+    enrolment — which matters because CorvinumEU turns 2FA on for
+    managers. Django admin is not a fallback for a client: it needs a
+    superuser, and no Jober role is one. Designed but unbuilt in
+    `docs/product/jober-multi-office-scoping.md` §3a (invitation) and
+    §3b (credential lifecycle); the authority model is office-scoped like
+    everything else — Observer over every office, a manager over their
+    own. **This is the largest functional gap in the product** and blocks
+    real users more directly than it blocks the demo, which uses seeded
+    accounts throughout.
+12. **Medium — no superuser exists on `jober-staging`.** The 2026-07-26
+    database reset removed it and nothing restores it: the `Procfile`
+    declares only a `web:` process, there is no `app.json`, and
+    `DJANGO_SUPERUSER_EMAIL`/`_PASSWORD` are not in the app's config. The
+    "Initial admin user" row below claimed `ensure_superuser` is "wired
+    into the Dokku release steps" — it is not, and never was; it has only
+    ever been run by hand. Nothing in the demo depends on it, but `/admin/`
+    is unreachable until someone runs the command again.
+13. **Decision needed — old `agent/corvinum-wage-ledger` branch.** Confirmed
     still present (local + remote), 5 commits ahead of `main`, containing a
     unique `AdvanceRecovery` model and derived-net behavior not on `main`.
     Do not merge it wholesale — it may conflict with the agreed recorded-
@@ -117,7 +144,7 @@ Status at the time of this review: `main` clean at `948aff0`; both staging
 apps running the latest deploy and passing fresh HTTPS smoke checks (528
 Jober unit tests, 326 CorvinumEU tests, 50 Playwright tests; ruff, vendor
 hashes, no-Node check, Django checks, and migration consistency all green).
-None of that verifies the 11 items above — they're gaps the standard test/
+None of that verifies the 13 items above — they're gaps the standard test/
 smoke suite doesn't cover.
 
 ## Serving & runtime
@@ -128,7 +155,7 @@ smoke suite doesn't cover.
 | HTTPS + secure cookies on real host | ✅ Ready (verified live 2026-07-26) | `SECURE_SSL_REDIRECT`/`SESSION_COOKIE_SECURE`/`CSRF_COOKIE_SECURE` default secure; **must not** set the `DJANGO_*_=0` overrides on staging/prod (those exist only for the HTTP smoke network). Confirmed against `https://jober-staging.…sslip.io`: HTTP redirects to HTTPS, `Strict-Transport-Security: max-age=31536000; includeSubDomains; preload`, `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, and the CSRF cookie carries `Secure; HttpOnly; SameSite=Lax`. Minor cleanup left: nginx emits a *second*, shorter HSTS header (`max-age=15724800`) alongside Django's — harmless but duplicated. Production settings also set `SECURE_PROXY_SSL_HEADER`, so anything speaking to the app directly must send `X-Forwarded-Proto`. |
 | Dokku staging deploy | ✅ Ready (2026-07-26) | No longer blocked — the names exist and both apps are live: `jober-staging` and `corvinum-staging` on host `syncmetric-prime-dokku`, backed by `pg-jober-staging` / `pg-corvinum-staging`. Images are built locally from pinned deps and streamed with `git:load-image`, so the VPS never builds source or sees build-time secrets. Runbook: `docs/deployment/syncmetric-prime-staging.md`; per-deploy record in `deployment_journal.md`. **Production** deployment remains open (C-Q14, real server names). |
 | DB migrations on deploy | ✅ Ready | `accounts`/`audit` initial migrations run cleanly on pinned PostgreSQL 17. |
-| Initial admin user | ✅ Ready (2026-06-21) | `manage.py ensure_superuser` — idempotent, env-driven (`DJANGO_SUPERUSER_EMAIL`/`_PASSWORD`), audited; wired into the Dokku release steps (`docs/deployment/jober-dokku-staging.md`). `seed_demo` remains fictional/staging only — never against a real-data DB. |
+| Initial admin user | ⚠️ Open (corrected 2026-07-26) | `manage.py ensure_superuser` — idempotent, env-driven (`DJANGO_SUPERUSER_EMAIL`/`_PASSWORD`), audited. **It is not wired into any release step**, contrary to what this row previously claimed: the `Procfile` declares only `web:`, there is no `app.json`, and the superuser env vars are not in either app's config. It has only ever been run by hand, so a database reset silently leaves the app with no superuser — which is the current state of `jober-staging` (finding 12). Either add a release step with the vars supplied from Doppler, or accept that it is a manual post-reset step and say so in the runbook. `seed_demo` remains fictional/staging only — never against a real-data DB. |
 | Secret management | 🟡 Partial (2026-06-29) | **Doppler** is the secrets source (project `hr_system`, config `dev`); `doppler run --project hr_system --config dev -- scripts/dev_app.sh up` injects env locally (`doppler.yaml`, `docs/deployment/jober-twilio-setup.md`). Still to confirm: prod Doppler config + Dokku wiring (sync or service token) and `DJANGO_SECRET_KEY`/DB-cred rotation. |
 | DB backups / restore | ⚠️ Open | Not yet defined for the Dokku PostgreSQL service. |
 
