@@ -1,5 +1,33 @@
 # Deployment Journal
 
+## 2026-07-26 - Demo passwords rotated; seed guard deployed to jober-staging
+
+- The owner rotated all four `@demo.jober.test` accounts on `jober-staging`
+  off `demo-jober-2026`, the value this **public** repository publishes.
+  Verified rather than assumed: the old password no longer authenticates on
+  any of the four, and the hand-off command's `<your-password>` placeholder
+  had not been pasted through literally - a failure the `rotated` success
+  message would have hidden completely.
+- Deployed **`a6ad9ad`** as `jober-platform:demo-a6ad9ad`
+  (`sha256:2402ab17...`) to make the accompanying safety fix real on the
+  machine. `seed_demo` previously called `set_password` on **every** run, so
+  the next routine reseed would have silently restored the published value;
+  it now sets the built-in password only on accounts it creates.
+- **Proved the guard in production rather than trusting the unit tests.** Ran
+  `python manage.py seed_demo` on staging - precisely the command that would
+  previously have republished the password - and it reported "Kept the
+  existing password on 4 account(s)", with the old password still failing on
+  all four afterwards.
+- Re-verified everything after the redeploy: office badges (`Velký Meder` /
+  `All offices`), 5-of-7 people and 2-of-6 projects for the scoped roles
+  against 7 and 6 for Observer, Győr 403 vs 200, the Slovak finance headings
+  (`Mesačný trend podľa pobočiek`, `Zisk/strata podľa pobočiek`) with no
+  English remaining, the Slovak `Pobočky` Help section, and all five
+  `deploy_smoke.sh --https` checks.
+- **Still no superuser on this app** (finding 12). Nothing in the demo needs
+  one; `/admin/` stays unreachable until `ensure_superuser` is run by hand.
+- Rollback target: `jober-platform:demo-3490f5d`.
+
 ## 2026-07-26 - Slovak i18n fix redeployed to jober-staging (demo language)
 
 - Deployed **`3490f5d`** to `jober-staging` as `jober-platform:demo-3490f5d`
