@@ -9,11 +9,17 @@ BACKUP_REMOTE_DIR="${BACKUP_REMOTE_DIR:?Set BACKUP_REMOTE_DIR (absolute remote p
 BACKUP_SSH_KEY="${BACKUP_SSH_KEY:-}"
 BACKUP_MAX_AGE_HOURS="${BACKUP_MAX_AGE_HOURS:-26}"
 BACKUP_MAX_USAGE_PERCENT="${BACKUP_MAX_USAGE_PERCENT:-60}"
+# Must match the BACKUP_PREFIX the corresponding offsite_backup.sh run uses,
+# or this reports "no backup" for an app that is in fact backing up fine -
+# a false alarm that trains people to ignore the alert.
+BACKUP_PREFIX="${BACKUP_PREFIX:?Set BACKUP_PREFIX (same value as the backup job)}"
 
 die() { echo "backup health check failed: $*" >&2; exit 1; }
 command -v ssh >/dev/null 2>&1 || die "required command missing: ssh"
 [[ "$BACKUP_REMOTE_DIR" =~ ^/[A-Za-z0-9._/-]+$ ]] && [[ "$BACKUP_REMOTE_DIR" != *".."* ]] \
   || die "BACKUP_REMOTE_DIR must be an absolute, traversal-free path"
+[[ "$BACKUP_PREFIX" =~ ^[A-Za-z0-9._-]+$ ]] \
+  || die "BACKUP_PREFIX must match [A-Za-z0-9._-]+"
 [[ "$BACKUP_MAX_AGE_HOURS" =~ ^[0-9]+$ ]] || die "BACKUP_MAX_AGE_HOURS must be an integer"
 [[ "$BACKUP_MAX_USAGE_PERCENT" =~ ^[0-9]+$ ]] || die "BACKUP_MAX_USAGE_PERCENT must be an integer"
 
@@ -25,7 +31,7 @@ fi
 
 result="$(ssh "${ssh_args[@]}" "$BACKUP_REMOTE" "
   set -eu
-  latest=\$(find '$BACKUP_REMOTE_DIR/daily' -maxdepth 1 -type f -name 'corvinum-*.tar.gpg' -printf '%T@\\n' | sort -nr | head -n 1)
+  latest=\$(find '$BACKUP_REMOTE_DIR/daily' -maxdepth 1 -type f -name '$BACKUP_PREFIX-*.tar.gpg' -printf '%T@\\n' | sort -nr | head -n 1)
   [ -n \"\$latest\" ] || exit 42
   now=\$(date +%s)
   age=\$((now - \${latest%.*}))

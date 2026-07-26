@@ -93,7 +93,10 @@ is an owner-selected monitoring integration and must not carry application PII.
 
 ## 5. Encrypted nightly ERP backup
 
-`scripts/corvinum_offsite_backup.sh` runs **on the FORPSI host**. It creates an
+`scripts/offsite_backup.sh` runs **on the FORPSI host** (renamed from
+`corvinum_offsite_backup.sh` on 2026-07-26 when it was generalised to back up
+any Dokku app; set `DOKKU_APP`, `POSTGRES_SERVICE` and `BACKUP_PREFIX`
+explicitly). It creates an
 encrypted archive containing:
 
 - `pg-corvinum` through `dokku postgres:export`;
@@ -134,15 +137,15 @@ daily plus 12 monthly (first-of-month) generations.
    root-owned scheduler, for example:
 
    ```cron
-   15 02 * * * . /etc/corvinum/backup.env && /home/dokku/HR_System/scripts/corvinum_offsite_backup.sh >> /var/log/corvinum-backup.log 2>&1
-   45 02 * * * . /etc/corvinum/backup.env && /home/dokku/HR_System/scripts/corvinum_backup_health.sh >> /var/log/corvinum-backup-health.log 2>&1
+   15 02 * * * . /etc/corvinum/backup.env && /home/dokku/HR_System/scripts/offsite_backup.sh >> /var/log/corvinum-backup.log 2>&1
+   45 02 * * * . /etc/corvinum/backup.env && /home/dokku/HR_System/scripts/backup_health.sh >> /var/log/corvinum-backup-health.log 2>&1
    ```
 
    Adjust the repository path to the deployed release location. Scheduler
    logs must be access-restricted and rotated. Do not source Doppler exports
    into the backup task: it needs no application secrets.
 
-`scripts/corvinum_backup_health.sh` fails when no verified daily archive is
+`scripts/backup_health.sh` fails when no verified daily archive is
 younger than **26 hours** or the Contabo filesystem reaches **60%** use. Treat
 either failure as an operational incident. Upgrade the target before retained
 encrypted archives exceed 60% of its 300 GB capacity.

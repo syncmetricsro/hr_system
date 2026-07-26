@@ -71,10 +71,32 @@ one-off sweep of media orphaned by pre-fix replacements (item 6).
    The `DEBUG`-only `/media/` route was removed too — it meant local
    development bypassed every check while production served nothing, so a
    bypass was one settings flag away and invisible locally.
-4. **High — neither PostgreSQL service has scheduled backups.** Live
-   inspection shows no backup schedule on `pg-jober-staging` or
-   `pg-corvinum-staging`. Tracked below under "DB backups / restore" since
-   2026-06-29; still open.
+4. **High — neither PostgreSQL service has scheduled backups.** Still open,
+   and now the largest remaining risk here. Prepared 2026-07-26; **blocked on
+   the owner** for two concrete things, not on design.
+   *What was wrong with the plan:* the runbook told you to run
+   `dokku postgres:backup-schedule <service> <cron> <off-site-or-local>`.
+   That command is **S3-only** — `postgres:backup-auth` takes AWS keys and the
+   third argument is a bucket. There is no local-target variant, and it backs
+   up only the database, not the media volume (which now holds real uploads)
+   or a release manifest.
+   *What is ready:* `scripts/offsite_backup.sh` (generalised from the
+   CorvinumEU-specific version, so one script now covers any Dokku app) plus
+   `scripts/backup_health.sh`. Encrypts with GPG before transfer, verifies the
+   remote checksum, keeps 35 daily + 12 monthly, includes the media volume,
+   and never exports Dokku config because that carries Doppler secrets. Exact
+   env files and cron lines are in
+   `docs/deployment/syncmetric-prime-staging.md` §"Phase 6 — Backups".
+   *Blocked on:* **(a)** an off-site host on a different provider (open
+   question **D6**), **(b)** a GPG public key whose private half lives on
+   neither server, and **(c)** root shell on the Dokku host — the agent SSH
+   key is restricted to `dokku` commands and cannot install cron entries.
+   *Interim:* manual `dokku postgres:export` dumps were taken for both
+   services on 2026-07-26. That is a point-in-time safety net, not a backup
+   system.
+   **This item stays open even once a schedule runs, until a restore drill
+   has actually been performed** (`scripts/backup_restore_drill.sh`) and
+   logged. A backup nobody has restored is a hypothesis.
 5. ~~**High — office scoping protects Finance only.**~~ **Fixed
    2026-07-25** (ADR 0026 Phase B, PRs #95–#101). People, Projects,
    Reports, Compliance, Checklists, notifications, accommodation,
@@ -196,7 +218,7 @@ smoke suite doesn't cover.
 | DB migrations on deploy | ✅ Ready | `accounts`/`audit` initial migrations run cleanly on pinned PostgreSQL 17. |
 | Initial admin user | ⚠️ Open (corrected 2026-07-26) | `manage.py ensure_superuser` — idempotent, env-driven (`DJANGO_SUPERUSER_EMAIL`/`_PASSWORD`), audited. **It is not wired into any release step**, contrary to what this row previously claimed: the `Procfile` declares only `web:`, there is no `app.json`, and the superuser env vars are not in either app's config. It has only ever been run by hand, so a database reset silently leaves the app with no superuser — which is the current state of `jober-staging` (finding 12). Either add a release step with the vars supplied from Doppler, or accept that it is a manual post-reset step and say so in the runbook. `seed_demo` remains fictional/staging only — never against a real-data DB. |
 | Secret management | 🟡 Partial (2026-06-29) | **Doppler** is the secrets source (project `hr_system`, config `dev`); `doppler run --project hr_system --config dev -- scripts/dev_app.sh up` injects env locally (`doppler.yaml`, `docs/deployment/jober-twilio-setup.md`). Still to confirm: prod Doppler config + Dokku wiring (sync or service token) and `DJANGO_SECRET_KEY`/DB-cred rotation. |
-| DB backups / restore | ⚠️ Open | Not yet defined for the Dokku PostgreSQL service. |
+| DB backups / restore | ⚠️ Open — **defined, not installed** (2026-07-26) | Scripts and cron lines are ready (`scripts/offsite_backup.sh`, `scripts/backup_health.sh`; env and schedule in `syncmetric-prime-staging.md` §Phase 6). Blocked on an off-site host (D6), a GPG recipient key, and root shell on the Dokku host. The plugin's own `postgres:backup-schedule` is **S3-only** and covers the database only — not the media volume. Manual dumps taken 2026-07-26 as an interim. Stays open until a restore drill is run and logged. |
 
 ## Integrations
 

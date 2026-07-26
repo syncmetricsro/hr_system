@@ -296,15 +296,69 @@ Register the Twilio inbound webhook now that a public HTTPS host exists:
 
 ## Phase 6 — Backups
 
+**Not done yet, and it is now the largest remaining production-readiness risk**
+(item 4). Neither service has any schedule. Read this before choosing.
+
+### Why not `dokku postgres:backup-schedule`
+
+The plugin's own scheduler is **S3-only** — `postgres:backup-auth` takes an AWS
+access key pair and `postgres:backup-schedule` takes a bucket name. There is no
+"local target" variant, so the placeholder that used to sit here was wrong. It
+also backs up *only* the database: not the media volume (which now holds real
+uploads) and not a release manifest.
+
+### Use the repo's script instead
+
+`scripts/offsite_backup.sh` was generalised on 2026-07-26 from the CorvinumEU
+one; a single invocation backs up a single app. It exports the database via
+`dokku postgres:export`, adds the media volume and a non-secret release
+manifest, **encrypts with GPG before transfer**, verifies the remote checksum,
+and keeps 35 daily plus 12 monthly generations. It deliberately never runs
+`dokku config:export`, because that output carries Doppler-synchronised
+secrets.
+
+It runs **on the host**, as root, from cron — not over the restricted
+`dokku`-only SSH access used elsewhere in this runbook.
+
 ```bash
-dokku postgres:backup-schedule pg-jober-staging    "0 3 * * *" <off-site-or-local>
-dokku postgres:backup-schedule pg-corvinum-staging "15 3 * * *" <off-site-or-local>
+# /etc/dokku-backups/jober-staging.env   (root-owned, 0600, outside git)
+DOKKU_APP=jober-staging
+POSTGRES_SERVICE=pg-jober-staging
+BACKUP_PREFIX=jober-staging
+MEDIA_SOURCE_DIR=/var/lib/dokku/data/storage/jober-staging-media
+BACKUP_REMOTE=<user>@<off-site-host>          # asks D6
+BACKUP_REMOTE_DIR=/srv/jober-staging-backups
+BACKUP_GPG_RECIPIENT=<public key fingerprint>
+BACKUP_SSH_KEY=/root/.ssh/dokku-backup_ed25519
 ```
-If no off-site target yet (asks D6), schedule local backups and record the
-off-site copy as pending. Run one drill and log it:
-```bash
-DB_CONTAINER=... scripts/backup_restore_drill.sh    # adapt to the dokku pg service
+
+```cron
+20 03 * * *  . /etc/dokku-backups/jober-staging.env    && /path/to/scripts/offsite_backup.sh >> /var/log/jober-staging-backup.log 2>&1
+50 03 * * *  . /etc/dokku-backups/jober-staging.env    && /path/to/scripts/backup_health.sh  >> /var/log/jober-staging-backup-health.log 2>&1
+35 03 * * *  . /etc/dokku-backups/corvinum-staging.env && /path/to/scripts/offsite_backup.sh >> /var/log/corvinum-staging-backup.log 2>&1
 ```
+
+**`BACKUP_PREFIX` must match between the backup and health jobs for an app.**
+The retention pass globs on it, so a mismatch either prunes nothing or prunes
+another app's history; the health check would also report "no backup" for an
+app that is backing up fine. Giving each app its own `BACKUP_REMOTE_DIR` avoids
+the question entirely, and is the recommendation.
+
+### What the owner must supply
+
+1. **An off-site host and account** — open question **D6**. It must not be on
+   the same provider as the Dokku host, or a provider-level loss takes both.
+2. **A GPG public key** for `BACKUP_GPG_RECIPIENT`. Keep the private recovery
+   key off *both* servers; an encrypted backup whose key lives beside it is not
+   a backup.
+3. Root shell on the host to install the env files and cron entries.
+
+### Then prove it restores
+
+A backup nobody has restored is a hypothesis. Run
+`scripts/backup_restore_drill.sh` once against a scratch database, and record
+the result in `deployment_journal.md`. Until that has happened, item 4 stays
+open even with a schedule running.
 
 ## Rollback
 
