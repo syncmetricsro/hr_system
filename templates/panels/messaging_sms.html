@@ -15,7 +15,12 @@
     <label>{% trans "Message" %}
       <textarea name="body" placeholder="{% trans 'Or type a message' %}"></textarea>
     </label>
-    <button class="button button-primary" type="submit">{% trans "Send SMS" %}</button>
+    {% if panel.sms_configured %}
+      <button class="button button-primary" type="submit">{% trans "Send SMS" %}</button>
+    {% else %}
+      <button class="button button-primary" type="submit" disabled>{% trans "Send SMS" %}</button>
+      <p class="eyebrow">{% trans "SMS is not configured in this environment, so nothing can be sent from here." %}</p>
+    {% endif %}
   </form>
   {% if panel.recent_messages %}
     <ul class="plain-list">

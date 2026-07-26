@@ -12,7 +12,11 @@ class MessageTemplate(models.Model):
     body = models.TextField(_("body"))
     is_active = models.BooleanField(_("active"), default=True)
     created_by = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name="message_templates"
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="message_templates",
     )
     created_at = models.DateTimeField(_("created"), auto_now_add=True)
 
@@ -30,17 +34,32 @@ class OutboundMessage(models.Model):
         QUEUED = "queued", _("Queued")
         SENT = "sent", _("Sent")
         FAILED = "failed", _("Failed")
+        # Distinct from FAILED on purpose: the provider never saw this one.
+        # A non-production allowlist stopped it, which is a configuration
+        # outcome, not an error anyone should investigate.
+        BLOCKED = "blocked", _("Blocked (recipient not allowed here)")
 
     person = models.ForeignKey(
-        "people.Person", on_delete=models.SET_NULL, null=True, blank=True, related_name="messages", verbose_name=_("person")
+        "people.Person",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="messages",
+        verbose_name=_("person"),
     )
     to_number = models.CharField(_("to"), max_length=40)
     body = models.TextField(_("body"))
-    status = models.CharField(_("status"), max_length=20, choices=Status.choices, default=Status.QUEUED)
+    status = models.CharField(
+        _("status"), max_length=20, choices=Status.choices, default=Status.QUEUED
+    )
     provider_sid = models.CharField(_("provider id"), max_length=64, blank=True)
     error = models.CharField(_("error"), max_length=300, blank=True)
     sent_by = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name="sent_messages"
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="sent_messages",
     )
     created_at = models.DateTimeField(_("created"), auto_now_add=True)
 

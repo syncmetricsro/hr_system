@@ -158,6 +158,19 @@ TWILIO_ACCOUNT_SID = os.getenv("TWILIO_ACCOUNT_SID", "")
 TWILIO_AUTH_TOKEN = os.getenv("TWILIO_AUTH_TOKEN", "")
 TWILIO_FROM_NUMBER = os.getenv("TWILIO_FROM_NUMBER", "")
 
+# Recipient allowlist for non-production environments. Comma-separated numbers;
+# **empty means unrestricted**, which is what production wants.
+#
+# Staging carries real Twilio credentials and fictional worker data, so without
+# this a demo could text an arbitrary real number just by editing a person's
+# phone field - a fictional record with a real number on it is indistinguishable
+# from any other. Set it to the demo handset on every non-production app.
+SMS_ALLOWED_RECIPIENTS = [
+    number.strip()
+    for number in os.getenv("SMS_ALLOWED_RECIPIENTS", "").split(",")
+    if number.strip()
+]
+
 # Compliance alerting windows. Medical validity drives the medical expiry alert;
 # the alert window is how far ahead a paper counts as "expiring" (≈ the 11/23-month
 # pattern = ~1 month before a 12/24-month validity).

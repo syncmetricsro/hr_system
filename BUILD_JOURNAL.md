@@ -1,5 +1,32 @@
 # Build Journal
 
+## 2026-07-26 - SMS cannot reach a real number from staging any more
+
+The runbook was mitigating live Twilio credentials on a public-URL staging app
+with a sentence telling the presenter not to press Send. Two changes make that
+sentence unnecessary.
+
+- **A recipient allowlist outside production** (`SMS_ALLOWED_RECIPIENTS`,
+  comma-separated, **empty = unrestricted** so production is unaffected).
+  The risk it closes is specific: staging holds fictional worker data *and*
+  real provider credentials, and a fictional person record with a real phone
+  number typed into it is indistinguishable from any other - so "the data is
+  fake" was never a control. The check runs before the provider call, and the
+  test asserts the provider is never reached by monkeypatching it to raise.
+- Numbers are compared digits-only, so `+421 900 000 000` and
+  `+421-900-000-000` are the same handset. An allowlist that matched only one
+  spelling would be worse than none: the entry looks correct, the send is
+  blocked, and nothing explains why.
+- **A blocked send is `BLOCKED`, not `FAILED`.** FAILED means Twilio saw the
+  message and refused it; BLOCKED means we never asked. Collapsing them would
+  make a safety net read as an outage in the message history.
+- **"Just unset the credentials" is now actually safe.** It was not: with
+  Twilio unset, `send_sms` recorded FAILED, so an unconfigured environment
+  looked *broken* rather than unavailable - which is precisely why the runbook
+  fell back to "don't press it". The panel now renders with the control
+  disabled and a plain reason. The disabled attribute is cosmetic honesty; the
+  allowlist and the fail-closed provider call are the actual controls.
+
 ## 2026-07-26 - Uploaded media is served, and only to people entitled to it
 
 Uploads have been silently half-broken: the Dokku volumes *are* mounted and

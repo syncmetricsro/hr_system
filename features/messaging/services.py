@@ -24,6 +24,43 @@ class SmsSendError(Exception):
     """The provider rejected or failed the send."""
 
 
+class SmsRecipientNotAllowed(Exception):
+    """A non-production allowlist stopped the send before the provider."""
+
+
+def sms_configured() -> bool:
+    """Whether a send could actually reach Twilio.
+
+    Exposed so the UI can *say* messaging is unavailable instead of offering a
+    Send button that records a failure. An unconfigured environment is a
+    normal state (local, CI, a client with SMS off), not a fault.
+    """
+    return all(
+        (
+            getattr(settings, "TWILIO_ACCOUNT_SID", ""),
+            getattr(settings, "TWILIO_AUTH_TOKEN", ""),
+            getattr(settings, "TWILIO_FROM_NUMBER", ""),
+        )
+    )
+
+
+def _comparable(number: str) -> str:
+    """Reduce a phone number to digits (and a leading +) so an allowlist entry
+    matches however the number was typed - '+421 900 000 000', '+421900000000'
+    and '+421-900-000-000' are the same handset."""
+    return "".join(ch for ch in (number or "") if ch.isdigit() or ch == "+")
+
+
+def _assert_recipient_allowed(to_number: str) -> None:
+    allowed = getattr(settings, "SMS_ALLOWED_RECIPIENTS", []) or []
+    if not allowed:  # Empty = unrestricted; production's setting.
+        return
+    if _comparable(to_number) not in {_comparable(n) for n in allowed}:
+        raise SmsRecipientNotAllowed(
+            "This environment may only message its configured test number."
+        )
+
+
 def _twilio_send(to_number: str, body: str) -> str:
     """POST to Twilio's REST API via the standard library (no SDK). Returns the
     message SID. Credentials come from the environment, never the repo."""
@@ -34,11 +71,18 @@ def _twilio_send(to_number: str, body: str) -> str:
         raise SmsNotConfigured("Twilio credentials are not configured.")
 
     url = TWILIO_API.format(sid=sid)
-    data = urllib.parse.urlencode({"From": from_number, "To": to_number, "Body": body}).encode()
+    data = urllib.parse.urlencode(
+        {"From": from_number, "To": to_number, "Body": body}
+    ).encode()
     auth = base64.b64encode(f"{sid}:{token}".encode()).decode()
     request = urllib.request.Request(
-        url, data=data, method="POST",
-        headers={"Authorization": f"Basic {auth}", "Content-Type": "application/x-www-form-urlencoded"},
+        url,
+        data=data,
+        method="POST",
+        headers={
+            "Authorization": f"Basic {auth}",
+            "Content-Type": "application/x-www-form-urlencoded",
+        },
     )
     try:
         with urllib.request.urlopen(request, timeout=10) as response:  # noqa: S310 (pinned https URL)
@@ -52,13 +96,21 @@ def _twilio_send(to_number: str, body: str) -> str:
 
 def send_sms(to_number: str, body: str, *, actor=None, person=None) -> OutboundMessage:
     message = OutboundMessage.objects.create(
-        person=person, to_number=to_number, body=body,
+        person=person,
+        to_number=to_number,
+        body=body,
         sent_by=actor if getattr(actor, "is_authenticated", False) else None,
     )
     try:
+        # Allowlist first: a blocked send must never reach the provider, and
+        # must not be recorded as a provider failure.
+        _assert_recipient_allowed(to_number)
         sid = _twilio_send(to_number, body)
         message.status = OutboundMessage.Status.SENT
         message.provider_sid = sid
+    except SmsRecipientNotAllowed as exc:
+        message.status = OutboundMessage.Status.BLOCKED
+        message.error = str(exc)[:300]
     except (SmsNotConfigured, SmsSendError) as exc:
         message.status = OutboundMessage.Status.FAILED
         message.error = str(exc)[:300]
