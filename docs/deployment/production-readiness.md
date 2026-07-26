@@ -13,9 +13,11 @@ inspection — not just static code reading) found the items below. None are
 fixed by writing this list; each stays open until its own fix lands and is
 verified the same way (live inspection, not just "the code looks right").
 Recommended order (updated 2026-07-26 — items 1, 2, 3, 5, 6, 7, 8 and 9 are
-now done): **scheduled database backups (item 4) are the largest remaining
-risk**, followed by the user/credential-management subsystem (item 11) and a
-one-off sweep of media orphaned by pre-fix replacements (item 6).
+done; item 4 is **deferred** to the CorvinumEU build, see its note): the
+largest *actionable* item is now the user/credential-management subsystem
+(item 11), followed by a one-off sweep of media orphaned by pre-fix
+replacements (item 6). Item 4 remains the largest *risk* — it is deferred, not
+reduced.
 
 1. 🟡 **Partly fixed 2026-07-26 — public demo credentials could reach live
    Twilio.** The repo is public and publishes `demo-jober-2026`; Jober
@@ -71,9 +73,29 @@ one-off sweep of media orphaned by pre-fix replacements (item 6).
    The `DEBUG`-only `/media/` route was removed too — it meant local
    development bypassed every check while production served nothing, so a
    bypass was one settings flag away and invisible locally.
-4. **High — neither PostgreSQL service has scheduled backups.** Still open,
-   and now the largest remaining risk here. Prepared 2026-07-26; **blocked on
-   the owner** for two concrete things, not on design.
+4. 🕓 **High — neither PostgreSQL service has scheduled backups. DEFERRED by
+   the owner on 2026-07-26**, to be installed once CorvinumEU accepts the
+   offer (expected shortly after the Jober demo).
+   *Why the deferral is coherent rather than drift:* the missing piece is an
+   off-site host on a different provider, and
+   `docs/deployment/corvinum-basic-production.md` already plans exactly that —
+   a **Contabo Storage VPS 10 in the EU** as the encrypted backup target, with
+   its DPA as part of that build. The CorvinumEU engagement is what provides
+   the destination, so installing Jober's backups first would mean buying a
+   second one.
+   *What the deferral costs today:* both databases hold **fictional data
+   only**, so losing one costs a reseed — roughly ten minutes, done twice
+   already on 2026-07-26. That is an acceptable trade while the real-data gate
+   is shut.
+   **The trigger is not only CorvinumEU.** Backups must exist before *either*
+   of these, whichever comes first: CorvinumEU acceptance, or the real-data
+   gate opening for any client. Real worker data without a tested restore is
+   the line this deferral must not cross — at that point a lost database is
+   lost personal data, not a reseed, and it is also a GDPR availability
+   failure rather than an inconvenience.
+   Everything needed is already written; see below for what is ready and what
+   is still required. Prepared 2026-07-26; **blocked on the owner** for three
+   concrete things, not on design.
    *What was wrong with the plan:* the runbook told you to run
    `dokku postgres:backup-schedule <service> <cron> <off-site-or-local>`.
    That command is **S3-only** — `postgres:backup-auth` takes AWS keys and the

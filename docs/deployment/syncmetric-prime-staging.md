@@ -296,8 +296,16 @@ Register the Twilio inbound webhook now that a public HTTPS host exists:
 
 ## Phase 6 — Backups
 
-**Not done yet, and it is now the largest remaining production-readiness risk**
-(item 4). Neither service has any schedule. Read this before choosing.
+**Deferred by the owner on 2026-07-26** until CorvinumEU accepts the offer —
+that build provides the off-site destination (a Contabo Storage VPS in the EU,
+per `corvinum-basic-production.md`), so doing Jober first would mean buying a
+second one. Both databases hold fictional data, so a loss costs a reseed today.
+
+**Install this before the real-data gate opens for any client, whichever comes
+first.** Past that point a lost database is lost personal data and a GDPR
+availability failure, not an inconvenience.
+
+Everything below is ready to run; read it before choosing an approach.
 
 ### Why not `dokku postgres:backup-schedule`
 
