@@ -9,8 +9,16 @@ on cross-office access and an office badge in the shell. See
 what was built and for three decisions taken during implementation that
 differ from the design below.
 
-**Only §3a remains design-only**: the office-principal / staff-invitation
-subsystem, deferred by the owner as separable from office scoping itself.
+**§3a and §3b remain design-only** — and together they are now the largest
+functional gap in the product:
+
+- **§3a** office principals and staff invitation, deferred by the owner as
+  separable from office scoping itself. Nothing can create a user in-app.
+- **§3b** credential lifecycle (added 2026-07-26): nothing can change a
+  password, reset one, deactivate an account, or clear a lost 2FA
+  enrolment either. `Action.USER_MANAGE` is granted to Manager in both
+  clients' policies but has no view behind it, so the whole area is
+  dormant rather than partially built.
 
 Jober-owned content (CorvinumEU is confirmed single-site and unaffected),
 hence the `jober-` prefix per `docs/README.md`'s naming convention.
@@ -300,6 +308,72 @@ an oversight — worth noting it's also a natural monetization lever
 (offices-as-a-billable-dimension), consistent with the per-seat pricing
 discussion held earlier, though that's a separate business decision from
 this design.
+
+## 3b. Credential lifecycle (specified 2026-07-26, not built)
+
+§3a above covers *creating* a user and *changing which offices they belong
+to*. It says nothing about what happens to that account afterwards, and
+that omission has now been felt: rotating the staging demo password on
+2026-07-26 required a shell command against the Dokku host, because **no
+route in the product can change any password**. `core/accounts/` still has
+no `urls.py` or `forms.py`, and the only account routes are `login_page`,
+`logout_view`, `two_factor_verify`, `two_factor_setup`, `avatar_upload`
+and `avatar_remove`. Django admin is not a fallback for a client: it needs
+a superuser, which no Jober role is.
+
+**Authority follows the §3a shape** — the office boundary applies here
+exactly as it does everywhere else:
+
+| Actor | May act on | Scope |
+|---|---|---|
+| Observer (CEO) | any account | **every office** |
+| Principal Manager of office X | any account in X, including Managers | office X |
+| Regular Manager, member of office X | Recruiter/Coordinator accounts in X | office X |
+| Recruiter / Coordinator | their own account only | — |
+| Anyone | their own password | — |
+
+The capabilities that need to exist, none of which any document currently
+specifies:
+
+- **Self-service password change** for the signed-in user (current
+  password + new password). This is the one capability every role needs
+  and the only one with no office dimension at all.
+- **Administrator-initiated reset.** Two shapes are possible and the
+  choice is a real decision, not a detail: *(a)* the actor sets a
+  temporary password and communicates it out of band, or *(b)* the actor
+  triggers a single-use reset link reusing `StaffInvitation`'s token
+  machinery (`secrets.token_urlsafe`, expiry, single-use) — option (b)
+  means an administrator never learns another person's password, which is
+  the better privacy posture and adds no new dependency.
+- **Forgotten-password self-service**, if wanted at all. It implies
+  unauthenticated email delivery and therefore rate limiting and account
+  enumeration defences; it may be deliberately declined in favour of
+  "ask your manager", which is a legitimate answer for an internal tool
+  of this size.
+- **Deactivation / offboarding.** `User.is_active` already exists and
+  Django's auth backend honours it, but nothing sets it. Offboarding a
+  coordinator currently has no in-app path. Deactivation must be
+  reversible, audited, and must *not* delete the user — audit rows and
+  `owning_recruiter` / `responsible_coordinators` references point at
+  them, and the person-history requirement depends on those actors
+  surviving.
+- **Forced 2FA re-enrolment**, since `two_factor_setup` exists and
+  CorvinumEU turns 2FA on for managers: if a manager loses their
+  authenticator, someone must be able to clear the enrolment. Today
+  nobody can.
+
+Every one of these audits through `core.audit.services.record_event` with
+its own event name, and none of them may ever write a password or token
+into audit metadata.
+
+**One tension to resolve when this is built.** Both this section and §3a
+give Observer authority over accounts in every office, while
+`docs/permissions/jober-permission-matrix.md` describes Observer as
+read-only with "no operational/financial writes". That is not yet a
+contradiction, because none of it is built — but whichever lands first
+must state the carve-out explicitly in the matrix rather than leave two
+documents disagreeing. The intent is that Observer is the CEO: read-only
+over *operations*, authoritative over *staffing*.
 
 ## 4. Migration & seed impact
 

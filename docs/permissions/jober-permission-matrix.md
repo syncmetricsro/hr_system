@@ -52,7 +52,7 @@ Legend: ✅ permitted · — denied
 | `accommodation.manage` | — | — | ✅ | — |
 | `equipment.review_deduction` | — | — | ✅ | — |
 | `catalog.manage` | — | — | ✅ | — |
-| `user.manage` | — | — | ✅ | — |
+| `user.manage` (**dormant** — granted but no view implements it; see below) | — | — | ✅ | — |
 | `blacklist.propose` | — | ✅ | ✅ | — |
 | `blacklist.decide` | — | — | ✅ | — |
 | `sms.manage_templates` | — | — | ✅ | — |
@@ -121,6 +121,33 @@ is visible only to their owning recruiter (plus Observer) — see
   on the Observer-only executive finance dashboard. Read-only: approved
   dashboards/lists, warehouse stock, approved financial summaries, exports
   only where explicitly allowed. No operational/financial writes.
+
+## User and credential management is not built
+
+`user.manage` above is granted to Manager but **nothing implements it**.
+There is no route in the product that can create a user, change a password,
+reset one, deactivate an account, or clear a lost 2FA enrolment; `core/
+accounts/` has no `urls.py` or `forms.py`. Django admin is not a substitute
+for a client, since it requires a superuser and no Jober role is one.
+
+When it is built, the authority model is office-scoped like everything
+else — designed in `docs/product/jober-multi-office-scoping.md` §3a
+(invitation) and §3b (credential lifecycle):
+
+| Actor | May act on accounts | Scope |
+|---|---|---|
+| Observer (CEO) | any account | **every office** |
+| Principal Manager of office X | any account in X, incl. Managers | office X |
+| Regular Manager, member of office X | Recruiter/Coordinator in X | office X |
+| Recruiter / Coordinator | their own account | — |
+
+**That gives Observer a write authority this matrix otherwise denies it.**
+Observer is read-only over *operations* and authoritative over *staffing* —
+the CEO hires and removes people but does not record trial outcomes. The
+row above says "Observer: —" for `user.manage` because nothing is built;
+whichever slice implements §3a/§3b must change that cell and keep this
+explanation beside it, rather than leaving the matrix and the design docs
+disagreeing.
 
 ## Scope of this slice (Phase 1 foundation)
 

@@ -1,5 +1,45 @@
 # Build Journal
 
+## 2026-07-26 - User and credential management recorded as the largest functional gap
+
+Rotating the staging demo password needed a shell command against the Dokku
+host. That is worth stating plainly: **no route in the product can change any
+password.** `core/accounts/` has no `urls.py` or `forms.py`, and the only
+account routes are login, logout, the two 2FA views, and avatar
+upload/remove. `Action.USER_MANAGE` is granted to Manager in both clients'
+policies and has no view behind it. Django admin is not a fallback for a
+client - it needs a superuser, and no Jober role is one.
+
+- **The authority model was already right.** Section 3a of
+  `jober-multi-office-scoping.md` had specified exactly the rule the owner
+  restated - Observer acts in every office, a manager only in their own -
+  including the tiered detail that a *principal* manager may invite peer
+  managers while a regular member manager may not. Nothing needed deciding;
+  it needed building.
+- **What genuinely was not specified is what happens to an account after it
+  exists**, now written as section 3b: self-service password change,
+  administrator-initiated reset (with the real choice between setting a
+  temporary password and issuing a single-use link that means an
+  administrator never learns someone's password), optional
+  forgotten-password self-service and the rate-limiting/enumeration
+  obligations it brings, deactivation via the `User.is_active` flag that
+  already exists and that nothing sets, and clearing a lost 2FA enrolment -
+  which matters because CorvinumEU turns 2FA on for managers.
+- **Flagged a contradiction rather than encoding it silently.** Sections 3a
+  and 3b give Observer authority over accounts in every office, while the
+  permission matrix describes Observer as read-only with no writes. That is
+  not yet a contradiction because none of it is built, but whichever slice
+  lands first has to change that cell. Recorded the intent beside it:
+  Observer is read-only over *operations* and authoritative over *staffing*.
+  The CEO hires and removes people; the CEO does not record trial outcomes.
+- Two production-readiness findings added (11: no user/credential
+  management; 12: no superuser on staging after the reset) and one **false
+  claim corrected** - the "Initial admin user" row asserted that
+  `ensure_superuser` is wired into the Dokku release steps. It is not: the
+  `Procfile` declares only `web:`, there is no `app.json`, and the superuser
+  env vars are in neither app's config. It has only ever been run by hand,
+  which is why a database reset silently leaves the app with no superuser.
+
 ## 2026-07-26 - Runbook rehearsed against staging; two claims were wrong
 
 Walked the demo runbook end to end against the live staging app, checking each
