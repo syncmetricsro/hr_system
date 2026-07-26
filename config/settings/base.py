@@ -133,11 +133,16 @@ STATICFILES_DIRS = [BASE_DIR / "static"] + sorted(
     (BASE_DIR / "clients").glob("*/static")
 )
 
-# User-uploaded avatars (docs/product/avatar-design.md). Local filesystem in
-# every environment; production points this at a Dokku persistent-storage
-# mount served by nginx directly, never through Gunicorn/WhiteNoise (the
-# latter snapshots its manifest at process start, so uploads after boot
-# wouldn't be found). Overridden in config/settings/production.py.
+# User-uploaded avatars and certificate documents. Local filesystem in every
+# environment; production points this at a Dokku persistent-storage mount
+# (overridden in config/settings/production.py).
+#
+# MEDIA_URL is *not* routed anywhere - not by Django, not by an nginx alias.
+# Files are delivered by core/media_views.py, which re-runs the office
+# boundary and, for certificate scans, can_view_sensitive. The setting stays
+# because Django's FileField machinery expects it, not because a URL under it
+# resolves. See docs/product/avatar-design.md §2 for why the original
+# nginx-alias plan was reversed.
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 

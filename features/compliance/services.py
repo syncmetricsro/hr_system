@@ -8,7 +8,7 @@ from django.db import transaction
 from core.accounts.models import Role
 from core.offices.scoping import scope_people
 from core.audit.services import record_event
-from core.media import process_certificate_document
+from core.media import process_certificate_document, save_replacing
 from core.people.models import LifecycleStatus, Person
 from core.projects.models import AssignmentStatus
 from features.compliance.models import Certificate
@@ -147,7 +147,7 @@ def save_certificate(
         content, ext = process_certificate_document(uploaded_file)
     certificate.save()
     if uploaded_file:
-        certificate.document.save(f"cert.{ext}", content, save=True)
+        save_replacing(certificate.document, f"cert.{ext}", content)
 
     if creating:
         action = "certificate.uploaded"

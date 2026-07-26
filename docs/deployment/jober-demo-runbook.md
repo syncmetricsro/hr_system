@@ -43,15 +43,22 @@ warehouse stop reconciling last time.
    dashboard. Switching accounts mid-demo is smoother from two profiles than
    from one.
 
-**Do not upload anything during the demo.** Staging has no storage mount, so an
-uploaded avatar or certificate document 404s immediately and disappears on the
-next deploy (production-readiness items 2 and 3). Seeded avatars render from
-static files and are safe — it is only *new* uploads that break. If asked to
-show uploading, describe it instead and offer a follow-up.
+**Uploads work — and are worth showing.** The earlier "don't upload anything"
+warning was based on two things that turned out to be wrong or since fixed:
+staging *does* have a storage mount, so uploads always survived redeploys, and
+they are now served by a permission-checked view instead of 404ing. Uploading
+a worker photo or a certificate scan is a legitimate part of the demo.
+Better still, it demonstrates the boundary: a certificate document is visible
+to managers, the Observer, the owning recruiter and the responsible
+coordinator — an unconnected recruiter in the same office sees that the
+certificate exists and gets a refusal on the file itself.
 
-**Twilio.** Staging has live provider credentials and Recruiter, Coordinator
-and Manager can all send SMS. Either confirm with the owner that the live-SMS
-segment is wanted, or avoid the send buttons entirely.
+**Twilio.** Staging carries live provider credentials, but non-production apps
+now enforce a recipient allowlist, so a send can only reach the configured
+demo handset — editing a person's phone to a real number no longer texts it.
+Confirm with the owner whether the live-SMS segment is wanted. If SMS is
+switched off entirely, the panel says so and disables the control rather than
+recording a failed message.
 
 ### Local fallback
 
@@ -314,9 +321,9 @@ behavior also remain gated by external access and the Art. 28 DPA review.
 ## Caveats and decisions to collect
 
 - Fictional data only; the real-data gate remains closed.
-- **Uploads do not persist on staging** and certificate documents are not yet
-  access-controlled. Both are known, tracked production-readiness items (2 and
-  3); say so plainly if it comes up rather than demonstrating an upload.
+- Uploaded files are stored on a persistent volume and served only through a
+  permission check — never a public URL. Certificate scans follow the same
+  visibility rule as date of birth and identifiers.
 - The demo account password is published in a **public** repository. Rotate it
   before any external audience, or put staging behind access control.
 - Confirm whether the finance period is October 2025 or November 2025.

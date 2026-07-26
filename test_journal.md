@@ -1,5 +1,21 @@
 # Test Journal
 
+## 2026-07-26 - tests/test_media_hygiene.py (6)
+
+- `test_oversized_dimensions_are_rejected_before_decoding` monkeypatches
+  `PIL.Image.Image.load` to raise, so it asserts **nothing was decoded** rather
+  than "the right error came back". Under the old ordering the exception
+  message was already correct - the bug was purely *when* the check ran, which
+  a message assertion cannot see.
+- `test_a_first_upload_deletes_nothing` guards the off-by-one in the other
+  direction: a helper that deletes too eagerly would remove the file it just
+  stored, and every other test here would still pass.
+- The `django_capture_on_commit_callbacks` wrapper is load-bearing, not
+  ceremony. The cleanup is deliberately deferred to commit; pytest-django
+  rolls every test back, so without executing the callbacks these tests would
+  pass while asserting nothing.
+- Jober **682 passed**, CorvinumEU **430 passed, 12 skipped**.
+
 ## 2026-07-26 - tests/test_sms_safety.py (8)
 
 - `test_allowlist_blocks_an_unlisted_recipient` monkeypatches `_twilio_send`
