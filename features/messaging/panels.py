@@ -7,6 +7,7 @@ from core.accounts.permissions import Action
 from core.accounts.permissions import can as user_can
 from core.ui.registry import flag_enabled
 from features.messaging.models import MessageTemplate
+from features.messaging.services import sms_configured
 
 
 def sms_panel(request, person):
@@ -23,6 +24,11 @@ def sms_panel(request, person):
     if not can_message:
         return None
     return {
+        # The panel still renders when SMS is unconfigured, with the control
+        # disabled and a reason. Hiding it entirely would leave a presenter
+        # wondering where the feature went; offering a live button that files
+        # a failed message is worse still.
+        "sms_configured": sms_configured(),
         "message_templates": MessageTemplate.objects.filter(is_active=True),
         "recent_messages": person.messages.all()[:5],
     }

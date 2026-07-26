@@ -1,5 +1,20 @@
 # Test Journal
 
+## 2026-07-26 - tests/test_sms_safety.py (8)
+
+- `test_allowlist_blocks_an_unlisted_recipient` monkeypatches `_twilio_send`
+  to raise, so the assertion is "the provider was never called" rather than
+  "the status looks right". Verified by deleting the guard: the test fails
+  with exactly that message.
+- `test_empty_allowlist_is_unrestricted` guards the inverse mistake, which is
+  the one that would actually hurt: reading an empty list as "block
+  everything" would silently disable messaging in production the moment the
+  variable is unset.
+- `test_allowlist_matches_regardless_of_formatting` exists because a
+  format-sensitive allowlist fails in the most confusing possible way - the
+  entry is visibly correct and the send is still blocked.
+- Jober **684 passed**, CorvinumEU **425 passed, 13 skipped**.
+
 ## 2026-07-26 - tests/test_media_serving.py (9)
 
 - Covers the three permission shapes and, separately, that `/media/` resolves
