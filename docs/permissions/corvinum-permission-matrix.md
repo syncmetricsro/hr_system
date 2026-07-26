@@ -28,7 +28,7 @@ Legend: ✅ permitted · — denied
 | `project.assign` | — | ✅ | ✅ | — |
 | `trial.record_outcome` | — | ✅ | ✅ | — |
 | `readiness.complete` | — | ✅ | ✅ | — |
-| `approval.activate` | — | — | ✅ | — |
+| `approval.activate` (**not enforced** — see note below) | — | — | ✅ | — |
 | `project.manage` | — | — | ✅ | — |
 | `exit.reconcile` | — | ✅ | ✅ | — |
 | `equipment.issue_return` | — | ✅ | ✅ | — |
@@ -50,6 +50,14 @@ Legend: ✅ permitted · — denied
 | `user.manage` | — | — | ✅ | — |
 | `export.approved` | — | — | ✅ | ✅ |
 | `audit.view` | — | — | ✅ | ✅ |
+
+> **`approval.activate` is not enforced here either (2026-07-27).** The
+> activation route is shared core code (`core/projects/views.py::activate_person`)
+> and is gated by `project.assign`, which coordinators hold; the Activate button
+> sits behind `readiness.complete`, also a coordinator action. CorvinumEU grants
+> the same three actions as Jober, so a CorvinumEU coordinator can approve
+> Working exactly as a Jober one can. Tracked as Jober production-readiness
+> item 14 — the fix is in shared code and lands for both clients at once.
 
 ## Lifecycle transitions (trial-day workflow enabled for demo, C-Q1)
 
