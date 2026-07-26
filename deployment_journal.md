@@ -1,5 +1,32 @@
 # Deployment Journal
 
+## 2026-07-26 - Slovak i18n fix redeployed to jober-staging (demo language)
+
+- Deployed **`3490f5d`** to `jober-staging` as `jober-platform:demo-3490f5d`
+  (458 MB, `sha256:82d81475...`), built locally from pinned dependencies with
+  the Node-artifact and vendor-asset checks green, then streamed with
+  `git:load-image`. No VPS-side build, no build-time secrets. `migrate --check`
+  reported nothing pending - this release changes templates and catalogs only.
+- **Why it was needed:** the finance page a CEO is shown was rendering two
+  headings in English inside an otherwise Slovak UI. Found by requesting the
+  real `/sk/finance/` page on this app as the real demo accounts, not by
+  reading the catalog - the entries existed but were *fuzzy*, and `msgfmt`
+  compiles fuzzy entries away silently.
+- Verified after the deploy, again by rendering rather than by inspecting
+  files: the Observer's finance page now reads **`Mesačný trend podľa
+  pobočiek`** and **`Zisk/strata podľa pobočiek`**, and a scan for the four
+  previously-English office strings returns none. The Slovak `Pobočky` section
+  of the Getting started Help article is live with its scoping paragraph.
+- Re-confirmed the office boundary survived the redeploy: manager and
+  coordinator badges read `Velký Meder`, Observer's reads `All offices`;
+  5 of 7 people and 2 of 6 projects for the scoped roles against 7 and 6 for
+  Observer; the Győr project returns 403 and 200 respectively. Data untouched
+  (this deploy carried no migration or seed).
+- `scripts/deploy_smoke.sh <url> --https` passed all five checks: healthz,
+  login + CSRF, fingerprinted static CSS, X-Frame-Options, HSTS.
+- `jober-platform:demo-d5b103d` remains the immediate rollback target via
+  `git:from-image`.
+
 ## 2026-07-26 - ADR 0026 Phase B (office scoping) deployed to jober-staging, with a full database reset
 
 - Deployed application revision **`d5b103d`** to `jober-staging` as
