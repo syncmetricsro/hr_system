@@ -5,11 +5,12 @@ from datetime import timedelta
 from django.core.management.base import BaseCommand
 from django.utils import timezone
 
-from core.accounts.models import User
+from core.accounts.models import Role, User
 from core.offices.models import Office
 from core.people.models import LifecycleStatus, Person
 from core.projects.models import Project
 from core.projects.services import activate_on_project, schedule_trial
+from clients.jober.demo.management.commands.seed_demo import DEMO_USERS
 
 # Fictional data only — no real worker PII before the legal gate.
 DEMO_DOMAIN = "demo.jober.test"
@@ -78,7 +79,27 @@ class Command(BaseCommand):
 
         recruiter = User.objects.filter(email=f"naborar@{DEMO_DOMAIN}").first()
         coordinator = User.objects.filter(email=f"koordinator@{DEMO_DOMAIN}").first()
-        manager = User.objects.filter(email=f"manazer@{DEMO_DOMAIN}").first()
+
+        # Office membership for every seeded account, driven by the single
+        # DEMO_USERS table so accounts and their offices cannot drift apart.
+        # Done before projects, because responsible-coordinator assignment
+        # below needs to know which coordinator belongs to which office.
+        coordinators_by_office: dict[str, User] = {}
+        for local_part, role, _first, _last, office_code in DEMO_USERS:
+            user = User.objects.filter(email=f"{local_part}@{DEMO_DOMAIN}").first()
+            if user is None:
+                continue
+            if office_code is None:
+                # Observer: cross-office access is a role bypass, never a
+                # membership, so it must hold no office rows at all.
+                user.offices.clear()
+                continue
+            office = Office.objects.filter(code=office_code).first()
+            if office is None:
+                continue
+            user.offices.set([office])
+            if role == Role.COORDINATOR:
+                coordinators_by_office[office_code] = user
 
         projects = {}
         for spec in PROJECTS:
@@ -88,25 +109,16 @@ class Command(BaseCommand):
             project, _ = Project.objects.update_or_create(
                 code=spec["code"], defaults=defaults
             )
-            if coordinator:
-                project.responsible_coordinators.add(coordinator)
+            # Each project is run by a coordinator of its OWN office. Assigning
+            # every project to the Velký Meder coordinator - as this did until
+            # 2026-07-26 - left them formally responsible for four projects
+            # they get a 403 on, which reads as broken data the moment anyone
+            # asks who runs the Győr contracts.
+            office_coordinator = coordinators_by_office.get(office_code)
+            if office_coordinator:
+                project.responsible_coordinators.set([office_coordinator])
             projects[spec["code"]] = project
         self.stdout.write(f"Projects: {len(projects)}")
-
-        # Give the demo staff membership in exactly one office (ADR 0026 Phase
-        # A) — deliberately NOT all three, so the demo actually shows the
-        # restriction working (a manager's Finance page differs visibly from
-        # the Observer's all-offices executive view, rather than looking
-        # identical because every demo account happened to span every office).
-        velky_meder = Office.objects.filter(code="VM").first()
-        if recruiter and velky_meder:
-            recruiter.offices.set([velky_meder])
-        if coordinator and velky_meder:
-            coordinator.offices.set([velky_meder])
-        if manager and velky_meder:
-            manager.offices.set([velky_meder])
-        # Observer intentionally gets no office membership — cross-office
-        # visibility is a role bypass (user_office_scope), not a membership.
 
         for first, last, status, disabled, office_code in PEOPLE:
             office = Office.objects.filter(code=office_code).first()
