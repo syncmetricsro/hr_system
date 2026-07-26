@@ -11,6 +11,7 @@ import io
 import uuid
 
 from django.core.files.base import ContentFile
+from django.db import transaction
 
 MAX_UPLOAD_BYTES = 5 * 1024 * 1024  # 5MB raw upload cap
 MAX_INPUT_DIMENSION = 8000  # guards against decompression-bomb abuse
@@ -20,6 +21,37 @@ ALLOWED_FORMATS = {"JPEG", "PNG", "WEBP"}
 
 class AvatarUploadError(Exception):
     """Raised when an uploaded file fails avatar validation."""
+
+
+def save_replacing(fieldfile, name: str, content) -> None:
+    """Store ``content`` on ``fieldfile``, deleting the file it replaced.
+
+    ``FieldFile.save()`` allocates a *new* name (upload_to mints a fresh UUID)
+    and never touches the old file, so every replacement used to leave an
+    orphan on disk with no row referencing it - unreachable, un-auditable, and
+    still holding personal data. Only an explicit *remove* deleted anything.
+
+    The delete runs on commit: if the surrounding transaction rolls back, the
+    row still points at the old file, and deleting it eagerly would have
+    destroyed the live copy.
+    """
+    old_name = fieldfile.name or ""
+    storage = fieldfile.storage
+    fieldfile.save(name, content, save=True)
+    if old_name and old_name != fieldfile.name:
+        transaction.on_commit(lambda: storage.delete(old_name))
+
+
+def _cap_pillow_pixels(image_module) -> None:
+    """Second line of defence behind the header check.
+
+    Pillow raises ``DecompressionBombError`` past ``MAX_IMAGE_PIXELS``. Its
+    default (~89M pixels) is far more generous than anything this app stores,
+    and the header check above can only catch a *dimension* that is too large
+    - not, say, 7999 x 7999, which passes both dimension caps while decoding
+    to ~64M pixels.
+    """
+    image_module.MAX_IMAGE_PIXELS = MAX_INPUT_DIMENSION * MAX_INPUT_DIMENSION // 2
 
 
 def avatar_upload_path(instance, filename: str) -> str:
@@ -44,15 +76,25 @@ def process_avatar_upload(uploaded_file) -> ContentFile:
     """
     from PIL import Image, UnidentifiedImageError
 
+    _cap_pillow_pixels(Image)
+
     if uploaded_file.size > MAX_UPLOAD_BYTES:
         raise AvatarUploadError("Image is too large (max 5MB).")
 
     raw = uploaded_file.read()
     try:
         with Image.open(io.BytesIO(raw)) as probe:
+            # Dimensions come from the header, so this rejects a
+            # decompression bomb *before* anything decodes it. Checking after
+            # image.load() - as this did originally - meant the bomb had
+            # already been expanded in memory by the time it was refused.
+            probe_size = probe.size
             probe.verify()
     except (UnidentifiedImageError, OSError, ValueError):
         raise AvatarUploadError("File is not a valid image.") from None
+
+    if max(probe_size) > MAX_INPUT_DIMENSION:
+        raise AvatarUploadError("Image dimensions are too large.")
 
     # verify() leaves the file object unusable for further operations -
     # reopen fresh for the actual processing.
@@ -64,8 +106,6 @@ def process_avatar_upload(uploaded_file) -> ContentFile:
 
     if image.format not in ALLOWED_FORMATS:
         raise AvatarUploadError("Only JPEG, PNG, or WebP images are allowed.")
-    if max(image.size) > MAX_INPUT_DIMENSION:
-        raise AvatarUploadError("Image dimensions are too large.")
 
     # Re-encoding from decoded pixel data (not the original bytes) already
     # drops EXIF by construction - no separate strip step needed.
@@ -140,11 +180,17 @@ def process_certificate_document(uploaded_file) -> tuple[ContentFile, str]:
 
     from PIL import Image, UnidentifiedImageError
 
+    _cap_pillow_pixels(Image)
+
     try:
         with Image.open(io.BytesIO(raw)) as probe:
+            probe_size = probe.size  # header only - see process_avatar_upload
             probe.verify()
     except (UnidentifiedImageError, OSError, ValueError):
         raise CertificateUploadError("File is not a valid image or PDF.") from None
+
+    if max(probe_size) > CERTIFICATE_MAX_INPUT_DIMENSION:
+        raise CertificateUploadError("Image dimensions are too large.")
 
     try:
         image = Image.open(io.BytesIO(raw))
@@ -153,9 +199,9 @@ def process_certificate_document(uploaded_file) -> tuple[ContentFile, str]:
         raise CertificateUploadError("File is not a valid image or PDF.") from None
 
     if image.format not in CERTIFICATE_IMAGE_EXTENSIONS:
-        raise CertificateUploadError("Only JPEG, PNG, WebP images or PDF documents are allowed.")
-    if max(image.size) > CERTIFICATE_MAX_INPUT_DIMENSION:
-        raise CertificateUploadError("Image dimensions are too large.")
+        raise CertificateUploadError(
+            "Only JPEG, PNG, WebP images or PDF documents are allowed."
+        )
 
     stored_format = image.format
     if image.mode not in ("RGB", "L"):

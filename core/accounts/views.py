@@ -19,7 +19,7 @@ from django.views.decorators.http import require_POST
 
 from core.accounts import totp as totp_lib
 from core.audit.services import record_event
-from core.media import AvatarUploadError, process_avatar_upload
+from core.media import AvatarUploadError, process_avatar_upload, save_replacing
 from core.notifications.services import start_notification_session
 from core.ui.qr import qr_svg
 
@@ -54,7 +54,10 @@ def login_page(request: HttpRequest) -> HttpResponse:
             login_event = record_event(user, "auth.login")
             start_notification_session(request, login_event)
             if _role_requires_totp(user):
-                messages.warning(request, _("Your role requires two-factor authentication — set it up now."))
+                messages.warning(
+                    request,
+                    _("Your role requires two-factor authentication — set it up now."),
+                )
                 return HttpResponseRedirect(reverse("two_factor_setup"))
             return HttpResponseRedirect(reverse("dashboard"))
         error = _("Invalid email or password.")
@@ -141,7 +144,9 @@ def _safe_next(request: HttpRequest) -> str:
     from django.urls import reverse
 
     next_url = request.POST.get("next", "")
-    if not url_has_allowed_host_and_scheme(next_url, allowed_hosts={request.get_host()}):
+    if not url_has_allowed_host_and_scheme(
+        next_url, allowed_hosts={request.get_host()}
+    ):
         next_url = reverse("reports")
     return next_url
 
@@ -162,8 +167,12 @@ def avatar_upload(request: HttpRequest) -> HttpResponse:
         return redirect(_safe_next(request))
 
     had_avatar = bool(request.user.avatar)
-    request.user.avatar.save("avatar.webp", processed, save=True)
-    record_event(request.user, "user.avatar_replaced" if had_avatar else "user.avatar_added", target=request.user)
+    save_replacing(request.user.avatar, "avatar.webp", processed)
+    record_event(
+        request.user,
+        "user.avatar_replaced" if had_avatar else "user.avatar_added",
+        target=request.user,
+    )
     messages.success(request, _("Avatar updated."))
     return redirect(_safe_next(request))
 

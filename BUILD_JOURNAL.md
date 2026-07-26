@@ -1,5 +1,36 @@
 # Build Journal
 
+## 2026-07-26 - Replaced uploads stop leaving orphans; bombs refused before decoding
+
+Two production-readiness findings (6 and 8), plus the record correction that
+goes with the whole media slice.
+
+- **Every replacement was leaking a file.** `FieldFile.save()` mints a new
+  name from `upload_to` and never touches the predecessor, so replacing an
+  avatar or a certificate left the old file on disk with **no row pointing at
+  it** - unreachable, un-auditable, and still holding a photo or a scan of
+  someone's documents. Only an explicit *remove* deleted anything.
+  `core.media.save_replacing` now stores and cleans up in one call, used by
+  all three call sites.
+- The delete runs in `transaction.on_commit`, not inline: if the surrounding
+  transaction rolls back, the row still references the old file, and an eager
+  delete would have destroyed the live copy. That detail is also why the tests
+  need `django_capture_on_commit_callbacks` - without it they would pass
+  vacuously, since pytest-django rolls every test back and the callback would
+  simply never run.
+- **The decompression-bomb check ran after the bomb was decoded.** Both
+  handlers called `image.load()` and only then compared dimensions, so the
+  image had already been expanded in memory by the time it was refused. The
+  check now reads `.size` from the header in the probe block. `MAX_IMAGE_PIXELS`
+  is capped as well, because a dimension limit alone still admits 7999 x 7999
+  - roughly 64M pixels, well inside both caps.
+- **Corrected the record rather than only the code.** Production-readiness
+  item 2 asserted "Neither Dokku app has a storage mount"; both apps have one,
+  and `MEDIA_ROOT` resolves to `/app/media`. Uploads always survived
+  redeploys. The demo runbook's "uploads vanish on redeploy" warning inherited
+  that error and is gone; uploading is now something the demo can show,
+  including the certificate-visibility boundary.
+
 ## 2026-07-26 - SMS cannot reach a real number from staging any more
 
 The runbook was mitigating live Twilio credentials on a public-URL staging app

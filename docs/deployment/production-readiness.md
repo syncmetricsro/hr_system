@@ -12,10 +12,10 @@ A cross-cutting review of the deployed staging state (both apps, live
 inspection — not just static code reading) found the items below. None are
 fixed by writing this list; each stays open until its own fix lands and is
 verified the same way (live inspection, not just "the code looks right").
-Recommended order (updated 2026-07-26 — items 5, 7 and 9 are now done): lock
-down staging/provider access first (item 1, the only one that is urgent while
-the repo is public), then implement protected persistent media (items 2 and
-3), then schedule backups (item 4).
+Recommended order (updated 2026-07-26 — items 1, 2, 3, 5, 6, 7, 8 and 9 are
+now done): **scheduled database backups (item 4) are the largest remaining
+risk**, followed by the user/credential-management subsystem (item 11) and a
+one-off sweep of media orphaned by pre-fix replacements (item 6).
 
 1. 🟡 **Partly fixed 2026-07-26 — public demo credentials could reach live
    Twilio.** The repo is public and publishes `demo-jober-2026`; Jober
@@ -28,26 +28,49 @@ the repo is public), then implement protected persistent media (items 2 and
    every run, so any reseed would have quietly republished the known value);
    `--reset-passwords` forces the old behaviour and the command reports when
    it preserves one. `CLAUDE.md` now marks the published value local-only.
-   **Still open:** the Twilio decision itself. The credentials remain live on
-   a public-URL staging app. Note that *unsetting* them is not free — with
-   them absent, `send_sms` records the message as FAILED rather than raising,
-   so the send button would look broken on screen; the demo runbook instead
-   tells the presenter to avoid it. Also still open: the value stays
-   hardcoded in `seed_demo.py` and six e2e tests, so making it env-driven is
-   the durable fix.
-2. **Critical — uploaded media is not durable or served in production.**
-   Neither Dokku app has a storage mount. Django only serves `/media/` under
-   `DEBUG` (`config/urls.py`); production has no nginx alias yet. Avatars
-   and certificate files uploaded to staging today will not survive a
-   redeploy, and their URLs 404 right now.
-3. **Critical — the planned media-serving design would expose certificate
-   documents publicly.** `templates/panels/compliance_certificates.html`
-   links directly to `certificate.document.url`; a bare nginx `/media/`
-   alias (the design `avatar-design.md`/`certificate-upload-design.md`
-   sketched) would serve that with no auth check at all — a UUID filename
-   is obscurity, not authorization. Certificates need an authenticated,
-   permission-checked download view; avatars need an explicit privacy
-   decision (are they meant to be as-public-as-a-photo-badge, or not).
+   **Twilio: fixed 2026-07-26.** Two changes replaced the runbook's
+   "don't press Send". A recipient allowlist (`SMS_ALLOWED_RECIPIENTS`,
+   empty = unrestricted, so production is unaffected) blocks any non-listed
+   number *before* the provider call — staging holds fictional worker data
+   and real credentials, and a fictional record with a real number typed
+   into it is indistinguishable from any other, so "the data is fake" was
+   never a control. A blocked send records `BLOCKED`, not `FAILED`: the
+   provider never saw it. And unsetting the credentials is now genuinely
+   safe — `sms_configured()` drives a disabled control with a stated reason,
+   where before an unconfigured app filed a FAILED message and looked broken.
+   **Still open:** the demo password stays hardcoded in `seed_demo.py` and
+   six e2e tests, so making it env-driven is the durable fix. **Owner
+   action:** set `SMS_ALLOWED_RECIPIENTS` on both staging apps to the
+   existing `DEMO_SMS_PHONE` value.
+2. ~~**Critical — uploaded media is not durable or served in production.**~~
+   **Half of this was wrong, and the rest is fixed 2026-07-26.**
+   *Wrong:* "Neither Dokku app has a storage mount." Both apps **do** have
+   one (`/var/lib/dokku/data/storage/<app>-media:/app/media`), and
+   `MEDIA_ROOT` resolves to `/app/media` — verified by printing it from the
+   running container. Uploads have always survived redeploys; the demo
+   runbook's warning that they "vanish on redeploy" inherited this error and
+   has been corrected.
+   *Right, and now fixed:* nothing served them. `/media/` was routed only
+   under `DEBUG` and no nginx alias exists, so an upload succeeded and then
+   rendered as a broken image or a dead link. Files are now delivered by
+   `core/media_views.py` (see item 3).
+3. ~~**Critical — the planned media-serving design would expose certificate
+   documents publicly.**~~ **Fixed 2026-07-26 — and it was never live.**
+   The hole would have been *created* by building what the design docs
+   specified (a bare nginx `/media/` alias), not by anything deployed:
+   `nginx:show-config` confirmed no alias exists, so the exposure was
+   still on paper. Both design docs have been reversed rather than left as
+   a sketch someone implements later.
+   Files now go through `core/media_views.py`: person avatars take the
+   office boundary, staff headshots take plain authentication (colleagues
+   appear in shared queues; a headshot is not office data), and certificate
+   documents take the office boundary **and** `can_view_sensitive` — so an
+   unconnected recruiter in the same office sees that a certificate exists
+   and gets a 403 on the scan. The avatar privacy question this item asked
+   for is answered: **not** as-public-as-a-photo-badge.
+   The `DEBUG`-only `/media/` route was removed too — it meant local
+   development bypassed every check while production served nothing, so a
+   bypass was one settings flag away and invisible locally.
 4. **High — neither PostgreSQL service has scheduled backups.** Live
    inspection shows no backup schedule on `pg-jober-staging` or
    `pg-corvinum-staging`. Tracked below under "DB backups / restore" since
@@ -66,22 +89,26 @@ the repo is public), then implement protected persistent media (items 2 and
    rooms, and office-less people being invisible to everyone including
    their own recruiter — were fixed in the same programme. Blacklist
    remains deliberately company-wide (ADR 0026 point 3).
-6. **High — media replacement leaves old PII files behind.** Avatar/
-   certificate replacement (`core/accounts/views.py`,
-   `features/compliance/services.py`) saves the new upload but never
-   deletes the file it replaced — only an explicit *remove* deletes the
-   *current* file. Every past replacement leaves an orphaned file with no
-   remaining reference, and no cleanup path exists yet (this is the same
-   "no hard-delete/anonymization hook" gap `avatar-design.md`'s open items
-   already flagged, now confirmed to also apply to routine replacement, not
-   just erasure).
+6. ~~**High — media replacement leaves old PII files behind.**~~ **Fixed
+   2026-07-26.** `core.media.save_replacing` now stores the new file and
+   deletes the one it replaced, used by all three call sites (own avatar,
+   person avatar, certificate document). The delete runs in
+   `transaction.on_commit`, so a rolled-back transaction cannot destroy the
+   file the row still points at.
+   **Still open, and different:** files orphaned by replacements made
+   *before* this fix are still on the volumes, and there is still no
+   hard-delete/anonymization hook for erasure requests — the broader gap
+   `avatar-design.md`'s open items flagged. A one-off sweep comparing
+   storage against `FileField` values would clear the historical orphans;
+   nothing does that yet.
 7. ~~**Medium — no real GitHub CI gate.**~~ **Fixed** (per user, 2026-07-25).
-8. **Medium — upload dimension checks happen after full image decoding.**
-   `core/media.py`'s avatar and certificate handlers call `image.load()`
-   before enforcing the 8000px cap — decompression-bomb protection is
-   weaker than it looks, since the image is already fully decoded in
-   memory by the time the size check runs. Reorder to check dimensions from
-   header/metadata before a full `load()`.
+8. ~~**Medium — upload dimension checks happen after full image decoding.**~~
+   **Fixed 2026-07-26.** Both handlers now read `.size` from the header in
+   the probe block and reject before anything decodes; a test monkeypatches
+   `Image.load` to raise, so it asserts *nothing was decoded* rather than
+   *the error message looks right*. `Image.MAX_IMAGE_PIXELS` is also capped
+   as a second line of defence, because a dimension check alone still admits
+   7999 × 7999 (~64M pixels).
 9. ~~**Medium — backlog documentation is materially stale.**~~ **Fixed
    2026-07-26.** `docs/platform/client-feature-matrix.md` was reconciled
    against `main` — each claim re-checked in the code rather than assumed:

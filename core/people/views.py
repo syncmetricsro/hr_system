@@ -15,7 +15,7 @@ from django.views.decorators.http import require_POST
 from core.accounts.permissions import Action, require_action
 from core.offices.scoping import assert_person_in_scope, scope_people
 from core.audit.services import record_event
-from core.media import AvatarUploadError, process_avatar_upload
+from core.media import AvatarUploadError, process_avatar_upload, save_replacing
 from core.people.forms import PersonForm
 from core.accounts.permissions import can as user_can
 from core.people.models import InactiveReason, LifecycleError, LifecycleStatus, Person
@@ -308,7 +308,7 @@ def person_avatar_upload(request: HttpRequest, pk: int) -> HttpResponse:
         return redirect("person_detail", pk=person.pk)
 
     had_avatar = bool(person.avatar)
-    person.avatar.save("avatar.webp", processed, save=True)
+    save_replacing(person.avatar, "avatar.webp", processed)
     record_event(
         request.user,
         "person.avatar_replaced" if had_avatar else "person.avatar_added",
