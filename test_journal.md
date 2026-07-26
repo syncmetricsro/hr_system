@@ -1,5 +1,25 @@
 # Test Journal
 
+## 2026-07-26 - tests/test_media_serving.py (9)
+
+- Covers the three permission shapes and, separately, that `/media/` resolves
+  to **404 in every environment**. That last one is the regression guard that
+  matters: the failure mode here is not a broken view, it is someone "fixing"
+  broken images later by adding an nginx alias.
+- `test_certificate_document_hidden_from_unconnected_recruiter` is the test
+  that encodes the actual decision - same office, no relationship to the
+  person, sees the certificate row, 403 on the scan. Without it the
+  `can_view_sensitive` call reads as redundant next to the office guard and
+  would be a tempting simplification.
+- `test_missing_file_404s_rather_than_500s` deletes the file from storage
+  behind the model's back, which is exactly the state a DB restore without the
+  media volume produces.
+- One existing test had to change: `test_avatar_tag_renders_image_when_photo_present`
+  asserted `user.avatar.url in html`, encoding the behaviour being removed. It
+  now asserts the permission-checked route *and* that the raw storage URL is
+  absent.
+- Jober **676 passed**, CorvinumEU **425 passed**, Playwright **50 passed**.
+
 ## 2026-07-26 - tests/test_object_view_office_scoping.py (9) + test_blacklist_stays_company_wide.py (2)
 
 - **Verified by breaking it, not by watching it pass.** A security test that

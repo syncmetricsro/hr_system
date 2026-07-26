@@ -54,6 +54,16 @@ Dokku persistent volume, same `MEDIA_ROOT`, just a different subdirectory of
 the same volume — not a new storage mechanism, not a second infrastructure
 decision.
 
+**Serving is *not* shared wholesale, though (added 2026-07-26).** Both go
+through `core/media_views.py` rather than any nginx alias, but a certificate
+document is gated more tightly than an avatar: the office boundary **and**
+`can_view_sensitive` — managers, Observer, the owning recruiter, and the
+person's responsible coordinator(s). The rationale is the same one that made
+DOB and identifiers per-object rather than a flat role grant: the *existence*
+of a certificate is an ordinary broad read within the office, but a scan of
+someone's medical or licence document is not. An unconnected recruiter in the
+same office sees the row and gets a 403 on the file.
+
 No `uploaded_by` field is added — who uploaded, replaced, or deleted a
 document is captured by the audit event (§5), not denormalized onto the
 model.

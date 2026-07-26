@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from django.template import Library
 from django.templatetags.static import static
+from django.urls import reverse
 from django.utils.html import format_html
 from django.utils.safestring import SafeString
 
@@ -34,8 +35,17 @@ def avatar(obj, size: str = "sm") -> SafeString:
     """
     photo = getattr(obj, "avatar", None) if obj is not None else None
     if photo:
+        # Never photo.url: /media/ is not served, and must not be - the file
+        # goes through a permission-checked view (core/media_views.py).
+        route = (
+            "person_avatar_file"
+            if hasattr(obj, "lifecycle_status")
+            else "user_avatar_file"
+        )
         return format_html(
-            '<img class="avatar avatar-{}" src="{}" alt="">', size, photo.url
+            '<img class="avatar avatar-{}" src="{}" alt="">',
+            size,
+            reverse(route, args=[obj.pk]),
         )
     return format_html(
         '<img class="avatar avatar-{}" src="{}" alt="">', size, _default_avatar_url(obj)

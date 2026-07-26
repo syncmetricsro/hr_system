@@ -20,7 +20,7 @@
           <span class="equipment-unit-price">
             {% if certificate.issue_date %}{% trans "Issued" %}: {{ certificate.issue_date }}{% endif %}
             {% if certificate.expiry_date %} · {% trans "Expires" %}: {{ certificate.expiry_date }}{% endif %}
-            {% if certificate.document %} · <a href="{{ certificate.document.url }}" target="_blank" rel="noopener">{% trans "View document" %}</a>{% endif %}
+            {% if certificate.document %} · <a href="{% url 'certificate_document' certificate.pk %}" target="_blank" rel="noopener">{% trans "View document" %}</a>{% endif %}
           </span>
           {% if may_manage %}
             <div class="inline-form">
