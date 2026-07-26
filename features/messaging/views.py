@@ -10,6 +10,7 @@ from django.views.decorators.http import require_POST
 
 from core.accounts.models import Role
 from core.accounts.permissions import Action, require_action
+from core.offices.scoping import assert_person_in_scope
 from features.messaging.models import InboundMessage, MessageTemplate
 from features.messaging.services import send_sms, verify_twilio_signature
 from core.people.models import Person
@@ -19,12 +20,20 @@ from core.people.models import Person
 @require_action(Action.SMS_SEND)
 def send_sms_view(request: HttpRequest, person_pk: int) -> HttpResponse:
     person = get_object_or_404(Person, pk=person_pk)
+    # Office boundary first (ADR 0026): sending an SMS reaches a worker's
+    # personal phone, so it needs the same 403 as viewing their record. The
+    # person_detail page that renders this form is already scoped; this stops
+    # a direct POST with another office's pk.
+    assert_person_in_scope(request.user, person)
 
     # Coordinator-scoped sending: a coordinator may only message people on their
-    # own projects (messaging spec).
+    # own projects (messaging spec). Narrower than the office boundary, not a
+    # replacement for it.
     if getattr(request.user, "role", None) == Role.COORDINATOR:
         if request.user.pk not in person.responsible_coordinator_ids():
-            raise PermissionDenied("Coordinator may only message people on their projects.")
+            raise PermissionDenied(
+                "Coordinator may only message people on their projects."
+            )
 
     if not person.phone:
         messages.error(request, _("This person has no phone number."))
@@ -45,7 +54,9 @@ def send_sms_view(request: HttpRequest, person_pk: int) -> HttpResponse:
     if message.status == message.Status.SENT:
         messages.success(request, _("Message sent."))
     else:
-        messages.error(request, _("Message failed: %(error)s") % {"error": message.error})
+        messages.error(
+            request, _("Message failed: %(error)s") % {"error": message.error}
+        )
     return redirect("person_detail", pk=person.pk)
 
 

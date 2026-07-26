@@ -3,7 +3,6 @@ from __future__ import annotations
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.core.exceptions import PermissionDenied
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.template.response import TemplateResponse
@@ -14,7 +13,7 @@ from django.utils.dateparse import parse_date
 from django.views.decorators.http import require_POST
 
 from core.accounts.permissions import Action, require_action
-from core.offices.scoping import may_see_person, scope_people
+from core.offices.scoping import assert_person_in_scope, scope_people
 from core.audit.services import record_event
 from core.media import AvatarUploadError, process_avatar_upload
 from core.people.forms import PersonForm
@@ -48,11 +47,9 @@ def _form_age_warning(form: PersonForm):
 
 def _assert_person_in_scope(request: HttpRequest, person: Person) -> None:
     """ADR 0026 Phase B: a non-Observer can't view/edit another office's
-    person by guessing a URL, mirroring finance's _assert_month_in_scope.
-    Office-less people stay visible to their owning recruiter - see
-    core.offices.scoping for why."""
-    if not may_see_person(request.user, person):
-        raise PermissionDenied("This person belongs to another office.")
+    person by guessing a URL. Thin wrapper over the shared guard so this
+    module's call sites keep their request-shaped signature."""
+    assert_person_in_scope(request.user, person)
 
 
 def _configure_age_warning(form: PersonForm) -> None:

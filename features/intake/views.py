@@ -6,7 +6,10 @@ from django.shortcuts import get_object_or_404, redirect
 from django.template.response import TemplateResponse
 from django.utils.translation import gettext as _
 
-from core.accounts.permissions import Action, require_action
+from django.core.exceptions import PermissionDenied
+
+from core.accounts.permissions import Action, require_action, user_office_scope
+from core.offices.scoping import assert_person_in_scope
 from features.intake.models import RecruitmentIntake
 from features.intake.services import (
     answers_map,
@@ -28,9 +31,30 @@ def intake_start(request: HttpRequest) -> HttpResponse:
     return redirect("intake_panel", pk=intake.pk)
 
 
+def _assert_intake_in_scope(user, intake: RecruitmentIntake) -> None:
+    """An intake carries no office of its own (ADR 0026).
+
+    Before completion it belongs to the recruiter running it; afterwards a
+    Person exists and that person's office governs. This mirrors the
+    office-less-Person rule - fall back to ownership rather than making the
+    record either universally visible or invisible to its own author. It is
+    deliberately strict: a colleague in the same office cannot open a
+    half-finished intake. Widen it if that proves annoying in practice, but
+    widen it on purpose.
+    """
+    if user_office_scope(user) is None:
+        return
+    if intake.person_id is not None:
+        assert_person_in_scope(user, intake.person)
+        return
+    if intake.recruiter_id != getattr(user, "pk", None):
+        raise PermissionDenied("This intake belongs to another recruiter.")
+
+
 @require_action(Action.INTAKE_CREATE_EDIT)
 def intake_panel(request: HttpRequest, pk: int) -> HttpResponse:
     intake = get_object_or_404(RecruitmentIntake, pk=pk)
+    _assert_intake_in_scope(request.user, intake)
     if intake.status == RecruitmentIntake.Status.COMPLETED and intake.person_id:
         return redirect("person_detail", pk=intake.person_id)
 
@@ -62,11 +86,13 @@ def intake_panel(request: HttpRequest, pk: int) -> HttpResponse:
     questions = []
     for q in panel.questions.all():
         answer = existing.get(q.stable_key)
-        questions.append({
-            "q": q,
-            "value": answer.value if answer else "",
-            "error": errors.get(q.stable_key, ""),
-        })
+        questions.append(
+            {
+                "q": q,
+                "value": answer.value if answer else "",
+                "error": errors.get(q.stable_key, ""),
+            }
+        )
     return TemplateResponse(
         request,
         "pages/intake_panel.html",

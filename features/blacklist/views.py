@@ -8,7 +8,11 @@ from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
 
 from core.accounts.permissions import Action, require_action
-from features.blacklist.models import BlacklistCase, BlacklistCaseStatus, BlacklistCategory
+from features.blacklist.models import (
+    BlacklistCase,
+    BlacklistCaseStatus,
+    BlacklistCategory,
+)
 from features.blacklist.services import (
     BlacklistError,
     compute_composite_identifier,
@@ -17,6 +21,15 @@ from features.blacklist.services import (
     remove_case,
 )
 from core.people.models import Person
+
+
+# NOTE: nothing in this module is office-scoped, and that is deliberate
+# (ADR 0026 point 3). A person barred at one office must be caught at all of
+# them, so blacklist matching, the review queue and case decisions stay
+# company-wide while people, projects, stock, accommodation and finance are
+# walled off per office. `tests/test_blacklist_stays_company_wide.py` asserts
+# this, so a later "scope everything for consistency" sweep fails loudly
+# rather than quietly breaking fraud protection.
 
 
 @require_action(Action.BLACKLIST_DECIDE)
@@ -38,11 +51,17 @@ def blacklist_propose(request: HttpRequest, person_pk: int) -> HttpResponse:
         pk=request.POST.get("category"), is_active=True
     ).first()
     maiden = request.POST.get("mothers_maiden_name", "")
-    composite = compute_composite_identifier(
-        person.first_name, person.last_name, person.date_of_birth, maiden
-    ) if maiden else None
+    composite = (
+        compute_composite_identifier(
+            person.first_name, person.last_name, person.date_of_birth, maiden
+        )
+        if maiden
+        else None
+    )
     propose_case(
-        person, category=category, reason=request.POST.get("reason", ""),
+        person,
+        category=category,
+        reason=request.POST.get("reason", ""),
         identifier=request.POST.get("identifier") or None,
         identifier_type=request.POST.get("identifier_type", "national_id"),
         composite_identifier=composite,
@@ -57,8 +76,12 @@ def blacklist_propose(request: HttpRequest, person_pk: int) -> HttpResponse:
 def blacklist_decide(request: HttpRequest, pk: int) -> HttpResponse:
     case = get_object_or_404(BlacklistCase, pk=pk)
     try:
-        decide_case(case, request.POST.get("decision"), actor=request.user,
-                    reason=request.POST.get("reason", ""))
+        decide_case(
+            case,
+            request.POST.get("decision"),
+            actor=request.user,
+            reason=request.POST.get("reason", ""),
+        )
         messages.success(request, _("Decision recorded."))
     except BlacklistError as exc:
         messages.error(request, str(exc))
