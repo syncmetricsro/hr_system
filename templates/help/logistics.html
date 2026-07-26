@@ -6,10 +6,11 @@
 
 {% block help_content %}
   <h2>{% trans "Accommodation" %}</h2>
-  <p>{% blocktrans %}Rooms belong to an accommodation building and have a capacity and a monthly rate. Coordinators and Managers assign a worker to a room from their person page; releasing a room frees the space for the next assignment. Occupancy and cost are summarized on the Accommodation tab.{% endblocktrans %}</p>
+  <p>{% blocktrans %}Rooms belong to an accommodation building and have a capacity and a monthly rate. Coordinators and Managers assign a worker to a room from their person page; releasing a room frees the space for the next assignment. Occupancy and cost are summarized on the Accommodation tab, counting the buildings of your own offices.{% endblocktrans %}</p>
 
   <h2>{% trans "Equipment" %}</h2>
   <p>{% blocktrans %}Issuing equipment to a worker reduces available warehouse stock (where stock tracking is enabled); returning it restores that stock. An item that isn't returned can be flagged for a manager's deduction review, which decides whether to charge the worker or waive the charge — that decision, and the resulting charge if any, is recorded against the worker.{% endblocktrans %}</p>
+  <p>{% blocktrans %}Where a company has several offices, each office keeps its own warehouse. Issuing draws from the stock of the worker's own office and never from another office's shelves, so the balance and the monthly movement report you see are your office's, not the whole company's. A worker with no office assigned cannot be issued equipment, because there is no warehouse to take it from — give them an office first.{% endblocktrans %}</p>
 
   <h2>{% trans "Transport" %}</h2>
   <p>{% blocktrans %}Where transport tracking is enabled, weekly transport records capture who traveled and the associated cost, feeding into the transport trend reports.{% endblocktrans %}</p>

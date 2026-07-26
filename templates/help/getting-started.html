@@ -13,6 +13,10 @@
   <h2>{% trans "Roles" %}</h2>
   <p>{% blocktrans %}Four roles exist: Recruiter (intake and candidate routing), Coordinator (day-to-day field operations — assignments, readiness, equipment), Manager/Administrator (approvals and everything Recruiter/Coordinator can do), and Observer (read-only, for oversight). A hidden button on a page usually means your role doesn't have that permission, not that the feature is broken.{% endblocktrans %}</p>
 
+  <h2>{% trans "Offices" %}</h2>
+  <p>{% blocktrans %}If your company works from more than one office, what you can see is limited to the offices you belong to. People, projects, accommodation, equipment stock, compliance alerts and financial figures all show your own offices only, and totals count your offices only. The office bounding your current view is shown next to your name at the top of the screen.{% endblocktrans %}</p>
+  <p>{% blocktrans %}This is a real boundary, not a display filter: opening a link to a record that belongs to another office gives you a "not allowed" page rather than the record. Observers are the exception and see every office. A worker who has not been assigned to an office yet stays visible to the recruiter who owns them, so nobody loses track of a new candidate. If your company has only one office, nothing is limited and no office label appears.{% endblocktrans %}</p>
+
   <h2>{% trans "Statuses and colors" %}</h2>
   <p>{% blocktrans %}A worker's lifecycle status (Available, Trial day, Working, Inactive, Blacklisted) shows as a colored dot next to their photo — green for Working, amber for Trial day, blue for Available, gray for Inactive, red for Blacklisted. The same color language shows up on certificate icons and notification badges throughout the app: green/amber/red generally mean good / needs attention soon / needs attention now.{% endblocktrans %}</p>
 
