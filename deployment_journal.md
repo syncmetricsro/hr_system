@@ -1,5 +1,40 @@
 # Deployment Journal
 
+## 2026-07-26 - PostgreSQL password rotated on jober-staging (and a brief outage)
+
+Rotating `pg-jober-staging`'s password took the app down for a few minutes.
+Worth recording exactly why, because the cause was a wrong assumption in the
+procedure I wrote, not an execution mistake.
+
+- **The app does not read `DATABASE_URL`.** `config/settings/base.py` builds
+  the connection from `DB_NAME`/`DB_USER`/`DB_PASSWORD`/`DB_HOST`/`DB_PORT`;
+  the string `DATABASE_URL` appears nowhere in the settings. So the documented
+  `postgres:unlink` + `postgres:link` step - the part that re-issues
+  `DATABASE_URL` - **could never have fixed anything**. The variable that
+  matters is `DB_PASSWORD`, and nothing was updating it.
+- Sequence as it actually ran: `ALTER ROLE` succeeded, so the *database* had
+  the new password; the `PASSWORD` file was updated; `postgres:unlink`
+  reported "Not linked to app jober-staging" and did nothing; `postgres:link`
+  then created a *second* link under the alias `DOKKU_POSTGRES_AQUA_URL`,
+  leaving the stale `DATABASE_URL` in place. The app kept reading the old
+  `DB_PASSWORD` and failed authentication.
+- **Fix:** `dokku config:set jober-staging DB_PASSWORD=<new>`, taking the value
+  out of `DOKKU_POSTGRES_AQUA_URL` without echoing it. Back up immediately -
+  `DB OK`, 7 people, 54 financial months, office scoping and all five HTTPS
+  smoke checks confirmed unchanged.
+- Removed the leftover `DATABASE_URL`: it held the now-invalid old password,
+  nothing read it, and leaving a dead credential in an app's config is exactly
+  the sort of thing that misleads the next person debugging.
+- **An earlier attempt had failed silently and looked partly successful.**
+  `docker exec` (permission denied on `docker.sock`) and the `PASSWORD` file
+  write (permission denied) both failed, while the sudo'd unlink/link ran and
+  printed a confident "Application deployed". Nothing had rotated. The tell was
+  that the re-issued DSN carried the *same* password as before - which is the
+  check worth doing after any rotation.
+- **The correct minimal procedure** for this app is therefore: `ALTER USER` in
+  the database, write the `PASSWORD` file, then `config:set DB_PASSWORD`. The
+  unlink/link cycle is unnecessary here and is what introduced the alias mess.
+
 ## 2026-07-26 - Media serving, SMS allowlist and the office-guard fixes deployed
 
 - Deployed **`197cf23`** to `jober-staging` as `jober-platform:demo-197cf23`
