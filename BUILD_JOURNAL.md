@@ -1,5 +1,36 @@
 # Build Journal
 
+## 2026-07-26 - Runbook rehearsed against staging; two claims were wrong
+
+Walked the demo runbook end to end against the live staging app, checking each
+claim rather than re-reading the script. Nine of eleven checks matched exactly.
+Two did not, and both would have been discovered in front of the client.
+
+- **The CEO's own table had two wrong numbers.** The per-office net column read
+  ~EUR 20 060 for Gyor and ~EUR 11 270 for Dunajska Streda; the seeded values
+  are **24 690** and **18 180**. Revenue was right for all three offices, which
+  is what made it plausible - the net column had been written before the final
+  cost splits landed and never re-derived. Replaced with exact figures and the
+  company total (EUR 88 970 net on EUR 368 180), and dropped the "~" so the
+  presenter reads them off the screen instead of approximating.
+- **An undemonstrable step.** Section 5 told the presenter to open another
+  office's accommodation location by URL and get a 403. The seed creates
+  exactly **one** location (Ubytovna Nitra, Velky Meder), so there is no other
+  office's location to try. The instruction now says so and points at Section 1,
+  where the same boundary is already shown with a project and a person.
+- Verified and left alone: office separation (badges, 5-of-7 people, 2-of-6
+  projects, 403 vs 200), warehouse figures to the cent (36 + 23 + 14 = 73 units,
+  EUR 623.50 + 406.00 + 252.00 = 1 281.50), the 2025 tail (EUR 90 890, ~45k per
+  month against 2026's ~52.6k), DHL Bratislava 2026-05, manager finance showing
+  Velky Meder only, and the blacklist step (Ivan approved, Diana proposed - both
+  cases carrying no office, which is exactly the company-wide design Section 8
+  claims).
+- Transport is genuinely absent: the only "transport" left in a rendered page is
+  a dead `<symbol>` in the inlined icon sprite, and the nav tab is gated on
+  `has_transport`, which Jober sets false. No change needed.
+- Mira Novakova's under-18 warning cannot drift: the seed sets her birth date to
+  today minus 17 years, so the critical warning holds whenever the demo runs.
+
 ## 2026-07-26 - Help articles describe office scoping; 104 untranslated strings found and fixed
 
 Started as "mention office scoping in two Help articles". The i18n cycle that

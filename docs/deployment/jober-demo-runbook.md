@@ -174,8 +174,13 @@ not company-wide.
 ### 5. Accommodation cost and margin
 
 Accommodation is office-scoped too: the list shows only this office's
-locations, each location now carries an **Office**, and another office's
-location 403s on direct access — same boundary as People and Projects.
+locations, and each location now carries an **Office** — the same boundary as
+People and Projects, enforced the same way.
+
+**Do not try to demonstrate the 403 here.** The seed creates exactly one
+accommodation location (Ubytovňa Nitra, Velký Meder), so there is no other
+office's location to open by URL. The boundary is already shown convincingly
+in §1 with a project and a person; repeat the point verbally instead.
 
 Open **Accommodation**, then the Nitra location (Velký Meder). Show its
 effective monthly capacity and per-head cost period. Open **Cost report**,
@@ -218,9 +223,13 @@ stack the three offices land clearly differently across Jan–Jul 2026:
 
 | Office | Revenue | Net |
 |---|---|---|
-| Velký Meder | ~€165 300 | ~€46 100 |
-| Győr | ~€117 730 | ~€20 060 |
-| Dunajská Streda | ~€85 150 | ~€11 270 |
+| Velký Meder | €165 300 | €46 100 |
+| Győr | €117 730 | €24 690 |
+| Dunajská Streda | €85 150 | €18 180 |
+
+(Company net for Jan–Jul 2026 is therefore **€88 970** on **€368 180** revenue.
+These are the exact seeded figures, verified against staging on 2026-07-26 —
+quote them as read off the screen, not as approximations.)
 
 Six contracts sit behind those three lines, each with its own shape — DHL
 Bratislava grows steadily, Minit peaks over summer, WEBASTO dips and recovers,
