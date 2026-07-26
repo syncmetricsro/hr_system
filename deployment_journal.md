@@ -1,5 +1,58 @@
 # Deployment Journal
 
+## 2026-07-26 - ADR 0026 Phase B (office scoping) deployed to jober-staging, with a full database reset
+
+- Deployed application revision **`d5b103d`** to `jober-staging` as
+  `jober-platform:demo-d5b103d` (digest
+  `sha256:26233d14…`, 458 MB). Built locally from pinned dependencies with
+  `scripts/check_no_node_artifacts.py` and `scripts/verify_vendor_assets.py`
+  green, then streamed with `git:load-image` — no VPS-side source build and
+  no build-time secret access. CorvinumEU was **not** redeployed; this
+  release is Jober demo preparation.
+- Three new migrations applied cleanly: `people.0006_person_office`,
+  `logistics.0010_accommodation_office`, and
+  `logistics.0011_equipmentstockallocation_office_and_more`.
+- **The staging database was dropped and rebuilt from scratch**, not merely
+  reseeded. Re-running the (idempotent, repair-carrying) seeds over the
+  existing database left pre-Phase-B residue that seeds cannot retract,
+  because *seeds add and repair rows; they do not delete rows nobody seeds
+  any more*. Two symptoms proved it:
+  - **Warehouse stock did not reconcile.** The unscoped total read 111 units
+    / €1,980.50 while the three offices summed to 76 / €1,344. The gap was
+    the original *pooled* goods receipt of 2026-06-27 (`receipt#1`, from
+    before stock was split per office) — 4 lots, 4 allocations and 8
+    movements, all `office = NULL`, plus five issue/return movements made by
+    hand during earlier live demo sessions.
+  - **Five hand-created people** (Ilona Illés, Magdaléna Folker, Pista Tóth,
+    Roger Folker, Teszt Személy) had no office. Scoping handled them exactly
+    as ADR 0026 specifies — office-less people are visible to their owning
+    recruiter — but that owner was `manazer@`, so the demo manager's People
+    list showed 10 rows where the runbook scripts 5.
+  The reset procedure: `postgres:export pg-jober-staging` to a local dump
+  first (reversible), then `DROP SCHEMA public CASCADE; CREATE SCHEMA public`
+  through the app container's Django connection, `migrate`, then all six
+  seeds (`seed_demo seed_people seed_logistics seed_questionnaire
+  seed_finance seed_demo_scenario`).
+- Post-reset state: **7 people, every one with an office** and zero
+  office-less; 6 projects, two per office; **54 financial months** (12 in
+  2025 Nov–Dec, 42 across 2026 YTD) reading €90,890 revenue / €19,370 net
+  for 2025 against €368,180 / €88,970 for 2026; and warehouse stock that
+  reconciles exactly — 36 (VM) + 23 (GYR) + 14 (DS) = 73 units,
+  €623.50 + €406.00 + €252.00 = €1,281.50, with **zero** orphan movements,
+  lots or allocations.
+- **Office scoping verified on staging itself**, with the real demo
+  accounts rather than locally: `manazer@` and `koordinator@` badges read
+  `Velký Meder` and Observer's reads `All offices`; manager and coordinator
+  each see 5 of 7 people and 2 of 6 projects while Observer sees 7 and 6;
+  the Győr project detail returns **403** for manager and coordinator and
+  **200** for Observer, who also gets the executive finance dashboard.
+- Verification gotcha worth keeping: the production settings set
+  `SECURE_PROXY_SSL_HEADER`, so a Django test `Client` used against staging
+  needs `HTTP_X_FORWARDED_PROTO="https"` and not merely `secure=True`, or
+  every request answers 301. Also, `dokku run` does not forward stdin, so
+  scripts must be passed inline (base64 + `exec`) rather than piped into
+  `manage.py shell`.
+
 ## 2026-07-24 - Avatars, certificates, pill system, feedback flyer, Help area deployed (both apps)
 
 - Merged PR **#89** and deployed application revision **`43da54c`** to
