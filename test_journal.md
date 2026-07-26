@@ -1,5 +1,24 @@
 # Test Journal
 
+## 2026-07-26 - tests/test_demo_office_staffing.py (6)
+
+- `test_the_boundary_is_reciprocal` is the one that carries the demo: it
+  asserts the VM manager gets 200/403 on the VM/Gyor projects **and** that the
+  Gyor manager gets exactly the mirror. A single-direction assertion cannot
+  distinguish a boundary from one restricted account.
+- `test_reseeding_does_not_multiply_office_membership` guards a silent failure
+  rather than a loud one. If `set()` were ever changed to `add()`, memberships
+  would accumulate across reseeds until every account saw every office - no
+  error, no broken page, just a demo that quietly stops proving anything.
+- `test_observer_holds_no_office_membership` pins the *mechanism*, not the
+  outcome: granting the Observer all three offices would look identical on
+  screen while making a `user_office_scope` regression undetectable.
+- `test_each_project_is_run_by_a_coordinator_of_its_own_office` catches the
+  bug this slice found - six projects all assigned to one office's
+  coordinator, four of which they get a 403 on.
+- Jober **698 passed**, CorvinumEU **432 passed, 14 skipped**, Playwright
+  **50 passed**.
+
 ## 2026-07-26 - tests/test_corvinum_deployment_scripts.py (5, was 3)
 
 - `test_offsite_backup_prunes_only_its_own_prefix` is the one that matters. The

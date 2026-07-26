@@ -1,5 +1,34 @@
 # Build Journal
 
+## 2026-07-26 - Every office gets its own staff; projects get their own coordinator
+
+The demo's headline is office separation, and it could only be shown in one
+direction. All three working accounts belonged to Velky Meder, so "the VM
+manager cannot see Gyor" was demonstrable and "the Gyor manager cannot see VM"
+was not. One direction reads as a filter; both read as a boundary.
+
+- Seeded a manager, recruiter and coordinator for **Gyor** and **Dunajska
+  Streda** as well - nine staff accounts across three offices, plus the
+  Observer. `DEMO_USERS` now carries the office code, and `seed_people`
+  assigns membership from that single table, so an account and its office
+  cannot drift apart.
+- **Found and fixed an incoherence while doing it.** Every one of the six
+  projects listed the Velky Meder coordinator as responsible - including the
+  four in other offices, which that coordinator gets a 403 on. Formally
+  responsible for work they cannot open. Each project is now run by a
+  coordinator of its own office, so "who runs the Gyor contracts?" has an
+  answer that survives being clicked on.
+- `offices.set()` rather than `add()` throughout, and a test for it: `add()`
+  would accumulate across reseeds until every account spanned every office and
+  the demo silently stopped demonstrating anything. That failure is invisible -
+  every page still renders, it just stops proving the point.
+- The Observer deliberately keeps **zero** memberships. Granting it all three
+  offices would produce identical screens by a different mechanism and would
+  survive a regression in `user_office_scope` unnoticed, so a test pins the
+  bypass as the mechanism.
+- Runbook §1 now spends its time on the reciprocal check rather than the
+  one-way one.
+
 ## 2026-07-26 - Backups deferred to the CorvinumEU build (with a hard trigger)
 
 Owner decision: install scheduled backups once CorvinumEU accepts the offer,

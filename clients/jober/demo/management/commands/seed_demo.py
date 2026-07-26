@@ -9,11 +9,29 @@ from core.accounts.models import Role, User
 DEMO_PASSWORD = "demo-jober-2026"
 DEMO_DOMAIN = "demo.jober.test"
 
+# (local_part, role, first, last, office_code)
+#
+# Every office needs its own staff, or the demo can only show the office
+# boundary in one direction: "the Velký Meder manager cannot see Győr" is
+# half the story, and the weaker half. Signing in as the Győr manager and
+# finding Velký Meder equally absent is what shows it is a boundary rather
+# than a filter.
+#
+# ``office_code`` is consumed by seed_people (which owns the Office rows), so
+# accounts and their office membership stay described in one place. Observer
+# is deliberately ``None``: cross-office visibility is a role bypass in
+# user_office_scope, not a membership.
 DEMO_USERS = [
-    ("naborar", Role.RECRUITER, "Náborár", "Demo"),
-    ("koordinator", Role.COORDINATOR, "Koordinátor", "Demo"),
-    ("manazer", Role.MANAGER, "Manažér", "Demo"),
-    ("pozorovatel", Role.OBSERVER, "Pozorovateľ", "Demo"),
+    ("naborar", Role.RECRUITER, "Náborár", "Demo", "VM"),
+    ("koordinator", Role.COORDINATOR, "Koordinátor", "Demo", "VM"),
+    ("manazer", Role.MANAGER, "Manažér", "Demo", "VM"),
+    ("pozorovatel", Role.OBSERVER, "Pozorovateľ", "Demo", None),
+    ("naborar.gyor", Role.RECRUITER, "Náborár", "Győr", "GYR"),
+    ("koordinator.gyor", Role.COORDINATOR, "Koordinátor", "Győr", "GYR"),
+    ("manazer.gyor", Role.MANAGER, "Manažér", "Győr", "GYR"),
+    ("naborar.ds", Role.RECRUITER, "Náborár", "Dunajská Streda", "DS"),
+    ("koordinator.ds", Role.COORDINATOR, "Koordinátor", "Dunajská Streda", "DS"),
+    ("manazer.ds", Role.MANAGER, "Manažér", "Dunajská Streda", "DS"),
 ]
 
 
@@ -42,7 +60,7 @@ class Command(BaseCommand):
         # --reset-passwords says otherwise.
         reset_passwords = options["reset_passwords"]
         created, updated, kept = 0, 0, 0
-        for local_part, role, first, last in DEMO_USERS:
+        for local_part, role, first, last, _office_code in DEMO_USERS:
             email = f"{local_part}@{DEMO_DOMAIN}"
             assert is_fictional(email), (
                 "Seed accounts must use the fictional demo domain."

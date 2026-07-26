@@ -81,7 +81,19 @@ account can see**, so switching accounts is now part of the demo, not a detour:
 | Manager | `manazer@demo.jober.test` | Velký Meder |
 | Recruiter | `naborar@demo.jober.test` | Velký Meder |
 | Coordinator | `koordinator@demo.jober.test` | Velký Meder |
+| Manager | `manazer.gyor@demo.jober.test` | Győr |
+| Recruiter | `naborar.gyor@demo.jober.test` | Győr |
+| Coordinator | `koordinator.gyor@demo.jober.test` | Győr |
+| Manager | `manazer.ds@demo.jober.test` | Dunajská Streda |
+| Recruiter | `naborar.ds@demo.jober.test` | Dunajská Streda |
+| Coordinator | `koordinator.ds@demo.jober.test` | Dunajská Streda |
 | Observer | `pozorovatel@demo.jober.test` | all three (role bypass) |
+
+**All three offices are staffed, and that is what makes §1 convincing.** One
+direction — "the Velký Meder manager cannot see Győr" — looks like a filter.
+Signing in as `manazer.gyor@` and finding Velký Meder equally absent is what
+shows it is a boundary. Each office's projects are also run by *that office's*
+coordinator, so "who runs the Győr contracts?" has a real answer.
 
 Seeded people, so you know who should be visible to whom: **Olha, Diana, Mira,
 Bohdan, Ivan** are Velký Meder; **Farrukh** is Győr; **Tran** is Dunajská
@@ -112,6 +124,17 @@ Then show that it is a real boundary, not a filter:
 - Note the project id of DHL Bratislava, then edit the URL to a Győr or
   Dunajská Streda project (WEBASTO, Mevis 080, CARGO, RLS 067) or person. The
   server returns **403 Forbidden** — guessing a URL does not work.
+
+**Now switch to `manazer.gyor@` and do it in reverse.** Győr's manager sees
+WEBASTO and Mevis 080, sees Farrukh, and gets the same **403** on DHL
+Bratislava. This is the moment worth spending time on: the first half alone
+could be a permissions quirk in one account, and doing it symmetrically with a
+second real manager is what shows the offices are genuinely walled off from
+each other rather than one account being restricted.
+
+Point out too that each office's projects list its *own* coordinator as
+responsible — the Győr contracts are run by `koordinator.gyor@`, not by
+somebody in Velký Meder who could not open them.
 
 Now switch to **Observer** (`pozorovatel@`):
 

@@ -10,16 +10,181 @@
   <h2>{% trans "Finding your way around" %}</h2>
   <p>{% blocktrans %}People is almost always the starting point: search or filter the list, then open a worker's detail page to see their status, project, documents, and history in one place. Projects, Compliance, and the other tabs each focus on one slice of the operation — Reports pulls the headline numbers from all of them onto a single overview page.{% endblocktrans %}</p>
 
+  <div class="help-visual-section">
+    <div class="help-diagram" aria-label="{% trans 'Navigation overview' %}">
+      <div class="help-mock-navbar">
+        <div class="help-mock-row">
+          <div class="help-mock-logo">JOBER</div>
+          <div class="help-mock-tabs">
+            <span class="help-mock-tab active"><span class="help-callout-num">1</span>{% trans "People" %}</span>
+            <span class="help-mock-tab">{% trans "Projects" %}</span>
+            <span class="help-mock-tab">{% trans "Field" %}</span>
+            <span class="help-mock-tab">{% trans "Compliance" %}</span>
+            <span class="help-mock-tab">{% trans "Accommodation" %}</span>
+            <span class="help-mock-tab">{% trans "Reports" %}</span>
+            <span class="help-mock-tab">{% trans "Help" %}</span>
+          </div>
+          <div class="help-mock-user">
+            <span class="help-mock-tab"><span class="help-callout-num">2</span>Bratislava</span>
+            <span class="help-mock-tab"><span class="help-callout-num">3</span>Recruiter</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="help-callouts-grid">
+        <div class="help-callout-item">
+          <span class="help-callout-num">1</span><strong>{% trans "Module Tabs" %}:</strong> {% trans "Switch between worker lists, active field assignments, compliance, and reports." %}
+        </div>
+        <div class="help-callout-item">
+          <span class="help-callout-num">2</span><strong>{% trans "Office Scope" %}:</strong> {% trans "Shows the office bounding your current data view." %}
+        </div>
+        <div class="help-callout-item">
+          <span class="help-callout-num">3</span><strong>{% trans "User Role" %}:</strong> {% trans "Indicates your active operational role and permission scope." %}
+        </div>
+      </div>
+    </div>
+  </div>
+
   <h2>{% trans "Roles" %}</h2>
   <p>{% blocktrans %}Four roles exist: Recruiter (intake and candidate routing), Coordinator (day-to-day field operations — assignments, readiness, equipment), Manager/Administrator (approvals and everything Recruiter/Coordinator can do), and Observer (read-only, for oversight). A hidden button on a page usually means your role doesn't have that permission, not that the feature is broken.{% endblocktrans %}</p>
+
+  <div class="help-roles-grid">
+    <div class="help-role-card role-recruiter">
+      <div class="help-role-header">
+        <h3 class="help-role-title">{% trans "Recruiter" %}</h3>
+        <span class="help-role-badge">{% trans "Intake & Onboarding" %}</span>
+      </div>
+      <ul>
+        <li>{% trans "Intake new worker candidates" %}</li>
+        <li>{% trans "Route candidates to trial/projects" %}</li>
+        <li>{% trans "Manage applicant documentation" %}</li>
+      </ul>
+    </div>
+
+    <div class="help-role-card role-coordinator">
+      <div class="help-role-header">
+        <h3 class="help-role-title">{% trans "Coordinator" %}</h3>
+        <span class="help-role-badge">{% trans "Field Operations" %}</span>
+      </div>
+      <ul>
+        <li>{% trans "Manage day-to-day project assignments" %}</li>
+        <li>{% trans "Track worker readiness & equipment" %}</li>
+        <li>{% trans "Monitor trial days and attendance" %}</li>
+      </ul>
+    </div>
+
+    <div class="help-role-card role-manager">
+      <div class="help-role-header">
+        <h3 class="help-role-title">{% trans "Manager / Admin" %}</h3>
+        <span class="help-role-badge">{% trans "Full Operational Access" %}</span>
+      </div>
+      <ul>
+        <li>{% trans "Approve requests & financial records" %}</li>
+        <li>{% trans "Manage office stock & blacklist reviews" %}</li>
+        <li>{% trans "All Recruiter and Coordinator actions" %}</li>
+      </ul>
+    </div>
+
+    <div class="help-role-card role-observer">
+      <div class="help-role-header">
+        <h3 class="help-role-title">{% trans "Observer" %}</h3>
+        <span class="help-role-badge">{% trans "Read-Only Oversight" %}</span>
+      </div>
+      <ul>
+        <li>{% trans "Cross-office reporting & auditing" %}</li>
+        <li>{% trans "View all workers, projects & compliance" %}</li>
+        <li>{% trans "No editing or state modification rights" %}</li>
+      </ul>
+    </div>
+  </div>
 
   <h2>{% trans "Offices" %}</h2>
   <p>{% blocktrans %}If your company works from more than one office, what you can see is limited to the offices you belong to. People, projects, accommodation, equipment stock, compliance alerts and financial figures all show your own offices only, and totals count your offices only. The office bounding your current view is shown next to your name at the top of the screen.{% endblocktrans %}</p>
   <p>{% blocktrans %}This is a real boundary, not a display filter: opening a link to a record that belongs to another office gives you a "not allowed" page rather than the record. Observers are the exception and see every office. A worker who has not been assigned to an office yet stays visible to the recruiter who owns them, so nobody loses track of a new candidate. If your company has only one office, nothing is limited and no office label appears.{% endblocktrans %}</p>
 
+  <div class="help-office-flow">
+    <div class="help-office-box">
+      <span class="help-office-tag">{% trans "Office A (e.g. Bratislava)" %}</span>
+      <p>{% blocktrans %}Recruiters, Coordinators & Managers see Office A workers, projects & stock only.{% endblocktrans %}</p>
+    </div>
+    <div class="help-office-box">
+      <span class="help-office-tag">{% trans "Office B (e.g. Košice)" %}</span>
+      <p>{% blocktrans %}Recruiters, Coordinators & Managers see Office B workers, projects & stock only.{% endblocktrans %}</p>
+    </div>
+    <div class="help-office-box global-observer">
+      <span class="help-office-tag">{% trans "Global Oversight (Observer Role)" %}</span>
+      <p>{% blocktrans %}Observers bypass office boundaries to see cross-office metrics and overall figures.{% endblocktrans %}</p>
+    </div>
+  </div>
+
   <h2>{% trans "Statuses and colors" %}</h2>
   <p>{% blocktrans %}A worker's lifecycle status (Available, Trial day, Working, Inactive, Blacklisted) shows as a colored dot next to their photo — green for Working, amber for Trial day, blue for Available, gray for Inactive, red for Blacklisted. The same color language shows up on certificate icons and notification badges throughout the app: green/amber/red generally mean good / needs attention soon / needs attention now.{% endblocktrans %}</p>
 
+  <div class="help-visual-section">
+    <div class="help-status-flowchart">
+      <div class="help-status-node">
+        <span class="help-status-dot dot-available"></span>
+        {% trans "Available" %}
+      </div>
+      <span class="help-status-arrow">➔</span>
+      <div class="help-status-node">
+        <span class="help-status-dot dot-trial"></span>
+        {% trans "Trial day" %}
+      </div>
+      <span class="help-status-arrow">➔</span>
+      <div class="help-status-node">
+        <span class="help-status-dot dot-working"></span>
+        {% trans "Working" %}
+      </div>
+      <span class="help-status-arrow">➔</span>
+      <div class="help-status-node">
+        <span class="help-status-dot dot-inactive"></span>
+        {% trans "Inactive" %}
+      </div>
+    </div>
+
+    <div class="help-legend-grid">
+      <div class="help-legend-card">
+        <span class="help-status-dot dot-working"></span>
+        <span><strong>{% trans "Green" %}:</strong> {% trans "Working / Compliant / Good" %}</span>
+      </div>
+      <div class="help-legend-card">
+        <span class="help-status-dot dot-trial"></span>
+        <span><strong>{% trans "Amber" %}:</strong> {% trans "Trial day / Needs attention soon" %}</span>
+      </div>
+      <div class="help-legend-card">
+        <span class="help-status-dot dot-blacklisted"></span>
+        <span><strong>{% trans "Red" %}:</strong> {% trans "Blacklisted / Immediate action needed" %}</span>
+      </div>
+      <div class="help-legend-card">
+        <span class="help-status-dot dot-available"></span>
+        <span><strong>{% trans "Blue" %}:</strong> {% trans "Available candidate" %}</span>
+      </div>
+      <div class="help-legend-card">
+        <span class="help-status-dot dot-inactive"></span>
+        <span><strong>{% trans "Gray" %}:</strong> {% trans "Inactive status" %}</span>
+      </div>
+    </div>
+  </div>
+
   <h2>{% trans "Getting help" %}</h2>
   <p>{% blocktrans %}Hovering (or tapping, on a touch device) most buttons and tiles shows a short tooltip explaining what it does. This Help section covers whole workflows end to end — use the topic list to find the module you're working in.{% endblocktrans %}</p>
+
+  <div class="help-tooltip-demo">
+    <div class="help-mock-button">
+      <svg class="nav-icon" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 5v14M5 12h14"/>
+      </svg>
+      {% trans "Add Worker" %}
+    </div>
+    <div class="help-mock-tooltip-box">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"/>
+        <line x1="12" y1="16" x2="12" y2="12"/>
+        <line x1="12" y1="8" x2="12.01" y2="8"/>
+      </svg>
+      {% trans "Tooltip: Start candidate intake wizard to record personal details and documents." %}
+    </div>
+  </div>
 {% endblock %}
+
