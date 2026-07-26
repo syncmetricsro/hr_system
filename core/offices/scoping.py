@@ -19,6 +19,7 @@ of the ~8 call sites that need it.
 
 from __future__ import annotations
 
+from django.core.exceptions import PermissionDenied
 from django.db.models import Q
 
 from core.accounts.permissions import user_office_scope
@@ -62,3 +63,33 @@ def may_see_person(user, person) -> bool:
     if person.office_id is None:
         return person.owning_recruiter_id == user.pk
     return scope.filter(pk=person.office_id).exists()
+
+
+def assert_person_in_scope(user, person) -> None:
+    """Raise ``PermissionDenied`` if ``user`` may not see ``person``.
+
+    Filtering a list does not stop someone typing another office's URL, so
+    every view taking a person (or an object hanging off one) needs this too.
+    It lives here rather than in one app's ``views.py`` because messaging,
+    compliance and people all need the identical check - the first two shipped
+    without it precisely because it was a private helper somewhere else.
+    """
+    if not may_see_person(user, person):
+        raise PermissionDenied("This person belongs to another office.")
+
+
+def assert_office_in_scope(user, office) -> None:
+    """``assert_person_in_scope`` for a plain office-carrying object.
+
+    ``office`` may be ``None``, which only unrestricted roles may reach - an
+    office-less *non-Person* record has no owning-recruiter fallback to make
+    it visible to anyone else.
+    """
+    scope = user_office_scope(user)
+    if scope is None:
+        return
+    if user is None or not user.is_authenticated:
+        raise PermissionDenied("Authentication required.")
+    office_id = getattr(office, "pk", office)
+    if office_id is None or not scope.filter(pk=office_id).exists():
+        raise PermissionDenied("This record belongs to another office.")

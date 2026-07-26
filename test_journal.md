@@ -1,5 +1,23 @@
 # Test Journal
 
+## 2026-07-26 - tests/test_object_view_office_scoping.py (9) + test_blacklist_stays_company_wide.py (2)
+
+- **Verified by breaking it, not by watching it pass.** A security test that
+  passes proves nothing until it has been shown to fail: with the new guards
+  commented out, exactly the four cross-office assertions failed and the two
+  "still works inside my own office" assertions kept passing. That is the
+  evidence the tests detect the actual vulnerability rather than the happy path.
+- One test premise was wrong on the first run and is worth recording: Observer
+  cannot be used to prove "unrestricted roles bypass the office guard" on
+  `send_sms`, because Observer is denied `sms.send` by the *action* gate, so
+  its 403 says nothing about offices. Switched to a superuser, which is the
+  other unrestricted case, and said so in the test.
+- The blacklist file asserts the *negative* - that a Velky Meder manager still
+  sees and can decide a Gyor case. It guards a plausible future mistake: a
+  consistency sweep adding a guard there would read as an improvement in review
+  while removing the point of the feature.
+- Jober **667 passed**, CorvinumEU **425 passed, 12 skipped**.
+
 ## 2026-07-26 - tests/test_seed_demo_passwords.py (4 tests)
 
 Covers a silent-revert risk rather than a calculation: `seed_demo` reset every

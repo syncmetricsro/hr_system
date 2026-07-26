@@ -1,5 +1,47 @@
 # Build Journal
 
+## 2026-07-26 - Object-level office guards for messaging, compliance, feedback, intake
+
+ADR 0026 Phase B scoped the *list* queries across the app but left several
+per-object views fetching by pk. Found while planning the media work, by
+counting `get_object_or_404` calls against scope guards per file: `people`
+7/11 and `logistics` 21/20, against **`compliance` 4/0, `messaging` 3/0,
+`feedback` 3/0**. Filtering a list never stops someone typing a URL - which is
+exactly what `CLAUDE.md`'s RBAC rule now requires and what these views skipped.
+
+What was reachable before this slice, as a Velky Meder manager:
+
+- **Send an SMS to a Gyor worker** by POSTing their pk. This is the one that
+  matters most - it reaches a real phone, and the runbook was mitigating live
+  Twilio credentials with "don't press send" while the send path itself was
+  unbounded.
+- **Create, edit or delete a Gyor worker's certificates**, including deleting
+  the stored document.
+- **Download another office's feedback flyer**, and see every office's
+  feedback submissions and links in the inbox, and create a link against
+  another office's project.
+
+- `assert_person_in_scope` and a new `assert_office_in_scope` were promoted
+  into `core/offices/scoping.py`. The people-views copy was private, which is
+  precisely why three other modules shipped without it; there is now one
+  public guard to reach for.
+- **Intake needed a real rule, not an annotation.** `RecruitmentIntake` has no
+  office FK, so the plan assumed it had no office dimension - but it carries a
+  `recruiter` and a nullable `person`. The rule now mirrors the office-less
+  Person case: before completion the owning recruiter, afterwards the created
+  person's office. It is deliberately strict (a colleague in the same office
+  cannot open a half-finished intake) and says so, so widening it is a
+  decision rather than a drift.
+- **Blacklist stays company-wide and is now asserted.** ADR 0026 point 3 makes
+  it the deliberate exception: someone barred in one office must be caught in
+  all of them. An *absence* of scoping cannot be reviewed, so
+  `tests/test_blacklist_stays_company_wide.py` asserts a Velky Meder manager
+  still sees and can decide a Gyor case. A later "scope everything for
+  consistency" sweep now fails loudly instead of quietly disabling fraud
+  protection.
+- CorvinumEU is unaffected by data - single site, no `Office` rows, so every
+  guard returns its unrestricted sentinel.
+
 ## 2026-07-26 - Re-seeding can no longer republish a rotated demo password
 
 The owner rotated `jober-staging`'s four demo accounts off `demo-jober-2026`,

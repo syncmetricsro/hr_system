@@ -10,10 +10,15 @@ from django.views.decorators.http import require_POST
 
 from core.accounts.permissions import Action, require_action
 from core.media import CertificateUploadError
+from core.offices.scoping import assert_person_in_scope
 from core.people.models import Person
 from features.compliance.forms import CertificateForm
 from features.compliance.models import Certificate
-from features.compliance.services import compliance_alerts, delete_certificate, save_certificate
+from features.compliance.services import (
+    compliance_alerts,
+    delete_certificate,
+    save_certificate,
+)
 
 
 @login_required
@@ -28,13 +33,18 @@ def compliance_list(request: HttpRequest) -> TemplateResponse:
 @require_action(Action.CERTIFICATE_MANAGE)
 def certificate_create(request: HttpRequest, person_pk: int) -> HttpResponse:
     person = get_object_or_404(Person, pk=person_pk)
+    # ADR 0026: certificates hang off a person, so they inherit that person's
+    # office boundary. Guard every entry point, not just the list.
+    assert_person_in_scope(request.user, person)
     form = CertificateForm(request.POST or None)
     if request.method == "POST" and form.is_valid():
         certificate = form.save(commit=False)
         certificate.person = person
         uploaded = request.FILES.get("document")
         try:
-            save_certificate(certificate, actor=request.user, uploaded_file=uploaded, creating=True)
+            save_certificate(
+                certificate, actor=request.user, uploaded_file=uploaded, creating=True
+            )
         except CertificateUploadError as exc:
             messages.error(request, str(exc))
             return TemplateResponse(
@@ -42,28 +52,37 @@ def certificate_create(request: HttpRequest, person_pk: int) -> HttpResponse:
             )
         messages.success(request, _("Certificate added."))
         return redirect("person_detail", pk=person.pk)
-    return TemplateResponse(request, "pages/certificate_form.html", {"form": form, "person": person})
+    return TemplateResponse(
+        request, "pages/certificate_form.html", {"form": form, "person": person}
+    )
 
 
 @require_action(Action.CERTIFICATE_MANAGE)
 def certificate_edit(request: HttpRequest, pk: int) -> HttpResponse:
     certificate = get_object_or_404(Certificate, pk=pk)
     person = certificate.person
+    assert_person_in_scope(request.user, person)
     form = CertificateForm(request.POST or None, instance=certificate)
     if request.method == "POST" and form.is_valid():
         certificate = form.save(commit=False)
         uploaded = request.FILES.get("document")
         try:
-            save_certificate(certificate, actor=request.user, uploaded_file=uploaded, creating=False)
+            save_certificate(
+                certificate, actor=request.user, uploaded_file=uploaded, creating=False
+            )
         except CertificateUploadError as exc:
             messages.error(request, str(exc))
             return TemplateResponse(
-                request, "pages/certificate_form.html", {"form": form, "person": person, "certificate": certificate}
+                request,
+                "pages/certificate_form.html",
+                {"form": form, "person": person, "certificate": certificate},
             )
         messages.success(request, _("Certificate updated."))
         return redirect("person_detail", pk=person.pk)
     return TemplateResponse(
-        request, "pages/certificate_form.html", {"form": form, "person": person, "certificate": certificate}
+        request,
+        "pages/certificate_form.html",
+        {"form": form, "person": person, "certificate": certificate},
     )
 
 
@@ -71,6 +90,7 @@ def certificate_edit(request: HttpRequest, pk: int) -> HttpResponse:
 @require_action(Action.CERTIFICATE_MANAGE)
 def certificate_delete(request: HttpRequest, pk: int) -> HttpResponse:
     certificate = get_object_or_404(Certificate, pk=pk)
+    assert_person_in_scope(request.user, certificate.person)
     person_pk = certificate.person_id
     delete_certificate(certificate, actor=request.user)
     messages.success(request, _("Certificate deleted."))
