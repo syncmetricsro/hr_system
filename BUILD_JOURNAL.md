@@ -1,5 +1,45 @@
 # Build Journal
 
+## 2026-07-26 - One backup script for every app, not just CorvinumEU
+
+Scheduled database backups (production-readiness item 4) are the largest
+remaining risk, and the plan for them was wrong in a way worth recording.
+
+- **The documented command does not do what the runbook claimed.** Phase 6 said
+  to run `dokku postgres:backup-schedule <service> <cron> <off-site-or-local>`.
+  That command is **S3-only** - `postgres:backup-auth` takes AWS keys and the
+  third argument is a bucket name. There is no local-target variant, so the
+  placeholder was unimplementable as written. It also backs up only the
+  database: not the media volume, which now holds real uploads, and not a
+  release manifest.
+- **A working script already existed, one client too narrow.** CorvinumEU had
+  an encrypted, checksum-verified, retention-managed off-site backup;
+  `DOKKU_APP` and `POSTGRES_SERVICE` were already env-overridable. Only the
+  archive prefix, the work directory and the remote retention glob were
+  hardcoded. Generalised to `scripts/offsite_backup.sh` +
+  `scripts/backup_health.sh`, so one invocation backs up one app and Jober is
+  covered by the same reviewed code rather than a second implementation.
+- **The retention glob is the dangerous part.** Two apps may share a
+  `BACKUP_REMOTE_DIR`, and the prune previously matched `corvinum-*.tar.gpg`.
+  Widening that to `*` would have looked like a tidy generalisation in review
+  while silently deleting the other app's history. The prefix is now passed to
+  the remote shell as a positional argument, constrained to
+  `[A-Za-z0-9._-]+`, and asserted in tests. Verified by simulation: with 40
+  Jober and 5 CorvinumEU archives in one directory, a Jober run trimmed Jober
+  to 35 and left CorvinumEU untouched.
+- The health check globs the same prefix, because a mismatch reports "no
+  backup" for an app that is backing up fine - a false alarm that teaches
+  people to ignore the alert.
+- **Still blocked on the owner**, and specifically: an off-site host on a
+  different provider (D6), a GPG public key whose private half lives on
+  neither server, and root shell on the Dokku host - the agent's SSH key is
+  restricted to `dokku` commands and cannot install cron entries. Manual
+  `postgres:export` dumps were taken for both services as an interim, which is
+  a point-in-time safety net and not a backup system.
+- Item 4 is written to stay open **even once a schedule runs**, until a restore
+  drill has been performed and logged. A backup nobody has restored is a
+  hypothesis.
+
 ## 2026-07-26 - Replaced uploads stop leaving orphans; bombs refused before decoding
 
 Two production-readiness findings (6 and 8), plus the record correction that

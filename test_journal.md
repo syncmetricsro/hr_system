@@ -1,5 +1,21 @@
 # Test Journal
 
+## 2026-07-26 - tests/test_corvinum_deployment_scripts.py (5, was 3)
+
+- `test_offsite_backup_prunes_only_its_own_prefix` is the one that matters. The
+  retention pass runs on the *remote* host and deletes files; widening its glob
+  from `corvinum-*` to `*` while generalising the script would have read as a
+  harmless cleanup and would have deleted another app's backup history.
+- It asserts the prefix reaches the remote shell as a positional argument
+  (`prefix="$4"`) rather than by interpolation into the heredoc body, so the
+  value cannot rewrite the remote script, and that it is constrained to
+  `[A-Za-z0-9._-]+` so it cannot change what the glob matches.
+- Also verified outside pytest, because a string assertion cannot prove
+  behaviour: seeded a directory with 40 `jober-staging-*` and 5
+  `corvinum-staging-*` archives, ran the prune body with the Jober prefix, and
+  confirmed 40 -> 35 Jober with CorvinumEU untouched and the orphaned
+  `.sha256` siblings removed.
+
 ## 2026-07-26 - tests/test_media_hygiene.py (6)
 
 - `test_oversized_dimensions_are_rejected_before_decoding` monkeypatches

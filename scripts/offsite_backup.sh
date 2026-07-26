@@ -1,36 +1,47 @@
 #!/usr/bin/env bash
 #
-# Encrypted off-site backup for the CorvinumERP production Dokku host.
+# Encrypted off-site backup for any app on a Dokku host.
 #
-# This script intentionally exports only the PostgreSQL service, an optional
-# future media directory, and a non-secret deployment manifest.  It never
+# One invocation backs up one app.  Run it once per app (jober-staging,
+# corvinum-staging, and later the production apps), each with its own
+# environment file.
+#
+# This script intentionally exports only the PostgreSQL service, the media
+# volume if one is configured, and a non-secret deployment manifest.  It never
 # exports Dokku config: that output can contain Doppler-synchronised secrets.
 #
 # Required environment (normally supplied by a root-owned file outside git):
-#   BACKUP_REMOTE=corvinum-backup@backup.example
-#   BACKUP_REMOTE_DIR=/srv/corvinum-backups
+#   BACKUP_REMOTE=backup-user@backup.example
+#   BACKUP_REMOTE_DIR=/srv/jober-backups
 #   BACKUP_GPG_RECIPIENT=<public key fingerprint or recipient>
+#   DOKKU_APP=jober-staging            POSTGRES_SERVICE=pg-jober-staging
 # Optional:
-#   DOKKU_APP=corvinum                 POSTGRES_SERVICE=pg-corvinum
-#   BACKUP_SSH_KEY=/root/.ssh/corvinum-backup_ed25519
-#   MEDIA_SOURCE_DIR=/var/lib/dokku/data/storage/corvinum/media
-#   BACKUP_WORK_DIR=/var/lib/corvinum-backups
+#   BACKUP_PREFIX=jober-staging        # archive name prefix; defaults to DOKKU_APP
+#   BACKUP_SSH_KEY=/root/.ssh/dokku-backup_ed25519
+#   MEDIA_SOURCE_DIR=/var/lib/dokku/data/storage/jober-staging-media
+#   BACKUP_WORK_DIR=/var/lib/dokku-backups
+#
+# BACKUP_PREFIX is load-bearing when two apps share a BACKUP_REMOTE_DIR: the
+# remote retention pass only ever prunes archives carrying its own prefix, so a
+# mismatched prefix would either prune nothing or - far worse - prune another
+# app's history.  Prefer a separate BACKUP_REMOTE_DIR per app anyway.
 #
 # The recipient must be a public encryption key.  Keep its private recovery
 # key outside both VPS providers and do not place it on either server.
 set -euo pipefail
 umask 077
 
-DOKKU_APP="${DOKKU_APP:-corvinum}"
-POSTGRES_SERVICE="${POSTGRES_SERVICE:-pg-corvinum}"
+DOKKU_APP="${DOKKU_APP:?Set DOKKU_APP (the Dokku app to back up)}"
+POSTGRES_SERVICE="${POSTGRES_SERVICE:?Set POSTGRES_SERVICE (its linked Postgres service)}"
 BACKUP_REMOTE="${BACKUP_REMOTE:?Set BACKUP_REMOTE (user@backup-host)}"
 BACKUP_REMOTE_DIR="${BACKUP_REMOTE_DIR:?Set BACKUP_REMOTE_DIR (absolute remote path)}"
 BACKUP_GPG_RECIPIENT="${BACKUP_GPG_RECIPIENT:?Set BACKUP_GPG_RECIPIENT}"
 BACKUP_SSH_KEY="${BACKUP_SSH_KEY:-}"
 MEDIA_SOURCE_DIR="${MEDIA_SOURCE_DIR:-}"
-BACKUP_WORK_DIR="${BACKUP_WORK_DIR:-/var/lib/corvinum-backups}"
+BACKUP_WORK_DIR="${BACKUP_WORK_DIR:-/var/lib/dokku-backups}"
+BACKUP_PREFIX="${BACKUP_PREFIX:-$DOKKU_APP}"
 STAMP="$(date -u +%Y%m%dT%H%M%SZ)"
-ARCHIVE_NAME="corvinum-${STAMP}.tar"
+ARCHIVE_NAME="${BACKUP_PREFIX}-${STAMP}.tar"
 ENCRYPTED_NAME="${ARCHIVE_NAME}.gpg"
 WORK_DIR="${BACKUP_WORK_DIR}/work-${STAMP}-$$"
 
@@ -40,6 +51,10 @@ for command in dokku gpg ssh scp sha256sum tar; do
 done
 [[ "$BACKUP_REMOTE_DIR" =~ ^/[A-Za-z0-9._/-]+$ ]] && [[ "$BACKUP_REMOTE_DIR" != *".."* ]] \
   || die "BACKUP_REMOTE_DIR must be an absolute, traversal-free path"
+# The prefix is interpolated into a remote glob and filenames, so keep it to
+# characters that cannot change what the retention pass matches.
+[[ "$BACKUP_PREFIX" =~ ^[A-Za-z0-9._-]+$ ]] \
+  || die "BACKUP_PREFIX must match [A-Za-z0-9._-]+"
 gpg --batch --list-keys "$BACKUP_GPG_RECIPIENT" >/dev/null 2>&1 \
   || die "the backup recipient public key is not available locally"
 
@@ -83,11 +98,12 @@ scp "${ssh_args[@]}" "$WORK_DIR/$ENCRYPTED_NAME" \
 scp "${ssh_args[@]}" "$WORK_DIR/${ENCRYPTED_NAME}.sha256" \
   "$BACKUP_REMOTE:$BACKUP_REMOTE_DIR/daily/${ENCRYPTED_NAME}.sha256.partial"
 ssh "${ssh_args[@]}" "$BACKUP_REMOTE" \
-  "bash -s -- '$BACKUP_REMOTE_DIR' '$ENCRYPTED_NAME' '${STAMP:6:2}'" <<'REMOTE'
+  "bash -s -- '$BACKUP_REMOTE_DIR' '$ENCRYPTED_NAME' '${STAMP:6:2}' '$BACKUP_PREFIX'" <<'REMOTE'
 set -eu
 backup_dir="$1"
 archive="$2"
 day_of_month="$3"
+prefix="$4"
 
 cd "$backup_dir/daily"
 mv "$archive.partial" "$archive"
@@ -100,7 +116,7 @@ fi
 prune() {
   directory="$1"
   keep="$2"
-  find "$directory" -maxdepth 1 -type f -name 'corvinum-*.tar.gpg' -printf '%T@ %f\n' \
+  find "$directory" -maxdepth 1 -type f -name "$prefix-*.tar.gpg" -printf '%T@ %f\n' \
     | sort -n | head -n "-$keep" | cut -d' ' -f2- \
     | while IFS= read -r old; do
         [ -z "$old" ] || rm -f -- "$directory/$old" "$directory/$old.sha256"
