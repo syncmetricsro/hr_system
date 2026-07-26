@@ -9,7 +9,7 @@
   {% if may_edit %}
     <form class="avatar-form" action="{% url 'person_avatar_upload' person.pk %}" method="post" enctype="multipart/form-data">
       {% csrf_token %}
-      <label class="avatar-upload-label" data-tooltip="{% trans 'Change this person\'s avatar' %}">
+      <label class="avatar-upload-label" data-tooltip="{% trans "Change this person's avatar" %}">
         {% avatar person size="lg" %}
         {% status_pill person size="label" %}
         <input type="file" name="avatar" accept="image/jpeg,image/png,image/webp" onchange="this.form.submit()" class="sr-only">

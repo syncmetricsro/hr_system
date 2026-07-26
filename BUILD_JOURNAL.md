@@ -1,5 +1,46 @@
 # Build Journal
 
+## 2026-07-26 - Help articles describe office scoping; 104 untranslated strings found and fixed
+
+Started as "mention office scoping in two Help articles". The i18n cycle that
+the change required then turned up something much larger.
+
+- **The demo language was showing English.** `Profit/loss by office` and
+  `Monthly trend by office` - two headings on the finance page a CEO is shown
+  - rendered untranslated on the live Slovak staging app. Confirmed by
+  requesting the real page as the real demo accounts, not by reading the
+  catalog. In total **104 strings per catalog** were fuzzy or empty across
+  SK/HU/UK: the whole equipment-stock ledger, accommodation cost periods,
+  certificates, avatars, the trial/activation tooltips, and the office and
+  executive-dashboard vocabulary itself.
+- Fuzzy entries are excluded by `msgfmt`, so every one of them was rendering
+  in English too. The catalog's stored guesses show why that exclusion is
+  merciful: `msgmerge` had paired "Avatar updated." with "Skusobny den bol
+  aktualizovany." (*Trial day was updated*) and "Profit/loss by office" with
+  "Zisk/strata podla regionu" - the legacy *region* wording this programme
+  had just finished removing from the docs.
+- All 104 were translated in all three languages, following the terminology
+  already established in the catalogs rather than inventing new words:
+  office = `pobocka` / `iroda` / office, warehouse = `sklad` / `raktar` /
+  `sklad`, and the lifecycle statuses exactly as the UI already renders them.
+  Zero fuzzy and zero empty entries now remain in any catalog.
+- The applier only ever *fills a gap*: an entry already translated and not
+  fuzzy is a human decision and is never overwritten from a table. That guard
+  is what kept Hungarian's 46 existing stock/accommodation translations
+  intact - the run reports them as "not found" precisely because it refused
+  to touch them.
+- One deliberate overwrite, made separately: Slovak translated the `office`
+  field label as `kancelaria` (a clerical office) while every other string
+  says `pobocka` (a branch). That label is on the person form.
+- **A real template bug surfaced from the extraction.** `person_detail.html`
+  used `{% trans 'Change this person\'s avatar' %}`; the escaped apostrophe
+  truncated the extracted msgid to `Change this person\\`, so the tooltip
+  could never be translated in any language. Switched to double quotes.
+- Verified structurally, not by eye: placeholder sets compared between every
+  msgid and msgstr (0 mismatches), `python-format` flags confirmed present
+  wherever placeholders exist, and the added/removed msgid sets diffed
+  against `main` so the +4 net change is fully accounted for.
+
 ## 2026-07-26 - Legacy "region" vocabulary swept; feature matrix reconciled
 
 Closes production-readiness item 9. The repo still described offices as

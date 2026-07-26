@@ -1,5 +1,21 @@
 # Test Journal
 
+## 2026-07-26 - i18n verified by rendering, not by reading the catalog
+
+- The catalog said the office/finance strings existed; the *app* said
+  otherwise. The check that found the gap was requesting `/sk/finance/` on
+  live staging as `manazer@` and `pozorovatel@` and reading back the `<h2>`
+  text - two headings came back in English inside an otherwise Slovak page.
+  Grepping the `.po` would not have shown this, because the entries were
+  present and fuzzy, and fuzzy entries compile away silently.
+- Added no new test file. The guard that matters here is procedural and now
+  recorded in the build journal: after `--extract`, count fuzzy and empty
+  entries per catalog and require zero before compiling. Both counts are
+  cheap to compute and would have caught this at any point in the last month.
+- Full Jober unit lane and the CorvinumEU flag lane both run for this slice
+  even though it changes no Python, because it changes templates that both
+  clients render.
+
 ## 2026-07-25 - Guarding the finance seed's split invariant
 
 - Two real breaks found while verifying the seed expansion, neither of them
