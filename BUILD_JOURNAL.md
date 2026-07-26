@@ -1,5 +1,54 @@
 # Build Journal
 
+## 2026-07-27 - Four granted-but-unimplemented actions recorded; one is a control gap
+
+The owner asked whether project creation existed. It does not - and sweeping
+all 37 `Action` members against the views and templates that reference them
+found that three others are in the same state. They accumulated over months
+because nothing ever checked, and the permission matrix's Phase 1 caveat
+("most action rows do not yet have a backing business view") had never been
+revisited to say *which* rows were still aspirational.
+
+- **`approval.activate` is the serious one, and it is a contradiction rather
+  than an absence.** Three documents promise manager approval on activation -
+  the permission matrix, `Jober_Product_Design.md`, and
+  `jober-open-decisions.md` - and the action is checked nowhere.
+  `activate_person` is gated by `project.assign`, which coordinators hold, and
+  the Activate button sits inside the readiness block behind
+  `readiness.complete`, also a coordinator action. So a coordinator **sees the
+  button and can use it**; this is the normal UI path, not a crafted request.
+  The matrix stated flatly that coordinators "Cannot approve Working". That was
+  untrue, and is now corrected.
+- **`project.manage`** is referenced by exactly one file - the dashboard -
+  whose "Manage projects" button links to the read-only project list. No
+  create/edit/archive routes exist. The feature matrix called this "Partial
+  project management", which understates it enough to mislead.
+- **`sms.manage_templates`** and **`user.manage`** are dormant outright. The
+  first explains something noticed during yesterday's demo prep: no templates
+  are seeded *and* none can be created, so the SMS template picker never
+  renders at all.
+- **It affects CorvinumEU too, which the sweep only revealed on verification.**
+  Grepping `approval.activate` across `docs/` to confirm every mention was
+  marked turned up `corvinum-permission-matrix.md` making the same promise -
+  and CorvinumEU grants the same three actions and mounts the same shared
+  `activate_person` route. A single-client fix would have left the second
+  client's matrix lying. Both are now marked; the code fix lands for both at
+  once.
+- **Marked specified-not-enforced rather than reversing the design.** This is a
+  different situation from the 2026-07-26 corrections, where documents made
+  false claims about built behaviour ("Office never gates visibility"). Here the
+  design is right and the implementation is missing, and the owner confirmed
+  manager-only approval is still wanted - so the design docs keep their content
+  and gain a marker pointing at readiness item 14.
+- **The sweep's own criterion needed correcting mid-write.** The first pass
+  counted "referenced by no view *and* no template", which returns 3 - it
+  quietly excuses `project.manage`, whose button exists while nothing enforces
+  it. The criterion that matters is **no server-side enforcement**, which
+  returns 4. A `{% can %}` only hides a button. Both documents now state the
+  criterion and the exact command, so a re-run reproduces the number instead of
+  producing a different one and casting doubt on the list. A guard test asserting this was proposed and
+  declined for now; the backlog entries carry the information instead.
+
 ## 2026-07-26 - Every office gets its own staff; projects get their own coordinator
 
 The demo's headline is office separation, and it could only be shown in one

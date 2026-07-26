@@ -12,12 +12,19 @@ A cross-cutting review of the deployed staging state (both apps, live
 inspection — not just static code reading) found the items below. None are
 fixed by writing this list; each stays open until its own fix lands and is
 verified the same way (live inspection, not just "the code looks right").
-Recommended order (updated 2026-07-26 — items 1, 2, 3, 5, 6, 7, 8 and 9 are
-done; item 4 is **deferred** to the CorvinumEU build, see its note): the
-largest *actionable* item is now the user/credential-management subsystem
-(item 11), followed by a one-off sweep of media orphaned by pre-fix
-replacements (item 6). Item 4 remains the largest *risk* — it is deferred, not
-reduced.
+Recommended order (updated 2026-07-27 — items 1, 2, 3, 5, 6, 7, 8, 9 and 12
+are done; item 4 is **deferred** to the CorvinumEU build, see its note):
+
+- **Item 14** — the activation control gap. Small, and it is the only entry
+  here where a document currently promises a client a control the code does
+  not enforce. Everything else is an absence; this one is a contradiction.
+- **Item 11** — user and credential management, still the largest functional
+  gap and the largest single block of engineering.
+- **Item 15** — project management, closely related to 11 and similarly a
+  "granted action with no implementation".
+- Then item 6's residual media-orphan sweep, and item 16.
+
+Item 4 remains the largest *risk* — deferred, not reduced.
 
 1. 🟡 **Partly fixed 2026-07-26 — public demo credentials could reach live
    Twilio.** The repo is public and publishes `demo-jober-2026`; Jober
@@ -207,8 +214,12 @@ reduced.
     own. **This is the largest functional gap in the product** and blocks
     real users more directly than it blocks the demo, which uses seeded
     accounts throughout.
-12. **Medium — no superuser exists on `jober-staging`.** The 2026-07-26
-    database reset removed it and nothing restores it: the `Procfile`
+12. ~~**Medium — no superuser exists on `jober-staging`.**~~ **Fixed
+    2026-07-27** — `admin@demo.jober.test` recreated by the owner via
+    `ensure_superuser`. The underlying gap stands and is recorded in the
+    "Initial admin user" row below: it is still a manual step, so the next
+    database reset will silently remove it again. Original finding: the
+    2026-07-26 database reset removed it and nothing restores it: the `Procfile`
     declares only a `web:` process, there is no `app.json`, and
     `DJANGO_SUPERUSER_EMAIL`/`_PASSWORD` are not in the app's config. The
     "Initial admin user" row below claimed `ensure_superuser` is "wired
@@ -222,12 +233,84 @@ reduced.
     gross/independent-net wage-ledger boundary. Needs an explicit accept-or-
     reject decision, then delete the branch either way rather than leaving
     it stale.
+14. **High — the documented manager approval on activation is not
+    enforced.** Found 2026-07-27 by sweeping all 37 `Action` members against
+    the views and templates that reference them (method below). Three
+    independent documents promise this control and the code does not
+    implement it:
+    - `Action.APPROVAL_ACTIVATE` is granted to Manager only in
+      `clients/jober/policies.py` and is **never checked anywhere**.
+    - `activate_person` (`core/projects/views.py`) is decorated
+      `@require_action(Action.PROJECT_ASSIGN)` instead, which **coordinators
+      hold**; `activate_from_readiness` adds no role check either.
+    - The Activate button sits inside the readiness block, gated by
+      `readiness.complete` — also a coordinator action. So a coordinator
+      **sees the button and can use it**. This is not a craft-a-request
+      bypass; it is the normal UI path.
+    - `docs/permissions/jober-permission-matrix.md` states Coordinators
+      "Cannot approve Working", `Jober_Product_Design.md` describes a
+      manager-approval step, and `docs/product/jober-open-decisions.md`
+      records activation as running through "four-pillar readiness + manager
+      approval". The four-pillar gate is real and enforced; the manager half
+      is not.
+    **This affects CorvinumEU too.** `activate_person` is shared core code
+    mounted unconditionally, and `clients/corvinum_eu/policies.py` grants the
+    same three actions, so a CorvinumEU coordinator can approve Working as
+    well. The fix lands for both clients at once; both permission matrices
+    have been marked.
+    **Owner decision 2026-07-27: manager-only approval is still wanted**, so
+    this is a defect to wire rather than stale documentation. Fix is small —
+    `@require_action(Action.APPROVAL_ACTIVATE)` on `activate_person` plus a
+    `{% can %}` gate on the button — but it changes who can complete the main
+    lifecycle flow, so it needs both unit lanes plus e2e and a check of the
+    demo seed (the seeded coordinator currently performs activations).
+    Estimate ~1 day. **Do not treat the one-line decorator change as the whole
+    job.**
+15. **Medium — project management does not exist.** `Action.PROJECT_MANAGE` is
+    granted to Manager and is referenced by exactly one file:
+    `templates/pages/dashboard.html`, whose **"Manage projects" button links
+    to `project_list`** — the same read-only list every role already sees.
+    There are no create, edit or archive routes; `config/urls.py` has
+    `project_list` and `project_detail` only. Assignment, trials and
+    readiness all work, so the gap is specifically *managing the project
+    records themselves*. `docs/platform/client-feature-matrix.md` calls this
+    "Partial project management", which understates it.
+    Estimate 3–5 days. The misleading button is a separate five-minute fix
+    and should not wait for the feature.
+16. **Low — SMS templates cannot be managed in the product.**
+    `Action.SMS_MANAGE_TEMPLATES` is granted to Manager and implemented
+    nowhere. `MessageTemplate` is reachable only through Django admin, which
+    needs a superuser — and no Jober role is one (see item 11). No templates
+    are seeded either, so the template picker in the SMS panel never renders
+    and the runbook's "pick a template" step has nothing to pick.
+    Cheapest useful answer is to seed two or three templates and keep
+    management in admin; a real CRUD screen is 2–3 days if wanted.
+
+**How items 14–16 were found, so the sweep can be re-run.** The criterion that
+matters is **server-side enforcement**, not whether the string appears
+somewhere: a `{% can %}` in a template only hides a button.
+
+```bash
+# for each member of Action in core/accounts/permissions.py
+grep -rl "Action.<NAME>" --include=views.py --include=panels.py \
+        --include=services.py core features     # zero hits = nothing enforces it
+grep -rl "<value>" --include=*.html templates clients   # a button may still exist
+```
+
+**4 of 37 actions have no server-side enforcement**: `approval.activate`,
+`project.manage`, `user.manage` (item 11) and `sms.manage_templates`. Three of
+those are referenced nowhere at all; `project.manage` is the instructive case —
+it has a visible button and no enforcement, which is worse than being absent,
+because the UI advertises a capability that does not exist.
+A row in the permission matrix means "this role is permitted this action", not
+"this action is enforced somewhere" — the matrix's own Phase 1 note says as
+much, but had never been revisited to say *which* rows were still aspirational.
 
 Status at the time of this review: `main` clean at `948aff0`; both staging
 apps running the latest deploy and passing fresh HTTPS smoke checks (528
 Jober unit tests, 326 CorvinumEU tests, 50 Playwright tests; ruff, vendor
 hashes, no-Node check, Django checks, and migration consistency all green).
-None of that verifies the 13 items above — they're gaps the standard test/
+None of that verifies the 16 items above — they're gaps the standard test/
 smoke suite doesn't cover.
 
 ## Serving & runtime
