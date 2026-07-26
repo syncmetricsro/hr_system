@@ -53,7 +53,7 @@ never receives Doppler or Dokku secrets.
 ### 1. Freeze and verify the local release
 
 ```bash
-cd /home/disane/Development/HR_System
+cd /home/disane/Dev/hr_system
 git status --short                 # must be empty
 git rev-parse --short HEAD
 

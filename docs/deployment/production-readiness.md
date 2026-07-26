@@ -4,7 +4,7 @@ Tracks what must be true before the Jober app serves real users/data, and the
 state of each gate. "Ready" = verified; "Open" = not done / needs a human or an
 external input. Update this whenever a gate changes state.
 
-Last updated: 2026-07-25
+Last updated: 2026-07-26
 
 ## Pre-production review findings (2026-07-25)
 
@@ -12,12 +12,10 @@ A cross-cutting review of the deployed staging state (both apps, live
 inspection — not just static code reading) found the items below. None are
 fixed by writing this list; each stays open until its own fix lands and is
 verified the same way (live inspection, not just "the code looks right").
-Recommended order (updated 2026-07-25 — items 5 and 7 are now done): lock
-down staging/provider access first, then implement protected persistent
-media, then schedule backups, then reconcile the stale backlog docs
-(item 9, including this file's own pre-2026-07-25 rows below, which
-predate several features shipped since — e.g. Dokku staging is live, not
-"blocked/open" as those rows still say).
+Recommended order (updated 2026-07-26 — items 5, 7 and 9 are now done): lock
+down staging/provider access first (item 1, the only one that is urgent while
+the repo is public), then implement protected persistent media (items 2 and
+3), then schedule backups (item 4).
 
 1. **Critical — public demo credentials can reach live Twilio.** The repo is
    public and publishes the Jober staging URL/password in `CLAUDE.md`;
@@ -72,14 +70,36 @@ predate several features shipped since — e.g. Dokku staging is live, not
    weaker than it looks, since the image is already fully decoded in
    memory by the time the size check runs. Reorder to check dimensions from
    header/metadata before a full `load()`.
-9. **Medium — backlog documentation is materially stale.**
-   `docs/platform/client-feature-matrix.md` still lists age warnings and
-   warehouse stock as unimplemented and Jober transport as enabled; this
-   file's own pre-2026-07-25 rows still say Dokku staging/TLS are
-   unavailable. Zero open GitHub issues means there's no separate
-   executable backlog to fall back on either — this file (and
-   `docs/platform/client-feature-matrix.md`) needs a real reconciliation
-   pass against current `main`, not just this list of new findings.
+9. ~~**Medium — backlog documentation is materially stale.**~~ **Fixed
+   2026-07-26.** `docs/platform/client-feature-matrix.md` was reconciled
+   against `main` — each claim re-checked in the code rather than assumed:
+   warehouse stock ships (and is per-office), `core/people/services.py::
+   age_warning` ships, and Jober transport is `False` in
+   `clients/jober/settings.py`, so the recorded flag mismatch was already
+   resolved. Office-scoped RBAC gained a row, and the People, Accommodation
+   and Profitability rows gained the office dimension. The legacy "region"
+   vocabulary was swept in the same pass: `Jober_Finance_Specs.md` and
+   `docs/product/jober-requirements-supplement.md` keep their interview and
+   workbook text as historical provenance (that is what makes them useful
+   for the sign convention) but now carry a banner stating that regions
+   became `Office` in ADR 0026 and that `Project.region` no longer exists;
+   their "can the region list grow?" open questions are marked answered.
+   `docs/security/security-review-2026-06-29.md` keeps its dated text with
+   an inline note that ADR 0026 superseded "offices are filters, not access
+   boundaries", and ADR 0008 now carries a forward-pointer to 0026.
+   This file's own stale rows were corrected in the same pass and verified
+   against the live app rather than against the journal: "Dokku staging
+   deploy" and "HTTPS + secure cookies on real host" are now Ready, the
+   latter confirmed by inspecting the actual response headers and cookie
+   flags.
+   *Deliberately left for later:* the last legacy "region" naming is in
+   **code**, not docs — `features/finance/views.py` still passes
+   `regional_results`/`regional_chart_data`, read by
+   `templates/pages/finance_summary.html` and `finance_year.html` (including
+   the DOM id `chart-data-finance-summary-regional`). The data is already
+   per-office; only the names are stale. It is a mechanical rename across one
+   view and two templates, needing both unit lanes plus e2e, and was not worth
+   running the day before the CEO demo for a change no user can see.
 10. **Low — client Help content leaks unsupported features.** CorvinumEU
     users can read the Jober-only Feedback/profitability/accommodation/
     transport Help articles even though CorvinumEU has none of those
@@ -105,8 +125,8 @@ smoke suite doesn't cover.
 | Gate | State | Notes |
 |---|---|---|
 | Static files served in production | ✅ Ready (2026-06-21) | WhiteNoise under gunicorn (ADR 0016). Regression test `test_static_css_is_served`. Found because Phase 0 smoke never requested an asset. |
-| HTTPS + secure cookies on real host | ⚠️ Open | `SECURE_SSL_REDIRECT`/`SESSION_COOKIE_SECURE`/`CSRF_COOKIE_SECURE` default secure; **must not** set the `DJANGO_*_=0` overrides on staging/prod (those exist only for the HTTP smoke network). Verify once Dokku TLS is live. |
-| Dokku staging deploy | ⚠️ Open | Blocked on external staging app/domain/PostgreSQL service names. Runbook: `docs/deployment/jober-dokku-staging.md`. |
+| HTTPS + secure cookies on real host | ✅ Ready (verified live 2026-07-26) | `SECURE_SSL_REDIRECT`/`SESSION_COOKIE_SECURE`/`CSRF_COOKIE_SECURE` default secure; **must not** set the `DJANGO_*_=0` overrides on staging/prod (those exist only for the HTTP smoke network). Confirmed against `https://jober-staging.…sslip.io`: HTTP redirects to HTTPS, `Strict-Transport-Security: max-age=31536000; includeSubDomains; preload`, `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, and the CSRF cookie carries `Secure; HttpOnly; SameSite=Lax`. Minor cleanup left: nginx emits a *second*, shorter HSTS header (`max-age=15724800`) alongside Django's — harmless but duplicated. Production settings also set `SECURE_PROXY_SSL_HEADER`, so anything speaking to the app directly must send `X-Forwarded-Proto`. |
+| Dokku staging deploy | ✅ Ready (2026-07-26) | No longer blocked — the names exist and both apps are live: `jober-staging` and `corvinum-staging` on host `syncmetric-prime-dokku`, backed by `pg-jober-staging` / `pg-corvinum-staging`. Images are built locally from pinned deps and streamed with `git:load-image`, so the VPS never builds source or sees build-time secrets. Runbook: `docs/deployment/syncmetric-prime-staging.md`; per-deploy record in `deployment_journal.md`. **Production** deployment remains open (C-Q14, real server names). |
 | DB migrations on deploy | ✅ Ready | `accounts`/`audit` initial migrations run cleanly on pinned PostgreSQL 17. |
 | Initial admin user | ✅ Ready (2026-06-21) | `manage.py ensure_superuser` — idempotent, env-driven (`DJANGO_SUPERUSER_EMAIL`/`_PASSWORD`), audited; wired into the Dokku release steps (`docs/deployment/jober-dokku-staging.md`). `seed_demo` remains fictional/staging only — never against a real-data DB. |
 | Secret management | 🟡 Partial (2026-06-29) | **Doppler** is the secrets source (project `hr_system`, config `dev`); `doppler run --project hr_system --config dev -- scripts/dev_app.sh up` injects env locally (`doppler.yaml`, `docs/deployment/jober-twilio-setup.md`). Still to confirm: prod Doppler config + Dokku wiring (sync or service token) and `DJANGO_SECRET_KEY`/DB-cred rotation. |

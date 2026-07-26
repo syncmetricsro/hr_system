@@ -75,5 +75,9 @@ decision-point observations are listed below.
 - Object-level authorization on operational *writes* (e.g. a coordinator may act
   on a person outside their projects): this is the intended action-gated model
   (ADR 0008, "offices are filters, not access boundaries"), not a finding.
+  **Superseded by ADR 0026 (2026-07-24/25):** offices *are* an access boundary
+  now, for reads and writes alike — every non-Observer role is confined to
+  its own offices and cross-office object access returns 403. The dated text
+  above is left as written because it records what was true at review time.
 - Blacklist module (unbuilt, blocked on the Q3 legal answer) — to be reviewed
   when it lands, given it will hold the most sensitive data.

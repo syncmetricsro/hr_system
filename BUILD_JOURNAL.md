@@ -1,5 +1,45 @@
 # Build Journal
 
+## 2026-07-26 - Legacy "region" vocabulary swept; feature matrix reconciled
+
+Closes production-readiness item 9. The repo still described offices as
+"regions" in the two documents a reader would treat as authoritative for
+finance, and the cross-client feature matrix was wrong about three shipped
+features.
+
+- **The matrix was reconciled by re-checking each claim in the code, not by
+  reading the last journal entry.** It listed warehouse stock as
+  unimplemented (it ships, and is per-office), the under-18 warning as
+  unimplemented (`core/people/services.py::age_warning` ships - critical
+  under 18, advisory within 30 days, informational rather than blocking),
+  and Jober transport as an ON/OFF mismatch that `clients/jober/settings.py`
+  had already resolved to `False`. Added an office-scoped-RBAC row and gave
+  People/Accommodation/Profitability the office dimension.
+- **The "region" documents are kept, not rewritten.** `Jober_Finance_Specs.md`
+  and `jober-requirements-supplement.md` are the provenance record for the
+  workbook's sign convention and category structure - that is precisely why
+  they are worth keeping readable as spoken. Each now opens with a banner
+  saying regions became `Office` in ADR 0026 and that `Project.region` was
+  removed; only the forward-looking instructional lines (the data-model
+  sketches, the "can the region list grow?" open questions) were corrected,
+  struck through with the answer beside them.
+- `security-review-2026-06-29.md` keeps its dated text - it records what was
+  true at review time - with an inline note that ADR 0026 superseded
+  "offices are filters, not access boundaries". ADR 0008 gained a
+  forward-pointer: its broad read was always broad *within* the viewer's
+  offices.
+- Two of this file's own gates were stale and were verified against the live
+  app rather than the journal: Dokku staging deploy (both apps live) and
+  HTTPS/secure cookies - confirmed by reading the actual response headers
+  (HSTS with preload, `X-Frame-Options: DENY`) and the CSRF cookie's
+  `Secure; HttpOnly; SameSite=Lax`. That also surfaced a small real finding:
+  nginx emits a second, shorter HSTS header alongside Django's.
+- Left deliberately: the last "region" naming is in code, not docs -
+  `regional_results`/`regional_chart_data` in `features/finance/views.py`
+  and two templates. The data is already per-office; only the names are
+  stale. A rename needs both unit lanes plus e2e, which is not a sensible
+  thing to run the day before the CEO demo for a change no user can see.
+
 ## 2026-07-25 - Documentation caught up with office scoping (behaviour truth)
 
 Seven PRs of office scoping shipped while the documents kept describing the
