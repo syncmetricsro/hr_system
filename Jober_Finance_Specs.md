@@ -10,6 +10,17 @@
 > specifies Jober's target `features/profitability` capability. CorvinumEU keeps
 > profitability OFF. Application changes require a separate build prompt.
 
+> **Terminology note, 2026-07-26 — "region" is superseded by "office".** The
+> workbook's *regions* (Megyer, DS) became the `Office` model in ADR 0026;
+> Jober's live offices are Velký Meder (VM), Győr (GYR) and Dunajská Streda
+> (DS), and `Project.region` no longer exists (removed in
+> `projects.0006_remove_project_region_alter_project_office`). Read every
+> "region" below as describing **the source workbook**, which is what makes
+> this document useful — it is the provenance record for the sign convention
+> and category structure. Where it looks forward to how the system should
+> behave, the office roll-up in `features/finance` is the implementation, and
+> offices are now an access boundary, not merely a reporting dimension.
+
 ## 1. Source and provenance
 
 The source was supplied as `HV 202510.xlsx` and referred to as
@@ -102,8 +113,10 @@ EN/SK/HU/UK labels are implementation work; source wording must remain traceable
 
 ## 5. Logical data model
 
-- `Project.region`: region roll-up key. The implementation should use a
-  configurable relation/catalog if regions are confirmed to grow.
+- ~~`Project.region`: region roll-up key. The implementation should use a
+  configurable relation/catalog if regions are confirmed to grow.~~
+  **Built as `Project.office`** — the configurable catalog this line asked
+  for, and additionally an access boundary (ADR 0026).
 - `FinancePeriod`: project, year, month, state, note, created/updated actor and
   timestamps, lock metadata, and reopen reason; unique by project and month.
 - `FinanceCategory`: stable key, source label, cost/revenue kind, reporting
@@ -199,8 +212,10 @@ amounts.
 
 - Is the period October 2025, as `202510` suggests, or November 2025, as the
   worksheet states?
-- Are Megyer and DS the complete fixed region list, or must regions be managed
-  as growing data?
+- ~~Are Megyer and DS the complete fixed region list, or must regions be managed
+  as growing data?~~ **Answered by ADR 0026:** regions became the `Office`
+  model — managed data, not a fixed list — and Jober runs three of them
+  (VM, GYR, DS).
 - Is profitability switched on globally for Jober or individually per project?
 - Should persistence adopt signed values or retain positive magnitudes by kind
   while exposing the workbook's signed convention?

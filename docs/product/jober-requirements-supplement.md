@@ -12,6 +12,13 @@
 > build prompt and reviewed implementation are still required. It does not amend
 > the main product design as "built" or "confirmed in production."
 
+> **Terminology note, 2026-07-26 — "region" is superseded by "office".** ADR
+> 0026 turned the interview's *regions* into the `Office` model (Jober: Velký
+> Meder, Győr, Dunajská Streda) and made them an access boundary rather than a
+> reporting dimension. `Project.region` was removed in
+> `projects.0006_remove_project_region_alter_project_office`. The interview
+> record below is left as spoken; read "region" as "office".
+
 ## 1. Scope boundary
 
 Jober needs operational cost and recovery records, not a payroll engine.
@@ -326,7 +333,9 @@ reporting month remains an open question.
 
 ### Data model sketch
 
-- `Project.region`: roll-up key; whether it is a configurable catalog is open.
+- ~~`Project.region`: roll-up key; whether it is a configurable catalog is open.~~
+  **Built as `Project.office`** (ADR 0026) — a managed `Office` catalog, and an
+  access boundary as well as a roll-up key.
 - `FinancePeriod`: project plus year/month, state, lock/reopen metadata, actor,
   and optional note; unique per project-month.
 - `FinanceCategory`: client-seeded label, cost/revenue kind, grouping, order,
@@ -380,7 +389,8 @@ project-specific spreadsheet ranges.
 ### Open questions
 
 - Is the source period October 2025 (`202510`) or November 2025 (sheet label)?
-- Can the region list grow beyond Megyer and DS?
+- ~~Can the region list grow beyond Megyer and DS?~~ **Yes — answered by ADR
+  0026:** offices are managed data; Jober runs three (VM, GYR, DS).
 - Is profitability enabled per project or globally for Jober?
 - Must application storage use signed values, or may it normalize positive
   magnitudes by category while preserving signed entry/export behavior?

@@ -1,6 +1,11 @@
 # ADR 0008: Broad Read, Action-Gated RBAC
 
-Status: Accepted
+Status: Accepted — **amended by [ADR 0026](0026-office-scoped-rbac.md)**
+
+> The "broad read" here is broad *within the viewer's offices*. ADR 0026 made
+> `Office` a real access boundary: only Observer reads across offices, and
+> direct access to another office's record returns 403. The four roles and the
+> action-gating model below are unchanged.
 
 ## Context
 
