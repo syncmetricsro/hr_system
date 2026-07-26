@@ -52,6 +52,10 @@ scripts/dev_app.sh up|down|rebuild|status|logs     # seeds demo users + full sce
 # Twilio-enabled human session:
 doppler run --project hr_system --config dev -- scripts/dev_app.sh up
 # Logins: {manazer,naborar,koordinator,pozorovatel}@demo.jober.test / demo-jober-2026
+#   LOCAL ONLY. Staging's accounts were rotated away from this value on
+#   2026-07-26 because this repo is public - ask the owner for that one.
+#   `seed_demo` no longer resets an existing password (use --reset-passwords
+#   to force it), so reseeding staging cannot republish the value above.
 #   manazer/naborar/koordinator are scoped to Velký Meder; only pozorovatel
 #   (Observer) sees all three offices. A "missing" record is usually scoping.
 

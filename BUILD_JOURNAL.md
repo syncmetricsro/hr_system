@@ -1,5 +1,35 @@
 # Build Journal
 
+## 2026-07-26 - Re-seeding can no longer republish a rotated demo password
+
+The owner rotated `jober-staging`'s four demo accounts off `demo-jober-2026`,
+the value this public repo publishes. Verified by confirming the old password
+no longer authenticates on any of the four - and that the command's
+`<your-password>` placeholder had not been pasted through literally, which is
+the failure mode a "rotated" success message would have hidden.
+
+That left a trap. `seed_demo` called `set_password(DEMO_PASSWORD)` on **every**
+run, created or not, so the next routine reseed would have silently restored
+the published value with nothing reporting it. The rotation had no in-app
+undo either, since no route in the product can change a password
+(production-readiness 11).
+
+- `seed_demo` now sets the built-in password **only on accounts it creates**.
+  Existing accounts keep whatever they have, and the command says so:
+  "Kept the existing password on N account(s)."
+- `--reset-passwords` restores the old force-everything behaviour for the
+  cases that actually want it.
+- Everything else the seed repairs still gets repaired - role, names,
+  `is_active` - so this is not a step toward the seed becoming a no-op on an
+  existing database. A test asserts exactly that, because "preserve the
+  password" is one plausible edit away from "skip existing users entirely".
+- `CLAUDE.md` now marks the published password local-only and points at the
+  owner for staging.
+
+Left deliberately: the value is still hardcoded in `seed_demo.py` and six e2e
+tests, so env-driving it is the durable fix and a larger change than the day
+before a client demo warrants.
+
 ## 2026-07-26 - User and credential management recorded as the largest functional gap
 
 Rotating the staging demo password needed a shell command against the Dokku

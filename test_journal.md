@@ -1,5 +1,28 @@
 # Test Journal
 
+## 2026-07-26 - tests/test_seed_demo_passwords.py (4 tests)
+
+Covers a silent-revert risk rather than a calculation: `seed_demo` reset every
+account's password on every run, so re-seeding staging would have republished
+the password this public repo prints, with no error and no output saying it had
+happened.
+
+- `test_reseeding_keeps_a_rotated_password` is the regression itself.
+- `test_reseeding_still_repairs_everything_else` guards the *other* direction,
+  and is the more valuable of the two: "don't touch existing users' passwords"
+  is one plausible edit away from "skip existing users entirely", which would
+  quietly stop the seed from repairing roles and reactivating accounts. It
+  asserts role, name and `is_active` are still corrected while the password is
+  preserved.
+- `test_reset_passwords_flag_forces_the_builtin_password_back` keeps the escape
+  hatch honest.
+- Module-skipped when `clients.jober.demo` is not installed, and marked
+  `jober_only`, following the pattern established after
+  `tests/test_finance_seed_splits.py` aborted the whole CorvinumEU lane during
+  collection. Confirmed on both lanes this time rather than assumed: Jober
+  **658 passed** (654 + 4), CorvinumEU **425 passed, 12 skipped** (the extra
+  skip is this file).
+
 ## 2026-07-26 - i18n verified by rendering, not by reading the catalog
 
 - The catalog said the office/finance strings existed; the *app* said
