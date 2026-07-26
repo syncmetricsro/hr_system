@@ -1,7 +1,7 @@
 # Jober amendment demo runbook
 
-> Updated 2026-07-25 for office-scoped RBAC (ADR 0026 Phase B). This is the
-> Jober client on port 8000; all people and amounts are fictional demo data.
+> Updated 2026-07-26 for office-scoped RBAC (ADR 0026 Phase B) and for
+> presenting from **staging**. All people and amounts are fictional demo data.
 
 This walkthrough demonstrates working Django workflows, not mock screens. Allow
 40-50 minutes and present in Slovak, switching briefly to Hungarian or Ukrainian.
@@ -25,22 +25,46 @@ missing data.
 
 ## Preparation
 
-1. Run `scripts/dev_app.sh rebuild` from the repository root. Use
-   `doppler run --project hr_system --config dev -- scripts/dev_app.sh rebuild`
-   only if the optional live Twilio segment will actually be shown.
+**Venue: staging.** The demo is given from
+<https://jober-staging.80.211.210.46.sslip.io>, not from a laptop. Its database
+was dropped and rebuilt on 2026-07-26, so it matches every figure quoted in
+this runbook exactly. Do not reseed it again before the demo — a reseed *adds
+and repairs* rows but cannot retract hand-made ones, which is what made the
+warehouse stop reconciling last time.
 
-   **Rebuild, don't reuse.** A database seeded before 2026-07-25 keeps a
-   pre-split pooled stock receipt and office-less people, so per-office figures
-   and the blacklist step will not look right. `rebuild` reseeds from scratch;
-   re-running the seed commands on an existing database also repairs those rows.
-2. Open <http://localhost:8000> and sign in as
-   `manazer@demo.jober.test` / `demo-jober-2026`.
-3. Confirm: the header badge reads **Velký Meder**; Dashboard shows Warehouse
-   stock and Accommodation occupancy; Projects lists **DHL Bratislava and
-   Minit** (Velký Meder's two, not all six); and no Transport navigation or
-   project card is present.
-4. Run `scripts/playwright_e2e.sh` and rehearse the issue/return and finance
-   edits once. Never use real worker data or the supplied client workbook.
+1. Open the staging URL and sign in as `manazer@demo.jober.test`. Ask the owner
+   for the password; treat whatever is written in `CLAUDE.md` as public.
+2. Confirm before the client arrives: the header badge reads **Velký Meder**;
+   Dashboard shows Warehouse stock and Accommodation occupancy; People lists
+   **five** workers; Projects lists **DHL Bratislava and Minit** (Velký Meder's
+   two, not all six); and no Transport navigation or project card is present.
+3. Sign in as `pozorovatel@demo.jober.test` in a second browser profile and
+   confirm the badge reads **All offices** and Finance opens the executive
+   dashboard. Switching accounts mid-demo is smoother from two profiles than
+   from one.
+
+**Do not upload anything during the demo.** Staging has no storage mount, so an
+uploaded avatar or certificate document 404s immediately and disappears on the
+next deploy (production-readiness items 2 and 3). Seeded avatars render from
+static files and are safe — it is only *new* uploads that break. If asked to
+show uploading, describe it instead and offer a follow-up.
+
+**Twilio.** Staging has live provider credentials and Recruiter, Coordinator
+and Manager can all send SMS. Either confirm with the owner that the live-SMS
+segment is wanted, or avoid the send buttons entirely.
+
+### Local fallback
+
+If staging is unavailable, run `scripts/dev_app.sh rebuild` and present from
+<http://localhost:8000> instead — same accounts, same seeded figures. Use
+`doppler run --project hr_system --config dev -- scripts/dev_app.sh rebuild`
+only if the live Twilio segment will actually be shown. **Rebuild, don't
+reuse:** a database seeded before 2026-07-25 keeps a pre-split pooled stock
+receipt and office-less people, so per-office figures and the blacklist step
+will not look right.
+
+Rehearse the issue/return and finance edits once beforehand. Never use real
+worker data or the supplied client workbook.
 
 Other demo accounts use the same password. **Office membership is what each
 account can see**, so switching accounts is now part of the demo, not a detour:
@@ -281,6 +305,11 @@ behavior also remain gated by external access and the Art. 28 DPA review.
 ## Caveats and decisions to collect
 
 - Fictional data only; the real-data gate remains closed.
+- **Uploads do not persist on staging** and certificate documents are not yet
+  access-controlled. Both are known, tracked production-readiness items (2 and
+  3); say so plainly if it comes up rather than demonstrating an upload.
+- The demo account password is published in a **public** repository. Rotate it
+  before any external audience, or put staging behind access control.
 - Confirm whether the finance period is October 2025 or November 2025.
 - Confirm whether P&L opt-out is per project. (Office growth is no longer an
   open product question: the three licensed offices are a vendor-side ceiling
