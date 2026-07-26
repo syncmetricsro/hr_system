@@ -38,15 +38,30 @@ All demo accounts use the password **`demo-jober-2026`**:
 | Manager / Administrator | `manazer@demo.jober.test` | Velký Meder |
 | Recruiter | `naborar@demo.jober.test` | Velký Meder |
 | Coordinator | `koordinator@demo.jober.test` | Velký Meder |
+| Manager / Administrator | `manazer.gyor@demo.jober.test` | Győr |
+| Recruiter | `naborar.gyor@demo.jober.test` | Győr |
+| Coordinator | `koordinator.gyor@demo.jober.test` | Győr |
+| Manager / Administrator | `manazer.ds@demo.jober.test` | Dunajská Streda |
+| Recruiter | `naborar.ds@demo.jober.test` | Dunajská Streda |
+| Coordinator | `koordinator.ds@demo.jober.test` | Dunajská Streda |
 | Observer | `pozorovatel@demo.jober.test` | all three |
 
-Tip for demos: there are now **two** access dimensions to show. By *role*, the
+**On staging these accounts do *not* use the password above** — it is published
+in this public repository, so the staging copies were rotated. The table's
+password applies to a local stack only.
+
+Tip for demos: there are **two** access dimensions to show. By *role*, the
 **Manager** account gets the most actions (e.g. "Spravovať projekty") while the
-**Observer** is read-only. By *office*, the first three accounts see only Velký
-Meder's people, projects, warehouse and finance — the Observer is the only
-account that sees all three offices. The office bounding the current view is
-named in the header badge, so a scoped list is never mistaken for an empty
-database.
+**Observer** is read-only. By *office*, each account sees only its own office's
+people, projects, warehouse and finance — the Observer is the only account that
+sees all three, and it does so by role bypass rather than by belonging to them.
+
+Show the office dimension with **two** managers rather than one. `manazer@`
+seeing only Velký Meder could be a quirk of that account; `manazer.gyor@`
+seeing only Győr, and each getting a refusal on the other's projects, is what
+shows the offices are walled off from each other. The office bounding the
+current view is named in the header badge, so a scoped list is never mistaken
+for an empty database.
 
 ## Other commands
 

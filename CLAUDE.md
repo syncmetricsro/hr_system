@@ -51,13 +51,17 @@ secret-free and use mocks/fakes or the app's fail-closed unconfigured path.
 scripts/dev_app.sh up|down|rebuild|status|logs     # seeds demo users + full scenario
 # Twilio-enabled human session:
 doppler run --project hr_system --config dev -- scripts/dev_app.sh up
-# Logins: {manazer,naborar,koordinator,pozorovatel}@demo.jober.test / demo-jober-2026
-#   LOCAL ONLY. Staging's accounts were rotated away from this value on
-#   2026-07-26 because this repo is public - ask the owner for that one.
-#   `seed_demo` no longer resets an existing password (use --reset-passwords
-#   to force it), so reseeding staging cannot republish the value above.
-#   manazer/naborar/koordinator are scoped to Velký Meder; only pozorovatel
-#   (Observer) sees all three offices. A "missing" record is usually scoping.
+# Logins: {manazer,naborar,koordinator}@demo.jober.test        -> Velký Meder
+#         {manazer,naborar,koordinator}.gyor@demo.jober.test   -> Győr
+#         {manazer,naborar,koordinator}.ds@demo.jober.test     -> Dunajská Streda
+#         pozorovatel@demo.jober.test  -> all three (role bypass, no membership)
+#   Password: demo-jober-2026 — LOCAL ONLY. Staging's accounts were rotated
+#   away from this value on 2026-07-26 because this repo is public; ask the
+#   owner for that one. `seed_demo` no longer resets an existing password
+#   (use --reset-passwords to force it), so reseeding cannot republish it.
+#   Each staff account belongs to exactly one office, so a "missing" record is
+#   usually scoping. Verify office work with two managers in different offices,
+#   not one: one account seeing less proves nothing on its own.
 
 # Unit tests + lint (test image built from requirements/test.lock; needs a dev DB)
 scripts/dev_db.sh up          # digest-pinned Postgres on the internal jober-dev-net
