@@ -9,9 +9,10 @@ This walkthrough demonstrates working Django workflows, not mock screens. Allow
 ## Read this first: the demo is now office-scoped
 
 Jober operates three offices — **Velký Meder (VM)**, **Győr (GYR)** and
-**Dunajská Streda (DS)**. Every non-observer account now sees only its own
-office's data, and the seeded demo staff all belong to **Velký Meder**. This is
-the headline of §1 below, but it also changes what every other step shows:
+**Dunajská Streda (DS)**. Every non-observer account sees only its own office's
+data, and **each office has its own manager, recruiter and coordinator** — so
+the separation can be shown from both sides rather than asserted from one. This
+is the headline of §1 below, but it also changes what every other step shows:
 
 - Manager/Recruiter/Coordinator see one office's people, projects, warehouse,
   accommodation, compliance and finance — **not** company totals.
@@ -38,10 +39,16 @@ warehouse stop reconciling last time.
    Dashboard shows Warehouse stock and Accommodation occupancy; People lists
    **five** workers; Projects lists **DHL Bratislava and Minit** (Velký Meder's
    two, not all six); and no Transport navigation or project card is present.
-3. Sign in as `pozorovatel@demo.jober.test` in a second browser profile and
-   confirm the badge reads **All offices** and Finance opens the executive
-   dashboard. Switching accounts mid-demo is smoother from two profiles than
-   from one.
+3. Sign in as `manazer.gyor@demo.jober.test` in a **second** browser profile.
+   Badge reads **Győr**; People lists **Farrukh only**; Projects lists
+   **WEBASTO and Mevis 080**. This is the account §1 switches to, and having it
+   already open is what makes that moment quick rather than a login detour.
+4. Sign in as `pozorovatel@demo.jober.test` in a **third** profile and confirm
+   the badge reads **All offices** and Finance opens the executive dashboard.
+
+All nine staff accounts share one password — the one the owner set. Three
+browser profiles (or one plus two private windows) is the smoothest way to
+switch mid-demo.
 
 **Uploads work — and are worth showing.** The earlier "don't upload anything"
 warning was based on two things that turned out to be wrong or since fixed:

@@ -1,5 +1,35 @@
 # Deployment Journal
 
+## 2026-07-26 - Per-office staff deployed; six new accounts secured immediately
+
+- Deployed **`534d961`** to `jober-staging` as `jober-platform:demo-534d961`
+  (`sha256:43f211d5...`). No migrations. Re-ran `seed_demo` and `seed_people`:
+  **6 accounts created, 4 updated**, with the four existing passwords preserved
+  by the guard added earlier today ("Kept the existing password on 4
+  account(s)").
+- **The six new accounts were created with the published seed password**, which
+  is a live exposure on a public URL for as long as it lasts. Closed within the
+  same session by copying the password *hash* from `manazer@` - which already
+  carried the owner's rotated value - onto the six. That gives all nine staff
+  logins the owner's password without the plaintext ever being known here or
+  typed into a terminal. Verified afterwards: **no** `@demo.jober.test` account
+  accepts `demo-jober-2026`.
+- Reciprocal boundary confirmed live, which was the point of the change:
+
+  | account | badge | DHLBA / WEB / CARGO | people |
+  |---|---|---|---|
+  | `manazer@` | Velký Meder | 200 / 403 / 403 | 5 VM workers |
+  | `manazer.gyor@` | Győr | 403 / 200 / 403 | Farrukh |
+  | `manazer.ds@` | Dunajská Streda | 403 / 403 / 200 | Tran |
+  | `pozorovatel@` | All offices | 200 / 200 / 200 | all 7 |
+
+- Every project now resolves to a coordinator of its own office (checked all
+  six), replacing the state where one Velky Meder coordinator was responsible
+  for four projects they got a 403 on.
+- Unchanged and re-verified: Slovak finance headings with no English left,
+  warehouse 36 + 23 + 14 = 73 units / EUR 1 281.50 with zero orphans, 2025 and
+  2026 finance totals, and all five HTTPS smoke checks.
+
 ## 2026-07-26 - PostgreSQL password rotated on jober-staging (and a brief outage)
 
 Rotating `pg-jober-staging`'s password took the app down for a few minutes.
