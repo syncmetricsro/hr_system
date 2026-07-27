@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-27 14:24+0200\n"
+"POT-Creation-Date: 2026-07-28 00:15+0200\n"
 "Language: hu\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -148,12 +148,10 @@ msgstr "Felszerelés-katalóg"
 msgid "Activation requests"
 msgstr "Aktiválási kérelmek"
 
-
 #: clients/corvinum_eu/templates/layouts/base.html:66
 #: templates/layouts/base.html:53 templates/pages/activation_queue.html:4
 msgid "Activations"
 msgstr "Aktiválások"
-
 
 #: clients/corvinum_eu/templates/layouts/base.html:69 core/ui/help.py:56
 #: templates/layouts/base.html:56 templates/pages/blacklist_queue.html:4
@@ -229,7 +227,7 @@ msgstr "Menedzser/Adminisztrátor"
 msgid "Observer"
 msgstr "Megfigyelő"
 
-#: core/accounts/models.py:55 core/people/models.py:69
+#: core/accounts/models.py:55 core/people/models.py:71
 msgid "email"
 msgstr "e-mail"
 
@@ -241,7 +239,7 @@ msgstr "szerepkör"
 msgid "offices"
 msgstr "irodák"
 
-#: core/accounts/models.py:72 core/people/models.py:79
+#: core/accounts/models.py:72 core/people/models.py:81
 msgid "avatar"
 msgstr "profilkép"
 
@@ -262,7 +260,7 @@ msgstr "titkos kulcs"
 msgid "confirmed"
 msgstr "megerősítve"
 
-#: core/accounts/models.py:99 core/audit/models.py:33 core/people/models.py:139
+#: core/accounts/models.py:99 core/audit/models.py:46 core/people/models.py:147
 #: core/projects/models.py:36 core/projects/models.py:96
 #: core/projects/models.py:181 core/projects/models.py:259
 #: features/advances/models.py:92 features/blacklist/models.py:66
@@ -306,15 +304,15 @@ msgstr "Érvénytelen kód."
 msgid "Two-factor authentication enabled."
 msgstr "Kétlépcsős azonosítás bekapcsolva."
 
-#: core/accounts/views.py:161 core/people/views.py:329
+#: core/accounts/views.py:161 core/people/views.py:332
 msgid "No file was selected."
 msgstr "Nem választott ki fájlt."
 
-#: core/accounts/views.py:176 core/people/views.py:344
+#: core/accounts/views.py:176 core/people/views.py:347
 msgid "Avatar updated."
 msgstr "A profilkép frissítve."
 
-#: core/accounts/views.py:186 core/people/views.py:356
+#: core/accounts/views.py:186 core/people/views.py:359
 msgid "Avatar removed."
 msgstr "A profilkép eltávolítva."
 
@@ -335,19 +333,30 @@ msgstr "cél típusa"
 msgid "target id"
 msgstr "cél azonosítója"
 
-#: core/audit/models.py:31 features/logistics/models.py:466
+#: core/audit/models.py:41 core/people/models.py:151 core/projects/models.py:64
+#: core/projects/models.py:137 core/projects/models.py:209
+#: core/projects/models.py:322 features/advances/models.py:61
+#: features/blacklist/models.py:45 features/blacklist/models.py:105
+#: features/checklists/models.py:57 features/compliance/models.py:24
+#: features/intake/models.py:106 features/logistics/models.py:144
+#: features/logistics/models.py:263 features/messaging/models.py:48
+#: features/payslips/models.py:20 features/wage_ledger/models.py:16
+msgid "person"
+msgstr "személy"
+
+#: core/audit/models.py:44 features/logistics/models.py:466
 msgid "reason"
 msgstr "indok"
 
-#: core/audit/models.py:32
+#: core/audit/models.py:45
 msgid "metadata"
 msgstr "metaadatok"
 
-#: core/audit/models.py:36
+#: core/audit/models.py:49
 msgid "audit event"
 msgstr "auditesemény"
 
-#: core/audit/models.py:37
+#: core/audit/models.py:50
 msgid "audit events"
 msgstr "auditesemények"
 
@@ -727,7 +736,7 @@ msgstr "kód"
 msgid "country"
 msgstr "ország"
 
-#: core/offices/models.py:17 core/people/models.py:127
+#: core/offices/models.py:17 core/people/models.py:129
 #: core/projects/models.py:21 features/logistics/models.py:41
 #: features/logistics/models.py:355 features/logistics/models.py:440
 #: features/logistics/models.py:519 features/logistics/models.py:554
@@ -819,23 +828,23 @@ msgid "Date of birth cannot be in the future."
 msgstr "A születési dátum nem lehet jövőbeli."
 
 # --- lifecycle status labels ---
-#: core/people/models.py:14 templates/help/getting-started.html:128
+#: core/people/models.py:16 templates/help/getting-started.html:128
 #: templates/pages/dashboard.html:21
 #: templates/panels/logistics_equipment.html:47
 msgid "Available"
 msgstr "Elérhető"
 
-#: core/people/models.py:15 templates/help/getting-started.html:133
+#: core/people/models.py:17 templates/help/getting-started.html:133
 #: templates/pages/person_detail.html:73
 msgid "Trial day"
 msgstr "Próbanap"
 
-#: core/people/models.py:16 templates/help/getting-started.html:138
+#: core/people/models.py:18 templates/help/getting-started.html:138
 #: templates/pages/dashboard.html:24
 msgid "Working"
 msgstr "Dolgozik"
 
-#: core/people/models.py:17 templates/help/getting-started.html:143
+#: core/people/models.py:19 templates/help/getting-started.html:143
 #: templates/pages/accommodation_detail.html:35
 #: templates/pages/accommodation_list.html:20
 #: templates/pages/accommodation_list.html:33
@@ -846,18 +855,18 @@ msgstr "Dolgozik"
 msgid "Inactive"
 msgstr "Inaktív"
 
-#: core/people/models.py:18
+#: core/people/models.py:20
 msgid "Blacklisted"
 msgstr "Feketelistán"
 
-#: core/people/models.py:45 features/blacklist/models.py:16
+#: core/people/models.py:47 features/blacklist/models.py:16
 #: features/checklists/models.py:37 features/feedback/models.py:20
 #: features/finance/models.py:85 features/intake/models.py:66
 #: features/logistics/models.py:101
 msgid "label"
 msgstr "címke"
 
-#: core/people/models.py:46 core/projects/models.py:23
+#: core/people/models.py:48 core/projects/models.py:23
 #: features/blacklist/models.py:17 features/blacklist/models.py:113
 #: features/checklists/models.py:22 features/feedback/models.py:25
 #: features/finance/models.py:88 features/logistics/models.py:31
@@ -866,110 +875,103 @@ msgstr "címke"
 msgid "active"
 msgstr "aktív"
 
-#: core/people/models.py:47 features/blacklist/models.py:18
+#: core/people/models.py:49 features/blacklist/models.py:18
 #: features/checklists/models.py:41 features/finance/models.py:89
 #: features/intake/models.py:52 features/intake/models.py:69
 msgid "order"
 msgstr "sorrend"
 
-#: core/people/models.py:50 core/people/models.py:102
+#: core/people/models.py:52 core/people/models.py:104
 msgid "inactive reason"
 msgstr "inaktivitás oka"
 
-#: core/people/models.py:51
+#: core/people/models.py:53
 msgid "inactive reasons"
 msgstr "inaktivitás okai"
 
-#: core/people/models.py:62
+#: core/people/models.py:64
 msgid "first name"
 msgstr "keresztnév"
 
-#: core/people/models.py:63
+#: core/people/models.py:65
 msgid "last name"
 msgstr "vezetéknév"
 
-#: core/people/models.py:64
+#: core/people/models.py:66
 msgid "date of birth"
 msgstr "születési dátum"
 
-#: core/people/models.py:65
+#: core/people/models.py:67
 msgid "place of birth"
 msgstr "születési hely"
 
-#: core/people/models.py:66
+#: core/people/models.py:68
 msgid "phone"
 msgstr "telefon"
 
-#: core/people/models.py:70 features/logistics/models.py:30
+#: core/people/models.py:72 features/logistics/models.py:30
 msgid "address"
 msgstr "cím"
 
-#: core/people/models.py:71
+#: core/people/models.py:73
 msgid "nationality"
 msgstr "állampolgárság"
 
-#: core/people/models.py:73
+#: core/people/models.py:75
 msgid "preferred language"
 msgstr "preferált nyelv"
 
-#: core/people/models.py:83
+#: core/people/models.py:85
 msgid "has disability"
 msgstr "fogyatékossággal él"
 
-#: core/people/models.py:84
+#: core/people/models.py:86
 msgid "disability type"
 msgstr "fogyatékosság típusa"
 
-#: core/people/models.py:88
+#: core/people/models.py:90
 msgid "lifecycle status"
 msgstr "életciklus-állapot"
 
-#: core/people/models.py:104
+#: core/people/models.py:106
 msgid "inactive since"
 msgstr "inaktív ekkortól"
 
-#: core/people/models.py:113
+#: core/people/models.py:115
 msgid "owning recruiter"
 msgstr "felelős toborzó"
 
-#: core/people/models.py:114
+#: core/people/models.py:116
 msgid "The recruiter who entered this person."
 msgstr "A toborzó, aki ezt a személyt rögzítette."
 
-#: core/people/models.py:116
+#: core/people/models.py:118
 msgid "rehire eligible"
 msgstr "újrafoglalkoztatható"
 
-#: core/people/models.py:131
+#: core/people/models.py:133
 msgid "archived"
 msgstr "archiválva"
 
-#: core/people/models.py:132
+#: core/people/models.py:134
 msgid "archived at"
 msgstr "archiválás ideje"
 
-#: core/people/models.py:136
+#: core/people/models.py:138
 msgid "search name"
 msgstr "keresőnév"
 
-#: core/people/models.py:140 core/projects/models.py:37
+#: core/people/models.py:144
+msgid "search fold"
+msgstr "keresési névalak"
+
+#: core/people/models.py:148 core/projects/models.py:37
 #: core/projects/models.py:97 core/projects/models.py:260
 #: features/blacklist/models.py:67 features/finance/models.py:40
 msgid "updated"
 msgstr "frissítve"
 
-#: core/people/models.py:143 core/projects/models.py:64
-#: core/projects/models.py:137 core/projects/models.py:209
-#: core/projects/models.py:322 features/advances/models.py:61
-#: features/blacklist/models.py:45 features/blacklist/models.py:105
-#: features/checklists/models.py:57 features/compliance/models.py:24
-#: features/intake/models.py:106 features/logistics/models.py:144
-#: features/logistics/models.py:263 features/messaging/models.py:48
-#: features/payslips/models.py:20 features/wage_ledger/models.py:16
-msgid "person"
-msgstr "személy"
-
-#: core/people/models.py:144
+#: core/people/models.py:152
 msgid "people"
 msgstr "személyek"
 
@@ -1003,36 +1005,36 @@ msgstr "Próba eredménye"
 msgid "Readiness submitted"
 msgstr "Készenlét beküldve"
 
-#: core/people/views.py:123
+#: core/people/views.py:126
 msgid "Person added."
 msgstr "Személy hozzáadva."
 
-#: core/people/views.py:138 templates/pages/people_list.html:12
+#: core/people/views.py:141 templates/pages/people_list.html:12
 msgid "Add person"
 msgstr "Személy hozzáadása"
 
-#: core/people/views.py:153
+#: core/people/views.py:156
 msgid "Person updated."
 msgstr "Személy frissítve."
 
-#: core/people/views.py:164
+#: core/people/views.py:167
 msgid "Edit person"
 msgstr "Személy szerkesztése"
 
-#: core/people/views.py:219 templates/pages/activation_queue.html:28
+#: core/people/views.py:222 templates/pages/activation_queue.html:28
 #: templates/pages/person_detail.html:150
 msgid "Entry medical date"
 msgstr "Belépő orvosi dátuma"
 
-#: core/people/views.py:220
+#: core/people/views.py:223
 msgid "Review this future date."
 msgstr "Ellenőrizze ezt a jövőbeli dátumot."
 
-#: core/people/views.py:299
+#: core/people/views.py:302
 msgid "Person archived. Blacklist protection remains in place."
 msgstr "A személy archiválva. A feketelista-védelem megmarad."
 
-#: core/people/views.py:313
+#: core/people/views.py:316
 msgid "Recycled to Available."
 msgstr "Visszaküldve Elérhetőre."
 
@@ -1286,16 +1288,13 @@ msgstr "Elutasított"
 msgid "pillar snapshot"
 msgstr "pillérek pillanatképe"
 
-
 #: core/projects/models.py:349
 msgid "requested by"
 msgstr "kérelmezte"
 
-
 #: core/projects/models.py:351
 msgid "requested at"
 msgstr "kérelem időpontja"
-
 
 #: core/projects/models.py:358 features/blacklist/models.py:62
 msgid "decided by"
@@ -1309,47 +1308,44 @@ msgstr "döntés ideje"
 msgid "decision reason"
 msgstr "döntés indoklása"
 
-
 # --- projects UI ---
 #: core/projects/models.py:364
 msgid "activation approval"
 msgstr "aktiválás jóváhagyása"
-
 
 # --- projects UI ---
 #: core/projects/models.py:365
 msgid "activation approvals"
 msgstr "aktiválás-jóváhagyások"
 
-
-#: core/projects/services.py:131
+#: core/projects/services.py:139
 msgid "Only pending trials can be edited."
 msgstr "Csak függő próbanapok szerkeszthetők."
 
-#: core/projects/services.py:133
+#: core/projects/services.py:141
 msgid "Trials can only be scheduled for active projects."
 msgstr "Próbanap csak aktív projekthez ütemezhető."
 
-#: core/projects/services.py:203 features/advances/models.py:38
+#: core/projects/services.py:211 features/advances/models.py:38
 #: features/finance/catalog_i18n.py:20 templates/pages/activation_queue.html:25
 #: templates/pages/person_detail.html:118
 msgid "Medical"
 msgstr "Orvosi"
 
-#: core/projects/services.py:203
+#: core/projects/services.py:211
 msgid "Medical clearance is incomplete."
 msgstr "Az orvosi alkalmasság hiányos."
 
-#: core/projects/services.py:204 templates/pages/activation_queue.html:26
+#: core/projects/services.py:212 templates/pages/activation_queue.html:26
 #: templates/pages/person_detail.html:124
 msgid "Gear"
 msgstr "Felszerelés"
 
-#: core/projects/services.py:204
+#: core/projects/services.py:212
 msgid "Required equipment is incomplete."
 msgstr "A szükséges felszerelés hiányos."
 
-#: core/projects/services.py:205 features/finance/catalog_i18n.py:18
+#: core/projects/services.py:213 features/finance/catalog_i18n.py:18
 #: features/finance/models.py:67 templates/help/getting-started.html:22
 #: templates/help/logistics.html:8 templates/layouts/base.html:40
 #: templates/pages/accommodation_costs.html:6
@@ -1363,93 +1359,92 @@ msgstr "A szükséges felszerelés hiányos."
 msgid "Accommodation"
 msgstr "Szállás"
 
-#: core/projects/services.py:205
+#: core/projects/services.py:213
 msgid "Accommodation is incomplete."
 msgstr "A szállás nincs rendezve."
 
-#: core/projects/services.py:206 features/finance/models.py:66
+#: core/projects/services.py:214 features/finance/models.py:66
 #: templates/help/logistics.html:15 templates/layouts/base.html:42
 #: templates/pages/person_detail.html:140
 msgid "Transport"
 msgstr "Szállítás"
 
-#: core/projects/services.py:206
+#: core/projects/services.py:214
 msgid "Transport is incomplete."
 msgstr "A szállítás nincs rendezve."
 
-#: core/projects/services.py:225
+#: core/projects/services.py:233
 msgid "A reason is required when this is not applicable."
 msgstr "Ha nem alkalmazható, indoklás szükséges."
 
-#: core/projects/services.py:278
+#: core/projects/services.py:286
 msgid "Entry medical date is invalid."
 msgstr "Belépő orvosi dátuma érvénytelen."
 
-#: core/projects/services.py:280
+#: core/projects/services.py:288
 msgid "Entry medical date cannot be in the future."
 msgstr "Belépő orvosi dátuma nem lehet jövőbeli."
 
-#: core/projects/services.py:302
+#: core/projects/services.py:310
 msgid ""
 "Cannot activate this worker because no readiness record has been completed."
 msgstr ""
 "A munkavállaló nem aktiválható, mert nincs kitöltött készenléti adatlapja."
 
-#: core/projects/services.py:308
+#: core/projects/services.py:316
 #, python-format
 msgid "Cannot activate this worker until: %(items)s"
 msgstr "A munkavállaló nem aktiválható, amíg ezek nem teljesülnek: %(items)s"
 
-#: core/projects/services.py:328
+#: core/projects/services.py:336
 msgid "An activation request is already awaiting a decision."
 msgstr "Már van döntésre váró aktiválási kérelem."
 
-
-#: core/projects/services.py:370
+#: core/projects/services.py:378
 msgid "Only a pending activation request can be decided."
 msgstr "Csak függőben lévő aktiválási kérelemről lehet dönteni."
 
+#: core/projects/services.py:385
+msgid "You cannot decide your own activation request."
+msgstr "Nem dönthet a saját aktiválási kéréséről."
 
-#: core/projects/services.py:381
+#: core/projects/services.py:396
 msgid "A rejection must state a reason."
 msgstr "Az elutasításnál meg kell adni az indoklást."
 
-
-#: core/projects/services.py:384
+#: core/projects/services.py:399
 msgid "Decision must be 'approve' or 'reject'."
 msgstr "A döntésnek „jóváhagyás” vagy „elutasítás” kell legyen."
 
-
-#: core/projects/views.py:207 core/projects/views.py:271
+#: core/projects/views.py:208 core/projects/views.py:272
 msgid "Trial scheduled."
 msgstr "Próbanap ütemezve."
 
-#: core/projects/views.py:238
+#: core/projects/views.py:239
 msgid "Trial updated."
 msgstr "A próbanap frissítve."
 
-#: core/projects/views.py:263
+#: core/projects/views.py:264
 msgid "Review the trial details and try again."
 msgstr "Ellenőrizze a próbanap adatait, majd próbálja újra."
 
-#: core/projects/views.py:287
+#: core/projects/views.py:288
 msgid "Trial outcome recorded."
 msgstr "Próba eredménye rögzítve."
 
-#: core/projects/views.py:317
+#: core/projects/views.py:318
 msgid "Readiness saved."
 msgstr "Készenlét elmentve."
 
-#: core/projects/views.py:341
+#: core/projects/views.py:342
 msgid "Exit completed."
 msgstr "Kilépés befejezve."
 
-#: core/projects/views.py:360
+#: core/projects/views.py:361
 msgid "Activation requested — a manager will decide."
 msgstr "Az aktiválást kérelmezték — a menedzser dönt."
 
-
-#: core/projects/views.py:401 features/blacklist/views.py:85
+#: core/projects/views.py:398 features/blacklist/views.py:85
 msgid "Decision recorded."
 msgstr "Döntés rögzítve."
 
@@ -2889,60 +2884,60 @@ msgstr ""
 "Nyissa meg a visszaadásra vagy levonási döntésre váró kiadott "
 "felszereléseket."
 
-#: features/logistics/services.py:75
+#: features/logistics/services.py:76
 msgid "Amounts use a positive convention; negative values are not allowed."
 msgstr ""
 "Az összegek pozitív előjelet használnak; negatív érték nem engedélyezett."
 
-#: features/logistics/services.py:259
+#: features/logistics/services.py:276
 msgid "Only active rooms in active locations can be assigned."
 msgstr "Csak aktív szállás aktív szobája rendelhető hozzá."
 
-#: features/logistics/services.py:264
+#: features/logistics/services.py:281
 msgid "Room is at full capacity."
 msgstr "A szoba megtelt."
 
-#: features/logistics/services.py:500
+#: features/logistics/services.py:517
 #, python-format
 msgid "Only %(available)s units are available in %(office)s's stock."
 msgstr "Csak %(available)s egység érhető el a(z) %(office)s készletén."
 
-#: features/logistics/services.py:504
+#: features/logistics/services.py:521
 #, python-format
 msgid "Only %(available)s units are available in stock."
 msgstr "Csak %(available)s egység érhető el a készleten."
 
-#: features/logistics/services.py:572
+#: features/logistics/services.py:589
 msgid "Receipt quantities must be at least one."
 msgstr "A bevételezett mennyiség legalább egy legyen."
 
-#: features/logistics/services.py:575
+#: features/logistics/services.py:592
 msgid "Add at least one receipt line."
 msgstr "Adjon hozzá legalább egy bevételezési sort."
 
-#: features/logistics/services.py:613
+#: features/logistics/services.py:630
 msgid "A non-zero adjustment and reason are required."
 msgstr "Nem nulla korrekció és indoklás szükséges."
 
-#: features/logistics/services.py:687
+#: features/logistics/services.py:704
 msgid "This equipment item is inactive and cannot be issued."
 msgstr "Ez a felszerelési tétel inaktív, ezért nem adható ki."
 
-#: features/logistics/services.py:691
+#: features/logistics/services.py:708
 msgid "An operation key is required for stock-tracked issuance."
 msgstr "A készletkövetett kiadáshoz műveleti kulcs szükséges."
 
-#: features/logistics/services.py:702
+#: features/logistics/services.py:719
 msgid "Set this person's office before issuing stock-tracked equipment."
 msgstr ""
 "A készleten nyilvántartott felszerelés kiadása előtt állítsa be a személy "
 "irodáját."
 
-#: features/logistics/services.py:757 features/logistics/services.py:789
+#: features/logistics/services.py:774 features/logistics/services.py:806
 msgid "A transport record already exists for this project and week."
 msgstr "Ehhez a projekthez és héthez már létezik szállítási bejegyzés."
 
-#: features/logistics/services.py:861
+#: features/logistics/services.py:878
 msgid "Choose whether the returned equipment is reusable or retired."
 msgstr ""
 "Válassza ki, hogy a visszaadott felszerelés újrahasználható vagy selejtezett."
@@ -4153,8 +4148,8 @@ msgid "Accommodation costs"
 msgstr "Szállásköltségek"
 
 #: templates/pages/accommodation_costs.html:6
-msgid "Monthly cost and margin"
-msgstr "Havi költség és árrés"
+msgid "Monthly accommodation cost"
+msgstr "Havi szállásköltség"
 
 #: templates/pages/accommodation_costs.html:6
 #: templates/pages/accommodation_detail.html:10
@@ -4184,43 +4179,32 @@ msgstr "Szűrés"
 
 #: templates/pages/accommodation_costs.html:10
 #: templates/pages/accommodation_costs.html:19
-msgid "Standing cost"
-msgstr "Állandó költség"
-
-#: templates/pages/accommodation_costs.html:11
-#: templates/pages/accommodation_costs.html:20
-msgid "Worker payments"
-msgstr "Dolgozói befizetések"
-
-#: templates/pages/accommodation_costs.html:12
-#: templates/pages/accommodation_costs.html:20
-msgid "Empty-bed loss"
-msgstr "Üres ágyak vesztesége"
-
-#: templates/pages/accommodation_costs.html:13
-#: templates/pages/accommodation_costs.html:21
-#: templates/pages/finance_executive.html:35
-#: templates/pages/finance_executive.html:42
-#: templates/pages/finance_summary.html:37
-#: templates/pages/finance_summary.html:44
-msgid "Margin"
-msgstr "Árrés"
-
-#: templates/pages/accommodation_costs.html:16
-msgid "Missing cost period"
-msgstr "Hiányzó költségidőszak"
-
-#: templates/pages/accommodation_costs.html:18
 msgid "Capacity"
 msgstr "Kapacitás"
 
-#: templates/pages/accommodation_costs.html:18
-msgid "Occupied bed-days"
-msgstr "Foglalt ágy-napok"
-
+#: templates/pages/accommodation_costs.html:11
 #: templates/pages/accommodation_costs.html:19
-msgid "Occupied cost"
-msgstr "Kihasznált költség"
+msgid "Occupied beds"
+msgstr "Foglalt ágyak"
+
+#: templates/pages/accommodation_costs.html:12
+#: templates/pages/accommodation_costs.html:20
+msgid "Standing cost"
+msgstr "Állandó költség"
+
+#: templates/pages/accommodation_costs.html:13
+#: templates/pages/accommodation_costs.html:21
+msgid "Worker payments"
+msgstr "Dolgozói befizetések"
+
+#: templates/pages/accommodation_costs.html:14
+#: templates/pages/accommodation_costs.html:21
+msgid "Empty-bed loss"
+msgstr "Üres ágyak vesztesége"
+
+#: templates/pages/accommodation_costs.html:17
+msgid "Missing cost period"
+msgstr "Hiányzó költségidőszak"
 
 #: templates/pages/accommodation_costs.html:22
 #: templates/pages/accommodation_list.html:40
@@ -4339,30 +4323,31 @@ msgid ""
 "Workers whose readiness is complete and who are waiting to start. Approving "
 "moves them to Working on the named project; rejecting sends them back to "
 "readiness with your reason, so the coordinator knows what to fix."
-msgstr "Azok a munkavállalók, akiknek a felkészültsége teljes, és a kezdésre várnak. A jóváhagyás Dolgozik állapotba lépteti őket a megnevezett projekten; az elutasítás az indoklásával együtt visszaküldi őket a felkészültséghez, hogy a koordinátor tudja, mit kell javítani."
-
+msgstr ""
+"Azok a munkavállalók, akiknek a felkészültsége teljes, és a kezdésre várnak. "
+"A jóváhagyás Dolgozik állapotba lépteti őket a megnevezett projekten; az "
+"elutasítás az indoklásával együtt visszaküldi őket a felkészültséghez, hogy "
+"a koordinátor tudja, mit kell javítani."
 
 #: templates/pages/activation_queue.html:22
 msgid "Requested by"
 msgstr "Kérelmezte"
 
-
 #: templates/pages/activation_queue.html:23
 msgid "Requested"
 msgstr "Kérelmezve"
-
 
 #: templates/pages/activation_queue.html:32
 msgid "Reason (required to reject)"
 msgstr "Indoklás (elutasításhoz kötelező)"
 
-
 #: templates/pages/activation_queue.html:33
 msgid ""
 "This activates the worker: they move to Working on this project and the "
 "commitment starts."
-msgstr "Ezzel aktiválja a munkavállalót: Dolgozik állapotba kerül ezen a projekten, és megkezdődik a kötelezettségvállalás."
-
+msgstr ""
+"Ezzel aktiválja a munkavállalót: Dolgozik állapotba kerül ezen a projekten, "
+"és megkezdődik a kötelezettségvállalás."
 
 #: templates/pages/activation_queue.html:33
 #: templates/pages/blacklist_queue.html:29
@@ -4372,8 +4357,8 @@ msgstr "Jóváhagyás"
 
 #: templates/pages/activation_queue.html:34
 msgid "This rejects the request and leaves the worker in readiness."
-msgstr "Ezzel elutasítja a kérelmet, és a munkavállaló a felkészültségben marad."
-
+msgstr ""
+"Ezzel elutasítja a kérelmet, és a munkavállaló a felkészültségben marad."
 
 #: templates/pages/activation_queue.html:34
 #: templates/pages/blacklist_queue.html:30
@@ -4384,7 +4369,6 @@ msgstr "Elutasítás"
 #: templates/pages/activation_queue.html:38
 msgid "No activation requests are waiting for a decision."
 msgstr "Nincs döntésre váró aktiválási kérelem."
-
 
 #: templates/pages/audit_log.html:4 templates/pages/audit_log.html:9
 msgid "Audit log"
@@ -4921,6 +4905,13 @@ msgstr "Havi trend irodánként"
 msgid "Net result by month, one line per office"
 msgstr "Havi nettó eredmény, irodánként egy vonallal"
 
+#: templates/pages/finance_executive.html:35
+#: templates/pages/finance_executive.html:42
+#: templates/pages/finance_summary.html:37
+#: templates/pages/finance_summary.html:44
+msgid "Margin"
+msgstr "Árrés"
+
 #: templates/pages/finance_executive.html:37
 #: templates/pages/finance_summary.html:39
 #, python-format
@@ -5321,29 +5312,26 @@ msgstr "Készenlét mentése"
 msgid "Awaiting a manager's decision"
 msgstr "A menedzser döntésére vár"
 
-
 #: templates/pages/person_detail.html:156
 msgid "requested"
 msgstr "kérelmezve"
-
 
 #: templates/pages/person_detail.html:161
 msgid ""
 "Sends this worker to a manager for the activation decision. It does not "
 "activate them."
-msgstr "Elküldi ezt a munkavállalót a menedzsernek az aktiválási döntéshez. Nem aktiválja őt."
-
+msgstr ""
+"Elküldi ezt a munkavállalót a menedzsernek az aktiválási döntéshez. Nem "
+"aktiválja őt."
 
 # --- projects UI ---
 #: templates/pages/person_detail.html:161
 msgid "Request activation"
 msgstr "Aktiválás kérelmezése"
 
-
 #: templates/pages/person_detail.html:163
 msgid "Ready to request"
 msgstr "Kérelmezésre kész"
-
 
 #: templates/pages/person_detail.html:165
 msgid "Medical and gear required"
@@ -5352,7 +5340,6 @@ msgstr "Orvosi és felszerelés szükséges"
 #: templates/pages/person_detail.html:170
 msgid "Previous request rejected"
 msgstr "Az előző kérelmet elutasították"
-
 
 #: templates/pages/person_detail.html:178
 #: templates/pages/project_detail.html:15
@@ -6134,6 +6121,12 @@ msgstr "Világos"
 #: templates/partials/theme_picker.html:6
 msgid "Dark"
 msgstr "Sötét"
+
+#~ msgid "Monthly cost and margin"
+#~ msgstr "Havi költség és árrés"
+
+#~ msgid "Occupied cost"
+#~ msgstr "Kihasznált költség"
 
 #~ msgid "Activated — now Working."
 #~ msgstr "Aktiválva — most Dolgozik."

@@ -10,6 +10,7 @@ from django.db.models import Sum
 from django.utils import timezone
 from django.utils.translation import gettext as _
 
+from core.accounts.permissions import user_office_scope
 from core.audit.services import record_event
 from features.logistics.models import (
     Accommodation,
@@ -111,8 +112,14 @@ def _money(value):
     return Decimal(value).quantize(CENT, rounding=ROUND_HALF_UP)
 
 
-def accommodation_month_report(year, month):
-    """Prorated per-head cost/payment report; never creates payroll effects."""
+def accommodation_month_report(year, month, user):
+    """Prorated per-head cost/payment report; never creates payroll effects.
+
+    ``user`` is required, not optional: this is an aggregate over every
+    accommodation, and a summary spanning all three offices is a cross-office
+    read even though no single record is opened (ADR 0026). A default would
+    make that leak the easy thing to write.
+    """
     start = date(year, month, 1)
     if month == 12:
         next_month = date(year + 1, 1, 1)
@@ -122,16 +129,18 @@ def accommodation_month_report(year, month):
     rows = []
     company = {
         "capacity": 0,
-        "occupied_days": 0,
+        "occupied_beds": 0,
         "standing_cost": Decimal("0"),
         "occupied_cost": Decimal("0"),
         "payments": Decimal("0"),
         "empty_bed_loss": Decimal("0"),
-        "margin": Decimal("0"),
     }
     accommodations = Accommodation.objects.prefetch_related(
         "rooms__assignments", "cost_periods"
     )
+    scope = user_office_scope(user)
+    if scope is not None:
+        accommodations = accommodations.filter(office__in=scope)
     for accommodation in accommodations:
         period = next(
             (p for p in accommodation.cost_periods.all() if p.effective_month <= start),
@@ -142,6 +151,11 @@ def accommodation_month_report(year, month):
             continue
         occupied_days = 0
         payments = Decimal("0")
+        # TODO(client): occupancy is "a worker is assigned here", not "the bed is
+        # unavailable to anyone else". A worker alone in a two-bed room who pays
+        # for both beds counts as one, and the bed he funds reads as empty.
+        # Confirm whether a paid-for-but-empty bed should ever count as occupied.
+        occupants = set()
         for room in accommodation.rooms.all():
             for assignment in room.assignments.all():
                 occupied_from = max(assignment.start_date or start, start)
@@ -149,6 +163,7 @@ def accommodation_month_report(year, month):
                 overlap = max(0, (occupied_until - occupied_from).days)
                 if overlap:
                     occupied_days += overlap
+                    occupants.add(assignment.person_id)
                     payments += (
                         Decimal(assignment.worker_payment_monthly)
                         * Decimal(overlap)
@@ -156,17 +171,20 @@ def accommodation_month_report(year, month):
                     )
         standing = Decimal(period.capacity) * period.per_head_cost
         occupied_cost = period.per_head_cost * Decimal(occupied_days) / days
-        empty_loss = max(Decimal("0"), standing - occupied_cost)
+        # Floored at zero deliberately: a full house has no empty beds, so the
+        # raw difference (which then equals -payments) is not a loss.
+        empty_loss = max(Decimal("0"), standing - payments - occupied_cost)
         row = {
             "accommodation": accommodation,
             "missing_period": False,
             "capacity": period.capacity,
-            "occupied_days": occupied_days,
+            # A head count, not the bed-days behind occupied_cost: someone who
+            # moved rooms mid-month still occupied one bed.
+            "occupied_beds": len(occupants),
             "standing_cost": _money(standing),
             "occupied_cost": _money(occupied_cost),
             "payments": _money(payments),
             "empty_bed_loss": _money(empty_loss),
-            "margin": _money(payments - standing),
         }
         rows.append(row)
         for key in company:
@@ -177,7 +195,6 @@ def accommodation_month_report(year, month):
         "occupied_cost",
         "payments",
         "empty_bed_loss",
-        "margin",
     ):
         company[key] = _money(company[key])
     return {"year": year, "month": month, "rows": rows, "company": company}

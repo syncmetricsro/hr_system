@@ -57,8 +57,13 @@ def test_finance_year_page(page):
 def test_accommodation_cost_report(page):
     _login(page)
     page.goto(f"{base_url()}/en/accommodation/costs/")
-    page.get_by_role("heading", name="Monthly cost and margin").wait_for()
+    page.get_by_role("heading", name="Monthly accommodation cost").wait_for()
     page.get_by_text("Reporting only").wait_for()
+    # Exactly five figures, per the client's specification (J3). Margin and the
+    # internal occupied-cost term were removed and must not creep back.
+    page.get_by_text("Occupied beds").first.wait_for()
+    assert page.get_by_text("Margin").count() == 0
+    assert page.get_by_text("Occupied cost").count() == 0
 
 
 def test_warehouse_stock(page):
