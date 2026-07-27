@@ -1,5 +1,38 @@
 # Build Journal
 
+## 2026-07-27 - Finance manual workflow documented; J4's premise corrected
+
+The July interview fix list (`docs/jober-fix-prompts-to-do-before-demo.md`)
+carries J4: "the Finance page derives its figures from system data (headcount,
+inventory, accommodation) - remove every automatic derivation". Checked before
+building it, and **there is nothing to remove**: `set_line_item()` stores a
+hand-typed amount, `recompute_month()` only sums line items, and
+`features/finance/` imports nothing from people, logistics or accommodation.
+
+- The likeliest explanation for what the client saw is the **seeded demo data**
+  - 54 pre-filled months that look auto-populated but were written by
+  `seed_finance`. On the clean trial instance he asked for (J11) the pages
+  start empty, which may resolve the complaint on its own.
+- Marked J4 in the fix list as premise-wrong rather than deleting it, listing
+  what genuinely survives: the workbook inputs-vs-computed question, the
+  "one chart" request against several currently on the page, and the
+  `202510`-versus-`November 2025` discrepancy.
+- **Documented the manual workflow as runbook §6a**, because a hands-on tester
+  needs the operating instructions and the demo script only covers what to
+  point at. The section leads on the one genuine trap: **saving line items
+  recomputes the month from those items and replaces the headline revenue and
+  cost typed when the month was created.** Somebody entering a total and then
+  its breakdown will watch their number change, and without that sentence it
+  reads as data loss rather than as the mechanism that makes the spreadsheet's
+  off-by-one impossible.
+- Also documented that costs must be typed **negative** exactly as the workbook
+  has them, and that the rejection of a positive cost is deliberate - it is the
+  only thing preventing a cost being booked silently as revenue.
+- **Corrected the fix list's own conventions preamble**, which told agents that
+  Django apps live under `apps/`. That layout has not existed since ADR
+  0021/0022; anyone pasting those prompts verbatim would send an agent hunting
+  directories that are not there.
+
 ## 2026-07-27 - Activation now needs two people (readiness item 14)
 
 Activating a worker is the moment Jober commits - the person is on a client

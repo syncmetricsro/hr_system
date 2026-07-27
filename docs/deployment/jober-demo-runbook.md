@@ -286,6 +286,66 @@ manager's file contains Velký Meder only. The demo uses fictional numbers only.
 `HV 202510.xlsx` remains a specification source, not seed data; its `202510`
 filename versus `November 2025` sheet label is still an open client question.
 
+### 6a. Using Finance: manual entry, end to end
+
+Section 6 is the demo narrative. This is the operating guide — what a manager
+actually does, and the two things that surprise people.
+
+**Every figure is typed in. Nothing is derived.** Finance reads no data from
+People, Equipment, Accommodation or anywhere else; `features/finance/` imports
+nothing from those modules. The numbers on screen are exactly the numbers
+somebody entered, taken from the client's own workbook. (An earlier fix list
+recorded the opposite — that Finance pulls from headcount and inventory and
+that this must be removed. It never did.)
+
+**Step 1 — create the month.** Finance → the *Record month* form: pick the
+project, type the year and month, and a first revenue and cost figure. Only
+projects flagged as financially reportable appear, and only from your own
+office(s).
+
+**Step 2 — enter the categories.** Open the month. Every active finance
+category is one input, labelled with its kind (cost or revenue) and grouped by
+reporting group. Fill in what the workbook says and press save.
+
+**Type the signs exactly as the spreadsheet has them.** Costs are entered
+**negative**, revenues **positive**. A positive cost is *rejected* with
+"Costs must be entered as negative amounts", and a negative revenue likewise.
+That refusal is deliberate: it is the one thing standing between a cost and
+being silently booked as revenue. Storage keeps positive magnitudes and the
+category's kind carries the meaning, so the display re-signs them for you.
+
+**The surprise: saving recalculates the month from the line items.** The
+revenue and cost typed in step 1 are provisional. As soon as you save any
+category, the month's totals are recomputed as the sum of its line items and
+the step-1 figures are replaced. This is intentional — it is what makes the
+spreadsheet's off-by-one impossible, because the total is always the sum of
+everything present rather than a stored range. But if you type a headline
+figure, then enter categories that sum to something else, **the categories
+win**. Expect the number to change, and treat step 1 as a placeholder.
+
+**Locking and reopening.** Lock makes the line items read-only. Reopening
+requires a written reason and is audited — the reason is not optional and not
+free of consequence, it appears in the audit log against your name.
+
+**What you can read back.** The month page charts the net result by finance
+group. The Finance page charts the monthly trend and a margin gauge. The year
+view (`Finance → a year`) gives month-by-month results for comparison across
+the year. Observers get a different, all-offices executive page instead.
+CSV export carries period, office, project, category, kind, group and signed
+amount, followed by per-office and grand summaries — scoped like everything
+else, so a manager's file contains their own office only.
+
+**Open with the client before they rely on this** (unresolved from the July
+interview, and blocking a faithful mapping of their workbook):
+
+1. **Which workbook columns are inputs and which are computed?** The category
+   catalogue currently treats every row as an input. If some are meant to be
+   derived from others, that changes the entry screen.
+2. **Is the period October or November 2025?** The file is named `202510`
+   while the sheet is labelled `November 2025`.
+3. **Is one chart enough?** The client asked for a single monthly-result chart;
+   the page currently carries more than that. Confirm before removing any.
+
 ### 7. Equipment issuing and deduction review
 
 Sign in as Coordinator and open a fictional worker (e.g. **Olha**).
