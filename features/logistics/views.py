@@ -647,7 +647,7 @@ def flag_unreturned_view(request: HttpRequest, issue_pk: int) -> HttpResponse:
 def equipment_reviews(request: HttpRequest) -> TemplateResponse:
     """Manager queue of unreturned items awaiting an approve/waive decision (Q2)."""
     return TemplateResponse(
-        request, "pages/equipment_reviews.html", pending_deduction_reviews()
+        request, "pages/equipment_reviews.html", pending_deduction_reviews(request.user)
     )
 
 
@@ -655,6 +655,9 @@ def equipment_reviews(request: HttpRequest) -> TemplateResponse:
 @require_action(Action.EQUIPMENT_REVIEW_DEDUCTION)
 def review_deduction_view(request: HttpRequest, issue_pk: int) -> HttpResponse:
     issue = get_object_or_404(EquipmentIssue, pk=issue_pk)
+    # Filtering the queue does not stop someone posting another office's pk,
+    # and this decision charges money to the worker named on the issue.
+    _assert_person_in_scope(request, issue.person)
     try:
         review_deduction(
             issue,

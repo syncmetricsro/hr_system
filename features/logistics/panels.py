@@ -64,7 +64,7 @@ def equipment_panel(request, person):
             status=EquipmentIssueStatus.ISSUED
         ).select_related("item"),
         "equipment_items": items,
-        "issued_value": issued_equipment_value(person),
+        "issued_value": issued_equipment_value(person, user=request.user),
         "show_person_value": not stock_enabled,
         "stock_enabled": stock_enabled,
         "operation_key": uuid4(),
@@ -108,7 +108,7 @@ def reviews_badge(request):
         return None
     if not user_can(request.user, Action.EQUIPMENT_REVIEW_DEDUCTION):
         return None
-    count = pending_deduction_reviews()["issues"].count()
+    count = pending_deduction_reviews(request.user)["issues"].count()
     if not count:
         return None
     return {"count": count, "severe": False}
@@ -127,7 +127,8 @@ def equipment_value_tile(request):
                 "Open current quantities, value, and monthly stock movements."
             )
         return tile
-    tile = {"label": _("Equipment value"), "value": f"{issued_equipment_value()} EUR"}
+    value = issued_equipment_value(user=request.user)
+    tile = {"label": _("Equipment value"), "value": f"{value} EUR"}
     if user_can(request.user, Action.EQUIPMENT_REVIEW_DEDUCTION):
         tile["url"] = reverse("equipment_reviews")
         tile["tooltip_heading"] = _("Review equipment exceptions")
