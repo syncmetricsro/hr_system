@@ -10,13 +10,15 @@ from __future__ import annotations
 import datetime as dt
 
 from django.core.paginator import Paginator
+from django.db.models import Q
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 
 from core.accounts.permissions import Action, require_action
 from core.audit.models import AuditEvent
 from core.audit.presentation import audit_action_label, audit_reason_label
-from core.people.models import Person
+from core.people.naming import fold_name
+from core.offices.scoping import people_scope_q
 
 PAGE_SIZE = 50
 
@@ -30,7 +32,20 @@ def _parse_date(value: str) -> dt.date | None:
 
 @require_action(Action.AUDIT_VIEW)
 def audit_log(request: HttpRequest) -> HttpResponse:
-    events = AuditEvent.objects.select_related("actor")
+    events = AuditEvent.objects.select_related("actor", "person")
+
+    # Office scoping (ADR 0026). The audit log had none: a Velky Meder manager
+    # could read every action taken on Gyor and Dunajska Streda workers, which
+    # is the same boundary breach the People and Finance surfaces already close.
+    #
+    # Events with no attributed person stay visible to everyone. They are
+    # configuration and system actions - catalogue edits, logins, seeds - which
+    # carry no worker's data and belong to no office; hiding them would blind a
+    # manager to their own app's history to no benefit. Decision recorded here
+    # rather than left implicit, per J1.
+    person_scope = people_scope_q(request.user, prefix="person__")
+    if person_scope is not None:
+        events = events.filter(person_scope | Q(person__isnull=True))
 
     actor = request.GET.get("actor", "").strip()
     if actor:
@@ -46,12 +61,14 @@ def audit_log(request: HttpRequest) -> HttpResponse:
 
     worker = request.GET.get("worker", "").strip()
     if worker:
-        person_ids = Person.objects.filter(
-            search_name__contains=worker.lower()
-        ).values_list("pk", flat=True)
-        events = events.filter(
-            target_type="Person", target_id__in=[str(pk) for pk in person_ids]
-        )
+        # Match on the attributed person, not on target_type="Person". A
+        # certificate upload targets the Certificate and an equipment issue the
+        # EquipmentIssue; both are events *about* a worker, and the old filter
+        # found neither - which is what made it look broken (J1).
+        #
+        # Folded comparison so "horvat" finds "Horváthová": Slovak and
+        # Hungarian names carry accents that people routinely omit when typing.
+        events = events.filter(person__search_fold__contains=fold_name(worker))
 
     date_from = _parse_date(request.GET.get("from", ""))
     if date_from:

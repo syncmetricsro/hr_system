@@ -3,10 +3,11 @@ from __future__ import annotations
 import hashlib
 import hmac
 import re
-import unicodedata
 from datetime import timedelta
 
 from django.conf import settings
+
+from core.people.naming import fold_name
 from django.db import transaction
 from django.db.models import Q
 from django.utils import timezone
@@ -30,26 +31,12 @@ def _hmac_keys() -> list[str]:
     return [k for k in keys if k]
 
 
-# Latin letters NFKD cannot decompose to base + combining mark; folded
-# explicitly so names like Groß/Łukasz survive normalization. Anything still
-# non-ASCII afterwards (Cyrillic, CJK, …) is stripped by the final regex.
-_FOLD = str.maketrans(
-    {"ß": "SS", "ẞ": "SS", "Đ": "D", "đ": "D", "Ø": "O", "ø": "O",
-     "Ł": "L", "ł": "L", "Æ": "AE", "æ": "AE", "Œ": "OE", "œ": "OE"}
-)
-
-
-def _normalize(identifier: str) -> str:
-    """Uppercase, transliterate diacritics, and strip non-alphanumerics so
-    trivial formatting/spelling differences (spaces, slashes in a rodné číslo,
-    Kováč vs Kovac) don't defeat matching.
-
-    Pure ASCII-alphanumeric input passes through unchanged, so fingerprints of
-    existing stored ID codes are stable across this normalizer."""
-    text = (identifier or "").upper().translate(_FOLD)
-    text = unicodedata.normalize("NFKD", text)
-    text = "".join(c for c in text if not unicodedata.combining(c))
-    return re.sub(r"[^A-Za-z0-9]", "", text)
+# Name folding moved to core/people/naming.py (2026-07-27) so the audit log and
+# People search can share it - core may not import features. Kept as a local
+# alias so the fingerprint call sites below read unchanged; the function itself
+# is byte-identical, which matters because changing it invalidates every stored
+# fingerprint and fails open.
+_normalize = fold_name
 
 
 def _hmac_digest(canonical: str, *, key_version: int | None = None) -> tuple[str, int]:
@@ -60,7 +47,9 @@ def _hmac_digest(canonical: str, *, key_version: int | None = None) -> tuple[str
     return digest.hexdigest(), version
 
 
-def compute_fingerprint(identifier: str, *, key_version: int | None = None) -> tuple[str, int]:
+def compute_fingerprint(
+    identifier: str, *, key_version: int | None = None
+) -> tuple[str, int]:
     """Keyed HMAC-SHA256 of a normalized identifier. Returns (hex_digest, version).
 
     The raw identifier is used only transiently here and never stored. Defaults to
@@ -82,10 +71,12 @@ def compute_composite_identifier(
     never collides with ANN|AKOVAC. Returns None when any component is missing
     or normalizes to empty (e.g. an all-Cyrillic name): no fingerprint then."""
     tokens = sorted(
-        t for t in (
+        t
+        for t in (
             _normalize(part)
             for part in re.split(r"[\s\-]+", f"{first_name or ''} {last_name or ''}")
-        ) if t
+        )
+        if t
     )
     maiden = _normalize(mothers_maiden_name)
     if not tokens or not date_of_birth or not maiden:
@@ -93,7 +84,9 @@ def compute_composite_identifier(
     return "|".join(["v1", *tokens, date_of_birth.isoformat(), maiden])
 
 
-def compute_composite_fingerprint(canonical: str, *, key_version: int | None = None) -> tuple[str, int]:
+def compute_composite_fingerprint(
+    canonical: str, *, key_version: int | None = None
+) -> tuple[str, int]:
     """HMAC of an already-canonical composite string (no re-normalization —
     it would erase the field separators)."""
     return _hmac_digest(canonical, key_version=key_version)
@@ -109,7 +102,10 @@ def check_match(identifier: str):
     if not getattr(settings, "BLACKLIST_MATCHING_ENABLED", True) or not identifier:
         return MatchFingerprint.objects.none()
     today = timezone.localdate()
-    hashes = {compute_fingerprint(identifier, key_version=v)[0] for v in range(len(_hmac_keys()))}
+    hashes = {
+        compute_fingerprint(identifier, key_version=v)[0]
+        for v in range(len(_hmac_keys()))
+    }
     return (
         MatchFingerprint.objects.filter(is_active=True, hmac__in=hashes)
         .filter(Q(expires_at__isnull=True) | Q(expires_at__gte=today))
@@ -151,8 +147,16 @@ def _retention_expiry():
 
 
 @transaction.atomic
-def propose_case(person, *, category=None, reason="", identifier=None,
-                 identifier_type="national_id", composite_identifier=None, actor=None):
+def propose_case(
+    person,
+    *,
+    category=None,
+    reason="",
+    identifier=None,
+    identifier_type="national_id",
+    composite_identifier=None,
+    actor=None,
+):
     """Open a proposed blacklist case (does NOT change lifecycle — a manager
     decides). If an identifier is given, store a keyed HMAC fingerprint; the raw
     identifier is discarded. ``composite_identifier`` (a canonical string from
@@ -168,15 +172,23 @@ def propose_case(person, *, category=None, reason="", identifier=None,
     if identifier:
         digest, version = compute_fingerprint(identifier)
         MatchFingerprint.objects.create(
-            case=case, person=person, identifier_type=identifier_type,
-            hmac=digest, key_version=version, is_active=False,  # activated on approval
+            case=case,
+            person=person,
+            identifier_type=identifier_type,
+            hmac=digest,
+            key_version=version,
+            is_active=False,  # activated on approval
             expires_at=_retention_expiry(),
         )
     if composite_identifier:
         digest, version = compute_composite_fingerprint(composite_identifier)
         MatchFingerprint.objects.create(
-            case=case, person=person, identifier_type=IdentifierType.NAME_DOB_MMN,
-            hmac=digest, key_version=version, is_active=False,
+            case=case,
+            person=person,
+            identifier_type=IdentifierType.NAME_DOB_MMN,
+            hmac=digest,
+            key_version=version,
+            is_active=False,
             expires_at=_retention_expiry(),
         )
     record_event(actor, "blacklist.proposed", target=case, person=str(person))
@@ -192,7 +204,9 @@ def decide_case(case, decision, *, actor=None, reason=""):
         raise BlacklistError("Only a proposed case can be decided.")
     if decision == "approve":
         case.status = BlacklistCaseStatus.APPROVED
-        case.person.set_status(LifecycleStatus.BLACKLISTED, actor=actor, reason=reason or "blacklisted")
+        case.person.set_status(
+            LifecycleStatus.BLACKLISTED, actor=actor, reason=reason or "blacklisted"
+        )
         case.fingerprints.update(is_active=True)
     elif decision == "reject":
         case.status = BlacklistCaseStatus.REJECTED
@@ -202,7 +216,15 @@ def decide_case(case, decision, *, actor=None, reason=""):
         case.restricted_reason = reason
     case.decided_by = actor if getattr(actor, "is_authenticated", False) else None
     case.decided_at = timezone.now()
-    case.save(update_fields=["status", "restricted_reason", "decided_by", "decided_at", "updated_at"])
+    case.save(
+        update_fields=[
+            "status",
+            "restricted_reason",
+            "decided_by",
+            "decided_at",
+            "updated_at",
+        ]
+    )
     record_event(actor, "blacklist.decided", target=case, decision=decision)
     return case
 
@@ -216,7 +238,9 @@ def remove_case(case, *, actor=None, reason=""):
     case.status = BlacklistCaseStatus.REMOVED
     case.fingerprints.update(is_active=False)
     if case.person.lifecycle_status == LifecycleStatus.BLACKLISTED:
-        case.person.set_status(LifecycleStatus.AVAILABLE, actor=actor, reason=reason or "blacklist removed")
+        case.person.set_status(
+            LifecycleStatus.AVAILABLE, actor=actor, reason=reason or "blacklist removed"
+        )
     case.decided_by = actor if getattr(actor, "is_authenticated", False) else None
     case.decided_at = timezone.now()
     case.save(update_fields=["status", "decided_by", "decided_at", "updated_at"])

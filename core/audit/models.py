@@ -28,6 +28,19 @@ class AuditEvent(models.Model):
     action = models.CharField(_("action"), max_length=100)
     target_type = models.CharField(_("target type"), max_length=100, blank=True)
     target_id = models.CharField(_("target id"), max_length=100, blank=True)
+    # Which worker this event is *about*, which is not the same as its target.
+    # A certificate upload targets the Certificate, an equipment issue the
+    # EquipmentIssue - filtering on target_type="Person" found neither, so the
+    # person filter silently hid most of a worker's history (J1).
+    person = models.ForeignKey(
+        "people.Person",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="audit_events",
+        verbose_name=_("person"),
+        db_index=True,
+    )
     reason = models.TextField(_("reason"), blank=True)
     metadata = models.JSONField(_("metadata"), default=dict, blank=True)
     created_at = models.DateTimeField(_("created"), auto_now_add=True)
