@@ -1,5 +1,49 @@
 # Build Journal
 
+## 2026-07-27 - Fixed the Help visual aids, and how they reached main unreviewed
+
+The Getting Started page gained navigation, role, office-boundary, status and
+tooltip diagrams. They shipped broken, and they shipped inside **PR #123**,
+whose title was "Staff every office, and give each project its own office's
+coordinator" - because that commit was staged with `git add -A` and swept up
+another session's in-flight work. 302 lines of CSS and 165 lines of template
+merged under a misleading title, unreviewed, and deployed to staging.
+
+The diagrams described a system that does not exist:
+
+- a **"Field" navigation tab** that is not in the shell (People, Projects,
+  Compliance, Accommodation, Reports, Help), and a callout describing "active
+  field assignments";
+- **Bratislava** as the office-scope badge and **Office A (e.g. Bratislava) /
+  Office B (e.g. Kosice)** as the boundary example - for a client whose
+  offices are Velky Meder, Gyor and Dunajska Streda;
+- a hardcoded **`JOBER`** wordmark in a template CorvinumEU also renders;
+- the office-boundary diagram rendering unconditionally, explaining a
+  boundary a single-site client does not have.
+
+**39 of 59 strings had no translation.** Wrapping a string in `{% trans %}`
+makes it *extractable*, not *translated*; the catalog cycle was never run, so
+the live Slovak page showed 14 English fragments. Two more untranslated
+strings turned out to be **mine** from yesterday's SMS work - the `BLOCKED`
+status label and the disabled-SMS notice - so the same omission, in the same
+week, in my own slice. All 46 are now translated in SK/HU/UK with zero fuzzy
+and zero empty entries remaining.
+
+- The office diagram is now gated on a new `OFFICES_IN_USE` context flag,
+  reusing the data-driven test the shell badge already makes rather than
+  branching on client.
+- **That flag caused a regression I only caught by running the lanes.**
+  Computing `Office.objects.exists()` at the top of the context processor
+  added a query to *every* response, including the anonymous login page which
+  otherwise touches no database - four tests that render pages without a
+  database started failing. Now a `SimpleLazyObject`, so the query happens
+  only if a template actually reads the flag.
+- `tests/test_help_visual_aids.py` pins the claims a diagram makes but prose
+  does not have to: which tabs exist, which cities are not offices, that the
+  wordmark comes from `BRAND_NAME`, that the boundary picture hides on a
+  single-site install, and that the strings render translated in all three
+  languages. Verified against the original template: four of the seven fail.
+
 ## 2026-07-27 - Four granted-but-unimplemented actions recorded; one is a control gap
 
 The owner asked whether project creation existed. It does not - and sweeping
