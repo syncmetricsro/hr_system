@@ -16,7 +16,8 @@ from core.projects.models import (
 )
 from core.projects.services import (
     WorkflowError,
-    activate_from_readiness,
+    decide_activation,
+    request_activation,
     get_or_create_readiness,
     record_trial_outcome,
     schedule_trial,
@@ -38,6 +39,7 @@ def fixtures(django_user_model):
 
 
 # --- trials ------------------------------------------------------------------
+
 
 def test_schedule_sets_trial_day(fixtures):
     actor, project, person = fixtures
@@ -93,13 +95,21 @@ def test_outcome_recorded_twice_rejected(fixtures):
 
 # --- readiness + activation --------------------------------------------------
 
+
 def test_readiness_ready_when_required_complete_optional_na(fixtures):
     actor, project, person = fixtures
     r = get_or_create_readiness(person, project)
-    update_readiness(r, actor=actor, states={
-        "medical": PillarState.COMPLETE, "gear": PillarState.COMPLETE,
-        "accommodation": PillarState.NOT_APPLICABLE, "transport": PillarState.NOT_APPLICABLE,
-    }, na_reasons={"accommodation": "private flat", "transport": "own car"})
+    update_readiness(
+        r,
+        actor=actor,
+        states={
+            "medical": PillarState.COMPLETE,
+            "gear": PillarState.COMPLETE,
+            "accommodation": PillarState.NOT_APPLICABLE,
+            "transport": PillarState.NOT_APPLICABLE,
+        },
+        na_reasons={"accommodation": "private flat", "transport": "own car"},
+    )
     assert r.is_ready()
 
 
@@ -107,13 +117,20 @@ def test_na_requires_a_reason(fixtures):
     actor, project, person = fixtures
     r = get_or_create_readiness(person, project)
     with pytest.raises(WorkflowError):
-        update_readiness(r, actor=actor, states={"accommodation": PillarState.NOT_APPLICABLE})
+        update_readiness(
+            r, actor=actor, states={"accommodation": PillarState.NOT_APPLICABLE}
+        )
 
 
 def test_entry_medical_date_is_saved(fixtures):
     actor, project, person = fixtures
     r = get_or_create_readiness(person, project)
-    update_readiness(r, actor=actor, states={"medical": PillarState.COMPLETE}, entry_medical_date="2026-05-01")
+    update_readiness(
+        r,
+        actor=actor,
+        states={"medical": PillarState.COMPLETE},
+        entry_medical_date="2026-05-01",
+    )
     r.refresh_from_db()
     assert str(r.entry_medical_date) == "2026-05-01"
 
@@ -123,7 +140,9 @@ def test_future_entry_medical_date_is_rejected(fixtures):
     r = get_or_create_readiness(person, project)
     with pytest.raises(WorkflowError):
         update_readiness(
-            r, actor=actor, states={"medical": PillarState.COMPLETE},
+            r,
+            actor=actor,
+            states={"medical": PillarState.COMPLETE},
             entry_medical_date=timezone.localdate() + timedelta(days=1),
         )
 
@@ -141,7 +160,9 @@ def test_activation_blocked_until_ready(fixtures):
     trial = person.trials.first()
     record_trial_outcome(trial, TrialOutcome.PASS, actor=actor)
     with pytest.raises(WorkflowError):
-        activate_from_readiness(person, project, actor=actor)
+        # The four-pillar gate now bites when activation is *requested*, so an
+        # unready worker never reaches a manager's queue in the first place.
+        request_activation(person, project, actor=actor)
 
 
 def test_activation_error_names_the_missing_readiness_requirement(fixtures):
@@ -151,7 +172,7 @@ def test_activation_error_names_the_missing_readiness_requirement(fixtures):
     get_or_create_readiness(person, project)
 
     with translation.override("hu"), pytest.raises(WorkflowError) as exc:
-        activate_from_readiness(person, project, actor=actor)
+        request_activation(person, project, actor=actor)
 
     assert "orvosi alkalmasság" in str(exc.value).lower()
 
@@ -167,17 +188,33 @@ def test_not_applicable_without_a_reason_does_not_pass_readiness(fixtures):
     assert not readiness.is_ready()
 
 
-def test_full_path_to_working(fixtures):
+def test_full_path_to_working(fixtures, django_user_model):
     actor, project, person = fixtures
-    # intake-available -> trial -> pass -> readiness -> activate
+    # intake-available -> trial -> pass -> readiness -> request -> manager approves
     trial = schedule_trial(person, project, actor=actor)
     record_trial_outcome(trial, TrialOutcome.PASS, actor=actor)
     r = get_or_create_readiness(person, project)
-    update_readiness(r, actor=actor, states={
-        "medical": PillarState.COMPLETE, "gear": PillarState.COMPLETE,
-        "accommodation": PillarState.COMPLETE, "transport": PillarState.NOT_APPLICABLE,
-    }, na_reasons={"transport": "own car"})
-    activate_from_readiness(person, project, actor=actor)
+    update_readiness(
+        r,
+        actor=actor,
+        states={
+            "medical": PillarState.COMPLETE,
+            "gear": PillarState.COMPLETE,
+            "accommodation": PillarState.COMPLETE,
+            "transport": PillarState.NOT_APPLICABLE,
+        },
+        na_reasons={"transport": "own car"},
+    )
+
+    approval = request_activation(person, project, actor=actor)
+    person.refresh_from_db()
+    # Requesting must not activate: that separation is the whole control.
+    assert person.lifecycle_status != LifecycleStatus.WORKING
+
+    manager = django_user_model.objects.create_user(
+        email="approver@demo.jober.test", password="x", role="manager"
+    )
+    decide_activation(approval, "approve", actor=manager)
     person.refresh_from_db()
     assert person.lifecycle_status == LifecycleStatus.WORKING
     assert person.assignments.filter(status=AssignmentStatus.ACTIVE).count() == 1

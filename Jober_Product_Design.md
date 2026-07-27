@@ -932,15 +932,13 @@ Each pillar supports:
 
 The manager approval button remains disabled until all four pillars are complete or explicitly not applicable.
 
-> **Specified, not yet enforced (2026-07-27).** The four-pillar readiness gate
-> is built and enforced. The *manager* half of this design is not: `activate_person`
-> is gated by `project.assign` rather than `approval.activate`, and the Activate
-> button sits behind `readiness.complete` — both of which coordinators hold, so a
-> coordinator can currently approve Working. There is also no separate
-> `ActivationApproval` record with pending/approved/rejected states; activation is
-> a single action against the readiness record. The design above is still what
-> Jober wants and is **not** superseded — see production-readiness item 14 for the
-> gap and the plan to wire it.
+> **Built 2026-07-27** (`core/projects/models.py::ActivationApproval`). A
+> coordinator completes the four pillars and *requests* activation; a manager of
+> that office decides from an Activations queue, with a pillar snapshot taken at
+> request time and a reason required to reject. Two refinements beyond the sketch
+> above, both learned from the gap this replaced: the requester may not decide
+> their own request even when they hold the manager role, and readiness is
+> re-checked at decision time because it stays editable in between.
 
 
 Pillars (Jober confirmed, round 4):

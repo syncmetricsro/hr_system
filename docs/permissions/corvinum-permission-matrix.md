@@ -28,7 +28,7 @@ Legend: ✅ permitted · — denied
 | `project.assign` | — | ✅ | ✅ | — |
 | `trial.record_outcome` | — | ✅ | ✅ | — |
 | `readiness.complete` | — | ✅ | ✅ | — |
-| `approval.activate` (**not enforced** — see note below) | — | — | ✅ | — |
+| `approval.activate` (decide a pending activation request) | — | — | ✅ | — |
 | `project.manage` | — | — | ✅ | — |
 | `exit.reconcile` | — | ✅ | ✅ | — |
 | `equipment.issue_return` | — | ✅ | ✅ | — |
@@ -51,13 +51,12 @@ Legend: ✅ permitted · — denied
 | `export.approved` | — | — | ✅ | ✅ |
 | `audit.view` | — | — | ✅ | ✅ |
 
-> **`approval.activate` is not enforced here either (2026-07-27).** The
-> activation route is shared core code (`core/projects/views.py::activate_person`)
-> and is gated by `project.assign`, which coordinators hold; the Activate button
-> sits behind `readiness.complete`, also a coordinator action. CorvinumEU grants
-> the same three actions as Jober, so a CorvinumEU coordinator can approve
-> Working exactly as a Jober one can. Tracked as Jober production-readiness
-> item 14 — the fix is in shared code and lands for both clients at once.
+> **Activation needs a manager here too (since 2026-07-27).** The activation
+> route is shared core code, so CorvinumEU gets the same control as Jober: a
+> coordinator completes readiness and *requests* activation, and a manager
+> decides from the Activations queue. **This removed a capability CorvinumEU
+> coordinators previously had** — they could activate directly, contrary to
+> this matrix. A manager cannot decide their own request either.
 
 ## Lifecycle transitions (trial-day workflow enabled for demo, C-Q1)
 

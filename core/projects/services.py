@@ -8,6 +8,8 @@ from django.utils.translation import gettext as _
 from core.audit.services import record_event
 from core.people.models import LifecycleStatus
 from core.projects.models import (
+    ActivationApproval,
+    ActivationApprovalStatus,
     AssignmentStatus,
     PillarState,
     ProjectAssignment,
@@ -16,6 +18,14 @@ from core.projects.models import (
     TrialOutcome,
     TrialState,
 )
+
+
+class SelfApprovalError(Exception):
+    """The requester tried to decide their own activation request.
+
+    Separate from WorkflowError so the view can answer 403 (a permission
+    outcome) rather than re-rendering with a message.
+    """
 
 
 class WorkflowError(Exception):
@@ -48,7 +58,9 @@ def _coordinator_snapshot(project) -> str:
 
 
 @transaction.atomic
-def activate_on_project(person, project, *, actor=None, reason: str = "", start_date=None):
+def activate_on_project(
+    person, project, *, actor=None, reason: str = "", start_date=None
+):
     """Place a person on a project as their active assignment and set them WORKING.
 
     Coordinator-driven (phase1-open-questions Q2). Closes any existing active
@@ -83,12 +95,22 @@ def activate_on_project(person, project, *, actor=None, reason: str = "", start_
     record_event(actor, "assignment.created", target=assignment, project=project.code)
 
     if person.lifecycle_status != LifecycleStatus.WORKING:
-        person.set_status(LifecycleStatus.WORKING, actor=actor, reason=reason or "activation")
+        person.set_status(
+            LifecycleStatus.WORKING, actor=actor, reason=reason or "activation"
+        )
     return assignment
 
 
 @transaction.atomic
-def schedule_trial(person, project, *, actor=None, scheduled_for=None, scheduled_date=None, note: str = ""):
+def schedule_trial(
+    person,
+    project,
+    *,
+    actor=None,
+    scheduled_for=None,
+    scheduled_date=None,
+    note: str = "",
+):
     """Send an Available person to a project trial at a recorded appointment."""
     if person.lifecycle_status != LifecycleStatus.AVAILABLE:
         raise WorkflowError("Only an Available person can be sent to a trial.")
@@ -97,7 +119,8 @@ def schedule_trial(person, project, *, actor=None, scheduled_for=None, scheduled
         project=project,
         # Keep the date column populated for old reports/records while new UI
         # displays the precise, timezone-aware appointment.
-        scheduled_date=scheduled_date or (
+        scheduled_date=scheduled_date
+        or (
             timezone.localdate(scheduled_for) if scheduled_for else timezone.localdate()
         ),
         scheduled_for=scheduled_for or timezone.now(),
@@ -127,7 +150,10 @@ def update_pending_trial(trial, *, project, scheduled_for, note: str = "", actor
     trial.note = note or ""
     trial.save(update_fields=["project", "scheduled_for", "scheduled_date", "note"])
     record_event(
-        actor, "trial.updated", target=trial, old=old,
+        actor,
+        "trial.updated",
+        target=trial,
+        old=old,
         new={
             "project": project.code,
             "scheduled_for": scheduled_for.isoformat(),
@@ -147,7 +173,9 @@ def record_trial_outcome(trial, outcome, *, actor=None, note: str = ""):
 
     trial.outcome = outcome
     trial.state = TrialState.COMPLETED
-    trial.outcome_recorded_by = actor if getattr(actor, "is_authenticated", False) else None
+    trial.outcome_recorded_by = (
+        actor if getattr(actor, "is_authenticated", False) else None
+    )
     trial.outcome_recorded_at = timezone.now()
     if note:
         trial.note = note
@@ -158,13 +186,17 @@ def record_trial_outcome(trial, outcome, *, actor=None, note: str = ""):
     if outcome in {TrialOutcome.FAIL, TrialOutcome.NO_SHOW}:
         # Recycling: back to the recruiter pool.
         if person.lifecycle_status == LifecycleStatus.TRIAL_DAY:
-            person.set_status(LifecycleStatus.AVAILABLE, actor=actor, reason=f"trial {outcome}")
+            person.set_status(
+                LifecycleStatus.AVAILABLE, actor=actor, reason=f"trial {outcome}"
+            )
     # On pass the person stays TRIAL_DAY and enters the readiness workflow.
     return trial
 
 
 def get_or_create_readiness(person, project) -> ReadinessRecord:
-    readiness, _created = ReadinessRecord.objects.get_or_create(person=person, project=project)
+    readiness, _created = ReadinessRecord.objects.get_or_create(
+        person=person, project=project
+    )
     return readiness
 
 
@@ -187,21 +219,32 @@ def readiness_blockers(readiness: ReadinessRecord) -> list[dict[str, str]]:
             continue
         state = getattr(readiness, f"{pillar}_state")
         if state == PillarState.INCOMPLETE:
-            blockers.append({"field": pillar, "label": label, "message": incomplete_message})
+            blockers.append(
+                {"field": pillar, "label": label, "message": incomplete_message}
+            )
         elif (
             state == PillarState.NOT_APPLICABLE
             and not getattr(readiness, f"{pillar}_na_reason", "").strip()
         ):
-            blockers.append({
-                "field": f"{pillar}_reason",
-                "label": label,
-                "message": _("A reason is required when this is not applicable."),
-            })
+            blockers.append(
+                {
+                    "field": f"{pillar}_reason",
+                    "label": label,
+                    "message": _("A reason is required when this is not applicable."),
+                }
+            )
     return blockers
 
 
 @transaction.atomic
-def update_readiness(readiness, *, actor=None, states: dict, na_reasons: dict | None = None, entry_medical_date=None):
+def update_readiness(
+    readiness,
+    *,
+    actor=None,
+    states: dict,
+    na_reasons: dict | None = None,
+    entry_medical_date=None,
+):
     """Set the four pillar states (§11.6). Medical and gear cannot be N/A;
     accommodation/transport require an explicit reason when marked N/A."""
     from django.utils.dateparse import parse_date
@@ -226,46 +269,160 @@ def update_readiness(readiness, *, actor=None, states: dict, na_reasons: dict | 
             if value == PillarState.NOT_APPLICABLE:
                 reason = (na_reasons.get(pillar) or "").strip()
                 if not reason:
-                    raise WorkflowError(f"A reason is required to mark {pillar} not-applicable.")
+                    raise WorkflowError(
+                        f"A reason is required to mark {pillar} not-applicable."
+                    )
                 setattr(readiness, f"{pillar}_na_reason", reason)
             else:
                 setattr(readiness, f"{pillar}_na_reason", "")
 
     if entry_medical_date is not None:
         parsed_medical_date = (
-            parse_date(entry_medical_date) if isinstance(entry_medical_date, str) else entry_medical_date
+            parse_date(entry_medical_date)
+            if isinstance(entry_medical_date, str)
+            else entry_medical_date
         )
         if parsed_medical_date is None:
             raise WorkflowError(_("Entry medical date is invalid."))
         if parsed_medical_date > timezone.localdate():
             raise WorkflowError(_("Entry medical date cannot be in the future."))
         readiness.entry_medical_date = parsed_medical_date
-    readiness.submitted_by = actor if getattr(actor, "is_authenticated", False) else None
+    readiness.submitted_by = (
+        actor if getattr(actor, "is_authenticated", False) else None
+    )
     readiness.submitted_at = timezone.now()
     readiness.save()
-    record_event(actor, "readiness.updated", target=readiness, ready=readiness.is_ready())
+    record_event(
+        actor, "readiness.updated", target=readiness, ready=readiness.is_ready()
+    )
+    return readiness
+
+
+def _assert_ready(person, project):
+    """The four-pillar gate (ADR 0018). Shared by request and decision, because
+    readiness stays editable after a request is raised - a pillar can regress
+    between the two, and approving a no-longer-ready worker would defeat the
+    gate the approval exists to double-check."""
+    readiness = ReadinessRecord.objects.filter(person=person, project=project).first()
+    if readiness is None:
+        raise WorkflowError(
+            _(
+                "Cannot activate this worker because no readiness record has been completed."
+            )
+        )
+    blockers = readiness_blockers(readiness)
+    if blockers:
+        raise WorkflowError(
+            _("Cannot activate this worker until: %(items)s")
+            % {
+                "items": "; ".join(str(blocker["message"]) for blocker in blockers),
+            }
+        )
     return readiness
 
 
 @transaction.atomic
-def activate_from_readiness(person, project, *, actor=None):
-    """Coordinator activation with the system-enforced four-pillar gate (ADR 0018)."""
-    readiness = ReadinessRecord.objects.filter(person=person, project=project).first()
-    if readiness is None:
-        raise WorkflowError(_("Cannot activate this worker because no readiness record has been completed."))
-    blockers = readiness_blockers(readiness)
-    if blockers:
-        raise WorkflowError(
-            _("Cannot activate this worker until: %(items)s") % {
-                "items": "; ".join(str(blocker["message"]) for blocker in blockers),
-            }
-        )
-    return activate_on_project(person, project, actor=actor, reason="readiness met")
+def request_activation(person, project, *, actor=None):
+    """Raise a manager-decidable activation request (plan §12.4).
+
+    This does **not** change the person's status - that is the whole point.
+    The coordinator who completed readiness asks; a manager decides.
+    """
+    readiness = _assert_ready(person, project)
+    existing = ActivationApproval.objects.filter(
+        person=person, project=project, status=ActivationApprovalStatus.PENDING
+    ).first()
+    if existing is not None:
+        raise WorkflowError(_("An activation request is already awaiting a decision."))
+
+    approval = ActivationApproval.objects.create(
+        person=person,
+        project=project,
+        readiness=readiness,
+        requested_by=actor if getattr(actor, "is_authenticated", False) else None,
+        # What the manager is being asked to approve, frozen at request time.
+        pillar_snapshot={
+            "medical": readiness.medical_state,
+            "gear": readiness.gear_state,
+            "accommodation": readiness.accommodation_state,
+            "transport": readiness.transport_state,
+            "accommodation_na_reason": readiness.accommodation_na_reason,
+            "transport_na_reason": readiness.transport_na_reason,
+            "entry_medical_date": (
+                readiness.entry_medical_date.isoformat()
+                if readiness.entry_medical_date
+                else None
+            ),
+        },
+    )
+    record_event(
+        actor,
+        "activation.requested",
+        target=approval,
+        person=str(person),
+        project=project.code,
+    )
+    return approval
 
 
 @transaction.atomic
-def exit_person(person, *, actor=None, reason: str = "", outcome: str = "available",
-                inactive_reason=None):
+def decide_activation(approval, decision, *, actor=None, reason=""):
+    """Manager decision on a pending activation request.
+
+    ``approve`` moves the person to Working; ``reject`` closes the request and
+    leaves them in readiness so the coordinator can fix what was wrong and ask
+    again. A rejection must say why - that sentence is the entire value of a
+    rejection to whoever has to act on it.
+    """
+    if approval.status != ActivationApprovalStatus.PENDING:
+        raise WorkflowError(_("Only a pending activation request can be decided."))
+    # Separation of duties lives here rather than in the view: a manager holds
+    # both actions, so the role gate alone does not stop self-approval, and a
+    # management command or future API calling this service would otherwise
+    # bypass the control entirely.
+    actor_pk = getattr(actor, "pk", None)
+    if actor_pk is not None and approval.requested_by_id == actor_pk:
+        raise SelfApprovalError(_("You cannot decide your own activation request."))
+
+    if decision == "approve":
+        # Re-check the gate: readiness may have regressed since the request.
+        _assert_ready(approval.person, approval.project)
+        approval.status = ActivationApprovalStatus.APPROVED
+        activate_on_project(
+            approval.person, approval.project, actor=actor, reason="activation approved"
+        )
+    elif decision == "reject":
+        if not (reason or "").strip():
+            raise WorkflowError(_("A rejection must state a reason."))
+        approval.status = ActivationApprovalStatus.REJECTED
+    else:
+        raise WorkflowError(_("Decision must be 'approve' or 'reject'."))
+
+    approval.decision_reason = (reason or "").strip()[:300]
+    approval.decided_by = actor if getattr(actor, "is_authenticated", False) else None
+    approval.decided_at = timezone.now()
+    approval.save(
+        update_fields=["status", "decision_reason", "decided_by", "decided_at"]
+    )
+    record_event(
+        actor,
+        f"activation.{approval.status}",
+        target=approval,
+        person=str(approval.person),
+        project=approval.project.code,
+    )
+    return approval
+
+
+@transaction.atomic
+def exit_person(
+    person,
+    *,
+    actor=None,
+    reason: str = "",
+    outcome: str = "available",
+    inactive_reason=None,
+):
     """Exit reconciliation (plan §11.13): end the active project assignment,
     release the room, return all issued equipment, and recycle the person to
     Available (default) or mark them Inactive.
@@ -284,13 +441,19 @@ def exit_person(person, *, actor=None, reason: str = "", outcome: str = "availab
         hook(person, actor=actor)
 
     if outcome == "inactive" and person.lifecycle_status == LifecycleStatus.AVAILABLE:
-        person.set_status(LifecycleStatus.INACTIVE, actor=actor, reason=reason or "exit")
+        person.set_status(
+            LifecycleStatus.INACTIVE, actor=actor, reason=reason or "exit"
+        )
         person.inactive_reason = inactive_reason
         person.inactive_since = timezone.localdate()
         person.save(update_fields=["inactive_reason", "inactive_since", "updated_at"])
 
     record_event(
-        actor, "person.exited", target=person, reason=reason, outcome=outcome,
+        actor,
+        "person.exited",
+        target=person,
+        reason=reason,
+        outcome=outcome,
         inactive_reason=(inactive_reason.label if inactive_reason else ""),
     )
     return person
@@ -308,5 +471,7 @@ def end_assignment(person, *, actor=None, reason: str = ""):
         record_event(actor, "assignment.ended", target=assignment, reason=reason)
 
     if person.lifecycle_status == LifecycleStatus.WORKING:
-        person.set_status(LifecycleStatus.AVAILABLE, actor=actor, reason=reason or "exit")
+        person.set_status(
+            LifecycleStatus.AVAILABLE, actor=actor, reason=reason or "exit"
+        )
     return assignment

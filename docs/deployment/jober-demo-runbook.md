@@ -327,6 +327,14 @@ off per office; fraud protection deliberately is not.
 
 ## Supporting flow
 
+**Activation now needs two people.** A coordinator completes the four readiness
+pillars and clicks **Request activation** — which does *not* activate. A manager
+of that office decides from the **Activations** tab, and cannot decide a request
+they raised themselves. Worth showing: it is the separation-of-duties control a
+client's auditor asks about, and the seed leaves one request waiting in
+**Dunajská Streda** — so `manazer.ds@` has a queue item while `manazer@`'s
+queue is empty, which demonstrates the queue is office-scoped too.
+
 If time allows, show the existing trial-readiness-activation flow, compliance
 alerts, role switching, and optional SMS. Compliance and notification queues are
 office-scoped like the rest. Readiness now requires medical, gear, and the

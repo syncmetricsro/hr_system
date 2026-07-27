@@ -148,7 +148,12 @@ def test_audit_log_page_translates_known_reason_but_not_free_text(client, users)
 
     assert "Активовано на проєкті" in body
     assert "Called in sick today" in body
-    assert "activation" not in body
+    # The raw reason code must not be rendered *as content*. Scoped to the
+    # table cell rather than the whole page: audit_log.html renders reasons in
+    # <td class="muted">, and a bare page-wide substring check also matched
+    # unrelated nav URLs (/uk/activations/) once an activation queue existed.
+    assert ">activation<" not in body
+    assert '<td class="muted">activation</td>' not in body
 
 
 def test_request_errors_reach_console_logging(settings):

@@ -18,17 +18,21 @@ from core.accounts.permissions import can as user_can
 from core.people.models import InactiveReason, Person
 from core.projects.forms import TrialCreateForm, TrialEditForm, operable_projects
 from core.projects.models import (
+    ActivationApproval,
+    ActivationApprovalStatus,
     AssignmentStatus,
     Project,
     TrialAssignment,
     TrialOutcome,
 )
 from core.projects.services import (
+    SelfApprovalError,
     WorkflowError,
-    activate_from_readiness,
+    decide_activation,
     exit_person,
     get_or_create_readiness,
     record_trial_outcome,
+    request_activation,
     schedule_trial,
     update_pending_trial,
     update_readiness,
@@ -342,13 +346,60 @@ def exit_view(request: HttpRequest, person_pk: int) -> HttpResponse:
 @require_POST
 @require_action(Action.PROJECT_ASSIGN)
 def activate_person(request: HttpRequest, person_pk: int) -> HttpResponse:
+    """Coordinator (or manager) *requests* activation. It no longer activates.
+
+    Separation of duties (plan §12.4, production-readiness item 14): whoever
+    completed readiness asks, and a manager of that office decides. Keeping the
+    URL name means existing links and the readiness panel keep working.
+    """
     person = get_object_or_404(Person, pk=person_pk)
     _assert_person_in_scope(request, person)
     project = get_object_or_404(Project, pk=request.POST.get("project"))
     _assert_project_in_scope(request, project)
     try:
-        activate_from_readiness(person, project, actor=request.user)
-        messages.success(request, _("Activated — now Working."))
+        request_activation(person, project, actor=request.user)
+        messages.success(request, _("Activation requested — a manager will decide."))
     except WorkflowError as exc:
         messages.error(request, str(exc))
     return redirect("person_detail", pk=person.pk)
+
+
+@require_action(Action.APPROVAL_ACTIVATE)
+def activation_queue(request: HttpRequest) -> TemplateResponse:
+    """Manager review queue for pending activation requests, office-scoped."""
+    approvals = ActivationApproval.objects.filter(
+        status=ActivationApprovalStatus.PENDING
+    ).select_related(
+        "person", "project", "project__office", "requested_by", "readiness"
+    )
+    scope = user_office_scope(request.user)
+    if scope is not None:
+        approvals = approvals.filter(project__office__in=scope)
+    return TemplateResponse(
+        request, "pages/activation_queue.html", {"approvals": approvals}
+    )
+
+
+@require_POST
+@require_action(Action.APPROVAL_ACTIVATE)
+def activation_decide(request: HttpRequest, pk: int) -> HttpResponse:
+    approval = get_object_or_404(
+        ActivationApproval.objects.select_related("person", "project"), pk=pk
+    )
+    _assert_person_in_scope(request, approval.person)
+    _assert_project_in_scope(request, approval.project)
+    try:
+        decide_activation(
+            approval,
+            request.POST.get("decision"),
+            actor=request.user,
+            reason=request.POST.get("reason", ""),
+        )
+        messages.success(request, _("Decision recorded."))
+    except SelfApprovalError as exc:
+        # A permission outcome, not a workflow one: answer 403 rather than
+        # bouncing back with a message.
+        raise PermissionDenied(str(exc)) from exc
+    except WorkflowError as exc:
+        messages.error(request, str(exc))
+    return redirect("activation_queue")

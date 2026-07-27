@@ -47,7 +47,7 @@ Legend: ✅ permitted · — denied
 | `equipment.manage_stock` | — | — | ✅ | — |
 | `transport.record` (Jober: feature off) | — | ✅ | ✅ | — |
 | `exit.reconcile` | — | ✅ | ✅ | — |
-| `approval.activate` (**not enforced** — coordinators can approve Working; see below) | — | — | ✅ | — |
+| `approval.activate` (decide a pending activation request) | — | — | ✅ | — |
 | `project.manage` (**not enforced** — no create/edit/archive exists) | — | — | ✅ | — |
 | `accommodation.manage` | — | — | ✅ | — |
 | `equipment.review_deduction` | — | — | ✅ | — |
@@ -110,12 +110,10 @@ is visible only to their owning recruiter (plus Observer) — see
   Coordinators may assign existing rooms but cannot create or edit accommodation
   locations or room catalogue records.
   Cannot manage users, decide blacklist, or view feedback.
-  **Can currently approve Working, contrary to the intended design** — the
-  Activate button is behind `readiness.complete` and the view is gated by
-  `project.assign`, both of which coordinators hold, while
-  `approval.activate` is checked nowhere. Manager-only approval is still what
-  Jober specified; production-readiness item 14 tracks wiring it. This line
-  previously read "Cannot approve Working", which was untrue.
+  **Cannot approve Working** — a coordinator *requests* activation once
+  readiness is complete and a manager of that office decides
+  (`approval.activate`). Enforced since 2026-07-27; before then coordinators
+  could activate directly, which is why this line carried a correction.
 - **Manager/Administrator** — within their office(s), all permitted reads plus
   every management action, including finance, users, blacklist decisions,
   audit, and exports. Not company-wide: another office's person, project,
@@ -131,9 +129,9 @@ is visible only to their owning recruiter (plus Observer) — see
 ## Granted, but not enforced anywhere
 
 **A row in the Actions table means "this role is permitted this action". It
-does not mean the action is enforced somewhere.** **4 of the 37 actions have no
-server-side enforcement at all**, so granting or revoking them changes nothing
-today. They are marked **not enforced** in the tables above.
+does not mean the action is enforced somewhere.** **3 of the 37 actions have no
+server-side enforcement at all** (was 4 until `approval.activate` was wired on
+2026-07-27), so granting or revoking them changes nothing today. They are marked **not enforced** in the tables above.
 
 Re-run the check before trusting any row (last done 2026-07-27). The criterion
 is a reference from a view, panel or service — a `{% can %}` in a template only
@@ -144,13 +142,12 @@ grep -rl "Action.<NAME>" --include=views.py --include=panels.py \
         --include=services.py core features
 ```
 
-Zero hits means nothing enforces it. Three of the four are referenced nowhere
+Zero hits means nothing enforces it. Two of the three are referenced nowhere
 at all; `project.manage` has a visible button and no enforcement, which is the
 worse case — the UI advertises a capability that does not exist.
 
 | Action | What actually happens today |
 |---|---|
-| `approval.activate` | **Never checked.** `activate_person` is gated by `project.assign`, which coordinators hold, and the Activate button sits behind `readiness.complete` — also a coordinator action. **Coordinators can and do approve Working.** Production-readiness item 14; manager-only is still the intended design and is to be wired. |
 | `project.manage` | Referenced only by `templates/pages/dashboard.html`, whose "Manage projects" button links to the read-only project list. No create, edit or archive exists. Item 15. |
 | `user.manage` | Nothing implements it — see below. Item 11. |
 | `sms.manage_templates` | Nothing implements it. `MessageTemplate` is editable only in Django admin, which needs a superuser no Jober role holds, and none are seeded. Item 16. |
