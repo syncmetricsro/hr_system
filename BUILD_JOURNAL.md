@@ -1,5 +1,51 @@
 # Build Journal
 
+## 2026-07-27 - J1: the audit person filter, and the office scoping it never had
+
+The client reported the audit person filter as "returns no rows". The fix list
+hypothesised that office scoping had introduced a join that eliminated them.
+Reproducing it first showed something different and larger.
+
+- **The filter matched `target_type="Person"`**, so it found only events whose
+  *target row* was the person. A certificate upload targets the Certificate; an
+  equipment issue targets the EquipmentIssue; a blacklist proposal targets the
+  case. All are events *about* a worker and none were findable. A manager
+  asking "what happened to Diana?" got a fraction of the answer and reasonably
+  concluded the filter was broken. Verified by recording two events about one
+  person and watching the filter return one of them.
+- **`AuditEvent.person` now attributes each event to the worker it concerns**,
+  resolved in `record_event` from the target being a Person, the target hanging
+  off one (`.person`), or an explicit `person=` kwarg that several call sites
+  already passed. Attribution is best-effort and returns `None` rather than
+  raising: audit writes sit inside business transactions, and recording history
+  must never be the thing that fails an operation.
+- **The data migration backfills historical rows**, because without it the fix
+  works only for events recorded after deployment - which on any real database
+  looks exactly like not having fixed it. Verified on legacy-shaped rows: a
+  person filter that found 0 finds 2 afterwards, and genuinely unattributable
+  rows are left alone rather than guessed at.
+- **Diacritics were a second, independent bug.** `search_name` stored
+  "horváthová" verbatim, so typing "horvat" matched nothing. Slovak and
+  Hungarian names carry accents that people routinely omit at the keyboard.
+  Fixed with a folded `Person.search_fold` column, and **People search now uses
+  it too** - the two surfaces disagreeing about what a name is would be its own
+  bug.
+- **The normalizer was moved, not rewritten.** The blacklist already had one,
+  but `core` may not import `features` (ADR 0021), so it moved to
+  `core/people/naming.py::fold_name`. It feeds HMAC fingerprints: changing what
+  it returns silently invalidates every stored fingerprint and **fails open** -
+  a barred person stops matching and is quietly admitted. Moved byte-identically
+  and confirmed against the existing blacklist suite before going further.
+- **The audit log had no office scoping at all** - the fix list only guessed at
+  this. A Velky Meder manager could read every action taken on Gyor and
+  Dunajska Streda workers. That is the fourth surface in this class after
+  messaging, compliance and feedback. Attributed events are now scoped;
+  unattributed ones stay visible to everyone, because they are configuration
+  and system actions carrying no worker's data and hiding them would blind a
+  manager to their own app's history for no privacy gain. The decision is
+  asserted in a test rather than left implicit, per J1's instruction to decide
+  explicitly.
+
 ## 2026-07-27 - Finance manual workflow documented; J4's premise corrected
 
 The July interview fix list (`docs/jober-fix-prompts-to-do-before-demo.md`)

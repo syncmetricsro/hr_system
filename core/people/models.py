@@ -5,6 +5,8 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
+from core.people.naming import fold_name
+
 from core.media import avatar_upload_path
 
 
@@ -135,6 +137,12 @@ class Person(models.Model):
     search_name = models.CharField(
         _("search name"), max_length=255, db_index=True, blank=True
     )
+    # Diacritic-folded twin of search_name, so "horvat" finds "Horváthová".
+    # Slovak and Hungarian names carry accents that people routinely omit when
+    # typing, and a plain lowercase index simply misses them.
+    search_fold = models.CharField(
+        _("search fold"), max_length=255, db_index=True, blank=True
+    )
 
     created_at = models.DateTimeField(_("created"), auto_now_add=True)
     updated_at = models.DateTimeField(_("updated"), auto_now=True)
@@ -150,6 +158,11 @@ class Person(models.Model):
 
     def save(self, *args, **kwargs):
         self.search_name = f"{self.first_name} {self.last_name}".strip().lower()
+        self.search_fold = fold_name(f"{self.first_name} {self.last_name}")
+        if (fields := kwargs.get("update_fields")) is not None:
+            # Callers that save a narrow field set would otherwise skip the
+            # recomputed columns, leaving the index stale after a rename.
+            kwargs["update_fields"] = set(fields) | {"search_name", "search_fold"}
         super().save(*args, **kwargs)
 
     # --- lifecycle ---------------------------------------------------------

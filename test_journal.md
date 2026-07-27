@@ -1,5 +1,25 @@
 # Test Journal
 
+## 2026-07-27 - tests/test_audit_person_filter.py (16)
+
+- `test_finds_events_whose_target_is_not_the_person` is the defect itself: two
+  events about one worker, one targeting the Person and one targeting a
+  Certificate, and the filter must return both. Under the old code it returned
+  one, which is why the client called it broken rather than incomplete.
+- The diacritic parametrization includes `horvat` deliberately - unaccented
+  typing is the normal case for these names, not an edge case.
+- `test_a_non_matching_name_still_returns_nothing` guards the opposite failure:
+  folding that matches everything would pass every other test in the file.
+- `test_unattributed_events_stay_visible` pins a *decision*, not a behaviour.
+  Scoping unattributed events away would look like a tightening in review while
+  quietly removing a manager's view of their own configuration history.
+- `test_recording_an_event_never_fails_on_an_unresolvable_target` exists
+  because attribution runs inside every business transaction; a raise here
+  would turn an audit detail into a failed activation or issue.
+- Backfill verified separately against legacy-shaped rows before shipping:
+  0 matches before, 2 after, unattributable rows untouched.
+- Jober **734 passed**, CorvinumEU **441 passed**, Playwright **50 passed**.
+
 ## 2026-07-27 - tests/test_activation_approval.py (13)
 
 - `test_requesting_does_not_activate` is the load-bearing one: if a request

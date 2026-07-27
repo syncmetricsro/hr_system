@@ -19,6 +19,7 @@ from core.media import AvatarUploadError, process_avatar_upload, save_replacing
 from core.people.forms import PersonForm
 from core.accounts.permissions import can as user_can
 from core.people.models import InactiveReason, LifecycleError, LifecycleStatus, Person
+from core.people.naming import fold_name
 from core.people.permissions import can_view_sensitive
 from core.people.services import age_warning, person_history, recycle_to_available
 from core.ui import registry
@@ -80,7 +81,9 @@ def people_list(request: HttpRequest) -> TemplateResponse:
         request.user,
     )
     if query:
-        people = people.filter(search_name__contains=query.lower())
+        # Folded match so "horvat" finds "Horváthová" here too - the audit
+        # filter and People search should not disagree about what a name is.
+        people = people.filter(search_fold__contains=fold_name(query))
     if status in LifecycleStatus.values:
         people = people.filter(lifecycle_status=status)
     else:
