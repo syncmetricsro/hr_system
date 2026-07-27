@@ -1,5 +1,46 @@
 # Deployment Journal
 
+## 2026-07-27 - Activation approval deployed; deploy key made keyring-independent
+
+- Deployed **`294b877`** to `jober-staging` as `jober-platform:demo-294b877`.
+  One migration: `projects.0007_activationapproval`. Reseeded; `seed_demo`
+  reported "Kept the existing password on 10 account(s)", so the owner's
+  rotated password survived as designed.
+- **Verified the control live, with the real demo accounts**, not locally:
+
+  | check | result |
+  |---|---|
+  | seeded request | Tran → CARGO (DS), raised by `koordinator.ds` |
+  | `manazer@` (VM) sees it | **no** — queue is office-scoped |
+  | `manazer.ds@` sees it | yes |
+  | `koordinator.ds@` decides | **403** — coordinators cannot approve |
+  | `manazer@` decides a DS request | **403** — wrong office |
+  | `manazer.ds@` approves | 302, approval `approved`, person `working`, decider recorded |
+
+- **The verification consumed the demo fixture** - approving moved Tran to
+  Working and emptied the queue, and `seed_demo_scenario` will not recreate a
+  request for someone already Working. Restored deliberately rather than left
+  broken: `exit_person` back to Available, delete the consumed approval, re-run
+  the scenario seed. Confirmed afterwards that the pending request, both
+  blacklist cases and all 7 people are intact. **Any future live walkthrough of
+  this flow has the same one-shot problem** - it is the third demo fixture with
+  that property, alongside Diana's blacklist case and Olha's equipment charge.
+- **Observer gets 403 on the Activations queue.** Consistent with the blacklist
+  queue, which is also gated on a manager-only action, and with both matrices
+  giving Observer no `approval.activate`. Recorded because it is a reasonable
+  thing to question: the all-offices oversight role cannot see a queue of
+  pending commitments. Not changed unilaterally.
+- **Deploy key replaced.** The GNOME-keyring-held key stopped signing mid-session
+  ("agent refused operation") because the keyring locks on screen lock and
+  `SSH_ASKPASS` is unset in the agent's environment. Replaced with a dedicated
+  passphrase-less key plus `IdentityAgent none` in the host block - the second
+  half is load-bearing, because without it ssh still asks the agent first, gets
+  a refusal, and never falls back to the file. Registered with
+  `dokku ssh-keys:add` rather than appending to `authorized_keys`, so it keeps
+  the forced-command restriction: dokku subcommands only, no shell. Revoke with
+  `dokku ssh-keys:remove claude-deploy` without touching the personal key.
+- All five HTTPS smoke checks passed after the deploy.
+
 ## 2026-07-26 - Per-office staff deployed; six new accounts secured immediately
 
 - Deployed **`534d961`** to `jober-staging` as `jober-platform:demo-534d961`
