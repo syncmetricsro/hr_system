@@ -1,0 +1,41 @@
+{% extends "layouts/base.html" %}
+{% load i18n nav icons %}
+
+{% block title %}{% trans "Activations" %} · {{ BRAND_NAME }}{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <p class="eyebrow">{% trans "Workforce" %}</p>
+  <h1>{% trans "Activation requests" %}</h1>
+</section>
+
+<p class="muted">{% blocktrans %}Workers whose readiness is complete and who are waiting to start. Approving moves them to Working on the named project; rejecting sends them back to readiness with your reason, so the coordinator knows what to fix.{% endblocktrans %}</p>
+
+<section class="field-list" aria-label="{% trans 'Activation requests' %}">
+  {% for approval in approvals %}
+    <article class="field-card">
+      <div>
+        <h3><a href="{% url 'person_detail' approval.person_id %}">{{ approval.person }}</a></h3>
+        <p>{{ approval.project.name }}{% if approval.project.office %} · {{ approval.project.office.name }}{% endif %}</p>
+      </div>
+      <dl>
+        <div><dt>{% trans "Requested by" %}</dt><dd>{{ approval.requested_by|default:"—" }}</dd></div>
+        <div><dt>{% trans "Requested" %}</dt><dd>{{ approval.requested_at|date:"Y-m-d H:i" }}</dd></div>
+        {# What was true when the request was raised - readiness stays editable afterwards. #}
+        <div><dt>{% trans "Medical" %}</dt><dd>{{ approval.pillar_snapshot.medical|default:"—" }}</dd></div>
+        <div><dt>{% trans "Gear" %}</dt><dd>{{ approval.pillar_snapshot.gear|default:"—" }}</dd></div>
+        <div><dt>{% trans "Accommodation" %}</dt><dd>{{ approval.pillar_snapshot.accommodation|default:"—" }}</dd></div>
+        <div><dt>{% trans "Entry medical date" %}</dt><dd>{{ approval.pillar_snapshot.entry_medical_date|default:"—" }}</dd></div>
+      </dl>
+      <form class="people-search" method="post" action="{% url 'activation_decide' approval.pk %}">
+        {% csrf_token %}
+        <input type="text" name="reason" aria-label="{% trans 'Reason' %}" placeholder="{% trans 'Reason (required to reject)' %}">
+        <button class="button button-primary" type="submit" name="decision" value="approve" data-confirm="{% trans 'This activates the worker: they move to Working on this project and the commitment starts.' %}">{% icon "approve" %}{% trans "Approve" %}</button>
+        <button class="button button-secondary" type="submit" name="decision" value="reject" data-confirm="{% trans 'This rejects the request and leaves the worker in readiness.' %}">{% icon "reject" %}{% trans "Reject" %}</button>
+      </form>
+    </article>
+  {% empty %}
+    <p class="muted">{% trans "No activation requests are waiting for a decision." %}</p>
+  {% endfor %}
+</section>
+{% endblock %}

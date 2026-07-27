@@ -152,16 +152,23 @@
         </label>
         <button class="button button-secondary" type="submit">{% icon "save" %}{% trans "Save readiness" %}</button>
       </form>
-      <form class="activate-form" method="post" action="{% url 'activate_person' person.pk %}">
-        {% csrf_token %}
-        <input type="hidden" name="project" value="{{ passed_trial.project.pk }}">
-        <button class="button button-primary" type="submit" data-tooltip="{% trans 'Activates the person into Working status on this project.' %}">{% trans "Activate (Working)" %}</button>
-        {% if is_ready %}
-          <span class="eyebrow">{% trans "Ready to activate" %}</span>
-        {% else %}
-          <span class="eyebrow">{% trans "Medical and gear required" %}</span>
-        {% endif %}
-      </form>
+      {% if pending_activation %}
+        <p class="eyebrow">{% trans "Awaiting a manager's decision" %} — {% trans "requested" %} {{ pending_activation.requested_at|date:"Y-m-d H:i" }}{% if pending_activation.requested_by %} · {{ pending_activation.requested_by }}{% endif %}</p>
+      {% else %}
+        <form class="activate-form" method="post" action="{% url 'activate_person' person.pk %}">
+          {% csrf_token %}
+          <input type="hidden" name="project" value="{{ passed_trial.project.pk }}">
+          <button class="button button-primary" type="submit" data-tooltip="{% trans 'Sends this worker to a manager for the activation decision. It does not activate them.' %}">{% trans "Request activation" %}</button>
+          {% if is_ready %}
+            <span class="eyebrow">{% trans "Ready to request" %}</span>
+          {% else %}
+            <span class="eyebrow">{% trans "Medical and gear required" %}</span>
+          {% endif %}
+        </form>
+      {% endif %}
+      {% if last_activation_rejection %}
+        <p class="eyebrow">{% trans "Previous request rejected" %}: {{ last_activation_rejection.decision_reason }}</p>
+      {% endif %}
     {% endif %}
   </section>
 {% endif %}

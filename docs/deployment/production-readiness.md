@@ -12,14 +12,12 @@ A cross-cutting review of the deployed staging state (both apps, live
 inspection — not just static code reading) found the items below. None are
 fixed by writing this list; each stays open until its own fix lands and is
 verified the same way (live inspection, not just "the code looks right").
-Recommended order (updated 2026-07-27 — items 1, 2, 3, 5, 6, 7, 8, 9 and 12
+Recommended order (updated 2026-07-27 — items 1, 2, 3, 5, 6, 7, 8, 9, 12 and 14
 are done; item 4 is **deferred** to the CorvinumEU build, see its note):
 
-- **Item 14** — the activation control gap. Small, and it is the only entry
-  here where a document currently promises a client a control the code does
-  not enforce. Everything else is an absence; this one is a contradiction.
-- **Item 11** — user and credential management, still the largest functional
-  gap and the largest single block of engineering.
+- **Item 11** — user and credential management, now the largest functional
+  gap and the largest single block of engineering. (Item 14, the activation
+  control gap, was fixed 2026-07-27.)
 - **Item 15** — project management, closely related to 11 and similarly a
   "granted action with no implementation".
 - Then item 6's residual media-orphan sweep, and item 16.
@@ -233,9 +231,29 @@ Item 4 remains the largest *risk* — deferred, not reduced.
     gross/independent-net wage-ledger boundary. Needs an explicit accept-or-
     reject decision, then delete the branch either way rather than leaving
     it stale.
-14. **High — the documented manager approval on activation is not
-    enforced.** Found 2026-07-27 by sweeping all 37 `Action` members against
-    the views and templates that reference them (method below). Three
+14. ~~**High — the documented manager approval on activation is not
+    enforced.**~~ **Fixed 2026-07-27.** Built as the full `ActivationApproval`
+    record the design specified, not a bare gate: a coordinator *requests*
+    activation and a manager of that office decides, with a pillar snapshot,
+    a decision reason and audited `activation.requested` /
+    `activation.approved` / `activation.rejected` events.
+    Three details worth keeping:
+    - **Separation of duties is enforced by identity, not only by role.**
+      Managers hold both actions, so a role gate alone would still let a
+      manager approve their own request. The check lives in
+      `decide_activation` rather than the view, because a management command
+      or future API calling the service would otherwise bypass it.
+    - **Readiness is re-checked at decision time.** It stays editable after a
+      request is raised, so a pillar can regress in between; approving a
+      no-longer-ready worker would defeat the gate the approval exists to
+      double-check.
+    - **The snapshot matters.** Managers approve what was submitted, not
+      whatever the readiness record says when they open the queue.
+    Applied to **both clients** — CorvinumEU coordinators lose the ability to
+    activate, which their own matrix already said they did not have.
+    *Original finding, kept because the sweep that produced it is reusable:*
+    found 2026-07-27 by checking all 37 `Action` members against the views and
+    templates that reference them (method below). Three
     independent documents promise this control and the code does not
     implement it:
     - `Action.APPROVAL_ACTIVATE` is granted to Manager only in
@@ -297,11 +315,12 @@ grep -rl "Action.<NAME>" --include=views.py --include=panels.py \
 grep -rl "<value>" --include=*.html templates clients   # a button may still exist
 ```
 
-**4 of 37 actions have no server-side enforcement**: `approval.activate`,
-`project.manage`, `user.manage` (item 11) and `sms.manage_templates`. Three of
-those are referenced nowhere at all; `project.manage` is the instructive case —
-it has a visible button and no enforcement, which is worse than being absent,
-because the UI advertises a capability that does not exist.
+**3 of 37 actions have no server-side enforcement** (was 4 until
+`approval.activate` was wired on 2026-07-27): `project.manage`, `user.manage`
+(item 11) and `sms.manage_templates`. Two are referenced nowhere at all;
+`project.manage` is the instructive case — it has a visible button and no
+enforcement, which is worse than being absent, because the UI advertises a
+capability that does not exist.
 A row in the permission matrix means "this role is permitted this action", not
 "this action is enforced somewhere" — the matrix's own Phase 1 note says as
 much, but had never been revisited to say *which* rows were still aspirational.

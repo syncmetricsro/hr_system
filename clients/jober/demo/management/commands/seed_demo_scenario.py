@@ -22,6 +22,19 @@ from features.logistics.services import (
     return_equipment,
 )
 from core.people.models import InactiveReason, LifecycleStatus, Person
+from core.projects.models import (
+    ActivationApprovalStatus,
+    PillarState,
+    Project,
+    TrialOutcome,
+)
+from core.projects.services import (
+    get_or_create_readiness,
+    record_trial_outcome,
+    request_activation,
+    schedule_trial,
+    update_readiness,
+)
 
 DEMO_DOMAIN = "demo.jober.test"
 # Obviously-fictional demo identifier for the live blacklist re-entry moment.
@@ -185,6 +198,51 @@ class Command(BaseCommand):
                 actor=manager,
             )
             decide_case(case, "approve", actor=manager)
+
+        # --- An activation request awaiting a manager's decision ---------------
+        # Deliberately in Dunajska Streda rather than Velky Meder: it gives the
+        # DS manager a non-empty Activations queue while the VM manager's stays
+        # empty, which demonstrates that the queue is office-scoped as well as
+        # demonstrating the approval itself. The live walkthrough uses Farrukh's
+        # pending Gyor trial instead, so the two do not collide.
+        tran = Person.objects.filter(first_name="Tran", last_name="Van Minh").first()
+        ds_coordinator = User.objects.filter(
+            email="koordinator.ds@demo.jober.test"
+        ).first()
+        cargo = Project.objects.filter(code="CARGO").first()
+        if (
+            tran
+            and ds_coordinator
+            and cargo
+            and not tran.activation_approvals.filter(
+                status=ActivationApprovalStatus.PENDING
+            ).exists()
+            and tran.lifecycle_status
+            in (LifecycleStatus.AVAILABLE, LifecycleStatus.TRIAL_DAY)
+        ):
+            trial = tran.trials.filter(outcome=TrialOutcome.PENDING).first()
+            if (
+                trial is None
+                and not tran.trials.filter(outcome=TrialOutcome.PASS).exists()
+            ):
+                trial = schedule_trial(
+                    tran, cargo, actor=ds_coordinator, scheduled_for=timezone.now()
+                )
+            if trial is not None:
+                record_trial_outcome(trial, TrialOutcome.PASS, actor=ds_coordinator)
+            readiness = get_or_create_readiness(tran, cargo)
+            update_readiness(
+                readiness,
+                actor=ds_coordinator,
+                states={
+                    "medical": PillarState.COMPLETE,
+                    "gear": PillarState.COMPLETE,
+                    "accommodation": PillarState.COMPLETE,
+                    "transport": PillarState.NOT_APPLICABLE,
+                },
+                na_reasons={"transport": "own car"},
+            )
+            request_activation(tran, cargo, actor=ds_coordinator)
 
         # --- Blacklist: a proposed case for the manager to decide live ---------
         diana = Person.objects.filter(

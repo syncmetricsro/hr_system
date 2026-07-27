@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-27 13:05+0200\n"
+"POT-Creation-Date: 2026-07-27 14:24+0200\n"
 "Language: sk\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -57,7 +57,7 @@ msgid "Skip to content"
 msgstr "Preskočiť na obsah"
 
 #: clients/corvinum_eu/templates/layouts/base.html:39
-#: clients/corvinum_eu/templates/layouts/base.html:70
+#: clients/corvinum_eu/templates/layouts/base.html:72
 #: templates/help/getting-started.html:23 templates/layouts/base.html:20
 #: templates/layouts/base.html:43 templates/pages/finance_summary.html:8
 #: templates/pages/reports.html:4 templates/pages/reports.html:9
@@ -71,8 +71,8 @@ msgstr "Hlavná navigácia"
 
 # --- people list / detail ---
 #: clients/corvinum_eu/templates/layouts/base.html:44
-#: templates/pages/people_list.html:8 templates/pages/reports.html:23
-#: templates/pages/reports.html:45
+#: templates/pages/activation_queue.html:8 templates/pages/people_list.html:8
+#: templates/pages/reports.html:23 templates/pages/reports.html:45
 msgid "Workforce"
 msgstr "Pracovná sila"
 
@@ -109,12 +109,12 @@ msgid "Compliance"
 msgstr "Súlad"
 
 #: clients/corvinum_eu/templates/layouts/base.html:53
-#: templates/layouts/base.html:60 templates/pages/ledger.html:8
+#: templates/layouts/base.html:62 templates/pages/ledger.html:8
 msgid "Ledger"
 msgstr "Kniha záloh"
 
 #: clients/corvinum_eu/templates/layouts/base.html:56
-#: templates/layouts/base.html:63 templates/pages/payslips.html:4
+#: templates/layouts/base.html:65 templates/pages/payslips.html:4
 #: templates/pages/payslips.html:9
 msgid "Payslips"
 msgstr "Výplatné pásky"
@@ -142,46 +142,59 @@ msgstr "Spravovať katalóg vybavenia"
 msgid "Equipment catalogue"
 msgstr "Katalóg vybavenia"
 
-#: clients/corvinum_eu/templates/layouts/base.html:67 core/ui/help.py:56
-#: templates/layouts/base.html:54 templates/pages/blacklist_queue.html:4
+#: clients/corvinum_eu/templates/layouts/base.html:66
+#: templates/layouts/base.html:53 templates/pages/activation_queue.html:9
+#: templates/pages/activation_queue.html:14
+msgid "Activation requests"
+msgstr "Žiadosti o aktiváciu"
+
+
+#: clients/corvinum_eu/templates/layouts/base.html:66
+#: templates/layouts/base.html:53 templates/pages/activation_queue.html:4
+msgid "Activations"
+msgstr "Aktivácie"
+
+
+#: clients/corvinum_eu/templates/layouts/base.html:69 core/ui/help.py:56
+#: templates/layouts/base.html:56 templates/pages/blacklist_queue.html:4
 #: templates/panels/blacklist_banner.html:3
 #: templates/panels/blacklist_case.html:5
 msgid "Blacklist"
 msgstr "Čierna listina"
 
-#: clients/corvinum_eu/templates/layouts/base.html:69
+#: clients/corvinum_eu/templates/layouts/base.html:71
 #: core/notifications/services.py:169 templates/partials/theme_picker.html:7
 msgid "System"
 msgstr "Systém"
 
-#: clients/corvinum_eu/templates/layouts/base.html:71
+#: clients/corvinum_eu/templates/layouts/base.html:73
 #: templates/help/_base.html:4 templates/help/_base.html:8
 #: templates/help/getting-started.html:24 templates/layouts/base.html:44
 #: templates/pages/help_index.html:4 templates/pages/help_index.html:9
 msgid "Help"
 msgstr "Pomocník"
 
-#: clients/corvinum_eu/templates/layouts/base.html:73 core/ui/help.py:62
+#: clients/corvinum_eu/templates/layouts/base.html:75 core/ui/help.py:62
 #: templates/layouts/base.html:46
 msgid "Audit"
 msgstr "Audit"
 
-#: clients/corvinum_eu/templates/layouts/base.html:80
-#: templates/layouts/base.html:86
+#: clients/corvinum_eu/templates/layouts/base.html:82
+#: templates/layouts/base.html:88
 msgid "Change your avatar"
 msgstr "Zmeniť avatar"
 
-#: clients/corvinum_eu/templates/layouts/base.html:102
-#: templates/layouts/base.html:74 templates/pages/feedback_form.html:17
+#: clients/corvinum_eu/templates/layouts/base.html:104
+#: templates/layouts/base.html:76 templates/pages/feedback_form.html:17
 msgid "Language"
 msgstr "Jazyk"
 
-#: clients/corvinum_eu/templates/layouts/base.html:112
-#: templates/layouts/base.html:102
+#: clients/corvinum_eu/templates/layouts/base.html:114
+#: templates/layouts/base.html:104
 msgid "Sign out"
 msgstr "Odhlásiť sa"
 
-#: clients/corvinum_eu/templates/layouts/base.html:123
+#: clients/corvinum_eu/templates/layouts/base.html:125
 #: templates/layouts/base.html:28 templates/layouts/base.html:29
 msgid "Open navigation"
 msgstr "Otvoriť navigáciu"
@@ -250,8 +263,8 @@ msgid "confirmed"
 msgstr "potvrdené"
 
 #: core/accounts/models.py:99 core/audit/models.py:33 core/people/models.py:139
-#: core/projects/models.py:36 core/projects/models.py:92
-#: core/projects/models.py:151 core/projects/models.py:193
+#: core/projects/models.py:36 core/projects/models.py:96
+#: core/projects/models.py:181 core/projects/models.py:259
 #: features/advances/models.py:92 features/blacklist/models.py:66
 #: features/blacklist/models.py:114 features/checklists/models.py:23
 #: features/compliance/models.py:33 features/feedback/models.py:26
@@ -293,15 +306,15 @@ msgstr "Neplatný kód."
 msgid "Two-factor authentication enabled."
 msgstr "Dvojfaktorové overenie zapnuté."
 
-#: core/accounts/views.py:161 core/people/views.py:302
+#: core/accounts/views.py:161 core/people/views.py:329
 msgid "No file was selected."
 msgstr "Nebol vybraný žiadny súbor."
 
-#: core/accounts/views.py:176 core/people/views.py:317
+#: core/accounts/views.py:176 core/people/views.py:344
 msgid "Avatar updated."
 msgstr "Avatar bol aktualizovaný."
 
-#: core/accounts/views.py:186 core/people/views.py:329
+#: core/accounts/views.py:186 core/people/views.py:356
 msgid "Avatar removed."
 msgstr "Avatar bol odstránený."
 
@@ -617,7 +630,7 @@ msgid "Added to blacklist"
 msgstr "Pridaný na čiernu listinu"
 
 # --- exit / recycling ---
-#: core/audit/presentation.py:101 templates/pages/person_detail.html:209
+#: core/audit/presentation.py:101 templates/pages/person_detail.html:216
 msgid "Exit"
 msgstr "Odchod"
 
@@ -684,17 +697,17 @@ msgstr "Pripravenosť vyžaduje pozornosť"
 msgid "Notification is not available."
 msgstr "Upozornenie nie je dostupné."
 
-#: core/offices/context_processors.py:49
+#: core/offices/context_processors.py:57
 #: templates/pages/finance_executive.html:21
 #: templates/pages/finance_executive.html:51
 msgid "All offices"
 msgstr "Všetky pobočky"
 
-#: core/offices/context_processors.py:59
+#: core/offices/context_processors.py:67
 msgid "No office"
 msgstr "Bez pobočky"
 
-#: core/offices/context_processors.py:66
+#: core/offices/context_processors.py:74
 #, python-format
 msgid "%(first)s +%(count)s"
 msgstr "%(first)s +%(count)s"
@@ -758,17 +771,17 @@ msgid "Email"
 msgstr "E-mail"
 
 #: core/people/forms.py:40 features/intake/catalog_i18n.py:17
-#: templates/pages/person_detail.html:174
+#: templates/pages/person_detail.html:181
 msgid "Phone"
 msgstr "Telefón"
 
 #: core/people/forms.py:41 features/intake/catalog_i18n.py:19
-#: templates/pages/person_detail.html:175
+#: templates/pages/person_detail.html:182
 msgid "Address"
 msgstr "Adresa"
 
 #: core/people/forms.py:42 features/intake/catalog_i18n.py:20
-#: templates/pages/person_detail.html:176
+#: templates/pages/person_detail.html:183
 msgid "Nationality"
 msgstr "Národnosť"
 
@@ -777,12 +790,12 @@ msgid "Preferred language"
 msgstr "Preferovaný jazyk"
 
 #: core/people/forms.py:44 features/intake/catalog_i18n.py:15
-#: templates/pages/person_detail.html:188
+#: templates/pages/person_detail.html:195
 msgid "Date of birth"
 msgstr "Dátum narodenia"
 
 #: core/people/forms.py:45 features/intake/catalog_i18n.py:16
-#: templates/pages/person_detail.html:189
+#: templates/pages/person_detail.html:196
 msgid "Place of birth"
 msgstr "Miesto narodenia"
 
@@ -828,7 +841,7 @@ msgstr "Pracuje"
 #: templates/pages/accommodation_list.html:33
 #: templates/pages/equipment_catalog.html:19
 #: templates/pages/equipment_catalog.html:33
-#: templates/pages/person_detail.html:232 templates/pages/project_detail.html:8
+#: templates/pages/person_detail.html:239 templates/pages/project_detail.html:8
 #: templates/pages/project_list.html:19 templates/pages/project_list.html:35
 msgid "Inactive"
 msgstr "Neaktívny"
@@ -940,19 +953,19 @@ msgid "search name"
 msgstr "vyhľadávacie meno"
 
 #: core/people/models.py:140 core/projects/models.py:37
-#: core/projects/models.py:93 core/projects/models.py:194
+#: core/projects/models.py:97 core/projects/models.py:260
 #: features/blacklist/models.py:67 features/finance/models.py:40
 msgid "updated"
 msgstr "aktualizované"
 
 #: core/people/models.py:143 core/projects/models.py:64
-#: core/projects/models.py:130 core/projects/models.py:176
-#: features/advances/models.py:61 features/blacklist/models.py:45
-#: features/blacklist/models.py:105 features/checklists/models.py:57
-#: features/compliance/models.py:24 features/intake/models.py:106
-#: features/logistics/models.py:144 features/logistics/models.py:263
-#: features/messaging/models.py:48 features/payslips/models.py:20
-#: features/wage_ledger/models.py:16
+#: core/projects/models.py:137 core/projects/models.py:209
+#: core/projects/models.py:322 features/advances/models.py:61
+#: features/blacklist/models.py:45 features/blacklist/models.py:105
+#: features/checklists/models.py:57 features/compliance/models.py:24
+#: features/intake/models.py:106 features/logistics/models.py:144
+#: features/logistics/models.py:263 features/messaging/models.py:48
+#: features/payslips/models.py:20 features/wage_ledger/models.py:16
 msgid "person"
 msgstr "osoba"
 
@@ -990,35 +1003,36 @@ msgstr "Výsledok skúšky"
 msgid "Readiness submitted"
 msgstr "Pripravenosť odoslaná"
 
-#: core/people/views.py:118
+#: core/people/views.py:123
 msgid "Person added."
 msgstr "Osoba pridaná."
 
-#: core/people/views.py:133 templates/pages/people_list.html:12
+#: core/people/views.py:138 templates/pages/people_list.html:12
 msgid "Add person"
 msgstr "Pridať osobu"
 
-#: core/people/views.py:148
+#: core/people/views.py:153
 msgid "Person updated."
 msgstr "Osoba aktualizovaná."
 
-#: core/people/views.py:159
+#: core/people/views.py:164
 msgid "Edit person"
 msgstr "Upraviť osobu"
 
-#: core/people/views.py:196 templates/pages/person_detail.html:150
+#: core/people/views.py:219 templates/pages/activation_queue.html:28
+#: templates/pages/person_detail.html:150
 msgid "Entry medical date"
 msgstr "Dátum vstupnej prehliadky"
 
-#: core/people/views.py:197
+#: core/people/views.py:220
 msgid "Review this future date."
 msgstr "Skontrolujte tento budúci dátum."
 
-#: core/people/views.py:272
+#: core/people/views.py:299
 msgid "Person archived. Blacklist protection remains in place."
 msgstr "Osoba bola archivovaná. Ochrana čiernej listiny zostáva zachovaná."
 
-#: core/people/views.py:286
+#: core/people/views.py:313
 msgid "Recycled to Available."
 msgstr "Vrátené na Dostupný."
 
@@ -1068,9 +1082,9 @@ msgid "financial reporting eligible"
 msgstr "zahrnuté do finančného výkazníctva"
 
 #: core/projects/models.py:40 core/projects/models.py:70
-#: core/projects/models.py:133 core/projects/models.py:179
-#: features/feedback/models.py:23 features/finance/models.py:27
-#: features/logistics/models.py:578
+#: core/projects/models.py:143 core/projects/models.py:215
+#: core/projects/models.py:328 features/feedback/models.py:23
+#: features/finance/models.py:27 features/logistics/models.py:578
 msgid "project"
 msgstr "projekt"
 
@@ -1091,15 +1105,15 @@ msgstr "Aktívny"
 msgid "Ended"
 msgstr "Ukončené"
 
-#: core/projects/models.py:51 core/projects/models.py:115
+#: core/projects/models.py:51 core/projects/models.py:119
 #: features/advances/models.py:30
 msgid "Cancelled"
 msgstr "Zrušené"
 
-#: core/projects/models.py:73 features/blacklist/models.py:48
-#: features/intake/models.py:27 features/intake/models.py:108
-#: features/logistics/models.py:153 features/logistics/models.py:273
-#: features/messaging/models.py:53
+#: core/projects/models.py:73 core/projects/models.py:337
+#: features/blacklist/models.py:48 features/intake/models.py:27
+#: features/intake/models.py:108 features/logistics/models.py:153
+#: features/logistics/models.py:273 features/messaging/models.py:53
 msgid "status"
 msgstr "stav"
 
@@ -1111,181 +1125,231 @@ msgstr "dátum začiatku"
 msgid "end date"
 msgstr "dátum konca"
 
-#: core/projects/models.py:86 core/projects/models.py:144
+#: core/projects/models.py:86 core/projects/models.py:168
 #: features/logistics/models.py:182
 msgid "assigned by"
 msgstr "priradil"
 
-#: core/projects/models.py:88
+#: core/projects/models.py:89
 msgid "assignment reason"
 msgstr "dôvod priradenia"
 
-#: core/projects/models.py:90
+#: core/projects/models.py:93
 msgid "coordinator snapshot"
 msgstr "snímka koordinátorov"
 
-#: core/projects/models.py:96
+#: core/projects/models.py:100
 msgid "project assignment"
 msgstr "priradenie na projekt"
 
-#: core/projects/models.py:97
+#: core/projects/models.py:101
 msgid "project assignments"
 msgstr "priradenia na projekt"
 
-#: core/projects/models.py:113
+#: core/projects/models.py:117
 msgid "Scheduled"
 msgstr "Naplánované"
 
-#: core/projects/models.py:114 features/intake/models.py:97
+#: core/projects/models.py:118 features/intake/models.py:97
 msgid "Completed"
 msgstr "Dokončené"
 
-#: core/projects/models.py:119
+#: core/projects/models.py:123 core/projects/models.py:298
 msgid "Pending"
 msgstr "Čaká"
 
-#: core/projects/models.py:120 templates/pages/person_detail.html:84
+#: core/projects/models.py:124 templates/pages/person_detail.html:84
 msgid "Pass"
 msgstr "Prešiel"
 
-#: core/projects/models.py:121 templates/pages/person_detail.html:88
+#: core/projects/models.py:125 templates/pages/person_detail.html:88
 msgid "Fail"
 msgstr "Neprešiel"
 
-#: core/projects/models.py:122 templates/pages/person_detail.html:92
+#: core/projects/models.py:126 templates/pages/person_detail.html:92
 msgid "No-show"
 msgstr "Nedostavil sa"
 
-#: core/projects/models.py:135
+#: core/projects/models.py:145
 msgid "scheduled date"
 msgstr "plánovaný dátum"
 
-#: core/projects/models.py:138
+#: core/projects/models.py:148
 msgid "scheduled for"
 msgstr "čas príchodu"
 
-#: core/projects/models.py:139
+#: core/projects/models.py:150
 msgid "state"
 msgstr "stav"
 
-#: core/projects/models.py:140
+#: core/projects/models.py:156
 msgid "outcome"
 msgstr "výsledok"
 
-#: core/projects/models.py:141 features/advances/models.py:83
+#: core/projects/models.py:161 features/advances/models.py:83
 #: features/checklists/models.py:68 features/finance/models.py:33
 #: features/logistics/models.py:345 features/logistics/models.py:582
 #: features/payslips/models.py:31 features/wage_ledger/models.py:34
 msgid "note"
 msgstr "poznámka"
 
-#: core/projects/models.py:148
+#: core/projects/models.py:176
 msgid "outcome recorded by"
 msgstr "výsledok zaznamenal"
 
-#: core/projects/models.py:150
+#: core/projects/models.py:179
 msgid "outcome recorded at"
 msgstr "výsledok zaznamenaný o"
 
-#: core/projects/models.py:154
+#: core/projects/models.py:184
 msgid "trial assignment"
 msgstr "skúšobný deň"
 
-#: core/projects/models.py:155
+#: core/projects/models.py:185
 msgid "trial assignments"
 msgstr "skúšobné dni"
 
-#: core/projects/models.py:163 templates/pages/person_detail.html:120
+#: core/projects/models.py:193 templates/pages/person_detail.html:120
 #: templates/pages/person_detail.html:126
 #: templates/pages/person_detail.html:132
 #: templates/pages/person_detail.html:142
 msgid "Incomplete"
 msgstr "Nekompletné"
 
-#: core/projects/models.py:164 templates/pages/person_detail.html:121
+#: core/projects/models.py:194 templates/pages/person_detail.html:121
 #: templates/pages/person_detail.html:127
 #: templates/pages/person_detail.html:133
 #: templates/pages/person_detail.html:143
 msgid "Complete"
 msgstr "Kompletné"
 
-#: core/projects/models.py:165 templates/pages/person_detail.html:134
+#: core/projects/models.py:195 templates/pages/person_detail.html:134
 #: templates/pages/person_detail.html:144
 msgid "Not applicable"
 msgstr "Neaplikovateľné"
 
-#: core/projects/models.py:181
+#: core/projects/models.py:218
 msgid "medical"
 msgstr "lekárske"
 
-#: core/projects/models.py:182
+#: core/projects/models.py:224
 msgid "gear"
 msgstr "výbava"
 
-#: core/projects/models.py:183 features/logistics/models.py:46
+#: core/projects/models.py:230 features/logistics/models.py:46
 #: features/logistics/models.py:59 features/logistics/models.py:99
 msgid "accommodation"
 msgstr "ubytovanie"
 
-#: core/projects/models.py:184
+#: core/projects/models.py:236
 msgid "transport"
 msgstr "doprava"
 
-#: core/projects/models.py:185
+#: core/projects/models.py:242
 msgid "accommodation N/A reason"
 msgstr "dôvod nerelevantnosti ubytovania"
 
 # --- transport trends ---
-#: core/projects/models.py:186
+#: core/projects/models.py:245
 msgid "transport N/A reason"
 msgstr "dôvod nerelevantnosti dopravy"
 
-#: core/projects/models.py:187
+#: core/projects/models.py:248
 msgid "entry medical date"
 msgstr "dátum vstupnej lekárskej prehliadky"
 
-#: core/projects/models.py:190
+#: core/projects/models.py:256
 msgid "submitted by"
 msgstr "odoslal"
 
-#: core/projects/models.py:192
+#: core/projects/models.py:258
 msgid "submitted at"
 msgstr "odoslané o"
 
-#: core/projects/models.py:197
+#: core/projects/models.py:263 core/projects/models.py:334
 msgid "readiness record"
 msgstr "záznam pripravenosti"
 
-#: core/projects/models.py:198
+#: core/projects/models.py:264
 msgid "readiness records"
 msgstr "záznamy pripravenosti"
 
-#: core/projects/services.py:116
+#: core/projects/models.py:299 features/blacklist/models.py:31
+msgid "Approved"
+msgstr "Schválené"
+
+#: core/projects/models.py:300 features/blacklist/models.py:32
+msgid "Rejected"
+msgstr "Zamietnuté"
+
+#: core/projects/models.py:342
+msgid "pillar snapshot"
+msgstr "snímka pilierov"
+
+
+#: core/projects/models.py:349
+msgid "requested by"
+msgstr "požiadal"
+
+
+#: core/projects/models.py:351
+msgid "requested at"
+msgstr "dátum žiadosti"
+
+
+#: core/projects/models.py:358 features/blacklist/models.py:62
+msgid "decided by"
+msgstr "rozhodol"
+
+#: core/projects/models.py:360 features/blacklist/models.py:64
+msgid "decided at"
+msgstr "rozhodnuté o"
+
+#: core/projects/models.py:361
+msgid "decision reason"
+msgstr "dôvod rozhodnutia"
+
+
+# --- projects UI ---
+#: core/projects/models.py:364
+msgid "activation approval"
+msgstr "schválenie aktivácie"
+
+
+# --- projects UI ---
+#: core/projects/models.py:365
+msgid "activation approvals"
+msgstr "schválenia aktivácie"
+
+
+#: core/projects/services.py:131
 msgid "Only pending trials can be edited."
 msgstr "Upravovať možno iba čakajúce skúšobné dni."
 
-#: core/projects/services.py:118
+#: core/projects/services.py:133
 msgid "Trials can only be scheduled for active projects."
 msgstr "Skúšobné dni možno plánovať iba pre aktívne projekty."
 
-#: core/projects/services.py:179 features/advances/models.py:38
-#: features/finance/catalog_i18n.py:20 templates/pages/person_detail.html:118
+#: core/projects/services.py:203 features/advances/models.py:38
+#: features/finance/catalog_i18n.py:20 templates/pages/activation_queue.html:25
+#: templates/pages/person_detail.html:118
 msgid "Medical"
 msgstr "Lekárska"
 
-#: core/projects/services.py:179
+#: core/projects/services.py:203
 msgid "Medical clearance is incomplete."
 msgstr "Lekárska spôsobilosť nie je dokončená."
 
-#: core/projects/services.py:180 templates/pages/person_detail.html:124
+#: core/projects/services.py:204 templates/pages/activation_queue.html:26
+#: templates/pages/person_detail.html:124
 msgid "Gear"
 msgstr "Výstroj"
 
-#: core/projects/services.py:180
+#: core/projects/services.py:204
 msgid "Required equipment is incomplete."
 msgstr "Požadované vybavenie nie je kompletné."
 
-#: core/projects/services.py:181 features/finance/catalog_i18n.py:18
+#: core/projects/services.py:205 features/finance/catalog_i18n.py:18
 #: features/finance/models.py:67 templates/help/getting-started.html:22
 #: templates/help/logistics.html:8 templates/layouts/base.html:40
 #: templates/pages/accommodation_costs.html:6
@@ -1293,75 +1357,101 @@ msgstr "Požadované vybavenie nie je kompletné."
 #: templates/pages/accommodation_list.html:4
 #: templates/pages/accommodation_list.html:9
 #: templates/pages/accommodation_list.html:27
+#: templates/pages/activation_queue.html:27
 #: templates/pages/person_detail.html:130 templates/pages/room_form.html:7
 #: templates/panels/logistics_room.html:4
 msgid "Accommodation"
 msgstr "Ubytovanie"
 
-#: core/projects/services.py:181
+#: core/projects/services.py:205
 msgid "Accommodation is incomplete."
 msgstr "Ubytovanie nie je zabezpečené."
 
-#: core/projects/services.py:182 features/finance/models.py:66
+#: core/projects/services.py:206 features/finance/models.py:66
 #: templates/help/logistics.html:15 templates/layouts/base.html:42
 #: templates/pages/person_detail.html:140
 msgid "Transport"
 msgstr "Doprava"
 
-#: core/projects/services.py:182
+#: core/projects/services.py:206
 msgid "Transport is incomplete."
 msgstr "Doprava nie je zabezpečená."
 
-#: core/projects/services.py:198
+#: core/projects/services.py:225
 msgid "A reason is required when this is not applicable."
 msgstr "Ak sa to neuplatňuje, je potrebný dôvod."
 
-#: core/projects/services.py:239
+#: core/projects/services.py:278
 msgid "Entry medical date is invalid."
 msgstr "Dátum vstupnej lekárskej prehliadky je neplatný."
 
-#: core/projects/services.py:241
+#: core/projects/services.py:280
 msgid "Entry medical date cannot be in the future."
 msgstr "Dátum vstupnej lekárskej prehliadky nemôže byť v budúcnosti."
 
-#: core/projects/services.py:255
+#: core/projects/services.py:302
 msgid ""
 "Cannot activate this worker because no readiness record has been completed."
 msgstr ""
 "Pracovníka nemožno aktivovať, pretože nie je vyplnený záznam pripravenosti."
 
-#: core/projects/services.py:259
+#: core/projects/services.py:308
 #, python-format
 msgid "Cannot activate this worker until: %(items)s"
 msgstr "Pracovníka nemožno aktivovať, kým nie je splnené: %(items)s"
 
-#: core/projects/views.py:204 core/projects/views.py:268
+#: core/projects/services.py:328
+msgid "An activation request is already awaiting a decision."
+msgstr "Žiadosť o aktiváciu už čaká na rozhodnutie."
+
+
+#: core/projects/services.py:370
+msgid "Only a pending activation request can be decided."
+msgstr "Rozhodnúť možno iba o čakajúcej žiadosti o aktiváciu."
+
+
+#: core/projects/services.py:381
+msgid "A rejection must state a reason."
+msgstr "Zamietnutie musí uvádzať dôvod."
+
+
+#: core/projects/services.py:384
+msgid "Decision must be 'approve' or 'reject'."
+msgstr "Rozhodnutie musí byť „schváliť“ alebo „zamietnuť“."
+
+
+#: core/projects/views.py:207 core/projects/views.py:271
 msgid "Trial scheduled."
 msgstr "Skúška naplánovaná."
 
-#: core/projects/views.py:235
+#: core/projects/views.py:238
 msgid "Trial updated."
 msgstr "Skúšobný deň bol aktualizovaný."
 
-#: core/projects/views.py:260
+#: core/projects/views.py:263
 msgid "Review the trial details and try again."
 msgstr "Skontrolujte údaje skúšobného dňa a skúste to znova."
 
-#: core/projects/views.py:284
+#: core/projects/views.py:287
 msgid "Trial outcome recorded."
 msgstr "Výsledok skúšky zaznamenaný."
 
-#: core/projects/views.py:314
+#: core/projects/views.py:317
 msgid "Readiness saved."
 msgstr "Pripravenosť uložená."
 
-#: core/projects/views.py:338
+#: core/projects/views.py:341
 msgid "Exit completed."
 msgstr "Odchod dokončený."
 
-#: core/projects/views.py:351
-msgid "Activated — now Working."
-msgstr "Aktivované — teraz Pracuje."
+#: core/projects/views.py:360
+msgid "Activation requested — a manager will decide."
+msgstr "Aktivácia bola vyžiadaná — rozhodne manažér."
+
+
+#: core/projects/views.py:401 features/blacklist/views.py:85
+msgid "Decision recorded."
+msgstr "Rozhodnutie zaznamenané."
 
 #: core/ui/help.py:14 core/ui/help.py:16 templates/help/getting-started.html:4
 #: templates/help/getting-started.html:5 tests/test_help.py:115
@@ -1399,7 +1489,7 @@ msgid "Logistics: accommodation, equipment, and transport"
 msgstr "Logistika: ubytovanie, vybavenie a doprava"
 
 # --- finance ---
-#: core/ui/help.py:44 templates/layouts/base.html:57
+#: core/ui/help.py:44 templates/layouts/base.html:59
 #: templates/pages/finance_executive.html:4
 #: templates/pages/finance_executive.html:9
 #: templates/pages/finance_month_detail.html:8
@@ -1416,7 +1506,7 @@ msgid "Finance: recording a month and reading the reports"
 msgstr "Financie: zaznamenanie mesiaca a čítanie reportov"
 
 # --- feedback ---
-#: core/ui/help.py:50 templates/layouts/base.html:66
+#: core/ui/help.py:50 templates/layouts/base.html:68
 #: templates/pages/feedback_form.html:8 templates/pages/feedback_form.html:27
 msgid "Feedback"
 msgstr "Spätná väzba"
@@ -1664,14 +1754,6 @@ msgstr "kategórie čiernej listiny"
 msgid "Proposed"
 msgstr "Navrhnuté"
 
-#: features/blacklist/models.py:31
-msgid "Approved"
-msgstr "Schválené"
-
-#: features/blacklist/models.py:32
-msgid "Rejected"
-msgstr "Zamietnuté"
-
 #: features/blacklist/models.py:33
 msgid "Removed"
 msgstr "Odstránené"
@@ -1683,14 +1765,6 @@ msgstr "vyhradený dôvod"
 #: features/blacklist/models.py:58
 msgid "proposed by"
 msgstr "navrhol"
-
-#: features/blacklist/models.py:62
-msgid "decided by"
-msgstr "rozhodol"
-
-#: features/blacklist/models.py:64
-msgid "decided at"
-msgstr "rozhodnuté o"
 
 #: features/blacklist/models.py:65 features/compliance/models.py:31
 msgid "expiry date"
@@ -1784,10 +1858,6 @@ msgstr ""
 #: features/blacklist/views.py:70
 msgid "Blacklist case proposed for review."
 msgstr "Prípad čiernej listiny navrhnutý na posúdenie."
-
-#: features/blacklist/views.py:85
-msgid "Decision recorded."
-msgstr "Rozhodnutie zaznamenané."
 
 #: features/blacklist/views.py:97
 msgid "Removed from blacklist."
@@ -2492,12 +2562,12 @@ msgstr "Úprava množstva"
 msgid "Value for positive adjustment"
 msgstr "Hodnota pri kladnej úprave"
 
-#: features/logistics/forms.py:243 templates/pages/audit_log.html:44
-#: templates/pages/blacklist_queue.html:23
+#: features/logistics/forms.py:243 templates/pages/activation_queue.html:32
+#: templates/pages/audit_log.html:44 templates/pages/blacklist_queue.html:23
 #: templates/pages/blacklist_queue.html:28
 #: templates/pages/equipment_stock.html:50
 #: templates/pages/finance_month_detail.html:19
-#: templates/pages/person_detail.html:234
+#: templates/pages/person_detail.html:241
 #: templates/panels/blacklist_case.html:11
 #: templates/panels/blacklist_case.html:19
 #: templates/panels/blacklist_case.html:26
@@ -3001,7 +3071,6 @@ msgstr "Zlyhalo"
 msgid "Blocked (recipient not allowed here)"
 msgstr "Zablokované (príjemca tu nie je povolený)"
 
-
 #: features/messaging/models.py:50
 msgid "to"
 msgstr "komu"
@@ -3061,7 +3130,7 @@ msgstr "chýba e-mail!"
 
 #: features/payslips/forms.py:20 templates/pages/ledger.html:21
 #: templates/pages/payslips.html:35 templates/pages/person_detail.html:38
-#: templates/pages/person_detail.html:261 templates/pages/wages.html:38
+#: templates/pages/person_detail.html:268 templates/pages/wages.html:38
 #: templates/partials/ledger_activity.html:8
 #: templates/partials/ledger_activity.html:26
 #: templates/partials/ledger_cycle.html:16
@@ -3506,46 +3575,37 @@ msgstr ""
 msgid "Navigation overview"
 msgstr "Prehľad navigácie"
 
-
 #: templates/help/getting-started.html:27
 msgid "Your office"
 msgstr "Vaša pobočka"
-
 
 #: templates/help/getting-started.html:28
 msgid "Your role"
 msgstr "Vaša rola"
 
-
 #: templates/help/getting-started.html:35
 msgid "Module Tabs"
 msgstr "Karty modulov"
-
 
 #: templates/help/getting-started.html:35
 msgid "Switch between people, projects, compliance, accommodation and reports."
 msgstr "Prepínanie medzi ľuďmi, projektmi, súladom, ubytovaním a reportmi."
 
-
 #: templates/help/getting-started.html:38
 msgid "Office Scope"
 msgstr "Rozsah pobočky"
-
 
 #: templates/help/getting-started.html:38
 msgid "Shows the office bounding your current data view."
 msgstr "Zobrazuje pobočku, ktorá ohraničuje váš aktuálny pohľad na údaje."
 
-
 #: templates/help/getting-started.html:41
 msgid "User Role"
 msgstr "Rola používateľa"
 
-
 #: templates/help/getting-started.html:41
 msgid "Indicates your active operational role and permission scope."
 msgstr "Označuje vašu aktívnu prevádzkovú rolu a rozsah oprávnení."
-
 
 #: templates/help/getting-started.html:47 tests/test_help.py:116
 msgid "Roles"
@@ -3570,87 +3630,70 @@ msgstr ""
 msgid "Intake & Onboarding"
 msgstr "Príjem a nástup"
 
-
 #: templates/help/getting-started.html:57
 msgid "Intake new worker candidates"
 msgstr "Prijímať nových uchádzačov"
-
 
 #: templates/help/getting-started.html:58
 msgid "Route candidates to trial/projects"
 msgstr "Smerovať uchádzačov na skúšobný deň alebo projekt"
 
-
 #: templates/help/getting-started.html:59
 msgid "Manage applicant documentation"
 msgstr "Spravovať dokumentáciu uchádzačov"
-
 
 # --- projects UI ---
 #: templates/help/getting-started.html:66
 msgid "Field Operations"
 msgstr "Prevádzka v teréne"
 
-
 #: templates/help/getting-started.html:69
 msgid "Manage day-to-day project assignments"
 msgstr "Spravovať každodenné priradenia na projekty"
-
 
 #: templates/help/getting-started.html:70
 msgid "Track worker readiness & equipment"
 msgstr "Sledovať pripravenosť a vybavenie pracovníkov"
 
-
 #: templates/help/getting-started.html:71
 msgid "Monitor trial days and attendance"
 msgstr "Sledovať skúšobné dni a dochádzku"
-
 
 #: templates/help/getting-started.html:77
 msgid "Manager / Admin"
 msgstr "Manažér / Administrátor"
 
-
 #: templates/help/getting-started.html:78
 msgid "Full Operational Access"
 msgstr "Plný prevádzkový prístup"
-
 
 #: templates/help/getting-started.html:81
 msgid "Approve requests & financial records"
 msgstr "Schvaľovať žiadosti a finančné záznamy"
 
-
 #: templates/help/getting-started.html:82
 msgid "Manage office stock & blacklist reviews"
 msgstr "Spravovať skladové zásoby pobočky a posudzovanie čiernej listiny"
-
 
 #: templates/help/getting-started.html:83
 msgid "All Recruiter and Coordinator actions"
 msgstr "Všetky činnosti náborára a koordinátora"
 
-
 #: templates/help/getting-started.html:90
 msgid "Read-Only Oversight"
 msgstr "Dohľad len na čítanie"
-
 
 #: templates/help/getting-started.html:93
 msgid "Cross-office reporting & auditing"
 msgstr "Reporting a audit naprieč pobočkami"
 
-
 #: templates/help/getting-started.html:94
 msgid "View all workers, projects & compliance"
 msgstr "Zobraziť všetkých pracovníkov, projekty a súlad"
 
-
 #: templates/help/getting-started.html:95
 msgid "No editing or state modification rights"
 msgstr "Bez práv na úpravy alebo zmenu stavu"
-
 
 #: templates/help/getting-started.html:100
 msgid "Offices"
@@ -3691,37 +3734,37 @@ msgstr ""
 msgid "Office A"
 msgstr "Pobočka A"
 
-
 #: templates/help/getting-started.html:108
 msgid ""
 "Recruiters, Coordinators & Managers see Office A workers, projects & stock "
 "only."
-msgstr "Náborári, koordinátori a manažéri vidia iba pracovníkov, projekty a zásoby pobočky A."
-
+msgstr ""
+"Náborári, koordinátori a manažéri vidia iba pracovníkov, projekty a zásoby "
+"pobočky A."
 
 #: templates/help/getting-started.html:111
 msgid "Office B"
 msgstr "Pobočka B"
 
-
 #: templates/help/getting-started.html:112
 msgid ""
 "Recruiters, Coordinators & Managers see Office B workers, projects & stock "
 "only."
-msgstr "Náborári, koordinátori a manažéri vidia iba pracovníkov, projekty a zásoby pobočky B."
-
+msgstr ""
+"Náborári, koordinátori a manažéri vidia iba pracovníkov, projekty a zásoby "
+"pobočky B."
 
 #: templates/help/getting-started.html:115
 msgid "Global Oversight (Observer Role)"
 msgstr "Celkový dohľad (rola Pozorovateľ)"
 
-
 #: templates/help/getting-started.html:116
 msgid ""
 "Observers bypass office boundaries to see cross-office metrics and overall "
 "figures."
-msgstr "Pozorovatelia obchádzajú hranice pobočiek a vidia metriky naprieč pobočkami aj celkové čísla."
-
+msgstr ""
+"Pozorovatelia obchádzajú hranice pobočiek a vidia metriky naprieč pobočkami "
+"aj celkové čísla."
 
 #: templates/help/getting-started.html:121
 msgid "Statuses and colors"
@@ -3748,52 +3791,42 @@ msgstr ""
 msgid "Green"
 msgstr "Zelená"
 
-
 #: templates/help/getting-started.html:150
 msgid "Working / Compliant / Good"
 msgstr "Pracuje / v súlade / v poriadku"
-
 
 #: templates/help/getting-started.html:154
 msgid "Amber"
 msgstr "Oranžová"
 
-
 #: templates/help/getting-started.html:154
 msgid "Trial day / Needs attention soon"
 msgstr "Skúšobný deň / čoskoro si vyžiada pozornosť"
-
 
 #: templates/help/getting-started.html:158
 msgid "Red"
 msgstr "Červená"
 
-
 #: templates/help/getting-started.html:158
 msgid "Blacklisted / Immediate action needed"
 msgstr "Na čiernej listine / vyžaduje okamžitý zásah"
 
-
 #: templates/help/getting-started.html:162
 msgid "Blue"
 msgstr "Modrá"
-
 
 # --- lifecycle status labels ---
 #: templates/help/getting-started.html:162
 msgid "Available candidate"
 msgstr "Dostupný uchádzač"
 
-
 #: templates/help/getting-started.html:166
 msgid "Gray"
 msgstr "Sivá"
 
-
 #: templates/help/getting-started.html:166
 msgid "Inactive status"
 msgstr "Neaktívny stav"
-
 
 #: templates/help/getting-started.html:171
 msgid "Getting help"
@@ -3815,13 +3848,13 @@ msgstr ""
 msgid "Add Worker"
 msgstr "Pridať pracovníka"
 
-
 #: templates/help/getting-started.html:187
 msgid ""
 "Tooltip: Start candidate intake wizard to record personal details and "
 "documents."
-msgstr "Popis: Spustí sprievodcu príjmom uchádzača na zaznamenanie osobných údajov a dokumentov."
-
+msgstr ""
+"Popis: Spustí sprievodcu príjmom uchádzača na zaznamenanie osobných údajov a "
+"dokumentov."
 
 #: templates/help/logistics.html:9
 msgid ""
@@ -4025,23 +4058,23 @@ msgstr "Terén"
 msgid "Warehouse"
 msgstr "Sklad"
 
-#: templates/layouts/base.html:95
+#: templates/layouts/base.html:97
 msgid "Remove your avatar?"
 msgstr "Odstrániť váš avatar?"
 
-#: templates/layouts/base.html:98
+#: templates/layouts/base.html:100
 msgid "Role"
 msgstr "Rola"
 
-#: templates/layouts/base.html:99
+#: templates/layouts/base.html:101
 msgid "Office scope"
 msgstr "Rozsah pobočiek"
 
-#: templates/layouts/base.html:99
+#: templates/layouts/base.html:101
 msgid "You can see every office. Other roles only see their own."
 msgstr "Vidíte všetky pobočky. Ostatné roly vidia iba svoju vlastnú."
 
-#: templates/layouts/base.html:99
+#: templates/layouts/base.html:101
 msgid "You only see data belonging to this office."
 msgstr "Vidíte iba údaje patriace tejto pobočke."
 
@@ -4276,11 +4309,63 @@ msgstr "Všetky"
 
 #: templates/pages/accommodation_list.html:29
 #: templates/pages/compliance_list.html:14 templates/pages/people_list.html:41
-#: templates/pages/person_detail.html:172
+#: templates/pages/person_detail.html:179
 #: templates/pages/project_detail.html:16 templates/pages/project_list.html:27
 #: tests/test_tooltips.py:86
 msgid "Details"
 msgstr "Podrobnosti"
+
+#: templates/pages/activation_queue.html:12
+msgid ""
+"Workers whose readiness is complete and who are waiting to start. Approving "
+"moves them to Working on the named project; rejecting sends them back to "
+"readiness with your reason, so the coordinator knows what to fix."
+msgstr "Pracovníci s dokončenou pripravenosťou, ktorí čakajú na nástup. Schválením prejdú do stavu Pracuje na uvedenom projekte; zamietnutím sa vrátia do pripravenosti spolu s vaším dôvodom, aby koordinátor vedel, čo opraviť."
+
+
+#: templates/pages/activation_queue.html:22
+msgid "Requested by"
+msgstr "Požiadal"
+
+
+#: templates/pages/activation_queue.html:23
+msgid "Requested"
+msgstr "Požiadané"
+
+
+#: templates/pages/activation_queue.html:32
+msgid "Reason (required to reject)"
+msgstr "Dôvod (povinný pri zamietnutí)"
+
+
+#: templates/pages/activation_queue.html:33
+msgid ""
+"This activates the worker: they move to Working on this project and the "
+"commitment starts."
+msgstr "Týmto sa pracovník aktivuje: prejde do stavu Pracuje na tomto projekte a začína záväzok."
+
+
+#: templates/pages/activation_queue.html:33
+#: templates/pages/blacklist_queue.html:29
+#: templates/panels/blacklist_case.html:20
+msgid "Approve"
+msgstr "Schváliť"
+
+#: templates/pages/activation_queue.html:34
+msgid "This rejects the request and leaves the worker in readiness."
+msgstr "Týmto sa žiadosť zamietne a pracovník zostane v pripravenosti."
+
+
+#: templates/pages/activation_queue.html:34
+#: templates/pages/blacklist_queue.html:30
+#: templates/panels/blacklist_case.html:21
+msgid "Reject"
+msgstr "Zamietnuť"
+
+#: templates/pages/activation_queue.html:38
+msgid "No activation requests are waiting for a decision."
+msgstr "Na rozhodnutie nečakajú žiadne žiadosti o aktiváciu."
+
 
 #: templates/pages/audit_log.html:4 templates/pages/audit_log.html:9
 msgid "Audit log"
@@ -4402,20 +4487,10 @@ msgstr ""
 "Schváli prípad čiernej listiny: osoba bude Na čiernej listine a budúce "
 "pokusy o návrat budú označené."
 
-#: templates/pages/blacklist_queue.html:29
-#: templates/panels/blacklist_case.html:20
-msgid "Approve"
-msgstr "Schváliť"
-
 #: templates/pages/blacklist_queue.html:30
 #: templates/panels/blacklist_case.html:21
 msgid "This rejects the proposed blacklist case and closes it."
 msgstr "Zamietne navrhovaný prípad čiernej listiny a uzavrie ho."
-
-#: templates/pages/blacklist_queue.html:30
-#: templates/panels/blacklist_case.html:21
-msgid "Reject"
-msgstr "Zamietnuť"
 
 #: templates/pages/blacklist_queue.html:34
 #: templates/pages/equipment_reviews.html:36
@@ -4991,14 +5066,14 @@ msgstr "Príjem"
 msgid "Step"
 msgstr "Krok"
 
-#: templates/pages/intake_panel.html:24 templates/pages/person_detail.html:179
-#: templates/pages/person_detail.html:192
+#: templates/pages/intake_panel.html:24 templates/pages/person_detail.html:186
+#: templates/pages/person_detail.html:199
 #: templates/pages/project_detail.html:32
 msgid "Yes"
 msgstr "Áno"
 
-#: templates/pages/intake_panel.html:25 templates/pages/person_detail.html:179
-#: templates/pages/person_detail.html:192
+#: templates/pages/intake_panel.html:25 templates/pages/person_detail.html:186
+#: templates/pages/person_detail.html:199
 #: templates/pages/project_detail.html:32
 msgid "No"
 msgstr "Nie"
@@ -5124,7 +5199,7 @@ msgstr "Hľadať podľa mena"
 msgid "All statuses"
 msgstr "Všetky stavy"
 
-#: templates/pages/people_list.html:27 templates/pages/person_detail.html:219
+#: templates/pages/people_list.html:27 templates/pages/person_detail.html:226
 msgid "Inactive reason"
 msgstr "Dôvod neaktivity"
 
@@ -5219,52 +5294,73 @@ msgstr "Dôvod, ak sa neaplikuje"
 msgid "Save readiness"
 msgstr "Uložiť pripravenosť"
 
-#: templates/pages/person_detail.html:158
-msgid "Activates the person into Working status on this project."
-msgstr "Aktivuje osobu do stavu Pracuje na tomto projekte."
+#: templates/pages/person_detail.html:156
+msgid "Awaiting a manager's decision"
+msgstr "Čaká na rozhodnutie manažéra"
 
-#: templates/pages/person_detail.html:158
-msgid "Activate (Working)"
-msgstr "Aktivovať (Pracuje)"
 
-#: templates/pages/person_detail.html:160
-msgid "Ready to activate"
-msgstr "Pripravené na aktiváciu"
+#: templates/pages/person_detail.html:156
+msgid "requested"
+msgstr "požiadané"
 
-#: templates/pages/person_detail.html:162
+
+#: templates/pages/person_detail.html:161
+msgid ""
+"Sends this worker to a manager for the activation decision. It does not "
+"activate them."
+msgstr "Odošle tohto pracovníka manažérovi na rozhodnutie o aktivácii. Neaktivuje ho."
+
+
+# --- projects UI ---
+#: templates/pages/person_detail.html:161
+msgid "Request activation"
+msgstr "Požiadať o aktiváciu"
+
+
+#: templates/pages/person_detail.html:163
+msgid "Ready to request"
+msgstr "Pripravené na žiadosť"
+
+
+#: templates/pages/person_detail.html:165
 msgid "Medical and gear required"
 msgstr "Vyžaduje sa lekárska a výstroj"
 
-#: templates/pages/person_detail.html:171
+#: templates/pages/person_detail.html:170
+msgid "Previous request rejected"
+msgstr "Predchádzajúca žiadosť bola zamietnutá"
+
+
+#: templates/pages/person_detail.html:178
 #: templates/pages/project_detail.html:15
 msgid "Operational"
 msgstr "Prevádzkové"
 
-#: templates/pages/person_detail.html:177
+#: templates/pages/person_detail.html:184
 msgid "Current project"
 msgstr "Aktuálny projekt"
 
-#: templates/pages/person_detail.html:178
+#: templates/pages/person_detail.html:185
 msgid "Owning recruiter"
 msgstr "Zodpovedný náborár"
 
-#: templates/pages/person_detail.html:179
+#: templates/pages/person_detail.html:186
 msgid "Rehire eligible"
 msgstr "Možnosť opätovného prijatia"
 
-#: templates/pages/person_detail.html:184
+#: templates/pages/person_detail.html:191
 msgid "Restricted"
 msgstr "Obmedzené"
 
-#: templates/pages/person_detail.html:185
+#: templates/pages/person_detail.html:192
 msgid "Personal data"
 msgstr "Osobné údaje"
 
-#: templates/pages/person_detail.html:191
+#: templates/pages/person_detail.html:198
 msgid "Disability"
 msgstr "Zdravotné postihnutie"
 
-#: templates/pages/person_detail.html:196
+#: templates/pages/person_detail.html:203
 msgid ""
 "Restricted — visible only to managers, observers, the owning recruiter, and "
 "the responsible coordinator."
@@ -5272,16 +5368,16 @@ msgstr ""
 "Obmedzené — viditeľné iba pre manažérov, pozorovateľov, zodpovedného "
 "náborára a zodpovedného koordinátora."
 
-#: templates/pages/person_detail.html:210
+#: templates/pages/person_detail.html:217
 msgid "Exit & reconcile"
 msgstr "Odchod a vyúčtovanie"
 
-#: templates/pages/person_detail.html:211
+#: templates/pages/person_detail.html:218
 msgid ""
 "Ends the project assignment, releases the room, and returns issued equipment."
 msgstr "Ukončí pridelenie na projekt, uvoľní izbu a vráti vydané vybavenie."
 
-#: templates/pages/person_detail.html:213
+#: templates/pages/person_detail.html:220
 msgid ""
 "This ends the active assignment, releases the room, returns issued "
 "equipment, and sets the person to Available."
@@ -5289,11 +5385,11 @@ msgstr ""
 "Ukončí aktívne priradenie, uvoľní izbu, vráti vydanú výbavu a nastaví osobu "
 "na Dostupný."
 
-#: templates/pages/person_detail.html:215
+#: templates/pages/person_detail.html:222
 msgid "Exit to Available"
 msgstr "Odchod na Dostupný"
 
-#: templates/pages/person_detail.html:217
+#: templates/pages/person_detail.html:224
 msgid ""
 "This ends the active assignment, releases the room, returns issued "
 "equipment, and sets the person to Inactive with the chosen reason."
@@ -5301,43 +5397,43 @@ msgstr ""
 "Ukončí aktívne priradenie, uvoľní izbu, vráti vydanú výbavu a nastaví osobu "
 "na Neaktívny so zvoleným dôvodom."
 
-#: templates/pages/person_detail.html:220
+#: templates/pages/person_detail.html:227
 msgid "Reason…"
 msgstr "Dôvod…"
 
-#: templates/pages/person_detail.html:223
+#: templates/pages/person_detail.html:230
 msgid "Exit to Inactive"
 msgstr "Odchod na Neaktívny"
 
-#: templates/pages/person_detail.html:231
+#: templates/pages/person_detail.html:238
 msgid "Lifecycle"
 msgstr "Životný cyklus"
 
-#: templates/pages/person_detail.html:235
+#: templates/pages/person_detail.html:242
 msgid "Since"
 msgstr "Od"
 
-#: templates/pages/person_detail.html:238
+#: templates/pages/person_detail.html:245
 msgid ""
 "This reactivates the person from Inactive, setting their status to Available."
 msgstr ""
 "Znovu aktivuje osobu zo stavu Neaktívny a nastaví jej stav na Dostupný."
 
-#: templates/pages/person_detail.html:240
+#: templates/pages/person_detail.html:247
 msgid "Recycle to Available"
 msgstr "Vrátiť na Dostupný"
 
-#: templates/pages/person_detail.html:248
+#: templates/pages/person_detail.html:255
 #: templates/pages/transport_trends.html:42
 msgid "Records"
 msgstr "Záznamy"
 
-#: templates/pages/person_detail.html:249
-#: templates/pages/person_detail.html:254
+#: templates/pages/person_detail.html:256
+#: templates/pages/person_detail.html:261
 msgid "Archive person"
 msgstr "Archivovať osobu"
 
-#: templates/pages/person_detail.html:250
+#: templates/pages/person_detail.html:257
 msgid ""
 "Hides this operational record from the People list. It is not a deletion and "
 "does not remove blacklist protection or audit history."
@@ -5345,7 +5441,7 @@ msgstr ""
 "Skryje tento prevádzkový záznam zo zoznamu ľudí. Nejde o vymazanie a "
 "neodstráni ochranu čiernej listiny ani históriu auditu."
 
-#: templates/pages/person_detail.html:251
+#: templates/pages/person_detail.html:258
 msgid ""
 "This archives the person from the operational list. It does not delete their "
 "record, audit history, or blacklist protection."
@@ -5353,16 +5449,16 @@ msgstr ""
 "Týmto sa osoba archivuje z prevádzkového zoznamu. Nevymaže sa jej záznam, "
 "história auditu ani ochrana čiernej listiny."
 
-#: templates/pages/person_detail.html:253
+#: templates/pages/person_detail.html:260
 msgid "Archive reason"
 msgstr "Dôvod archivácie"
 
 # --- person card: history + filter ---
-#: templates/pages/person_detail.html:262
+#: templates/pages/person_detail.html:269
 msgid "History"
 msgstr "História"
 
-#: templates/pages/person_detail.html:267
+#: templates/pages/person_detail.html:274
 msgid "No history yet."
 msgstr "Zatiaľ žiadna história."
 
@@ -5853,8 +5949,9 @@ msgstr "Alebo napíšte správu"
 #: templates/panels/messaging_sms.html:22
 msgid ""
 "SMS is not configured in this environment, so nothing can be sent from here."
-msgstr "SMS nie je v tomto prostredí nakonfigurovaná, takže odtiaľto nemožno nič odoslať."
-
+msgstr ""
+"SMS nie je v tomto prostredí nakonfigurovaná, takže odtiaľto nemožno nič "
+"odoslať."
 
 #: templates/partials/confirm_dialog.html:8
 msgid "Please confirm"
@@ -6006,6 +6103,15 @@ msgstr "Svetlá"
 #: templates/partials/theme_picker.html:6
 msgid "Dark"
 msgstr "Tmavá"
+
+#~ msgid "Activated — now Working."
+#~ msgstr "Aktivované — teraz Pracuje."
+
+#~ msgid "Activates the person into Working status on this project."
+#~ msgstr "Aktivuje osobu do stavu Pracuje na tomto projekte."
+
+#~ msgid "Activate (Working)"
+#~ msgstr "Aktivovať (Pracuje)"
 
 #~ msgid "region"
 #~ msgstr "región"

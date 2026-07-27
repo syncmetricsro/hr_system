@@ -49,6 +49,8 @@
         {% if may_equip_review and has_equipment %}<a class="folder-tab {% nav_active 'equipment_reviews' %}" href="{% url 'equipment_reviews' %}" data-tooltip="{% trans 'Reviews' %}"><svg class="nav-icon" aria-hidden="true"><use href="#nav-icon-reviews"></use></svg><span>{% trans "Reviews" %}</span>{% nav_badge "reviews" %}</a>{% endif %}
         {% can 'equipment.view_stock' as may_view_stock %}
         {% if may_view_stock and has_equipment %}<a class="folder-tab {% nav_active 'equipment_stock' 'equipment_stock_receive' %}" href="{% url 'equipment_stock' %}" data-tooltip="{% trans 'Warehouse stock' %}"><svg class="nav-icon" aria-hidden="true"><use href="#nav-icon-warehouse"></use></svg><span>{% trans "Warehouse" %}</span></a>{% endif %}
+        {% can 'approval.activate' as may_activate %}
+        {% if may_activate %}<a class="folder-tab {% nav_active 'activation_queue' %}" href="{% url 'activation_queue' %}" data-tooltip="{% trans 'Activation requests' %}"><svg class="nav-icon" aria-hidden="true"><use href="#nav-icon-approvals"></use></svg><span>{% trans "Activations" %}</span></a>{% endif %}
         {% can 'blacklist.decide' as may_blacklist %}
         {% flag_on 'duplicate_blacklist' as has_blacklist %}
         {% if may_blacklist and has_blacklist %}<a class="folder-tab {% nav_active 'blacklist_queue' %}" href="{% url 'blacklist_queue' %}" data-tooltip="{% trans 'Blacklist' %}"><svg class="nav-icon" aria-hidden="true"><use href="#nav-icon-blacklist"></use></svg><span>{% trans "Blacklist" %}</span></a>{% endif %}

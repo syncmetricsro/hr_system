@@ -1,5 +1,44 @@
 # Build Journal
 
+## 2026-07-27 - Activation now needs two people (readiness item 14)
+
+Activating a worker is the moment Jober commits - the person is on a client
+site, accommodation is booked, equipment is issued, billing starts. The design
+specified a manager approval on that step and both permission matrices promised
+it; it was never implemented. Demonstrated before starting: one coordinator
+went Available -> trial -> readiness -> **WORKING** with nobody else involved,
+because `activate_person` was gated by `project.assign` and the Activate button
+by `readiness.complete`, both of which coordinators hold.
+
+- Built as the **full `ActivationApproval` record** the design describes rather
+  than a bare gate: pending/approved/rejected, a pillar snapshot, a decision
+  reason, requester and decider. A coordinator requests; a manager of that
+  office decides from an Activations queue modelled on the blacklist one.
+- **Separation of duties is enforced by identity, not only by role.** Managers
+  hold both actions, so the role gate alone would still permit self-approval.
+  The check started life in the view and was moved into `decide_activation`
+  before shipping - a management command or future API calling the service
+  would otherwise have bypassed the entire control, which makes it a
+  view-shaped bug in business logic rather than a style point.
+- **Readiness is re-checked at decision time**, because it stays editable after
+  a request is raised. Approving a worker whose medical lapsed in the meantime
+  would defeat the very gate the approval exists to double-check.
+- **The snapshot is not decoration.** Without it a manager approves whatever
+  the readiness record says when they open the queue, not what the coordinator
+  submitted.
+- Rejection requires a reason, and the reason surfaces on the person page so
+  the coordinator knows what to fix rather than guessing.
+- **Applied to CorvinumEU as well**, on the owner's call. Their coordinators
+  lose a capability they had - a client-facing behaviour change - but their own
+  matrix already said they did not have it, so the code now matches the
+  document rather than the document being quietly wrong.
+- Two incidental fixes the suite caught: `how_to_reg` is not in CorvinumEU's
+  self-hosted icon subset and would have rendered as a blank box, and the
+  audit-page test's page-wide substring check for raw reason codes tripped on
+  the new `/activations/` URL. The latter was tightened to assert on rendered
+  content rather than loosened - verified by rendering `event.reason` raw and
+  confirming it still fails.
+
 ## 2026-07-27 - Fixed the Help visual aids, and how they reached main unreviewed
 
 The Getting Started page gained navigation, role, office-boundary, status and

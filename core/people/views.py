@@ -23,7 +23,12 @@ from core.people.permissions import can_view_sensitive
 from core.people.services import age_warning, person_history, recycle_to_available
 from core.ui import registry
 from core.projects.forms import operable_projects
-from core.projects.models import PillarState, TrialOutcome
+from core.projects.models import (
+    ActivationApproval,
+    ActivationApprovalStatus,
+    PillarState,
+    TrialOutcome,
+)
 from core.projects.services import get_or_create_readiness, readiness_blockers
 
 
@@ -181,6 +186,24 @@ def person_detail(request: HttpRequest, pk: int) -> TemplateResponse:
         and pending_trial is None
         and passed_trial is not None
     )
+    pending_activation = (
+        ActivationApproval.objects.filter(
+            person=person, status=ActivationApprovalStatus.PENDING
+        )
+        .select_related("requested_by")
+        .first()
+    )
+    # A rejection is only useful if the coordinator sees why, so surface the
+    # most recent one until a new request supersedes it.
+    last_activation_rejection = (
+        ActivationApproval.objects.filter(
+            person=person, status=ActivationApprovalStatus.REJECTED
+        )
+        .order_by("-decided_at")
+        .first()
+        if pending_activation is None
+        else None
+    )
     readiness = None
     readiness_issues = []
     if in_readiness:
@@ -220,6 +243,10 @@ def person_detail(request: HttpRequest, pk: int) -> TemplateResponse:
                 and readiness.entry_medical_date > timezone.localdate()
             ),
             "is_ready": readiness.is_ready() if readiness else False,
+            # A request in flight replaces the request button, so a coordinator
+            # cannot raise a second one and does not think nothing happened.
+            "pending_activation": pending_activation,
+            "last_activation_rejection": last_activation_rejection,
             "PillarState": PillarState,
             "is_available": person.lifecycle_status == LifecycleStatus.AVAILABLE,
             "active_projects": operable_projects(request.user),

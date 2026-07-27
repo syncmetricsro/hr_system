@@ -1,5 +1,25 @@
 # Test Journal
 
+## 2026-07-27 - tests/test_activation_approval.py (13)
+
+- `test_requesting_does_not_activate` is the load-bearing one: if a request
+  activated, the second pair of eyes would be decorative and every other test
+  here would still pass.
+- `test_a_manager_cannot_decide_their_own_request` (HTTP) and
+  `test_self_approval_is_blocked_at_the_service_not_just_the_view` (service)
+  are deliberately both present. The first proves the endpoint refuses; the
+  second proves the *rule* holds for any caller, which is what moving it out of
+  the view bought.
+- `test_approval_rechecks_readiness` and `test_snapshot_records_what_was_asked_for`
+  cover the same underlying fact from both directions - readiness is mutable
+  between request and decision - because one guards correctness and the other
+  guards what the manager is shown.
+- `test_workflow.py::test_full_path_to_working` was rewritten rather than
+  deleted: it now walks trial -> readiness -> request -> manager approves, and
+  asserts the person is *not* Working after the request. That intermediate
+  assertion is the regression that would otherwise be silent.
+- Jober **717 passed**, CorvinumEU **441 passed**, Playwright **50 passed**.
+
 ## 2026-07-27 - tests/test_help_visual_aids.py (7)
 
 - Diagrams assert things prose does not have to. "There is a Field tab" is
