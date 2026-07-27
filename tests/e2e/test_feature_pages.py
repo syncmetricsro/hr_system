@@ -13,7 +13,9 @@ COORDINATOR = "koordinator"
 def base_url() -> str:
     value = os.environ.get("BASE_URL")
     if not value:
-        raise RuntimeError("BASE_URL must point to the app container for browser tests.")
+        raise RuntimeError(
+            "BASE_URL must point to the app container for browser tests."
+        )
     return value.rstrip("/")
 
 
@@ -30,6 +32,7 @@ def _login(page, local_part: str = MANAGER) -> None:
 
 
 # --- rendering: the pages shipped this sprint actually load in a browser -------
+
 
 def test_finance_summary_and_month_detail(page):
     _login(page)
@@ -57,8 +60,13 @@ def test_finance_year_page(page):
 def test_accommodation_cost_report(page):
     _login(page)
     page.goto(f"{base_url()}/en/accommodation/costs/")
-    page.get_by_role("heading", name="Monthly cost and margin").wait_for()
+    page.get_by_role("heading", name="Monthly accommodation cost").wait_for()
     page.get_by_text("Reporting only").wait_for()
+    # Exactly five figures, per the client's specification (J3). Margin and the
+    # internal occupied-cost term were removed and must not creep back.
+    page.get_by_text("Occupied beds").first.wait_for()
+    assert page.get_by_text("Margin").count() == 0
+    assert page.get_by_text("Occupied cost").count() == 0
 
 
 def test_warehouse_stock(page):
@@ -96,6 +104,7 @@ def test_reports_inactive_by_reason(page):
 
 # --- navigation gating: manager-only tabs are absent for lesser roles ----------
 
+
 def test_manager_sees_reviews_tab(page):
     _login(page, MANAGER)
     page.goto(f"{base_url()}/en/")
@@ -123,6 +132,7 @@ def test_observer_has_finance_but_not_reviews_tab(page):
 
 
 # --- access gating: direct hits return 403 for unauthorized roles --------------
+
 
 def test_recruiter_blocked_from_accommodation_costs(page):
     _login(page, RECRUITER)

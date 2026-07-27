@@ -1,5 +1,31 @@
 # Test Journal
 
+## 2026-07-28 - tests/test_accommodation_month_report.py (11, was 1)
+
+- `test_client_acceptance_fixture` is the client's own worked example, kept
+  verbatim so the numbers in the repo and the numbers he quoted are the same
+  numbers. It asserts the internal occupied-cost term too, even though the page
+  does not show it, because it is the term the loss formula turns on.
+- `test_the_bed_a_worker_pays_extra_for_is_not_counted_as_occupied` pins a
+  *definition* the client may yet change his mind about. If he does, this test
+  is the one that should fail first and loudest.
+- `test_a_full_house_reports_no_empty_bed_loss_rather_than_a_negative_one`
+  covers the case his formula does not: applied literally it yields -payments
+  when every bed is filled. Without this test the zero floor looks like an
+  unexplained deviation from the spec.
+- `test_margin_is_gone` asserts an absence. Removals regress silently - the
+  figure comes back in a merge and no test notices - so the removal is pinned
+  rather than assumed.
+- `test_a_manager_sees_only_their_own_offices_residences` was verified by
+  deleting the scope filter and confirming it fails; the other ten still passed
+  without it, which is exactly how the leak survived this long.
+- `test_a_worker_who_changes_room_mid_month_still_occupies_one_bed` found a
+  constraint I had not accounted for: `unique_active_room_per_person` means the
+  old assignment must be ended first, so the head count is over people with any
+  overlapping assignment, not over assignment rows.
+- e2e now asserts *Margin* and *Occupied cost* appear zero times on the page,
+  not merely that the five wanted figures are present.
+
 ## 2026-07-27 - tests/test_audit_person_filter.py (16)
 
 - `test_finds_events_whose_target_is_not_the_person` is the defect itself: two

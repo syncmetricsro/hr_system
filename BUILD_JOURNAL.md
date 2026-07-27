@@ -1,5 +1,47 @@
 # Build Journal
 
+## 2026-07-28 - J3: the accommodation cost report, five figures and a leak
+
+The client gave a worked example on the handover call - capacity 18 at 180
+EUR/head, three workers, one of them alone in a two-bed room paying 230 - and
+the fix list carried his diagnosis with it: "occupied beds renders 15, i.e.
+capacity minus occupied; the counter is inverted." Building his fixture against
+the current code first, as the list itself asked, showed the diagnosis was
+wrong and one of the other figures was wrong instead.
+
+- **There is no inverted counter.** The page showed `occupied_days`, correctly
+  labelled *Occupied bed-days*, and three workers across a month is 93. The
+  client read a bed-day count as a bed count. Both 18-3 and a partial-month
+  bed-day sum can land on 15, which is why the hypothesis looked sound. The fix
+  is a head count (`occupied_beds`), not a sign flip.
+- **Empty-bed loss was genuinely wrong**, and nobody had reported it: it read
+  `standing - occupied_cost` and never subtracted worker payments, overstating
+  the loss by exactly what the workers pay. His fixture makes it 2700 where it
+  should be 2370.
+- **The zero floor stays, deliberately.** Taken literally the client's formula
+  goes negative whenever a house is full - standing cost then equals occupied
+  cost, leaving `-payments` - and a figure labelled "loss" must not read -150
+  for a fully occupied hostel. Floored at zero, with a test that pins it.
+- **Occupancy counts people, not beds withdrawn from circulation.** The worker
+  who pays 230 to keep a twin room to himself counts as one, and the bed he
+  funds reads as empty. That is the client's own stated definition; it is left
+  as a TODO in the service and an open question for him, because a
+  paid-for-but-empty bed arguably belongs in a different report.
+- **Margin and the internal occupied-cost term are off the card**, on request.
+  Occupied cost stays in the returned data so the arithmetic is testable and so
+  the runbook can explain the formula; it is simply not rendered.
+- **The report had no office scoping at all** (ADR 0026). It opened no single
+  record, so the `_assert_..._in_scope` guards beside it never fired - yet it
+  listed every office's residences and summed them into one company-wide bar. A
+  Velky Meder manager could read Gyor's and Dunajska Streda's capacities, costs
+  and worker payments. This is precisely the aggregate leak the convention
+  warns about, and the second one this week. The service now takes `user` as a
+  **required** argument rather than an optional one, so the next aggregate
+  cannot omit it by default.
+
+Suites: 744 Jober, 449 CorvinumEU, e2e green. Runbook section 5 rewritten - it
+described margin, which no longer exists.
+
 ## 2026-07-27 - J1: the audit person filter, and the office scoping it never had
 
 The client reported the audit person filter as "returns no rows". The fix list

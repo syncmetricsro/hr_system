@@ -208,7 +208,7 @@ every office. The manager recovery review snapshots FIFO issue value but does
 not mutate payroll. Jober's primary view is warehouse balance — now per office,
 not company-wide.
 
-### 5. Accommodation cost and margin
+### 5. Accommodation cost report
 
 Accommodation is office-scoped too: the list shows only this office's
 locations, and each location now carries an **Office** — the same boundary as
@@ -221,17 +221,37 @@ in §1 with a project and a person; repeat the point verbally instead.
 
 Open **Accommodation**, then the Nitra location (Velký Meder). Show its
 effective monthly capacity and per-head cost period. Open **Cost report**,
-select the current month, and explain:
+select the current month, and walk the **five figures** — the card shows these
+and nothing else, reworked to the client's own specification (J3):
 
-- standing cost = capacity x per-head monthly cost;
-- occupied cost and worker payments use assignment-date overlap and daily
-  proration;
-- empty-bed loss is unused standing capacity;
-- margin = worker payments - full standing cost.
+| Figure | Meaning |
+|---|---|
+| **Capacity** | beds the company is paying for, from the cost period |
+| **Occupied beds** | how many workers are actually placed — a head count |
+| **Standing cost** | capacity x per-head monthly cost; owed whether beds fill or not |
+| **Worker payments** | what the placed workers themselves pay |
+| **Empty-bed loss** | standing cost - worker payments - occupied cost |
 
-Olha is seeded from mid-month with a separate worker payment, making the
-proration visible. State explicitly that this report creates no wage,
-deduction, or recovery entry.
+Two points worth making out loud, because both have surprised people:
+
+- **Occupied beds counts workers, not beds taken out of circulation.** A worker
+  alone in a two-bed room who pays extra to keep it to himself counts as *one*;
+  the bed he funds still reads as empty. This is a deliberate open question
+  with the client, not an oversight.
+- **Occupied cost is deliberately not displayed.** It appears in the loss
+  formula above only so the arithmetic can be followed; the client asked for it
+  off the card. If someone asks where it went, it is occupied beds x per-head
+  cost, prorated by day.
+
+Empty-bed loss never goes below zero: a full house has no empty beds, so it
+reads 0 rather than a negative number.
+
+Olha is seeded from mid-month with a separate worker payment, making the daily
+proration visible — mid-month arrivals cost and pay a fraction of the month.
+State explicitly that this report creates no wage, deduction, or recovery entry.
+
+The summary bar at the top sums the same five figures **across this manager's
+offices only**. An Observer sees all three offices in it; a manager does not.
 
 ### 6. Profit/loss by office
 

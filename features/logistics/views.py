@@ -343,7 +343,7 @@ def accommodation_costs(request: HttpRequest) -> TemplateResponse:
     except (TypeError, ValueError):
         year, month = today.year, today.month
         month_value = f"{year:04d}-{month:02d}"
-    context = accommodation_month_report(year, month)
+    context = accommodation_month_report(year, month, request.user)
     context["month_value"] = month_value
     return TemplateResponse(request, "pages/accommodation_costs.html", context)
 
