@@ -12,6 +12,7 @@ from django.utils.translation import gettext as _
 
 from core.accounts.permissions import user_office_scope
 from core.audit.services import record_event
+from core.offices.scoping import scope_people
 from features.logistics.models import (
     Accommodation,
     AccommodationCostPeriod,
@@ -331,9 +332,14 @@ def release_room(person, *, actor=None):
     return assignment
 
 
-def issued_equipment_value(person=None):
+def issued_equipment_value(person=None, *, user):
     """Total value of currently-issued equipment (qty x unit_price), optionally
-    scoped to one person. Latest-manual-price valuation (round-4 confirmed)."""
+    scoped to one person. Latest-manual-price valuation (round-4 confirmed).
+
+    ``user`` is a required keyword: without a person this is a company-wide
+    money figure, and a dashboard tile summing every office is a cross-office
+    read even though it opens no record (ADR 0026).
+    """
     from decimal import Decimal
 
     from django.db.models import Case, DecimalField, ExpressionWrapper, F, Sum, When
@@ -341,6 +347,7 @@ def issued_equipment_value(person=None):
     qs = EquipmentIssue.objects.filter(status=EquipmentIssueStatus.ISSUED)
     if person is not None:
         qs = qs.filter(person=person)
+    qs = scope_people(qs, user, prefix="person__")
     total = qs.aggregate(
         value=Sum(
             Case(
@@ -421,14 +428,20 @@ def review_deduction(issue, decision, *, actor=None, note: str = ""):
     return issue
 
 
-def pending_deduction_reviews():
+def pending_deduction_reviews(user):
     """Manager review queue: items flagged unreturned and awaiting a decision,
-    with the outstanding charge total (dynamic)."""
+    with the outstanding charge total (dynamic).
+
+    ``user`` is required (ADR 0026). This queue is an aggregate over every
+    office's issues, and the decision it leads to charges money to a named
+    worker - so it must not show a manager anyone else's people.
+    """
     qs = (
         EquipmentIssue.objects.filter(review_status=DeductionReviewStatus.PENDING)
         .select_related("person", "item")
         .order_by("-issued_at")
     )
+    qs = scope_people(qs, user, prefix="person__")
     total = sum((i.charge_amount or Decimal("0") for i in qs), Decimal("0"))
     return {"issues": qs, "total": total}
 

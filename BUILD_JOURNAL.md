@@ -1,5 +1,52 @@
 # Build Journal
 
+## 2026-07-28 - Sweeping the aggregates for the ADR 0026 blind spot
+
+Three office-scoping leaks had shipped and every one was found while doing
+something else - a dashboard tile summing every office's rooms, the audit log,
+and the accommodation cost report two days ago. That is a pattern, not three
+coincidences, so this slice went looking on purpose rather than waiting for the
+fourth.
+
+The blind spot is structural. Scoping has two enforcement points: a filter on
+every list, and an `_assert_..._in_scope` guard on every view taking an object
+pk. An aggregate falls between them - it opens no single record, so no guard
+fires, and it does not look like a "list", so the filter gets forgotten.
+
+Found and fixed:
+
+- **The equipment deduction review queue was unscoped, and it is a write.**
+  This is the serious one. `pending_deduction_reviews()` returned every
+  office's flagged issues, so a Velky Meder manager saw Gyor workers' names and
+  charge amounts - and `review_deduction_view` had no scope guard at all, so
+  posting another office's issue pk **approved a money charge against a worker
+  in an office they cannot otherwise see**. Verified before fixing: the probe
+  posted the pk and the review status changed. Both the queue and the decision
+  are now scoped, the latter with `_assert_person_in_scope`.
+- **The queue total, the nav badge count and the notification** all read the
+  same unscoped queryset, so each leaked a cross-office figure on its own.
+- **The `Equipment value` dashboard tile** summed every office's issued
+  equipment. Reachable only when the stock ledger is off, which is not Jober's
+  configuration today - but it is one setting away.
+- **Finance would 500 on a tenant with no offices.** `user_office_scope`
+  returns `None` both for an unrestricted caller *and* when no `Office` rows
+  exist at all; `finance_summary` handled only the first reading and passed the
+  sentinel into `office__in=`, which raises. Not hypothetical: an office-less
+  instance is exactly the empty one the client asked to be handed for their
+  trial (J11), so a manager opening Finance before creating an office got an
+  error page. Two call sites, both now guarded like `finance_year` already was.
+
+Deliberately not changed: `accommodation_cost_report()` (the legacy room-rate
+report) is also unscoped, but it has **no callers** - dead code retained "for
+historical records and other clients". Deleting it is a separate decision, and
+scoping a function nobody calls would only make it look maintained.
+
+Services that aggregate now take `user` as a **required** argument rather than
+an optional one. An optional scope is a leak waiting for the next author, and
+that is precisely how these accumulated.
+
+Suites: 752 Jober, 449 CorvinumEU.
+
 ## 2026-07-28 - J3: the accommodation cost report, five figures and a leak
 
 The client gave a worked example on the handover call - capacity 18 at 180

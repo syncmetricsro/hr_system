@@ -35,9 +35,12 @@ def setup(django_user_model):
     coord = django_user_model.objects.create_user(
         email="c@demo.jober.test", password="x", role="coordinator"
     )
-    item = EquipmentItem.objects.create(name="Boots", size="42", unit_price=Decimal("45.00"))
+    item = EquipmentItem.objects.create(
+        name="Boots", size="42", unit_price=Decimal("45.00")
+    )
     receive_stock(
-        received_on=date.today(), operation_key=uuid4(),
+        received_on=date.today(),
+        operation_key=uuid4(),
         lines=[{"item": item, "quantity": 20, "total_value": Decimal("900.00")}],
         actor=manager,
     )
@@ -91,12 +94,12 @@ def test_review_requires_pending_and_valid_decision(setup):
 def test_pending_queue_total(setup):
     manager, coord, item, person = setup
     p2 = Person.objects.create(first_name="C", last_name="D")
-    a = issue_equipment(person, item, 1, actor=coord, operation_key=uuid4())   # 45
-    b = issue_equipment(p2, item, 2, actor=coord, operation_key=uuid4())       # 90
+    a = issue_equipment(person, item, 1, actor=coord, operation_key=uuid4())  # 45
+    b = issue_equipment(p2, item, 2, actor=coord, operation_key=uuid4())  # 90
     flag_unreturned(a, actor=coord)
     flag_unreturned(b, actor=coord)
-    review_deduction(a, "waive", actor=manager)          # leaves only b pending
-    queue = pending_deduction_reviews()
+    review_deduction(a, "waive", actor=manager)  # leaves only b pending
+    queue = pending_deduction_reviews(manager)
     assert list(queue["issues"]) == [b]
     assert queue["total"] == Decimal("90.00")
 
@@ -115,7 +118,7 @@ def test_exit_leaves_flagged_items_for_review(settings, setup):
         else EquipmentIssueStatus.RETURNED
     )
     assert keep.status == expected
-    assert flagged.status == EquipmentIssueStatus.ISSUED      # left for review
+    assert flagged.status == EquipmentIssueStatus.ISSUED  # left for review
     assert flagged.review_status == DeductionReviewStatus.PENDING
 
 

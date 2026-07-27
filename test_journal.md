@@ -1,5 +1,27 @@
 # Test Journal
 
+## 2026-07-28 - tests/test_office_scoped_aggregates.py (8, new file)
+
+A dedicated file rather than tests scattered into each feature's suite,
+because the thing being tested is a *class* of bug that crosses features. When
+the fourth aggregate leak appears, this is where its regression test goes.
+
+- Every test here was written against the unfixed code and observed to fail
+  first. `test_a_manager_cannot_decide_another_offices_deduction` is the one
+  that mattered: it posted another office's issue pk and watched the review
+  status change from pending to decided.
+- `test_a_manager_can_still_decide_their_own_offices_deduction` guards the
+  opposite failure. A blanket 403 would satisfy the leak test while breaking
+  the feature, and nothing else in the suite would have noticed.
+- `test_the_queue_total_narrows_with_the_queue` covers the aggregate
+  separately from the rows. Scoping a list and forgetting its total is the
+  exact shape of the bug this file exists for.
+- `test_finance_renders_on_a_tenant_with_no_offices` asserts a 200, not an
+  absence of rows. It is a crash test wearing a scoping test's clothes: the
+  `None` sentinel has two meanings and only one was handled.
+- Observer counterparts throughout, so a future "fix" that scopes everyone
+  into blindness fails here rather than in a demo.
+
 ## 2026-07-28 - tests/test_accommodation_month_report.py (11, was 1)
 
 - `test_client_acceptance_fixture` is the client's own worked example, kept

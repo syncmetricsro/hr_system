@@ -90,16 +90,28 @@ def finance_summary(request: HttpRequest) -> HttpResponse:
                 "years": yearly_totals(),
                 "gauge_chart_data": {**totals, "margin_pct": margin},
                 "office_chart_data": net_bar_payload(offices, label_key="office"),
-                "office_trend_chart_data": _office_trend_chart_data(office_monthly_totals()),
+                "office_trend_chart_data": _office_trend_chart_data(
+                    office_monthly_totals()
+                ),
             },
         )
 
     scope = user_office_scope(request.user)
-    months = FinancialMonth.objects.select_related("project").filter(project__office__in=scope)
+    months = FinancialMonth.objects.select_related("project")
+    # `scope` is None for an unrestricted caller *and* on a tenant with no
+    # Office rows at all - which is exactly the empty instance handed to a
+    # client for their trial. `office__in=None` raises, so this must guard.
+    if scope is not None:
+        months = months.filter(project__office__in=scope)
     totals = company_totals(offices=scope)
     groups = group_breakdown(offices=scope)
     margin = margin_pct(totals)
     offices = office_totals(offices=scope)
+    scoped_projects = Project.objects.filter(
+        is_active=True, financial_reporting_eligible=True
+    )
+    if scope is not None:
+        scoped_projects = scoped_projects.filter(office__in=scope)
     return TemplateResponse(
         request,
         "pages/finance_summary.html",
@@ -111,9 +123,7 @@ def finance_summary(request: HttpRequest) -> HttpResponse:
             "project_results": project_totals(offices=scope),
             "regional_results": offices,
             "years": yearly_totals(offices=scope),
-            "projects": Project.objects.filter(
-                is_active=True, financial_reporting_eligible=True, office__in=scope
-            ),
+            "projects": scoped_projects,
             "trend_chart_data": _trend_chart_data(monthly_totals(offices=scope)),
             "gauge_chart_data": {**totals, "margin_pct": margin},
             "group_chart_data": net_bar_payload(groups),
@@ -184,7 +194,9 @@ def finance_month_save(request: HttpRequest, pk: int) -> HttpResponse:
                 raw = request.POST.get(f"cat_{category.pk}")
                 if raw not in (None, ""):
                     set_line_item(
-                        month, category, normalize_source_amount(category.kind, raw),
+                        month,
+                        category,
+                        normalize_source_amount(category.kind, raw),
                         actor=request.user,
                     )
             recompute_month(month, actor=request.user)
