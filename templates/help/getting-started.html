@@ -14,26 +14,25 @@
     <div class="help-diagram" aria-label="{% trans 'Navigation overview' %}">
       <div class="help-mock-navbar">
         <div class="help-mock-row">
-          <div class="help-mock-logo">JOBER</div>
+          <div class="help-mock-logo">{{ BRAND_NAME }}</div>
           <div class="help-mock-tabs">
             <span class="help-mock-tab active"><span class="help-callout-num">1</span>{% trans "People" %}</span>
             <span class="help-mock-tab">{% trans "Projects" %}</span>
-            <span class="help-mock-tab">{% trans "Field" %}</span>
             <span class="help-mock-tab">{% trans "Compliance" %}</span>
             <span class="help-mock-tab">{% trans "Accommodation" %}</span>
             <span class="help-mock-tab">{% trans "Reports" %}</span>
             <span class="help-mock-tab">{% trans "Help" %}</span>
           </div>
           <div class="help-mock-user">
-            <span class="help-mock-tab"><span class="help-callout-num">2</span>Bratislava</span>
-            <span class="help-mock-tab"><span class="help-callout-num">3</span>Recruiter</span>
+            <span class="help-mock-tab"><span class="help-callout-num">2</span>{% trans "Your office" %}</span>
+            <span class="help-mock-tab"><span class="help-callout-num">3</span>{% trans "Your role" %}</span>
           </div>
         </div>
       </div>
 
       <div class="help-callouts-grid">
         <div class="help-callout-item">
-          <span class="help-callout-num">1</span><strong>{% trans "Module Tabs" %}:</strong> {% trans "Switch between worker lists, active field assignments, compliance, and reports." %}
+          <span class="help-callout-num">1</span><strong>{% trans "Module Tabs" %}:</strong> {% trans "Switch between people, projects, compliance, accommodation and reports." %}
         </div>
         <div class="help-callout-item">
           <span class="help-callout-num">2</span><strong>{% trans "Office Scope" %}:</strong> {% trans "Shows the office bounding your current data view." %}
@@ -102,13 +101,14 @@
   <p>{% blocktrans %}If your company works from more than one office, what you can see is limited to the offices you belong to. People, projects, accommodation, equipment stock, compliance alerts and financial figures all show your own offices only, and totals count your offices only. The office bounding your current view is shown next to your name at the top of the screen.{% endblocktrans %}</p>
   <p>{% blocktrans %}This is a real boundary, not a display filter: opening a link to a record that belongs to another office gives you a "not allowed" page rather than the record. Observers are the exception and see every office. A worker who has not been assigned to an office yet stays visible to the recruiter who owns them, so nobody loses track of a new candidate. If your company has only one office, nothing is limited and no office label appears.{% endblocktrans %}</p>
 
+  {% if OFFICES_IN_USE %}
   <div class="help-office-flow">
     <div class="help-office-box">
-      <span class="help-office-tag">{% trans "Office A (e.g. Bratislava)" %}</span>
+      <span class="help-office-tag">{% trans "Office A" %}</span>
       <p>{% blocktrans %}Recruiters, Coordinators & Managers see Office A workers, projects & stock only.{% endblocktrans %}</p>
     </div>
     <div class="help-office-box">
-      <span class="help-office-tag">{% trans "Office B (e.g. Košice)" %}</span>
+      <span class="help-office-tag">{% trans "Office B" %}</span>
       <p>{% blocktrans %}Recruiters, Coordinators & Managers see Office B workers, projects & stock only.{% endblocktrans %}</p>
     </div>
     <div class="help-office-box global-observer">
@@ -116,6 +116,7 @@
       <p>{% blocktrans %}Observers bypass office boundaries to see cross-office metrics and overall figures.{% endblocktrans %}</p>
     </div>
   </div>
+  {% endif %}
 
   <h2>{% trans "Statuses and colors" %}</h2>
   <p>{% blocktrans %}A worker's lifecycle status (Available, Trial day, Working, Inactive, Blacklisted) shows as a colored dot next to their photo — green for Working, amber for Trial day, blue for Available, gray for Inactive, red for Blacklisted. The same color language shows up on certificate icons and notification badges throughout the app: green/amber/red generally mean good / needs attention soon / needs attention now.{% endblocktrans %}</p>

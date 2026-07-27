@@ -1,5 +1,23 @@
 # Test Journal
 
+## 2026-07-27 - tests/test_help_visual_aids.py (7)
+
+- Diagrams assert things prose does not have to. "There is a Field tab" is
+  checkable, and nothing checked it, so a confident picture of the wrong
+  product reached staging. These tests check the checkable claims: the tab
+  names against the real shell, the absence of cities that are not offices,
+  the wordmark coming from `BRAND_NAME`, and the boundary diagram hiding when
+  `OFFICES_IN_USE` is false.
+- Verified by restoring the original template from `7552c6d`: **four of the
+  seven fail**. The three translation tests pass against it, because they
+  assert on the *catalog* rather than the template - worth knowing, since it
+  means they guard the cycle being skipped, not the template being wrong.
+- The suite also caught a regression in the fix itself: evaluating
+  `Office.objects.exists()` eagerly in the context processor put a query on
+  every anonymous response and broke four database-free rendering tests.
+- Jober **705 passed**, CorvinumEU **432 passed, 14 skipped**, Playwright
+  **50 passed**.
+
 ## 2026-07-26 - tests/test_demo_office_staffing.py (6)
 
 - `test_the_boundary_is_reciprocal` is the one that carries the demo: it
