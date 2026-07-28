@@ -1,5 +1,25 @@
 # Test Journal
 
+## 2026-07-28 - tests/test_audit_person_backfill.py (9)
+
+Every test blanks attribution first (`_as_legacy()`) to reproduce what a
+pre-migration database looks like, because the bug is invisible on data created
+through `record_event` - which is precisely why the original test suite passed
+while staging stayed broken.
+
+- `test_the_person_filter_finds_history_after_the_backfill` asserts **0 before
+  and 1 after**, through the real view. Without the "before" assertion the test
+  would pass even if the filter had never been broken.
+- `test_attributes_an_event_whose_target_merely_hangs_off_a_person` is the class
+  the migration missed entirely and the reason this command exists.
+- `test_never_reattributes_an_already_attributed_event` protects a manual
+  correction from being overwritten on the next run.
+- `test_a_deleted_person_is_not_resurrected_by_primary_key` guards the failure
+  that would be worst if it happened: attributing an old event to whoever now
+  holds that pk.
+- `test_an_event_about_nobody_stays_unattributed` pins the decision not to
+  guess; configuration events carry no worker's data.
+
 ## 2026-07-28 - period filter: 3 files, 53 tests
 
 `tests/test_reporting_periods.py` (34) and `tests/test_reporting_controls.py`
