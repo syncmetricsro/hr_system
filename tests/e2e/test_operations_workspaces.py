@@ -12,9 +12,15 @@ def test_manager_operates_trials_warehouse_and_accommodation(page):
     page.goto(f"{base_url()}/en/trials/?create=1")
     form = page.locator("form[action*='/trials/create/']")
     expect(form).to_be_visible()
-    candidate = form.locator("select[name='person'] option").filter(has_not_text="---------").first
+    candidate = (
+        form.locator("select[name='person'] option")
+        .filter(has_not_text="---------")
+        .first
+    )
     candidate_label = candidate.inner_text()
-    form.locator("select[name='person']").select_option(candidate.get_attribute("value"))
+    form.locator("select[name='person']").select_option(
+        candidate.get_attribute("value")
+    )
     form.locator("select[name='project']").select_option(index=1)
     form.locator("input[name='scheduled_for']").fill("2030-01-07T08:30")
     form.locator("textarea[name='note']").fill("E2E main gate")
@@ -66,7 +72,11 @@ def test_operations_forms_fit_mobile(page):
         ("/en/accommodation/new/", "/accommodation/new/"),
     ):
         page.goto(f"{base_url()}{path}")
-        form = page.locator(f"form[action*='{action}']") if "?" in path else page.locator("main form")
+        form = (
+            page.locator(f"form[action*='{action}']")
+            if "?" in path
+            else page.locator("main form")
+        )
         expect(form).to_be_visible()
         box = form.bounding_box()
         assert box is not None and box["x"] >= 0 and box["x"] + box["width"] <= 375

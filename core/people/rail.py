@@ -32,9 +32,9 @@ RAIL_LIMIT = 60
 
 def rail_people(request):
     """Workers visible to this user, most recently updated first."""
-    people = scope_people(
-        Person.objects.filter(is_archived=False), request.user
-    ).only("id", "first_name", "last_name", "lifecycle_status", "avatar")
+    people = scope_people(Person.objects.filter(is_archived=False), request.user).only(
+        "id", "first_name", "last_name", "lifecycle_status", "avatar"
+    )
     return list(people.order_by("-updated_at", "last_name")[:RAIL_LIMIT])
 
 

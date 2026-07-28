@@ -360,9 +360,12 @@ def person_avatar_remove(request: HttpRequest, pk: int) -> HttpResponse:
         messages.success(request, _("Avatar removed."))
     return redirect("person_detail", pk=person.pk)
 
+
 @login_required
 @require_GET
 def worker_status_rail(request: HttpRequest) -> TemplateResponse:
     """The rail's contents, fetched once per page rather than rendered into
     every response (J8). Mirrors how the notification centre already defers."""
-    return TemplateResponse(request, "partials/worker_rail_body.html", rail_context(request))
+    return TemplateResponse(
+        request, "partials/worker_rail_body.html", rail_context(request)
+    )
