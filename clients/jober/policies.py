@@ -60,23 +60,24 @@ ACTION_ROLES: dict[Action, frozenset[Role]] = {
     Action.FEEDBACK_VIEW: frozenset({_MANAGER}),
     Action.FINANCE_VIEW_SUMMARY: frozenset({_MANAGER, _OBSERVER}),
     Action.AUDIT_VIEW: frozenset({_MANAGER, _OBSERVER}),
+    Action.STAFF_ACTIVITY_VIEW: frozenset({_MANAGER, _OBSERVER}),
 }
 
 ALLOWED_TRANSITIONS: dict[str, set[str]] = {
     LifecycleStatus.AVAILABLE: {
         LifecycleStatus.TRIAL_DAY,
-        LifecycleStatus.WORKING,      # CARGO manager override / direct activation
+        LifecycleStatus.WORKING,  # CARGO manager override / direct activation
         LifecycleStatus.INACTIVE,
         LifecycleStatus.BLACKLISTED,
     },
     LifecycleStatus.TRIAL_DAY: {
-        LifecycleStatus.AVAILABLE,    # fail / no-show recycling
-        LifecycleStatus.WORKING,      # pass -> readiness -> activation
+        LifecycleStatus.AVAILABLE,  # fail / no-show recycling
+        LifecycleStatus.WORKING,  # pass -> readiness -> activation
         LifecycleStatus.INACTIVE,
         LifecycleStatus.BLACKLISTED,
     },
     LifecycleStatus.WORKING: {
-        LifecycleStatus.AVAILABLE,    # exit / reassignment
+        LifecycleStatus.AVAILABLE,  # exit / reassignment
         LifecycleStatus.INACTIVE,
         LifecycleStatus.BLACKLISTED,
     },
@@ -85,7 +86,7 @@ ALLOWED_TRANSITIONS: dict[str, set[str]] = {
         LifecycleStatus.BLACKLISTED,
     },
     LifecycleStatus.BLACKLISTED: {
-        LifecycleStatus.AVAILABLE,    # manager removal (Phase 3)
+        LifecycleStatus.AVAILABLE,  # manager removal (Phase 3)
     },
 }
 

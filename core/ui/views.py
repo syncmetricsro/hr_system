@@ -13,7 +13,10 @@ from django.views.i18n import LANGUAGE_QUERY_PARAMETER
 from django.views.i18n import set_language as django_set_language
 
 from core.accounts.models import Role
-from core.accounts.permissions import user_office_scope
+from core.accounts.permissions import Action, require_action, user_office_scope
+from core.reporting.controls import period_filter_context
+from core.reporting.periods import resolve_period
+from core.reporting.staff_activity import people_registered, recruiter_productivity
 from core.offices.scoping import scope_people
 from core.ui import registry
 from core.ui.help import ARTICLE_TEMPLATES, HELP_GROUPS
@@ -63,6 +66,30 @@ def set_language(request: HttpRequest) -> HttpResponse:
     if translated_location != location:
         response.headers["Location"] = translated_location
     return response
+
+
+@require_action(Action.STAFF_ACTIVITY_VIEW)
+def staff_activity(request: HttpRequest) -> TemplateResponse:
+    """Staff activity statistics (J2), separate from the audit log.
+
+    The client accepted that the audit log is a traceability tool and asked for
+    the reporting separately, so this is its own page rather than a filter on
+    the log.
+    """
+    period = resolve_period(request.GET)
+    # The registry calls every contribution with (request) alone; features read
+    # the period from here rather than the signature growing per consumer.
+    request.reporting_period = period
+    return TemplateResponse(
+        request,
+        "pages/staff_activity.html",
+        {
+            **period_filter_context(period),
+            "recruiters": recruiter_productivity(period, request.user),
+            "people_registered": people_registered(period, request.user),
+            "panels": registry.staff_activity_panels(request),
+        },
+    )
 
 
 @login_required

@@ -66,6 +66,7 @@ class Action(str, Enum):
     WAGE_VIEW = "wage.view"
     PAYSLIP_VIEW = "payslip.view"
     AUDIT_VIEW = "audit.view"
+    STAFF_ACTIVITY_VIEW = "staff_activity.view"
 
 
 # Role grants are client policy (Stage B3, ADR 0021): resolved from the module

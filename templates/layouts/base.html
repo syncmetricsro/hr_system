@@ -42,6 +42,8 @@
         {% if has_transport %}<a class="folder-tab {% nav_active 'transport_trends' %}" href="{% url 'transport_trends' %}" data-tooltip="{% trans 'Transport' %}"><svg class="nav-icon" aria-hidden="true"><use href="#nav-icon-transport"></use></svg><span>{% trans "Transport" %}</span></a>{% endif %}
         <a class="folder-tab {% nav_active 'dashboard' 'reports' %}" href="{% url 'reports' %}" data-tooltip="{% trans 'Reports' %}"><svg class="nav-icon" aria-hidden="true"><use href="#nav-icon-reports"></use></svg><span>{% trans "Reports" %}</span></a>
         <a class="folder-tab {% nav_active 'help_index' 'help_article' %}" href="{% url 'help_index' %}" data-tooltip="{% trans 'Help' %}"><svg class="nav-icon" aria-hidden="true"><use href="#nav-icon-help"></use></svg><span>{% trans "Help" %}</span></a>
+        {% can 'staff_activity.view' as may_activity %}
+        {% if may_activity %}<a class="folder-tab {% nav_active 'staff_activity' %}" href="{% url 'staff_activity' %}" data-tooltip="{% trans 'Staff activity' %}"><svg class="nav-icon" aria-hidden="true"><use href="#nav-icon-activity"></use></svg><span>{% trans "Staff activity" %}</span></a>{% endif %}
         {% can 'audit.view' as may_audit %}
         {% if may_audit %}<a class="folder-tab {% nav_active 'audit_log' %}" href="{% url 'audit_log' %}" data-tooltip="{% trans 'Audit' %}"><svg class="nav-icon" aria-hidden="true"><use href="#nav-icon-audit"></use></svg><span>{% trans "Audit" %}</span></a>{% endif %}
         {% can 'equipment.review_deduction' as may_equip_review %}

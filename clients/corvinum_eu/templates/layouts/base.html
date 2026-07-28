@@ -70,6 +70,8 @@
         <p class="sb-section">{% trans "System" %}</p>
         <a class="sb-item {% nav_active 'dashboard' 'reports' %}" href="{% url 'reports' %}" data-tooltip="{% trans 'Reports' %}"><span class="material-symbols-outlined" aria-hidden="true">trending_up</span><span class="sb-text">{% trans "Reports" %}</span></a>
         <a class="sb-item {% nav_active 'help_index' 'help_article' %}" href="{% url 'help_index' %}" data-tooltip="{% trans 'Help' %}"><span class="material-symbols-outlined" aria-hidden="true">info</span><span class="sb-text">{% trans "Help" %}</span></a>
+        {% can 'staff_activity.view' as may_activity %}
+        {% if may_activity %}<a class="sb-item {% nav_active 'staff_activity' %}" href="{% url 'staff_activity' %}" data-tooltip="{% trans 'Staff activity' %}"><span class="material-symbols-outlined" aria-hidden="true">trending_up</span><span class="sb-text">{% trans "Staff activity" %}</span></a>{% endif %}
         {% can 'audit.view' as may_audit %}
         {% if may_audit %}<a class="sb-item {% nav_active 'audit_log' %}" href="{% url 'audit_log' %}" data-tooltip="{% trans 'Audit' %}"><span class="material-symbols-outlined" aria-hidden="true">verified_user</span><span class="sb-text">{% trans "Audit" %}</span></a>{% endif %}
       </nav>

@@ -13,6 +13,7 @@ class LogisticsConfig(AppConfig):
             register_nav_badge,
             register_person_panel,
             register_report_tile,
+            register_staff_activity_panel,
         )
         from features.logistics.panels import (
             equipment_panel,
@@ -27,11 +28,18 @@ class LogisticsConfig(AppConfig):
 
         register_exit_hook(exit_reconcile)
         register_person_panel("panels/logistics_room.html", room_panel, order=10)
-        register_person_panel("panels/logistics_equipment.html", equipment_panel, order=20)
+        register_person_panel(
+            "panels/logistics_equipment.html", equipment_panel, order=20
+        )
         register_exit_relevance(holds_resources)
         register_report_tile(occupancy_tile, order=20)
         register_report_tile(equipment_value_tile, order=30)
         register_nav_badge("reviews", reviews_badge)
+        from features.logistics.staff_activity import staff_activity_panel
+
+        register_staff_activity_panel(
+            "panels/logistics_staff_activity.html", staff_activity_panel, order=20
+        )
         from core.notifications.registry import register_alert_provider
         from features.logistics.notifications import logistics_notification_provider
 

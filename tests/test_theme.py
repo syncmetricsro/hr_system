@@ -36,8 +36,8 @@ def test_jober_navigation_uses_accessible_client_owned_icons(client):
     response = client.get(reverse("login"))
     body = response.content.decode()
 
-    # 36 since the activation-approval queue gained its own nav icon.
-    assert body.count('<symbol id="nav-icon-') == 36
+    # 37 since the Staff activity page gained its own nav icon.
+    assert body.count('<symbol id="nav-icon-') == 37
     assert '<use href="#nav-icon-people"></use>' in body
     assert '<use href="#nav-icon-reports"></use>' in body
     assert '<svg class="nav-icon" aria-hidden="true">' in body

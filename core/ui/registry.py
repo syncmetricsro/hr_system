@@ -33,6 +33,7 @@ person_form_extensions: list = []
 exit_relevance_checks: list = []
 # Each: {"context": fn(request) -> dict|None, "order": int} -> {"label","value"}
 _report_tiles: list[dict] = []
+_staff_activity_panels: list[dict] = []
 # Each: {"template": str, "context": fn(request) -> dict|None, "order": int}
 _report_panels: list[dict] = []
 # Each provider returns a label and period -> (Decimal, currency) values.
@@ -71,6 +72,19 @@ def register_report_tile(context, order: int = 100) -> None:
     entry = {"context": context, "order": order}
     if entry not in _report_tiles:
         _report_tiles.append(entry)
+
+
+def register_staff_activity_panel(template: str, context, order: int = 100) -> None:
+    """A feature's contribution to the Staff activity page (J2).
+
+    Core owns the page and the recruiter figures, which come from
+    `core.people`; anything drawn from a feature's own records - equipment
+    issuance, accommodation transfers - arrives through here, so core never
+    imports a feature in order to report on it.
+    """
+    entry = {"template": template, "context": context, "order": order}
+    if entry not in _staff_activity_panels:
+        _staff_activity_panels.append(entry)
 
 
 def register_report_panel(template: str, context, order: int = 100) -> None:
@@ -187,6 +201,15 @@ def report_tiles(request) -> list[dict]:
 def report_panels(request) -> list[dict]:
     rendered = []
     for entry in sorted(_report_panels, key=lambda e: e["order"]):
+        ctx = entry["context"](request)
+        if ctx is not None:
+            rendered.append({"template": entry["template"], **ctx})
+    return rendered
+
+
+def staff_activity_panels(request) -> list[dict]:
+    rendered = []
+    for entry in sorted(_staff_activity_panels, key=lambda e: e["order"]):
         ctx = entry["context"](request)
         if ctx is not None:
             rendered.append({"template": entry["template"], **ctx})

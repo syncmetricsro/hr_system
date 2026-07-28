@@ -1,0 +1,33 @@
+{% extends "layouts/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Staff activity" %} · {{ BRAND_NAME }}{% endblock %}
+{% block content %}
+<section class="page-head">
+  <p class="eyebrow">{% trans "Reporting" %}</p>
+  <h1>{% trans "Staff activity" %}</h1>
+</section>
+
+<p class="muted">{% blocktrans %}How much each colleague did in the selected period. This is reporting, not traceability — for who changed a specific record and why, use the Audit log.{% endblocktrans %}</p>
+
+<section class="panel">
+  {% include "partials/period_filter.html" %}
+  <div class="dashboard-grid">
+    <article class="metric-card"><span>{% trans "People registered" %}</span><strong>{{ people_registered }}</strong></article>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>{% trans "People registered by recruiter" %}</h2>
+  <p class="muted">{% trans "Every recruiter is listed, including those who registered nobody, so the gap between two of them is visible." %}</p>
+  <dl class="detail-grid">
+    {% for row in recruiters %}
+      <div><dt>{{ row.recruiter.get_full_name|default:row.recruiter.email }}</dt><dd>{{ row.registered }}</dd></div>
+    {% empty %}
+      <div><dd>{% trans "No recruiters yet." %}</dd></div>
+    {% endfor %}
+  </dl>
+</section>
+
+{% for panel in panels %}{% include panel.template with panel=panel %}{% endfor %}
+{% endblock %}
