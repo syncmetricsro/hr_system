@@ -1,5 +1,22 @@
 # Test Journal
 
+## 2026-07-28 - tests/test_equipment_returns_flag.py (7)
+
+- `test_jober_has_no_return_route_at_all` asserts `NoReverseMatch`, not a 403.
+  The distinction is the point: the route is gone, not guarded.
+- `test_a_client_that_keeps_returns_still_has_the_route` is the mirror, and the
+  one that matters. A global removal passes every Jober assertion in this file
+  while silently breaking CorvinumEU; this is what catches that, and it is why
+  the CorvinumEU count moved 518 -> 519.
+- `test_the_return_form_is_not_rendered` exists because a removed route plus a
+  template that still links it is worse than either alone - the page raises
+  `NoReverseMatch` instead of quietly omitting a button.
+- `test_jober_still_issues_equipment` and `test_jober_keeps_the_stock_correction_path`
+  guard the opposite failure: with returns gone, correction is the only way to
+  put quantity back.
+- `test_history_is_preserved_not_deleted` pins that this is a retirement, not a
+  deletion.
+
 ## 2026-07-28 - tests/test_staff_activity.py (16, was 14)
 
 - `test_the_demo_seed_spreads_registrations_across_recruiters` guards a demo

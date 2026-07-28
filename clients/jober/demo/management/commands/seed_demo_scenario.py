@@ -16,6 +16,7 @@ from features.compliance.models import Certificate, CertificateCategory
 from features.finance.models import FinanceCategory, FinanceCategoryKind, FinancialMonth
 from features.finance.services import recompute_month, set_line_item
 from features.logistics.models import EquipmentItem
+from core.ui.registry import flag_enabled
 from features.logistics.services import (
     flag_unreturned,
     issue_equipment,
@@ -106,7 +107,11 @@ class Command(BaseCommand):
             first_name="Tran", last_name="Van Minh"
         ).first()
         helmet = EquipmentItem.objects.filter(name="Safety helmet").first()
-        if demo_returner and helmet:
+        # Only seed returns for a client that has them. Jober retired the path
+        # (J6, "what we issue, stays out"), and seeding two returned helmets
+        # there would leave a worker holding items they had no way to return -
+        # demo data implying a capability the UI does not offer.
+        if flag_enabled("equipment_returns") and demo_returner and helmet:
             for suffix, disposition in (("restock", "restock"), ("retire", "retire")):
                 issue = issue_equipment(
                     demo_returner,
