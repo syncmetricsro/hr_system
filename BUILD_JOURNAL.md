@@ -56,6 +56,53 @@ is a banner on the person *detail* page, not an icon in the people list.
 
 Suites: 851 Jober, 510 CorvinumEU.
 
+## 2026-07-28 - J9 first slice: Help articles now match the client's feature set
+
+The visual-aids plan for J9 flagged this as production-readiness item 10, and
+it turns out to be a defect rather than a nicety: `HELP_GROUPS` shipped every
+article to every client, so a CorvinumEU user was offered - and could open -
+articles explaining Feedback, Finance reports and accommodation, none of which
+that client's app has.
+
+Documentation for a feature you cannot reach is worse than no documentation. It
+reads as something broken or missing rather than absent by design, and it is
+the kind of thing a client finds in the first ten minutes of a trial.
+
+- Articles declare the flags they depend on and appear when **any** is on,
+  because an article can legitimately span features: Logistics covers
+  accommodation, equipment and transport, and CorvinumEU has only the middle
+  one - the article is still worth reading there.
+- **The gate is a boundary, not decoration**: a hidden article 404s by URL as
+  well as vanishing from the index. A URL survives in a bookmark or a chat
+  message long after the index stops linking it.
+- **Still not role-gated.** The design doc is explicit that every role gets
+  documentation, and a test pins that so the flag gate cannot quietly become a
+  permission gate.
+- This also removes the need for client-conditional screenshots in three of the
+  nine articles, which is why the plan put it first.
+
+Two things worth recording about how this was built:
+
+**Mutating `settings.FEATURE_FLAGS` in a test rebuilds the URLconf.**
+`config/urls.py` registers routes per flag at import time, so a test that
+flipped a flag to check a Help article silently unregistered unrelated URLs and
+failed somewhere else entirely. The tests patch the flag *lookup* instead, and
+the fixture says why.
+
+**The CorvinumEU lane caught what the Jober lane could not.** Three existing
+tests asserted that every article renders; under CorvinumEU they now correctly
+404. Jober has every feature, so its lane was green throughout - the whole
+argument for running both.
+
+Suites: 850 Jober, 510 CorvinumEU.
+
+**Still outstanding for J9:** the screenshots and illustrations themselves. The
+plan at `~/.claude/plans/` has the generation prompts; capture needs a
+`scripts/capture_help_screens.sh`, a `COPY static/help` line in the Dockerfile
+(subdirectories are copied individually), and a staticfiles-discoverability
+test mirroring `test_default_avatar_file_is_actually_discoverable_by_staticfiles`.
+
+
 ## 2026-07-28 - J2: staff activity statistics, and two field checks I got wrong
 
 The client accepted that the audit log is traceability rather than reporting,
