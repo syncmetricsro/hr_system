@@ -15,6 +15,7 @@ def make_user(django_user_model):
         return django_user_model.objects.create_user(
             email=f"{role}@demo.jober.test", password="x", role=role
         )
+
     return _make
 
 
