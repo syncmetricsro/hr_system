@@ -2136,3 +2136,14 @@ body:has(.worker-rail:not([data-collapsed="true"])) .cv-main {
   .worker-rail { margin: var(--space-3); }
   .worker-rail-toggle-text { display: none; }
 }
+
+/* Inline field help on master-data forms. The project form carries three
+   fields whose consequence is not obvious from the label alone - a unique
+   code, the finance-visibility flag, and the office-restricted coordinator
+   picker - so the explanation belongs beside the input, not in a runbook. */
+.field-help {
+  display: block;
+  margin-top: var(--space-1);
+  font-size: 0.8125rem;
+  line-height: 1.4;
+}

@@ -7,6 +7,10 @@
 <section class="page-head">
   <p class="eyebrow">{% trans "Operations" %}</p>
   <h1>{% trans "Projects" %}</h1>
+  {% can 'project.manage' as may_manage_projects %}
+  {% if may_manage_projects %}
+    <a class="button button-primary" href="{% url 'project_create' %}">{% icon "add" %}{% trans "New project" %}</a>
+  {% endif %}
   {% can 'export.approved' as may_export %}
   {% if may_export %}
     <a class="button button-secondary" href="{% url 'export_projects' %}">{% icon "export" %}{% trans "Export" %}</a>

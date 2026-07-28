@@ -475,3 +475,50 @@ def end_assignment(person, *, actor=None, reason: str = ""):
             LifecycleStatus.AVAILABLE, actor=actor, reason=reason or "exit"
         )
     return assignment
+
+
+@transaction.atomic
+def save_project(project, *, actor=None, old=None):
+    """Create or update a project, audited.
+
+    Mirrors `features.logistics.services.save_accommodation`. Exists so project
+    master data goes through the service layer like everything else - Django
+    admin was the only way to write one before, and it records no audit event.
+    """
+    project.save()
+    record_event(
+        actor,
+        "project.updated" if old else "project.created",
+        target=project,
+        old=old or {},
+        new={
+            "name": project.name,
+            "partner": project.partner,
+            "code": project.code,
+            "office": str(project.office) if project.office_id else "",
+            "financial_reporting_eligible": project.financial_reporting_eligible,
+            "is_active": project.is_active,
+        },
+    )
+    return project
+
+
+@transaction.atomic
+def set_project_active(project, *, active, actor=None):
+    """Deactivate or reactivate a project.
+
+    Deletion is not offered and cannot be: ProjectAssignment, TrialAssignment,
+    FinancialMonth and TransportWeek all PROTECT their project. Deactivation is
+    the honest equivalent, and the project list already filters on it.
+    """
+    if project.is_active == active:
+        return project
+    project.is_active = active
+    project.save(update_fields=["is_active", "updated_at"])
+    record_event(
+        actor,
+        "project.reactivated" if active else "project.deactivated",
+        target=project,
+        code=project.code,
+    )
+    return project

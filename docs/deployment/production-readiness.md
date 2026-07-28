@@ -4,7 +4,7 @@ Tracks what must be true before the Jober app serves real users/data, and the
 state of each gate. "Ready" = verified; "Open" = not done / needs a human or an
 external input. Update this whenever a gate changes state.
 
-Last updated: 2026-07-26
+Last updated: 2026-07-28
 
 ## Pre-production review findings (2026-07-25)
 
@@ -188,7 +188,11 @@ Item 4 remains the largest *risk* — deferred, not reduced.
    per-office; only the names are stale. It is a mechanical rename across one
    view and two templates, needing both unit lanes plus e2e, and was not worth
    running the day before the CEO demo for a change no user can see.
-10. **Low — client Help content leaks unsupported features.** CorvinumEU
+10. ~~**Low — client Help content leaks unsupported features.**~~ **Fixed
+    2026-07-28** (PR #137): `HELP_GROUPS` articles declare the flags they
+    depend on, a hidden article 404s by URL as well as vanishing from the
+    index, and documentation stays non-role-gated. Original text:
+10. ~~**Low — client Help content leaks unsupported features.**~~ CorvinumEU
     users can read the Jober-only Feedback/profitability/accommodation/
     transport Help articles even though CorvinumEU has none of those
     features enabled. Already acknowledged as a known follow-up in
@@ -284,7 +288,17 @@ Item 4 remains the largest *risk* — deferred, not reduced.
     demo seed (the seeded coordinator currently performs activations).
     Estimate ~1 day. **Do not treat the one-line decorator change as the whole
     job.**
-15. **Medium — project management does not exist.** `Action.PROJECT_MANAGE` is
+15. ~~**Medium — project management does not exist.**~~ **Fixed 2026-07-28.**
+    Create, edit and deactivate/reactivate now exist for Manager in both
+    clients, office-scoped and audited through `save_project()`. Deletion is
+    not offered and cannot be - four models `PROTECT` a project.
+    **The backlog entry was half wrong:** the "Manage projects" button it
+    describes lives in `templates/pages/dashboard.html`, which **no view
+    renders** (`dashboard()` delegates to `reports()`), so the button was not
+    merely misleading - it was invisible, and the page a manager actually
+    lands on had no project entry point at all. The create link is now on
+    `reports.html` and the project list. Original text:
+15. ~~**Medium — project management does not exist.**~~ `Action.PROJECT_MANAGE` is
     granted to Manager and is referenced by exactly one file:
     `templates/pages/dashboard.html`, whose **"Manage projects" button links
     to `project_list`** — the same read-only list every role already sees.

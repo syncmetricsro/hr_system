@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-28 10:13+0200\n"
+"POT-Creation-Date: 2026-07-28 16:25+0200\n"
 "Language: hu\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -61,7 +61,7 @@ msgstr "Ugrás a tartalomra"
 #: templates/help/getting-started.html:23 templates/layouts/base.html:20
 #: templates/layouts/base.html:43 templates/pages/finance_summary.html:8
 #: templates/pages/reports.html:4 templates/pages/reports.html:9
-#: templates/pages/reports.html:12
+#: templates/pages/reports.html:24
 msgid "Reports"
 msgstr "Jelentések"
 
@@ -72,21 +72,21 @@ msgstr "Fő navigáció"
 # --- people list / detail ---
 #: clients/corvinum_eu/templates/layouts/base.html:44
 #: templates/pages/activation_queue.html:8 templates/pages/people_list.html:8
-#: templates/pages/reports.html:23 templates/pages/reports.html:45
+#: templates/pages/reports.html:35 templates/pages/reports.html:57
 msgid "Workforce"
 msgstr "Munkaerő"
 
-#: clients/corvinum_eu/templates/layouts/base.html:45 core/ui/help.py:20
+#: clients/corvinum_eu/templates/layouts/base.html:45 core/ui/help.py:31
 #: templates/help/getting-started.html:19 templates/layouts/base.html:33
 #: templates/pages/people_list.html:4 templates/pages/people_list.html:9
-#: templates/pages/people_list.html:39 templates/pages/reports.html:14
+#: templates/pages/people_list.html:39 templates/pages/reports.html:26
 msgid "People"
 msgstr "Emberek"
 
-#: clients/corvinum_eu/templates/layouts/base.html:46 core/ui/help.py:26
+#: clients/corvinum_eu/templates/layouts/base.html:46 core/ui/help.py:37
 #: templates/help/getting-started.html:20 templates/layouts/base.html:34
 #: templates/pages/project_list.html:4 templates/pages/project_list.html:9
-#: templates/pages/project_list.html:25
+#: templates/pages/project_list.html:29
 msgid "Projects"
 msgstr "Projektek"
 
@@ -98,7 +98,7 @@ msgid "Operations"
 msgstr "Műveletek"
 
 # --- compliance ---
-#: clients/corvinum_eu/templates/layouts/base.html:50 core/ui/help.py:32
+#: clients/corvinum_eu/templates/layouts/base.html:50 core/ui/help.py:43
 #: features/compliance/panels.py:27 features/finance/models.py:68
 #: features/intake/catalog_i18n.py:12 templates/help/getting-started.html:21
 #: templates/layouts/base.html:38 templates/pages/compliance_list.html:4
@@ -130,7 +130,7 @@ msgid "Reviews"
 msgstr "Ellenőrzések"
 
 #: clients/corvinum_eu/templates/layouts/base.html:64
-#: templates/panels/logistics_equipment.html:54
+#: templates/panels/logistics_equipment.html:63
 msgid "Manage equipment catalogue"
 msgstr "Felszerelés-katalóg kezelése"
 
@@ -153,7 +153,7 @@ msgstr "Aktiválási kérelmek"
 msgid "Activations"
 msgstr "Aktiválások"
 
-#: clients/corvinum_eu/templates/layouts/base.html:69 core/ui/help.py:56
+#: clients/corvinum_eu/templates/layouts/base.html:69 core/ui/help.py:83
 #: templates/layouts/base.html:58 templates/pages/blacklist_queue.html:4
 #: templates/panels/blacklist_banner.html:3
 #: templates/panels/blacklist_case.html:5
@@ -178,7 +178,7 @@ msgstr "Súgó"
 msgid "Staff activity"
 msgstr "Munkatársi tevékenység"
 
-#: clients/corvinum_eu/templates/layouts/base.html:77 core/ui/help.py:62
+#: clients/corvinum_eu/templates/layouts/base.html:77 core/ui/help.py:93
 #: templates/layouts/base.html:48
 msgid "Audit"
 msgstr "Audit"
@@ -826,7 +826,7 @@ msgstr "Fogyatékosság típusa"
 #: features/logistics/forms.py:74 features/logistics/forms.py:228
 #: templates/pages/equipment_stock.html:48
 #: templates/pages/goods_receipt_detail.html:16
-#: templates/pages/project_detail.html:20
+#: templates/pages/project_detail.html:35
 msgid "Office"
 msgstr "Iroda"
 
@@ -837,7 +837,7 @@ msgstr "A születési dátum nem lehet jövőbeli."
 # --- lifecycle status labels ---
 #: core/people/models.py:16 templates/help/getting-started.html:128
 #: templates/pages/dashboard.html:21
-#: templates/panels/logistics_equipment.html:47
+#: templates/panels/logistics_equipment.html:56
 msgid "Available"
 msgstr "Elérhető"
 
@@ -858,7 +858,7 @@ msgstr "Dolgozik"
 #: templates/pages/equipment_catalog.html:19
 #: templates/pages/equipment_catalog.html:33
 #: templates/pages/person_detail.html:239 templates/pages/project_detail.html:8
-#: templates/pages/project_list.html:19 templates/pages/project_list.html:35
+#: templates/pages/project_list.html:23 templates/pages/project_list.html:39
 msgid "Inactive"
 msgstr "Inaktív"
 
@@ -1045,15 +1045,15 @@ msgstr "A személy archiválva. A feketelista-védelem megmarad."
 msgid "Recycled to Available."
 msgstr "Visszaküldve Elérhetőre."
 
-#: core/projects/forms.py:24
+#: core/projects/forms.py:25
 msgid "Candidate"
 msgstr "Jelölt"
 
-#: core/projects/forms.py:26
+#: core/projects/forms.py:27
 msgid "Only available candidates can be scheduled."
 msgstr "Csak elérhető jelöltek ütemezhetők."
 
-#: core/projects/forms.py:29 core/projects/forms.py:55
+#: core/projects/forms.py:30 core/projects/forms.py:56
 #: templates/pages/feedback_inbox.html:32
 #: templates/pages/finance_summary.html:67
 #: templates/pages/person_detail.html:59 templates/pages/project_detail.html:8
@@ -1064,15 +1064,40 @@ msgstr "Csak elérhető jelöltek ütemezhetők."
 msgid "Project"
 msgstr "Projekt"
 
-#: core/projects/forms.py:32 core/projects/forms.py:58
+#: core/projects/forms.py:33 core/projects/forms.py:59
 #: templates/pages/person_detail.html:64 templates/pages/person_detail.html:77
 msgid "Arrival time"
 msgstr "Érkezés ideje"
 
-#: core/projects/forms.py:39 core/projects/forms.py:65
+#: core/projects/forms.py:40 core/projects/forms.py:66
 #: features/logistics/forms.py:43
 msgid "Operational note"
 msgstr "Működési megjegyzés"
+
+#: core/projects/forms.py:122
+msgid "Include this project in Finance"
+msgstr "A projekt szerepeljen a Pénzügyekben"
+
+#: core/projects/forms.py:124
+msgid "Short unique reference, for example DHLBA. Cannot be reused."
+msgstr "Rövid egyedi azonosító, például DHLBA. Nem használható újra."
+
+#: core/projects/forms.py:126
+msgid ""
+"Unticking hides this project's months from Finance. The figures are kept, "
+"not deleted."
+msgstr "Kipipálás megszüntetésével a projekt hónapjai eltűnnek a Pénzügyekből. Az adatok megmaradnak, nem törlődnek."
+
+#: core/projects/forms.py:130
+msgid "Only coordinators of the selected office can be chosen."
+msgstr "Csak a kiválasztott iroda koordinátorai választhatók."
+
+#: core/projects/forms.py:169
+#, python-format
+msgid ""
+"%(names)s do not belong to this office and would have no access to the "
+"project."
+msgstr "%(names)s nem tartozik ehhez az irodához, és nem férne hozzá a projekthez."
 
 #: core/projects/models.py:13
 msgid "partner"
@@ -1105,8 +1130,8 @@ msgstr "projektek"
 #: templates/pages/accommodation_detail.html:35
 #: templates/pages/accommodation_list.html:19
 #: templates/pages/equipment_catalog.html:18
-#: templates/pages/project_detail.html:8 templates/pages/project_list.html:18
-#: templates/pages/project_list.html:35
+#: templates/pages/project_detail.html:8 templates/pages/project_list.html:22
+#: templates/pages/project_list.html:39
 msgid "Active"
 msgstr "Aktív"
 
@@ -1423,37 +1448,53 @@ msgstr "Az elutasításnál meg kell adni az indoklást."
 msgid "Decision must be 'approve' or 'reject'."
 msgstr "A döntésnek „jóváhagyás” vagy „elutasítás” kell legyen."
 
-#: core/projects/views.py:208 core/projects/views.py:272
+#: core/projects/views.py:215 core/projects/views.py:279
 msgid "Trial scheduled."
 msgstr "Próbanap ütemezve."
 
-#: core/projects/views.py:239
+#: core/projects/views.py:246
 msgid "Trial updated."
 msgstr "A próbanap frissítve."
 
-#: core/projects/views.py:264
+#: core/projects/views.py:271
 msgid "Review the trial details and try again."
 msgstr "Ellenőrizze a próbanap adatait, majd próbálja újra."
 
-#: core/projects/views.py:288
+#: core/projects/views.py:295
 msgid "Trial outcome recorded."
 msgstr "Próba eredménye rögzítve."
 
-#: core/projects/views.py:318
+#: core/projects/views.py:325
 msgid "Readiness saved."
 msgstr "Készenlét elmentve."
 
-#: core/projects/views.py:342
+#: core/projects/views.py:349
 msgid "Exit completed."
 msgstr "Kilépés befejezve."
 
-#: core/projects/views.py:361
+#: core/projects/views.py:368
 msgid "Activation requested — a manager will decide."
 msgstr "Az aktiválást kérelmezték — a menedzser dönt."
 
-#: core/projects/views.py:398 features/blacklist/views.py:85
+#: core/projects/views.py:405 features/blacklist/views.py:85
 msgid "Decision recorded."
 msgstr "Döntés rögzítve."
+
+#: core/projects/views.py:428
+msgid "Project created."
+msgstr "Projekt létrehozva."
+
+#: core/projects/views.py:447
+msgid "Project updated."
+msgstr "Projekt frissítve."
+
+#: core/projects/views.py:465
+msgid "Project reactivated."
+msgstr "Projekt újraaktiválva."
+
+#: core/projects/views.py:465
+msgid "Project deactivated."
+msgstr "Projekt inaktiválva."
 
 #: core/reporting/periods.py:45 templates/partials/period_filter.html:24
 msgid "Day"
@@ -1485,43 +1526,43 @@ msgstr "Év"
 msgid "Week %(week)s, %(year)s"
 msgstr "%(year)s. %(week)s. hét"
 
-#: core/ui/help.py:14 core/ui/help.py:16 templates/help/getting-started.html:4
-#: templates/help/getting-started.html:5 tests/test_help.py:115
+#: core/ui/help.py:25 core/ui/help.py:27 templates/help/getting-started.html:4
+#: templates/help/getting-started.html:5 tests/test_help.py:125
 msgid "Getting started"
 msgstr "Első lépések"
 
-#: core/ui/help.py:22 templates/help/people.html:4 templates/help/people.html:5
+#: core/ui/help.py:33 templates/help/people.html:4 templates/help/people.html:5
 msgid "People: intake, lifecycle, and trials"
 msgstr "Emberek: beléptetés, életciklus és próbanapok"
 
-#: core/ui/help.py:28 templates/help/projects.html:4
+#: core/ui/help.py:39 templates/help/projects.html:4
 #: templates/help/projects.html:5
 msgid "Projects: assignments and readiness"
 msgstr "Projektek: beosztások és készenlét"
 
-#: core/ui/help.py:34 templates/help/compliance.html:4
+#: core/ui/help.py:47 templates/help/compliance.html:4
 #: templates/help/compliance.html:5
 msgid "Compliance: certificates and expiry alerts"
 msgstr "Megfelelőség: tanúsítványok és lejárati figyelmeztetések"
 
 # --- logistics: accommodation ---
-#: core/ui/help.py:38 templates/pages/accommodation_list.html:8
+#: core/ui/help.py:53 templates/pages/accommodation_list.html:8
 #: templates/pages/equipment_catalog.html:8
 #: templates/pages/equipment_reviews.html:8
-#: templates/pages/project_detail.html:51
+#: templates/pages/project_detail.html:66
 #: templates/pages/transport_trends.html:8
 #: templates/panels/logistics_equipment.html:3
 #: templates/panels/logistics_room.html:3
 msgid "Logistics"
 msgstr "Logisztika"
 
-#: core/ui/help.py:40 templates/help/logistics.html:4
+#: core/ui/help.py:57 templates/help/logistics.html:4
 #: templates/help/logistics.html:5
 msgid "Logistics: accommodation, equipment, and transport"
 msgstr "Logisztika: szállás, felszerelés és szállítás"
 
 # --- finance ---
-#: core/ui/help.py:44 templates/layouts/base.html:61
+#: core/ui/help.py:63 templates/layouts/base.html:61
 #: templates/pages/finance_executive.html:4
 #: templates/pages/finance_executive.html:9
 #: templates/pages/finance_month_detail.html:8
@@ -1532,47 +1573,47 @@ msgstr "Logisztika: szállás, felszerelés és szállítás"
 msgid "Finance"
 msgstr "Pénzügyek"
 
-#: core/ui/help.py:46 templates/help/finance.html:4
+#: core/ui/help.py:67 templates/help/finance.html:4
 #: templates/help/finance.html:5
 msgid "Finance: recording a month and reading the reports"
 msgstr "Pénzügy: hónap rögzítése és a riportok értelmezése"
 
 # --- feedback ---
-#: core/ui/help.py:50 templates/layouts/base.html:70
+#: core/ui/help.py:73 templates/layouts/base.html:70
 #: templates/pages/feedback_form.html:8 templates/pages/feedback_form.html:27
 msgid "Feedback"
 msgstr "Visszajelzés"
 
-#: core/ui/help.py:52 templates/help/feedback.html:4
+#: core/ui/help.py:77 templates/help/feedback.html:4
 #: templates/help/feedback.html:5
 msgid "Feedback: links, QR codes, and submissions"
 msgstr "Visszajelzés: linkek, QR-kódok és beküldések"
 
-#: core/ui/help.py:58 templates/help/blacklist.html:4
+#: core/ui/help.py:87 templates/help/blacklist.html:4
 #: templates/help/blacklist.html:5
 msgid "Blacklist: proposing and deciding a case"
 msgstr "Feketelista: eset javaslata és eldöntése"
 
-#: core/ui/help.py:64 templates/help/audit.html:4 templates/help/audit.html:5
+#: core/ui/help.py:95 templates/help/audit.html:4 templates/help/audit.html:5
 msgid "Audit: what's logged and why"
 msgstr "Audit: mi kerül naplózásra és miért"
 
-#: core/ui/views.py:113
+#: core/ui/views.py:118
 #, python-format
 msgid "View %(status)s people"
 msgstr "%(status)s állapotú személyek megtekintése"
 
-#: core/ui/views.py:114 templates/pages/dashboard.html:20
+#: core/ui/views.py:119 templates/pages/dashboard.html:20
 #: templates/pages/dashboard.html:23
 msgid "Open People filtered to this lifecycle status."
 msgstr "Nyissa meg a személylistát erre az életciklus-állapotra szűrve."
 
-#: core/ui/views.py:121
+#: core/ui/views.py:126
 #, python-format
 msgid "View inactive people: %(reason)s"
 msgstr "Inaktív személyek megtekintése: %(reason)s"
 
-#: core/ui/views.py:124
+#: core/ui/views.py:129
 msgid "Open People filtered to this inactive reason."
 msgstr "Nyissa meg a személylistát erre az inaktivitási okra szűrve."
 
@@ -2566,13 +2607,13 @@ msgstr "Megjegyzés"
 
 #: features/logistics/forms.py:191 features/logistics/forms.py:225
 #: templates/pages/equipment_stock.html:47
-#: templates/panels/logistics_equipment.html:46
+#: templates/panels/logistics_equipment.html:55
 msgid "Item"
 msgstr "Tétel"
 
 #: features/logistics/forms.py:193 templates/pages/equipment_stock.html:36
 #: templates/pages/goods_receipt_detail.html:31
-#: templates/panels/logistics_equipment.html:49
+#: templates/panels/logistics_equipment.html:58
 msgid "Quantity"
 msgstr "Mennyiség"
 
@@ -2793,7 +2834,7 @@ msgid "Issue"
 msgstr "Kiadás"
 
 #: features/logistics/models.py:408
-#: templates/panels/logistics_equipment.html:29
+#: templates/panels/logistics_equipment.html:37
 msgid "Return"
 msgstr "Visszavétel"
 
@@ -3657,7 +3698,7 @@ msgstr "Felhasználói szerepkör"
 msgid "Indicates your active operational role and permission scope."
 msgstr "Jelzi az aktív működési szerepkörét és jogosultsági körét."
 
-#: templates/help/getting-started.html:47 tests/test_help.py:116
+#: templates/help/getting-started.html:47 tests/test_help.py:126
 msgid "Roles"
 msgstr "Szerepkörök"
 
@@ -4211,7 +4252,7 @@ msgstr "Jelentés hónapja"
 #: templates/pages/accommodation_costs.html:8
 #: templates/pages/accommodation_list.html:23 templates/pages/audit_log.html:30
 #: templates/pages/equipment_catalog.html:22
-#: templates/pages/project_list.html:21
+#: templates/pages/project_list.html:25
 #: templates/pages/transport_trends.html:37
 #: templates/pages/trials_queue.html:41
 #: templates/partials/period_filter.html:64
@@ -4302,7 +4343,7 @@ msgstr "Havi díj"
 #: templates/pages/compliance_list.html:21
 #: templates/pages/equipment_catalog.html:17
 #: templates/pages/people_list.html:20 templates/pages/people_list.html:50
-#: templates/pages/project_list.html:34 templates/pages/trials_queue.html:55
+#: templates/pages/project_list.html:38 templates/pages/trials_queue.html:55
 #: templates/panels/blacklist_case.html:8
 msgid "Status"
 msgstr "Állapot"
@@ -4330,8 +4371,8 @@ msgstr "Szálláskezelés"
 # --- compliance ---
 #: templates/pages/accommodation_form.html:9
 #: templates/pages/certificate_form.html:10
-#: templates/pages/equipment_form.html:10 templates/pages/room_form.html:9
-#: templates/pages/transport_trends.html:22
+#: templates/pages/equipment_form.html:10 templates/pages/project_form.html:9
+#: templates/pages/room_form.html:9 templates/pages/transport_trends.html:22
 #: templates/pages/trials_queue.html:25
 #: templates/partials/confirm_dialog.html:12
 #: templates/partials/ledger_activity.html:44
@@ -4354,7 +4395,7 @@ msgstr "Összes"
 #: templates/pages/accommodation_list.html:29
 #: templates/pages/compliance_list.html:14 templates/pages/people_list.html:41
 #: templates/pages/person_detail.html:179
-#: templates/pages/project_detail.html:16 templates/pages/project_list.html:27
+#: templates/pages/project_detail.html:31 templates/pages/project_list.html:31
 #: tests/test_tooltips.py:86
 msgid "Details"
 msgstr "Részletek"
@@ -4599,27 +4640,28 @@ msgstr "Nincs megfelelőségi figyelmeztetés."
 msgid "Operational overview"
 msgstr "Üzemeltetési áttekintés"
 
-#: templates/pages/dashboard.html:12
-msgid "Manage projects"
-msgstr "Projektek kezelése"
+#: templates/pages/dashboard.html:12 templates/pages/project_list.html:12
+#: templates/pages/reports.html:20
+msgid "New project"
+msgstr "Új projekt"
 
 #: templates/pages/dashboard.html:16
 msgid "Operational summaries"
 msgstr "Üzemeltetési összesítők"
 
-#: templates/pages/dashboard.html:17 templates/pages/reports.html:13
+#: templates/pages/dashboard.html:17 templates/pages/reports.html:25
 #: tests/test_tooltips.py:116
 msgid "Review active projects"
 msgstr "Aktív projektek áttekintése"
 
-#: templates/pages/dashboard.html:17 templates/pages/reports.html:13
+#: templates/pages/dashboard.html:17 templates/pages/reports.html:25
 #: tests/test_tooltips.py:118
 msgid "Open active projects to review their coordinators and assignments."
 msgstr ""
 "Nyissa meg az aktív projekteket a koordinátorok és hozzárendelések "
 "áttekintéséhez."
 
-#: templates/pages/dashboard.html:18 templates/pages/reports.html:13
+#: templates/pages/dashboard.html:18 templates/pages/reports.html:25
 msgid "Active projects"
 msgstr "Aktív projektek"
 
@@ -4631,16 +4673,16 @@ msgstr "Elérhető személyek megtekintése"
 msgid "View working people"
 msgstr "Dolgozó személyek megtekintése"
 
-#: templates/pages/dashboard.html:28 templates/pages/reports.html:15
+#: templates/pages/dashboard.html:28 templates/pages/reports.html:27
 msgid "Resolve pending trial outcomes"
 msgstr "Függőben lévő próbanaperedmények kezelése"
 
-#: templates/pages/dashboard.html:28 templates/pages/reports.html:15
+#: templates/pages/dashboard.html:28 templates/pages/reports.html:27
 msgid "Open trials that still require an outcome."
 msgstr ""
 "Nyissa meg azokat a próbanapokat, amelyeknél még rögzíteni kell az eredményt."
 
-#: templates/pages/dashboard.html:29 templates/pages/reports.html:15
+#: templates/pages/dashboard.html:29 templates/pages/reports.html:27
 msgid "Awaiting outcome"
 msgstr "Eredményre vár"
 
@@ -4677,7 +4719,7 @@ msgid "Unit price"
 msgstr "Egységár"
 
 #: templates/pages/equipment_catalog.html:36
-#: templates/pages/person_detail.html:42
+#: templates/pages/person_detail.html:42 templates/pages/project_detail.html:13
 #: templates/pages/transport_trends.html:45
 #: templates/pages/trials_queue.html:59
 #: templates/panels/compliance_certificates.html:27
@@ -4925,7 +4967,7 @@ msgstr "Vezetői áttekintés"
 
 #: templates/pages/finance_executive.html:10
 #: templates/pages/finance_summary.html:10 templates/pages/people_list.html:16
-#: templates/pages/project_list.html:12
+#: templates/pages/project_list.html:16
 msgid "Export"
 msgstr "Exportálás"
 
@@ -5158,13 +5200,13 @@ msgstr "Lépés"
 
 #: templates/pages/intake_panel.html:24 templates/pages/person_detail.html:186
 #: templates/pages/person_detail.html:199
-#: templates/pages/project_detail.html:32
+#: templates/pages/project_detail.html:47
 msgid "Yes"
 msgstr "Igen"
 
 #: templates/pages/intake_panel.html:25 templates/pages/person_detail.html:186
 #: templates/pages/person_detail.html:199
-#: templates/pages/project_detail.html:32
+#: templates/pages/project_detail.html:47
 msgid "No"
 msgstr "Nem"
 
@@ -5419,7 +5461,7 @@ msgid "Previous request rejected"
 msgstr "Az előző kérelmet elutasították"
 
 #: templates/pages/person_detail.html:178
-#: templates/pages/project_detail.html:15
+#: templates/pages/project_detail.html:30
 msgid "Operational"
 msgstr "Üzemeltetési"
 
@@ -5559,113 +5601,149 @@ msgstr "Mentés"
 msgid "Back to projects"
 msgstr "Vissza a projektekhez"
 
-#: templates/pages/project_detail.html:18 templates/pages/project_list.html:30
+#: templates/pages/project_detail.html:20
+msgid ""
+"This deactivates the project. It stays in reports and keeps its history, but "
+"cannot be picked for new assignments."
+msgstr "Ezzel a projekt inaktívvá válik. A jelentésekben és az előzményekben megmarad, de új beosztáshoz nem választható."
+
+#: templates/pages/project_detail.html:20
+msgid "This reactivates the project so it can be picked again."
+msgstr "Ezzel a projekt újra aktív lesz, és ismét választható."
+
+#: templates/pages/project_detail.html:23
+msgid "Deactivate"
+msgstr "Inaktiválás"
+
+# --- projects UI ---
+#: templates/pages/project_detail.html:23
+msgid "Reactivate"
+msgstr "Újraaktiválás"
+
+#: templates/pages/project_detail.html:33 templates/pages/project_list.html:34
 msgid "Code"
 msgstr "Kód"
 
-#: templates/pages/project_detail.html:19
+#: templates/pages/project_detail.html:34
 msgid "Partner"
 msgstr "Partner"
 
-#: templates/pages/project_detail.html:21
+#: templates/pages/project_detail.html:36
 msgid "Region"
 msgstr "Régió"
 
-#: templates/pages/project_detail.html:23
+#: templates/pages/project_detail.html:38
 msgid "Responsible coordinators"
 msgstr "Felelős koordinátorok"
 
-#: templates/pages/project_detail.html:31
+#: templates/pages/project_detail.html:46
 msgid "Financial reporting"
 msgstr "Pénzügyi jelentés"
 
-#: templates/pages/project_detail.html:38
+#: templates/pages/project_detail.html:53
 msgid "Assigned"
 msgstr "Hozzárendelve"
 
-#: templates/pages/project_detail.html:39
+#: templates/pages/project_detail.html:54
 #: templates/partials/worker_rail.html:13
 msgid "Workers"
 msgstr "Munkavállalók"
 
-#: templates/pages/project_detail.html:44
+#: templates/pages/project_detail.html:59
 msgid "No workers assigned."
 msgstr "Nincs hozzárendelt dolgozó."
 
 # --- logistics: transport ---
-#: templates/pages/project_detail.html:52
+#: templates/pages/project_detail.html:67
 #: templates/pages/transport_trends.html:52
 msgid "Weekly transport"
 msgstr "Heti szállítás"
 
-#: templates/pages/project_detail.html:57
+#: templates/pages/project_detail.html:72
 msgid "No transport weeks recorded."
 msgstr "Nincs rögzített szállítási hét."
 
-#: templates/pages/project_detail.html:63
+#: templates/pages/project_detail.html:78
 #: templates/pages/transport_trends.html:44
 msgid "Week start"
 msgstr "Hét kezdete"
 
-#: templates/pages/project_detail.html:64
+#: templates/pages/project_detail.html:79
 #: templates/pages/transport_trends.html:44
 msgid "Headcount"
 msgstr "Létszám"
 
-#: templates/pages/project_detail.html:65
+#: templates/pages/project_detail.html:80
 msgid "Record week"
 msgstr "Hét rögzítése"
 
-#: templates/pages/project_list.html:15
+#: templates/pages/project_form.html:4 templates/pages/project_form.html:8
+msgid "Edit project"
+msgstr "Projekt szerkesztése"
+
+#: templates/pages/project_form.html:4 templates/pages/project_form.html:8
+#: templates/pages/project_form.html:19
+msgid "Create project"
+msgstr "Projekt létrehozása"
+
+#: templates/pages/project_form.html:7
+msgid "Project management"
+msgstr "Projektkezelés"
+
+#: templates/pages/project_form.html:19
+msgid "Save project"
+msgstr "Projekt mentése"
+
+#: templates/pages/project_list.html:19
 msgid "Project status"
 msgstr "Projekt állapota"
 
-#: templates/pages/project_list.html:17
+#: templates/pages/project_list.html:21
 msgid "All project statuses"
 msgstr "Minden projektállapot"
 
-#: templates/pages/project_list.html:40
+#: templates/pages/project_list.html:44
 msgid "No projects found."
 msgstr "Nincs találat."
 
-#: templates/pages/reports.html:14
+#: templates/pages/reports.html:26
 msgid "Browse people"
 msgstr "Személyek böngészése"
 
-#: templates/pages/reports.html:14
+#: templates/pages/reports.html:26
 msgid "Open the full People list to search and filter workers."
 msgstr ""
 "Nyissa meg a teljes személylistát a munkavállalók kereséséhez és szűréséhez."
 
-#: templates/pages/reports.html:24
+#: templates/pages/reports.html:36
 msgid "People by status"
 msgstr "Emberek állapot szerint"
 
-#: templates/pages/reports.html:31
+#: templates/pages/reports.html:43
 msgid "Inactive by reason"
 msgstr "Inaktívak ok szerint"
 
-#: templates/pages/reports.html:36
+#: templates/pages/reports.html:48
 msgid "No inactive people."
 msgstr "Nincsenek inaktív személyek."
 
-#: templates/pages/reports.html:46
+#: templates/pages/reports.html:58
 msgid "Projects and assigned personnel"
 msgstr "Projektek és hozzárendelt munkatársak"
 
-#: templates/pages/reports.html:50
+#: templates/pages/reports.html:62
 msgid "Active headcount per project"
 msgstr "Aktív létszám projektenként"
 
-#: templates/pages/reports.html:53
+#: templates/pages/reports.html:65
 msgid "Active headcount per project chart"
 msgstr "Aktív létszám projektenkénti diagramja"
 
-#: templates/pages/reports.html:63
+#: templates/pages/reports.html:75
 msgid "No one currently assigned."
 msgstr "Jelenleg senki sincs hozzárendelve."
 
-#: templates/pages/reports.html:69
+#: templates/pages/reports.html:81
 msgid "No active projects."
 msgstr "Nincsenek aktív projektek."
 
@@ -5966,25 +6044,25 @@ msgstr ""
 "Új tanúsítvány, jogosítvány vagy dokumentum hozzáadása ehhez a "
 "munkavállalóhoz"
 
-#: templates/panels/logistics_equipment.html:25
+#: templates/panels/logistics_equipment.html:33
 msgid "Return disposition"
 msgstr "Visszavétel módja"
 
-#: templates/panels/logistics_equipment.html:26
+#: templates/panels/logistics_equipment.html:34
 msgid "Reusable — return to stock"
 msgstr "Újrahasználható — vissza a készletbe"
 
-#: templates/panels/logistics_equipment.html:27
+#: templates/panels/logistics_equipment.html:35
 msgid "Damaged or retired"
 msgstr "Sérült vagy selejtezett"
 
-#: templates/panels/logistics_equipment.html:29
+#: templates/panels/logistics_equipment.html:37
 msgid "Marks this item as returned and updates warehouse stock accordingly."
 msgstr ""
 "Visszavettként jelöli ezt a tételt, és ennek megfelelően frissíti a "
 "raktárkészletet."
 
-#: templates/panels/logistics_equipment.html:33
+#: templates/panels/logistics_equipment.html:42
 msgid ""
 "This flags the item as unreturned and opens a manager charge review at its "
 "issued stock value."
@@ -5992,17 +6070,17 @@ msgstr ""
 "Megjelöli a tételt visszaadatlanként, és megnyitja a vezetői terhelés-"
 "felülvizsgálatot a kiadott készletérték alapján."
 
-#: templates/panels/logistics_equipment.html:33
+#: templates/panels/logistics_equipment.html:42
 msgid "Flag unreturned"
 msgstr "Vissza nem adottnak jelöl"
 
-#: templates/panels/logistics_equipment.html:50
+#: templates/panels/logistics_equipment.html:59
 msgid "Issues this item to the worker and reduces available warehouse stock."
 msgstr ""
 "Kiadja ezt a tételt a munkavállalónak, és csökkenti az elérhető "
 "raktárkészletet."
 
-#: templates/panels/logistics_equipment.html:50
+#: templates/panels/logistics_equipment.html:59
 msgid "Issue equipment"
 msgstr "Felszerelés kiadása"
 
@@ -6283,6 +6361,9 @@ msgstr "A legutóbb frissített %(rail_limit)s látható."
 #: templates/partials/worker_rail_body.html:34
 msgid "Open People"
 msgstr "Emberek megnyitása"
+
+#~ msgid "Manage projects"
+#~ msgstr "Projektek kezelése"
 
 #~ msgid "Closing value"
 #~ msgstr "Záróérték"
