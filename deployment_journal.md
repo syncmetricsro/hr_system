@@ -1,5 +1,30 @@
 # Deployment Journal
 
+## 2026-07-28 - Project management and the finance entry panel deployed
+
+Deployed **`e0f833b`** to `jober-staging` as `jober-platform:demo-e0f833b`,
+carrying project management (#144), the finance manual-entry panel (#143), J6's
+returns retirement (#142), the finance-workbook answers (#141) and the deploy
+record (#140). No migrations.
+
+**Verified by creating a real project through the UI, not by reading code:**
+
+| check | result |
+|---|---|
+| `manazer@` creates a project | HTTP 200, filed to Velký Meder |
+| audited | `project.created` recorded |
+| `manazer.gyor@` sees it in the list | **no** |
+| `manazer.gyor@` opens its edit form | **403** |
+| `manazer.gyor@` deactivates it | **403**, and it stayed active |
+| `manazer@` opens its edit form | 200 |
+| finance record panel renders | yes |
+
+Done with two managers in different offices rather than one, and the write
+attempt matters as much as the read: filtering a list has never been the same
+thing as refusing a POST, which is how the cross-office deduction write got
+through earlier this week. The verification project was deleted afterwards - it
+had no assignments or finance months, so nothing PROTECTed it.
+
 ## 2026-07-28 - Rail, Help gating, Help pipeline and the seed correction deployed
 
 Deployed **`4db5f99`** to `jober-staging` as `jober-platform:demo-4db5f99`,
