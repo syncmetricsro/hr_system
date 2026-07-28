@@ -142,7 +142,9 @@ def test_coordinators_from_another_office_are_rejected(
     """The demo seed had exactly this bug until 2026-07-26: a coordinator made
     responsible for projects they get a 403 on, which reads as broken data the
     moment anyone asks who runs the Győr contracts."""
-    stray = _coordinator(django_user_model, offices[1], "koordinator.gyor@demo.jober.test")
+    stray = _coordinator(
+        django_user_model, offices[1], "koordinator.gyor@demo.jober.test"
+    )
     client.force_login(manager)
     response = client.post(
         reverse("project_create"),
