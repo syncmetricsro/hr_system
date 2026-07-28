@@ -1,5 +1,48 @@
 # Build Journal
 
+## 2026-07-28 - J9 second slice: the Help screenshot pipeline, and what it caught
+
+The Help area's one existing "visual" is a hand-built HTML mock of the
+navigation. The plan's core argument is that a mock drifts from the product
+while a screenshot cannot - and the very first capture proved the point
+immediately.
+
+**The first screenshot found a defect in the worker status rail merged an hour
+earlier.** Collapsed, the rail was an 18rem fixed box anchored below the
+notification bell - directly on top of the People page's Search button, which
+could therefore not be clicked. 851 unit tests and 50 browser tests were green
+throughout, because none of them looks at whether one element covers another.
+The rail is now anchored bottom-right, the one corner no page competes for, and
+collapses to its own width instead of reserving space for content it is not
+showing.
+
+The pipeline itself:
+
+- **`scripts/capture_help_screens.sh`** reuses the e2e harness rather than
+  duplicating it - `playwright_e2e.sh` gained an `E2E_PYTEST_ARGS` hook, so the
+  capture job runs against the same built apps and seeded databases the test
+  suite drives. Regeneration is one command, which is the only way screenshots
+  stay true.
+- **Captured in Slovak**, the default and the language most users see. The
+  app's chrome is therefore in one language; the numbered callouts beside each
+  figure carry the explanation in the reader's language, which is exactly why
+  the illustrations that accompany them must stay textless.
+- **`COPY static/help /app/static/help` in the Dockerfile.** Static
+  subdirectories are copied individually, so a missing line means files that
+  exist in git and 404 in production - which has already happened once, to the
+  avatars. A test asserts the line is present.
+- **Tests guard the properties that failed last time**: every referenced asset
+  resolves through `staticfiles.find()` rather than merely producing a URL;
+  every `<img>` carries translatable alt text; no illustration is
+  per-language, because a label baked into a raster can never be translated.
+  They are written to pass with zero images so the scaffolding lands before the
+  assets.
+
+**Still needed from the owner:** the textless illustrations. The generation
+prompts are in the plan; I can capture screens but not draw rasters.
+
+Suites: e2e 50 green after the rail fix.
+
 ## 2026-07-28 - J8: the persistent worker status rail
 
 An always-visible list of workers and their current state, with the

@@ -14,6 +14,7 @@ diagram of the wrong product rather than a crash.
 from __future__ import annotations
 
 import re
+from pathlib import Path
 
 import pytest
 from django.template.loader import render_to_string
@@ -90,3 +91,73 @@ def test_visual_aid_strings_are_translated(language):
         html = _render()
     untranslated = [p for p in probes if p in html]
     assert not untranslated, f"{language}: still rendering English: {untranslated}"
+
+
+# --- the screenshot/illustration pipeline (J9) -------------------------------
+#
+# The section above guards a hand-built HTML mock of the UI. The plan's core
+# argument is that such a mock drifts from the product while a screenshot
+# cannot, so the mock is on its way out - but only once real captures exist to
+# replace it. These tests guard the pipeline that will carry them, and they are
+# deliberately written to pass with zero images so the scaffolding can land
+# before the assets do.
+
+REPO = Path(__file__).resolve().parent.parent
+HELP_TEMPLATES = sorted((REPO / "templates" / "help").glob("*.html"))
+
+STATIC_REF = re.compile(r"""\{%\s*static\s+["']([^"']+)["']\s*%\}""")
+IMG_TAG = re.compile(r"<img\b[^>]*>", re.IGNORECASE | re.DOTALL)
+ALT_ATTR = re.compile(r"""\balt\s*=\s*["']([^"']*)["']""", re.IGNORECASE)
+
+
+def _static_refs() -> list[tuple[str, str]]:
+    refs = []
+    for path in HELP_TEMPLATES:
+        for ref in STATIC_REF.findall(path.read_text(encoding="utf-8")):
+            refs.append((path.name, ref))
+    return refs
+
+
+def test_the_help_static_directory_is_copied_into_the_image():
+    """Static subdirectories are copied individually in the Dockerfile, so a
+    missing line means the files exist in git and 404 in production. That has
+    already happened once, to the avatars."""
+    dockerfile = (REPO / "Dockerfile").read_text(encoding="utf-8")
+    assert "COPY static/help /app/static/help" in dockerfile
+
+
+def test_every_referenced_asset_is_discoverable_by_staticfiles():
+    """`{% static %}` builds a URL without checking anything exists. This is
+    the check that catches a file placed where STATICFILES_DIRS never looks."""
+    from django.contrib.staticfiles.finders import find
+
+    missing = [
+        f"{name} -> {ref}" for name, ref in _static_refs() if find(ref) is None
+    ]
+    assert not missing, f"referenced but not servable: {missing}"
+
+
+@pytest.mark.parametrize("path", HELP_TEMPLATES, ids=lambda p: p.name)
+def test_every_help_image_has_translatable_alt_text(path):
+    """Alt text is content in a four-language Help area, not decoration -
+    and hardcoding it ships English to a Slovak reader."""
+    source = path.read_text(encoding="utf-8")
+    for tag in IMG_TAG.findall(source):
+        alt = ALT_ATTR.search(tag)
+        assert alt is not None, f"{path.name}: <img> without alt: {tag[:80]}"
+        value = alt.group(1).strip()
+        assert value, f"{path.name}: <img> with empty alt: {tag[:80]}"
+        assert "{%" in value or "{{" in value, (
+            f"{path.name}: alt text is not translatable: {value!r}"
+        )
+
+
+def test_illustrations_are_shared_across_languages():
+    """Illustrations are textless by construction, so a per-language variant
+    means someone baked a label into a raster."""
+    for name, ref in _static_refs():
+        if "illustrations/" in ref:
+            assert not re.search(r"[-_](en|sk|hu|uk)\.", ref), (
+                f"{name} references a per-language illustration ({ref}); "
+                "illustrations must be textless and shared"
+            )

@@ -125,6 +125,10 @@ done
 docker run --rm --network "$NET" \
   -e BASE_URL="http://$APP:8000" \
   -e CORVINUM_BASE_URL="http://$CORVINUM_APP:8000" \
+  -e E2E_PYTEST_ARGS="${E2E_PYTEST_ARGS:-}" \
+  -e HELP_SCREENS_DIR="${HELP_SCREENS_DIR:-}" \
+  -v "$PWD/static/help:/app/static/help" \
+  --user "$(id -u):$(id -g)" \
   "$PLAYWRIGHT_TEST_IMAGE" sh -eu -c '
     for binary in node npm pnpm yarn; do
       if command -v "$binary" >/dev/null 2>&1; then
@@ -133,5 +137,8 @@ docker run --rm --network "$NET" \
       fi
     done
     test "${PLAYWRIGHT_BROWSERS_PATH:-}" = "/ms-playwright"
-    pytest -c tests/e2e/pytest.ini tests/e2e --browser chromium
+    # E2E_PYTEST_ARGS lets a caller run a different browser-driven job against
+    # the same seeded stacks (scripts/capture_help_screens.sh uses it) without
+    # duplicating the whole harness.
+    pytest -c tests/e2e/pytest.ini ${E2E_PYTEST_ARGS:-tests/e2e} --browser chromium
   '
