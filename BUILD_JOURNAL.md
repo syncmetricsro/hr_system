@@ -1,5 +1,23 @@
 # Build Journal
 
+## 2026-07-28 - The status rail's fetch was racing the tooltip
+
+An unrelated e2e tooltip assertion failed in CI while passing locally, twice
+over. The mechanism is mine: `app.js` hides any open tooltip on
+`htmx:beforeSwap`, and the worker status rail fetched its contents on htmx's
+`revealed` trigger. `revealed` fires unpredictably for an element that starts
+hidden, so on a slower machine the rail's swap could land mid-hover and dismiss
+the tooltip the test was asserting on.
+
+Fixed by making the fetch explicit: the toggle dispatches a `workerRailOpened`
+event the first time the rail is opened, and `hx-trigger` listens for that
+instead. Deterministic, fetches nothing until the rail is actually used, and
+removes the race rather than retrying past it.
+
+Worth recording because the tempting response to a green-locally/red-in-CI test
+is to re-run it. Re-running would have worked most times, and the flake would
+have stayed.
+
 ## 2026-07-28 - SMS templates seeded, and the language gap that exposed
 
 Item 16 read as "templates cannot be managed in the product". The larger half
