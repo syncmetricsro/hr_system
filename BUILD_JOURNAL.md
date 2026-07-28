@@ -1,5 +1,34 @@
 # Build Journal
 
+## 2026-07-28 - SMS templates seeded, and the language gap that exposed
+
+Item 16 read as "templates cannot be managed in the product". The larger half
+was simpler than that: **none were seeded**, and the SMS panel hides its picker
+behind `{% if panel.message_templates %}`. So the control never appeared at
+all, and the demo runbook's "pick a template" step had nothing to pick. It
+looked like a missing feature; it was missing data.
+
+Three templates now seed via `seed_messaging`, added to `dev_app.sh` and both
+staging seed lists. Idempotent on `name`, so a reseed repairs an edited body
+rather than accumulating near-copies - seeds re-run on every staging deploy.
+
+Written as messages a coordinator would actually send. A template nobody would
+send teaches a demo audience nothing.
+
+**Seeding them surfaced a real gap, recorded as backlog item 17.**
+`features/messaging/views.py` sends `template.body` verbatim, and messaging
+never reads `Person.preferred_language` - which exists and is populated. The
+workforce is Ukrainian, Hungarian, Slovak and Vietnamese, so a single-language
+template reaches people who cannot read it. The seeded bodies are Slovak, the
+company's operating language and the app default: the least wrong single
+choice, not a solution. Fixing it properly needs the client to say which
+languages he actually sends in, so it is a question rather than a task.
+
+Management stays in Django admin, so `Action.SMS_MANAGE_TEMPLATES` remains
+unenforced and item 16 is only partly closed.
+
+Suites: 901 Jober, 529 CorvinumEU.
+
 ## 2026-07-28 - Project management (production-readiness item 15)
 
 A manager could not create a project. `Action.PROJECT_MANAGE` was granted to

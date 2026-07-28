@@ -137,7 +137,7 @@ The first deployment follows the same image-stream process, but after the
 app/database/config/domain/TLS setup it runs the Jober fictional scenario:
 
 ```bash
-for command in seed_demo seed_people seed_logistics seed_questionnaire seed_finance seed_demo_scenario; do
+for command in seed_demo seed_people seed_logistics seed_questionnaire seed_finance seed_messaging seed_demo_scenario; do
   sudo dokku run jober-staging python manage.py "$command"
 done
 ```
