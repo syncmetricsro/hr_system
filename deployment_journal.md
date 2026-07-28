@@ -1,5 +1,34 @@
 # Deployment Journal
 
+## 2026-07-28 - Rail, Help gating, Help pipeline and the seed correction deployed
+
+Deployed **`4db5f99`** to `jober-staging` as `jober-platform:demo-4db5f99`,
+carrying the worker status rail (#136), both J9 slices (#137 Help article
+gating, #138 the screenshot pipeline plus the rail-overlap fix that pipeline
+found), and the seed correction (#139). No migrations.
+
+`seed_people` was re-run deliberately, to exercise the repair path rather than
+only to refresh data: the recruiter correction applies on creation, so without
+an explicit repair pass this database would have kept its old attribution
+however often it was reseeded. It worked - Farrukh moved to the Győr recruiter
+and Tran to the Dunajská Streda one, on rows that already existed.
+
+Verified live:
+
+| check | result |
+|---|---|
+| seeded ownership | 4 VM / 1 GYR / 1 DS across three recruiters |
+| J2, Observer | 7 registered; recruiters 5 / 1 / 1 |
+| J2, VM manager | 5 registered; the other offices' recruiters at 0, correctly scoped |
+| J8 rail, VM manager | 5 of 7 workers; counts available 2, working 1, inactive 1, blacklisted 1 |
+| J9 Help index | all nine articles, which is right for Jober |
+
+**The staff-activity spread is thin and that is a property of the demo, not a
+bug.** Seven people across three offices cannot produce a dramatic comparison;
+5/1/1 is truthful where 7/0/0 was misleading. If the client wants the report to
+*look* like the tool it is, the demo needs more seeded people, which is a
+decision rather than a fix.
+
 ## 2026-07-28 - Five slices deployed; the audit filter finally works on real data
 
 Deployed **`4d1f6e3`** to `jober-staging` as `jober-platform:demo-4d1f6e3`,
