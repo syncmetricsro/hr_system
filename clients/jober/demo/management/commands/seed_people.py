@@ -85,6 +85,7 @@ class Command(BaseCommand):
         # Done before projects, because responsible-coordinator assignment
         # below needs to know which coordinator belongs to which office.
         coordinators_by_office: dict[str, User] = {}
+        recruiters_by_office: dict[str, User] = {}
         for local_part, role, _first, _last, office_code in DEMO_USERS:
             user = User.objects.filter(email=f"{local_part}@{DEMO_DOMAIN}").first()
             if user is None:
@@ -100,6 +101,8 @@ class Command(BaseCommand):
             user.offices.set([office])
             if role == Role.COORDINATOR:
                 coordinators_by_office[office_code] = user
+            if role == Role.RECRUITER:
+                recruiters_by_office[office_code] = user
 
         projects = {}
         for spec in PROJECTS:
@@ -126,7 +129,16 @@ class Command(BaseCommand):
                 first_name=first,
                 last_name=last,
                 defaults={
-                    "owning_recruiter": recruiter,
+                    # Owned by their OWN office's recruiter, the same
+                    # correction made for project coordinators on 2026-07-26.
+                    # Attributing all seven to the Velký Meder recruiter left
+                    # the staff-activity report showing one recruiter with
+                    # everything and two with nothing - which demonstrates the
+                    # zero rows but not the gap between two working recruiters
+                    # the report exists to reveal.
+                    "owning_recruiter": recruiters_by_office.get(
+                        office_code, recruiter
+                    ),
                     "has_disability": disabled,
                     "disability_type": "reduced mobility" if disabled else "",
                     # WORKING is reached via an assignment below, not directly.
@@ -139,6 +151,14 @@ class Command(BaseCommand):
             if not created and person.office_id != (office.id if office else None):
                 person.office = office
                 person.save(update_fields=["office", "updated_at"])
+            # Repair databases seeded before recruiters were per-office. Without
+            # this the correction only reaches a database created from scratch,
+            # and every existing demo instance keeps showing one recruiter with
+            # everything.
+            owner = recruiters_by_office.get(office_code, recruiter)
+            if not created and owner and person.owning_recruiter_id != owner.id:
+                person.owning_recruiter = owner
+                person.save(update_fields=["owning_recruiter", "updated_at"])
             if created and status == LifecycleStatus.WORKING:
                 activate_on_project(
                     person, projects["DHLBA"], actor=coordinator, reason="demo seed"
