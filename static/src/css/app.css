@@ -2027,3 +2027,99 @@ select {
   gap: var(--space-2);
 }
 
+
+/* Persistent worker status rail (J8). Pinned right, below the notification
+   centre, so the two share one rail region as the client asked.
+
+   The rail *reserves* its width rather than floating over the page: a fixed
+   overlay on a centred, max-width layout covers content and swallows clicks,
+   which is worse than not having a rail. Both shells centre their content
+   (.app-shell here, .cv-main for CorvinumEU), so both get the same reserved
+   gutter while the rail is expanded, and it is released when collapsed. */
+body:has(.worker-rail:not([data-collapsed="true"])) .app-shell,
+body:has(.worker-rail:not([data-collapsed="true"])) .cv-main {
+  padding-right: 20rem;
+}
+
+@media (max-width: 1100px) {
+  body:has(.worker-rail) .app-shell,
+  body:has(.worker-rail) .cv-main {
+    padding-right: 0;
+  }
+}
+/* Persistent worker status rail (J8). Pinned right, below the notification
+   centre, so the two share one rail region as the client asked. Collapses to
+   its toggle on narrow screens rather than competing with the sidebar. */
+.worker-rail {
+  position: fixed;
+  z-index: 50;
+  top: 9.5rem;
+  right: var(--space-4);
+  width: min(18rem, calc(100vw - 2 * var(--space-4)));
+  max-height: calc(100vh - 12rem);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  background: var(--surface-raised);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-3);
+  box-shadow: var(--shadow-sm);
+}
+
+.worker-rail-toggle {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: none;
+  border: 0;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font: inherit;
+}
+
+.worker-rail-inner { overflow-y: auto; }
+
+.worker-rail[data-collapsed="true"] .worker-rail-inner { display: none; }
+.worker-rail[data-collapsed="true"] { max-height: none; }
+
+.worker-rail-counts {
+  list-style: none;
+  margin: 0 0 var(--space-2);
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+}
+
+.worker-rail-count { font-weight: 600; color: var(--text-primary); }
+
+.worker-rail-list { list-style: none; margin: 0; padding: 0; }
+
+.worker-rail-list a {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) 0;
+  color: inherit;
+  text-decoration: none;
+}
+
+.worker-rail-list a:hover .worker-rail-name { text-decoration: underline; }
+.worker-rail-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.worker-rail-status { font-size: 0.75rem; color: var(--text-muted); white-space: nowrap; }
+.worker-rail-more { font-size: 0.8125rem; margin-top: var(--space-2); }
+
+/* The rail is supplementary; on narrow viewports it starts collapsed so it
+   never covers the page or fights the collapsible sidebar. */
+@media (max-width: 1100px) {
+  .worker-rail { position: static; width: auto; max-height: none; margin: var(--space-4); }
+}
+
+@media (max-width: 640px) {
+  .worker-rail { margin: var(--space-3); }
+  .worker-rail-toggle-text { display: none; }
+}

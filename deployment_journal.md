@@ -1,5 +1,46 @@
 # Deployment Journal
 
+## 2026-07-28 - Five slices deployed; the audit filter finally works on real data
+
+Deployed **`4d1f6e3`** to `jober-staging` as `jober-platform:demo-4d1f6e3`,
+carrying J1 (audit filter), J3 (accommodation cost report), the ADR 0026
+aggregate sweep, J7 (period control) + the real J10 fix, J5 (goods-receipt log)
+and J2 (staff activity). Migrations had already been applied in the earlier
+`2d393b9` deploy; this one reported none pending.
+
+**`backfill_audit_persons` is the reason this deploy mattered.** The earlier
+deploy of J1 looked successful and was not: the migration had attributed 8 of
+900 events, so typing a worker's name into the audit filter still returned
+**zero rows for every account** - the client's original complaint, unchanged.
+The command attributed 25 more, all worker actions, and the filter now answers:
+
+| worker | office | observer | VM manager | DS manager |
+|---|---|---|---|---|
+| Diana Horvathova | Velký Meder | 2 | 2 | 0 |
+| Olha Kovalenko | Velký Meder | 10 | 10 | 0 |
+| Farrukh Tashkentov | Győr | 2 | **0** | 0 |
+| Tran Van Minh | Dunajská Streda | 15 | **0** | 15 |
+
+Scoping and the person filter compose correctly in both directions, and
+diacritic folding works live: `Horvathova`, `horvat`, `HORVAT` and
+`diana horvat` all return the same 2 rows.
+
+**Demo caveat worth knowing before a walkthrough:** `Mira Novakova` returns 0
+for everyone, correctly - the seed creates her and never acts on her, so she
+has no history to find. Anyone testing the filter should pick Olha, Tran or
+Diana. A worker with no events looks identical to the bug that was just fixed.
+
+Also verified live: J5 scoping (VM 3 receipts/58 units, DS 1/15, Observer
+5/96 - the seed spread across months is visible), and J2 (VM manager 5 people
+registered, Observer 7, with all three recruiters listed including the two
+zeros).
+
+**Seed observation for the demo:** every seeded person is attributed to the
+Velký Meder recruiter, so the staff-activity table shows one recruiter with
+everything and two with nothing. That demonstrates the zero rows but not the
+"gap between two working recruiters" the feature exists for. Worth spreading in
+a later seed pass, the same way the goods receipts were.
+
 ## 2026-07-27 - Activation approval deployed; deploy key made keyring-independent
 
 - Deployed **`294b877`** to `jober-staging` as `jober-platform:demo-294b877`.

@@ -20,8 +20,11 @@ def test_manager_operates_trials_warehouse_and_accommodation(page):
     form.locator("textarea[name='note']").fill("E2E main gate")
     form.get_by_role("button", name="Schedule trial").click()
     page.wait_for_load_state("networkidle")
-    expect(page.get_by_text(candidate_label, exact=True)).to_be_visible()
-    expect(page.get_by_text("E2E main gate", exact=True)).to_be_visible()
+    # Scoped to main: the worker status rail (J8) also carries every worker's
+    # name, so a page-wide text match now resolves to two elements.
+    content = page.locator("main")
+    expect(content.get_by_text(candidate_label, exact=True)).to_be_visible()
+    expect(content.get_by_text("E2E main gate", exact=True)).to_be_visible()
 
     # Receive a fictional lot and land on the current warehouse balance.
     page.goto(f"{base_url()}/en/equipment/stock/receive/")
