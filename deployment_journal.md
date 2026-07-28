@@ -1,5 +1,29 @@
 # Deployment Journal
 
+## 2026-07-28 - SMS templates deployed and the picker verified rendering
+
+Deployed **`631dd1c`** to `jober-staging` as `jober-platform:demo-631dd1c` -
+the seeded SMS templates (#146) and the status-rail race fix that came with
+them. No migrations. `seed_messaging` run on staging: 3 created.
+
+**Verified the picker actually renders**, not just that rows exist. The panel
+hides its `<select name="template">` behind
+`{% if panel.message_templates %}`, which is exactly why an empty table looked
+like a missing feature - so a row count proves nothing and the page had to be
+loaded:
+
+| check | result |
+|---|---|
+| templates on staging | 3, all active |
+| coordinator opens a person with a phone (Olha) | HTTP 200 |
+| `<select name="template">` present | **yes** |
+| all three names appear as options | yes |
+
+The runbook's "pick a template" step now has something to pick.
+
+**Unchanged and still true:** the body is sent verbatim in whatever language it
+was written in. These are Slovak. Backlog item 17.
+
 ## 2026-07-28 - Project management and the finance entry panel deployed
 
 Deployed **`e0f833b`** to `jober-staging` as `jober-platform:demo-e0f833b`,
