@@ -13,18 +13,18 @@
 <section class="dashboard-grid">
   <article class="metric-card"><span>{% trans "Units available" %}</span><strong>{{ balance.quantity }}</strong></article>
   <article class="metric-card"><span>{% trans "Current stock value" %}</span><strong>{{ balance.value }} EUR</strong></article>
-  <article class="metric-card"><span>{% trans "Closing value" %}</span><strong>{{ report.closing.value }} EUR</strong></article>
 </section>
 
 <section class="panel">
-  <form class="people-search" method="get">
-    <label>{% trans "Report month" %}<input type="month" name="month" value="{{ month_value }}"></label>
-    <button class="button button-secondary" type="submit">{% trans "Filter" %}</button>
-  </form>
+  {% include "partials/period_filter.html" %}
   <div class="dashboard-grid">
-    <article class="metric-card"><span>{% trans "Opening value" %}</span><strong>{{ report.opening.value }} EUR</strong></article>
-    <article class="metric-card"><span>{% trans "Closing value" %}</span><strong>{{ report.closing.value }} EUR</strong></article>
-    {% for kind, totals in report.by_type.items %}<article class="metric-card"><span>{{ kind }}</span><strong>{{ totals.quantity }} · {{ totals.value }} EUR</strong></article>{% endfor %}
+    {% comment %}
+    `row.label` is the translated movement-type label. This used to render the
+    raw enum key, printing a literal "receipt"/"issue" in every language - the
+    untranslated warehouse strings the client reported.
+    {% endcomment %}
+    {% for row in report.by_type %}<article class="metric-card"><span>{{ row.label }}</span><strong>{{ row.quantity }} · {{ row.value }} EUR</strong></article>
+    {% empty %}<p class="muted">{% trans "No stock movements in this period." %}</p>{% endfor %}
   </div>
 </section>
 

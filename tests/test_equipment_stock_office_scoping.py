@@ -9,12 +9,13 @@ from django.test import override_settings
 
 from core.accounts.permissions import user_office_scope
 from core.offices.models import Office
+from core.reporting.periods import resolve_period
 from core.people.models import Person
 from features.logistics.models import EquipmentItem, EquipmentStockLot
 from features.logistics.services import (
     LogisticsWorkflowError,
     adjust_stock,
-    equipment_month_report,
+    equipment_period_report,
     equipment_stock_balance,
     issue_equipment,
     receive_stock,
@@ -121,9 +122,15 @@ def test_month_report_scoped_to_one_office(stocked, django_user_model):
     )
     manager.offices.set([stocked["velky_meder"]])
     scope = user_office_scope(manager)
-    report = equipment_month_report(2026, 4, offices=scope)
-    assert report["closing"]["quantity"] == 3
-    assert report["by_type"]["receipt"]["quantity"] == 3
+    period = resolve_period({"period": "month", "month": "2026-04"})
+    report = equipment_period_report(period, offices=scope)
+    receipts = [r for r in report["by_type"] if r["movement_type"] == "receipt"]
+    assert [r["quantity"] for r in receipts] == [3]
+    # The balance is scoped by the same argument, checked separately now that
+    # the report no longer carries opening/closing figures.
+    assert (
+        equipment_stock_balance(as_of=date(2026, 4, 30), offices=scope)["quantity"] == 3
+    )
 
 
 @override_settings(EQUIPMENT_STOCK_LEDGER_ENABLED=True)

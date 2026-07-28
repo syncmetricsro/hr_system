@@ -267,3 +267,34 @@ window.JoberShell = {
   }, true);
   window.addEventListener("resize", function () { hide(true); });
 })();
+
+// Period filter (J7): show only the inputs for the selected granularity.
+// Progressive enhancement - without this every group stays visible and the
+// form still submits correctly, because the server reads only the inputs
+// belonging to the chosen `period`.
+(function () {
+  var forms = document.querySelectorAll("[data-period-filter]");
+  if (!forms.length) return;
+
+  forms.forEach(function (form) {
+    var select = form.querySelector("[data-period-select]");
+    var groups = form.querySelectorAll("[data-period-group]");
+    if (!select || !groups.length) return;
+
+    function sync() {
+      groups.forEach(function (group) {
+        group.hidden = group.getAttribute("data-period-group") !== select.value;
+      });
+    }
+
+    // Changing the year above the checkbox grid reloads it for that year;
+    // ticks are per-year, so this submits rather than filtering client-side.
+    var monthsYear = form.querySelector("[data-period-months-year]");
+    if (monthsYear) {
+      monthsYear.addEventListener("change", function () { form.submit(); });
+    }
+
+    select.addEventListener("change", sync);
+    sync();
+  });
+})();

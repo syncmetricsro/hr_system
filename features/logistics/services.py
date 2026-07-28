@@ -1,7 +1,6 @@
 from __future__ import annotations
 
-import calendar
-from datetime import date, timedelta
+from datetime import date
 from decimal import Decimal, ROUND_HALF_UP
 
 from django.conf import settings
@@ -689,25 +688,42 @@ def equipment_stock_balance(*, as_of=None, offices=None):
     }
 
 
-def equipment_month_report(year, month, *, offices=None):
-    start = date(year, month, 1)
-    end = date(year, month, calendar.monthrange(year, month)[1])
-    opening = equipment_stock_balance(as_of=start - timedelta(days=1), offices=offices)
-    closing = equipment_stock_balance(as_of=end, offices=offices)
-    movements = EquipmentStockMovement.objects.filter(occurred_on__range=(start, end))
+def equipment_period_report(period, *, offices=None):
+    """Stock movements over a reporting period, totalled by movement type.
+
+    Takes a `core.reporting.periods.Period` rather than a year and month, so a
+    full year or several separate months are one report rather than several
+    (J7). Opening and closing balances were removed on the client's word that
+    he does not need them; they also had no clear meaning across a gapped
+    selection, which the discrete multi-month picker now permits.
+    """
+    movements = EquipmentStockMovement.objects.filter(period.filter_q("occurred_on"))
     if offices is not None:
         movements = movements.filter(office__in=offices)
     movements = movements.values("movement_type").annotate(
         quantity=Sum("quantity_delta"), value=Sum("value_delta")
     )
-    by_type = {row["movement_type"]: row for row in movements}
-    return {
-        "year": year,
-        "month": month,
-        "opening": opening,
-        "closing": closing,
-        "by_type": by_type,
-    }
+    # Carry the *label*, not the raw key. The page used to render the enum
+    # value straight into the template, so it printed a literal lowercase
+    # "receipt" and "issue" in every language - which is exactly what the
+    # client pointed at when he reported untranslated warehouse strings (J10).
+    # The catalog was always correct; nothing ever asked it for the label.
+    by_type = []
+    for row in movements:
+        try:
+            label = EquipmentStockMovementType(row["movement_type"]).label
+        except ValueError:  # a value retired from the enum but still on old rows
+            label = row["movement_type"]
+        by_type.append(
+            {
+                "movement_type": row["movement_type"],
+                "label": label,
+                "quantity": row["quantity"],
+                "value": row["value"],
+            }
+        )
+    by_type.sort(key=lambda row: str(row["label"]))
+    return {"period": period, "by_type": by_type}
 
 
 @transaction.atomic
