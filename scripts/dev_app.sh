@@ -103,6 +103,7 @@ cmd_up() {
   manage seed_logistics >/dev/null
   manage seed_questionnaire >/dev/null
   manage seed_finance >/dev/null
+  manage seed_messaging >/dev/null
   echo "Seeding demo scenario (fills every module screen) ..."
   manage seed_demo_scenario >/dev/null
 

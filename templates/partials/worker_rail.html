@@ -14,7 +14,7 @@ existing sidebar on narrow screens.
   </button>
   <div class="worker-rail-inner"
        hx-get="{% url 'worker_status_rail' %}"
-       hx-trigger="revealed, workersChanged from:body"
+       hx-trigger="workerRailOpened, workersChanged from:body"
        hx-swap="innerHTML">
     <p class="muted">{% trans "Loading workers…" %}</p>
   </div>

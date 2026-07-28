@@ -1,5 +1,15 @@
 # Test Journal
 
+## 2026-07-28 - tests/test_sms_templates_seed.py (4)
+
+- `test_a_reseed_repairs_an_edited_body` pins `update_or_create` on `name`.
+  The alternative - matching on nothing, or on body - silently accumulates
+  near-duplicate templates every time staging is reseeded, and the picker grows
+  a little longer each deploy.
+- `test_seeding_is_idempotent` for the same reason, stated as a count.
+- Module-skips when messaging is not installed, so the CorvinumEU lane does not
+  fail on a feature it does not have.
+
 ## 2026-07-28 - tests/test_project_management.py (18)
 
 - `test_a_manager_cannot_post_another_office_either` is the one that matters.

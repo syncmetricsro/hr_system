@@ -309,7 +309,28 @@ Item 4 remains the largest *risk* — deferred, not reduced.
     "Partial project management", which understates it.
     Estimate 3–5 days. The misleading button is a separate five-minute fix
     and should not wait for the feature.
-16. **Low — SMS templates cannot be managed in the product.**
+16. 🟡 **Partly fixed 2026-07-28 — SMS templates cannot be managed in the
+    product.** **Done:** three templates are now seeded
+    (`seed_messaging`), so the picker renders and the runbook's "pick a
+    template" step has something to pick. It never appeared before, because
+    the panel hides it behind `{% if panel.message_templates %}` and nothing
+    created any — this read as a missing feature when it was missing data.
+    **Still open:** management stays in Django admin, which needs a superuser
+    no client role has, so `Action.SMS_MANAGE_TEMPLATES` is still unenforced.
+    A real CRUD screen is 2–3 days if wanted.
+17. **Medium — an SMS goes out in whatever language its template was written
+    in.** Found while seeding item 16. `features/messaging/views.py` sends
+    `template.body` verbatim, and messaging never reads
+    `Person.preferred_language` — which exists and is populated. The workforce
+    is Ukrainian, Hungarian, Slovak and Vietnamese, so a single-language
+    template reaches people who cannot read it. The seeded bodies are Slovak,
+    the company's operating language and the app default, which is the least
+    wrong single choice rather than a solution. Options: per-language template
+    variants the coordinator picks by hand (no model change), or a language
+    column plus lookup by the recipient's preference. **Needs the client's
+    answer on which languages he actually sends in** before either is built.
+    Original text of item 16:
+16. ~~**Low — SMS templates cannot be managed in the product.**~~
     `Action.SMS_MANAGE_TEMPLATES` is granted to Manager and implemented
     nowhere. `MessageTemplate` is reachable only through Django admin, which
     needs a superuser — and no Jober role is one (see item 11). No templates

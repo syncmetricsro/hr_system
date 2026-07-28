@@ -323,10 +323,22 @@ window.JoberShell = {
     toggle.setAttribute("aria-expanded", collapsed ? "false" : "true");
   }
 
+  // Fetch when the rail is actually opened, not on htmx's `revealed`.
+  // `revealed` fires unpredictably for an element that starts hidden, and the
+  // resulting swap dismisses any open tooltip (app.js hides on
+  // htmx:beforeSwap) - which made an unrelated tooltip test flake in CI while
+  // passing locally. An explicit event is deterministic.
+  var fetched = false;
   toggle.addEventListener("click", function () {
     collapsed = !collapsed;
     try { window.localStorage.setItem(KEY, String(collapsed)); } catch (err) { /* private mode */ }
     apply();
+    if (!collapsed && !fetched) {
+      fetched = true;
+      rail.querySelector("[hx-get]").dispatchEvent(
+        new CustomEvent("workerRailOpened", { bubbles: false })
+      );
+    }
   });
 
   apply();
