@@ -66,6 +66,9 @@ COPY templates /app/templates
 COPY static/vendor /app/static/vendor
 COPY static/src/js /app/static/src/js
 COPY static/avatars /app/static/avatars
+# Static subdirectories are copied individually; a missing line here means
+# the files exist in git and 404 in production. That has shipped once.
+COPY static/help /app/static/help
 COPY vendor/fonts /app/vendor/fonts
 COPY --from=tailwind /app/static/dist/css/app.css /app/static/dist/css/app.css
 

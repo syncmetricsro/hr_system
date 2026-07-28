@@ -1,5 +1,21 @@
 # Test Journal
 
+## 2026-07-28 - tests/test_help_visual_aids.py extended (20)
+
+- `test_every_referenced_asset_is_discoverable_by_staticfiles` uses `find()`,
+  not a URL string. `{% static %}` happily returns a URL for a file nothing
+  will ever serve, which is how the avatars shipped 404s with a green suite.
+- `test_the_help_static_directory_is_copied_into_the_image` asserts a
+  Dockerfile line. Unusual for a test, but the failure it prevents - files
+  present in git and absent in the image - is invisible until production.
+- `test_every_help_image_has_translatable_alt_text` requires the alt to contain
+  a template tag, not merely to be non-empty: hardcoded alt text ships English
+  to a Slovak reader, which is the exact failure this area already had.
+- All of these pass with zero images on purpose, so the pipeline can land
+  before the assets and fail loudly the moment a bad one is added.
+- What no test caught: the rail toggle covering the Search button. Only the
+  screenshot did.
+
 ## 2026-07-28 - tests/test_worker_status_rail.py (10)
 
 - `test_the_cost_does_not_grow_with_headcount` replaced a first draft that

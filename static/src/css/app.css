@@ -2053,10 +2053,17 @@ body:has(.worker-rail:not([data-collapsed="true"])) .cv-main {
 .worker-rail {
   position: fixed;
   z-index: 50;
-  top: 9.5rem;
+  /* Anchored to the bottom-right, not below the notification bell. Collapsed,
+     this is a floating control over the page, and the top-right is where every
+     page puts its own actions - the first Help screenshot caught the toggle
+     sitting on top of the People search button, which no unit test could see.
+     The bottom-right corner is the one region no page competes for. */
+  bottom: var(--space-4);
   right: var(--space-4);
   width: min(18rem, calc(100vw - 2 * var(--space-4)));
   max-height: calc(100vh - 12rem);
+  /* Expanded, it grows upward from the bottom rather than pushing off-screen. */
+  justify-content: flex-end;
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
@@ -2082,7 +2089,13 @@ body:has(.worker-rail:not([data-collapsed="true"])) .cv-main {
 .worker-rail-inner { overflow-y: auto; }
 
 .worker-rail[data-collapsed="true"] .worker-rail-inner { display: none; }
-.worker-rail[data-collapsed="true"] { max-height: none; }
+.worker-rail[data-collapsed="true"] {
+  max-height: none;
+  /* Collapsed it is just its own toggle, so it should not reserve 18rem of
+     width for content it is not showing. */
+  width: auto;
+  padding: var(--space-2) var(--space-3);
+}
 
 .worker-rail-counts {
   list-style: none;
