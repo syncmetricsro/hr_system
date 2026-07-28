@@ -116,3 +116,24 @@ def test_a_client_that_keeps_returns_still_has_the_route():
     if not flag_enabled("equipment_returns"):
         pytest.skip("this client has returns disabled")
     assert reverse("return_equipment", args=[1])
+
+
+@pytest.mark.jober_only
+@pytest.mark.django_db
+def test_the_demo_seed_does_not_manufacture_returns_it_cannot_perform():
+    """The scenario seed exists partly to demonstrate the return flow. With
+    returns retired, seeding two returned helmets leaves a worker holding items
+    they had no way to return - demo data implying a capability the UI does not
+    offer, which is exactly what a client pokes at first."""
+    from django.core.management import call_command
+
+    from features.logistics.models import EquipmentIssue, EquipmentIssueStatus
+
+    call_command("seed_demo")
+    call_command("seed_people")
+    call_command("seed_logistics")
+    call_command("seed_demo_scenario")
+
+    assert not EquipmentIssue.objects.filter(
+        status=EquipmentIssueStatus.RETURNED
+    ).exists()
