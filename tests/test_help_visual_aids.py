@@ -131,9 +131,7 @@ def test_every_referenced_asset_is_discoverable_by_staticfiles():
     the check that catches a file placed where STATICFILES_DIRS never looks."""
     from django.contrib.staticfiles.finders import find
 
-    missing = [
-        f"{name} -> {ref}" for name, ref in _static_refs() if find(ref) is None
-    ]
+    missing = [f"{name} -> {ref}" for name, ref in _static_refs() if find(ref) is None]
     assert not missing, f"referenced but not servable: {missing}"
 
 
