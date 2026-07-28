@@ -1,0 +1,40 @@
+{% extends "layouts/base.html" %}
+{% load i18n icons %}
+
+{% block title %}{% trans "Goods receipts" %} · {{ BRAND_NAME }}{% endblock %}
+{% block content %}
+<section class="page-head">
+  <p class="eyebrow">{% trans "Warehouse" %}</p>
+  <h1>{% trans "Goods receipts" %}</h1>
+  <a class="button button-secondary" href="{% url 'equipment_stock' %}">{% trans "Back to stock" %}</a>
+</section>
+
+<p class="muted">{% trans "What was booked into the warehouse, newest first." %}</p>
+
+<section class="panel">
+  {% include "partials/period_filter.html" %}
+  <div class="dashboard-grid">
+    <article class="metric-card"><span>{% trans "Receipts" %}</span><strong>{{ log.rows|length }}</strong></article>
+    <article class="metric-card"><span>{% trans "Units received" %}</span><strong>{{ log.quantity }}</strong></article>
+    <article class="metric-card"><span>{% trans "Total value" %}</span><strong>{{ log.value }} EUR</strong></article>
+  </div>
+</section>
+
+<section class="field-list" aria-label="{% trans 'Goods receipts' %}">
+  {% for row in log.rows %}
+    <article class="field-card">
+      <div>
+        <h3><a href="{% url 'goods_receipt_detail' row.receipt.pk %}">{{ row.receipt.received_on|date:"Y-m-d" }}{% if row.receipt.reference %} · {{ row.receipt.reference }}{% endif %}</a></h3>
+        <p>{{ row.receipt.supplier|default:"—" }}{% if row.receipt.office %} · {{ row.receipt.office.name }}{% endif %}</p>
+      </div>
+      <dl>
+        <div><dt>{% trans "Units" %}</dt><dd>{{ row.quantity }}</dd></div>
+        <div><dt>{% trans "Value" %}</dt><dd>{{ row.value }} EUR</dd></div>
+        <div><dt>{% trans "Recorded by" %}</dt><dd>{{ row.receipt.recorded_by|default:"—" }}</dd></div>
+      </dl>
+    </article>
+  {% empty %}
+    <p class="muted">{% trans "No goods receipts in this period." %}</p>
+  {% endfor %}
+</section>
+{% endblock %}

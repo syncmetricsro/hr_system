@@ -269,6 +269,16 @@ if _feature_on("logistics", "equipment"):
                 logistics_views.equipment_stock_adjust,
                 name="equipment_stock_adjust",
             ),
+            path(
+                "equipment/receipts/",
+                logistics_views.goods_receipt_log,
+                name="goods_receipt_log",
+            ),
+            path(
+                "equipment/receipts/<int:pk>/",
+                logistics_views.goods_receipt_detail,
+                name="goods_receipt_detail",
+            ),
         ]
 
 if _feature_on("logistics", "transport"):

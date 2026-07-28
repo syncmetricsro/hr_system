@@ -688,6 +688,44 @@ def equipment_stock_balance(*, as_of=None, offices=None):
     }
 
 
+def goods_receipts(period=None, *, offices=None):
+    """Goods-receipt log: what was booked into the warehouse, newest first (J5).
+
+    A read over the receipt records `receive_stock()` already writes - the
+    client could see new totals after receiving stock but could not answer
+    "what did I take in today?". No new model was needed; the header and its
+    lines were persisted all along.
+
+    Totals are summed from the lines rather than stored, so a receipt can never
+    disagree with what it contains.
+    """
+    receipts = (
+        EquipmentStockReceipt.objects.select_related("office", "recorded_by")
+        .prefetch_related("lines__item")
+        .order_by("-received_on", "-created_at")
+    )
+    if offices is not None:
+        receipts = receipts.filter(office__in=offices)
+    if period is not None:
+        receipts = receipts.filter(period.filter_q("received_on"))
+    rows = []
+    for receipt in receipts:
+        lines = list(receipt.lines.all())
+        rows.append(
+            {
+                "receipt": receipt,
+                "lines": lines,
+                "quantity": sum(line.quantity for line in lines),
+                "value": sum((line.total_value for line in lines), Decimal("0")),
+            }
+        )
+    return {
+        "rows": rows,
+        "quantity": sum(row["quantity"] for row in rows),
+        "value": sum((row["value"] for row in rows), Decimal("0")),
+    }
+
+
 def equipment_period_report(period, *, offices=None):
     """Stock movements over a reporting period, totalled by movement type.
 
