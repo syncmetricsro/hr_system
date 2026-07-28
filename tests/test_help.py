@@ -4,7 +4,7 @@ import pytest
 from django.urls import reverse
 from django.utils import translation
 
-from core.ui.help import ARTICLE_TEMPLATES, HELP_GROUPS
+from core.ui.help import ARTICLE_TEMPLATES, HELP_GROUPS, available_groups
 
 pytestmark = pytest.mark.django_db
 
@@ -35,16 +35,25 @@ def test_help_index_visible_to_every_role(client, make_user, role):
 def test_help_index_lists_every_group_and_article(client, make_user):
     client.force_login(make_user("recruiter"))
     body = client.get(reverse("help_index")).content.decode()
-    for group in HELP_GROUPS:
+    # Articles are gated by feature flag, so the index lists what *this* client
+    # actually has - CorvinumEU has no Feedback or Finance reporting.
+    for group in available_groups():
         for article in group["articles"]:
             assert reverse("help_article", args=[article["slug"]]) in body
 
 
 @pytest.mark.parametrize("slug", list(ARTICLE_TEMPLATES))
 def test_each_help_article_renders(client, make_user, slug):
+    """Every article this client offers must render.
+
+    Parametrized over all slugs rather than the available ones so a template
+    that breaks stays visible in the report; an article the client does not
+    have is asserted to 404 instead, which is the gate working.
+    """
     client.force_login(make_user("observer"))
     resp = client.get(reverse("help_article", args=[slug]))
-    assert resp.status_code == 200
+    available = {a["slug"] for g in available_groups() for a in g["articles"]}
+    assert resp.status_code == (200 if slug in available else 404)
 
 
 def test_unknown_help_slug_is_404(client, make_user):

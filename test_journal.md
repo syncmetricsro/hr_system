@@ -1,5 +1,23 @@
 # Test Journal
 
+## 2026-07-28 - tests/test_help_gating.py (9), tests/test_help.py updated
+
+- `test_a_hidden_article_is_not_reachable_by_url` is the one that matters: an
+  index that stops linking an article is not a gate while the URL still serves
+  it.
+- `test_an_available_article_still_opens` names a *flagged* article on purpose
+  and is Jober-only. An always-available one would pass even if the gate
+  rejected everything flagged, which is the failure it guards.
+- `test_documentation_is_still_not_role_gated` pins a design decision: the flag
+  gate must not drift into a permission gate.
+- The `flags_off` fixture patches the flag lookup rather than
+  `settings.FEATURE_FLAGS`, because changing that setting rebuilds the URLconf
+  and unregisters unrelated routes. The first draft did it the other way and
+  failed in a different module entirely.
+- `test_each_help_article_renders` now asserts 200 *or* 404 by availability
+  rather than 200 unconditionally, so a broken template still shows up while a
+  correctly-gated article does not read as a failure.
+
 ## 2026-07-28 - tests/test_staff_activity.py (14)
 
 - `test_a_recruiter_who_registered_nobody_is_still_listed` pins the property the

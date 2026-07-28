@@ -19,7 +19,12 @@ from core.reporting.periods import resolve_period
 from core.reporting.staff_activity import people_registered, recruiter_productivity
 from core.offices.scoping import scope_people
 from core.ui import registry
-from core.ui.help import ARTICLE_TEMPLATES, HELP_GROUPS
+from core.ui.help import (
+    ARTICLE_TEMPLATES,
+    HELP_GROUPS,
+    article_is_available,
+    available_groups,
+)
 from core.people.models import LifecycleStatus, Person
 from core.people.services import inactive_by_reason
 from core.projects.models import (
@@ -168,11 +173,16 @@ def dashboard(request: HttpRequest) -> HttpResponse:
 
 @login_required
 def help_index(request: HttpRequest) -> TemplateResponse:
-    """Landing page grouping Help articles by module - unconditional, no
-    Action/flag gate (docs/product/help-area-design.md): every role needs
-    documentation regardless of what else they can see."""
+    """Landing page grouping Help articles by module.
+
+    Still no *role* gate (docs/product/help-area-design.md): every role needs
+    documentation regardless of what else they can see. Articles are filtered
+    by **feature flag** though - a CorvinumEU user was previously offered
+    articles on Feedback, Finance reports and accommodation, none of which
+    that client's app has.
+    """
     return TemplateResponse(
-        request, "pages/help_index.html", {"help_groups": HELP_GROUPS}
+        request, "pages/help_index.html", {"help_groups": available_groups()}
     )
 
 
@@ -180,5 +190,13 @@ def help_index(request: HttpRequest) -> TemplateResponse:
 def help_article(request: HttpRequest, slug: str) -> TemplateResponse:
     template = ARTICLE_TEMPLATES.get(slug)
     if template is None:
+        raise Http404
+    # A hidden article must also be unreachable by URL, or the gate is
+    # decoration rather than a boundary.
+    article = next(
+        (a for group in HELP_GROUPS for a in group["articles"] if a["slug"] == slug),
+        None,
+    )
+    if article is None or not article_is_available(article):
         raise Http404
     return TemplateResponse(request, template, {"slug": slug})
