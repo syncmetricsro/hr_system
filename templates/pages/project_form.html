@@ -1,0 +1,22 @@
+{% extends "layouts/base.html" %}
+{% load i18n %}
+
+{% block title %}{% if project %}{% trans "Edit project" %}{% else %}{% trans "Create project" %}{% endif %} · {{ BRAND_NAME }}{% endblock %}
+{% block content %}
+<section class="page-head">
+  <p class="eyebrow">{% trans "Project management" %}</p>
+  <h1>{% if project %}{% trans "Edit project" %}{% else %}{% trans "Create project" %}{% endif %}</h1>
+  <a class="button button-secondary" href="{% if project %}{% url 'project_detail' project.pk %}{% else %}{% url 'project_list' %}{% endif %}">{% trans "Cancel" %}</a>
+</section>
+<section class="panel workflow-panel">
+  <form class="stack" method="post">{% csrf_token %}{{ form.non_field_errors }}
+    {% for field in form %}
+      <label>{{ field.label }}{{ field }}
+        {% if field.help_text %}<span class="field-help muted">{{ field.help_text }}</span>{% endif %}
+        {{ field.errors }}
+      </label>
+    {% endfor %}
+    <button class="button button-primary" type="submit">{% if project %}{% trans "Save project" %}{% else %}{% trans "Create project" %}{% endif %}</button>
+  </form>
+</section>
+{% endblock %}

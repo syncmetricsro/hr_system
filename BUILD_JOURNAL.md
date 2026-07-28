@@ -1,5 +1,45 @@
 # Build Journal
 
+## 2026-07-28 - Project management (production-readiness item 15)
+
+A manager could not create a project. `Action.PROJECT_MANAGE` was granted to
+Manager in both clients and implemented nowhere; the only ways in were the demo
+seed, a shell, or Django admin - which needs a superuser no client role has,
+bypasses the service layer, writes no audit event and honours no office
+boundary. The client intends to enter a whole project on his trial instance, so
+he would have hit this in his first ten minutes.
+
+Create, edit and deactivate/reactivate, mirroring the accommodation pattern -
+same shape, so `apply_office_scope()` and the existing
+`_assert_project_in_scope()` were reused rather than reinvented.
+
+**The backlog entry was half wrong, and the truth is worse.** Item 15 described
+a misleading "Manage projects" button linking to the read-only list. That
+button lives in `templates/pages/dashboard.html`, which **no view renders** -
+the `dashboard` URL delegates to `reports()`. So it was not misleading, it was
+invisible, and `reports.html`, the page a manager actually lands on, had no
+project entry point at all. The create link now sits there and on the project
+list.
+
+Two decisions worth recording:
+
+- **Deactivate, never delete.** `ProjectAssignment`, `TrialAssignment`,
+  `FinancialMonth` and `TransportWeek` all `PROTECT` their project, so a used
+  one cannot be removed and offering deletion would only fail at the database.
+- **The coordinator picker is restricted to the chosen office**, in the
+  queryset *and* in `clean()`. The demo seed had exactly this bug until
+  2026-07-26 - a coordinator formally responsible for projects they get a 403
+  on. A hand-built form is the obvious place to reintroduce it.
+
+The office field is validated by its queryset, not just narrowed for display:
+posting another office's pk is a field error, and a test posts one to prove it.
+
+Suites: 897 Jober, 529 CorvinumEU. Form captured and reviewed - fully
+translated, office pre-selected, and only the selected office's coordinator
+offered. Two cosmetic items noted, neither introduced here: the page-head
+Cancel button sits under the fixed notification bell (true of every page with a
+right-aligned head button), and the finance checkbox row is cramped.
+
 ## 2026-07-28 - J6: Jober stops taking equipment back
 
 The client was unambiguous - "what we issue, stays out" - and the owner

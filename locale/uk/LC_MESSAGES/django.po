@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-28 15:44+0200\n"
+"POT-Creation-Date: 2026-07-28 17:36+0200\n"
 "Language: uk\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -62,7 +62,7 @@ msgstr "Перейти до вмісту"
 #: templates/help/getting-started.html:23 templates/layouts/base.html:20
 #: templates/layouts/base.html:43 templates/pages/finance_summary.html:8
 #: templates/pages/reports.html:4 templates/pages/reports.html:9
-#: templates/pages/reports.html:12
+#: templates/pages/reports.html:24
 msgid "Reports"
 msgstr "Звіти"
 
@@ -73,21 +73,21 @@ msgstr "Головна навігація"
 # --- people list / detail ---
 #: clients/corvinum_eu/templates/layouts/base.html:44
 #: templates/pages/activation_queue.html:8 templates/pages/people_list.html:8
-#: templates/pages/reports.html:23 templates/pages/reports.html:45
+#: templates/pages/reports.html:35 templates/pages/reports.html:57
 msgid "Workforce"
 msgstr "Робоча сила"
 
 #: clients/corvinum_eu/templates/layouts/base.html:45 core/ui/help.py:31
 #: templates/help/getting-started.html:19 templates/layouts/base.html:33
 #: templates/pages/people_list.html:4 templates/pages/people_list.html:9
-#: templates/pages/people_list.html:39 templates/pages/reports.html:14
+#: templates/pages/people_list.html:39 templates/pages/reports.html:26
 msgid "People"
 msgstr "Люди"
 
 #: clients/corvinum_eu/templates/layouts/base.html:46 core/ui/help.py:37
 #: templates/help/getting-started.html:20 templates/layouts/base.html:34
 #: templates/pages/project_list.html:4 templates/pages/project_list.html:9
-#: templates/pages/project_list.html:25
+#: templates/pages/project_list.html:29
 msgid "Projects"
 msgstr "Проєкти"
 
@@ -131,7 +131,7 @@ msgid "Reviews"
 msgstr "Перевірки"
 
 #: clients/corvinum_eu/templates/layouts/base.html:64
-#: templates/panels/logistics_equipment.html:54
+#: templates/panels/logistics_equipment.html:63
 msgid "Manage equipment catalogue"
 msgstr "Керувати каталогом спорядження"
 
@@ -827,7 +827,7 @@ msgstr "Тип інвалідності"
 #: features/logistics/forms.py:74 features/logistics/forms.py:228
 #: templates/pages/equipment_stock.html:48
 #: templates/pages/goods_receipt_detail.html:16
-#: templates/pages/project_detail.html:20
+#: templates/pages/project_detail.html:35
 msgid "Office"
 msgstr "Офіс"
 
@@ -838,7 +838,7 @@ msgstr "Дата народження не може бути в майбутнь
 # --- lifecycle status labels ---
 #: core/people/models.py:16 templates/help/getting-started.html:128
 #: templates/pages/dashboard.html:21
-#: templates/panels/logistics_equipment.html:47
+#: templates/panels/logistics_equipment.html:56
 msgid "Available"
 msgstr "Доступний"
 
@@ -859,7 +859,7 @@ msgstr "Працює"
 #: templates/pages/equipment_catalog.html:19
 #: templates/pages/equipment_catalog.html:33
 #: templates/pages/person_detail.html:239 templates/pages/project_detail.html:8
-#: templates/pages/project_list.html:19 templates/pages/project_list.html:35
+#: templates/pages/project_list.html:23 templates/pages/project_list.html:39
 msgid "Inactive"
 msgstr "Неактивний"
 
@@ -1044,15 +1044,15 @@ msgstr "Особу архівовано. Захист чорного списк�
 msgid "Recycled to Available."
 msgstr "Повернено до доступних."
 
-#: core/projects/forms.py:24
+#: core/projects/forms.py:25
 msgid "Candidate"
 msgstr "Кандидат"
 
-#: core/projects/forms.py:26
+#: core/projects/forms.py:27
 msgid "Only available candidates can be scheduled."
 msgstr "Можна планувати лише доступних кандидатів."
 
-#: core/projects/forms.py:29 core/projects/forms.py:55
+#: core/projects/forms.py:30 core/projects/forms.py:56
 #: templates/pages/feedback_inbox.html:32
 #: templates/pages/finance_summary.html:21
 #: templates/pages/person_detail.html:59 templates/pages/project_detail.html:8
@@ -1063,15 +1063,43 @@ msgstr "Можна планувати лише доступних кандида
 msgid "Project"
 msgstr "Проєкт"
 
-#: core/projects/forms.py:32 core/projects/forms.py:58
+#: core/projects/forms.py:33 core/projects/forms.py:59
 #: templates/pages/person_detail.html:64 templates/pages/person_detail.html:77
 msgid "Arrival time"
 msgstr "Час прибуття"
 
-#: core/projects/forms.py:39 core/projects/forms.py:65
+#: core/projects/forms.py:40 core/projects/forms.py:66
 #: features/logistics/forms.py:43
 msgid "Operational note"
 msgstr "Операційна примітка"
+
+#: core/projects/forms.py:122
+msgid "Include this project in Finance"
+msgstr "Включити цей проєкт до Фінансів"
+
+#: core/projects/forms.py:124
+msgid "Short unique reference, for example DHLBA. Cannot be reused."
+msgstr ""
+"Коротке унікальне позначення, наприклад DHLBA. Не можна використати повторно."
+
+#: core/projects/forms.py:126
+msgid ""
+"Unticking hides this project's months from Finance. The figures are kept, "
+"not deleted."
+msgstr ""
+"Знявши позначку, місяці цього проєкту зникнуть із Фінансів. Дані "
+"зберігаються, не видаляються."
+
+#: core/projects/forms.py:130
+msgid "Only coordinators of the selected office can be chosen."
+msgstr "Можна обрати лише координаторів обраного офісу."
+
+#: core/projects/forms.py:169
+#, python-format
+msgid ""
+"%(names)s do not belong to this office and would have no access to the "
+"project."
+msgstr "%(names)s не належать до цього офісу і не мали б доступу до проєкту."
 
 #: core/projects/models.py:13
 msgid "partner"
@@ -1104,8 +1132,8 @@ msgstr "проєкти"
 #: templates/pages/accommodation_detail.html:35
 #: templates/pages/accommodation_list.html:19
 #: templates/pages/equipment_catalog.html:18
-#: templates/pages/project_detail.html:8 templates/pages/project_list.html:18
-#: templates/pages/project_list.html:35
+#: templates/pages/project_detail.html:8 templates/pages/project_list.html:22
+#: templates/pages/project_list.html:39
 msgid "Active"
 msgstr "Активний"
 
@@ -1422,37 +1450,53 @@ msgstr "Відхилення має містити причину."
 msgid "Decision must be 'approve' or 'reject'."
 msgstr "Рішення має бути «затвердити» або «відхилити»."
 
-#: core/projects/views.py:208 core/projects/views.py:272
+#: core/projects/views.py:215 core/projects/views.py:279
 msgid "Trial scheduled."
 msgstr "Пробний день заплановано."
 
-#: core/projects/views.py:239
+#: core/projects/views.py:246
 msgid "Trial updated."
 msgstr "Пробний день оновлено."
 
-#: core/projects/views.py:264
+#: core/projects/views.py:271
 msgid "Review the trial details and try again."
 msgstr "Перевірте дані пробного дня та спробуйте ще раз."
 
-#: core/projects/views.py:288
+#: core/projects/views.py:295
 msgid "Trial outcome recorded."
 msgstr "Результат пробного дня записано."
 
-#: core/projects/views.py:318
+#: core/projects/views.py:325
 msgid "Readiness saved."
 msgstr "Готовність збережено."
 
-#: core/projects/views.py:342
+#: core/projects/views.py:349
 msgid "Exit completed."
 msgstr "Вихід завершено."
 
-#: core/projects/views.py:361
+#: core/projects/views.py:368
 msgid "Activation requested — a manager will decide."
 msgstr "Активацію запитано — рішення прийме менеджер."
 
-#: core/projects/views.py:398 features/blacklist/views.py:85
+#: core/projects/views.py:405 features/blacklist/views.py:85
 msgid "Decision recorded."
 msgstr "Рішення записано."
+
+#: core/projects/views.py:428
+msgid "Project created."
+msgstr "Проєкт створено."
+
+#: core/projects/views.py:447
+msgid "Project updated."
+msgstr "Проєкт оновлено."
+
+#: core/projects/views.py:465
+msgid "Project reactivated."
+msgstr "Проєкт знову активовано."
+
+#: core/projects/views.py:465
+msgid "Project deactivated."
+msgstr "Проєкт деактивовано."
 
 #: core/reporting/periods.py:45 templates/partials/period_filter.html:24
 msgid "Day"
@@ -1507,7 +1551,7 @@ msgstr "Відповідність: сертифікати та сповіщен
 #: core/ui/help.py:53 templates/pages/accommodation_list.html:8
 #: templates/pages/equipment_catalog.html:8
 #: templates/pages/equipment_reviews.html:8
-#: templates/pages/project_detail.html:51
+#: templates/pages/project_detail.html:66
 #: templates/pages/transport_trends.html:8
 #: templates/panels/logistics_equipment.html:3
 #: templates/panels/logistics_room.html:3
@@ -2566,13 +2610,13 @@ msgstr "Нотатка"
 
 #: features/logistics/forms.py:191 features/logistics/forms.py:225
 #: templates/pages/equipment_stock.html:47
-#: templates/panels/logistics_equipment.html:46
+#: templates/panels/logistics_equipment.html:55
 msgid "Item"
 msgstr "Позиція"
 
 #: features/logistics/forms.py:193 templates/pages/equipment_stock.html:36
 #: templates/pages/goods_receipt_detail.html:31
-#: templates/panels/logistics_equipment.html:49
+#: templates/panels/logistics_equipment.html:58
 msgid "Quantity"
 msgstr "Кількість"
 
@@ -2793,7 +2837,7 @@ msgid "Issue"
 msgstr "Видача"
 
 #: features/logistics/models.py:408
-#: templates/panels/logistics_equipment.html:29
+#: templates/panels/logistics_equipment.html:37
 msgid "Return"
 msgstr "Повернути"
 
@@ -4202,7 +4246,7 @@ msgstr "Місяць звіту"
 #: templates/pages/accommodation_costs.html:8
 #: templates/pages/accommodation_list.html:23 templates/pages/audit_log.html:30
 #: templates/pages/equipment_catalog.html:22
-#: templates/pages/project_list.html:21
+#: templates/pages/project_list.html:25
 #: templates/pages/transport_trends.html:37
 #: templates/pages/trials_queue.html:41
 #: templates/partials/period_filter.html:64
@@ -4293,7 +4337,7 @@ msgstr "Місячна ставка"
 #: templates/pages/compliance_list.html:21
 #: templates/pages/equipment_catalog.html:17
 #: templates/pages/people_list.html:20 templates/pages/people_list.html:50
-#: templates/pages/project_list.html:34 templates/pages/trials_queue.html:55
+#: templates/pages/project_list.html:38 templates/pages/trials_queue.html:55
 #: templates/panels/blacklist_case.html:8
 msgid "Status"
 msgstr "Статус"
@@ -4321,8 +4365,8 @@ msgstr "Керування проживанням"
 # --- compliance ---
 #: templates/pages/accommodation_form.html:9
 #: templates/pages/certificate_form.html:10
-#: templates/pages/equipment_form.html:10 templates/pages/room_form.html:9
-#: templates/pages/transport_trends.html:22
+#: templates/pages/equipment_form.html:10 templates/pages/project_form.html:9
+#: templates/pages/room_form.html:9 templates/pages/transport_trends.html:22
 #: templates/pages/trials_queue.html:25
 #: templates/partials/confirm_dialog.html:12
 #: templates/partials/ledger_activity.html:44
@@ -4345,7 +4389,7 @@ msgstr "Усі"
 #: templates/pages/accommodation_list.html:29
 #: templates/pages/compliance_list.html:14 templates/pages/people_list.html:41
 #: templates/pages/person_detail.html:179
-#: templates/pages/project_detail.html:16 templates/pages/project_list.html:27
+#: templates/pages/project_detail.html:31 templates/pages/project_list.html:31
 #: tests/test_tooltips.py:86
 msgid "Details"
 msgstr "Деталі"
@@ -4589,26 +4633,27 @@ msgstr "Немає сповіщень відповідності."
 msgid "Operational overview"
 msgstr "Операційний огляд"
 
-#: templates/pages/dashboard.html:12
-msgid "Manage projects"
-msgstr "Керувати проєктами"
+#: templates/pages/dashboard.html:12 templates/pages/project_list.html:12
+#: templates/pages/reports.html:20
+msgid "New project"
+msgstr "Новий проєкт"
 
 #: templates/pages/dashboard.html:16
 msgid "Operational summaries"
 msgstr "Операційні зведення"
 
-#: templates/pages/dashboard.html:17 templates/pages/reports.html:13
+#: templates/pages/dashboard.html:17 templates/pages/reports.html:25
 #: tests/test_tooltips.py:116
 msgid "Review active projects"
 msgstr "Переглянути активні проєкти"
 
-#: templates/pages/dashboard.html:17 templates/pages/reports.html:13
+#: templates/pages/dashboard.html:17 templates/pages/reports.html:25
 #: tests/test_tooltips.py:118
 msgid "Open active projects to review their coordinators and assignments."
 msgstr ""
 "Відкрийте активні проєкти, щоб переглянути їхніх координаторів і призначення."
 
-#: templates/pages/dashboard.html:18 templates/pages/reports.html:13
+#: templates/pages/dashboard.html:18 templates/pages/reports.html:25
 msgid "Active projects"
 msgstr "Активні проєкти"
 
@@ -4620,15 +4665,15 @@ msgstr "Переглянути доступних людей"
 msgid "View working people"
 msgstr "Переглянути працюючих людей"
 
-#: templates/pages/dashboard.html:28 templates/pages/reports.html:15
+#: templates/pages/dashboard.html:28 templates/pages/reports.html:27
 msgid "Resolve pending trial outcomes"
 msgstr "Опрацювати результати пробних днів"
 
-#: templates/pages/dashboard.html:28 templates/pages/reports.html:15
+#: templates/pages/dashboard.html:28 templates/pages/reports.html:27
 msgid "Open trials that still require an outcome."
 msgstr "Відкрийте пробні дні, для яких ще потрібно зафіксувати результат."
 
-#: templates/pages/dashboard.html:29 templates/pages/reports.html:15
+#: templates/pages/dashboard.html:29 templates/pages/reports.html:27
 msgid "Awaiting outcome"
 msgstr "Очікує результату"
 
@@ -4665,7 +4710,7 @@ msgid "Unit price"
 msgstr "Ціна за одиницю"
 
 #: templates/pages/equipment_catalog.html:36
-#: templates/pages/person_detail.html:42
+#: templates/pages/person_detail.html:42 templates/pages/project_detail.html:13
 #: templates/pages/transport_trends.html:45
 #: templates/pages/trials_queue.html:59
 #: templates/panels/compliance_certificates.html:27
@@ -4911,7 +4956,7 @@ msgstr "Огляд для керівництва"
 
 #: templates/pages/finance_executive.html:10
 #: templates/pages/finance_summary.html:10 templates/pages/people_list.html:16
-#: templates/pages/project_list.html:12
+#: templates/pages/project_list.html:16
 msgid "Export"
 msgstr "Експорт"
 
@@ -5163,13 +5208,13 @@ msgstr "Крок"
 
 #: templates/pages/intake_panel.html:24 templates/pages/person_detail.html:186
 #: templates/pages/person_detail.html:199
-#: templates/pages/project_detail.html:32
+#: templates/pages/project_detail.html:47
 msgid "Yes"
 msgstr "Так"
 
 #: templates/pages/intake_panel.html:25 templates/pages/person_detail.html:186
 #: templates/pages/person_detail.html:199
-#: templates/pages/project_detail.html:32
+#: templates/pages/project_detail.html:47
 msgid "No"
 msgstr "Ні"
 
@@ -5424,7 +5469,7 @@ msgid "Previous request rejected"
 msgstr "Попередній запит відхилено"
 
 #: templates/pages/person_detail.html:178
-#: templates/pages/project_detail.html:15
+#: templates/pages/project_detail.html:30
 msgid "Operational"
 msgstr "Операційні"
 
@@ -5564,112 +5609,150 @@ msgstr "Зберегти"
 msgid "Back to projects"
 msgstr "Назад до проєктів"
 
-#: templates/pages/project_detail.html:18 templates/pages/project_list.html:30
+#: templates/pages/project_detail.html:20
+msgid ""
+"This deactivates the project. It stays in reports and keeps its history, but "
+"cannot be picked for new assignments."
+msgstr ""
+"Це деактивує проєкт. Він залишається у звітах і зберігає історію, але його "
+"не можна обрати для нових призначень."
+
+#: templates/pages/project_detail.html:20
+msgid "This reactivates the project so it can be picked again."
+msgstr "Це знову активує проєкт, і його можна буде обрати."
+
+#: templates/pages/project_detail.html:23
+msgid "Deactivate"
+msgstr "Деактивувати"
+
+# --- projects UI ---
+#: templates/pages/project_detail.html:23
+msgid "Reactivate"
+msgstr "Активувати знову"
+
+#: templates/pages/project_detail.html:33 templates/pages/project_list.html:34
 msgid "Code"
 msgstr "Код"
 
-#: templates/pages/project_detail.html:19
+#: templates/pages/project_detail.html:34
 msgid "Partner"
 msgstr "Партнер"
 
-#: templates/pages/project_detail.html:21
+#: templates/pages/project_detail.html:36
 msgid "Region"
 msgstr "Регіон"
 
-#: templates/pages/project_detail.html:23
+#: templates/pages/project_detail.html:38
 msgid "Responsible coordinators"
 msgstr "Відповідальні координатори"
 
-#: templates/pages/project_detail.html:31
+#: templates/pages/project_detail.html:46
 msgid "Financial reporting"
 msgstr "Фінансова звітність"
 
-#: templates/pages/project_detail.html:38
+#: templates/pages/project_detail.html:53
 msgid "Assigned"
 msgstr "Призначені"
 
-#: templates/pages/project_detail.html:39
+#: templates/pages/project_detail.html:54
 #: templates/partials/worker_rail.html:13
 msgid "Workers"
 msgstr "Працівники"
 
-#: templates/pages/project_detail.html:44
+#: templates/pages/project_detail.html:59
 msgid "No workers assigned."
 msgstr "Немає призначених працівників."
 
 # --- logistics: transport ---
-#: templates/pages/project_detail.html:52
+#: templates/pages/project_detail.html:67
 #: templates/pages/transport_trends.html:52
 msgid "Weekly transport"
 msgstr "Щотижневий транспорт"
 
-#: templates/pages/project_detail.html:57
+#: templates/pages/project_detail.html:72
 msgid "No transport weeks recorded."
 msgstr "Тижні транспорту не записані."
 
-#: templates/pages/project_detail.html:63
+#: templates/pages/project_detail.html:78
 #: templates/pages/transport_trends.html:44
 msgid "Week start"
 msgstr "Початок тижня"
 
-#: templates/pages/project_detail.html:64
+#: templates/pages/project_detail.html:79
 #: templates/pages/transport_trends.html:44
 msgid "Headcount"
 msgstr "Кількість осіб"
 
-#: templates/pages/project_detail.html:65
+#: templates/pages/project_detail.html:80
 msgid "Record week"
 msgstr "Записати тиждень"
 
-#: templates/pages/project_list.html:15
+#: templates/pages/project_form.html:4 templates/pages/project_form.html:8
+msgid "Edit project"
+msgstr "Редагувати проєкт"
+
+#: templates/pages/project_form.html:4 templates/pages/project_form.html:8
+#: templates/pages/project_form.html:19
+msgid "Create project"
+msgstr "Створити проєкт"
+
+#: templates/pages/project_form.html:7
+msgid "Project management"
+msgstr "Керування проєктами"
+
+#: templates/pages/project_form.html:19
+msgid "Save project"
+msgstr "Зберегти проєкт"
+
+#: templates/pages/project_list.html:19
 msgid "Project status"
 msgstr "Статус проєкту"
 
-#: templates/pages/project_list.html:17
+#: templates/pages/project_list.html:21
 msgid "All project statuses"
 msgstr "Усі статуси проєктів"
 
-#: templates/pages/project_list.html:40
+#: templates/pages/project_list.html:44
 msgid "No projects found."
 msgstr "Проєктів не знайдено."
 
-#: templates/pages/reports.html:14
+#: templates/pages/reports.html:26
 msgid "Browse people"
 msgstr "Переглянути людей"
 
-#: templates/pages/reports.html:14
+#: templates/pages/reports.html:26
 msgid "Open the full People list to search and filter workers."
 msgstr "Відкрийте повний список людей для пошуку та фільтрування працівників."
 
-#: templates/pages/reports.html:24
+#: templates/pages/reports.html:36
 msgid "People by status"
 msgstr "Люди за статусом"
 
-#: templates/pages/reports.html:31
+#: templates/pages/reports.html:43
 msgid "Inactive by reason"
 msgstr "Неактивні за причиною"
 
-#: templates/pages/reports.html:36
+#: templates/pages/reports.html:48
 msgid "No inactive people."
 msgstr "Немає неактивних людей."
 
-#: templates/pages/reports.html:46
+#: templates/pages/reports.html:58
 msgid "Projects and assigned personnel"
 msgstr "Проєкти та призначений персонал"
 
-#: templates/pages/reports.html:50
+#: templates/pages/reports.html:62
 msgid "Active headcount per project"
 msgstr "Активна чисельність за проєктом"
 
-#: templates/pages/reports.html:53
+#: templates/pages/reports.html:65
 msgid "Active headcount per project chart"
 msgstr "Графік активної чисельності за проєктом"
 
-#: templates/pages/reports.html:63
+#: templates/pages/reports.html:75
 msgid "No one currently assigned."
 msgstr "Наразі нікого не призначено."
 
-#: templates/pages/reports.html:69
+#: templates/pages/reports.html:81
 msgid "No active projects."
 msgstr "Немає активних проєктів."
 
@@ -5970,24 +6053,24 @@ msgstr "Видалити цей сертифікат і його докумен�
 msgid "Add a new certificate, licence, or document for this worker"
 msgstr "Додати новий сертифікат, посвідчення або документ для цього працівника"
 
-#: templates/panels/logistics_equipment.html:25
+#: templates/panels/logistics_equipment.html:33
 msgid "Return disposition"
 msgstr "Спосіб повернення"
 
-#: templates/panels/logistics_equipment.html:26
+#: templates/panels/logistics_equipment.html:34
 msgid "Reusable — return to stock"
 msgstr "Придатне — повернути на склад"
 
-#: templates/panels/logistics_equipment.html:27
+#: templates/panels/logistics_equipment.html:35
 msgid "Damaged or retired"
 msgstr "Пошкоджено або списано"
 
-#: templates/panels/logistics_equipment.html:29
+#: templates/panels/logistics_equipment.html:37
 msgid "Marks this item as returned and updates warehouse stock accordingly."
 msgstr ""
 "Позначає цю позицію як повернуту та відповідно оновлює складські запаси."
 
-#: templates/panels/logistics_equipment.html:33
+#: templates/panels/logistics_equipment.html:42
 msgid ""
 "This flags the item as unreturned and opens a manager charge review at its "
 "issued stock value."
@@ -5995,15 +6078,15 @@ msgstr ""
 "Позначає предмет як неповернений і відкриває менеджерську перевірку "
 "нарахування за вартістю виданого запасу."
 
-#: templates/panels/logistics_equipment.html:33
+#: templates/panels/logistics_equipment.html:42
 msgid "Flag unreturned"
 msgstr "Позначити як неповернене"
 
-#: templates/panels/logistics_equipment.html:50
+#: templates/panels/logistics_equipment.html:59
 msgid "Issues this item to the worker and reduces available warehouse stock."
 msgstr "Видає цю позицію працівникові та зменшує доступні складські запаси."
 
-#: templates/panels/logistics_equipment.html:50
+#: templates/panels/logistics_equipment.html:59
 msgid "Issue equipment"
 msgstr "Видати спорядження"
 
@@ -6286,6 +6369,9 @@ msgstr "Показано %(rail_limit)s останніх оновлених."
 #: templates/partials/worker_rail_body.html:34
 msgid "Open People"
 msgstr "Відкрити Люди"
+
+#~ msgid "Manage projects"
+#~ msgstr "Керувати проєктами"
 
 #~ msgid "Closing value"
 #~ msgstr "Кінцева вартість"

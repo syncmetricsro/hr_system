@@ -48,7 +48,7 @@ Legend: ✅ permitted · — denied
 | `transport.record` (Jober: feature off) | — | ✅ | ✅ | — |
 | `exit.reconcile` | — | ✅ | ✅ | — |
 | `approval.activate` (decide a pending activation request) | — | — | ✅ | — |
-| `project.manage` (**not enforced** — no create/edit/archive exists) | — | — | ✅ | — |
+| `project.manage` | — | — | ✅ | — |
 | `accommodation.manage` | — | — | ✅ | — |
 | `equipment.review_deduction` | — | — | ✅ | — |
 | `catalog.manage` | — | — | ✅ | — |
@@ -130,9 +130,9 @@ is visible only to their owning recruiter (plus Observer) — see
 ## Granted, but not enforced anywhere
 
 **A row in the Actions table means "this role is permitted this action". It
-does not mean the action is enforced somewhere.** **3 of the 37 actions have no
+does not mean the action is enforced somewhere.** **2 of the 37 actions have no
 server-side enforcement at all** (was 4 until `approval.activate` was wired on
-2026-07-27), so granting or revoking them changes nothing today. They are marked **not enforced** in the tables above.
+2026-07-27, and 3 until `project.manage` was wired on 2026-07-28), so granting or revoking them changes nothing today. They are marked **not enforced** in the tables above.
 
 Re-run the check before trusting any row (last done 2026-07-27). The criterion
 is a reference from a view, panel or service — a `{% can %}` in a template only
@@ -143,13 +143,18 @@ grep -rl "Action.<NAME>" --include=views.py --include=panels.py \
         --include=services.py core features
 ```
 
-Zero hits means nothing enforces it. Two of the three are referenced nowhere
-at all; `project.manage` has a visible button and no enforcement, which is the
-worse case — the UI advertises a capability that does not exist.
+Zero hits means nothing enforces it. Both remaining ones are referenced
+nowhere at all.
+
+`project.manage` was on this list until 2026-07-28 and is now enforced by
+`project_create` / `project_edit` / `project_set_active`. Worth recording what
+the entry got wrong: it said the action "has a visible button and no
+enforcement", but that button lives in `templates/pages/dashboard.html`, which
+**no view renders** — so it was invisible rather than misleading, and the page
+managers actually land on had no project entry point at all.
 
 | Action | What actually happens today |
 |---|---|
-| `project.manage` | Referenced only by `templates/pages/dashboard.html`, whose "Manage projects" button links to the read-only project list. No create, edit or archive exists. Item 15. |
 | `user.manage` | Nothing implements it — see below. Item 11. |
 | `sms.manage_templates` | Nothing implements it. `MessageTemplate` is editable only in Django admin, which needs a superuser no Jober role holds, and none are seeded. Item 16. |
 

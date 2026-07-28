@@ -1,5 +1,20 @@
 # Test Journal
 
+## 2026-07-28 - tests/test_project_management.py (18)
+
+- `test_a_manager_cannot_post_another_office_either` is the one that matters.
+  Narrowing a picker is presentation; the queryset is the validation, and only
+  a posted pk proves it.
+- `test_coordinators_from_another_office_are_rejected` guards against
+  reintroducing by hand the bug the demo seed had until 2026-07-26.
+- `test_a_duplicate_code_is_a_field_error_not_a_500` - `code` is unique, and a
+  hand-built form is where that becomes an IntegrityError.
+- `test_a_manager_can_edit_their_own_offices_project` pairs with the 403 test;
+  a blanket 403 satisfies the first alone.
+- `test_the_overview_page_offers_a_create_link` had to be rewritten mid-build:
+  it targeted `dashboard.html`, which no view renders. The failure is how that
+  was discovered.
+
 ## 2026-07-28 - tests/test_equipment_returns_flag.py (7)
 
 - `test_jober_has_no_return_route_at_all` asserts `NoReverseMatch`, not a 403.

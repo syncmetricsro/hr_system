@@ -8,6 +8,20 @@
   <p class="eyebrow">{% trans "Project" %} · {% if project.is_active %}{% trans "Active" %}{% else %}{% trans "Inactive" %}{% endif %}</p>
   <h1>{{ project.name }}</h1>
   <a class="button button-secondary" href="{% url 'project_list' %}">{% trans "Back to projects" %}</a>
+  {% can 'project.manage' as may_manage_projects %}
+  {% if may_manage_projects %}
+    <a class="button button-secondary" href="{% url 'project_edit' project.pk %}">{% icon "edit" %}{% trans "Edit" %}</a>
+    {% comment %}
+    Deactivate, never delete: assignments, trials, financial months and
+    transport weeks all PROTECT their project, so a used one cannot be removed.
+    {% endcomment %}
+    <form class="inline-form" method="post" action="{% url 'project_set_active' project.pk %}"
+          data-confirm="{% if project.is_active %}{% trans 'This deactivates the project. It stays in reports and keeps its history, but cannot be picked for new assignments.' %}{% else %}{% trans 'This reactivates the project so it can be picked again.' %}{% endif %}">
+      {% csrf_token %}
+      <input type="hidden" name="active" value="{% if project.is_active %}0{% else %}1{% endif %}">
+      <button class="button button-secondary" type="submit">{% if project.is_active %}{% trans "Deactivate" %}{% else %}{% trans "Reactivate" %}{% endif %}</button>
+    </form>
+  {% endif %}
 </section>
 
 <section class="two-column">
