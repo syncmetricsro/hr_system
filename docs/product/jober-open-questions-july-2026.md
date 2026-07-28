@@ -6,6 +6,9 @@ build slice rather than after it.
 
 Status as of 2026-07-28. Answers belong in this file, dated.
 
+**Answered so far:** question 2a and 2b (finance workbook — see below).
+Question 6 is the one that blocks build work.
+
 ---
 
 ## 1. Warehouse opening and closing value — which is it?
@@ -25,22 +28,57 @@ designed in from the start rather than bolted on.
 
 ---
 
-## 2. Finance workbook — which columns are inputs, and which period is it?
+## 2. Finance workbook — ✅ **ANSWERED 2026-07-28** (2a, 2b); 2c still open
 
-**2a. Inputs vs. computed.** Every finance category is currently a manual
-input. If some of them should instead be derived from the others, that changes
-the entry screen.
+**2a. Inputs vs. computed — answered by the workbook itself.**
 
-> **Context worth giving him:** he asked us to remove automatic derivation from
-> the Finance page. Verified against the code — **there was never any**.
-> `set_line_item()` stores a hand-typed amount and `recompute_month()` only
-> sums line items; finance imports nothing from people, logistics or
-> accommodation. What he saw was 54 months of *seeded demo data*, which looks
-> auto-populated but was written by the demo seeder. On the empty trial
-> instance those pages start blank.
+`docs/examples/HV 202510.xlsx` was read directly. **Nothing is derived from
+another category.** The sheet is projects-as-columns, categories-as-rows, in two
+office blocks (*Megyer* = Veľký Meder, and *DS*).
 
-**2b. The period discrepancy.** The file is named `HV 202510.xlsx` but the
-sheet inside is labelled **November 2025**. Which is the real period?
+| His rows | Count | Kind |
+|---|---|---|
+| `hrubá výplata bez zrážok` … `Iné náklady mimoriadne` | 20 | **typed input** (cost) |
+| `celkové náklady` | 1 | formula `SUM(B3:B23)` |
+| `faktúry` … `škoda` | 5 | **typed input** (revenue) |
+| `celkové výnosy` | 1 | formula `SUM(B26:B31)` |
+| `zisk/strata` | 1 | formula `B24+B32` |
+| `Summ Megyer`, `Summ DS`, `Summ Spolu` | 3 | formulas over the above |
+
+**25 inputs, 8 totals, and every total is a plain sum.** So he types all 25 by
+hand and nothing else — which is exactly what the app already does.
+`set_line_item()` stores a hand-typed amount, `recompute_month()` only sums, and
+no total is ever stored or asked for. **The app's 25 seeded `FinanceCategory`
+rows already match his 25 rows one-to-one, in his order**, so the entry screen
+mirrors his workbook.
+
+Nothing to change. He wanted manual entry with computed totals; that is what
+exists.
+
+> **⚠️ Practical warning — tell him before he enters November 2025.** His own
+> total for the **Minit** column is wrong. Every other column sums its costs
+> with `SUM(…:…23)`; Minit uses `SUM(C3:C22)` and **omits row 23**, so the €200
+> of `Iné náklady mimoriadne` is missing. His sheet says **−15 087,17**; the
+> twenty rows actually total **−15 287,17**, and Minit's profit is overstated by
+> €200.
+>
+> This matters operationally, not rhetorically: when he types those numbers in,
+> the app will show −15 287,17 and he will reasonably conclude the app is
+> broken. It is his SUM range, not our arithmetic. Say so first.
+
+**Two more observations from the file:**
+
+- **Győr is absent.** Only two office blocks. Either it postdates this period
+  or it is tracked elsewhere — worth confirming, since the app has three.
+- **His signs are inverted relative to ours.** He stores costs negative and
+  computes profit as `cost + revenue`; the app stores everything positive
+  (validators enforce it) and computes `revenue − cost`. Same result. But
+  anyone transcribing must **not** carry his minus signs across, or they will
+  be double-negated.
+
+**2b. The period discrepancy — answered.** It is **November 2025**. The
+workbook contains exactly one sheet, named `November 2025`; the `202510`
+filename is simply mislabelled (owner-confirmed 2026-07-28).
 
 **2c. How many charts?** He asked for *one* — monthly result across the year.
 The pages currently carry four: a monthly trend, a margin gauge, a by-group
