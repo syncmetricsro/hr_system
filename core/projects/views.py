@@ -16,7 +16,12 @@ from core.accounts.permissions import Action, require_action, user_office_scope
 from core.offices.scoping import may_see_person
 from core.accounts.permissions import can as user_can
 from core.people.models import InactiveReason, Person
-from core.projects.forms import TrialCreateForm, TrialEditForm, operable_projects
+from core.projects.forms import (
+    ProjectForm,
+    TrialCreateForm,
+    TrialEditForm,
+    operable_projects,
+)
 from core.projects.models import (
     ActivationApproval,
     ActivationApprovalStatus,
@@ -33,6 +38,8 @@ from core.projects.services import (
     get_or_create_readiness,
     record_trial_outcome,
     request_activation,
+    save_project,
+    set_project_active,
     schedule_trial,
     update_pending_trial,
     update_readiness,
@@ -403,3 +410,58 @@ def activation_decide(request: HttpRequest, pk: int) -> HttpResponse:
     except WorkflowError as exc:
         messages.error(request, str(exc))
     return redirect("activation_queue")
+
+
+@require_action(Action.PROJECT_MANAGE)
+def project_create(request: HttpRequest) -> HttpResponse:
+    """Create a project (production-readiness item 15).
+
+    The office picker is already narrowed to what this user may choose
+    (`apply_office_scope`), so a manager cannot file a project against another
+    office by selecting one - and cannot do it by posting one either, because
+    the field's queryset is the validation.
+    """
+    form = ProjectForm(request.POST or None, user=request.user)
+    if request.method == "POST" and form.is_valid():
+        project = save_project(form.save(commit=False), actor=request.user)
+        form.save_m2m()
+        messages.success(request, _("Project created."))
+        return redirect("project_detail", pk=project.pk)
+    return TemplateResponse(
+        request, "pages/project_form.html", {"form": form, "project": None}
+    )
+
+
+@require_action(Action.PROJECT_MANAGE)
+def project_edit(request: HttpRequest, pk: int) -> HttpResponse:
+    project = get_object_or_404(Project, pk=pk)
+    _assert_project_in_scope(request, project)
+    old = {
+        field: getattr(project, field)
+        for field in ("name", "partner", "code", "is_active")
+    }
+    form = ProjectForm(request.POST or None, instance=project, user=request.user)
+    if request.method == "POST" and form.is_valid():
+        save_project(form.save(commit=False), actor=request.user, old=old)
+        form.save_m2m()
+        messages.success(request, _("Project updated."))
+        return redirect("project_detail", pk=project.pk)
+    return TemplateResponse(
+        request, "pages/project_form.html", {"form": form, "project": project}
+    )
+
+
+@require_POST
+@require_action(Action.PROJECT_MANAGE)
+def project_set_active(request: HttpRequest, pk: int) -> HttpResponse:
+    """Deactivate or reactivate. Never delete - four models PROTECT a project,
+    so a used one cannot be removed and pretending otherwise would only fail
+    at the database."""
+    project = get_object_or_404(Project, pk=pk)
+    _assert_project_in_scope(request, project)
+    active = request.POST.get("active") == "1"
+    set_project_active(project, active=active, actor=request.user)
+    messages.success(
+        request, _("Project reactivated.") if active else _("Project deactivated.")
+    )
+    return redirect("project_detail", pk=project.pk)

@@ -100,7 +100,14 @@ app_routes = [
         name="recycle_person",
     ),
     path("projects/", project_views.project_list, name="project_list"),
+    path("projects/new/", project_views.project_create, name="project_create"),
     path("projects/<int:pk>/", project_views.project_detail, name="project_detail"),
+    path("projects/<int:pk>/edit/", project_views.project_edit, name="project_edit"),
+    path(
+        "projects/<int:pk>/active/",
+        project_views.project_set_active,
+        name="project_set_active",
+    ),
 ]
 
 # Trials/readiness stay in core/projects physically (extraction-plan deviation)

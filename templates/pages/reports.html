@@ -1,5 +1,5 @@
 {% extends "layouts/base.html" %}
-{% load i18n nav static %}
+{% load i18n nav static rbac icons %}
 
 {% block title %}{% trans "Reports" %} · {{ BRAND_NAME }}{% endblock %}
 
@@ -7,6 +7,17 @@
 <section class="page-head">
   <p class="eyebrow">{% trans "Operations" %}</p>
   <h1>{% trans "Reports" %}</h1>
+  {% comment %}
+  This is the page the `dashboard` URL actually renders (core/ui/views.py's
+  dashboard() delegates to reports()). `templates/pages/dashboard.html` is not
+  rendered by any view, so the "Manage projects" button recorded in
+  production-readiness item 15 was never visible - the real page simply had no
+  way to create a project at all.
+  {% endcomment %}
+  {% can 'project.manage' as may_manage_projects %}
+  {% if may_manage_projects %}
+    <a class="button button-primary" href="{% url 'project_create' %}">{% icon "add" %}{% trans "New project" %}</a>
+  {% endif %}
 </section>
 
 <section class="dashboard-grid" aria-label="{% trans 'Reports' %}">
