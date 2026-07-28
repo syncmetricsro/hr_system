@@ -4,7 +4,7 @@ import pytest
 from django.urls import reverse
 from django.utils import translation
 
-from core.ui.help import ARTICLE_TEMPLATES, HELP_GROUPS, available_groups
+from core.ui.help import ARTICLE_TEMPLATES, available_groups
 
 pytestmark = pytest.mark.django_db
 
