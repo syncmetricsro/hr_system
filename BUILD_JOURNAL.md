@@ -1,5 +1,37 @@
 # Build Journal
 
+## 2026-07-28 - J5: the goods-receipt log, which needed no new model
+
+The client demonstrated the gap live: after receiving 3 helmets and 2 boots he
+could see the new totals but could not answer "what did I take in today?".
+
+The fix list said to check whether the receipt header is persisted before
+adding a model. It is - `receive_stock()` has been writing
+`EquipmentStockReceipt` and its lines since the warehouse slice, and nothing
+ever read them back. So this is a read view over existing records: **no model,
+no migration.**
+
+- **List and detail**, newest first, with supplier, reference, office and who
+  recorded it. Totals are summed from the lines rather than stored, like every
+  other money figure here, so a receipt can never disagree with what it
+  contains.
+- **Period filtering reuses J7's control** rather than a fourth month picker,
+  which is the whole reason J7 came first.
+- **Office-scoped from the first commit, list *and* detail.** A receipt names a
+  supplier, a reference and a value belonging to one office. After three leaks
+  of exactly this shape in one week, the `_assert_receipt_in_scope` guard went
+  in with the feature rather than after it, with a companion test asserting a
+  manager can still open their *own* office's receipt - a blanket 403 would
+  satisfy the leak test while breaking the feature.
+- **The seed now spreads receipts across two months.** Every seeded receipt
+  previously carried the same date, four days before the current month starts,
+  so the default current-month view showed nothing and only a year selection
+  revealed anything. That reads as missing data rather than as an empty period.
+  A second, smaller top-up receipt two months earlier makes both the log and
+  the period filter demonstrable.
+
+Suites: 818 Jober, 493 CorvinumEU.
+
 ## 2026-07-28 - The audit backfill only reached 8 of 900 events
 
 Deploying J1 and checking it against the real staging database, rather than
@@ -38,6 +70,7 @@ attribution correctly. Only pre-existing rows were broken, and only a real
 database has those.
 
 Suites: 814 Jober, 493 CorvinumEU.
+
 
 ## 2026-07-28 - J7: one reporting-period control, and what J10 actually was
 

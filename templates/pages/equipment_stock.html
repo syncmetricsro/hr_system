@@ -7,6 +7,7 @@
   <p class="eyebrow">{% trans "Equipment" %}</p>
   <h1>{% trans "Warehouse stock" %}</h1>
   {% if can_manage %}<a class="button button-primary" href="{% url 'equipment_stock_receive' %}">{% icon "receive" %}{% trans "Receive stock" %}</a>{% endif %}
+  <a class="button button-secondary" href="{% url 'goods_receipt_log' %}">{% trans "Goods receipts" %}</a>
   {% if can_manage %}<a class="button button-secondary" href="{% url 'equipment_catalog' %}">{% trans "Catalogue" %}</a>{% endif %}
 </section>
 

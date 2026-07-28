@@ -1,0 +1,39 @@
+{% extends "layouts/base.html" %}
+{% load i18n nav %}
+
+{% block title %}{% trans "Goods receipt" %} · {{ BRAND_NAME }}{% endblock %}
+{% block content %}
+<section class="page-head">
+  <p class="eyebrow">{% trans "Warehouse" %}</p>
+  <h1>{{ receipt.received_on|date:"Y-m-d" }}{% if receipt.reference %} · {{ receipt.reference }}{% endif %}</h1>
+  <a class="button button-secondary" href="{% url 'goods_receipt_log' %}">{% trans "Back to receipts" %}</a>
+</section>
+
+<section class="panel">
+  <dl class="detail-grid">
+    <div><dt>{% trans "Supplier" %}</dt><dd>{{ receipt.supplier|default:"—" }}</dd></div>
+    <div><dt>{% trans "Reference" %}</dt><dd>{{ receipt.reference|default:"—" }}</dd></div>
+    <div><dt>{% trans "Office" %}</dt><dd>{{ receipt.office.name|default:"—" }}</dd></div>
+    <div><dt>{% trans "Recorded by" %}</dt><dd>{{ receipt.recorded_by|default:"—" }}</dd></div>
+    <div><dt>{% trans "Units received" %}</dt><dd>{{ quantity }}</dd></div>
+    <div><dt>{% trans "Total value" %}</dt><dd>{{ value }} EUR</dd></div>
+  </dl>
+  {% if receipt.note %}<p class="muted">{{ receipt.note }}</p>{% endif %}
+</section>
+
+<section class="field-list" aria-label="{% trans 'Receipt lines' %}">
+  {% for line in lines %}
+    <article class="field-card">
+      <div>
+        <h3>{{ line.item.name|db_trans }}{% if line.item.size %} · {{ line.item.size }}{% endif %}</h3>
+      </div>
+      <dl>
+        <div><dt>{% trans "Quantity" %}</dt><dd>{{ line.quantity }}</dd></div>
+        <div><dt>{% trans "Total value" %}</dt><dd>{{ line.total_value }} EUR</dd></div>
+      </dl>
+    </article>
+  {% empty %}
+    <p class="muted">{% trans "This receipt has no lines." %}</p>
+  {% endfor %}
+</section>
+{% endblock %}

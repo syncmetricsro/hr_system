@@ -127,4 +127,24 @@ class Command(BaseCommand):
                 office=office,
             )
 
+            # A second, smaller top-up two months earlier. Without it every
+            # receipt sits in one month, so the goods-receipt log and the
+            # period filter both show a single row and the year/multi-month
+            # granularities look broken rather than empty (J5/J7).
+            receive_stock(
+                received_on=month_start - timedelta(days=64),
+                operation_key=uuid5(NAMESPACE_URL, f"jober-demo-stock-topup-v1-{code}"),
+                reference=f"DEMO-TOPUP-{code}",
+                supplier="Fictional Workwear s.r.o.",
+                lines=[
+                    {
+                        "item": items[1],
+                        "quantity": max(2, vests // 4),
+                        "total_value": Decimal("7.50") * max(2, vests // 4),
+                    },
+                ],
+                actor=coordinator,
+                office=office,
+            )
+
         self.stdout.write(self.style.SUCCESS("Logistics demo data seeded."))

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-28 01:54+0200\n"
+"POT-Creation-Date: 2026-07-28 02:37+0200\n"
 "Language: sk\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -818,7 +818,8 @@ msgstr "Typ postihnutia"
 
 #: core/people/forms.py:48 features/finance/catalog_i18n.py:26
 #: features/logistics/forms.py:74 features/logistics/forms.py:228
-#: templates/pages/equipment_stock.html:44
+#: templates/pages/equipment_stock.html:48
+#: templates/pages/goods_receipt_detail.html:16
 #: templates/pages/project_detail.html:20
 msgid "Office"
 msgstr "Pobočka"
@@ -1448,28 +1449,28 @@ msgstr "Aktivácia bola vyžiadaná — rozhodne manažér."
 msgid "Decision recorded."
 msgstr "Rozhodnutie zaznamenané."
 
-#: core/reporting/periods.py:45 templates/partials/period_filter.html:22
+#: core/reporting/periods.py:45 templates/partials/period_filter.html:24
 msgid "Day"
 msgstr "Deň"
 
-#: core/reporting/periods.py:46 templates/partials/period_filter.html:26
+#: core/reporting/periods.py:46 templates/partials/period_filter.html:28
 msgid "Week"
 msgstr "Týždeň"
 
 #: core/reporting/periods.py:47 templates/pages/finance_summary.html:75
 #: templates/partials/ledger_cycle.html:8
-#: templates/partials/period_filter.html:30
+#: templates/partials/period_filter.html:32
 msgid "Month"
 msgstr "Mesiac"
 
-#: core/reporting/periods.py:48 templates/partials/period_filter.html:37
+#: core/reporting/periods.py:48 templates/partials/period_filter.html:42
 msgid "Several months"
 msgstr "Viac mesiacov"
 
 #: core/reporting/periods.py:49 templates/pages/finance_summary.html:72
 #: templates/partials/ledger_cycle.html:5
-#: templates/partials/period_filter.html:38
-#: templates/partials/period_filter.html:52
+#: templates/partials/period_filter.html:43
+#: templates/partials/period_filter.html:57
 msgid "Year"
 msgstr "Rok"
 
@@ -2323,7 +2324,7 @@ msgid "Yes/No"
 msgstr "Áno/Nie"
 
 #: features/intake/models.py:19 features/logistics/forms.py:234
-#: templates/pages/equipment_stock.html:45
+#: templates/pages/equipment_stock.html:49
 #: templates/partials/ledger_activity.html:8
 #: templates/partials/ledger_activity.html:26
 msgid "Date"
@@ -2542,11 +2543,11 @@ msgstr "Prijímajúca pobočka"
 msgid "The warehouse this stock is received into."
 msgstr "Sklad, do ktorého sa tieto zásoby prijímajú."
 
-#: features/logistics/forms.py:176
+#: features/logistics/forms.py:176 templates/pages/goods_receipt_detail.html:15
 msgid "Reference"
 msgstr "Referencia"
 
-#: features/logistics/forms.py:177
+#: features/logistics/forms.py:177 templates/pages/goods_receipt_detail.html:14
 msgid "Supplier"
 msgstr "Dodávateľ"
 
@@ -2557,17 +2558,20 @@ msgid "Note"
 msgstr "Poznámka"
 
 #: features/logistics/forms.py:191 features/logistics/forms.py:225
-#: templates/pages/equipment_stock.html:43
+#: templates/pages/equipment_stock.html:47
 #: templates/panels/logistics_equipment.html:46
 msgid "Item"
 msgstr "Položka"
 
-#: features/logistics/forms.py:193 templates/pages/equipment_stock.html:32
+#: features/logistics/forms.py:193 templates/pages/equipment_stock.html:36
+#: templates/pages/goods_receipt_detail.html:31
 #: templates/panels/logistics_equipment.html:49
 msgid "Quantity"
 msgstr "Množstvo"
 
-#: features/logistics/forms.py:195
+#: features/logistics/forms.py:195 templates/pages/goods_receipt_detail.html:19
+#: templates/pages/goods_receipt_detail.html:32
+#: templates/pages/goods_receipts.html:19
 msgid "Total value"
 msgstr "Celková hodnota"
 
@@ -2579,18 +2583,18 @@ msgstr "Vyplňte položku, množstvo a celkovú hodnotu."
 msgid "The warehouse whose stock is being adjusted."
 msgstr "Sklad, ktorého zásoby sa upravujú."
 
-#: features/logistics/forms.py:236 templates/pages/equipment_stock.html:46
+#: features/logistics/forms.py:236 templates/pages/equipment_stock.html:50
 msgid "Quantity adjustment"
 msgstr "Úprava množstva"
 
-#: features/logistics/forms.py:238 templates/pages/equipment_stock.html:47
+#: features/logistics/forms.py:238 templates/pages/equipment_stock.html:51
 msgid "Value for positive adjustment"
 msgstr "Hodnota pri kladnej úprave"
 
 #: features/logistics/forms.py:243 templates/pages/activation_queue.html:32
 #: templates/pages/audit_log.html:44 templates/pages/blacklist_queue.html:23
 #: templates/pages/blacklist_queue.html:28
-#: templates/pages/equipment_stock.html:48
+#: templates/pages/equipment_stock.html:52
 #: templates/pages/finance_month_detail.html:19
 #: templates/pages/person_detail.html:241
 #: templates/panels/blacklist_case.html:11
@@ -2884,7 +2888,7 @@ msgstr "Otvorte náklady na ubytovanie, obsadené miesta a priradené náklady."
 #: templates/pages/equipment_catalog.html:11
 #: templates/pages/equipment_stock.html:4
 #: templates/pages/equipment_stock.html:8
-#: templates/pages/equipment_stock.html:29
+#: templates/pages/equipment_stock.html:33
 #: templates/pages/equipment_stock_receive.html:6
 msgid "Warehouse stock"
 msgstr "Skladové zásoby"
@@ -2910,160 +2914,160 @@ msgid "Open issued equipment awaiting return or a deduction decision."
 msgstr ""
 "Otvorte vydané vybavenie čakajúce na vrátenie alebo rozhodnutie o zrážke."
 
-#: features/logistics/services.py:77
+#: features/logistics/services.py:76
 msgid "Amounts use a positive convention; negative values are not allowed."
 msgstr "Sumy používajú kladnú konvenciu; záporné hodnoty nie sú povolené."
 
-#: features/logistics/services.py:277
+#: features/logistics/services.py:276
 msgid "Only active rooms in active locations can be assigned."
 msgstr "Prideľovať možno iba aktívne izby v aktívnych ubytovaniach."
 
-#: features/logistics/services.py:282
+#: features/logistics/services.py:281
 msgid "Room is at full capacity."
 msgstr "Izba je plne obsadená."
 
-#: features/logistics/services.py:530
+#: features/logistics/services.py:529
 #, python-format
 msgid "Only %(available)s units are available in %(office)s's stock."
 msgstr "Na sklade pobočky %(office)s je dostupných iba %(available)s kusov."
 
-#: features/logistics/services.py:534
+#: features/logistics/services.py:533
 #, python-format
 msgid "Only %(available)s units are available in stock."
 msgstr "Na sklade je dostupných iba %(available)s ks."
 
-#: features/logistics/services.py:602
+#: features/logistics/services.py:601
 msgid "Receipt quantities must be at least one."
 msgstr "Prijaté množstvo musí byť aspoň jedna."
 
-#: features/logistics/services.py:605
+#: features/logistics/services.py:604
 msgid "Add at least one receipt line."
 msgstr "Pridajte aspoň jeden riadok príjmu."
 
-#: features/logistics/services.py:643
+#: features/logistics/services.py:642
 msgid "A non-zero adjustment and reason are required."
 msgstr "Vyžaduje sa nenulová úprava a dôvod."
 
-#: features/logistics/services.py:734
+#: features/logistics/services.py:773
 msgid "This equipment item is inactive and cannot be issued."
 msgstr "Táto položka vybavenia je neaktívna a nemožno ju vydať."
 
-#: features/logistics/services.py:738
+#: features/logistics/services.py:777
 msgid "An operation key is required for stock-tracked issuance."
 msgstr "Pri výdaji sledovanom skladom sa vyžaduje kľúč operácie."
 
-#: features/logistics/services.py:749
+#: features/logistics/services.py:788
 msgid "Set this person's office before issuing stock-tracked equipment."
 msgstr ""
 "Pred vydaním skladovo sledovaného vybavenia nastavte pobočku tejto osoby."
 
-#: features/logistics/services.py:804 features/logistics/services.py:836
+#: features/logistics/services.py:843 features/logistics/services.py:875
 msgid "A transport record already exists for this project and week."
 msgstr "Pre tento projekt a týždeň už existuje záznam dopravy."
 
-#: features/logistics/services.py:908
+#: features/logistics/services.py:947
 msgid "Choose whether the returned equipment is reusable or retired."
 msgstr "Vyberte, či je vrátené vybavenie znovu použiteľné alebo vyradené."
 
-#: features/logistics/views.py:275
+#: features/logistics/views.py:278
 msgid "Accommodation created. Add rooms to make it assignable."
 msgstr ""
 "Ubytovanie bolo vytvorené. Pridajte izby, aby ho bolo možné prideľovať."
 
-#: features/logistics/views.py:291
+#: features/logistics/views.py:294
 msgid "Accommodation updated."
 msgstr "Ubytovanie bolo aktualizované."
 
-#: features/logistics/views.py:310
+#: features/logistics/views.py:313
 msgid "Room created."
 msgstr "Izba bola vytvorená."
 
-#: features/logistics/views.py:327
+#: features/logistics/views.py:330
 msgid "Room updated."
 msgstr "Izba bola aktualizovaná."
 
-#: features/logistics/views.py:369
+#: features/logistics/views.py:372
 msgid "Accommodation cost period saved."
 msgstr "Obdobie nákladov na ubytovanie bolo uložené."
 
-#: features/logistics/views.py:371
+#: features/logistics/views.py:374
 msgid "Review the accommodation cost details."
 msgstr "Skontrolujte údaje o nákladoch na ubytovanie."
 
-#: features/logistics/views.py:382
+#: features/logistics/views.py:385
 msgid "Room rate saved."
 msgstr "Sadzba izby uložená."
 
-#: features/logistics/views.py:384 features/logistics/views.py:401
-#: features/logistics/views.py:420
+#: features/logistics/views.py:387 features/logistics/views.py:404
+#: features/logistics/views.py:423
 msgid "Invalid amount."
 msgstr "Neplatná suma."
 
-#: features/logistics/views.py:399
+#: features/logistics/views.py:402
 msgid "Rate override saved."
 msgstr "Úprava sadzby uložená."
 
-#: features/logistics/views.py:418
+#: features/logistics/views.py:421
 msgid "Worker accommodation payment saved."
 msgstr "Platba pracovníka za ubytovanie bola uložená."
 
-#: features/logistics/views.py:440
+#: features/logistics/views.py:443
 msgid "Room assigned."
 msgstr "Izba pridelená."
 
-#: features/logistics/views.py:452
+#: features/logistics/views.py:455
 msgid "Room released."
 msgstr "Izba uvoľnená."
 
-#: features/logistics/views.py:526
+#: features/logistics/views.py:574
 msgid "Stock receipt recorded."
 msgstr "Príjem zásob bol zaznamenaný."
 
-#: features/logistics/views.py:553
+#: features/logistics/views.py:601
 msgid "Stock adjustment recorded."
 msgstr "Úprava zásob bola zaznamenaná."
 
-#: features/logistics/views.py:557
+#: features/logistics/views.py:605
 msgid "Review the stock adjustment and try again."
 msgstr "Skontrolujte úpravu zásob a skúste to znova."
 
-#: features/logistics/views.py:566
+#: features/logistics/views.py:614
 msgid "Equipment item created."
 msgstr "Položka vybavenia vytvorená."
 
-#: features/logistics/views.py:583
+#: features/logistics/views.py:631
 msgid "Equipment item updated."
 msgstr "Položka vybavenia aktualizovaná."
 
-#: features/logistics/views.py:608
+#: features/logistics/views.py:656
 msgid "Equipment issued."
 msgstr "Vybavenie vydané."
 
-#: features/logistics/views.py:610
+#: features/logistics/views.py:658
 msgid "Invalid equipment issue."
 msgstr "Neplatný výdaj vybavenia."
 
-#: features/logistics/views.py:622
+#: features/logistics/views.py:670
 msgid "Equipment returned."
 msgstr "Vybavenie vrátené."
 
-#: features/logistics/views.py:634
+#: features/logistics/views.py:682
 msgid "Flagged for deduction review."
 msgstr "Označené na kontrolu zrážky."
 
-#: features/logistics/views.py:662
+#: features/logistics/views.py:710
 msgid "Review recorded."
 msgstr "Kontrola zaznamenaná."
 
-#: features/logistics/views.py:683 features/logistics/views.py:702
+#: features/logistics/views.py:731 features/logistics/views.py:750
 msgid "Transport week recorded."
 msgstr "Týždeň dopravy zaznamenaný."
 
-#: features/logistics/views.py:685
+#: features/logistics/views.py:733
 msgid "Review the transport details and try again."
 msgstr "Skontrolujte údaje o doprave a skúste to znova."
 
-#: features/logistics/views.py:734
+#: features/logistics/views.py:782
 msgid "Transport record updated."
 msgstr "Záznam dopravy bol aktualizovaný."
 
@@ -4079,7 +4083,8 @@ msgstr ""
 msgid "Field"
 msgstr "Terén"
 
-#: templates/layouts/base.html:51
+#: templates/layouts/base.html:51 templates/pages/goods_receipt_detail.html:7
+#: templates/pages/goods_receipts.html:7
 msgid "Warehouse"
 msgstr "Sklad"
 
@@ -4184,7 +4189,7 @@ msgstr "Mesiac výkazu"
 #: templates/pages/project_list.html:21
 #: templates/pages/transport_trends.html:37
 #: templates/pages/trials_queue.html:41
-#: templates/partials/period_filter.html:59
+#: templates/partials/period_filter.html:64
 msgid "Filter"
 msgstr "Filtrovať"
 
@@ -4731,46 +4736,53 @@ msgid "Receive stock"
 msgstr "Prijať zásoby"
 
 #: templates/pages/equipment_stock.html:10
+#: templates/pages/goods_receipts.html:4 templates/pages/goods_receipts.html:8
+#: templates/pages/goods_receipts.html:23
+msgid "Goods receipts"
+msgstr "Príjemky"
+
+#: templates/pages/equipment_stock.html:11
 msgid "Catalogue"
 msgstr "Katalóg"
 
-#: templates/pages/equipment_stock.html:14
+#: templates/pages/equipment_stock.html:15
 msgid "Units available"
 msgstr "Dostupné kusy"
 
-#: templates/pages/equipment_stock.html:15
+#: templates/pages/equipment_stock.html:16
 msgid "Current stock value"
 msgstr "Aktuálna hodnota zásob"
 
-#: templates/pages/equipment_stock.html:25
+#: templates/pages/equipment_stock.html:29
 msgid "No stock movements in this period."
 msgstr "V tomto období nie sú žiadne pohyby zásob."
 
-#: templates/pages/equipment_stock.html:33
+#: templates/pages/equipment_stock.html:37
+#: templates/pages/goods_receipts.html:32
 #: templates/panels/logistics_equipment.html:7
 msgid "Value"
 msgstr "Hodnota"
 
-#: templates/pages/equipment_stock.html:35
+#: templates/pages/equipment_stock.html:39
 msgid "No stock has been received."
 msgstr "Neboli prijaté žiadne zásoby."
 
-#: templates/pages/equipment_stock.html:39
+#: templates/pages/equipment_stock.html:43
 msgid "Controlled correction"
 msgstr "Kontrolovaná oprava"
 
-#: templates/pages/equipment_stock.html:40
+#: templates/pages/equipment_stock.html:44
 msgid "Stock adjustment"
 msgstr "Úprava zásob"
 
-#: templates/pages/equipment_stock.html:41
+#: templates/pages/equipment_stock.html:45
 msgid ""
 "This posts an auditable stock adjustment and cannot edit prior movements."
 msgstr ""
 "Táto akcia zaúčtuje auditovateľnú úpravu zásob a nemení predchádzajúce "
 "pohyby."
 
-#: templates/pages/equipment_stock.html:49
+#: templates/pages/equipment_stock.html:53
 msgid ""
 "This changes the recorded stock quantity for this item and cannot edit prior "
 "movements."
@@ -4778,13 +4790,14 @@ msgstr ""
 "Táto akcia zmení evidovaný stav zásob tejto položky a nemení predchádzajúce "
 "pohyby."
 
-#: templates/pages/equipment_stock.html:49
+#: templates/pages/equipment_stock.html:53
 msgid "Post adjustment"
 msgstr "Zaúčtovať úpravu"
 
 #: templates/pages/equipment_stock_receive.html:9
+#: templates/pages/goods_receipt_detail.html:24
 msgid "Receipt lines"
-msgstr "Riadky príjmu"
+msgstr "Riadky príjemky"
 
 #: templates/pages/equipment_stock_receive.html:11
 msgid "Record receipt"
@@ -5051,6 +5064,48 @@ msgstr "Príjmy, náklady a čisté podľa mesiacov v roku %(year)s"
 #: templates/pages/finance_year.html:56
 msgid "Net result by project chart"
 msgstr "Graf čistého výsledku podľa projektu"
+
+#: templates/pages/goods_receipt_detail.html:4
+msgid "Goods receipt"
+msgstr "Príjemka"
+
+#: templates/pages/goods_receipt_detail.html:9
+msgid "Back to receipts"
+msgstr "Späť na príjemky"
+
+#: templates/pages/goods_receipt_detail.html:17
+#: templates/pages/goods_receipts.html:33 templates/pages/wages.html:42
+msgid "Recorded by"
+msgstr "Zaznamenal"
+
+#: templates/pages/goods_receipt_detail.html:18
+#: templates/pages/goods_receipts.html:18
+msgid "Units received"
+msgstr "Prijaté kusy"
+
+#: templates/pages/goods_receipt_detail.html:36
+msgid "This receipt has no lines."
+msgstr "Táto príjemka nemá žiadne riadky."
+
+#: templates/pages/goods_receipts.html:9
+msgid "Back to stock"
+msgstr "Späť na sklad"
+
+#: templates/pages/goods_receipts.html:12
+msgid "What was booked into the warehouse, newest first."
+msgstr "Čo bolo prijaté na sklad, od najnovšieho."
+
+#: templates/pages/goods_receipts.html:17
+msgid "Receipts"
+msgstr "Príjemky"
+
+#: templates/pages/goods_receipts.html:31
+msgid "Units"
+msgstr "Kusy"
+
+#: templates/pages/goods_receipts.html:37
+msgid "No goods receipts in this period."
+msgstr "V tomto období nie sú žiadne príjemky."
 
 #: templates/pages/help_index.html:8
 msgid "Documentation"
@@ -5729,10 +5784,6 @@ msgstr "Zaznamenané hrubé mzdy"
 msgid "Wage month"
 msgstr "Mzdový mesiac"
 
-#: templates/pages/wages.html:42
-msgid "Recorded by"
-msgstr "Zaznamenal"
-
 #: templates/pages/wages.html:55
 msgid "No gross wages recorded."
 msgstr "Nie sú zaznamenané žiadne hrubé mzdy."
@@ -6074,11 +6125,11 @@ msgstr "Označiť cyklus ako vysporiadaný"
 msgid "No entries in this cycle window."
 msgstr "V tomto cykle nie sú žiadne záznamy."
 
-#: templates/partials/period_filter.html:13
+#: templates/partials/period_filter.html:15
 msgid "Period"
 msgstr "Obdobie"
 
-#: templates/partials/period_filter.html:61
+#: templates/partials/period_filter.html:66
 #, python-format
 msgid "Showing: %(selection)s"
 msgstr "Zobrazuje sa: %(selection)s"
