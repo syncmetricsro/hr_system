@@ -32,6 +32,46 @@ no migration.**
 
 Suites: 818 Jober, 493 CorvinumEU.
 
+## 2026-07-28 - The audit backfill only reached 8 of 900 events
+
+Deploying J1 and checking it against the real staging database, rather than
+against a freshly seeded test one, showed the fix had not actually fixed the
+client's complaint. Searching the audit log for a worker still returned **zero
+rows** for every account.
+
+The migration attributed **8 of 900** events. Its own docstring said why - a
+data migration works with historical models that carry no relations, and `core`
+must not import `features` to learn that an `EquipmentIssue` has a `.person` -
+but the consequence was underestimated when it was written. `equipment.issued`,
+`room.assigned`, `blacklist.proposed`, `trial.scheduled`, `sms.sent`: none were
+attributed, and those are exactly the events a manager means by "what happened
+to this worker?". Only `person.lifecycle_changed`, where the target *is* the
+person, came through.
+
+A management command has what a migration lacks: real models. Resolving
+`target_type` through the app registry needs no core-to-feature import, and the
+resolution rule is the same one `record_event` applies to new events, so
+history ends up attributed the way the future already is.
+
+Verified against the real staging data before writing it, as a dry run: **25
+further events** would be attributed, all of them worker actions. What stays
+unattributed is correctly impersonal - 738 finance line items, 108 financial
+months, receipts, rooms, cost periods - plus two `ActivationApproval` rows
+whose target no longer exists, because a consumed approval was deleted during
+last week's verification. A person deleted since the event was written also
+stays unattributed rather than pointing at a recycled primary key.
+
+**This is a deploy-step change, not just code:** the command has to be run after
+migrating any database that carries history. Recorded in the deployment runbook.
+
+The general lesson is the one this week keeps repeating: the local test passed
+because it created its events through `record_event`, which resolves
+attribution correctly. Only pre-existing rows were broken, and only a real
+database has those.
+
+Suites: 814 Jober, 493 CorvinumEU.
+
+
 ## 2026-07-28 - J7: one reporting-period control, and what J10 actually was
 
 The client could not ask for "the whole of 2026" - selecting a year collapsed
