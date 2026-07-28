@@ -298,3 +298,36 @@ window.JoberShell = {
     sync();
   });
 })();
+
+// Worker status rail (J8): remember the collapsed state per browser, and start
+// collapsed on narrow viewports so the rail never covers the page on arrival.
+(function () {
+  var rail = document.querySelector("[data-worker-rail]");
+  if (!rail) return;
+  var toggle = rail.querySelector("[data-worker-rail-toggle]");
+  if (!toggle) return;
+
+  var KEY = "jober-worker-rail-collapsed";
+  var stored = null;
+  try { stored = window.localStorage.getItem(KEY); } catch (err) { stored = null; }
+
+  // Collapsed by default, deliberately. Expanded, the rail reserves a 20rem
+  // gutter so it never covers page content - but CorvinumEU centres its main
+  // column at 1280px beside a 280px sidebar, so there is no width to give away
+  // without narrowing every page for a client that did not ask for the rail.
+  // Opt-in keeps it one click away without imposing that cost.
+  var collapsed = stored === null ? true : stored === "true";
+
+  function apply() {
+    rail.setAttribute("data-collapsed", collapsed ? "true" : "false");
+    toggle.setAttribute("aria-expanded", collapsed ? "false" : "true");
+  }
+
+  toggle.addEventListener("click", function () {
+    collapsed = !collapsed;
+    try { window.localStorage.setItem(KEY, String(collapsed)); } catch (err) { /* private mode */ }
+    apply();
+  });
+
+  apply();
+})();

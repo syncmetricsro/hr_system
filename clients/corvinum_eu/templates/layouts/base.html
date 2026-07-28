@@ -139,6 +139,7 @@
         {% block content %}{% endblock %}
       </main>
     </div>
+    {% if user.is_authenticated %}{% include "partials/worker_rail.html" %}{% endif %}
     {% if user.is_authenticated %}{% include "notifications/panel.html" %}{% endif %}
     {% include "partials/tooltip.html" %}
     {% include "partials/confirm_dialog.html" %}

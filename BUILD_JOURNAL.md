@@ -1,5 +1,61 @@
 # Build Journal
 
+## 2026-07-28 - J8: the persistent worker status rail
+
+An always-visible list of workers and their current state, with the
+notification centre in the same rail region, as the client asked.
+
+Three constraints in the brief drove the shape, and each of them turned out to
+have an existing answer in the codebase rather than needing a new mechanism:
+
+- **"Must not become an N+1 query on every page render. Cache or defer-load
+  it."** The notification centre already defers its contents through `hx-get`
+  and re-fetches on an event; the rail does the same. An ordinary page ships
+  the rail's shell and none of its data, and the fragment costs a constant
+  number of queries. The test asserts *that*, not a magic number: resolving the
+  office scope is its own query and a legitimate constant, so what is pinned is
+  that twenty workers cost what one does.
+- **"Corvinum's status vocabulary is the candidate pipeline, not
+  working/not-working. Drive the labels from the client's lifecycle
+  configuration."** Both clients in fact share `LifecycleStatus` - CorvinumEU
+  simply enables `TRIAL_DAY` - so rendering from its choices through the same
+  `status_pill` the People list uses satisfies this by construction. The brief
+  implied Corvinum needed a separate vocabulary; in the code it does not, which
+  made this simpler than written.
+- **"Scoped exactly like the People list."** `scope_people`, which also covers
+  the coordinator case the brief calls out. The status counts above the list are
+  scoped too - a summary over a scoped list that is not itself scoped is the
+  precise bug that shipped three times this week, so it has its own test.
+
+Capped at 60 most-recently-updated with an explicit "open People" link rather
+than paginating: the rail is a glance, not a directory, and an uncapped list
+would degrade quietly as the workforce grows.
+
+**The rail is collapsed by default, which is a deliberate deviation from
+"always-visible", and e2e is what forced the question.** The first version was
+a fixed overlay; it covered page content and intercepted a click, failing a
+CorvinumEU test. Reserving a 20rem gutter fixed that and then failed a second
+test that pins CorvinumEU's content width - correctly, because the gutter
+narrows every page by 320px. CorvinumEU centres a 1280px column beside a 280px
+sidebar, so at a 1650px viewport there is simply no width to give away, and
+imposing that on a client who never asked for the rail is a worse outcome than
+one click. Expanded, it still reserves the gutter rather than floating over
+content; collapsed, it costs nothing and does not even fetch (`hx-trigger`
+is `revealed`). The state is remembered per browser.
+
+Worth raising with the client: he asked for always-visible, and this is
+one-click-away instead. The brief invited the trade ("pick one and justify it
+against the existing sidebar layout"), but the justification is a real
+constraint rather than a preference.
+
+**The person-card icons the brief also mentions were deliberately not guessed
+at.** The current indicators are written up as question 4 of
+`docs/product/jober-open-questions-july-2026.md` for the client to choose from -
+including the fact that the blacklist indicator he listed as confirmed-working
+is a banner on the person *detail* page, not an icon in the people list.
+
+Suites: 851 Jober, 510 CorvinumEU.
+
 ## 2026-07-28 - J9 first slice: Help articles now match the client's feature set
 
 The visual-aids plan for J9 flagged this as production-readiness item 10, and
@@ -45,6 +101,7 @@ plan at `~/.claude/plans/` has the generation prompts; capture needs a
 `scripts/capture_help_screens.sh`, a `COPY static/help` line in the Dockerfile
 (subdirectories are copied individually), and a staticfiles-discoverability
 test mirroring `test_default_avatar_file_is_actually_discoverable_by_staticfiles`.
+
 
 ## 2026-07-28 - J2: staff activity statistics, and two field checks I got wrong
 
