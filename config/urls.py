@@ -55,6 +55,11 @@ app_routes = [
         name="notification_panel",
     ),
     path(
+        "workers/rail/",
+        people_views.worker_status_rail,
+        name="worker_status_rail",
+    ),
+    path(
         "notifications/dismiss/",
         notification_views.notification_dismiss,
         name="notification_dismiss",

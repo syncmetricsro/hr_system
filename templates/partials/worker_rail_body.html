@@ -1,0 +1,37 @@
+{% load i18n avatars %}
+{% comment %}
+The rail's contents, fetched through htmx rather than rendered into every
+response (J8). Status labels and colours come from the lifecycle configuration
+via `status_pill`, the same tag the People list uses, so the rail can never
+drift from the rest of the UI or hardcode a working/not-working split.
+{% endcomment %}
+<div id="worker-rail-body" class="worker-rail-body">
+  {% if rail_status_counts %}
+    <ul class="worker-rail-counts">
+      {% for row in rail_status_counts %}
+        <li><span class="worker-rail-count">{{ row.count }}</span> {{ row.label }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  <ul class="worker-rail-list">
+    {% for person in rail_people %}
+      <li>
+        <a href="{% url 'person_detail' person.pk %}">
+          <span class="avatar-stack">{% avatar person size="sm" %}{% status_pill person size="dot" %}</span>
+          <span class="worker-rail-name">{{ person }}</span>
+          <span class="worker-rail-status">{{ person.get_lifecycle_status_display }}</span>
+        </a>
+      </li>
+    {% empty %}
+      <li class="muted">{% trans "No workers to show." %}</li>
+    {% endfor %}
+  </ul>
+
+  {% if rail_truncated %}
+    <p class="muted worker-rail-more">
+      {% blocktrans %}Showing the {{ rail_limit }} most recently updated.{% endblocktrans %}
+      <a href="{% url 'people_list' %}">{% trans "Open People" %}</a>
+    </p>
+  {% endif %}
+</div>

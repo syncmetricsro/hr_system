@@ -10,7 +10,7 @@ from django.urls import reverse
 from django.utils.translation import gettext as _
 from django.utils import timezone
 from django.utils.dateparse import parse_date
-from django.views.decorators.http import require_POST
+from django.views.decorators.http import require_GET, require_POST
 
 from core.accounts.permissions import Action, require_action
 from core.offices.scoping import assert_person_in_scope, scope_people
@@ -18,6 +18,7 @@ from core.audit.services import record_event
 from core.media import AvatarUploadError, process_avatar_upload, save_replacing
 from core.people.forms import PersonForm
 from core.accounts.permissions import can as user_can
+from core.people.rail import rail_context
 from core.people.models import InactiveReason, LifecycleError, LifecycleStatus, Person
 from core.people.naming import fold_name
 from core.people.permissions import can_view_sensitive
@@ -358,3 +359,13 @@ def person_avatar_remove(request: HttpRequest, pk: int) -> HttpResponse:
         record_event(request.user, "person.avatar_removed", target=person)
         messages.success(request, _("Avatar removed."))
     return redirect("person_detail", pk=person.pk)
+
+
+@login_required
+@require_GET
+def worker_status_rail(request: HttpRequest) -> TemplateResponse:
+    """The rail's contents, fetched once per page rather than rendered into
+    every response (J8). Mirrors how the notification centre already defers."""
+    return TemplateResponse(
+        request, "partials/worker_rail_body.html", rail_context(request)
+    )

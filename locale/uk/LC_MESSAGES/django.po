@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-28 08:29+0200\n"
+"POT-Creation-Date: 2026-07-28 10:13+0200\n"
 "Language: uk\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -311,15 +311,15 @@ msgstr "Недійсний код."
 msgid "Two-factor authentication enabled."
 msgstr "Двофакторну автентифікацію ввімкнено."
 
-#: core/accounts/views.py:161 core/people/views.py:332
+#: core/accounts/views.py:161 core/people/views.py:333
 msgid "No file was selected."
 msgstr "Файл не вибрано."
 
-#: core/accounts/views.py:176 core/people/views.py:347
+#: core/accounts/views.py:176 core/people/views.py:348
 msgid "Avatar updated."
 msgstr "Аватар оновлено."
 
-#: core/accounts/views.py:186 core/people/views.py:359
+#: core/accounts/views.py:186 core/people/views.py:360
 msgid "Avatar removed."
 msgstr "Аватар видалено."
 
@@ -1011,36 +1011,36 @@ msgstr "Результат пробного дня"
 msgid "Readiness submitted"
 msgstr "Готовність подано"
 
-#: core/people/views.py:126
+#: core/people/views.py:127
 msgid "Person added."
 msgstr "Особу додано."
 
-#: core/people/views.py:141 templates/pages/people_list.html:12
+#: core/people/views.py:142 templates/pages/people_list.html:12
 msgid "Add person"
 msgstr "Додати особу"
 
-#: core/people/views.py:156
+#: core/people/views.py:157
 msgid "Person updated."
 msgstr "Особу оновлено."
 
-#: core/people/views.py:167
+#: core/people/views.py:168
 msgid "Edit person"
 msgstr "Редагувати особу"
 
-#: core/people/views.py:222 templates/pages/activation_queue.html:28
+#: core/people/views.py:223 templates/pages/activation_queue.html:28
 #: templates/pages/person_detail.html:150
 msgid "Entry medical date"
 msgstr "Дата вхідного медогляду"
 
-#: core/people/views.py:223
+#: core/people/views.py:224
 msgid "Review this future date."
 msgstr "Перевірте цю майбутню дату."
 
-#: core/people/views.py:302
+#: core/people/views.py:303
 msgid "Person archived. Blacklist protection remains in place."
 msgstr "Особу архівовано. Захист чорного списку залишається чинним."
 
-#: core/people/views.py:316
+#: core/people/views.py:317
 msgid "Recycled to Available."
 msgstr "Повернено до доступних."
 
@@ -5570,6 +5570,7 @@ msgid "Assigned"
 msgstr "Призначені"
 
 #: templates/pages/project_detail.html:39
+#: templates/partials/worker_rail.html:13
 msgid "Workers"
 msgstr "Працівники"
 
@@ -6245,6 +6246,27 @@ msgstr "Світла"
 #: templates/partials/theme_picker.html:6
 msgid "Dark"
 msgstr "Темна"
+
+#: templates/partials/worker_rail.html:9 templates/partials/worker_rail.html:11
+msgid "Worker status"
+msgstr "Статус працівників"
+
+#: templates/partials/worker_rail.html:19
+msgid "Loading workers…"
+msgstr "Завантаження працівників…"
+
+#: templates/partials/worker_rail_body.html:27
+msgid "No workers to show."
+msgstr "Немає працівників для показу."
+
+#: templates/partials/worker_rail_body.html:33
+#, python-format
+msgid "Showing the %(rail_limit)s most recently updated."
+msgstr "Показано %(rail_limit)s останніх оновлених."
+
+#: templates/partials/worker_rail_body.html:34
+msgid "Open People"
+msgstr "Відкрити Люди"
 
 #~ msgid "Closing value"
 #~ msgstr "Кінцева вартість"

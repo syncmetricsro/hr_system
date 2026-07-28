@@ -1,5 +1,27 @@
 # Test Journal
 
+## 2026-07-28 - tests/test_worker_status_rail.py (10)
+
+- `test_the_cost_does_not_grow_with_headcount` replaced a first draft that
+  asserted exactly one query and failed at two. The second query was the office
+  scope - constant, not an N+1 - so the exact number was testing the wrong
+  thing. Comparing the count at one worker and at twenty tests the property the
+  brief actually names.
+- `test_an_ordinary_page_does_not_render_the_rail_contents` asserts both
+  halves: the shell present, a worker's name absent. Only checking the shell
+  would pass if the rail were inlined into every response, which is the
+  regression that matters.
+- `test_the_status_counts_narrow_with_the_list` exists because a scoped list
+  with an unscoped summary above it has now shipped three times.
+- `test_statuses_are_not_a_working_not_working_split` seeds four different
+  lifecycle statuses; a hardcoded two-state rail passes every other test here.
+- `test_statuses_nobody_holds_are_not_listed` pins the opposite: the counts are
+  a glance, not a full enumeration of the enum.
+- The layout was settled by e2e, not by unit tests: a fixed overlay intercepted
+  a click in CorvinumEU, and the gutter that fixed it then failed a test
+  pinning CorvinumEU's content width. Neither failure was reachable from the
+  Python suite, which is the argument for the browser lane existing.
+
 ## 2026-07-28 - tests/test_staff_activity.py (14)
 
 - `test_a_recruiter_who_registered_nobody_is_still_listed` pins the property the
