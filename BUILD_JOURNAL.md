@@ -1,5 +1,27 @@
 # Build Journal
 
+## 2026-07-28 - Finance manual entry gets its own panel
+
+The month-recording form sat at the bottom of the "Financial months" list, so
+the way you *create* a month was appended to the list of ones that already
+exist - findable only by scrolling past them. It is now its own panel directly
+under the page head, with a line saying plainly that every figure is typed by
+hand and only the totals are calculated.
+
+That sentence is worth having on the page rather than only in the runbook. The
+client's stated reason for wanting manual entry is that he does not trust a
+system to invent numbers; the screen should say what it does rather than leave
+him to infer it.
+
+**The screenshot pipeline caught the new strings shipping in English.** The
+existing field labels rendered as PROJEKT / ROK / MESIAC because they were
+already translated; my three new ones - the eyebrow, the heading and the
+explanatory line - rendered as English inside a Slovak page. That is the exact
+failure this area had before, and it was invisible to 875 passing tests. Caught
+by capturing the panel and looking at it, fixed, and re-captured to confirm.
+
+Suites: 875 Jober, 519 CorvinumEU, 50 e2e.
+
 ## 2026-07-28 - Seeded people belong to their own office's recruiter
 
 Verifying J2 on staging showed the staff-activity table listing one recruiter

@@ -87,3 +87,4 @@ def test_capture_jober_screens(desktop):
 
     page.goto(f"{base_url()}/finance/")
     _shot(page, "jober/finance-summary.png", "main")
+    _shot(page, "jober/finance-record-panel.png", ".finance-record-panel")

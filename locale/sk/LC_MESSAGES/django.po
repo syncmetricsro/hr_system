@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-28 10:13+0200\n"
+"POT-Creation-Date: 2026-07-28 15:44+0200\n"
 "Language: sk\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -76,14 +76,14 @@ msgstr "Hlavná navigácia"
 msgid "Workforce"
 msgstr "Pracovná sila"
 
-#: clients/corvinum_eu/templates/layouts/base.html:45 core/ui/help.py:20
+#: clients/corvinum_eu/templates/layouts/base.html:45 core/ui/help.py:31
 #: templates/help/getting-started.html:19 templates/layouts/base.html:33
 #: templates/pages/people_list.html:4 templates/pages/people_list.html:9
 #: templates/pages/people_list.html:39 templates/pages/reports.html:14
 msgid "People"
 msgstr "Ľudia"
 
-#: clients/corvinum_eu/templates/layouts/base.html:46 core/ui/help.py:26
+#: clients/corvinum_eu/templates/layouts/base.html:46 core/ui/help.py:37
 #: templates/help/getting-started.html:20 templates/layouts/base.html:34
 #: templates/pages/project_list.html:4 templates/pages/project_list.html:9
 #: templates/pages/project_list.html:25
@@ -98,7 +98,7 @@ msgid "Operations"
 msgstr "Prevádzka"
 
 # --- compliance ---
-#: clients/corvinum_eu/templates/layouts/base.html:50 core/ui/help.py:32
+#: clients/corvinum_eu/templates/layouts/base.html:50 core/ui/help.py:43
 #: features/compliance/panels.py:27 features/finance/models.py:68
 #: features/intake/catalog_i18n.py:12 templates/help/getting-started.html:21
 #: templates/layouts/base.html:38 templates/pages/compliance_list.html:4
@@ -153,7 +153,7 @@ msgstr "Žiadosti o aktiváciu"
 msgid "Activations"
 msgstr "Aktivácie"
 
-#: clients/corvinum_eu/templates/layouts/base.html:69 core/ui/help.py:56
+#: clients/corvinum_eu/templates/layouts/base.html:69 core/ui/help.py:83
 #: templates/layouts/base.html:58 templates/pages/blacklist_queue.html:4
 #: templates/panels/blacklist_banner.html:3
 #: templates/panels/blacklist_case.html:5
@@ -178,7 +178,7 @@ msgstr "Pomocník"
 msgid "Staff activity"
 msgstr "Aktivita personálu"
 
-#: clients/corvinum_eu/templates/layouts/base.html:77 core/ui/help.py:62
+#: clients/corvinum_eu/templates/layouts/base.html:77 core/ui/help.py:93
 #: templates/layouts/base.html:48
 msgid "Audit"
 msgstr "Audit"
@@ -1055,7 +1055,7 @@ msgstr "Naplánovať možno iba dostupných uchádzačov."
 
 #: core/projects/forms.py:29 core/projects/forms.py:55
 #: templates/pages/feedback_inbox.html:32
-#: templates/pages/finance_summary.html:67
+#: templates/pages/finance_summary.html:21
 #: templates/pages/person_detail.html:59 templates/pages/project_detail.html:8
 #: templates/pages/transport_trends.html:31
 #: templates/pages/transport_trends.html:44
@@ -1463,7 +1463,7 @@ msgstr "Deň"
 msgid "Week"
 msgstr "Týždeň"
 
-#: core/reporting/periods.py:47 templates/pages/finance_summary.html:75
+#: core/reporting/periods.py:47 templates/pages/finance_summary.html:29
 #: templates/partials/ledger_cycle.html:8
 #: templates/partials/period_filter.html:32
 msgid "Month"
@@ -1473,7 +1473,7 @@ msgstr "Mesiac"
 msgid "Several months"
 msgstr "Viac mesiacov"
 
-#: core/reporting/periods.py:49 templates/pages/finance_summary.html:72
+#: core/reporting/periods.py:49 templates/pages/finance_summary.html:26
 #: templates/partials/ledger_cycle.html:5
 #: templates/partials/period_filter.html:43
 #: templates/partials/period_filter.html:57
@@ -1485,27 +1485,27 @@ msgstr "Rok"
 msgid "Week %(week)s, %(year)s"
 msgstr "%(week)s. týždeň %(year)s"
 
-#: core/ui/help.py:14 core/ui/help.py:16 templates/help/getting-started.html:4
-#: templates/help/getting-started.html:5 tests/test_help.py:115
+#: core/ui/help.py:25 core/ui/help.py:27 templates/help/getting-started.html:4
+#: templates/help/getting-started.html:5 tests/test_help.py:125
 msgid "Getting started"
 msgstr "Začíname"
 
-#: core/ui/help.py:22 templates/help/people.html:4 templates/help/people.html:5
+#: core/ui/help.py:33 templates/help/people.html:4 templates/help/people.html:5
 msgid "People: intake, lifecycle, and trials"
 msgstr "Ľudia: príjem, životný cyklus a skúšobné dni"
 
-#: core/ui/help.py:28 templates/help/projects.html:4
+#: core/ui/help.py:39 templates/help/projects.html:4
 #: templates/help/projects.html:5
 msgid "Projects: assignments and readiness"
 msgstr "Projekty: priradenia a pripravenosť"
 
-#: core/ui/help.py:34 templates/help/compliance.html:4
+#: core/ui/help.py:47 templates/help/compliance.html:4
 #: templates/help/compliance.html:5
 msgid "Compliance: certificates and expiry alerts"
 msgstr "Súlad: certifikáty a upozornenia na platnosť"
 
 # --- logistics: accommodation ---
-#: core/ui/help.py:38 templates/pages/accommodation_list.html:8
+#: core/ui/help.py:53 templates/pages/accommodation_list.html:8
 #: templates/pages/equipment_catalog.html:8
 #: templates/pages/equipment_reviews.html:8
 #: templates/pages/project_detail.html:51
@@ -1515,13 +1515,13 @@ msgstr "Súlad: certifikáty a upozornenia na platnosť"
 msgid "Logistics"
 msgstr "Logistika"
 
-#: core/ui/help.py:40 templates/help/logistics.html:4
+#: core/ui/help.py:57 templates/help/logistics.html:4
 #: templates/help/logistics.html:5
 msgid "Logistics: accommodation, equipment, and transport"
 msgstr "Logistika: ubytovanie, vybavenie a doprava"
 
 # --- finance ---
-#: core/ui/help.py:44 templates/layouts/base.html:61
+#: core/ui/help.py:63 templates/layouts/base.html:61
 #: templates/pages/finance_executive.html:4
 #: templates/pages/finance_executive.html:9
 #: templates/pages/finance_month_detail.html:8
@@ -1532,47 +1532,47 @@ msgstr "Logistika: ubytovanie, vybavenie a doprava"
 msgid "Finance"
 msgstr "Financie"
 
-#: core/ui/help.py:46 templates/help/finance.html:4
+#: core/ui/help.py:67 templates/help/finance.html:4
 #: templates/help/finance.html:5
 msgid "Finance: recording a month and reading the reports"
 msgstr "Financie: zaznamenanie mesiaca a čítanie reportov"
 
 # --- feedback ---
-#: core/ui/help.py:50 templates/layouts/base.html:70
+#: core/ui/help.py:73 templates/layouts/base.html:70
 #: templates/pages/feedback_form.html:8 templates/pages/feedback_form.html:27
 msgid "Feedback"
 msgstr "Spätná väzba"
 
-#: core/ui/help.py:52 templates/help/feedback.html:4
+#: core/ui/help.py:77 templates/help/feedback.html:4
 #: templates/help/feedback.html:5
 msgid "Feedback: links, QR codes, and submissions"
 msgstr "Spätná väzba: odkazy, QR kódy a odpovede"
 
-#: core/ui/help.py:58 templates/help/blacklist.html:4
+#: core/ui/help.py:87 templates/help/blacklist.html:4
 #: templates/help/blacklist.html:5
 msgid "Blacklist: proposing and deciding a case"
 msgstr "Čierna listina: návrh a rozhodnutie prípadu"
 
-#: core/ui/help.py:64 templates/help/audit.html:4 templates/help/audit.html:5
+#: core/ui/help.py:95 templates/help/audit.html:4 templates/help/audit.html:5
 msgid "Audit: what's logged and why"
 msgstr "Audit: čo sa zaznamenáva a prečo"
 
-#: core/ui/views.py:113
+#: core/ui/views.py:118
 #, python-format
 msgid "View %(status)s people"
 msgstr "Zobraziť ľudí so stavom %(status)s"
 
-#: core/ui/views.py:114 templates/pages/dashboard.html:20
+#: core/ui/views.py:119 templates/pages/dashboard.html:20
 #: templates/pages/dashboard.html:23
 msgid "Open People filtered to this lifecycle status."
 msgstr "Otvorte zoznam ľudí filtrovaný podľa tohto stavu životného cyklu."
 
-#: core/ui/views.py:121
+#: core/ui/views.py:126
 #, python-format
 msgid "View inactive people: %(reason)s"
 msgstr "Zobraziť neaktívnych ľudí: %(reason)s"
 
-#: core/ui/views.py:124
+#: core/ui/views.py:129
 msgid "Open People filtered to this inactive reason."
 msgstr "Otvorte zoznam ľudí filtrovaný podľa tohto dôvodu neaktivity."
 
@@ -2220,9 +2220,9 @@ msgstr "finančné mesiace"
 
 #: features/finance/models.py:60 templates/pages/finance_executive.html:15
 #: templates/pages/finance_month_detail.html:33
-#: templates/pages/finance_summary.html:15
-#: templates/pages/finance_summary.html:28
-#: templates/pages/finance_summary.html:81 templates/pages/finance_year.html:27
+#: templates/pages/finance_summary.html:35
+#: templates/pages/finance_summary.html:45
+#: templates/pages/finance_summary.html:58 templates/pages/finance_year.html:27
 #: templates/pages/finance_year.html:40
 msgid "Cost"
 msgstr "Náklady"
@@ -2230,9 +2230,9 @@ msgstr "Náklady"
 #: features/finance/models.py:61 features/finance/models.py:73
 #: templates/pages/finance_executive.html:14
 #: templates/pages/finance_month_detail.html:32
-#: templates/pages/finance_summary.html:14
-#: templates/pages/finance_summary.html:28
-#: templates/pages/finance_summary.html:78 templates/pages/finance_year.html:26
+#: templates/pages/finance_summary.html:32
+#: templates/pages/finance_summary.html:44
+#: templates/pages/finance_summary.html:58 templates/pages/finance_year.html:26
 #: templates/pages/finance_year.html:40
 msgid "Revenue"
 msgstr "Príjmy"
@@ -3642,7 +3642,7 @@ msgstr "Rola používateľa"
 msgid "Indicates your active operational role and permission scope."
 msgstr "Označuje vašu aktívnu prevádzkovú rolu a rozsah oprávnení."
 
-#: templates/help/getting-started.html:47 tests/test_help.py:116
+#: templates/help/getting-started.html:47 tests/test_help.py:126
 msgid "Roles"
 msgstr "Role"
 
@@ -4692,13 +4692,13 @@ msgstr ""
 #: templates/pages/finance_executive.html:13
 #: templates/pages/finance_executive.html:34
 #: templates/pages/finance_executive.html:70
-#: templates/pages/finance_summary.html:13
-#: templates/pages/finance_summary.html:21
-#: templates/pages/finance_summary.html:36
-#: templates/pages/finance_summary.html:54
-#: templates/pages/finance_summary.html:90
-#: templates/pages/finance_summary.html:111
-#: templates/pages/finance_summary.html:123
+#: templates/pages/finance_summary.html:43
+#: templates/pages/finance_summary.html:51
+#: templates/pages/finance_summary.html:66
+#: templates/pages/finance_summary.html:84
+#: templates/pages/finance_summary.html:96
+#: templates/pages/finance_summary.html:117
+#: templates/pages/finance_summary.html:129
 #: templates/pages/finance_year.html:25
 #: templates/pages/transport_trends.html:51
 msgid "Company total"
@@ -4909,10 +4909,10 @@ msgstr "Export"
 #: templates/pages/finance_executive.html:16
 #: templates/pages/finance_executive.html:74
 #: templates/pages/finance_month_detail.html:34
-#: templates/pages/finance_summary.html:16
-#: templates/pages/finance_summary.html:29
-#: templates/pages/finance_summary.html:58
-#: templates/pages/finance_summary.html:127
+#: templates/pages/finance_summary.html:46
+#: templates/pages/finance_summary.html:59
+#: templates/pages/finance_summary.html:88
+#: templates/pages/finance_summary.html:133
 #: templates/pages/finance_year.html:28 templates/pages/finance_year.html:41
 #: templates/pages/finance_year.html:86
 msgid "Net"
@@ -4929,56 +4929,56 @@ msgstr "Čistý výsledok podľa mesiacov, jedna čiara na pobočku"
 
 #: templates/pages/finance_executive.html:35
 #: templates/pages/finance_executive.html:42
-#: templates/pages/finance_summary.html:37
-#: templates/pages/finance_summary.html:44
+#: templates/pages/finance_summary.html:67
+#: templates/pages/finance_summary.html:74
 msgid "Margin"
 msgstr "Marža"
 
 #: templates/pages/finance_executive.html:37
-#: templates/pages/finance_summary.html:39
+#: templates/pages/finance_summary.html:69
 #, python-format
 msgid "Margin gauge: %(margin_pct)s%% of revenue"
 msgstr "Ukazovateľ marže: %(margin_pct)s %% z príjmov"
 
 #: templates/pages/finance_executive.html:39
-#: templates/pages/finance_summary.html:41
+#: templates/pages/finance_summary.html:71
 msgid "Net as a share of revenue"
 msgstr "Čisté ako podiel z príjmov"
 
 #: templates/pages/finance_executive.html:44
-#: templates/pages/finance_summary.html:46
+#: templates/pages/finance_summary.html:76
 msgid "margin"
 msgstr "marža"
 
 #: templates/pages/finance_executive.html:52
-#: templates/pages/finance_summary.html:137
+#: templates/pages/finance_summary.html:143
 #: templates/pages/finance_year.html:15
 msgid "Profit/loss by office"
 msgstr "Zisk/strata podľa pobočiek"
 
 #: templates/pages/finance_executive.html:57
-#: templates/pages/finance_summary.html:142
+#: templates/pages/finance_summary.html:148
 msgid "Net result by office chart"
 msgstr "Graf čistého výsledku podľa pobočiek"
 
 #: templates/pages/finance_executive.html:64
 #: templates/pages/finance_executive.html:76
-#: templates/pages/finance_summary.html:60
-#: templates/pages/finance_summary.html:117
-#: templates/pages/finance_summary.html:129
-#: templates/pages/finance_summary.html:149
+#: templates/pages/finance_summary.html:90
+#: templates/pages/finance_summary.html:123
+#: templates/pages/finance_summary.html:135
+#: templates/pages/finance_summary.html:155
 #: templates/pages/finance_year.html:20 templates/pages/finance_year.html:63
 #: templates/pages/finance_year.html:88
 msgid "No financial months."
 msgstr "Žiadne finančné mesiace."
 
 #: templates/pages/finance_executive.html:71
-#: templates/pages/finance_summary.html:124 templates/pages/finance_year.html:8
+#: templates/pages/finance_summary.html:130 templates/pages/finance_year.html:8
 msgid "Yearly results"
 msgstr "Ročné výsledky"
 
 #: templates/pages/finance_month_detail.html:8
-#: templates/pages/finance_summary.html:58 templates/pages/finance_year.html:86
+#: templates/pages/finance_summary.html:88 templates/pages/finance_year.html:86
 msgid "Locked"
 msgstr "Uzamknuté"
 
@@ -5014,7 +5014,7 @@ msgid "Save & recalculate"
 msgstr "Uložiť a prepočítať"
 
 #: templates/pages/finance_month_detail.html:60
-#: templates/pages/finance_summary.html:91 templates/pages/finance_year.html:69
+#: templates/pages/finance_summary.html:97 templates/pages/finance_year.html:69
 msgid "Group breakdown"
 msgstr "Rozpis podľa skupín"
 
@@ -5023,42 +5023,61 @@ msgid "By group"
 msgstr "Podľa skupiny"
 
 #: templates/pages/finance_month_detail.html:66
-#: templates/pages/finance_summary.html:96
+#: templates/pages/finance_summary.html:102
 msgid "Net result by finance group chart"
 msgstr "Graf čistého výsledku podľa finančnej skupiny"
 
-#: templates/pages/finance_summary.html:22 templates/pages/finance_year.html:34
+#: templates/pages/finance_summary.html:15
+msgid "Record a financial month"
+msgstr "Zaznamenať finančný mesiac"
+
+#: templates/pages/finance_summary.html:16
+msgid "Manual entry"
+msgstr "Ručné zadávanie"
+
+#: templates/pages/finance_summary.html:17
+msgid "Record a month"
+msgstr "Zaznamenať mesiac"
+
+#: templates/pages/finance_summary.html:18
+msgid ""
+"Every figure here is typed by hand — nothing is pulled from elsewhere in the "
+"system. Create the month, then open it to enter each category; the totals "
+"are the only thing calculated for you."
+msgstr "Každý údaj tu zadávate ručne — nič sa nepreberá z iných častí systému. Vytvorte mesiac a potom ho otvorte a zadajte jednotlivé kategórie; jediné, čo sa počíta za vás, sú súčty."
+
+#: templates/pages/finance_summary.html:38
+msgid "Record month"
+msgstr "Zaznamenať mesiac"
+
+#: templates/pages/finance_summary.html:52 templates/pages/finance_year.html:34
 msgid "Monthly trend"
 msgstr "Mesačný trend"
 
-#: templates/pages/finance_summary.html:25
+#: templates/pages/finance_summary.html:55
 msgid "Revenue, cost, and net by month"
 msgstr "Príjmy, náklady a čisté podľa mesiacov"
 
-#: templates/pages/finance_summary.html:30 templates/pages/finance_year.html:42
+#: templates/pages/finance_summary.html:60 templates/pages/finance_year.html:42
 msgid "Monthly revenue, cost, and net trend chart"
 msgstr "Graf mesačného trendu príjmov, nákladov a čistého výsledku"
 
-#: templates/pages/finance_summary.html:55 templates/pages/finance_year.html:33
+#: templates/pages/finance_summary.html:85 templates/pages/finance_year.html:33
 #: templates/pages/finance_year.html:82
 msgid "Financial months"
 msgstr "Finančné mesiace"
 
-#: templates/pages/finance_summary.html:84
-msgid "Record month"
-msgstr "Zaznamenať mesiac"
-
-#: templates/pages/finance_summary.html:103
+#: templates/pages/finance_summary.html:109
 #: templates/pages/finance_year.html:75
 msgid "No line items yet."
 msgstr "Zatiaľ žiadne položky."
 
-#: templates/pages/finance_summary.html:112
+#: templates/pages/finance_summary.html:118
 #: templates/pages/finance_year.html:50
 msgid "Per-project results"
 msgstr "Výsledky podľa projektu"
 
-#: templates/pages/finance_summary.html:136
+#: templates/pages/finance_summary.html:142
 #: templates/pages/finance_year.html:14
 msgid "Office roll-up"
 msgstr "Súhrn podľa pobočiek"

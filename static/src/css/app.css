@@ -2136,3 +2136,9 @@ body:has(.worker-rail:not([data-collapsed="true"])) .cv-main {
   .worker-rail { margin: var(--space-3); }
   .worker-rail-toggle-text { display: none; }
 }
+
+/* Finance manual-entry panel. Its own section directly under the page head so
+   recording a month is the first thing on the page rather than the last thing
+   appended to a list of existing ones. */
+.finance-record-panel { margin-bottom: var(--space-4); }
+.finance-record-panel .people-search { margin-top: var(--space-3); align-items: end; }
