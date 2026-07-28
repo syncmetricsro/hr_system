@@ -50,6 +50,7 @@ Legend: ✅ permitted · — denied
 | `user.manage` | — | — | ✅ | — |
 | `export.approved` | — | — | ✅ | ✅ |
 | `audit.view` | — | — | ✅ | ✅ |
+| `staff_activity.view` | — | — | ✅ | ✅ |
 
 > **Activation needs a manager here too (since 2026-07-27).** The activation
 > route is shared core code, so CorvinumEU gets the same control as Jober: a

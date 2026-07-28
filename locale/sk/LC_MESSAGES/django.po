@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-28 02:37+0200\n"
+"POT-Creation-Date: 2026-07-28 08:29+0200\n"
 "Language: sk\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -109,12 +109,12 @@ msgid "Compliance"
 msgstr "Súlad"
 
 #: clients/corvinum_eu/templates/layouts/base.html:53
-#: templates/layouts/base.html:62 templates/pages/ledger.html:8
+#: templates/layouts/base.html:64 templates/pages/ledger.html:8
 msgid "Ledger"
 msgstr "Kniha záloh"
 
 #: clients/corvinum_eu/templates/layouts/base.html:56
-#: templates/layouts/base.html:65 templates/pages/payslips.html:4
+#: templates/layouts/base.html:67 templates/pages/payslips.html:4
 #: templates/pages/payslips.html:9
 msgid "Payslips"
 msgstr "Výplatné pásky"
@@ -125,7 +125,7 @@ msgid "Gross wages"
 msgstr "Hrubé mzdy"
 
 #: clients/corvinum_eu/templates/layouts/base.html:63
-#: templates/layouts/base.html:49
+#: templates/layouts/base.html:51
 msgid "Reviews"
 msgstr "Kontroly"
 
@@ -143,18 +143,18 @@ msgid "Equipment catalogue"
 msgstr "Katalóg vybavenia"
 
 #: clients/corvinum_eu/templates/layouts/base.html:66
-#: templates/layouts/base.html:53 templates/pages/activation_queue.html:9
+#: templates/layouts/base.html:55 templates/pages/activation_queue.html:9
 #: templates/pages/activation_queue.html:14
 msgid "Activation requests"
 msgstr "Žiadosti o aktiváciu"
 
 #: clients/corvinum_eu/templates/layouts/base.html:66
-#: templates/layouts/base.html:53 templates/pages/activation_queue.html:4
+#: templates/layouts/base.html:55 templates/pages/activation_queue.html:4
 msgid "Activations"
 msgstr "Aktivácie"
 
 #: clients/corvinum_eu/templates/layouts/base.html:69 core/ui/help.py:56
-#: templates/layouts/base.html:56 templates/pages/blacklist_queue.html:4
+#: templates/layouts/base.html:58 templates/pages/blacklist_queue.html:4
 #: templates/panels/blacklist_banner.html:3
 #: templates/panels/blacklist_case.html:5
 msgid "Blacklist"
@@ -172,27 +172,33 @@ msgstr "Systém"
 msgid "Help"
 msgstr "Pomocník"
 
-#: clients/corvinum_eu/templates/layouts/base.html:75 core/ui/help.py:62
-#: templates/layouts/base.html:46
+#: clients/corvinum_eu/templates/layouts/base.html:75
+#: templates/layouts/base.html:46 templates/pages/staff_activity.html:4
+#: templates/pages/staff_activity.html:8
+msgid "Staff activity"
+msgstr "Aktivita personálu"
+
+#: clients/corvinum_eu/templates/layouts/base.html:77 core/ui/help.py:62
+#: templates/layouts/base.html:48
 msgid "Audit"
 msgstr "Audit"
 
-#: clients/corvinum_eu/templates/layouts/base.html:82
-#: templates/layouts/base.html:88
+#: clients/corvinum_eu/templates/layouts/base.html:84
+#: templates/layouts/base.html:90
 msgid "Change your avatar"
 msgstr "Zmeniť avatar"
 
-#: clients/corvinum_eu/templates/layouts/base.html:104
-#: templates/layouts/base.html:76 templates/pages/feedback_form.html:17
+#: clients/corvinum_eu/templates/layouts/base.html:106
+#: templates/layouts/base.html:78 templates/pages/feedback_form.html:17
 msgid "Language"
 msgstr "Jazyk"
 
-#: clients/corvinum_eu/templates/layouts/base.html:114
-#: templates/layouts/base.html:104
+#: clients/corvinum_eu/templates/layouts/base.html:116
+#: templates/layouts/base.html:106
 msgid "Sign out"
 msgstr "Odhlásiť sa"
 
-#: clients/corvinum_eu/templates/layouts/base.html:125
+#: clients/corvinum_eu/templates/layouts/base.html:127
 #: templates/layouts/base.html:28 templates/layouts/base.html:29
 msgid "Open navigation"
 msgstr "Otvoriť navigáciu"
@@ -1515,7 +1521,7 @@ msgid "Logistics: accommodation, equipment, and transport"
 msgstr "Logistika: ubytovanie, vybavenie a doprava"
 
 # --- finance ---
-#: core/ui/help.py:44 templates/layouts/base.html:59
+#: core/ui/help.py:44 templates/layouts/base.html:61
 #: templates/pages/finance_executive.html:4
 #: templates/pages/finance_executive.html:9
 #: templates/pages/finance_month_detail.html:8
@@ -1532,7 +1538,7 @@ msgid "Finance: recording a month and reading the reports"
 msgstr "Financie: zaznamenanie mesiaca a čítanie reportov"
 
 # --- feedback ---
-#: core/ui/help.py:50 templates/layouts/base.html:68
+#: core/ui/help.py:50 templates/layouts/base.html:70
 #: templates/pages/feedback_form.html:8 templates/pages/feedback_form.html:27
 msgid "Feedback"
 msgstr "Spätná väzba"
@@ -1551,22 +1557,22 @@ msgstr "Čierna listina: návrh a rozhodnutie prípadu"
 msgid "Audit: what's logged and why"
 msgstr "Audit: čo sa zaznamenáva a prečo"
 
-#: core/ui/views.py:86
+#: core/ui/views.py:113
 #, python-format
 msgid "View %(status)s people"
 msgstr "Zobraziť ľudí so stavom %(status)s"
 
-#: core/ui/views.py:87 templates/pages/dashboard.html:20
+#: core/ui/views.py:114 templates/pages/dashboard.html:20
 #: templates/pages/dashboard.html:23
 msgid "Open People filtered to this lifecycle status."
 msgstr "Otvorte zoznam ľudí filtrovaný podľa tohto stavu životného cyklu."
 
-#: core/ui/views.py:94
+#: core/ui/views.py:121
 #, python-format
 msgid "View inactive people: %(reason)s"
 msgstr "Zobraziť neaktívnych ľudí: %(reason)s"
 
-#: core/ui/views.py:97
+#: core/ui/views.py:124
 msgid "Open People filtered to this inactive reason."
 msgstr "Otvorte zoznam ľudí filtrovaný podľa tohto dôvodu neaktivity."
 
@@ -2884,7 +2890,7 @@ msgstr "Skontrolovať obsadenosť ubytovania"
 msgid "Open accommodation costs, occupied places, and assigned costs."
 msgstr "Otvorte náklady na ubytovanie, obsadené miesta a priradené náklady."
 
-#: features/logistics/panels.py:122 templates/layouts/base.html:51
+#: features/logistics/panels.py:122 templates/layouts/base.html:53
 #: templates/pages/equipment_catalog.html:11
 #: templates/pages/equipment_stock.html:4
 #: templates/pages/equipment_stock.html:8
@@ -2948,24 +2954,24 @@ msgstr "Pridajte aspoň jeden riadok príjmu."
 msgid "A non-zero adjustment and reason are required."
 msgstr "Vyžaduje sa nenulová úprava a dôvod."
 
-#: features/logistics/services.py:773
+#: features/logistics/services.py:771
 msgid "This equipment item is inactive and cannot be issued."
 msgstr "Táto položka vybavenia je neaktívna a nemožno ju vydať."
 
-#: features/logistics/services.py:777
+#: features/logistics/services.py:775
 msgid "An operation key is required for stock-tracked issuance."
 msgstr "Pri výdaji sledovanom skladom sa vyžaduje kľúč operácie."
 
-#: features/logistics/services.py:788
+#: features/logistics/services.py:786
 msgid "Set this person's office before issuing stock-tracked equipment."
 msgstr ""
 "Pred vydaním skladovo sledovaného vybavenia nastavte pobočku tejto osoby."
 
-#: features/logistics/services.py:843 features/logistics/services.py:875
+#: features/logistics/services.py:841 features/logistics/services.py:873
 msgid "A transport record already exists for this project and week."
 msgstr "Pre tento projekt a týždeň už existuje záznam dopravy."
 
-#: features/logistics/services.py:947
+#: features/logistics/services.py:945
 msgid "Choose whether the returned equipment is reusable or retired."
 msgstr "Vyberte, či je vrátené vybavenie znovu použiteľné alebo vyradené."
 
@@ -4083,28 +4089,28 @@ msgstr ""
 msgid "Field"
 msgstr "Terén"
 
-#: templates/layouts/base.html:51 templates/pages/goods_receipt_detail.html:7
+#: templates/layouts/base.html:53 templates/pages/goods_receipt_detail.html:7
 #: templates/pages/goods_receipts.html:7
 msgid "Warehouse"
 msgstr "Sklad"
 
-#: templates/layouts/base.html:97
+#: templates/layouts/base.html:99
 msgid "Remove your avatar?"
 msgstr "Odstrániť váš avatar?"
 
-#: templates/layouts/base.html:100
+#: templates/layouts/base.html:102
 msgid "Role"
 msgstr "Rola"
 
-#: templates/layouts/base.html:101
+#: templates/layouts/base.html:103
 msgid "Office scope"
 msgstr "Rozsah pobočiek"
 
-#: templates/layouts/base.html:101
+#: templates/layouts/base.html:103
 msgid "You can see every office. Other roles only see their own."
 msgstr "Vidíte všetky pobočky. Ostatné roly vidia iba svoju vlastnú."
 
-#: templates/layouts/base.html:101
+#: templates/layouts/base.html:103
 msgid "You only see data belonging to this office."
 msgstr "Vidíte iba údaje patriace tejto pobočke."
 
@@ -4436,6 +4442,7 @@ msgid "To"
 msgstr "Do"
 
 #: templates/pages/audit_log.html:40
+#: templates/panels/logistics_staff_activity.html:33
 msgid "When"
 msgstr "Kedy"
 
@@ -5638,6 +5645,34 @@ msgstr "Žiadne aktívne projekty."
 msgid "Save room"
 msgstr "Uložiť izbu"
 
+#: templates/pages/staff_activity.html:7
+msgid "Reporting"
+msgstr "Vykazovanie"
+
+#: templates/pages/staff_activity.html:11
+msgid ""
+"How much each colleague did in the selected period. This is reporting, not "
+"traceability — for who changed a specific record and why, use the Audit log."
+msgstr ""
+
+#: templates/pages/staff_activity.html:16
+msgid "People registered"
+msgstr "Zaregistrovaní ľudia"
+
+#: templates/pages/staff_activity.html:21
+msgid "People registered by recruiter"
+msgstr "Zaregistrovaní ľudia podľa náborára"
+
+#: templates/pages/staff_activity.html:22
+msgid ""
+"Every recruiter is listed, including those who registered nobody, so the gap "
+"between two of them is visible."
+msgstr ""
+
+#: templates/pages/staff_activity.html:27
+msgid "No recruiters yet."
+msgstr "Zatiaľ žiadni náborári."
+
 # --- transport trends ---
 #: templates/pages/transport_trends.html:4
 #: templates/pages/transport_trends.html:9
@@ -5973,6 +6008,36 @@ msgstr "Prideliť izbu"
 #: templates/panels/logistics_room.html:42
 msgid "No active room with free capacity is available."
 msgstr "Nie je dostupná žiadna aktívna izba s voľnou kapacitou."
+
+#: templates/panels/logistics_staff_activity.html:5
+msgid "Equipment issued by coordinator"
+msgstr "Vybavenie vydané podľa koordinátora"
+
+#: templates/panels/logistics_staff_activity.html:9
+msgid "items"
+msgstr "položiek"
+
+#: templates/panels/logistics_staff_activity.html:17
+msgid "No equipment was issued in this period."
+msgstr "V tomto období nebolo vydané žiadne vybavenie."
+
+#: templates/panels/logistics_staff_activity.html:25
+msgid "Accommodation transfers"
+msgstr "Presuny ubytovania"
+
+#: templates/panels/logistics_staff_activity.html:26
+msgid ""
+"A first placement is not a transfer; only moves between accommodations are "
+"listed."
+msgstr ""
+
+#: templates/panels/logistics_staff_activity.html:32
+msgid "Moved by"
+msgstr "Presunul"
+
+#: templates/panels/logistics_staff_activity.html:37
+msgid "No accommodation transfers in this period."
+msgstr "V tomto období nie sú žiadne presuny ubytovania."
 
 # --- messaging / SMS ---
 #: templates/panels/messaging_sms.html:3

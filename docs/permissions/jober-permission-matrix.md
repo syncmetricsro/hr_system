@@ -74,6 +74,7 @@ Legend: ✅ permitted · — denied
 | `feedback.view` (worker feedback inbox) | — | — | ✅ | — |
 | `finance.view_summary` | — | — | ✅ | ✅ |
 | `audit.view` | — | — | ✅ | ✅ |
+| `staff_activity.view` | — | — | ✅ | ✅ |
 
 ## Person sensitive fields (per-object rule)
 

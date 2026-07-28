@@ -57,6 +57,7 @@ ACTION_ROLES: dict[Action, frozenset[Role]] = {
     Action.USER_MANAGE: frozenset({_MANAGER}),
     Action.EXPORT_APPROVED: frozenset({_MANAGER, _OBSERVER}),
     Action.AUDIT_VIEW: frozenset({_MANAGER, _OBSERVER}),
+    Action.STAFF_ACTIVITY_VIEW: frozenset({_MANAGER, _OBSERVER}),
 }
 
 # Core lifecycle with TRIAL_DAY enabled for the CorvinumEU demo (C-Q1).

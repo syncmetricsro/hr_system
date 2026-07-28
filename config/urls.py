@@ -47,6 +47,8 @@ app_routes = [
     path("help/", views.help_index, name="help_index"),
     path("help/<slug:slug>/", views.help_article, name="help_article"),
     path("audit/", audit_views.audit_log, name="audit_log"),
+    # Reporting, deliberately not a filter on the audit log (J2).
+    path("staff-activity/", views.staff_activity, name="staff_activity"),
     path(
         "notifications/",
         notification_views.notification_panel,

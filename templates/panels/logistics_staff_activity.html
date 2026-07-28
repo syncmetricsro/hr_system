@@ -1,0 +1,41 @@
+{% load i18n nav %}
+
+{% if panel.coordinator_issuance is not None %}
+<section class="panel">
+  <h2>{% trans "Equipment issued by coordinator" %}</h2>
+  <div class="field-list">
+    {% for row in panel.coordinator_issuance %}
+      <article class="field-card">
+        <div><h3>{{ row.coordinator }}</h3><p>{{ row.quantity }} {% trans "items" %}</p></div>
+        <dl>
+          {% for line in row.items %}
+            <div><dt>{{ line.item|db_trans }}{% if line.size %} · {{ line.size }}{% endif %}</dt><dd>{{ line.quantity }}</dd></div>
+          {% endfor %}
+        </dl>
+      </article>
+    {% empty %}
+      <p class="muted">{% trans "No equipment was issued in this period." %}</p>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+{% if panel.accommodation_transfers is not None %}
+<section class="panel">
+  <h2>{% trans "Accommodation transfers" %}</h2>
+  <p class="muted">{% trans "A first placement is not a transfer; only moves between accommodations are listed." %}</p>
+  <div class="field-list">
+    {% for row in panel.accommodation_transfers %}
+      <article class="field-card">
+        <div><h3>{{ row.person }}</h3><p>{{ row.moved_from.name }} → {{ row.moved_to.name }}</p></div>
+        <dl>
+          <div><dt>{% trans "Moved by" %}</dt><dd>{{ row.by|default:"—" }}</dd></div>
+          <div><dt>{% trans "When" %}</dt><dd>{{ row.when|date:"Y-m-d" }}</dd></div>
+        </dl>
+      </article>
+    {% empty %}
+      <p class="muted">{% trans "No accommodation transfers in this period." %}</p>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}

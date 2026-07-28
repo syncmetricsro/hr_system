@@ -1,5 +1,22 @@
 # Test Journal
 
+## 2026-07-28 - tests/test_staff_activity.py (14)
+
+- `test_a_recruiter_who_registered_nobody_is_still_listed` pins the property the
+  feature exists for. Every other test here passes if zero rows are dropped,
+  and dropping them is what a naive `annotate().filter()` does.
+- `test_a_gapped_period_skips_the_month_between` seeds a February registration
+  that must not be counted, so a start..end reading of "January and March"
+  fails it.
+- `test_a_first_placement_is_not_counted_as_a_transfer` asserts the empty case
+  *before* the move as well as the single row after it; without the first half
+  it would pass even if every placement counted.
+- Role tests cover recruiter and coordinator separately rather than assuming
+  one implies the other - they are distinct grants in the matrix.
+- The issuance test needed real stock received into the worker's own office
+  first. That is not incidental: issuance draws from the person's office, so a
+  test that skipped it was asserting against a path that cannot happen.
+
 ## 2026-07-28 - tests/test_goods_receipt_log.py (13)
 
 - `test_totals_are_summed_from_the_lines_not_stored` uses two lines with
@@ -17,6 +34,7 @@
   filter looks broken instead of empty.
 - `test_the_seed_is_idempotent` because seeds are re-run on every staging
   deploy and a duplicating top-up would inflate warehouse figures each time.
+
 
 ## 2026-07-28 - tests/test_audit_person_backfill.py (9)
 

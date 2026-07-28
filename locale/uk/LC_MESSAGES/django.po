@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-28 02:37+0200\n"
+"POT-Creation-Date: 2026-07-28 08:29+0200\n"
 "Language: uk\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -110,12 +110,12 @@ msgid "Compliance"
 msgstr "Відповідність"
 
 #: clients/corvinum_eu/templates/layouts/base.html:53
-#: templates/layouts/base.html:62 templates/pages/ledger.html:8
+#: templates/layouts/base.html:64 templates/pages/ledger.html:8
 msgid "Ledger"
 msgstr "Книга"
 
 #: clients/corvinum_eu/templates/layouts/base.html:56
-#: templates/layouts/base.html:65 templates/pages/payslips.html:4
+#: templates/layouts/base.html:67 templates/pages/payslips.html:4
 #: templates/pages/payslips.html:9
 msgid "Payslips"
 msgstr "Розрахункові листи"
@@ -126,7 +126,7 @@ msgid "Gross wages"
 msgstr "Валові зарплати"
 
 #: clients/corvinum_eu/templates/layouts/base.html:63
-#: templates/layouts/base.html:49
+#: templates/layouts/base.html:51
 msgid "Reviews"
 msgstr "Перевірки"
 
@@ -144,18 +144,18 @@ msgid "Equipment catalogue"
 msgstr "Каталог спорядження"
 
 #: clients/corvinum_eu/templates/layouts/base.html:66
-#: templates/layouts/base.html:53 templates/pages/activation_queue.html:9
+#: templates/layouts/base.html:55 templates/pages/activation_queue.html:9
 #: templates/pages/activation_queue.html:14
 msgid "Activation requests"
 msgstr "Запити на активацію"
 
 #: clients/corvinum_eu/templates/layouts/base.html:66
-#: templates/layouts/base.html:53 templates/pages/activation_queue.html:4
+#: templates/layouts/base.html:55 templates/pages/activation_queue.html:4
 msgid "Activations"
 msgstr "Активації"
 
 #: clients/corvinum_eu/templates/layouts/base.html:69 core/ui/help.py:56
-#: templates/layouts/base.html:56 templates/pages/blacklist_queue.html:4
+#: templates/layouts/base.html:58 templates/pages/blacklist_queue.html:4
 #: templates/panels/blacklist_banner.html:3
 #: templates/panels/blacklist_case.html:5
 msgid "Blacklist"
@@ -173,27 +173,33 @@ msgstr "Система"
 msgid "Help"
 msgstr "Довідка"
 
-#: clients/corvinum_eu/templates/layouts/base.html:75 core/ui/help.py:62
-#: templates/layouts/base.html:46
+#: clients/corvinum_eu/templates/layouts/base.html:75
+#: templates/layouts/base.html:46 templates/pages/staff_activity.html:4
+#: templates/pages/staff_activity.html:8
+msgid "Staff activity"
+msgstr "Активність персоналу"
+
+#: clients/corvinum_eu/templates/layouts/base.html:77 core/ui/help.py:62
+#: templates/layouts/base.html:48
 msgid "Audit"
 msgstr "Аудит"
 
-#: clients/corvinum_eu/templates/layouts/base.html:82
-#: templates/layouts/base.html:88
+#: clients/corvinum_eu/templates/layouts/base.html:84
+#: templates/layouts/base.html:90
 msgid "Change your avatar"
 msgstr "Змінити аватар"
 
-#: clients/corvinum_eu/templates/layouts/base.html:104
-#: templates/layouts/base.html:76 templates/pages/feedback_form.html:17
+#: clients/corvinum_eu/templates/layouts/base.html:106
+#: templates/layouts/base.html:78 templates/pages/feedback_form.html:17
 msgid "Language"
 msgstr "Мова"
 
-#: clients/corvinum_eu/templates/layouts/base.html:114
-#: templates/layouts/base.html:104
+#: clients/corvinum_eu/templates/layouts/base.html:116
+#: templates/layouts/base.html:106
 msgid "Sign out"
 msgstr "Вийти"
 
-#: clients/corvinum_eu/templates/layouts/base.html:125
+#: clients/corvinum_eu/templates/layouts/base.html:127
 #: templates/layouts/base.html:28 templates/layouts/base.html:29
 msgid "Open navigation"
 msgstr "Відкрити навігацію"
@@ -1514,7 +1520,7 @@ msgid "Logistics: accommodation, equipment, and transport"
 msgstr "Логістика: проживання, обладнання та транспорт"
 
 # --- finance ---
-#: core/ui/help.py:44 templates/layouts/base.html:59
+#: core/ui/help.py:44 templates/layouts/base.html:61
 #: templates/pages/finance_executive.html:4
 #: templates/pages/finance_executive.html:9
 #: templates/pages/finance_month_detail.html:8
@@ -1531,7 +1537,7 @@ msgid "Finance: recording a month and reading the reports"
 msgstr "Фінанси: фіксація місяця та читання звітів"
 
 # --- feedback ---
-#: core/ui/help.py:50 templates/layouts/base.html:68
+#: core/ui/help.py:50 templates/layouts/base.html:70
 #: templates/pages/feedback_form.html:8 templates/pages/feedback_form.html:27
 msgid "Feedback"
 msgstr "Зворотний зв’язок"
@@ -1550,23 +1556,23 @@ msgstr "Чорний список: пропозиція та вирішення 
 msgid "Audit: what's logged and why"
 msgstr "Аудит: що фіксується і чому"
 
-#: core/ui/views.py:86
+#: core/ui/views.py:113
 #, python-format
 msgid "View %(status)s people"
 msgstr "Переглянути людей зі статусом %(status)s"
 
-#: core/ui/views.py:87 templates/pages/dashboard.html:20
+#: core/ui/views.py:114 templates/pages/dashboard.html:20
 #: templates/pages/dashboard.html:23
 msgid "Open People filtered to this lifecycle status."
 msgstr ""
 "Відкрийте список людей, відфільтрований за цим статусом життєвого циклу."
 
-#: core/ui/views.py:94
+#: core/ui/views.py:121
 #, python-format
 msgid "View inactive people: %(reason)s"
 msgstr "Переглянути неактивних людей: %(reason)s"
 
-#: core/ui/views.py:97
+#: core/ui/views.py:124
 msgid "Open People filtered to this inactive reason."
 msgstr "Відкрийте список людей, відфільтрований за цією причиною неактивності."
 
@@ -2885,7 +2891,7 @@ msgstr "Переглянути заповненість житла"
 msgid "Open accommodation costs, occupied places, and assigned costs."
 msgstr "Відкрийте витрати на житло, зайняті місця та призначені витрати."
 
-#: features/logistics/panels.py:122 templates/layouts/base.html:51
+#: features/logistics/panels.py:122 templates/layouts/base.html:53
 #: templates/pages/equipment_catalog.html:11
 #: templates/pages/equipment_stock.html:4
 #: templates/pages/equipment_stock.html:8
@@ -2950,24 +2956,24 @@ msgstr "Додайте щонайменше один рядок надходже
 msgid "A non-zero adjustment and reason are required."
 msgstr "Потрібні ненульове коригування та причина."
 
-#: features/logistics/services.py:773
+#: features/logistics/services.py:771
 msgid "This equipment item is inactive and cannot be issued."
 msgstr "Ця одиниця спорядження неактивна, її не можна видати."
 
-#: features/logistics/services.py:777
+#: features/logistics/services.py:775
 msgid "An operation key is required for stock-tracked issuance."
 msgstr "Для видачі з обліком запасів потрібен ключ операції."
 
-#: features/logistics/services.py:788
+#: features/logistics/services.py:786
 msgid "Set this person's office before issuing stock-tracked equipment."
 msgstr ""
 "Перш ніж видавати спорядження зі складського обліку, вкажіть офіс цієї особи."
 
-#: features/logistics/services.py:843 features/logistics/services.py:875
+#: features/logistics/services.py:841 features/logistics/services.py:873
 msgid "A transport record already exists for this project and week."
 msgstr "Для цього проєкту й тижня вже існує запис транспорту."
 
-#: features/logistics/services.py:947
+#: features/logistics/services.py:945
 msgid "Choose whether the returned equipment is reusable or retired."
 msgstr ""
 "Виберіть, чи повернене спорядження придатне до повторного використання або "
@@ -4093,28 +4099,28 @@ msgstr ""
 msgid "Field"
 msgstr "Поле"
 
-#: templates/layouts/base.html:51 templates/pages/goods_receipt_detail.html:7
+#: templates/layouts/base.html:53 templates/pages/goods_receipt_detail.html:7
 #: templates/pages/goods_receipts.html:7
 msgid "Warehouse"
 msgstr "Склад"
 
-#: templates/layouts/base.html:97
+#: templates/layouts/base.html:99
 msgid "Remove your avatar?"
 msgstr "Видалити ваш аватар?"
 
-#: templates/layouts/base.html:100
+#: templates/layouts/base.html:102
 msgid "Role"
 msgstr "Роль"
 
-#: templates/layouts/base.html:101
+#: templates/layouts/base.html:103
 msgid "Office scope"
 msgstr "Охоплення офісів"
 
-#: templates/layouts/base.html:101
+#: templates/layouts/base.html:103
 msgid "You can see every office. Other roles only see their own."
 msgstr "Ви бачите всі офіси. Інші ролі бачать лише свій."
 
-#: templates/layouts/base.html:101
+#: templates/layouts/base.html:103
 msgid "You only see data belonging to this office."
 msgstr "Ви бачите лише дані, що належать цьому офісу."
 
@@ -4447,6 +4453,7 @@ msgid "To"
 msgstr "До"
 
 #: templates/pages/audit_log.html:40
+#: templates/panels/logistics_staff_activity.html:33
 msgid "When"
 msgstr "Коли"
 
@@ -5650,6 +5657,34 @@ msgstr "Немає активних проєктів."
 msgid "Save room"
 msgstr "Зберегти кімнату"
 
+#: templates/pages/staff_activity.html:7
+msgid "Reporting"
+msgstr "Звітність"
+
+#: templates/pages/staff_activity.html:11
+msgid ""
+"How much each colleague did in the selected period. This is reporting, not "
+"traceability — for who changed a specific record and why, use the Audit log."
+msgstr ""
+
+#: templates/pages/staff_activity.html:16
+msgid "People registered"
+msgstr "Зареєстровані особи"
+
+#: templates/pages/staff_activity.html:21
+msgid "People registered by recruiter"
+msgstr "Зареєстровані особи за рекрутером"
+
+#: templates/pages/staff_activity.html:22
+msgid ""
+"Every recruiter is listed, including those who registered nobody, so the gap "
+"between two of them is visible."
+msgstr ""
+
+#: templates/pages/staff_activity.html:27
+msgid "No recruiters yet."
+msgstr "Ще немає рекрутерів."
+
 # --- transport trends ---
 #: templates/pages/transport_trends.html:4
 #: templates/pages/transport_trends.html:9
@@ -5990,6 +6025,36 @@ msgstr "Призначити кімнату"
 #: templates/panels/logistics_room.html:42
 msgid "No active room with free capacity is available."
 msgstr "Немає активної кімнати з вільними місцями."
+
+#: templates/panels/logistics_staff_activity.html:5
+msgid "Equipment issued by coordinator"
+msgstr "Видане спорядження за координатором"
+
+#: templates/panels/logistics_staff_activity.html:9
+msgid "items"
+msgstr "одиниць"
+
+#: templates/panels/logistics_staff_activity.html:17
+msgid "No equipment was issued in this period."
+msgstr "У цьому періоді спорядження не видавалося."
+
+#: templates/panels/logistics_staff_activity.html:25
+msgid "Accommodation transfers"
+msgstr "Переселення"
+
+#: templates/panels/logistics_staff_activity.html:26
+msgid ""
+"A first placement is not a transfer; only moves between accommodations are "
+"listed."
+msgstr ""
+
+#: templates/panels/logistics_staff_activity.html:32
+msgid "Moved by"
+msgstr "Переселив"
+
+#: templates/panels/logistics_staff_activity.html:37
+msgid "No accommodation transfers in this period."
+msgstr "У цьому періоді немає переселень."
 
 # --- messaging / SMS ---
 #: templates/panels/messaging_sms.html:3

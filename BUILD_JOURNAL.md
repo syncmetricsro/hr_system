@@ -1,5 +1,46 @@
 # Build Journal
 
+## 2026-07-28 - J2: staff activity statistics, and two field checks I got wrong
+
+The client accepted that the audit log is traceability rather than reporting,
+then asked for the reporting separately. This is its own page - `Staff
+activity`, beside Audit in the nav in both shells - rather than another filter
+on the log.
+
+**I twice reported a field as missing that was already there.** Checking
+`EquipmentIssue` with a line-range window that stopped at 300 hid `issued_by` at
+304; checking `RoomAssignment` the same way hid `assigned_by` and `created_at`.
+On the strength of the first error I asked the owner to choose between adding a
+field with a backfill and reporting off the audit log, and they picked the
+field - a decision that was never needed. Both facts were already recorded on
+the domain models, so **J2 needed no migration at all** and the fix list's
+"models untouched if possible" was achievable as written. Reading the whole
+class, not a line window, is the fix.
+
+That the data lives on the models rather than only in the audit log matters for
+a reason beyond convenience: `core.retention` will eventually purge audit rows
+for GDPR, and statistics built on the log alone would quietly empty themselves.
+
+- **Recruiter productivity** comes from `core.people`, so it lives in core.
+  Every recruiter is listed **including those who registered nobody** - the
+  stated purpose is spotting a large gap between two recruiters, and a table
+  that drops its zero rows cannot show a gap.
+- **Equipment issuance and accommodation transfers** come from a feature's own
+  records, so they arrive through a new
+  `register_staff_activity_panel` registry slot rather than core importing
+  logistics. The period reaches them on `request.reporting_period`, because the
+  registry calls every contribution with `(request)` alone and growing that
+  signature per consumer would be worse.
+- **A first placement is not a transfer.** Only a move between accommodations
+  counts, and the previous accommodation is read from the worker's earlier
+  assignment rather than stored - no denormalised trail.
+- Office-scoped throughout, including the headline counts, and gapped periods
+  are respected: January+March does not count February.
+- RBAC: new `staff_activity.view`, manager and observer only, mirrored in both
+  clients' permission matrices.
+
+Suites: 828 Jober, 503 CorvinumEU.
+
 ## 2026-07-28 - J5: the goods-receipt log, which needed no new model
 
 The client demonstrated the gap live: after receiving 3 helmets and 2 boots he
@@ -31,6 +72,7 @@ no migration.**
   the period filter demonstrable.
 
 Suites: 818 Jober, 493 CorvinumEU.
+
 
 ## 2026-07-28 - The audit backfill only reached 8 of 900 events
 
