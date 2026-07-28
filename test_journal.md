@@ -17,6 +17,25 @@
   first. That is not incidental: issuance draws from the person's office, so a
   test that skipped it was asserting against a path that cannot happen.
 
+## 2026-07-28 - tests/test_goods_receipt_log.py (13)
+
+- `test_totals_are_summed_from_the_lines_not_stored` uses two lines with
+  different values, so a single-line fixture cannot accidentally pass.
+- `test_a_manager_cannot_open_another_offices_receipt_by_pk` and
+  `test_a_manager_can_still_open_their_own` are a pair on purpose. The first
+  alone is satisfied by a blanket 403.
+- `test_a_manager_sees_only_their_own_offices_receipts` also asserts the
+  headline *total*, not just the row list - scoping a list and leaving its
+  summary unscoped is the precise bug this week produced three times.
+- `test_a_gapped_period_excludes_the_months_between` seeds a July receipt that
+  is not selected, so a span-based reading of "several months" fails it.
+- `test_the_demo_seed_spreads_receipts_across_months` guards a demo property
+  rather than a code path: with every seeded receipt in one month, the period
+  filter looks broken instead of empty.
+- `test_the_seed_is_idempotent` because seeds are re-run on every staging
+  deploy and a duplicating top-up would inflate warehouse figures each time.
+
+
 ## 2026-07-28 - tests/test_audit_person_backfill.py (9)
 
 Every test blanks attribution first (`_as_legacy()`) to reproduce what a
@@ -36,6 +55,7 @@ while staging stayed broken.
   holds that pk.
 - `test_an_event_about_nobody_stays_unattributed` pins the decision not to
   guess; configuration events carry no worker's data.
+
 
 ## 2026-07-28 - period filter: 3 files, 53 tests
 

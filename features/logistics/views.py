@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from collections import defaultdict
+from decimal import Decimal
 from uuid import UUID
 
 from django.contrib import messages
@@ -34,6 +35,7 @@ from features.logistics.models import (
     Accommodation,
     EquipmentIssue,
     EquipmentItem,
+    EquipmentStockReceipt,
     Room,
     RoomAssignment,
     TransportWeek,
@@ -49,6 +51,7 @@ from features.logistics.services import (
     equipment_period_report,
     equipment_stock_balance,
     flag_unreturned,
+    goods_receipts,
     issue_equipment,
     pending_deduction_reviews,
     record_transport_week,
@@ -475,6 +478,51 @@ def equipment_catalog(request: HttpRequest) -> TemplateResponse:
             "query": query,
             "status_filter": status,
             "stock_enabled": stock_ledger_enabled(),
+        },
+    )
+
+
+def _assert_receipt_in_scope(request: HttpRequest, receipt) -> None:
+    """Filtering the log does not stop someone typing another office's receipt
+    pk - the same gap that let a manager decide another office's deduction."""
+    scope = user_office_scope(request.user)
+    if scope is not None and not scope.filter(pk=receipt.office_id).exists():
+        raise PermissionDenied("This receipt belongs to another office.")
+
+
+@require_action(Action.EQUIPMENT_VIEW_STOCK)
+def goods_receipt_log(request: HttpRequest) -> TemplateResponse:
+    """What was booked into the warehouse, and when (J5)."""
+    period = resolve_period(request.GET)
+    scope = user_office_scope(request.user)
+    return TemplateResponse(
+        request,
+        "pages/goods_receipts.html",
+        {
+            **period_filter_context(period),
+            "log": goods_receipts(period, offices=scope),
+        },
+    )
+
+
+@require_action(Action.EQUIPMENT_VIEW_STOCK)
+def goods_receipt_detail(request: HttpRequest, pk: int) -> TemplateResponse:
+    receipt = get_object_or_404(
+        EquipmentStockReceipt.objects.select_related(
+            "office", "recorded_by"
+        ).prefetch_related("lines__item"),
+        pk=pk,
+    )
+    _assert_receipt_in_scope(request, receipt)
+    lines = list(receipt.lines.all())
+    return TemplateResponse(
+        request,
+        "pages/goods_receipt_detail.html",
+        {
+            "receipt": receipt,
+            "lines": lines,
+            "quantity": sum(line.quantity for line in lines),
+            "value": sum((line.total_value for line in lines), Decimal("0")),
         },
     )
 

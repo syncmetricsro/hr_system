@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-28 07:47+0200\n"
+"POT-Creation-Date: 2026-07-28 08:29+0200\n"
 "Language: hu\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -824,7 +824,8 @@ msgstr "Fogyatékosság típusa"
 
 #: core/people/forms.py:48 features/finance/catalog_i18n.py:26
 #: features/logistics/forms.py:74 features/logistics/forms.py:228
-#: templates/pages/equipment_stock.html:47
+#: templates/pages/equipment_stock.html:48
+#: templates/pages/goods_receipt_detail.html:16
 #: templates/pages/project_detail.html:20
 msgid "Office"
 msgstr "Iroda"
@@ -2330,7 +2331,7 @@ msgid "Yes/No"
 msgstr "Igen/Nem"
 
 #: features/intake/models.py:19 features/logistics/forms.py:234
-#: templates/pages/equipment_stock.html:48
+#: templates/pages/equipment_stock.html:49
 #: templates/partials/ledger_activity.html:8
 #: templates/partials/ledger_activity.html:26
 msgid "Date"
@@ -2549,11 +2550,11 @@ msgstr "Fogadó iroda"
 msgid "The warehouse this stock is received into."
 msgstr "A raktár, ahová ez a készlet bekerül."
 
-#: features/logistics/forms.py:176
+#: features/logistics/forms.py:176 templates/pages/goods_receipt_detail.html:15
 msgid "Reference"
 msgstr "Hivatkozás"
 
-#: features/logistics/forms.py:177
+#: features/logistics/forms.py:177 templates/pages/goods_receipt_detail.html:14
 msgid "Supplier"
 msgstr "Beszállító"
 
@@ -2564,17 +2565,20 @@ msgid "Note"
 msgstr "Megjegyzés"
 
 #: features/logistics/forms.py:191 features/logistics/forms.py:225
-#: templates/pages/equipment_stock.html:46
+#: templates/pages/equipment_stock.html:47
 #: templates/panels/logistics_equipment.html:46
 msgid "Item"
 msgstr "Tétel"
 
-#: features/logistics/forms.py:193 templates/pages/equipment_stock.html:35
+#: features/logistics/forms.py:193 templates/pages/equipment_stock.html:36
+#: templates/pages/goods_receipt_detail.html:31
 #: templates/panels/logistics_equipment.html:49
 msgid "Quantity"
 msgstr "Mennyiség"
 
-#: features/logistics/forms.py:195
+#: features/logistics/forms.py:195 templates/pages/goods_receipt_detail.html:19
+#: templates/pages/goods_receipt_detail.html:32
+#: templates/pages/goods_receipts.html:19
 msgid "Total value"
 msgstr "Teljes érték"
 
@@ -2586,18 +2590,18 @@ msgstr "Töltse ki a tételt, a mennyiséget és az összértéket."
 msgid "The warehouse whose stock is being adjusted."
 msgstr "A raktár, amelynek készletét módosítja."
 
-#: features/logistics/forms.py:236 templates/pages/equipment_stock.html:49
+#: features/logistics/forms.py:236 templates/pages/equipment_stock.html:50
 msgid "Quantity adjustment"
 msgstr "Mennyiségi korrekció"
 
-#: features/logistics/forms.py:238 templates/pages/equipment_stock.html:50
+#: features/logistics/forms.py:238 templates/pages/equipment_stock.html:51
 msgid "Value for positive adjustment"
 msgstr "Pozitív korrekció értéke"
 
 #: features/logistics/forms.py:243 templates/pages/activation_queue.html:32
 #: templates/pages/audit_log.html:44 templates/pages/blacklist_queue.html:23
 #: templates/pages/blacklist_queue.html:28
-#: templates/pages/equipment_stock.html:51
+#: templates/pages/equipment_stock.html:52
 #: templates/pages/finance_month_detail.html:19
 #: templates/pages/person_detail.html:241
 #: templates/panels/blacklist_case.html:11
@@ -2893,7 +2897,7 @@ msgstr ""
 #: templates/pages/equipment_catalog.html:11
 #: templates/pages/equipment_stock.html:4
 #: templates/pages/equipment_stock.html:8
-#: templates/pages/equipment_stock.html:32
+#: templates/pages/equipment_stock.html:33
 #: templates/pages/equipment_stock_receive.html:6
 msgid "Warehouse stock"
 msgstr "Raktárkészlet"
@@ -2955,127 +2959,127 @@ msgstr "Adjon hozzá legalább egy bevételezési sort."
 msgid "A non-zero adjustment and reason are required."
 msgstr "Nem nulla korrekció és indoklás szükséges."
 
-#: features/logistics/services.py:733
+#: features/logistics/services.py:771
 msgid "This equipment item is inactive and cannot be issued."
 msgstr "Ez a felszerelési tétel inaktív, ezért nem adható ki."
 
-#: features/logistics/services.py:737
+#: features/logistics/services.py:775
 msgid "An operation key is required for stock-tracked issuance."
 msgstr "A készletkövetett kiadáshoz műveleti kulcs szükséges."
 
-#: features/logistics/services.py:748
+#: features/logistics/services.py:786
 msgid "Set this person's office before issuing stock-tracked equipment."
 msgstr ""
 "A készleten nyilvántartott felszerelés kiadása előtt állítsa be a személy "
 "irodáját."
 
-#: features/logistics/services.py:803 features/logistics/services.py:835
+#: features/logistics/services.py:841 features/logistics/services.py:873
 msgid "A transport record already exists for this project and week."
 msgstr "Ehhez a projekthez és héthez már létezik szállítási bejegyzés."
 
-#: features/logistics/services.py:907
+#: features/logistics/services.py:945
 msgid "Choose whether the returned equipment is reusable or retired."
 msgstr ""
 "Válassza ki, hogy a visszaadott felszerelés újrahasználható vagy selejtezett."
 
-#: features/logistics/views.py:275
+#: features/logistics/views.py:278
 msgid "Accommodation created. Add rooms to make it assignable."
 msgstr "A szállás létrejött. A hozzárendeléshez adjon hozzá szobákat."
 
-#: features/logistics/views.py:291
+#: features/logistics/views.py:294
 msgid "Accommodation updated."
 msgstr "A szállás frissítve."
 
-#: features/logistics/views.py:310
+#: features/logistics/views.py:313
 msgid "Room created."
 msgstr "A szoba létrejött."
 
-#: features/logistics/views.py:327
+#: features/logistics/views.py:330
 msgid "Room updated."
 msgstr "A szoba frissítve."
 
-#: features/logistics/views.py:369
+#: features/logistics/views.py:372
 msgid "Accommodation cost period saved."
 msgstr "A költségidőszak mentve."
 
-#: features/logistics/views.py:371
+#: features/logistics/views.py:374
 msgid "Review the accommodation cost details."
 msgstr "Ellenőrizze a költségidőszak adatait."
 
-#: features/logistics/views.py:382
+#: features/logistics/views.py:385
 msgid "Room rate saved."
 msgstr "Szobadíj mentve."
 
-#: features/logistics/views.py:384 features/logistics/views.py:401
-#: features/logistics/views.py:420
+#: features/logistics/views.py:387 features/logistics/views.py:404
+#: features/logistics/views.py:423
 msgid "Invalid amount."
 msgstr "Érvénytelen összeg."
 
-#: features/logistics/views.py:399
+#: features/logistics/views.py:402
 msgid "Rate override saved."
 msgstr "Egyedi díj mentve."
 
-#: features/logistics/views.py:418
+#: features/logistics/views.py:421
 msgid "Worker accommodation payment saved."
 msgstr "A dolgozó havi befizetése mentve."
 
-#: features/logistics/views.py:440
+#: features/logistics/views.py:443
 msgid "Room assigned."
 msgstr "Szoba hozzárendelve."
 
-#: features/logistics/views.py:452
+#: features/logistics/views.py:455
 msgid "Room released."
 msgstr "Szoba felszabadítva."
 
-#: features/logistics/views.py:526
+#: features/logistics/views.py:574
 msgid "Stock receipt recorded."
 msgstr "A készletbevételezés rögzítve."
 
-#: features/logistics/views.py:553
+#: features/logistics/views.py:601
 msgid "Stock adjustment recorded."
 msgstr "A készletkorrekció rögzítve."
 
-#: features/logistics/views.py:557
+#: features/logistics/views.py:605
 msgid "Review the stock adjustment and try again."
 msgstr "Ellenőrizze a készletkorrekció adatait, majd próbálja újra."
 
-#: features/logistics/views.py:566
+#: features/logistics/views.py:614
 msgid "Equipment item created."
 msgstr "Felszerelési tétel létrehozva."
 
-#: features/logistics/views.py:583
+#: features/logistics/views.py:631
 msgid "Equipment item updated."
 msgstr "Felszerelési tétel frissítve."
 
-#: features/logistics/views.py:608
+#: features/logistics/views.py:656
 msgid "Equipment issued."
 msgstr "Felszerelés kiadva."
 
-#: features/logistics/views.py:610
+#: features/logistics/views.py:658
 msgid "Invalid equipment issue."
 msgstr "Érvénytelen felszerelés-kiadás."
 
-#: features/logistics/views.py:622
+#: features/logistics/views.py:670
 msgid "Equipment returned."
 msgstr "Felszerelés visszavéve."
 
-#: features/logistics/views.py:634
+#: features/logistics/views.py:682
 msgid "Flagged for deduction review."
 msgstr "Levonási ellenőrzésre jelölve."
 
-#: features/logistics/views.py:662
+#: features/logistics/views.py:710
 msgid "Review recorded."
 msgstr "Ellenőrzés rögzítve."
 
-#: features/logistics/views.py:683 features/logistics/views.py:702
+#: features/logistics/views.py:731 features/logistics/views.py:750
 msgid "Transport week recorded."
 msgstr "Szállítási hét rögzítve."
 
-#: features/logistics/views.py:685
+#: features/logistics/views.py:733
 msgid "Review the transport details and try again."
 msgstr "Ellenőrizze a szállítás adatait, majd próbálja újra."
 
-#: features/logistics/views.py:734
+#: features/logistics/views.py:782
 msgid "Transport record updated."
 msgstr "A szállítási bejegyzés frissítve."
 
@@ -4106,7 +4110,8 @@ msgstr ""
 msgid "Field"
 msgstr "Terep"
 
-#: templates/layouts/base.html:53
+#: templates/layouts/base.html:53 templates/pages/goods_receipt_detail.html:7
+#: templates/pages/goods_receipts.html:7
 msgid "Warehouse"
 msgstr "Raktár"
 
@@ -4761,46 +4766,53 @@ msgid "Receive stock"
 msgstr "Készlet bevételezése"
 
 #: templates/pages/equipment_stock.html:10
+#: templates/pages/goods_receipts.html:4 templates/pages/goods_receipts.html:8
+#: templates/pages/goods_receipts.html:23
+msgid "Goods receipts"
+msgstr "Bevételezések"
+
+#: templates/pages/equipment_stock.html:11
 msgid "Catalogue"
 msgstr "Katalógus"
 
-#: templates/pages/equipment_stock.html:14
+#: templates/pages/equipment_stock.html:15
 msgid "Units available"
 msgstr "Elérhető egységek"
 
-#: templates/pages/equipment_stock.html:15
+#: templates/pages/equipment_stock.html:16
 msgid "Current stock value"
 msgstr "Aktuális készletérték"
 
-#: templates/pages/equipment_stock.html:28
+#: templates/pages/equipment_stock.html:29
 msgid "No stock movements in this period."
 msgstr "Ebben az időszakban nincs készletmozgás."
 
-#: templates/pages/equipment_stock.html:36
+#: templates/pages/equipment_stock.html:37
+#: templates/pages/goods_receipts.html:32
 #: templates/panels/logistics_equipment.html:7
 msgid "Value"
 msgstr "Érték"
 
-#: templates/pages/equipment_stock.html:38
+#: templates/pages/equipment_stock.html:39
 msgid "No stock has been received."
 msgstr "Még nem történt készletbevételezés."
 
-#: templates/pages/equipment_stock.html:42
+#: templates/pages/equipment_stock.html:43
 msgid "Controlled correction"
 msgstr "Ellenőrzött korrekció"
 
-#: templates/pages/equipment_stock.html:43
+#: templates/pages/equipment_stock.html:44
 msgid "Stock adjustment"
 msgstr "Készletkorrekció"
 
-#: templates/pages/equipment_stock.html:44
+#: templates/pages/equipment_stock.html:45
 msgid ""
 "This posts an auditable stock adjustment and cannot edit prior movements."
 msgstr ""
 "Ez auditálható készletkorrekciót könyvel, és nem módosítja a korábbi "
 "mozgásokat."
 
-#: templates/pages/equipment_stock.html:52
+#: templates/pages/equipment_stock.html:53
 msgid ""
 "This changes the recorded stock quantity for this item and cannot edit prior "
 "movements."
@@ -4808,13 +4820,14 @@ msgstr ""
 "Ez módosítja a tétel nyilvántartott készletmennyiségét, és nem módosítja a "
 "korábbi mozgásokat."
 
-#: templates/pages/equipment_stock.html:52
+#: templates/pages/equipment_stock.html:53
 msgid "Post adjustment"
 msgstr "Korrekció könyvelése"
 
 #: templates/pages/equipment_stock_receive.html:9
+#: templates/pages/goods_receipt_detail.html:24
 msgid "Receipt lines"
-msgstr "Bevételezési sorok"
+msgstr "Bevételezési tételek"
 
 #: templates/pages/equipment_stock_receive.html:11
 msgid "Record receipt"
@@ -5082,6 +5095,48 @@ msgstr "Bevétel, költség és nettó havi bontásban %(year)s évben"
 #: templates/pages/finance_year.html:56
 msgid "Net result by project chart"
 msgstr "Nettó eredmény projektenkénti diagramja"
+
+#: templates/pages/goods_receipt_detail.html:4
+msgid "Goods receipt"
+msgstr "Bevételezés"
+
+#: templates/pages/goods_receipt_detail.html:9
+msgid "Back to receipts"
+msgstr "Vissza a bevételezésekhez"
+
+#: templates/pages/goods_receipt_detail.html:17
+#: templates/pages/goods_receipts.html:33 templates/pages/wages.html:42
+msgid "Recorded by"
+msgstr "Rögzítette"
+
+#: templates/pages/goods_receipt_detail.html:18
+#: templates/pages/goods_receipts.html:18
+msgid "Units received"
+msgstr "Bevételezett darab"
+
+#: templates/pages/goods_receipt_detail.html:36
+msgid "This receipt has no lines."
+msgstr "Ennek a bevételezésnek nincsenek tételei."
+
+#: templates/pages/goods_receipts.html:9
+msgid "Back to stock"
+msgstr "Vissza a készlethez"
+
+#: templates/pages/goods_receipts.html:12
+msgid "What was booked into the warehouse, newest first."
+msgstr "Mi került be a raktárba, a legújabbtól kezdve."
+
+#: templates/pages/goods_receipts.html:17
+msgid "Receipts"
+msgstr "Bevételezések"
+
+#: templates/pages/goods_receipts.html:31
+msgid "Units"
+msgstr "Darab"
+
+#: templates/pages/goods_receipts.html:37
+msgid "No goods receipts in this period."
+msgstr "Ebben az időszakban nincs bevételezés."
 
 #: templates/pages/help_index.html:8
 msgid "Documentation"
@@ -5793,10 +5848,6 @@ msgstr "Rögzített bruttó bérek"
 #: templates/pages/wages.html:39
 msgid "Wage month"
 msgstr "Bérhónap"
-
-#: templates/pages/wages.html:42
-msgid "Recorded by"
-msgstr "Rögzítette"
 
 #: templates/pages/wages.html:55
 msgid "No gross wages recorded."
