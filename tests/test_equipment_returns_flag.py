@@ -26,9 +26,9 @@ def test_the_flag_matches_this_client():
     returns back on fails here rather than in a demo."""
     from django.conf import settings
 
-    assert flag_enabled("equipment_returns") is settings.FEATURE_FLAGS[
-        "equipment_returns"
-    ]
+    assert (
+        flag_enabled("equipment_returns") is settings.FEATURE_FLAGS["equipment_returns"]
+    )
 
 
 @pytest.mark.jober_only
