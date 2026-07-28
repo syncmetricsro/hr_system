@@ -391,6 +391,22 @@ whole point of this slice: issued (neutral), pending (warning, needs a
 decision), waived (success, resolved) are now distinguishable without
 reading the text.
 
+> **Returns are gone for Jober (J6, 2026-07-28).** "What we issue, stays out" -
+> there is no Return button on the equipment panel and no return route at all,
+> the same way transport was retired. Stock correction is now the only way to
+> put quantity back, and it is unchanged. History is preserved: previously
+> returned items still read correctly.
+>
+> **The manager recovery review queue is deliberately still here.** The fix
+> list said to flag it rather than remove it unilaterally, and nobody has said
+> it should go. Flagging an item unreturned and charging or waiving it is a
+> separate action from taking equipment back, so it still functions - but if
+> the client agrees nothing is ever expected back, this queue is the obvious
+> next thing to retire. Ask him during this section.
+>
+> CorvinumEU is unaffected and keeps returns, the recovery review and the
+> linked ledger deduction.
+
 ### 8. Blacklist: the deliberate exception to office scoping
 
 Worth showing explicitly, because it is the one place separation is *not*

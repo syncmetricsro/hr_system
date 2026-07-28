@@ -25,7 +25,7 @@ INSTALLED_APPS = [
     "core.projects",
     "core.retention",
     "core.notifications",
-    "features.logistics",     # equipment only — see FEATURE_FLAGS
+    "features.logistics",  # equipment only — see FEATURE_FLAGS
     "features.intake",
     "features.compliance",
     "features.blacklist",
@@ -38,20 +38,21 @@ INSTALLED_APPS = [
 ]
 
 FEATURE_FLAGS = {
-    "accommodation": False,       # rejected in interview (§15.4)
-    "equipment": True,            # issued items + cost recovery (§5.8)
-    "transport": False,           # rejected in interview (§15.8)
-    "recruitment_trials": True,   # owner-confirmed for the CorvinumEU demo
+    "accommodation": False,  # rejected in interview (§15.4)
+    "equipment": True,  # issued items + cost recovery (§5.8)
+    "equipment_returns": True,  # return-to-stock + recovery review retained
+    "transport": False,  # rejected in interview (§15.8)
+    "recruitment_trials": True,  # owner-confirmed for the CorvinumEU demo
     "intake": True,
-    "worker_messaging": False,    # phone + Messenger, no SMS module (§15.9)
-    "documents": True,            # compliance certificates + expiry (§5.4)
-    "feedback": False,            # worker portal rejected (§16)
+    "worker_messaging": False,  # phone + Messenger, no SMS module (§15.9)
+    "documents": True,  # compliance certificates + expiry (§5.4)
+    "feedback": False,  # worker portal rejected (§16)
     "duplicate_blacklist": True,  # §5.6
-    "profitability": False,       # no P&L dashboards (§15.6)
-    "checklists": True,           # approval checklists (§5.5, Stage C1)
-    "advances": True,             # advance & deduction ledger (§5.10, Stage C2)
-    "payslips": True,             # encrypted payslip email (ADR 0023, Stage C5)
-    "wage_ledger": True,          # calendar-month gross wage source values
+    "profitability": False,  # no P&L dashboards (§15.6)
+    "checklists": True,  # approval checklists (§5.5, Stage C1)
+    "advances": True,  # advance & deduction ledger (§5.10, Stage C2)
+    "payslips": True,  # encrypted payslip email (ADR 0023, Stage C5)
+    "wage_ledger": True,  # calendar-month gross wage source values
 }
 
 EQUIPMENT_STOCK_LEDGER_ENABLED = False
