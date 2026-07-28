@@ -2137,6 +2137,11 @@ body:has(.worker-rail:not([data-collapsed="true"])) .cv-main {
   .worker-rail-toggle-text { display: none; }
 }
 
+/* Finance manual-entry panel. Its own section directly under the page head so
+   recording a month is the first thing on the page rather than the last thing
+   appended to a list of existing ones. */
+.finance-record-panel { margin-bottom: var(--space-4); }
+.finance-record-panel .people-search { margin-top: var(--space-3); align-items: end; }
 /* Inline field help on master-data forms. The project form carries three
    fields whose consequence is not obvious from the label alone - a unique
    code, the finance-visibility flag, and the office-restricted coordinator

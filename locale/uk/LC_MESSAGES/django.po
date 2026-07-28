@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-28 16:25+0200\n"
+"POT-Creation-Date: 2026-07-28 17:36+0200\n"
 "Language: uk\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1054,7 +1054,7 @@ msgstr "Можна планувати лише доступних кандида
 
 #: core/projects/forms.py:30 core/projects/forms.py:56
 #: templates/pages/feedback_inbox.html:32
-#: templates/pages/finance_summary.html:67
+#: templates/pages/finance_summary.html:21
 #: templates/pages/person_detail.html:59 templates/pages/project_detail.html:8
 #: templates/pages/transport_trends.html:31
 #: templates/pages/transport_trends.html:44
@@ -1079,13 +1079,16 @@ msgstr "Включити цей проєкт до Фінансів"
 
 #: core/projects/forms.py:124
 msgid "Short unique reference, for example DHLBA. Cannot be reused."
-msgstr "Коротке унікальне позначення, наприклад DHLBA. Не можна використати повторно."
+msgstr ""
+"Коротке унікальне позначення, наприклад DHLBA. Не можна використати повторно."
 
 #: core/projects/forms.py:126
 msgid ""
 "Unticking hides this project's months from Finance. The figures are kept, "
 "not deleted."
-msgstr "Знявши позначку, місяці цього проєкту зникнуть із Фінансів. Дані зберігаються, не видаляються."
+msgstr ""
+"Знявши позначку, місяці цього проєкту зникнуть із Фінансів. Дані "
+"зберігаються, не видаляються."
 
 #: core/projects/forms.py:130
 msgid "Only coordinators of the selected office can be chosen."
@@ -1503,7 +1506,7 @@ msgstr "День"
 msgid "Week"
 msgstr "Тиждень"
 
-#: core/reporting/periods.py:47 templates/pages/finance_summary.html:75
+#: core/reporting/periods.py:47 templates/pages/finance_summary.html:29
 #: templates/partials/ledger_cycle.html:8
 #: templates/partials/period_filter.html:32
 msgid "Month"
@@ -1513,7 +1516,7 @@ msgstr "Місяць"
 msgid "Several months"
 msgstr "Кілька місяців"
 
-#: core/reporting/periods.py:49 templates/pages/finance_summary.html:72
+#: core/reporting/periods.py:49 templates/pages/finance_summary.html:26
 #: templates/partials/ledger_cycle.html:5
 #: templates/partials/period_filter.html:43
 #: templates/partials/period_filter.html:57
@@ -2262,9 +2265,9 @@ msgstr "фінансові місяці"
 
 #: features/finance/models.py:60 templates/pages/finance_executive.html:15
 #: templates/pages/finance_month_detail.html:33
-#: templates/pages/finance_summary.html:15
-#: templates/pages/finance_summary.html:28
-#: templates/pages/finance_summary.html:81 templates/pages/finance_year.html:27
+#: templates/pages/finance_summary.html:35
+#: templates/pages/finance_summary.html:45
+#: templates/pages/finance_summary.html:58 templates/pages/finance_year.html:27
 #: templates/pages/finance_year.html:40
 msgid "Cost"
 msgstr "Витрати"
@@ -2272,9 +2275,9 @@ msgstr "Витрати"
 #: features/finance/models.py:61 features/finance/models.py:73
 #: templates/pages/finance_executive.html:14
 #: templates/pages/finance_month_detail.html:32
-#: templates/pages/finance_summary.html:14
-#: templates/pages/finance_summary.html:28
-#: templates/pages/finance_summary.html:78 templates/pages/finance_year.html:26
+#: templates/pages/finance_summary.html:32
+#: templates/pages/finance_summary.html:44
+#: templates/pages/finance_summary.html:58 templates/pages/finance_year.html:26
 #: templates/pages/finance_year.html:40
 msgid "Revenue"
 msgstr "Дохід"
@@ -4744,13 +4747,13 @@ msgstr ""
 #: templates/pages/finance_executive.html:13
 #: templates/pages/finance_executive.html:34
 #: templates/pages/finance_executive.html:70
-#: templates/pages/finance_summary.html:13
-#: templates/pages/finance_summary.html:21
-#: templates/pages/finance_summary.html:36
-#: templates/pages/finance_summary.html:54
-#: templates/pages/finance_summary.html:90
-#: templates/pages/finance_summary.html:111
-#: templates/pages/finance_summary.html:123
+#: templates/pages/finance_summary.html:43
+#: templates/pages/finance_summary.html:51
+#: templates/pages/finance_summary.html:66
+#: templates/pages/finance_summary.html:84
+#: templates/pages/finance_summary.html:96
+#: templates/pages/finance_summary.html:117
+#: templates/pages/finance_summary.html:129
 #: templates/pages/finance_year.html:25
 #: templates/pages/transport_trends.html:51
 msgid "Company total"
@@ -4960,10 +4963,10 @@ msgstr "Експорт"
 #: templates/pages/finance_executive.html:16
 #: templates/pages/finance_executive.html:74
 #: templates/pages/finance_month_detail.html:34
-#: templates/pages/finance_summary.html:16
-#: templates/pages/finance_summary.html:29
-#: templates/pages/finance_summary.html:58
-#: templates/pages/finance_summary.html:127
+#: templates/pages/finance_summary.html:46
+#: templates/pages/finance_summary.html:59
+#: templates/pages/finance_summary.html:88
+#: templates/pages/finance_summary.html:133
 #: templates/pages/finance_year.html:28 templates/pages/finance_year.html:41
 #: templates/pages/finance_year.html:86
 msgid "Net"
@@ -4980,56 +4983,56 @@ msgstr "Чистий результат за місяцями, по одній �
 
 #: templates/pages/finance_executive.html:35
 #: templates/pages/finance_executive.html:42
-#: templates/pages/finance_summary.html:37
-#: templates/pages/finance_summary.html:44
+#: templates/pages/finance_summary.html:67
+#: templates/pages/finance_summary.html:74
 msgid "Margin"
 msgstr "Маржа"
 
 #: templates/pages/finance_executive.html:37
-#: templates/pages/finance_summary.html:39
+#: templates/pages/finance_summary.html:69
 #, python-format
 msgid "Margin gauge: %(margin_pct)s%% of revenue"
 msgstr "Індикатор маржі: %(margin_pct)s %% від доходу"
 
 #: templates/pages/finance_executive.html:39
-#: templates/pages/finance_summary.html:41
+#: templates/pages/finance_summary.html:71
 msgid "Net as a share of revenue"
 msgstr "Чистий результат як частка доходу"
 
 #: templates/pages/finance_executive.html:44
-#: templates/pages/finance_summary.html:46
+#: templates/pages/finance_summary.html:76
 msgid "margin"
 msgstr "маржа"
 
 #: templates/pages/finance_executive.html:52
-#: templates/pages/finance_summary.html:137
+#: templates/pages/finance_summary.html:143
 #: templates/pages/finance_year.html:15
 msgid "Profit/loss by office"
 msgstr "Прибуток/збиток за офісами"
 
 #: templates/pages/finance_executive.html:57
-#: templates/pages/finance_summary.html:142
+#: templates/pages/finance_summary.html:148
 msgid "Net result by office chart"
 msgstr "Діаграма чистого результату за офісами"
 
 #: templates/pages/finance_executive.html:64
 #: templates/pages/finance_executive.html:76
-#: templates/pages/finance_summary.html:60
-#: templates/pages/finance_summary.html:117
-#: templates/pages/finance_summary.html:129
-#: templates/pages/finance_summary.html:149
+#: templates/pages/finance_summary.html:90
+#: templates/pages/finance_summary.html:123
+#: templates/pages/finance_summary.html:135
+#: templates/pages/finance_summary.html:155
 #: templates/pages/finance_year.html:20 templates/pages/finance_year.html:63
 #: templates/pages/finance_year.html:88
 msgid "No financial months."
 msgstr "Немає фінансових місяців."
 
 #: templates/pages/finance_executive.html:71
-#: templates/pages/finance_summary.html:124 templates/pages/finance_year.html:8
+#: templates/pages/finance_summary.html:130 templates/pages/finance_year.html:8
 msgid "Yearly results"
 msgstr "Річні результати"
 
 #: templates/pages/finance_month_detail.html:8
-#: templates/pages/finance_summary.html:58 templates/pages/finance_year.html:86
+#: templates/pages/finance_summary.html:88 templates/pages/finance_year.html:86
 msgid "Locked"
 msgstr "Заблоковано"
 
@@ -5066,7 +5069,7 @@ msgid "Save & recalculate"
 msgstr "Зберегти та перерахувати"
 
 #: templates/pages/finance_month_detail.html:60
-#: templates/pages/finance_summary.html:91 templates/pages/finance_year.html:69
+#: templates/pages/finance_summary.html:97 templates/pages/finance_year.html:69
 msgid "Group breakdown"
 msgstr "Розподіл за групами"
 
@@ -5075,42 +5078,61 @@ msgid "By group"
 msgstr "За групою"
 
 #: templates/pages/finance_month_detail.html:66
-#: templates/pages/finance_summary.html:96
+#: templates/pages/finance_summary.html:102
 msgid "Net result by finance group chart"
 msgstr "Графік чистого результату за фінансовою групою"
 
-#: templates/pages/finance_summary.html:22 templates/pages/finance_year.html:34
+#: templates/pages/finance_summary.html:15
+msgid "Record a financial month"
+msgstr "Записати фінансовий місяць"
+
+#: templates/pages/finance_summary.html:16
+msgid "Manual entry"
+msgstr "Ручне введення"
+
+#: templates/pages/finance_summary.html:17
+msgid "Record a month"
+msgstr "Записати місяць"
+
+#: templates/pages/finance_summary.html:18
+msgid ""
+"Every figure here is typed by hand — nothing is pulled from elsewhere in the "
+"system. Create the month, then open it to enter each category; the totals "
+"are the only thing calculated for you."
+msgstr "Кожне число тут ви вводите вручну — нічого не береться з інших частин системи. Створіть місяць, потім відкрийте його та введіть кожну категорію; єдине, що обчислюється за вас, — це підсумки."
+
+#: templates/pages/finance_summary.html:38
+msgid "Record month"
+msgstr "Записати місяць"
+
+#: templates/pages/finance_summary.html:52 templates/pages/finance_year.html:34
 msgid "Monthly trend"
 msgstr "Місячна тенденція"
 
-#: templates/pages/finance_summary.html:25
+#: templates/pages/finance_summary.html:55
 msgid "Revenue, cost, and net by month"
 msgstr "Дохід, витрати та чистий результат за місяцями"
 
-#: templates/pages/finance_summary.html:30 templates/pages/finance_year.html:42
+#: templates/pages/finance_summary.html:60 templates/pages/finance_year.html:42
 msgid "Monthly revenue, cost, and net trend chart"
 msgstr "Графік місячної тенденції доходу, витрат і чистого результату"
 
-#: templates/pages/finance_summary.html:55 templates/pages/finance_year.html:33
+#: templates/pages/finance_summary.html:85 templates/pages/finance_year.html:33
 #: templates/pages/finance_year.html:82
 msgid "Financial months"
 msgstr "Фінансові місяці"
 
-#: templates/pages/finance_summary.html:84
-msgid "Record month"
-msgstr "Записати місяць"
-
-#: templates/pages/finance_summary.html:103
+#: templates/pages/finance_summary.html:109
 #: templates/pages/finance_year.html:75
 msgid "No line items yet."
 msgstr "Позицій поки немає."
 
-#: templates/pages/finance_summary.html:112
+#: templates/pages/finance_summary.html:118
 #: templates/pages/finance_year.html:50
 msgid "Per-project results"
 msgstr "Результати за проєктами"
 
-#: templates/pages/finance_summary.html:136
+#: templates/pages/finance_summary.html:142
 #: templates/pages/finance_year.html:14
 msgid "Office roll-up"
 msgstr "Зведення за офісами"
@@ -5591,7 +5613,9 @@ msgstr "Назад до проєктів"
 msgid ""
 "This deactivates the project. It stays in reports and keeps its history, but "
 "cannot be picked for new assignments."
-msgstr "Це деактивує проєкт. Він залишається у звітах і зберігає історію, але його не можна обрати для нових призначень."
+msgstr ""
+"Це деактивує проєкт. Він залишається у звітах і зберігає історію, але його "
+"не можна обрати для нових призначень."
 
 #: templates/pages/project_detail.html:20
 msgid "This reactivates the project so it can be picked again."
