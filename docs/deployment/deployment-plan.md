@@ -68,6 +68,15 @@ Secure cookies — fails closed)
 (or `app.json` predeploy); first deploy also `createsuperuser` (real email
 user; **never** `seed_demo`/`seed_corvinum_demo` on production).
 
+**On any database carrying history, also run
+`dokku run <app> python manage.py backfill_audit_persons`** after `migrate`.
+The migration that added `AuditEvent.person` can only attribute events whose
+target *was* a person; everything a manager searches for - the equipment issue,
+the room assignment, the blacklist proposal - needs the command, which resolves
+targets through the live app registry. Without it the audit person filter
+returns nothing for pre-existing rows, which is exactly how it looked when the
+client reported it. Idempotent, and `--dry-run` reports without writing.
+
 Session policy: 30-day rolling sessions by default
 (`DJANGO_SESSION_COOKIE_AGE` overrides, seconds); cookie names are per-client
 (`jober_sessionid` / `corvinum_sessionid`) so apps never evict each other's
