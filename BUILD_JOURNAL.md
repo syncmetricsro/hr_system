@@ -1,5 +1,46 @@
 # Build Journal
 
+## 2026-07-28 - J7: one reporting-period control, and what J10 actually was
+
+The client could not ask for "the whole of 2026" - selecting a year collapsed
+back into a month picker - and could not report several months together. The
+fix list is explicit that this must not be built three times, because J5
+(goods-receipt log) and J2 (staff activity) need the same granularities.
+
+- **`core/reporting/periods.py` resolves a period, and nothing else.** No
+  database, no model knowledge: `filter_q(field_name)` hands the caller a `Q`
+  for whichever date column they store, so the same period can filter stock
+  movements, receipts, person registrations or room assignments. Bad input
+  falls back to the current month rather than raising - these values come from
+  a query string a user can edit, and a report that 500s on a typo is worse
+  than one showing this month.
+- **Several months means several months.** Owner decision: a selection of
+  January and March resolves to two disjoint ranges, never
+  January-through-March. Silently widening a gapped selection is the same class
+  of surprise as the bug being fixed. Adjacent months are merged, so the common
+  contiguous run still costs one range and one `BETWEEN`, and `is_contiguous`
+  stays honest for any caller doing span-based arithmetic.
+- **Opening and closing balances are gone** from the warehouse report, on the
+  owner's call. They were also the figures with no clear meaning across a
+  gapped selection. The two tests that asserted them were rewritten rather than
+  deleted - both were really asserting that history is immutable, which is a
+  property of `equipment_stock_balance(as_of=...)` and is still covered.
+
+**J10 was not a translation problem.** I reported it earlier as substantially
+done because the catalog is correct - `Issue` is `Kiadás`, `Receipt` is
+`Bevételezés`. That assessment was wrong. The warehouse template rendered
+`{{ kind }}`, the **raw enum key**, so the page printed a literal lowercase
+"receipt" and "issue" in every language while the correct labels sat unused in
+the catalog. Translating it again would have fixed nothing. The report now
+carries `label`, and a test loads the page in Hungarian and asserts
+"Bevételezés" is present and the raw key is not.
+
+Also caught by an existing repo rule rather than by me: my first draft used
+multiline `{# ... #}` comments, which Django renders as **visible page text**.
+`tests/test_shell.py` failed on it. Rewritten as `{% comment %}` blocks.
+
+Suites: 805 Jober, 493 CorvinumEU.
+
 ## 2026-07-28 - Sweeping the aggregates for the ADR 0026 blind spot
 
 Three office-scoping leaks had shipped and every one was found while doing

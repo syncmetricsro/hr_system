@@ -1,5 +1,37 @@
 # Test Journal
 
+## 2026-07-28 - period filter: 3 files, 53 tests
+
+`tests/test_reporting_periods.py` (34) and `tests/test_reporting_controls.py`
+(11) need no database at all - the resolver is pure date arithmetic, which is
+why three surfaces can share it without sharing a query.
+
+- `test_a_gapped_selection_stays_gapped` is the one that matters. Everything
+  else in the resolver would pass if a gapped selection were quietly widened
+  into a span, and the widened version is easier to write.
+- `test_filter_q_has_one_clause_per_range` pins the merge: adjacent months must
+  collapse to one clause, gapped ones must not.
+- The bad-input parametrization includes `2026-02-30` and `2026-W99` - values
+  that parse structurally and are still not dates.
+- `test_the_grid_opens_on_the_year_that_was_selected` covers a silent failure:
+  selecting months in 2025 and getting a 2026 grid back hides the user's own
+  selection while looking fine.
+- `test_params_round_trip` feeds a period's own `params` back through the
+  resolver, which is exactly what the rendered control does on every submit.
+
+`tests/test_equipment_stock_period.py` (9) covers the page.
+
+- `test_several_months_report_as_one_period` seeds a July receipt that is *not*
+  selected, so a from/to span implementation fails it. Without that third
+  receipt the test would pass either way.
+- `test_the_hungarian_page_does_not_print_the_raw_enum_key` loads the real page
+  in the client's own language. It asserts both directions - the label present
+  and the raw key absent - because asserting only the label would pass while
+  both were rendered.
+- Writing it exposed that the language comes from the URL prefix, not
+  `HTTP_ACCEPT_LANGUAGE`; the header version silently rendered Slovak and the
+  assertion failed for the wrong reason.
+
 ## 2026-07-28 - tests/test_office_scoped_aggregates.py (8, new file)
 
 A dedicated file rather than tests scattered into each feature's suite,

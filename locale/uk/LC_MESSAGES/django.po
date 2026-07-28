@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-28 00:15+0200\n"
+"POT-Creation-Date: 2026-07-28 01:54+0200\n"
 "Language: uk\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -819,7 +819,7 @@ msgstr "Тип інвалідності"
 
 #: core/people/forms.py:48 features/finance/catalog_i18n.py:26
 #: features/logistics/forms.py:74 features/logistics/forms.py:228
-#: templates/pages/equipment_stock.html:46
+#: templates/pages/equipment_stock.html:44
 #: templates/pages/project_detail.html:20
 msgid "Office"
 msgstr "Офіс"
@@ -1446,6 +1446,36 @@ msgstr "Активацію запитано — рішення прийме ме
 #: core/projects/views.py:398 features/blacklist/views.py:85
 msgid "Decision recorded."
 msgstr "Рішення записано."
+
+#: core/reporting/periods.py:45 templates/partials/period_filter.html:22
+msgid "Day"
+msgstr "День"
+
+#: core/reporting/periods.py:46 templates/partials/period_filter.html:26
+msgid "Week"
+msgstr "Тиждень"
+
+#: core/reporting/periods.py:47 templates/pages/finance_summary.html:75
+#: templates/partials/ledger_cycle.html:8
+#: templates/partials/period_filter.html:30
+msgid "Month"
+msgstr "Місяць"
+
+#: core/reporting/periods.py:48 templates/partials/period_filter.html:37
+msgid "Several months"
+msgstr "Кілька місяців"
+
+#: core/reporting/periods.py:49 templates/pages/finance_summary.html:72
+#: templates/partials/ledger_cycle.html:5
+#: templates/partials/period_filter.html:38
+#: templates/partials/period_filter.html:52
+msgid "Year"
+msgstr "Рік"
+
+#: core/reporting/periods.py:160
+#, python-format
+msgid "Week %(week)s, %(year)s"
+msgstr "Тиждень %(week)s, %(year)s"
 
 #: core/ui/help.py:14 core/ui/help.py:16 templates/help/getting-started.html:4
 #: templates/help/getting-started.html:5 tests/test_help.py:115
@@ -2237,23 +2267,23 @@ msgstr "фінансова позиція"
 msgid "finance line items"
 msgstr "фінансові позиції"
 
-#: features/finance/views.py:191
+#: features/finance/views.py:203
 msgid "Saved and recalculated."
 msgstr "Збережено та перераховано."
 
-#: features/finance/views.py:193 features/finance/views.py:244
+#: features/finance/views.py:205 features/finance/views.py:256
 msgid "Invalid input."
 msgstr "Невірні дані."
 
-#: features/finance/views.py:203
+#: features/finance/views.py:215
 msgid "Month locked."
 msgstr "Місяць заблоковано."
 
-#: features/finance/views.py:214
+#: features/finance/views.py:226
 msgid "Month reopened."
 msgstr "Місяць знову відкрито."
 
-#: features/finance/views.py:242
+#: features/finance/views.py:254
 msgid "Financial month saved."
 msgstr "Фінансовий місяць збережено."
 
@@ -2294,7 +2324,7 @@ msgid "Yes/No"
 msgstr "Так/Ні"
 
 #: features/intake/models.py:19 features/logistics/forms.py:234
-#: templates/pages/equipment_stock.html:47
+#: templates/pages/equipment_stock.html:45
 #: templates/partials/ledger_activity.html:8
 #: templates/partials/ledger_activity.html:26
 msgid "Date"
@@ -2528,12 +2558,12 @@ msgid "Note"
 msgstr "Нотатка"
 
 #: features/logistics/forms.py:191 features/logistics/forms.py:225
-#: templates/pages/equipment_stock.html:45
+#: templates/pages/equipment_stock.html:43
 #: templates/panels/logistics_equipment.html:46
 msgid "Item"
 msgstr "Позиція"
 
-#: features/logistics/forms.py:193 templates/pages/equipment_stock.html:34
+#: features/logistics/forms.py:193 templates/pages/equipment_stock.html:32
 #: templates/panels/logistics_equipment.html:49
 msgid "Quantity"
 msgstr "Кількість"
@@ -2550,18 +2580,18 @@ msgstr "Заповніть товар, кількість і загальну в
 msgid "The warehouse whose stock is being adjusted."
 msgstr "Склад, запаси якого коригуються."
 
-#: features/logistics/forms.py:236 templates/pages/equipment_stock.html:48
+#: features/logistics/forms.py:236 templates/pages/equipment_stock.html:46
 msgid "Quantity adjustment"
 msgstr "Коригування кількості"
 
-#: features/logistics/forms.py:238 templates/pages/equipment_stock.html:49
+#: features/logistics/forms.py:238 templates/pages/equipment_stock.html:47
 msgid "Value for positive adjustment"
 msgstr "Вартість для додатного коригування"
 
 #: features/logistics/forms.py:243 templates/pages/activation_queue.html:32
 #: templates/pages/audit_log.html:44 templates/pages/blacklist_queue.html:23
 #: templates/pages/blacklist_queue.html:28
-#: templates/pages/equipment_stock.html:50
+#: templates/pages/equipment_stock.html:48
 #: templates/pages/finance_month_detail.html:19
 #: templates/pages/person_detail.html:241
 #: templates/panels/blacklist_case.html:11
@@ -2830,11 +2860,11 @@ msgstr "транспортний тиждень"
 msgid "transport weeks"
 msgstr "транспортні тижні"
 
-#: features/logistics/notifications.py:26
+#: features/logistics/notifications.py:31
 msgid "Equipment reviews are waiting"
 msgstr "Очікують перевірки обладнання"
 
-#: features/logistics/notifications.py:27
+#: features/logistics/notifications.py:33
 #, python-format
 msgid "%(count)s unreturned equipment reviews"
 msgstr "%(count)s перевірок неповерненого обладнання"
@@ -2855,7 +2885,7 @@ msgstr "Відкрийте витрати на житло, зайняті міс
 #: templates/pages/equipment_catalog.html:11
 #: templates/pages/equipment_stock.html:4
 #: templates/pages/equipment_stock.html:8
-#: templates/pages/equipment_stock.html:31
+#: templates/pages/equipment_stock.html:29
 #: templates/pages/equipment_stock_receive.html:6
 msgid "Warehouse stock"
 msgstr "Складські запаси"
@@ -2868,176 +2898,176 @@ msgstr "Переглянути складські запаси"
 msgid "Open current quantities, value, and monthly stock movements."
 msgstr "Відкрити поточні кількості, вартість і місячні рухи запасів."
 
-#: features/logistics/panels.py:130
+#: features/logistics/panels.py:131
 msgid "Equipment value"
 msgstr "Вартість спорядження"
 
-#: features/logistics/panels.py:133
+#: features/logistics/panels.py:134
 msgid "Review equipment exceptions"
 msgstr "Переглянути винятки щодо спорядження"
 
-#: features/logistics/panels.py:135
+#: features/logistics/panels.py:136
 msgid "Open issued equipment awaiting return or a deduction decision."
 msgstr ""
 "Відкрийте видане спорядження, що очікує повернення або рішення щодо "
 "відрахування."
 
-#: features/logistics/services.py:76
+#: features/logistics/services.py:77
 msgid "Amounts use a positive convention; negative values are not allowed."
 msgstr "Суми мають бути додатними; від’ємні значення не дозволені."
 
-#: features/logistics/services.py:276
+#: features/logistics/services.py:277
 msgid "Only active rooms in active locations can be assigned."
 msgstr "Можна призначати лише активні кімнати в активних місцях проживання."
 
-#: features/logistics/services.py:281
+#: features/logistics/services.py:282
 msgid "Room is at full capacity."
 msgstr "Кімната повністю зайнята."
 
-#: features/logistics/services.py:517
+#: features/logistics/services.py:530
 #, python-format
 msgid "Only %(available)s units are available in %(office)s's stock."
 msgstr "На складі офісу %(office)s доступно лише %(available)s одиниць."
 
-#: features/logistics/services.py:521
+#: features/logistics/services.py:534
 #, python-format
 msgid "Only %(available)s units are available in stock."
 msgstr "На складі доступно лише %(available)s од."
 
-#: features/logistics/services.py:589
+#: features/logistics/services.py:602
 msgid "Receipt quantities must be at least one."
 msgstr "Кількість надходження має бути щонайменше один."
 
-#: features/logistics/services.py:592
+#: features/logistics/services.py:605
 msgid "Add at least one receipt line."
 msgstr "Додайте щонайменше один рядок надходження."
 
-#: features/logistics/services.py:630
+#: features/logistics/services.py:643
 msgid "A non-zero adjustment and reason are required."
 msgstr "Потрібні ненульове коригування та причина."
 
-#: features/logistics/services.py:704
+#: features/logistics/services.py:734
 msgid "This equipment item is inactive and cannot be issued."
 msgstr "Ця одиниця спорядження неактивна, її не можна видати."
 
-#: features/logistics/services.py:708
+#: features/logistics/services.py:738
 msgid "An operation key is required for stock-tracked issuance."
 msgstr "Для видачі з обліком запасів потрібен ключ операції."
 
-#: features/logistics/services.py:719
+#: features/logistics/services.py:749
 msgid "Set this person's office before issuing stock-tracked equipment."
 msgstr ""
 "Перш ніж видавати спорядження зі складського обліку, вкажіть офіс цієї особи."
 
-#: features/logistics/services.py:774 features/logistics/services.py:806
+#: features/logistics/services.py:804 features/logistics/services.py:836
 msgid "A transport record already exists for this project and week."
 msgstr "Для цього проєкту й тижня вже існує запис транспорту."
 
-#: features/logistics/services.py:878
+#: features/logistics/services.py:908
 msgid "Choose whether the returned equipment is reusable or retired."
 msgstr ""
 "Виберіть, чи повернене спорядження придатне до повторного використання або "
 "списане."
 
-#: features/logistics/views.py:273
+#: features/logistics/views.py:275
 msgid "Accommodation created. Add rooms to make it assignable."
 msgstr ""
 "Місце проживання створено. Додайте кімнати, щоб його можна було призначати."
 
-#: features/logistics/views.py:289
+#: features/logistics/views.py:291
 msgid "Accommodation updated."
 msgstr "Місце проживання оновлено."
 
-#: features/logistics/views.py:308
+#: features/logistics/views.py:310
 msgid "Room created."
 msgstr "Кімнату створено."
 
-#: features/logistics/views.py:325
+#: features/logistics/views.py:327
 msgid "Room updated."
 msgstr "Кімнату оновлено."
 
-#: features/logistics/views.py:367
+#: features/logistics/views.py:369
 msgid "Accommodation cost period saved."
 msgstr "Період витрат на проживання збережено."
 
-#: features/logistics/views.py:369
+#: features/logistics/views.py:371
 msgid "Review the accommodation cost details."
 msgstr "Перевірте дані про витрати на проживання."
 
-#: features/logistics/views.py:380
+#: features/logistics/views.py:382
 msgid "Room rate saved."
 msgstr "Ставку кімнати збережено."
 
-#: features/logistics/views.py:382 features/logistics/views.py:399
-#: features/logistics/views.py:418
+#: features/logistics/views.py:384 features/logistics/views.py:401
+#: features/logistics/views.py:420
 msgid "Invalid amount."
 msgstr "Недійсна сума."
 
-#: features/logistics/views.py:397
+#: features/logistics/views.py:399
 msgid "Rate override saved."
 msgstr "Змінену ставку збережено."
 
-#: features/logistics/views.py:416
+#: features/logistics/views.py:418
 msgid "Worker accommodation payment saved."
 msgstr "Платіж працівника за проживання збережено."
 
-#: features/logistics/views.py:438
+#: features/logistics/views.py:440
 msgid "Room assigned."
 msgstr "Кімнату призначено."
 
-#: features/logistics/views.py:450
+#: features/logistics/views.py:452
 msgid "Room released."
 msgstr "Кімнату звільнено."
 
-#: features/logistics/views.py:532
+#: features/logistics/views.py:526
 msgid "Stock receipt recorded."
 msgstr "Оприбуткування запасів зафіксовано."
 
-#: features/logistics/views.py:559
+#: features/logistics/views.py:553
 msgid "Stock adjustment recorded."
 msgstr "Коригування запасів зафіксовано."
 
-#: features/logistics/views.py:563
+#: features/logistics/views.py:557
 msgid "Review the stock adjustment and try again."
 msgstr "Перевірте коригування запасів і спробуйте ще раз."
 
-#: features/logistics/views.py:572
+#: features/logistics/views.py:566
 msgid "Equipment item created."
 msgstr "Одиницю спорядження створено."
 
-#: features/logistics/views.py:589
+#: features/logistics/views.py:583
 msgid "Equipment item updated."
 msgstr "Одиницю спорядження оновлено."
 
-#: features/logistics/views.py:614
+#: features/logistics/views.py:608
 msgid "Equipment issued."
 msgstr "Спорядження видано."
 
-#: features/logistics/views.py:616
+#: features/logistics/views.py:610
 msgid "Invalid equipment issue."
 msgstr "Некоректна видача спорядження."
 
-#: features/logistics/views.py:628
+#: features/logistics/views.py:622
 msgid "Equipment returned."
 msgstr "Спорядження повернено."
 
-#: features/logistics/views.py:640
+#: features/logistics/views.py:634
 msgid "Flagged for deduction review."
 msgstr "Позначено для перевірки стягнення."
 
-#: features/logistics/views.py:665
+#: features/logistics/views.py:662
 msgid "Review recorded."
 msgstr "Перевірку записано."
 
-#: features/logistics/views.py:686 features/logistics/views.py:705
+#: features/logistics/views.py:683 features/logistics/views.py:702
 msgid "Transport week recorded."
 msgstr "Тиждень транспорту записано."
 
-#: features/logistics/views.py:688
+#: features/logistics/views.py:685
 msgid "Review the transport details and try again."
 msgstr "Перевірте дані транспорту та спробуйте ще раз."
 
-#: features/logistics/views.py:737
+#: features/logistics/views.py:734
 msgid "Transport record updated."
 msgstr "Запис транспорту оновлено."
 
@@ -4155,16 +4185,16 @@ msgid "Reporting only — no amounts are deducted from workers."
 msgstr "Лише для звітності — з працівників нічого не утримується."
 
 #: templates/pages/accommodation_costs.html:8
-#: templates/pages/equipment_stock.html:21
 msgid "Report month"
 msgstr "Місяць звіту"
 
 #: templates/pages/accommodation_costs.html:8
 #: templates/pages/accommodation_list.html:23 templates/pages/audit_log.html:30
 #: templates/pages/equipment_catalog.html:22
-#: templates/pages/equipment_stock.html:22 templates/pages/project_list.html:21
+#: templates/pages/project_list.html:21
 #: templates/pages/transport_trends.html:37
 #: templates/pages/trials_queue.html:41
+#: templates/partials/period_filter.html:59
 msgid "Filter"
 msgstr "Фільтрувати"
 
@@ -4722,39 +4752,34 @@ msgstr "Доступно одиниць"
 msgid "Current stock value"
 msgstr "Поточна вартість запасів"
 
-#: templates/pages/equipment_stock.html:16
-#: templates/pages/equipment_stock.html:26
-msgid "Closing value"
-msgstr "Кінцева вартість"
-
 #: templates/pages/equipment_stock.html:25
-msgid "Opening value"
-msgstr "Вартість на початок"
+msgid "No stock movements in this period."
+msgstr "У цьому періоді немає рухів запасів."
 
-#: templates/pages/equipment_stock.html:35
+#: templates/pages/equipment_stock.html:33
 #: templates/panels/logistics_equipment.html:7
 msgid "Value"
 msgstr "Вартість"
 
-#: templates/pages/equipment_stock.html:37
+#: templates/pages/equipment_stock.html:35
 msgid "No stock has been received."
 msgstr "Запаси ще не оприбутковано."
 
-#: templates/pages/equipment_stock.html:41
+#: templates/pages/equipment_stock.html:39
 msgid "Controlled correction"
 msgstr "Контрольоване виправлення"
 
-#: templates/pages/equipment_stock.html:42
+#: templates/pages/equipment_stock.html:40
 msgid "Stock adjustment"
 msgstr "Коригування запасів"
 
-#: templates/pages/equipment_stock.html:43
+#: templates/pages/equipment_stock.html:41
 msgid ""
 "This posts an auditable stock adjustment and cannot edit prior movements."
 msgstr ""
 "Ця дія проводить аудитоване коригування запасів і не змінює попередні рухи."
 
-#: templates/pages/equipment_stock.html:51
+#: templates/pages/equipment_stock.html:49
 msgid ""
 "This changes the recorded stock quantity for this item and cannot edit prior "
 "movements."
@@ -4762,7 +4787,7 @@ msgstr ""
 "Ця дія змінює облікову кількість запасів цієї позиції і не змінює попередні "
 "рухи."
 
-#: templates/pages/equipment_stock.html:51
+#: templates/pages/equipment_stock.html:49
 msgid "Post adjustment"
 msgstr "Провести коригування"
 
@@ -5008,16 +5033,6 @@ msgstr "Графік місячної тенденції доходу, витр�
 #: templates/pages/finance_year.html:82
 msgid "Financial months"
 msgstr "Фінансові місяці"
-
-#: templates/pages/finance_summary.html:72
-#: templates/partials/ledger_cycle.html:5
-msgid "Year"
-msgstr "Рік"
-
-#: templates/pages/finance_summary.html:75
-#: templates/partials/ledger_cycle.html:8
-msgid "Month"
-msgstr "Місяць"
 
 #: templates/pages/finance_summary.html:84
 msgid "Record month"
@@ -6077,6 +6092,15 @@ msgstr "Позначити цикл погашеним"
 msgid "No entries in this cycle window."
 msgstr "У цьому вікні циклу немає записів."
 
+#: templates/partials/period_filter.html:13
+msgid "Period"
+msgstr "Період"
+
+#: templates/partials/period_filter.html:61
+#, python-format
+msgid "Showing: %(selection)s"
+msgstr "Показано: %(selection)s"
+
 # --- dashboard ---
 #: templates/partials/person_finance_overview.html:4
 msgid "Wage and payslip overview"
@@ -6105,6 +6129,12 @@ msgstr "Світла"
 #: templates/partials/theme_picker.html:6
 msgid "Dark"
 msgstr "Темна"
+
+#~ msgid "Closing value"
+#~ msgstr "Кінцева вартість"
+
+#~ msgid "Opening value"
+#~ msgstr "Вартість на початок"
 
 #~ msgid "Monthly cost and margin"
 #~ msgstr "Місячні витрати та маржа"
@@ -6141,9 +6171,6 @@ msgstr "Темна"
 
 #~ msgid "Your feedback"
 #~ msgstr "Ваш відгук"
-
-#~ msgid "Period"
-#~ msgstr "Період"
 
 #~ msgid "Net amount"
 #~ msgstr "Чиста сума"

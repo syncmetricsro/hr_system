@@ -16,6 +16,8 @@ from django.utils.dateparse import parse_date
 from django.views.decorators.http import require_POST
 
 from core.accounts.permissions import Action, require_action, user_office_scope
+from core.reporting.controls import period_filter_context
+from core.reporting.periods import resolve_period
 from core.accounts.permissions import can as user_can
 from features.logistics.forms import (
     AccommodationCostPeriodForm,
@@ -44,7 +46,7 @@ from features.logistics.services import (
     accommodation_month_report,
     assign_room,
     create_transport_week,
-    equipment_month_report,
+    equipment_period_report,
     equipment_stock_balance,
     flag_unreturned,
     issue_equipment,
@@ -479,23 +481,15 @@ def equipment_catalog(request: HttpRequest) -> TemplateResponse:
 
 @require_action(Action.EQUIPMENT_VIEW_STOCK)
 def equipment_stock(request: HttpRequest) -> TemplateResponse:
-    today = timezone.localdate()
-    month_value = (request.GET.get("month") or f"{today:%Y-%m}").strip()
-    try:
-        year, month = (int(part) for part in month_value.split("-", 1))
-        if month < 1 or month > 12:
-            raise ValueError
-    except (TypeError, ValueError):
-        year, month = today.year, today.month
-        month_value = f"{year:04d}-{month:02d}"
+    period = resolve_period(request.GET)
     scope = user_office_scope(request.user)
     return TemplateResponse(
         request,
         "pages/equipment_stock.html",
         {
+            **period_filter_context(period),
             "balance": equipment_stock_balance(offices=scope),
-            "report": equipment_month_report(year, month, offices=scope),
-            "month_value": month_value,
+            "report": equipment_period_report(period, offices=scope),
             "can_manage": user_can(request.user, Action.EQUIPMENT_MANAGE_STOCK),
             # The adjustment form is hand-written in the template (not a
             # rendered Form), so it needs the pickable offices explicitly.

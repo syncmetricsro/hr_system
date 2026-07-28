@@ -1,0 +1,65 @@
+{% load i18n %}
+{% comment %}
+Reusable reporting-period picker (J7). Shared by the warehouse report, the
+goods-receipt log and staff activity statistics, per the fix list's "do not
+implement it three times".
+
+Every granularity's inputs are rendered; app.js hides the ones that do not
+match the selected granularity. Without JavaScript they all stay visible and
+the form still works - the server reads only the inputs belonging to the
+chosen `period`, so a stale value in a hidden field is harmless.
+{% endcomment %}
+<form class="period-filter" method="get" data-period-filter>
+  {% for name, value in extra_params.items %}<input type="hidden" name="{{ name }}" value="{{ value }}">{% endfor %}
+
+  <label>{% trans "Period" %}
+    <select name="period" data-period-select>
+      {% for value, label in granularities %}
+        <option value="{{ value }}" {% if value == period.kind %}selected{% endif %}>{{ label }}</option>
+      {% endfor %}
+    </select>
+  </label>
+
+  <span class="period-group" data-period-group="day">
+    <label>{% trans "Day" %}<input type="date" name="date" value="{{ period.params.date|default:today_iso }}"></label>
+  </span>
+
+  <span class="period-group" data-period-group="week">
+    <label>{% trans "Week" %}<input type="week" name="week" value="{{ period.params.week|default:this_week }}"></label>
+  </span>
+
+  <span class="period-group" data-period-group="month">
+    <label>{% trans "Month" %}<input type="month" name="month" value="{{ month_value }}"></label>
+  </span>
+
+  {% comment %}
+  Several months: discrete ticks, not a from/to span. January and March stay
+  January and March - see core/reporting/periods.py.
+  {% endcomment %}
+  <span class="period-group" data-period-group="months">
+    <fieldset class="period-months">
+      <legend>{% trans "Several months" %}</legend>
+      <label class="period-months-year">{% trans "Year" %}
+        <select name="months_year" data-period-months-year>
+          {% for year in selectable_years %}<option value="{{ year }}" {% if year == months_year %}selected{% endif %}>{{ year }}</option>{% endfor %}
+        </select>
+      </label>
+      <span class="period-months-grid">
+        {% for month in selectable_months %}
+          <label><input type="checkbox" name="month" value="{{ month.value }}" {% if month.selected %}checked{% endif %}>{{ month.label }}</label>
+        {% endfor %}
+      </span>
+    </fieldset>
+  </span>
+
+  <span class="period-group" data-period-group="year">
+    <label>{% trans "Year" %}
+      <select name="year">
+        {% for year in selectable_years %}<option value="{{ year }}" {% if year|slugify == period.params.year|slugify %}selected{% endif %}>{{ year }}</option>{% endfor %}
+      </select>
+    </label>
+  </span>
+
+  <button class="button button-secondary" type="submit">{% trans "Filter" %}</button>
+</form>
+<p class="muted period-selection">{% blocktrans with selection=period.label %}Showing: {{ selection }}{% endblocktrans %}</p>

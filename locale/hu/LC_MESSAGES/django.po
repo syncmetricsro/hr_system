@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-28 00:15+0200\n"
+"POT-Creation-Date: 2026-07-28 01:54+0200\n"
 "Language: hu\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -818,7 +818,7 @@ msgstr "Fogyatékosság típusa"
 
 #: core/people/forms.py:48 features/finance/catalog_i18n.py:26
 #: features/logistics/forms.py:74 features/logistics/forms.py:228
-#: templates/pages/equipment_stock.html:46
+#: templates/pages/equipment_stock.html:44
 #: templates/pages/project_detail.html:20
 msgid "Office"
 msgstr "Iroda"
@@ -1447,6 +1447,36 @@ msgstr "Az aktiválást kérelmezték — a menedzser dönt."
 #: core/projects/views.py:398 features/blacklist/views.py:85
 msgid "Decision recorded."
 msgstr "Döntés rögzítve."
+
+#: core/reporting/periods.py:45 templates/partials/period_filter.html:22
+msgid "Day"
+msgstr "Nap"
+
+#: core/reporting/periods.py:46 templates/partials/period_filter.html:26
+msgid "Week"
+msgstr "Hét"
+
+#: core/reporting/periods.py:47 templates/pages/finance_summary.html:75
+#: templates/partials/ledger_cycle.html:8
+#: templates/partials/period_filter.html:30
+msgid "Month"
+msgstr "Hónap"
+
+#: core/reporting/periods.py:48 templates/partials/period_filter.html:37
+msgid "Several months"
+msgstr "Több hónap"
+
+#: core/reporting/periods.py:49 templates/pages/finance_summary.html:72
+#: templates/partials/ledger_cycle.html:5
+#: templates/partials/period_filter.html:38
+#: templates/partials/period_filter.html:52
+msgid "Year"
+msgstr "Év"
+
+#: core/reporting/periods.py:160
+#, python-format
+msgid "Week %(week)s, %(year)s"
+msgstr "%(year)s. %(week)s. hét"
 
 #: core/ui/help.py:14 core/ui/help.py:16 templates/help/getting-started.html:4
 #: templates/help/getting-started.html:5 tests/test_help.py:115
@@ -2237,23 +2267,23 @@ msgstr "pénzügyi tételsor"
 msgid "finance line items"
 msgstr "pénzügyi tételsorok"
 
-#: features/finance/views.py:191
+#: features/finance/views.py:203
 msgid "Saved and recalculated."
 msgstr "Mentve és újraszámolva."
 
-#: features/finance/views.py:193 features/finance/views.py:244
+#: features/finance/views.py:205 features/finance/views.py:256
 msgid "Invalid input."
 msgstr "Érvénytelen bevitel."
 
-#: features/finance/views.py:203
+#: features/finance/views.py:215
 msgid "Month locked."
 msgstr "A hónap zárolva."
 
-#: features/finance/views.py:214
+#: features/finance/views.py:226
 msgid "Month reopened."
 msgstr "A hónap újranyitva."
 
-#: features/finance/views.py:242
+#: features/finance/views.py:254
 msgid "Financial month saved."
 msgstr "Pénzügyi hónap elmentve."
 
@@ -2294,7 +2324,7 @@ msgid "Yes/No"
 msgstr "Igen/Nem"
 
 #: features/intake/models.py:19 features/logistics/forms.py:234
-#: templates/pages/equipment_stock.html:47
+#: templates/pages/equipment_stock.html:45
 #: templates/partials/ledger_activity.html:8
 #: templates/partials/ledger_activity.html:26
 msgid "Date"
@@ -2528,12 +2558,12 @@ msgid "Note"
 msgstr "Megjegyzés"
 
 #: features/logistics/forms.py:191 features/logistics/forms.py:225
-#: templates/pages/equipment_stock.html:45
+#: templates/pages/equipment_stock.html:43
 #: templates/panels/logistics_equipment.html:46
 msgid "Item"
 msgstr "Tétel"
 
-#: features/logistics/forms.py:193 templates/pages/equipment_stock.html:34
+#: features/logistics/forms.py:193 templates/pages/equipment_stock.html:32
 #: templates/panels/logistics_equipment.html:49
 msgid "Quantity"
 msgstr "Mennyiség"
@@ -2550,18 +2580,18 @@ msgstr "Töltse ki a tételt, a mennyiséget és az összértéket."
 msgid "The warehouse whose stock is being adjusted."
 msgstr "A raktár, amelynek készletét módosítja."
 
-#: features/logistics/forms.py:236 templates/pages/equipment_stock.html:48
+#: features/logistics/forms.py:236 templates/pages/equipment_stock.html:46
 msgid "Quantity adjustment"
 msgstr "Mennyiségi korrekció"
 
-#: features/logistics/forms.py:238 templates/pages/equipment_stock.html:49
+#: features/logistics/forms.py:238 templates/pages/equipment_stock.html:47
 msgid "Value for positive adjustment"
 msgstr "Pozitív korrekció értéke"
 
 #: features/logistics/forms.py:243 templates/pages/activation_queue.html:32
 #: templates/pages/audit_log.html:44 templates/pages/blacklist_queue.html:23
 #: templates/pages/blacklist_queue.html:28
-#: templates/pages/equipment_stock.html:50
+#: templates/pages/equipment_stock.html:48
 #: templates/pages/finance_month_detail.html:19
 #: templates/pages/person_detail.html:241
 #: templates/panels/blacklist_case.html:11
@@ -2830,11 +2860,11 @@ msgstr "szállítási hét"
 msgid "transport weeks"
 msgstr "szállítási hetek"
 
-#: features/logistics/notifications.py:26
+#: features/logistics/notifications.py:31
 msgid "Equipment reviews are waiting"
 msgstr "Felszerelési ellenőrzések várakoznak"
 
-#: features/logistics/notifications.py:27
+#: features/logistics/notifications.py:33
 #, python-format
 msgid "%(count)s unreturned equipment reviews"
 msgstr "%(count)s vissza nem adott felszerelés ellenőrzése"
@@ -2857,7 +2887,7 @@ msgstr ""
 #: templates/pages/equipment_catalog.html:11
 #: templates/pages/equipment_stock.html:4
 #: templates/pages/equipment_stock.html:8
-#: templates/pages/equipment_stock.html:31
+#: templates/pages/equipment_stock.html:29
 #: templates/pages/equipment_stock_receive.html:6
 msgid "Warehouse stock"
 msgstr "Raktárkészlet"
@@ -2870,176 +2900,176 @@ msgstr "Raktárkészlet áttekintése"
 msgid "Open current quantities, value, and monthly stock movements."
 msgstr "Aktuális mennyiségek, érték és havi készletmozgások megnyitása."
 
-#: features/logistics/panels.py:130
+#: features/logistics/panels.py:131
 msgid "Equipment value"
 msgstr "Felszerelés értéke"
 
-#: features/logistics/panels.py:133
+#: features/logistics/panels.py:134
 msgid "Review equipment exceptions"
 msgstr "Felszerelési kivételek áttekintése"
 
-#: features/logistics/panels.py:135
+#: features/logistics/panels.py:136
 msgid "Open issued equipment awaiting return or a deduction decision."
 msgstr ""
 "Nyissa meg a visszaadásra vagy levonási döntésre váró kiadott "
 "felszereléseket."
 
-#: features/logistics/services.py:76
+#: features/logistics/services.py:77
 msgid "Amounts use a positive convention; negative values are not allowed."
 msgstr ""
 "Az összegek pozitív előjelet használnak; negatív érték nem engedélyezett."
 
-#: features/logistics/services.py:276
+#: features/logistics/services.py:277
 msgid "Only active rooms in active locations can be assigned."
 msgstr "Csak aktív szállás aktív szobája rendelhető hozzá."
 
-#: features/logistics/services.py:281
+#: features/logistics/services.py:282
 msgid "Room is at full capacity."
 msgstr "A szoba megtelt."
 
-#: features/logistics/services.py:517
+#: features/logistics/services.py:530
 #, python-format
 msgid "Only %(available)s units are available in %(office)s's stock."
 msgstr "Csak %(available)s egység érhető el a(z) %(office)s készletén."
 
-#: features/logistics/services.py:521
+#: features/logistics/services.py:534
 #, python-format
 msgid "Only %(available)s units are available in stock."
 msgstr "Csak %(available)s egység érhető el a készleten."
 
-#: features/logistics/services.py:589
+#: features/logistics/services.py:602
 msgid "Receipt quantities must be at least one."
 msgstr "A bevételezett mennyiség legalább egy legyen."
 
-#: features/logistics/services.py:592
+#: features/logistics/services.py:605
 msgid "Add at least one receipt line."
 msgstr "Adjon hozzá legalább egy bevételezési sort."
 
-#: features/logistics/services.py:630
+#: features/logistics/services.py:643
 msgid "A non-zero adjustment and reason are required."
 msgstr "Nem nulla korrekció és indoklás szükséges."
 
-#: features/logistics/services.py:704
+#: features/logistics/services.py:734
 msgid "This equipment item is inactive and cannot be issued."
 msgstr "Ez a felszerelési tétel inaktív, ezért nem adható ki."
 
-#: features/logistics/services.py:708
+#: features/logistics/services.py:738
 msgid "An operation key is required for stock-tracked issuance."
 msgstr "A készletkövetett kiadáshoz műveleti kulcs szükséges."
 
-#: features/logistics/services.py:719
+#: features/logistics/services.py:749
 msgid "Set this person's office before issuing stock-tracked equipment."
 msgstr ""
 "A készleten nyilvántartott felszerelés kiadása előtt állítsa be a személy "
 "irodáját."
 
-#: features/logistics/services.py:774 features/logistics/services.py:806
+#: features/logistics/services.py:804 features/logistics/services.py:836
 msgid "A transport record already exists for this project and week."
 msgstr "Ehhez a projekthez és héthez már létezik szállítási bejegyzés."
 
-#: features/logistics/services.py:878
+#: features/logistics/services.py:908
 msgid "Choose whether the returned equipment is reusable or retired."
 msgstr ""
 "Válassza ki, hogy a visszaadott felszerelés újrahasználható vagy selejtezett."
 
-#: features/logistics/views.py:273
+#: features/logistics/views.py:275
 msgid "Accommodation created. Add rooms to make it assignable."
 msgstr "A szállás létrejött. A hozzárendeléshez adjon hozzá szobákat."
 
-#: features/logistics/views.py:289
+#: features/logistics/views.py:291
 msgid "Accommodation updated."
 msgstr "A szállás frissítve."
 
-#: features/logistics/views.py:308
+#: features/logistics/views.py:310
 msgid "Room created."
 msgstr "A szoba létrejött."
 
-#: features/logistics/views.py:325
+#: features/logistics/views.py:327
 msgid "Room updated."
 msgstr "A szoba frissítve."
 
-#: features/logistics/views.py:367
+#: features/logistics/views.py:369
 msgid "Accommodation cost period saved."
 msgstr "A költségidőszak mentve."
 
-#: features/logistics/views.py:369
+#: features/logistics/views.py:371
 msgid "Review the accommodation cost details."
 msgstr "Ellenőrizze a költségidőszak adatait."
 
-#: features/logistics/views.py:380
+#: features/logistics/views.py:382
 msgid "Room rate saved."
 msgstr "Szobadíj mentve."
 
-#: features/logistics/views.py:382 features/logistics/views.py:399
-#: features/logistics/views.py:418
+#: features/logistics/views.py:384 features/logistics/views.py:401
+#: features/logistics/views.py:420
 msgid "Invalid amount."
 msgstr "Érvénytelen összeg."
 
-#: features/logistics/views.py:397
+#: features/logistics/views.py:399
 msgid "Rate override saved."
 msgstr "Egyedi díj mentve."
 
-#: features/logistics/views.py:416
+#: features/logistics/views.py:418
 msgid "Worker accommodation payment saved."
 msgstr "A dolgozó havi befizetése mentve."
 
-#: features/logistics/views.py:438
+#: features/logistics/views.py:440
 msgid "Room assigned."
 msgstr "Szoba hozzárendelve."
 
-#: features/logistics/views.py:450
+#: features/logistics/views.py:452
 msgid "Room released."
 msgstr "Szoba felszabadítva."
 
-#: features/logistics/views.py:532
+#: features/logistics/views.py:526
 msgid "Stock receipt recorded."
 msgstr "A készletbevételezés rögzítve."
 
-#: features/logistics/views.py:559
+#: features/logistics/views.py:553
 msgid "Stock adjustment recorded."
 msgstr "A készletkorrekció rögzítve."
 
-#: features/logistics/views.py:563
+#: features/logistics/views.py:557
 msgid "Review the stock adjustment and try again."
 msgstr "Ellenőrizze a készletkorrekció adatait, majd próbálja újra."
 
-#: features/logistics/views.py:572
+#: features/logistics/views.py:566
 msgid "Equipment item created."
 msgstr "Felszerelési tétel létrehozva."
 
-#: features/logistics/views.py:589
+#: features/logistics/views.py:583
 msgid "Equipment item updated."
 msgstr "Felszerelési tétel frissítve."
 
-#: features/logistics/views.py:614
+#: features/logistics/views.py:608
 msgid "Equipment issued."
 msgstr "Felszerelés kiadva."
 
-#: features/logistics/views.py:616
+#: features/logistics/views.py:610
 msgid "Invalid equipment issue."
 msgstr "Érvénytelen felszerelés-kiadás."
 
-#: features/logistics/views.py:628
+#: features/logistics/views.py:622
 msgid "Equipment returned."
 msgstr "Felszerelés visszavéve."
 
-#: features/logistics/views.py:640
+#: features/logistics/views.py:634
 msgid "Flagged for deduction review."
 msgstr "Levonási ellenőrzésre jelölve."
 
-#: features/logistics/views.py:665
+#: features/logistics/views.py:662
 msgid "Review recorded."
 msgstr "Ellenőrzés rögzítve."
 
-#: features/logistics/views.py:686 features/logistics/views.py:705
+#: features/logistics/views.py:683 features/logistics/views.py:702
 msgid "Transport week recorded."
 msgstr "Szállítási hét rögzítve."
 
-#: features/logistics/views.py:688
+#: features/logistics/views.py:685
 msgid "Review the transport details and try again."
 msgstr "Ellenőrizze a szállítás adatait, majd próbálja újra."
 
-#: features/logistics/views.py:737
+#: features/logistics/views.py:734
 msgid "Transport record updated."
 msgstr "A szállítási bejegyzés frissítve."
 
@@ -4164,16 +4194,16 @@ msgid "Reporting only — no amounts are deducted from workers."
 msgstr "Csak kimutatáshoz — a munkavállalóktól semmi nem kerül levonásra."
 
 #: templates/pages/accommodation_costs.html:8
-#: templates/pages/equipment_stock.html:21
 msgid "Report month"
 msgstr "Jelentés hónapja"
 
 #: templates/pages/accommodation_costs.html:8
 #: templates/pages/accommodation_list.html:23 templates/pages/audit_log.html:30
 #: templates/pages/equipment_catalog.html:22
-#: templates/pages/equipment_stock.html:22 templates/pages/project_list.html:21
+#: templates/pages/project_list.html:21
 #: templates/pages/transport_trends.html:37
 #: templates/pages/trials_queue.html:41
+#: templates/partials/period_filter.html:59
 msgid "Filter"
 msgstr "Szűrés"
 
@@ -4735,40 +4765,35 @@ msgstr "Elérhető egységek"
 msgid "Current stock value"
 msgstr "Aktuális készletérték"
 
-#: templates/pages/equipment_stock.html:16
-#: templates/pages/equipment_stock.html:26
-msgid "Closing value"
-msgstr "Záróérték"
-
 #: templates/pages/equipment_stock.html:25
-msgid "Opening value"
-msgstr "Nyitóérték"
+msgid "No stock movements in this period."
+msgstr "Ebben az időszakban nincs készletmozgás."
 
-#: templates/pages/equipment_stock.html:35
+#: templates/pages/equipment_stock.html:33
 #: templates/panels/logistics_equipment.html:7
 msgid "Value"
 msgstr "Érték"
 
-#: templates/pages/equipment_stock.html:37
+#: templates/pages/equipment_stock.html:35
 msgid "No stock has been received."
 msgstr "Még nem történt készletbevételezés."
 
-#: templates/pages/equipment_stock.html:41
+#: templates/pages/equipment_stock.html:39
 msgid "Controlled correction"
 msgstr "Ellenőrzött korrekció"
 
-#: templates/pages/equipment_stock.html:42
+#: templates/pages/equipment_stock.html:40
 msgid "Stock adjustment"
 msgstr "Készletkorrekció"
 
-#: templates/pages/equipment_stock.html:43
+#: templates/pages/equipment_stock.html:41
 msgid ""
 "This posts an auditable stock adjustment and cannot edit prior movements."
 msgstr ""
 "Ez auditálható készletkorrekciót könyvel, és nem módosítja a korábbi "
 "mozgásokat."
 
-#: templates/pages/equipment_stock.html:51
+#: templates/pages/equipment_stock.html:49
 msgid ""
 "This changes the recorded stock quantity for this item and cannot edit prior "
 "movements."
@@ -4776,7 +4801,7 @@ msgstr ""
 "Ez módosítja a tétel nyilvántartott készletmennyiségét, és nem módosítja a "
 "korábbi mozgásokat."
 
-#: templates/pages/equipment_stock.html:51
+#: templates/pages/equipment_stock.html:49
 msgid "Post adjustment"
 msgstr "Korrekció könyvelése"
 
@@ -5022,16 +5047,6 @@ msgstr "Havi bevétel, költség és nettó trend diagram"
 #: templates/pages/finance_year.html:82
 msgid "Financial months"
 msgstr "Pénzügyi hónapok"
-
-#: templates/pages/finance_summary.html:72
-#: templates/partials/ledger_cycle.html:5
-msgid "Year"
-msgstr "Év"
-
-#: templates/pages/finance_summary.html:75
-#: templates/partials/ledger_cycle.html:8
-msgid "Month"
-msgstr "Hónap"
 
 #: templates/pages/finance_summary.html:84
 msgid "Record month"
@@ -6093,6 +6108,15 @@ msgstr "Ciklus rendezettként jelölése"
 msgid "No entries in this cycle window."
 msgstr "Ebben a ciklusablakban nincs tétel."
 
+#: templates/partials/period_filter.html:13
+msgid "Period"
+msgstr "Időszak"
+
+#: templates/partials/period_filter.html:61
+#, python-format
+msgid "Showing: %(selection)s"
+msgstr "Megjelenítve: %(selection)s"
+
 # --- dashboard ---
 #: templates/partials/person_finance_overview.html:4
 msgid "Wage and payslip overview"
@@ -6121,6 +6145,12 @@ msgstr "Világos"
 #: templates/partials/theme_picker.html:6
 msgid "Dark"
 msgstr "Sötét"
+
+#~ msgid "Closing value"
+#~ msgstr "Záróérték"
+
+#~ msgid "Opening value"
+#~ msgstr "Nyitóérték"
 
 #~ msgid "Monthly cost and margin"
 #~ msgstr "Havi költség és árrés"
@@ -6158,9 +6188,6 @@ msgstr "Sötét"
 
 #~ msgid "Your feedback"
 #~ msgstr "Az Ön visszajelzése"
-
-#~ msgid "Period"
-#~ msgstr "Időszak"
 
 #~ msgid "Net amount"
 #~ msgstr "Nettó összeg"

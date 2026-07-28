@@ -11,7 +11,6 @@ from core.people.models import Person
 from features.logistics.models import EquipmentItem, EquipmentStockMovement
 from features.logistics.services import (
     LogisticsWorkflowError,
-    equipment_month_report,
     equipment_stock_balance,
     issue_equipment,
     receive_stock,
@@ -26,11 +25,13 @@ def test_fifo_preserves_lot_value_and_restock_snapshot():
     item = EquipmentItem.objects.create(name="Demo boot", size="38")
     person = Person.objects.create(first_name="Fictional", last_name="Worker")
     receive_stock(
-        received_on=date(2026, 4, 1), operation_key=uuid4(),
+        received_on=date(2026, 4, 1),
+        operation_key=uuid4(),
         lines=[{"item": item, "quantity": 3, "total_value": Decimal("10.00")}],
     )
     receive_stock(
-        received_on=date(2026, 4, 2), operation_key=uuid4(),
+        received_on=date(2026, 4, 2),
+        operation_key=uuid4(),
         lines=[{"item": item, "quantity": 2, "total_value": Decimal("9.00")}],
     )
     issue = issue_equipment(person, item, 4, operation_key=uuid4())
@@ -46,13 +47,18 @@ def test_stock_operations_are_idempotent_and_overdraw_rolls_back():
     person = Person.objects.create(first_name="Demo", last_name="Person")
     key = uuid4()
     first = receive_stock(
-        received_on=date(2026, 5, 1), operation_key=key,
+        received_on=date(2026, 5, 1),
+        operation_key=key,
         lines=[{"item": item, "quantity": 2, "total_value": Decimal("20")}],
     )
-    assert receive_stock(
-        received_on=date(2026, 5, 1), operation_key=key,
-        lines=[{"item": item, "quantity": 2, "total_value": Decimal("20")}],
-    ).pk == first.pk
+    assert (
+        receive_stock(
+            received_on=date(2026, 5, 1),
+            operation_key=key,
+            lines=[{"item": item, "quantity": 2, "total_value": Decimal("20")}],
+        ).pk
+        == first.pk
+    )
     with pytest.raises(LogisticsWorkflowError):
         issue_equipment(person, item, 3, operation_key=uuid4())
     assert not person.equipment_issues.exists()
@@ -63,8 +69,10 @@ def test_stock_operations_are_idempotent_and_overdraw_rolls_back():
     issue = issue_equipment(person, item, 1, operation_key=issue_key)
     assert issue_equipment(person, item, 1, operation_key=issue_key).pk == issue.pk
     assert equipment_stock_balance()["quantity"] == 1
-    # The current-date issue does not rewrite the historical May closing balance.
-    assert equipment_month_report(2026, 5)["closing"]["value"] == Decimal("20")
+    # The current-date issue does not rewrite history: the balance as of the
+    # end of May is still what it was. (Asserted against the balance directly
+    # now that the period report no longer carries a closing figure.)
+    assert equipment_stock_balance(as_of=date(2026, 5, 31))["value"] == Decimal("20")
     movement = EquipmentStockMovement.objects.first()
     with pytest.raises(ValueError):
         movement.save()
