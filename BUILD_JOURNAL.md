@@ -1,5 +1,31 @@
 # Build Journal
 
+## 2026-07-28 - Seeded people belong to their own office's recruiter
+
+Verifying J2 on staging showed the staff-activity table listing one recruiter
+with all seven people and two with none. The zero rows were correct and are
+deliberately kept - but the report exists to reveal *a gap between two working
+recruiters*, and seed data where only one recruiter has ever done anything
+cannot demonstrate that.
+
+Every seeded person was attributed to the Velký Meder recruiter regardless of
+their office. This is the same defect corrected for project coordinators on
+2026-07-26, which left the Velký Meder coordinator formally responsible for
+four projects they get a 403 on; the reasoning transfers directly and the fix
+mirrors it.
+
+The correction also **repairs existing databases** rather than only new ones.
+`get_or_create(defaults=...)` applies on creation alone, so without an explicit
+repair pass every demo instance already in existence - staging included - would
+keep the old attribution however often it was reseeded. The seed already had
+exactly this pattern for `office`; this follows it.
+
+Two tests guard demo properties rather than code paths, because nothing else
+would notice either: that seeded people span more than one recruiter, and that
+re-running the seed fixes a database whose attribution was collapsed onto one.
+
+Suites: 875 Jober, 517 CorvinumEU.
+
 ## 2026-07-28 - J9 second slice: the Help screenshot pipeline, and what it caught
 
 The Help area's one existing "visual" is a hand-built HTML mock of the

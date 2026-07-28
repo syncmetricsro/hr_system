@@ -1,5 +1,15 @@
 # Test Journal
 
+## 2026-07-28 - tests/test_staff_activity.py (16, was 14)
+
+- `test_the_demo_seed_spreads_registrations_across_recruiters` guards a demo
+  property: the report is technically correct with one recruiter owning
+  everything, and useless.
+- `test_reseeding_repairs_an_existing_databases_attribution` collapses every
+  person onto one recruiter, asserts that state, then reseeds and asserts it is
+  undone. Without the first assertion the test would pass on a database that
+  was never broken.
+
 ## 2026-07-28 - tests/test_help_visual_aids.py extended (20)
 
 - `test_every_referenced_asset_is_discoverable_by_staticfiles` uses `find()`,

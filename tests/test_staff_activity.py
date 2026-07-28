@@ -276,3 +276,44 @@ def test_a_first_placement_is_not_counted_as_a_transfer(
     assert transfers[0]["moved_from"] == first
     assert transfers[0]["moved_to"] == second
     assert transfers[0]["by"] == coordinator
+
+
+# --- the seed has to make the report demonstrable ---------------------------
+
+
+@pytest.mark.jober_only
+def test_the_demo_seed_spreads_registrations_across_recruiters(django_user_model):
+    """A staff-activity table showing one recruiter with everything and two
+    with nothing demonstrates the zero rows but not the gap between two working
+    recruiters, which is the comparison the report exists for.
+
+    Guards a demo property, not a code path - nothing else would notice.
+    """
+    from django.core.management import call_command
+
+    call_command("seed_demo")
+    call_command("seed_people")
+
+    owners = {
+        p.owning_recruiter.email
+        for p in Person.objects.filter(owning_recruiter__isnull=False)
+    }
+    assert len(owners) >= 2, f"every seeded person belongs to one recruiter: {owners}"
+
+
+@pytest.mark.jober_only
+def test_reseeding_repairs_an_existing_databases_attribution(django_user_model):
+    """The correction has to reach databases that already exist, or staging
+    keeps showing the old attribution however often it is reseeded."""
+    from django.core.management import call_command
+
+    call_command("seed_demo")
+    call_command("seed_people")
+
+    one = django_user_model.objects.get(email="naborar@demo.jober.test")
+    Person.objects.update(owning_recruiter=one)
+    assert Person.objects.exclude(owning_recruiter=one).count() == 0
+
+    call_command("seed_people")
+
+    assert Person.objects.exclude(owning_recruiter=one).exists()
