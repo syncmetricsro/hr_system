@@ -239,11 +239,6 @@ if _feature_on("logistics", "equipment"):
             name="issue_equipment",
         ),
         path(
-            "equipment/<int:issue_pk>/return/",
-            logistics_views.return_equipment_view,
-            name="return_equipment",
-        ),
-        path(
             "equipment/<int:issue_pk>/flag/",
             logistics_views.flag_unreturned_view,
             name="flag_unreturned",
@@ -259,6 +254,18 @@ if _feature_on("logistics", "equipment"):
             name="review_deduction",
         ),
     ]
+    if _feature_on("logistics", "equipment_returns"):
+        # Jober never returns issued equipment ("what we issue, stays out",
+        # J6). The route is not registered rather than 403'd, the same way
+        # transport was retired - models and history are preserved untouched.
+        app_routes += [
+            path(
+                "equipment/<int:issue_pk>/return/",
+                logistics_views.return_equipment_view,
+                name="return_equipment",
+            ),
+        ]
+
     if getattr(settings, "EQUIPMENT_STOCK_LEDGER_ENABLED", False):
         app_routes += [
             path(

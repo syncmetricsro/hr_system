@@ -20,6 +20,13 @@
           </div>
           {% if not panel.stock_enabled %}<span class="equipment-unit-price">{% trans "Unit price" %}: {{ issue.item.unit_price }} EUR</span>{% endif %}
           {% if issue.review_status == 'none' and may_equip %}
+            {% comment %}
+            Returns are per-client (J6). Jober never takes equipment back -
+            "what we issue, stays out" - so the form is not rendered and the
+            route is not registered. CorvinumEU keeps both.
+            {% endcomment %}
+            {% flag_on 'equipment_returns' as may_return %}
+            {% if may_return %}
             <form class="inline-form" method="post" action="{% url 'return_equipment' issue.pk %}">
               {% csrf_token %}
               {% if panel.stock_enabled %}<select name="disposition" required aria-label="{% trans 'Return disposition' %}">
@@ -28,6 +35,7 @@
               </select>{% endif %}
               <button class="button button-secondary" type="submit" data-tooltip="{% trans 'Marks this item as returned and updates warehouse stock accordingly.' %}">{% icon "receive" %}{% trans "Return" %}</button>
             </form>
+            {% endif %}
             <form class="inline-form" method="post" action="{% url 'flag_unreturned' issue.pk %}">
               {% csrf_token %}
               <button class="button button-secondary" type="submit" data-confirm="{% trans 'This flags the item as unreturned and opens a manager charge review at its issued stock value.' %}">{% trans "Flag unreturned" %}</button>

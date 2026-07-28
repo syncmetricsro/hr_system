@@ -17,12 +17,15 @@ def users(django_user_model):
         return django_user_model.objects.create_user(
             email=f"{role}@demo.jober.test", password="x", role=role
         )
+
     return {r: make(r) for r in ("recruiter", "coordinator", "manager", "observer")}
 
 
 @pytest.fixture
 def objs(users):
-    person = Person.objects.create(first_name="A", last_name="B", lifecycle_status=LifecycleStatus.TRIAL_DAY)
+    person = Person.objects.create(
+        first_name="A", last_name="B", lifecycle_status=LifecycleStatus.TRIAL_DAY
+    )
     project = Project.objects.create(name="DHL", code="DHLBA")
     trial = TrialAssignment.objects.create(person=person, project=project)
     item = EquipmentItem.objects.create(name="Boots")
@@ -37,8 +40,20 @@ CASES = [
     ("readiness_update", lambda o: {"person_pk": o["person"].pk}, "post", "recruiter"),
     ("activate_person", lambda o: {"person_pk": o["person"].pk}, "post", "recruiter"),
     ("assign_room", lambda o: {"person_pk": o["person"].pk}, "post", "observer"),
-    ("issue_equipment", lambda o: {"person_pk": o["person"].pk}, "post", "observer"),
-    ("return_equipment", lambda o: {"issue_pk": o["issue"].pk}, "post", "observer"),
+    (
+        "issue_equipment",
+        lambda o: {
+            "person_pk": o[
+                "person"  # `return_equipment` is intentionally absent: the route is not registered
+                # for a client whose `equipment_returns` flag is off (J6), so parametrizing
+                # it here would fail at reverse() rather than testing a gate. Its RBAC is
+                # covered for clients that keep returns by
+                # tests/test_equipment_returns_flag.py.
+            ].pk
+        },
+        "post",
+        "observer",
+    ),
     ("finance_record", lambda o: {}, "post", "observer"),
     ("finance_summary", lambda o: {}, "get", "recruiter"),
     ("intake_start", lambda o: {}, "get", "observer"),
@@ -46,7 +61,9 @@ CASES = [
 
 
 @pytest.mark.parametrize("url_name,kwargs_fn,method,denied_role", CASES)
-def test_denied_role_gets_403(client, users, objs, url_name, kwargs_fn, method, denied_role):
+def test_denied_role_gets_403(
+    client, users, objs, url_name, kwargs_fn, method, denied_role
+):
     client.force_login(users[denied_role])
     url = reverse(url_name, kwargs=kwargs_fn(objs))
     response = getattr(client, method)(url)
@@ -54,7 +71,9 @@ def test_denied_role_gets_403(client, users, objs, url_name, kwargs_fn, method, 
 
 
 @pytest.mark.parametrize("url_name,kwargs_fn,method,denied_role", CASES)
-def test_anonymous_is_redirected(client, objs, url_name, kwargs_fn, method, denied_role):
+def test_anonymous_is_redirected(
+    client, objs, url_name, kwargs_fn, method, denied_role
+):
     url = reverse(url_name, kwargs=kwargs_fn(objs))
     response = getattr(client, method)(url)
     assert response.status_code == 302

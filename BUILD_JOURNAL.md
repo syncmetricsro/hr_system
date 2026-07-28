@@ -1,5 +1,44 @@
 # Build Journal
 
+## 2026-07-28 - J6: Jober stops taking equipment back
+
+The client was unambiguous - "what we issue, stays out" - and the owner
+confirmed it. Returns are now per-client.
+
+Done the way the transport removal was, and for the same reason: **the route is
+not registered** for a client whose `equipment_returns` flag is off, rather
+than registered and 403'd. A route that 403s is still a route to maintain, and
+a URL that does not exist cannot be reached by guessing. Models and migrations
+are untouched, so previously returned items still read correctly - nothing is
+deleted, only the path forward is closed.
+
+CorvinumEU keeps returns, the recovery review and the linked ledger deduction.
+That is asserted positively rather than inferred from a green lane: the
+CorvinumEU suite gained a test that the route *does* resolve there, and its
+count moved 518 -> 519 while Jober skips it. A global removal would have
+satisfied every Jober assertion while silently breaking the other client.
+
+`tests/test_view_gating.py` lost its `return_equipment` row. Parametrizing a
+route that is not registered fails at `reverse()` rather than testing a gate;
+the RBAC coverage moved to the new file, where it runs for whichever clients
+still have the route.
+
+**Two things deliberately not done, both flagged rather than guessed:**
+
+- **The manager recovery review queue stays.** The fix list said to flag it
+  rather than remove it unilaterally, and nobody has said it should go.
+  Flagging an item unreturned and charging or waiving it is a distinct action
+  from taking equipment back, so it still functions. If the client agrees
+  nothing is ever expected back, it is the obvious next thing to retire -
+  recorded in runbook §7 as a question to ask him during that section.
+- **The "receipt-total tile" was not removed.** The fix list says to remove the
+  "20 units / 730 EUR" figure, but question 1 of the open-questions doc records
+  him *confirming he wants* the item list plus the current total value - which
+  is what the warehouse page's two tiles show. Removing the wrong one deletes
+  something he asked for. He needs to point at it.
+
+Suites: 879 Jober, 519 CorvinumEU, 50 e2e.
+
 ## 2026-07-28 - Finance manual entry gets its own panel
 
 The month-recording form sat at the bottom of the "Financial months" list, so
@@ -21,6 +60,7 @@ failure this area had before, and it was invisible to 875 passing tests. Caught
 by capturing the panel and looking at it, fixed, and re-captured to confirm.
 
 Suites: 875 Jober, 519 CorvinumEU, 50 e2e.
+
 
 ## 2026-07-28 - Seeded people belong to their own office's recruiter
 

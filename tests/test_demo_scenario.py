@@ -12,6 +12,7 @@ if not django_apps.is_installed("features.finance"):
 import pytest
 from django.core.management import call_command
 
+from core.ui.registry import flag_enabled
 from features.blacklist.models import BlacklistCaseStatus, MatchFingerprint
 from features.blacklist.services import check_match
 from features.compliance.services import compliance_alerts
@@ -67,8 +68,15 @@ def test_scenario_populates_every_module():
         review_status=DeductionReviewStatus.PENDING
     ).exists()
     assert EquipmentStockMovement.objects.filter(movement_type="receipt").exists()
-    assert EquipmentIssue.objects.filter(return_disposition="restock").exists()
-    assert EquipmentIssue.objects.filter(return_disposition="retire").exists()
+    # Returns are per-client (J6). Jober retired them, so the scenario no
+    # longer seeds a returned helmet there - seeding one would leave a worker
+    # holding items they had no way to return. Clients that keep returns must
+    # still get both dispositions, so the demo exercises restock and retire.
+    if flag_enabled("equipment_returns"):
+        assert EquipmentIssue.objects.filter(return_disposition="restock").exists()
+        assert EquipmentIssue.objects.filter(return_disposition="retire").exists()
+    else:
+        assert not EquipmentIssue.objects.exclude(return_disposition="").exists()
 
     # Inactive-by-reason has a named bucket (not just "No reason").
     labels = {row["label"] for row in inactive_by_reason()}

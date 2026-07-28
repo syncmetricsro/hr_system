@@ -14,6 +14,7 @@ CLIENT_POLICIES = "clients.jober.policies"
 FEATURE_FLAGS = {
     "accommodation": True,
     "equipment": True,
+    "equipment_returns": False,  # "what we issue, stays out" (J6, 2026-07-28)
     "transport": False,
     "recruitment_trials": True,
     "intake": True,
@@ -22,9 +23,9 @@ FEATURE_FLAGS = {
     "feedback": True,
     "duplicate_blacklist": True,
     "profitability": True,
-    "checklists": False,   # CorvinumEU feature (ADR 0022) — not in the Jober product
-    "advances": False,     # CorvinumEU feature (ADR 0022) — not in the Jober product
-    "payslips": False,     # CorvinumEU feature (ADR 0023) — not in the Jober product
+    "checklists": False,  # CorvinumEU feature (ADR 0022) — not in the Jober product
+    "advances": False,  # CorvinumEU feature (ADR 0022) — not in the Jober product
+    "payslips": False,  # CorvinumEU feature (ADR 0023) — not in the Jober product
     "wage_ledger": False,  # CorvinumEU gross-wage source ledger
 }
 
