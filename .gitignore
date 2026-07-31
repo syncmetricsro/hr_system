@@ -27,3 +27,6 @@ vite.config.*
 test-artifacts/
 backups/
 _font_subset_work/
+
+# Local client-provided reference files; may contain sensitive business data.
+/docs/examples/HV 202510.xlsx
