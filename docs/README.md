@@ -10,7 +10,7 @@ they are never renamed or renumbered per client.
 |---|---|---|
 | `../Jober_Product_Design.md` | Jober | Product truth: modules, workflows, plan §§ |
 | `../Jober_Finance_Specs.md` | Jober | Finance module spec (positive sign convention, Q4) |
-| `../Jober_Messaging_Specs.md` | Jober | SMS/Telegram messaging spec |
+| `../Jober_Messaging_Specs.md` | Jober | Reconciled Twilio SMS status and Telegram channel-broadcast entrypoint |
 | `../AGENTS.md` | Platform | **Binding authority**: scope, security, supply chain |
 | `../CLAUDE.md` | Platform | Session onboarding for coding agents |
 | `../ENVIRONMENT.md`, `../Handoff.md`, `../README.md` | Platform | Environment/runtime notes, handoff, repo intro |
@@ -66,7 +66,9 @@ staff-invitation subsystem deferred) ·
 | `playwright-test-environment-note.md` | Platform | e2e environment notes |
 | `avatar-design.md` | Platform | Worker/admin avatar design — fully implemented 2026-07-25, including illustrated per-role default art |
 | `pill-system-design.md` | Platform | Worker status pill, certificate-validity icons, Compliance/Reviews nav badges — fully implemented 2026-07-24 |
-| `certificate-upload-design.md` | Platform | Certificate document upload (forklift/crane/welding), RBAC, validation — implemented 2026-07-24 |
+| `certificate-upload-design.md` | Platform | Shared forklift/crane/welding upload, renewal/history, RBAC, validation, and emergency purge — implemented 2026-07-31 |
+| `document-storage-boundary.md` | Platform | Metadata-only/prohibited high-risk document boundary and optional separately scoped Secure Document Vault |
+| `accountant-data-handoff.md` | Platform | Separate Slovak/Hungarian accountant handoffs: country-specific payroll facts and tax declarations, medical/ID exclusions, secure routing, and refusal of mixed/unresolved jurisdictions |
 | `feedback-flyer-design.md` | Platform | Downloadable PDF+QR flyer for feedback links, Cyrillic-capable via a vendored font (ADR 0028) — implemented 2026-07-24 |
 | `help-area-design.md` | Platform | In-app Help section (nav tab, 9 articles, full SK/HU/UK i18n) — implemented 2026-07-24; per-client article filtering by feature flag noted as a follow-up |
 | `notification-center.md` | Platform | Floating alerts/updates behavior, privacy, refresh, and extension contract |
@@ -76,8 +78,9 @@ staff-invitation subsystem deferred) ·
 | `jober-open-questions-july-2026.md` | Jober | Handover-call questions (**open**); 4 of 6 block or reshape queued work |
 | `jober-open-decisions.md`, `jober-risk-blockers.md` | Jober | Open decisions / blockers |
 | `jober-multi-office-scoping.md` | Jober | Multi-office (Velký Meder/Győr/Dunajská Streda) RBAC impact analysis — implemented (Phases A+B); only the staff-invitation subsystem §3a remains design-only (revisits ADR 0008) |
+| `jober-telegram-channel-design.md` | Jober | Canonical Manager/Admin-only, outbound Telegram channel-broadcast design — approved direction, not implemented, client/privacy gates open |
 | `jober-demo-inventory.md`, `jober-demo-to-django-map.md`, `jober-removed-feature-inventory.md`, `jober-source-register.md` | Jober | Build-era inventories and source register |
-| `corvinum-open-questions.md` | CorvinumEU | C-Q1…C-Q16 build defaults awaiting client confirmation |
+| `corvinum-open-questions.md` | CorvinumEU | C-Q1…C-Q19 build defaults awaiting client confirmation |
 
 ## docs/security/
 | Doc | Owner | Purpose |

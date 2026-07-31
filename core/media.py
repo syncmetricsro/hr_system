@@ -12,6 +12,7 @@ import uuid
 
 from django.core.files.base import ContentFile
 from django.db import transaction
+from django.utils.translation import gettext as _
 
 MAX_UPLOAD_BYTES = 5 * 1024 * 1024  # 5MB raw upload cap
 MAX_INPUT_DIMENSION = 8000  # guards against decompression-bomb abuse
@@ -130,6 +131,7 @@ def process_avatar_upload(uploaded_file) -> ContentFile:
 CERTIFICATE_MAX_UPLOAD_BYTES = 10 * 1024 * 1024  # 10MB — scans run larger than avatars
 CERTIFICATE_MAX_INPUT_DIMENSION = 8000  # guards against decompression-bomb abuse
 CERTIFICATE_STORED_MAX_DIMENSION = 2000  # must stay legible - no center-crop
+CERTIFICATE_MAX_PDF_PAGES = 4
 CERTIFICATE_IMAGE_EXTENSIONS = {"JPEG": "jpg", "PNG": "png", "WEBP": "webp"}
 
 
@@ -146,7 +148,9 @@ def certificate_upload_path(instance, filename: str) -> str:
     return f"certificates/{uuid.uuid4().hex}.{ext}"
 
 
-def process_certificate_document(uploaded_file) -> tuple[ContentFile, str]:
+def process_certificate_document(
+    uploaded_file, *, allow_pdf: bool = True
+) -> tuple[ContentFile, str]:
     """Validate an uploaded certificate document — image or PDF — and return
     ``(content, extension)`` ready to store.
 
@@ -154,12 +158,13 @@ def process_certificate_document(uploaded_file) -> tuple[ContentFile, str]:
     decoded pixel data, and capped to a max dimension — but, unlike avatars,
     never center-cropped, since the document must stay legible. PDFs are
     validated by instantiating ``pypdf.PdfReader`` and touching ``.pages``
-    (the PDF equivalent of ``Image.verify()``) and stored unmodified.
+    (the PDF equivalent of ``Image.verify()``), rejected if interactive, and
+    rebuilt from its page content to discard catalogue actions and metadata.
 
     Raises ``CertificateUploadError`` with a message safe to show the user.
     """
     if uploaded_file.size > CERTIFICATE_MAX_UPLOAD_BYTES:
-        raise CertificateUploadError("File is too large (max 10MB).")
+        raise CertificateUploadError(_("File is too large (max 10MB)."))
 
     raw = uploaded_file.read()
     is_pdf = (uploaded_file.content_type or "").lower() == "application/pdf" or (
@@ -167,16 +172,45 @@ def process_certificate_document(uploaded_file) -> tuple[ContentFile, str]:
     ).lower().endswith(".pdf")
 
     if is_pdf:
-        from pypdf import PdfReader
+        if not allow_pdf:
+            raise CertificateUploadError(_("The back side must be an image."))
+
+        from pypdf import PdfReader, PdfWriter
         from pypdf.errors import PdfReadError
 
         try:
             reader = PdfReader(io.BytesIO(raw))
-            if len(reader.pages) < 1:
-                raise CertificateUploadError("PDF has no pages.")
+            if reader.is_encrypted:
+                raise CertificateUploadError(_("Encrypted PDFs are not allowed."))
+            page_count = len(reader.pages)
+            if page_count < 1:
+                raise CertificateUploadError(_("PDF has no pages."))
+            if page_count > CERTIFICATE_MAX_PDF_PAGES:
+                raise CertificateUploadError(_("PDF has too many pages (max 4)."))
+
+            root = reader.trailer.get("/Root", {})
+            forbidden_root_keys = {"/AA", "/AcroForm", "/Names", "/OpenAction"}
+            if any(key in root for key in forbidden_root_keys):
+                raise CertificateUploadError(
+                    _("Interactive PDFs or PDFs with attachments are not allowed.")
+                )
+            for page in reader.pages:
+                if "/AA" in page or "/Annots" in page:
+                    raise CertificateUploadError(
+                        _("Interactive PDFs or PDFs with attachments are not allowed.")
+                    )
+
+            # Rebuild from page content rather than retaining the source
+            # catalogue. This drops document metadata and catalogue-level
+            # actions/attachments while preserving the scanned pages.
+            writer = PdfWriter()
+            for page in reader.pages:
+                writer.add_page(page)
+            buffer = io.BytesIO()
+            writer.write(buffer)
         except (PdfReadError, ValueError, OSError, KeyError):
-            raise CertificateUploadError("File is not a valid PDF.") from None
-        return ContentFile(raw), "pdf"
+            raise CertificateUploadError(_("File is not a valid PDF.")) from None
+        return ContentFile(buffer.getvalue()), "pdf"
 
     from PIL import Image, UnidentifiedImageError
 
@@ -187,20 +221,20 @@ def process_certificate_document(uploaded_file) -> tuple[ContentFile, str]:
             probe_size = probe.size  # header only - see process_avatar_upload
             probe.verify()
     except (UnidentifiedImageError, OSError, ValueError):
-        raise CertificateUploadError("File is not a valid image or PDF.") from None
+        raise CertificateUploadError(_("File is not a valid image or PDF.")) from None
 
     if max(probe_size) > CERTIFICATE_MAX_INPUT_DIMENSION:
-        raise CertificateUploadError("Image dimensions are too large.")
+        raise CertificateUploadError(_("Image dimensions are too large."))
 
     try:
         image = Image.open(io.BytesIO(raw))
         image.load()
     except (UnidentifiedImageError, OSError, ValueError):
-        raise CertificateUploadError("File is not a valid image or PDF.") from None
+        raise CertificateUploadError(_("File is not a valid image or PDF.")) from None
 
     if image.format not in CERTIFICATE_IMAGE_EXTENSIONS:
         raise CertificateUploadError(
-            "Only JPEG, PNG, WebP images or PDF documents are allowed."
+            _("Only JPEG, PNG, WebP images or PDF documents are allowed.")
         )
 
     stored_format = image.format

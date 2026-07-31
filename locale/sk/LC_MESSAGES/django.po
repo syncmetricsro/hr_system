@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-28 17:36+0200\n"
+"POT-Creation-Date: 2026-07-31 13:47+0200\n"
 "Language: sk\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -99,7 +99,7 @@ msgstr "Prevádzka"
 
 # --- compliance ---
 #: clients/corvinum_eu/templates/layouts/base.html:50 core/ui/help.py:43
-#: features/compliance/panels.py:27 features/finance/models.py:68
+#: features/compliance/panels.py:33 features/finance/models.py:68
 #: features/intake/catalog_i18n.py:12 templates/help/getting-started.html:21
 #: templates/layouts/base.html:38 templates/pages/compliance_list.html:4
 #: templates/pages/compliance_list.html:9
@@ -271,7 +271,7 @@ msgstr "potvrdené"
 #: core/projects/models.py:181 core/projects/models.py:259
 #: features/advances/models.py:92 features/blacklist/models.py:66
 #: features/blacklist/models.py:114 features/checklists/models.py:23
-#: features/compliance/models.py:33 features/feedback/models.py:26
+#: features/compliance/models.py:87 features/feedback/models.py:26
 #: features/feedback/models.py:48 features/finance/models.py:39
 #: features/intake/models.py:32 features/logistics/models.py:43
 #: features/logistics/models.py:79 features/logistics/models.py:184
@@ -343,14 +343,15 @@ msgstr "ID cieľa"
 #: core/projects/models.py:137 core/projects/models.py:209
 #: core/projects/models.py:322 features/advances/models.py:61
 #: features/blacklist/models.py:45 features/blacklist/models.py:105
-#: features/checklists/models.py:57 features/compliance/models.py:24
+#: features/checklists/models.py:57 features/compliance/models.py:51
 #: features/intake/models.py:106 features/logistics/models.py:144
 #: features/logistics/models.py:263 features/messaging/models.py:48
 #: features/payslips/models.py:20 features/wage_ledger/models.py:16
 msgid "person"
 msgstr "osoba"
 
-#: core/audit/models.py:44 features/logistics/models.py:466
+#: core/audit/models.py:44 features/compliance/forms.py:128
+#: features/logistics/models.py:466
 msgid "reason"
 msgstr "dôvod"
 
@@ -431,243 +432,299 @@ msgstr "Rozhodnutie zaznamenané."
 msgid "Blacklist case proposed"
 msgstr "Prípad čiernej listiny navrhnutý na posúdenie."
 
-#: core/audit/presentation.py:29 core/audit/presentation.py:99
+#: core/audit/presentation.py:29 core/audit/presentation.py:105
 msgid "Removed from blacklist"
 msgstr "Odstránené z čiernej listiny."
 
 #: core/audit/presentation.py:30
-msgid "Certificate deleted"
-msgstr "Certifikát vymazaný"
+msgid "Certificate archived"
+msgstr "Certifikát archivovaný"
 
-#: core/audit/presentation.py:31
-msgid "Certificate document replaced"
-msgstr "Dokument certifikátu nahradený"
-
-#: core/audit/presentation.py:32
-msgid "Certificate updated"
-msgstr "Certifikát aktualizovaný"
-
-#: core/audit/presentation.py:33
+#: core/audit/presentation.py:31 core/audit/presentation.py:39
 msgid "Certificate uploaded"
 msgstr "Certifikát nahraný"
 
+#: core/audit/presentation.py:32
+msgid "Certificate files permanently removed"
+msgstr "Súbory certifikátu boli natrvalo odstránené"
+
+#: core/audit/presentation.py:33
+msgid "Certificate renewed"
+msgstr "Certifikát obnovený"
+
 #: core/audit/presentation.py:34
+msgid "Certificate superseded"
+msgstr "Certifikát nahradený novým"
+
+#: core/audit/presentation.py:36
+msgid "Certificate deleted"
+msgstr "Certifikát vymazaný"
+
+#: core/audit/presentation.py:37
+msgid "Certificate document replaced"
+msgstr "Dokument certifikátu nahradený"
+
+#: core/audit/presentation.py:38
+msgid "Certificate updated"
+msgstr "Certifikát aktualizovaný"
+
+#: core/audit/presentation.py:40
 msgid "Checklist item completed"
 msgstr "Položka kontrolného zoznamu dokončená"
 
-#: core/audit/presentation.py:35
+#: core/audit/presentation.py:41
 msgid "Checklist item reopened"
 msgstr "Položka kontrolného zoznamu znovu otvorená"
 
-#: core/audit/presentation.py:36
+#: core/audit/presentation.py:42
 msgid "Equipment item created"
 msgstr "Položka vybavenia vytvorená"
 
-#: core/audit/presentation.py:37
+#: core/audit/presentation.py:43
 msgid "Equipment item updated"
 msgstr "Položka vybavenia aktualizovaná"
 
-#: core/audit/presentation.py:38
+#: core/audit/presentation.py:44
 msgid "Equipment deduction review recorded"
 msgstr "Kontrola zrážky za vybavenie zaznamenaná"
 
-#: core/audit/presentation.py:39
+#: core/audit/presentation.py:45
 msgid "Equipment flagged as unreturned"
 msgstr "Vybavenie označené ako nevrátené"
 
-#: core/audit/presentation.py:40 core/people/services.py:137
+#: core/audit/presentation.py:46 core/people/services.py:137
 msgid "Equipment issued"
 msgstr "Vybavenie vydané"
 
-#: core/audit/presentation.py:41
+#: core/audit/presentation.py:47
 msgid "Equipment returned"
 msgstr "Vybavenie vrátené."
 
-#: core/audit/presentation.py:42
+#: core/audit/presentation.py:48
 msgid "Equipment stock adjusted"
 msgstr "Zásoby vybavenia upravené"
 
-#: core/audit/presentation.py:43
+#: core/audit/presentation.py:49
 msgid "Equipment stock received"
 msgstr "Zásoby vybavenia prijaté"
 
-#: core/audit/presentation.py:44
+#: core/audit/presentation.py:50
 msgid "Finance line item saved"
 msgstr "Finančná položka uložená"
 
-#: core/audit/presentation.py:45
+#: core/audit/presentation.py:51
 msgid "Financial month locked"
 msgstr "Finančný mesiac uzamknutý"
 
-#: core/audit/presentation.py:46
+#: core/audit/presentation.py:52
 msgid "Financial month recorded"
 msgstr "Finančný mesiac zaznamenaný"
 
-#: core/audit/presentation.py:47
+#: core/audit/presentation.py:53
 msgid "Finance recalculated"
 msgstr "Uložiť a prepočítať"
 
-#: core/audit/presentation.py:48
+#: core/audit/presentation.py:54
 msgid "Financial month reopened"
 msgstr "Finančný mesiac znovu otvorený"
 
-#: core/audit/presentation.py:49
+#: core/audit/presentation.py:55
 msgid "Worker feedback received"
 msgstr "Prijatá spätná väzba od pracovníka"
 
-#: core/audit/presentation.py:50 core/people/services.py:157
+#: core/audit/presentation.py:56 core/people/services.py:157
 msgid "Intake completed"
 msgstr "Príjem dokončený"
 
-#: core/audit/presentation.py:51
+#: core/audit/presentation.py:57
 msgid "Ledger cycle marked settled"
 msgstr "Cyklus knihy označený ako vysporiadaný"
 
-#: core/audit/presentation.py:52
+#: core/audit/presentation.py:58
 msgid "Ledger entries included in cycle"
 msgstr "Položky knihy zahrnuté do cyklu"
 
-#: core/audit/presentation.py:53
+#: core/audit/presentation.py:59
 msgid "Ledger entry cancelled"
 msgstr "Záznam zrušený."
 
-#: core/audit/presentation.py:54
+#: core/audit/presentation.py:60
 msgid "Ledger entry recorded"
 msgstr "Záznam v knihe uložený."
 
-#: core/audit/presentation.py:55
+#: core/audit/presentation.py:61
 msgid "Ledger entry reversed"
 msgstr "Záznam v knihe stornovaný"
 
-#: core/audit/presentation.py:56
+#: core/audit/presentation.py:62
 msgid "Payslip recorded"
 msgstr "Výplatná páska uložená."
 
-#: core/audit/presentation.py:57
+#: core/audit/presentation.py:63
 msgid "Payslip sent"
 msgstr "Výplatná páska odoslaná"
 
-#: core/audit/presentation.py:58
+#: core/audit/presentation.py:64
 msgid "Person archived"
 msgstr "Osoba archivovaná"
 
-#: core/audit/presentation.py:59 core/audit/presentation.py:79
+#: core/audit/presentation.py:65 core/audit/presentation.py:85
 msgid "Avatar added"
 msgstr "Avatar pridaný"
 
-#: core/audit/presentation.py:60 core/audit/presentation.py:80
+#: core/audit/presentation.py:66 core/audit/presentation.py:86
 msgid "Avatar removed"
 msgstr "Avatar odstránený"
 
-#: core/audit/presentation.py:61 core/audit/presentation.py:81
+#: core/audit/presentation.py:67 core/audit/presentation.py:87
 msgid "Avatar replaced"
 msgstr "Avatar nahradený"
 
-#: core/audit/presentation.py:62
+#: core/audit/presentation.py:68
 msgid "Person added"
 msgstr "Osoba pridaná."
 
-#: core/audit/presentation.py:63
+#: core/audit/presentation.py:69
 msgid "Exit completed"
 msgstr "Odchod dokončený."
 
-#: core/audit/presentation.py:64 core/people/services.py:171
+#: core/audit/presentation.py:70 core/people/services.py:171
 msgid "Status changed"
 msgstr "Stav zmenený"
 
-#: core/audit/presentation.py:65 core/audit/presentation.py:104
+#: core/audit/presentation.py:71 core/audit/presentation.py:110
 msgid "Recycled to Available"
 msgstr "Vrátené na Dostupný."
 
-#: core/audit/presentation.py:66
+#: core/audit/presentation.py:72
 msgid "Person updated"
 msgstr "Osoba aktualizovaná."
 
-#: core/audit/presentation.py:67
+#: core/audit/presentation.py:73
 msgid "Readiness saved"
 msgstr "Pripravenosť uložená."
 
-#: core/audit/presentation.py:68 core/people/services.py:127
+#: core/audit/presentation.py:74 core/people/services.py:127
 msgid "Room assigned"
 msgstr "Izba pridelená"
 
-#: core/audit/presentation.py:69
+#: core/audit/presentation.py:75
 msgid "Room created"
 msgstr "Izba bola vytvorená."
 
-#: core/audit/presentation.py:70
+#: core/audit/presentation.py:76
 msgid "Room released"
 msgstr "Izba uvoľnená."
 
-#: core/audit/presentation.py:71
+#: core/audit/presentation.py:77
 msgid "Room updated"
 msgstr "Izba bola aktualizovaná."
 
-#: core/audit/presentation.py:72
+#: core/audit/presentation.py:78
 msgid "Message sent"
 msgstr "Správa odoslaná."
 
-#: core/audit/presentation.py:73
+#: core/audit/presentation.py:79
 msgid "Transport week created"
 msgstr "Týždeň dopravy vytvorený"
 
-#: core/audit/presentation.py:74
+#: core/audit/presentation.py:80
 msgid "Transport week recorded"
 msgstr "Týždeň dopravy zaznamenaný."
 
-#: core/audit/presentation.py:75
+#: core/audit/presentation.py:81
 msgid "Transport week updated"
 msgstr "Týždeň dopravy bol aktualizovaný"
 
-#: core/audit/presentation.py:76
+#: core/audit/presentation.py:82
 msgid "Trial outcome recorded"
 msgstr "Výsledok skúšky zaznamenaný."
 
-#: core/audit/presentation.py:77 core/audit/presentation.py:108
+#: core/audit/presentation.py:83 core/audit/presentation.py:114
 #: core/people/services.py:101
 msgid "Trial scheduled"
 msgstr "Skúška naplánovaná"
 
-#: core/audit/presentation.py:78
+#: core/audit/presentation.py:84
 msgid "Trial updated"
 msgstr "Skúšobný deň bol aktualizovaný."
 
-#: core/audit/presentation.py:82
+#: core/audit/presentation.py:88
 msgid "Gross wage recorded"
 msgstr "Hrubá mzda bola zaznamenaná."
 
-#: core/audit/presentation.py:98
+#: core/audit/presentation.py:104
 msgid "Activated onto a project"
 msgstr "Aktivovaný na projekte"
 
-#: core/audit/presentation.py:100
+#: core/audit/presentation.py:106
 msgid "Added to blacklist"
 msgstr "Pridaný na čiernu listinu"
 
 # --- exit / recycling ---
-#: core/audit/presentation.py:101 templates/pages/person_detail.html:216
+#: core/audit/presentation.py:107 templates/pages/person_detail.html:216
 msgid "Exit"
 msgstr "Odchod"
 
-#: core/audit/presentation.py:102
+#: core/audit/presentation.py:108
 msgid "Readiness requirements met"
 msgstr "Požiadavky na pripravenosť splnené"
 
-#: core/audit/presentation.py:103
+#: core/audit/presentation.py:109
 msgid "Room reassigned"
 msgstr "Izba preradená"
 
-#: core/audit/presentation.py:105
+#: core/audit/presentation.py:111
 msgid "Superseded by a new assignment"
 msgstr "Nahradené novým priradením"
 
-#: core/audit/presentation.py:106
+#: core/audit/presentation.py:112
 msgid "Trial failed"
 msgstr "Skúšobný deň neúspešný"
 
-#: core/audit/presentation.py:107
+#: core/audit/presentation.py:113
 msgid "Trial no-show"
 msgstr "Skúšobný deň – nedostavil sa"
+
+#: core/media.py:167
+msgid "File is too large (max 10MB)."
+msgstr "Súbor je príliš veľký (max. 10 MB)."
+
+#: core/media.py:176 features/compliance/forms.py:93
+msgid "The back side must be an image."
+msgstr "Zadná strana musí byť obrázok."
+
+#: core/media.py:184
+msgid "Encrypted PDFs are not allowed."
+msgstr "Šifrované súbory PDF nie sú povolené."
+
+#: core/media.py:187
+msgid "PDF has no pages."
+msgstr "PDF nemá žiadne strany."
+
+#: core/media.py:189
+msgid "PDF has too many pages (max 4)."
+msgstr "PDF má príliš veľa strán (max. 4)."
+
+#: core/media.py:195 core/media.py:200
+msgid "Interactive PDFs or PDFs with attachments are not allowed."
+msgstr "Interaktívne súbory PDF ani PDF s prílohami nie sú povolené."
+
+#: core/media.py:212
+msgid "File is not a valid PDF."
+msgstr "Súbor nie je platný PDF."
+
+#: core/media.py:224 core/media.py:233
+msgid "File is not a valid image or PDF."
+msgstr "Súbor nie je platný obrázok ani PDF."
+
+#: core/media.py:227
+msgid "Image dimensions are too large."
+msgstr "Rozmery obrázka sú príliš veľké."
+
+#: core/media.py:237
+msgid "Only JPEG, PNG, WebP images or PDF documents are allowed."
+msgstr "Povolené sú iba obrázky JPEG, PNG, WebP alebo dokumenty PDF."
 
 #: core/notifications/models.py:21
 msgid "item key"
@@ -728,7 +785,7 @@ msgid "%(first)s +%(count)s"
 msgstr "%(first)s +%(count)s"
 
 #: core/offices/models.py:12 core/projects/models.py:12
-#: features/checklists/models.py:18 features/compliance/models.py:29
+#: features/checklists/models.py:18 features/compliance/models.py:59
 #: features/intake/models.py:25 features/logistics/models.py:29
 #: features/logistics/models.py:216 features/messaging/models.py:11
 msgid "name"
@@ -767,7 +824,7 @@ msgstr "Vojenská služba"
 
 #: core/people/catalog_i18n.py:14 features/advances/models.py:40
 #: features/blacklist/catalog_i18n.py:15 features/blacklist/models.py:88
-#: features/blacklist/panels.py:61 features/compliance/models.py:14
+#: features/blacklist/panels.py:61 features/compliance/models.py:15
 #: features/finance/models.py:74 features/intake/catalog_i18n.py:29
 msgid "Other"
 msgstr "Ostatné"
@@ -1128,7 +1185,8 @@ msgstr "projekt"
 msgid "projects"
 msgstr "projekty"
 
-#: core/projects/models.py:49 features/logistics/models.py:135
+#: core/projects/models.py:49 features/compliance/models.py:19
+#: features/logistics/models.py:135
 #: templates/pages/accommodation_detail.html:35
 #: templates/pages/accommodation_list.html:19
 #: templates/pages/equipment_catalog.html:18
@@ -1689,7 +1747,7 @@ msgid "entry type"
 msgstr "typ záznamu"
 
 #: features/advances/models.py:68 features/blacklist/models.py:53
-#: features/compliance/models.py:27 features/finance/models.py:110
+#: features/compliance/models.py:54 features/finance/models.py:110
 msgid "category"
 msgstr "kategória"
 
@@ -1841,7 +1899,7 @@ msgstr "vyhradený dôvod"
 msgid "proposed by"
 msgstr "navrhol"
 
-#: features/blacklist/models.py:65 features/compliance/models.py:31
+#: features/blacklist/models.py:65 features/compliance/models.py:65
 msgid "expiry date"
 msgstr "dátum expirácie"
 
@@ -2021,37 +2079,137 @@ msgid "Activation blocked by open checklist items: %(items)s"
 msgstr ""
 "Aktivácia je zablokovaná otvorenými položkami kontrolného zoznamu: %(items)s"
 
-#: features/compliance/models.py:10
+#: features/compliance/forms.py:31
+msgid "certificate type"
+msgstr "typ certifikátu"
+
+#: features/compliance/forms.py:34
+msgid "front, paper scan, or PDF"
+msgstr "predná strana, sken dokumentu alebo PDF"
+
+#: features/compliance/forms.py:41
+msgid "back (image only)"
+msgstr "zadná strana (iba obrázok)"
+
+#: features/compliance/forms.py:47
+msgid "remove the current back"
+msgstr "odstrániť aktuálnu zadnú stranu"
+
+#: features/compliance/forms.py:103
+msgid "A PDF must be the only file for a certificate."
+msgstr "PDF musí byť jediným súborom certifikátu."
+
+#: features/compliance/forms.py:109 features/compliance/services.py:216
+msgid ""
+"Remove the current back side before replacing the certificate with a PDF."
+msgstr ""
+"Pred nahradením certifikátu súborom PDF odstráňte aktuálnu zadnú stranu."
+
+#: features/compliance/forms.py:117
+msgid "Enter an expiry date or select does not expire."
+msgstr "Zadajte dátum vypršania alebo vyberte možnosť nevyprší."
+
+#: features/compliance/models.py:11
 msgid "Health"
 msgstr "Zdravotné"
 
-#: features/compliance/models.py:11
+#: features/compliance/models.py:12
 msgid "Forklift"
 msgstr "Vysokozdvižný vozík"
 
-#: features/compliance/models.py:12
+#: features/compliance/models.py:13
 msgid "Crane"
 msgstr "Žeriav"
 
-#: features/compliance/models.py:13
+#: features/compliance/models.py:14
 msgid "Welding"
 msgstr "Zváranie"
 
-#: features/compliance/models.py:30 features/payslips/models.py:32
+#: features/compliance/models.py:20
+msgid "Superseded"
+msgstr "Nahradený"
+
+#: features/compliance/models.py:21
+msgid "Archived"
+msgstr "Archivovaný"
+
+#: features/compliance/models.py:60
+msgid "issuer"
+msgstr "vydávajúca organizácia"
+
+#: features/compliance/models.py:62
+msgid "certificate number"
+msgstr "číslo certifikátu"
+
+#: features/compliance/models.py:64 features/payslips/models.py:32
 msgid "issue date"
 msgstr "dátum vydania"
 
-#: features/compliance/models.py:32
-msgid "document"
-msgstr "dokument"
+#: features/compliance/models.py:66
+msgid "does not expire"
+msgstr "nevyprší"
 
-#: features/compliance/models.py:36
+#: features/compliance/models.py:68
+msgid "front or PDF"
+msgstr "predná strana alebo PDF"
+
+# --- feedback ---
+#: features/compliance/models.py:71
+msgid "back"
+msgstr "zadná strana"
+
+#: features/compliance/models.py:74
+msgid "record status"
+msgstr "stav záznamu"
+
+#: features/compliance/models.py:85
+msgid "supersedes"
+msgstr "nahrádza"
+
+#: features/compliance/models.py:90
 msgid "certificate"
 msgstr "certifikát"
 
-#: features/compliance/models.py:37
+#: features/compliance/models.py:91
 msgid "certificates"
 msgstr "certifikáty"
+
+#: features/compliance/models.py:118
+msgid ""
+"Choose an expiry date or mark the certificate as not expiring, not both."
+msgstr ""
+"Vyberte dátum vypršania alebo označte certifikát ako nevypršateľný, nie "
+"oboje."
+
+#: features/compliance/models.py:122
+msgid "Enter an expiry date or mark the certificate as not expiring."
+msgstr "Zadajte dátum vypršania alebo označte certifikát ako nevypršateľný."
+
+#: features/compliance/models.py:129 features/compliance/services.py:192
+msgid "Files are allowed only for forklift, crane, and welding certificates."
+msgstr ""
+"Súbory sú povolené iba pre preukazy na vysokozdvižný vozík, žeriav a "
+"zváranie."
+
+#: features/compliance/models.py:134
+msgid "Choose a supported occupational certificate type."
+msgstr "Vyberte podporovaný typ pracovného oprávnenia."
+
+#: features/compliance/models.py:137
+msgid "Upload the certificate front, scan, or PDF."
+msgstr "Nahrajte prednú stranu certifikátu, sken alebo PDF."
+
+#: features/compliance/models.py:140
+msgid "Upload the front before adding the back."
+msgstr "Pred pridaním zadnej strany nahrajte prednú stranu."
+
+#: features/compliance/models.py:146
+msgid "A PDF must be the only file; the back side must be an image."
+msgstr "PDF musí byť jediným súborom; zadná strana musí byť obrázok."
+
+#: features/compliance/models.py:150
+msgid "A certificate cannot supersede itself."
+msgstr "Certifikát nemôže nahradiť sám seba."
 
 #: features/compliance/notifications.py:32
 msgid "Compliance problems need attention"
@@ -2062,32 +2220,44 @@ msgstr "Problémy s dodržiavaním predpisov vyžadujú pozornosť"
 msgid "%(count)s open document or medical alerts"
 msgstr "%(count)s otvorených upozornení na doklady alebo lekársku prehliadku"
 
-#: features/compliance/panels.py:30
+#: features/compliance/panels.py:36
 msgid "Review compliance issues"
 msgstr "Skontrolovať problémy súladu"
 
-#: features/compliance/panels.py:32
+#: features/compliance/panels.py:38
 msgid "Open workers with document or medical requirements that need attention."
 msgstr ""
 "Otvorte pracovníkov s dokumentmi alebo zdravotnými požiadavkami, ktoré "
 "vyžadujú pozornosť."
 
-#: features/compliance/panels.py:67
+#: features/compliance/panels.py:75
 #, python-format
 msgid "%(name)s (expires %(date)s)"
 msgstr "%(name)s (platnosť do %(date)s)"
 
-#: features/compliance/views.py:53
+#: features/compliance/services.py:212
+msgid "A PDF must be the only certificate file."
+msgstr "PDF musí byť jediným súborom certifikátu."
+
+#: features/compliance/views.py:82
 msgid "Certificate added."
 msgstr "Certifikát bol pridaný."
 
-#: features/compliance/views.py:80
+#: features/compliance/views.py:111
 msgid "Certificate updated."
 msgstr "Certifikát bol aktualizovaný."
 
-#: features/compliance/views.py:96
-msgid "Certificate deleted."
-msgstr "Certifikát bol vymazaný."
+#: features/compliance/views.py:150
+msgid "Certificate renewed."
+msgstr "Certifikát bol obnovený."
+
+#: features/compliance/views.py:172
+msgid "Certificate archived."
+msgstr "Certifikát bol archivovaný."
+
+#: features/compliance/views.py:190
+msgid "Certificate files permanently removed."
+msgstr "Súbory certifikátu boli natrvalo odstránené."
 
 #: features/feedback/models.py:19
 msgid "token"
@@ -2723,7 +2893,7 @@ msgid "equipment items"
 msgstr "položky výbavy"
 
 #: features/logistics/models.py:240
-#: templates/panels/compliance_certificates.html:21
+#: templates/panels/compliance_certificates.html:22
 #: templates/panels/logistics_equipment.html:14
 msgid "Issued"
 msgstr "Vydané"
@@ -3453,47 +3623,65 @@ msgstr ""
 "údaje vo vyhľadateľnej forme."
 
 #: templates/help/compliance.html:8
-#: templates/panels/compliance_certificates.html:4
-msgid "Certificates"
-msgstr "Certifikáty"
+msgid "Occupational certificate files"
+msgstr "Súbory pracovných oprávnení"
 
 #: templates/help/compliance.html:9
 msgid ""
-"A worker's certificates — health checks, forklift or crane licences, welding "
-"qualifications, and anything else — live on their person page. Recruiters, "
-"Coordinators, and Managers can add a certificate, optionally attaching a "
-"photo or PDF of the document itself, with an issue date and expiry date."
+"The base platform stores files only for forklift, crane, and welding "
+"licences. Do not upload identity cards, passports, birth or residence "
+"documents, financial records, medical reports, or health-certificate scans. "
+"Those requirements are metadata-only or kept outside the platform."
 msgstr ""
-"Certifikáty pracovníka — lekárske prehliadky, preukazy na vysokozdvižný "
-"vozík alebo žeriav, zváračské kvalifikácie a čokoľvek ďalšie — sa nachádzajú "
-"na jeho stránke osoby. Náborári, Koordinátori a Manažéri môžu pridať "
-"certifikát, voliteľne s priložením fotografie alebo PDF samotného dokumentu, "
-"spolu s dátumom vydania a platnosti."
+"Základná platforma ukladá súbory iba pre oprávnenia na vysokozdvižný vozík, "
+"žeriav a zváranie. Nenahrávajte občianske preukazy, pasy, rodné listy ani "
+"doklady o pobyte, finančné záznamy, lekárske správy či skeny zdravotných "
+"potvrdení. Tieto požiadavky sú iba metadáta alebo sa uchovávajú mimo platformy."
+
+#: templates/help/compliance.html:10
+msgid ""
+"On the person's Occupational certificates panel, an authorized Recruiter, "
+"Coordinator, or Manager can add one PDF, one image, or front and back "
+"images. Record the issuer and certificate number if needed, then enter an "
+"expiry date or mark the certificate as not expiring."
+msgstr ""
+"Na paneli Pracovné oprávnenia osoby môže oprávnený náborár, koordinátor alebo "
+"manažér pridať jeden PDF, jeden obrázok alebo obrázky prednej a zadnej strany. "
+"Podľa potreby zadajte vydávajúcu organizáciu a číslo certifikátu, potom dátum "
+"vypršania alebo označte certifikát ako nevypršateľný."
 
 #: templates/help/compliance.html:11
+msgid ""
+"Renew creates a new active certificate and keeps the previous one in "
+"history. Archive also keeps the record and files. Only a Manager can "
+"permanently remove improperly uploaded files, and a reason is required."
+msgstr ""
+"Obnovenie vytvorí nový aktívny certifikát a predchádzajúci ponechá v histórii. "
+"Archivácia tiež zachová záznam a súbory. Nesprávne nahrané súbory môže natrvalo "
+"odstrániť iba manažér a musí uviesť dôvod."
+
+#: templates/help/compliance.html:13
 msgid "Category icons"
 msgstr "Ikony kategórií"
 
-#: templates/help/compliance.html:12
+#: templates/help/compliance.html:14
 msgid ""
-"A small icon next to a worker's photo shows each certificate category they "
-"hold, tinted by how urgent it is: green or uncolored means valid, amber "
-"means expiring soon, red means already expired. If someone holds more than "
-"one certificate in the same category — a renewal, for example — the icon "
-"reflects whichever one is currently most relevant."
+"A small icon next to a worker's photo shows each active certificate category "
+"they hold, tinted by how urgent it is: green or uncolored means valid, amber "
+"means expiring soon, and red means expired. Superseded and archived "
+"certificates remain in history but do not drive the icon or expiry alerts."
 msgstr ""
-"Malá ikona vedľa fotky pracovníka zobrazuje každú kategóriu certifikátu, "
-"ktorú vlastní, sfarbenú podľa naliehavosti: zelená alebo nesfarbená znamená "
-"platný, jantárová znamená čoskoro vypršia, červená znamená už vypršal. Ak "
-"niekto vlastní viac certifikátov v rovnakej kategórii — napríklad obnovenie "
-"— ikona odráža ten, ktorý je momentálne najrelevantnejší."
+"Malá ikona vedľa fotky pracovníka zobrazuje každú aktívnu kategóriu "
+"certifikátu. Zelená alebo bez farby znamená platný, jantárová čoskoro "
+"vyprší a červená vypršaný. Nahradené a archivované certifikáty zostávajú "
+"v histórii, ale neovplyvňujú ikonu ani upozornenia na vypršanie."
 
 # --- compliance ---
-#: templates/help/compliance.html:14
+#: templates/help/compliance.html:16
 msgid "The Compliance page"
 msgstr "Stránka Súlad"
 
-#: templates/help/compliance.html:15
+#: templates/help/compliance.html:17
 msgid ""
 "The Compliance tab lists every missing, expiring, or expired requirement "
 "across all workers in one place — both certificates and entry medical checks "
@@ -4353,6 +4541,7 @@ msgstr "Správa ubytovania"
 
 # --- compliance ---
 #: templates/pages/accommodation_form.html:9
+#: templates/pages/certificate_action.html:10
 #: templates/pages/certificate_form.html:10
 #: templates/pages/equipment_form.html:10 templates/pages/project_form.html:9
 #: templates/pages/room_form.html:9 templates/pages/transport_trends.html:22
@@ -4564,6 +4753,42 @@ msgstr "Zamietne navrhovaný prípad čiernej listiny a uzavrie ho."
 msgid "Nothing awaiting review."
 msgstr "Nič nečaká na kontrolu."
 
+#: templates/pages/certificate_action.html:4
+#: templates/pages/certificate_action.html:9
+msgid "Permanently remove certificate files"
+msgstr "Natrvalo odstrániť súbory certifikátu"
+
+#: templates/pages/certificate_action.html:4
+#: templates/pages/certificate_action.html:9
+#: templates/pages/certificate_action.html:19
+msgid "Archive certificate"
+msgstr "Archivovať certifikát"
+
+#: templates/pages/certificate_action.html:14
+msgid ""
+"This permanently deletes the stored files and archives the record. Use it "
+"only for a wrong-person or otherwise improper upload."
+msgstr ""
+"Týmto sa uložené súbory natrvalo vymažú a záznam sa archivuje. Použite to "
+"iba pri nahratí k nesprávnej osobe alebo inom nesprávnom nahratí."
+
+#: templates/pages/certificate_action.html:16
+msgid ""
+"The certificate and its files remain in history until the applicable "
+"retention process removes them."
+msgstr ""
+"Certifikát a jeho súbory zostanú v histórii, kým ich neodstráni príslušný "
+"proces uchovávania."
+
+#: templates/pages/certificate_action.html:19
+msgid "Permanently remove files"
+msgstr "Natrvalo odstrániť súbory"
+
+#: templates/pages/certificate_form.html:4
+#: templates/pages/certificate_form.html:9
+msgid "Renew certificate"
+msgstr "Obnoviť certifikát"
+
 #: templates/pages/certificate_form.html:4
 #: templates/pages/certificate_form.html:9
 msgid "Edit certificate"
@@ -4571,23 +4796,35 @@ msgstr "Upraviť certifikát"
 
 #: templates/pages/certificate_form.html:4
 #: templates/pages/certificate_form.html:9
-#: templates/panels/compliance_certificates.html:41
+#: templates/panels/compliance_certificates.html:44
 msgid "Add certificate"
 msgstr "Pridať certifikát"
 
-#: templates/pages/certificate_form.html:15
-msgid "Document"
-msgstr "Dokument"
+#: templates/pages/certificate_form.html:13
+msgid ""
+"Upload one PDF, one image, or front and back images. PDFs cannot have a "
+"separate back side."
+msgstr ""
+"Nahrajte jeden PDF, jeden obrázok alebo obrázky prednej a zadnej strany. PDF "
+"nemôže mať samostatnú zadnú stranu."
 
-#: templates/pages/certificate_form.html:18
-msgid "Current document"
-msgstr "Aktuálny dokument"
+#: templates/pages/certificate_form.html:19
+msgid "Current front or PDF"
+msgstr "Aktuálna predná strana alebo PDF"
 
-#: templates/pages/certificate_form.html:18
+#: templates/pages/certificate_form.html:19
 msgid "uploading a new file replaces it"
 msgstr "nahratie nového súboru ho nahradí"
 
-#: templates/pages/certificate_form.html:19
+#: templates/pages/certificate_form.html:22
+msgid "Current back"
+msgstr "Aktuálna zadná strana"
+
+#: templates/pages/certificate_form.html:24
+msgid "Save renewal"
+msgstr "Uložiť obnovenie"
+
+#: templates/pages/certificate_form.html:24
 msgid "Save certificate"
 msgstr "Uložiť certifikát"
 
@@ -4596,7 +4833,7 @@ msgid "Alerts"
 msgstr "Upozornenia"
 
 #: templates/pages/compliance_list.html:23
-#: templates/panels/compliance_certificates.html:13
+#: templates/panels/compliance_certificates.html:14
 msgid "Expired"
 msgstr "Vypršané"
 
@@ -4702,7 +4939,7 @@ msgstr "Jednotková cena"
 #: templates/pages/person_detail.html:42 templates/pages/project_detail.html:13
 #: templates/pages/transport_trends.html:45
 #: templates/pages/trials_queue.html:59
-#: templates/panels/compliance_certificates.html:27
+#: templates/panels/compliance_certificates.html:30
 msgid "Edit"
 msgstr "Upraviť"
 
@@ -5088,7 +5325,10 @@ msgid ""
 "Every figure here is typed by hand — nothing is pulled from elsewhere in the "
 "system. Create the month, then open it to enter each category; the totals "
 "are the only thing calculated for you."
-msgstr "Každý údaj tu zadávate ručne — nič sa nepreberá z iných častí systému. Vytvorte mesiac a potom ho otvorte a zadajte jednotlivé kategórie; jediné, čo sa počíta za vás, sú súčty."
+msgstr ""
+"Každý údaj tu zadávate ručne — nič sa nepreberá z iných častí systému. "
+"Vytvorte mesiac a potom ho otvorte a zadajte jednotlivé kategórie; jediné, "
+"čo sa počíta za vás, sú súčty."
 
 #: templates/pages/finance_summary.html:38
 msgid "Record month"
@@ -6007,33 +6247,52 @@ msgstr[2] "%(n)s kritických položiek je otvorených — aktivácia je zablokov
 msgid "All critical items are complete."
 msgstr "Všetky kritické položky sú splnené."
 
-#: templates/panels/compliance_certificates.html:15
+#: templates/panels/compliance_certificates.html:4
+msgid "Occupational certificates"
+msgstr "Pracovné oprávnenia"
+
+#: templates/panels/compliance_certificates.html:12
+msgid "Does not expire"
+msgstr "Nevyprší"
+
+#: templates/panels/compliance_certificates.html:16
 msgid "Expiring soon"
 msgstr "Čoskoro vyprší"
 
-#: templates/panels/compliance_certificates.html:17
+#: templates/panels/compliance_certificates.html:18
 msgid "Valid"
 msgstr "Platné"
 
-#: templates/panels/compliance_certificates.html:22
+#: templates/panels/compliance_certificates.html:23
 msgid "Expires"
 msgstr "Platnosť do"
 
-#: templates/panels/compliance_certificates.html:23
-msgid "View document"
-msgstr "Zobraziť dokument"
+#: templates/panels/compliance_certificates.html:24
+#: templates/panels/compliance_certificates.html:55
+msgid "View front or PDF"
+msgstr "Zobraziť prednú stranu alebo PDF"
 
-#: templates/panels/compliance_certificates.html:27
-msgid "Edit this certificate or replace its document"
-msgstr "Upraviť tento certifikát alebo nahradiť jeho dokument"
+#: templates/panels/compliance_certificates.html:25
+#: templates/panels/compliance_certificates.html:56
+msgid "View back"
+msgstr "Zobraziť zadnú stranu"
 
-#: templates/panels/compliance_certificates.html:30
-msgid "Delete this certificate and its document?"
-msgstr "Vymazať tento certifikát a jeho dokument?"
+#: templates/panels/compliance_certificates.html:31
+msgid "Renew"
+msgstr "Obnoviť"
 
-#: templates/panels/compliance_certificates.html:41
-msgid "Add a new certificate, licence, or document for this worker"
-msgstr "Pridať nový certifikát, preukaz alebo dokument pre tohto pracovníka"
+#: templates/panels/compliance_certificates.html:33
+msgid "Archive"
+msgstr "Archivovať"
+
+#: templates/panels/compliance_certificates.html:34
+#: templates/panels/compliance_certificates.html:57
+msgid "Remove files"
+msgstr "Odstrániť súbory"
+
+#: templates/panels/compliance_certificates.html:49
+msgid "Certificate history"
+msgstr "História certifikátov"
 
 #: templates/panels/logistics_equipment.html:33
 msgid "Return disposition"
@@ -6350,6 +6609,43 @@ msgstr "Zobrazuje sa %(rail_limit)s naposledy aktualizovaných."
 #: templates/partials/worker_rail_body.html:34
 msgid "Open People"
 msgstr "Otvoriť Ľudia"
+
+#~ msgid "Certificates"
+#~ msgstr "Certifikáty"
+
+#~ msgid ""
+#~ "A worker's certificates — health checks, forklift or crane licences, "
+#~ "welding qualifications, and anything else — live on their person page. "
+#~ "Recruiters, Coordinators, and Managers can add a certificate, optionally "
+#~ "attaching a photo or PDF of the document itself, with an issue date and "
+#~ "expiry date."
+#~ msgstr ""
+#~ "Certifikáty pracovníka — lekárske prehliadky, preukazy na vysokozdvižný "
+#~ "vozík alebo žeriav, zváračské kvalifikácie a čokoľvek ďalšie — sa "
+#~ "nachádzajú na jeho stránke osoby. Náborári, Koordinátori a Manažéri môžu "
+#~ "pridať certifikát, voliteľne s priložením fotografie alebo PDF samotného "
+#~ "dokumentu, spolu s dátumom vydania a platnosti."
+
+#~ msgid "document"
+#~ msgstr "dokument"
+
+#~ msgid "Document"
+#~ msgstr "Dokument"
+
+#~ msgid "Current document"
+#~ msgstr "Aktuálny dokument"
+
+#~ msgid "View document"
+#~ msgstr "Zobraziť dokument"
+
+#~ msgid "Edit this certificate or replace its document"
+#~ msgstr "Upraviť tento certifikát alebo nahradiť jeho dokument"
+
+#~ msgid "Delete this certificate and its document?"
+#~ msgstr "Vymazať tento certifikát a jeho dokument?"
+
+#~ msgid "Add a new certificate, licence, or document for this worker"
+#~ msgstr "Pridať nový certifikát, preukaz alebo dokument pre tohto pracovníka"
 
 #~ msgid "Manage projects"
 #~ msgstr "Spravovať projekty"

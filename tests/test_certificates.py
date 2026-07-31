@@ -1,18 +1,27 @@
 from __future__ import annotations
 
+import datetime as dt
 import io
 
 import pytest
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.urls import reverse
+from django.utils import translation
 from PIL import Image
+from pypdf import PdfReader, PdfWriter
 
 from core.media import CertificateUploadError, process_certificate_document
 from core.people.models import Person
-from features.compliance.models import Certificate, CertificateCategory
-from features.payslips.services import _simple_pdf
+from features.compliance.models import (
+    Certificate,
+    CertificateCategory,
+    CertificateRecordStatus,
+)
+from features.compliance.services import save_certificate
 
 pytestmark = pytest.mark.django_db
+
+TODAY = dt.date.today()
 
 
 def _jpeg_bytes(size=(1600, 1000), color=(60, 90, 140)) -> bytes:
@@ -25,8 +34,23 @@ def _uploaded_jpeg(name="licence.jpg", **kwargs) -> SimpleUploadedFile:
     return SimpleUploadedFile(name, _jpeg_bytes(**kwargs), content_type="image/jpeg")
 
 
-def _uploaded_pdf(name="licence.pdf") -> SimpleUploadedFile:
-    return SimpleUploadedFile(name, _simple_pdf(["Forklift licence"]), content_type="application/pdf")
+def _uploaded_pdf(name="licence.pdf", *, pages=1) -> SimpleUploadedFile:
+    writer = PdfWriter()
+    for _ in range(pages):
+        writer.add_blank_page(width=300, height=200)
+    buffer = io.BytesIO()
+    writer.write(buffer)
+    return SimpleUploadedFile(name, buffer.getvalue(), content_type="application/pdf")
+
+
+def _post_data(category=CertificateCategory.FORKLIFT):
+    return {
+        "category": category,
+        "issuer": "Training Centre",
+        "certificate_number": "FL-100",
+        "issue_date": TODAY.isoformat(),
+        "expiry_date": (TODAY + dt.timedelta(days=365)).isoformat(),
+    }
 
 
 @pytest.fixture
@@ -35,167 +59,301 @@ def make_user(django_user_model):
         return django_user_model.objects.create_user(
             email=email or f"{role}@demo.jober.test", password="x", role=role
         )
+
     return _make
 
 
-# --- process_certificate_document -------------------------------------------
-
-def test_process_certificate_document_keeps_aspect_ratio_for_images():
-    content, ext = process_certificate_document(_uploaded_jpeg(size=(3200, 2000)))
-    assert ext == "jpg"
-    with Image.open(io.BytesIO(content.read())) as result:
-        assert result.format == "JPEG"
-        assert result.size == (2000, 1250)  # scaled down, ratio preserved, not cropped
-
-
-def test_process_certificate_document_does_not_upscale_small_images():
-    content, ext = process_certificate_document(_uploaded_jpeg(size=(400, 300)))
-    with Image.open(io.BytesIO(content.read())) as result:
-        assert result.size == (400, 300)
-
-
-def test_process_certificate_document_accepts_pdf():
-    content, ext = process_certificate_document(_uploaded_pdf())
-    assert ext == "pdf"
-    from pypdf import PdfReader
-
-    reader = PdfReader(io.BytesIO(content.read()))
-    assert len(reader.pages) == 1
-
-
-def test_process_certificate_document_rejects_garbage_pdf():
-    garbage = SimpleUploadedFile("fake.pdf", b"not a pdf", content_type="application/pdf")
-    with pytest.raises(CertificateUploadError):
-        process_certificate_document(garbage)
-
-
-def test_process_certificate_document_rejects_non_image_non_pdf():
-    garbage = SimpleUploadedFile("fake.jpg", b"not an image", content_type="image/jpeg")
-    with pytest.raises(CertificateUploadError):
-        process_certificate_document(garbage)
-
-
-def test_process_certificate_document_rejects_svg():
-    svg = SimpleUploadedFile("evil.svg", b"<svg onload='alert(1)'></svg>", content_type="image/svg+xml")
-    with pytest.raises(CertificateUploadError):
-        process_certificate_document(svg)
-
-
-def test_process_certificate_document_rejects_oversized_file():
-    oversized = SimpleUploadedFile("big.jpg", b"x" * (10 * 1024 * 1024 + 1), content_type="image/jpeg")
-    with pytest.raises(CertificateUploadError):
-        process_certificate_document(oversized)
-
-
-def test_process_certificate_document_strips_exif():
+def test_process_certificate_document_keeps_aspect_ratio_and_strips_exif():
     exif = Image.Exif()
     exif[271] = "TestCameraMake"
     buffer = io.BytesIO()
-    Image.new("RGB", (400, 300), (10, 20, 30)).save(buffer, format="JPEG", exif=exif)
-    source = SimpleUploadedFile("with_exif.jpg", buffer.getvalue(), content_type="image/jpeg")
+    Image.new("RGB", (3200, 2000), (10, 20, 30)).save(buffer, format="JPEG", exif=exif)
+    source = SimpleUploadedFile(
+        "with-exif.jpg", buffer.getvalue(), content_type="image/jpeg"
+    )
 
-    content, _ext = process_certificate_document(source)
+    content, extension = process_certificate_document(source)
+
+    assert extension == "jpg"
     with Image.open(io.BytesIO(content.read())) as result:
+        assert result.size == (2000, 1250)
         assert not dict(result.getexif())
 
 
-# --- Create / edit / delete views (RBAC) ------------------------------------
+def test_process_certificate_document_sanitizes_pdf_metadata():
+    source = _uploaded_pdf()
+    content, extension = process_certificate_document(source)
 
-@pytest.mark.jober_only
-def test_recruiter_can_add_certificate(client, make_user):
-    person = Person.objects.create(first_name="Olha", last_name="Kovalenko")
-    recruiter = make_user("recruiter")
-    client.force_login(recruiter)
-    resp = client.post(
-        reverse("certificate_create", args=[person.pk]),
-        {"category": CertificateCategory.FORKLIFT, "name": "Forklift licence", "document": _uploaded_jpeg()},
+    assert extension == "pdf"
+    result = PdfReader(io.BytesIO(content.read()))
+    assert len(result.pages) == 1
+    assert "/OpenAction" not in result.trailer["/Root"]
+    assert "/Names" not in result.trailer["/Root"]
+
+
+def test_process_certificate_document_rejects_interactive_pdf():
+    writer = PdfWriter()
+    writer.add_blank_page(width=300, height=200)
+    writer.add_js("app.alert('no')")
+    buffer = io.BytesIO()
+    writer.write(buffer)
+    source = SimpleUploadedFile(
+        "interactive.pdf", buffer.getvalue(), content_type="application/pdf"
     )
-    assert resp.status_code == 302
-    cert = person.certificates.get()
-    assert cert.category == CertificateCategory.FORKLIFT
-    assert cert.document
+
+    with translation.override("en"):
+        with pytest.raises(CertificateUploadError, match="Interactive PDFs"):
+            process_certificate_document(source)
 
 
-@pytest.mark.jober_only
-def test_coordinator_can_add_certificate(client, make_user):
-    person = Person.objects.create(first_name="Olha", last_name="Kovalenko")
-    coordinator = make_user("coordinator")
-    client.force_login(coordinator)
-    resp = client.post(
-        reverse("certificate_create", args=[person.pk]),
-        {"category": CertificateCategory.OTHER, "name": "Health check"},
-    )
-    assert resp.status_code == 302
-    assert person.certificates.count() == 1
+def test_process_certificate_document_rejects_more_than_four_pages():
+    with translation.override("en"):
+        with pytest.raises(CertificateUploadError, match="too many pages"):
+            process_certificate_document(_uploaded_pdf(pages=5))
 
 
-@pytest.mark.jober_only
-def test_observer_cannot_add_certificate(client, make_user):
-    person = Person.objects.create(first_name="Olha", last_name="Kovalenko")
-    observer = make_user("observer")
-    client.force_login(observer)
-    resp = client.post(
-        reverse("certificate_create", args=[person.pk]),
-        {"category": CertificateCategory.OTHER, "name": "Health check"},
-    )
-    assert resp.status_code == 403
-    assert person.certificates.count() == 0
+def test_back_side_rejects_pdf():
+    with translation.override("en"):
+        with pytest.raises(CertificateUploadError, match="back side"):
+            process_certificate_document(_uploaded_pdf(), allow_pdf=False)
 
 
-def test_certificate_upload_without_document_is_allowed(client, make_user):
+@pytest.mark.parametrize(
+    "upload",
+    [
+        SimpleUploadedFile("fake.pdf", b"not a pdf", content_type="application/pdf"),
+        SimpleUploadedFile("fake.jpg", b"not an image", content_type="image/jpeg"),
+        SimpleUploadedFile(
+            "evil.svg", b"<svg onload='alert(1)'></svg>", content_type="image/svg+xml"
+        ),
+    ],
+)
+def test_invalid_uploads_are_rejected(upload):
+    with pytest.raises(CertificateUploadError):
+        process_certificate_document(upload)
+
+
+def test_create_accepts_front_and_back_images(client, make_user):
     person = Person.objects.create(first_name="Olha", last_name="Kovalenko")
     manager = make_user("manager")
     client.force_login(manager)
-    resp = client.post(
+
+    response = client.post(
         reverse("certificate_create", args=[person.pk]),
-        {"category": CertificateCategory.HEALTH, "name": "Health check"},
+        {
+            **_post_data(),
+            "front_upload": _uploaded_jpeg(),
+            "back_upload": _uploaded_jpeg("back.jpg"),
+        },
     )
-    assert resp.status_code == 302
-    cert = person.certificates.get()
-    assert not cert.document
+
+    assert response.status_code == 302
+    certificate = person.certificates.get()
+    assert certificate.name == "Forklift licence"
+    assert certificate.front_document
+    assert certificate.back_document
+    assert certificate.record_status == CertificateRecordStatus.ACTIVE
 
 
-def test_invalid_document_upload_shows_error_and_does_not_create(client, make_user):
+def test_create_accepts_one_pdf(client, make_user):
     person = Person.objects.create(first_name="Olha", last_name="Kovalenko")
     manager = make_user("manager")
     client.force_login(manager)
-    garbage = SimpleUploadedFile("fake.jpg", b"not an image", content_type="image/jpeg")
-    resp = client.post(
+
+    response = client.post(
         reverse("certificate_create", args=[person.pk]),
-        {"category": CertificateCategory.OTHER, "name": "Bad upload", "document": garbage},
+        {**_post_data(), "front_upload": _uploaded_pdf()},
     )
-    assert resp.status_code == 200
-    assert person.certificates.count() == 0
+
+    assert response.status_code == 302
+    assert person.certificates.get().front_document.name.endswith(".pdf")
 
 
-def test_manager_can_replace_certificate_document(client, make_user):
+def test_create_requires_a_file(client, make_user):
     person = Person.objects.create(first_name="Olha", last_name="Kovalenko")
     manager = make_user("manager")
     client.force_login(manager)
-    cert = Certificate.objects.create(person=person, name="Forklift licence", category=CertificateCategory.FORKLIFT)
-    resp = client.post(
-        reverse("certificate_edit", args=[cert.pk]),
-        {"category": CertificateCategory.FORKLIFT, "name": "Forklift licence", "document": _uploaded_pdf()},
+
+    response = client.post(
+        reverse("certificate_create", args=[person.pk]), _post_data()
     )
-    assert resp.status_code == 302
-    cert.refresh_from_db()
-    assert cert.document
-    assert cert.document.name.endswith(".pdf")
+
+    assert response.status_code == 200
+    assert not person.certificates.exists()
 
 
-def test_manager_can_delete_certificate(client, make_user):
+@pytest.mark.parametrize(
+    "category", [CertificateCategory.HEALTH, CertificateCategory.OTHER]
+)
+def test_crafted_post_cannot_upload_disallowed_category(client, make_user, category):
     person = Person.objects.create(first_name="Olha", last_name="Kovalenko")
     manager = make_user("manager")
     client.force_login(manager)
-    cert = Certificate.objects.create(person=person, name="Health check")
-    resp = client.post(reverse("certificate_delete", args=[cert.pk]))
-    assert resp.status_code == 302
-    assert not Certificate.objects.filter(pk=cert.pk).exists()
+
+    response = client.post(
+        reverse("certificate_create", args=[person.pk]),
+        {**_post_data(category), "front_upload": _uploaded_jpeg()},
+    )
+
+    assert response.status_code == 200
+    assert not person.certificates.exists()
 
 
-# --- Audit -------------------------------------------------------------------
+def test_pdf_and_back_image_are_rejected(client, make_user):
+    person = Person.objects.create(first_name="Olha", last_name="Kovalenko")
+    manager = make_user("manager")
+    client.force_login(manager)
 
-def test_certificate_upload_records_uploaded_then_replaced_audit_events(client, make_user):
+    response = client.post(
+        reverse("certificate_create", args=[person.pk]),
+        {
+            **_post_data(),
+            "front_upload": _uploaded_pdf(),
+            "back_upload": _uploaded_jpeg("back.jpg"),
+        },
+    )
+
+    assert response.status_code == 200
+    assert not person.certificates.exists()
+
+
+def test_unconnected_recruiter_cannot_manage_certificate(client, make_user):
+    owner = make_user("recruiter", "owner@demo.jober.test")
+    outsider = make_user("recruiter", "outsider@demo.jober.test")
+    person = Person.objects.create(
+        first_name="Olha", last_name="Kovalenko", owning_recruiter=owner
+    )
+    client.force_login(outsider)
+
+    response = client.get(reverse("certificate_create", args=[person.pk]))
+
+    assert response.status_code == 403
+
+
+def test_owning_recruiter_can_manage_certificate(client, make_user):
+    owner = make_user("recruiter", "owner@demo.jober.test")
+    person = Person.objects.create(
+        first_name="Olha", last_name="Kovalenko", owning_recruiter=owner
+    )
+    client.force_login(owner)
+
+    response = client.get(reverse("certificate_create", args=[person.pk]))
+
+    assert response.status_code == 200
+
+
+def test_renewal_supersedes_previous_certificate(client, make_user):
+    person = Person.objects.create(first_name="Olha", last_name="Kovalenko")
+    manager = make_user("manager")
+    previous = Certificate(
+        person=person,
+        category=CertificateCategory.FORKLIFT,
+        name="Forklift licence",
+        expiry_date=TODAY + dt.timedelta(days=20),
+    )
+    save_certificate(
+        previous, actor=manager, front_upload=_uploaded_jpeg(), creating=True
+    )
+    client.force_login(manager)
+
+    response = client.post(
+        reverse("certificate_renew", args=[previous.pk]),
+        {**_post_data(), "front_upload": _uploaded_jpeg("renewed.jpg")},
+    )
+
+    assert response.status_code == 302
+    previous.refresh_from_db()
+    renewed = person.certificates.exclude(pk=previous.pk).get()
+    assert previous.record_status == CertificateRecordStatus.SUPERSEDED
+    assert renewed.supersedes == previous
+    assert renewed.record_status == CertificateRecordStatus.ACTIVE
+
+
+def test_archive_preserves_record_and_file(client, make_user):
+    person = Person.objects.create(first_name="Olha", last_name="Kovalenko")
+    manager = make_user("manager")
+    certificate = Certificate(
+        person=person,
+        category=CertificateCategory.FORKLIFT,
+        name="Forklift licence",
+        expiry_date=TODAY + dt.timedelta(days=20),
+    )
+    save_certificate(
+        certificate, actor=manager, front_upload=_uploaded_jpeg(), creating=True
+    )
+    stored_name = certificate.front_document.name
+    storage = certificate.front_document.storage
+    client.force_login(manager)
+
+    response = client.post(
+        reverse("certificate_archive", args=[certificate.pk]),
+        {"reason": "No longer required"},
+    )
+
+    assert response.status_code == 302
+    certificate.refresh_from_db()
+    assert certificate.record_status == CertificateRecordStatus.ARCHIVED
+    assert storage.exists(stored_name)
+
+
+def test_manager_purge_deletes_files_after_commit(
+    client, make_user, django_capture_on_commit_callbacks
+):
+    person = Person.objects.create(first_name="Olha", last_name="Kovalenko")
+    manager = make_user("manager")
+    certificate = Certificate(
+        person=person,
+        category=CertificateCategory.FORKLIFT,
+        name="Forklift licence",
+        expiry_date=TODAY + dt.timedelta(days=20),
+    )
+    save_certificate(
+        certificate,
+        actor=manager,
+        front_upload=_uploaded_jpeg(),
+        back_upload=_uploaded_jpeg("back.jpg"),
+        creating=True,
+    )
+    names = [certificate.front_document.name, certificate.back_document.name]
+    storage = certificate.front_document.storage
+    client.force_login(manager)
+
+    with django_capture_on_commit_callbacks(execute=True):
+        response = client.post(
+            reverse("certificate_purge_files", args=[certificate.pk]),
+            {"reason": "Wrong person's document"},
+        )
+
+    assert response.status_code == 302
+    certificate.refresh_from_db()
+    assert certificate.record_status == CertificateRecordStatus.ARCHIVED
+    assert not certificate.front_document
+    assert not certificate.back_document
+    assert all(not storage.exists(name) for name in names)
+
+
+def test_recruiter_cannot_purge_files(client, make_user):
+    owner = make_user("recruiter")
+    person = Person.objects.create(
+        first_name="Olha", last_name="Kovalenko", owning_recruiter=owner
+    )
+    certificate = Certificate.objects.create(
+        person=person,
+        category=CertificateCategory.FORKLIFT,
+        name="Forklift licence",
+        expiry_date=TODAY + dt.timedelta(days=20),
+    )
+    client.force_login(owner)
+
+    response = client.post(
+        reverse("certificate_purge_files", args=[certificate.pk]),
+        {"reason": "No"},
+    )
+
+    assert response.status_code == 403
+
+
+def test_certificate_events_include_before_and_after(client, make_user):
     from core.audit.models import AuditEvent
 
     person = Person.objects.create(first_name="Olha", last_name="Kovalenko")
@@ -203,49 +361,57 @@ def test_certificate_upload_records_uploaded_then_replaced_audit_events(client, 
     client.force_login(manager)
     client.post(
         reverse("certificate_create", args=[person.pk]),
-        {"category": CertificateCategory.OTHER, "name": "Health check", "document": _uploaded_jpeg()},
+        {**_post_data(), "front_upload": _uploaded_jpeg()},
     )
-    cert = person.certificates.get()
+    certificate = person.certificates.get()
     client.post(
-        reverse("certificate_edit", args=[cert.pk]),
-        {"category": CertificateCategory.OTHER, "name": "Health check", "document": _uploaded_jpeg()},
+        reverse("certificate_edit", args=[certificate.pk]),
+        {
+            **_post_data(),
+            "issuer": "Updated issuer",
+            "front_upload": _uploaded_jpeg("clearer.jpg"),
+        },
     )
-    actions = list(
-        AuditEvent.objects.filter(actor=manager, action__startswith="certificate.")
-        .order_by("pk").values_list("action", flat=True)
-    )
-    assert actions == ["certificate.uploaded", "certificate.replaced"]
+
+    created, updated = AuditEvent.objects.filter(
+        actor=manager, action__in=["certificate.created", "certificate.updated"]
+    ).order_by("pk")
+    assert created.metadata["before"] is None
+    assert created.metadata["after"]["has_front"] is True
+    assert updated.metadata["before"]["issuer"] == "Training Centre"
+    assert updated.metadata["after"]["issuer"] == "Updated issuer"
+    assert updated.metadata["files_changed"] == ["front"]
 
 
-def test_certificate_delete_records_audit_event_with_metadata(client, make_user):
-    from core.audit.models import AuditEvent
-
+def test_person_detail_shows_current_and_history(client, make_user):
     person = Person.objects.create(first_name="Olha", last_name="Kovalenko")
+    Certificate.objects.create(
+        person=person,
+        name="Forklift licence",
+        category=CertificateCategory.FORKLIFT,
+        expiry_date=TODAY + dt.timedelta(days=30),
+    )
+    Certificate.objects.create(
+        person=person,
+        name="Old crane licence",
+        category=CertificateCategory.CRANE,
+        record_status=CertificateRecordStatus.ARCHIVED,
+        expiry_date=TODAY - dt.timedelta(days=30),
+    )
     manager = make_user("manager")
     client.force_login(manager)
-    cert = Certificate.objects.create(person=person, name="Health check")
-    client.post(reverse("certificate_delete", args=[cert.pk]))
-    event = AuditEvent.objects.get(actor=manager, action="certificate.deleted")
-    assert event.metadata["person"] == person.pk
-    assert event.metadata["name"] == "Health check"
 
+    response = client.get(reverse("person_detail", args=[person.pk]))
 
-# --- Person-detail panel ------------------------------------------------------
-
-def test_person_detail_shows_certificate_panel(client, make_user):
-    person = Person.objects.create(first_name="Olha", last_name="Kovalenko")
-    Certificate.objects.create(person=person, name="Forklift licence", category=CertificateCategory.FORKLIFT)
-    manager = make_user("manager")
-    client.force_login(manager)
-    resp = client.get(reverse("person_detail", args=[person.pk]))
-    assert resp.status_code == 200
-    assert b"Forklift licence" in resp.content
-
-
-def test_observer_does_not_see_add_certificate_button(client, make_user):
-    person = Person.objects.create(first_name="Olha", last_name="Kovalenko")
-    observer = make_user("observer")
-    client.force_login(observer)
-    resp = client.get(reverse("person_detail", args=[person.pk]))
-    assert resp.status_code == 200
-    assert reverse("certificate_create", args=[person.pk]).encode() not in resp.content
+    assert response.status_code == 200
+    panel = next(
+        item
+        for item in response.context["person_panels"]
+        if item["template"] == "panels/compliance_certificates.html"
+    )
+    assert [item.category for item in panel["certificates"]] == [
+        CertificateCategory.FORKLIFT
+    ]
+    assert [item.category for item in panel["certificate_history"]] == [
+        CertificateCategory.CRANE
+    ]

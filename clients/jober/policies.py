@@ -23,6 +23,7 @@ ACTION_ROLES: dict[Action, frozenset[Role]] = {
     Action.INTAKE_ASSIGN_TRIAL: frozenset({_RECRUITER, _COORDINATOR, _MANAGER}),
     Action.PERSON_RECYCLE_AVAILABLE: frozenset({_RECRUITER, _COORDINATOR, _MANAGER}),
     Action.CERTIFICATE_MANAGE: frozenset({_RECRUITER, _COORDINATOR, _MANAGER}),
+    Action.CERTIFICATE_PURGE_FILE: frozenset({_MANAGER}),
     Action.SMS_SEND: frozenset({_RECRUITER, _COORDINATOR, _MANAGER}),
     Action.PROJECT_ASSIGN: frozenset({_COORDINATOR, _MANAGER}),
     Action.TRIAL_RECORD_OUTCOME: frozenset({_COORDINATOR, _MANAGER}),

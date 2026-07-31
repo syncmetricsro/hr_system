@@ -1,6 +1,6 @@
 # Open Decision Register
 
-Last updated: 2026-06-17
+Last updated: 2026-07-31
 
 Phase 0 must not hardcode these into migrations or domain logic.
 
@@ -19,4 +19,5 @@ Phase 0 must not hardcode these into migrations or domain logic.
 | Deduction review | Missing-returnable-item process. | Not modeled in Phase 0. |
 | Finance sign convention | Whether costs are entered negative or stored positive and subtracted. | **Answered 2026-06-29**: **positive convention** — costs/revenues entered positive, system computes `net = revenue − cost`. Matches the existing build; write path + model validators now reject negatives. A real filled month is still useful to reconcile category labels. |
 | Legal/privacy | DPA, EU hosting approval, blacklist legal basis, employee-leasing documents. | Blocks real-data gate, not fictional Phase 0 shell. |
+| Employer/accountant handoff | Confirm each employing entity and employment-level `SK`/`HU` jurisdiction; accountant role/DPA; exact country-specific structured payroll fields; conditional tax evidence custody and transfer; retention. | **Supported jurisdictions answered 2026-07-31: Slovakia and Hungary, kept separate.** Mixed, posted, unresolved cross-border, and other-country cases are refused. Researched boundary in [`accountant-data-handoff.md`](accountant-data-handoff.md); no export or sensitive-document upload is authorized; fictional data only. |
 | Branding terminology | Final HU/SK/UA product wording and assets. | Base language is now English (ADR 0017); Slovak is the default rendering. EN/SK/HU/UK catalogs ship compiled, but HU/UK + revised SK are AI-authored and need a fluent-speaker review before client use. |

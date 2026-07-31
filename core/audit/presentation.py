@@ -27,6 +27,12 @@ AUDIT_ACTION_LABELS = {
     "blacklist.decided": _("Blacklist decision recorded"),
     "blacklist.proposed": _("Blacklist case proposed"),
     "blacklist.removed": _("Removed from blacklist"),
+    "certificate.archived": _("Certificate archived"),
+    "certificate.created": _("Certificate uploaded"),
+    "certificate.files_purged": _("Certificate files permanently removed"),
+    "certificate.renewed": _("Certificate renewed"),
+    "certificate.superseded": _("Certificate superseded"),
+    # Historical action codes retained for existing audit rows.
     "certificate.deleted": _("Certificate deleted"),
     "certificate.replaced": _("Certificate document replaced"),
     "certificate.updated": _("Certificate updated"),

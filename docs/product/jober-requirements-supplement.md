@@ -288,28 +288,35 @@ workers and Telegram for Ukrainian workers. The client already has a Telegram
 channel and will grant access; a bot posts to that channel. This is a
 channel-broadcast model, not per-worker chat-ID onboarding.
 
-Placement remains shared `features/worker_messaging`, with provider/channel
+Placement remains the existing `features/messaging`, with provider/channel
 policy in `clients/jober`. Telegram is target ON for Jober and remains OFF for
 CorvinumEU. This decision supersedes the round-4 "manual channel, no bot"
 banner and the per-worker Telegram opt-in/chat-ID design in
 [`Jober_Messaging_Specs.md`](../../Jober_Messaging_Specs.md). The remainder of
-that document is not declared superseded by this supplement.
+that document is not declared superseded by this supplement. The reconciled,
+canonical channel-broadcast design is
+[`jober-telegram-channel-design.md`](jober-telegram-channel-design.md).
 
 ### UX and workflow
 
-Authorized staff compose and confirm a language-appropriate message. SMS may
+Manager/Admin composes and confirms a human-approved Ukrainian message. SMS may
 resolve individual recipients under existing role/project policy. Telegram
 publishes one message to the configured Ukrainian-worker channel; it must not
 claim per-person delivery, project targeting, or person-level opt-in evidence
-that the channel model cannot provide. Provider credentials are injected only
-at runtime through the approved secret manager.
+that the channel model cannot provide. The first version is outbound text only,
+contains only low-sensitivity general announcements, and has no Telegram
+webhook, commands, attachments, or automatic triggers. Provider credentials are
+injected only at runtime through the approved secret manager.
 
 ### Open questions and gates
 
 - Telegram channel access, bot token/setup, administrator ownership, and test
   environment are still owed by the client.
-- Confirm whether one channel is sufficient or future audience segmentation is
-  required.
+- Confirm that the channel is private, one channel is sufficient for v1,
+  Manager/Admin-only posting is accepted, and comments are disabled or outside
+  the Jober support workflow.
+- Confirm the human Ukrainian author/approver, retention, bot recovery
+  administrators, and token-rotation process.
 - Personal-data message content remains pending Art. 28 DPA review.
 
 ## 10. Jober per-project profitability

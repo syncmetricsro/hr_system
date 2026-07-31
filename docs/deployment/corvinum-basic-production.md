@@ -23,6 +23,12 @@ Do not admit real data until all of these are complete:
   business hours** and recorded in `deployment_journal.md`.
 - Encryption recovery material held outside both VPS providers (for example,
   company-controlled encrypted password manager plus offline recovery copy).
+- The FORPSI disk/volume encryption and key/recovery arrangement is documented
+  and approved, privileged root/Dokku access is restricted and reviewed, and
+  the residual fact that active host root can read the mounted ERP media volume
+  is explicitly accepted. The application does not provide per-file encryption;
+  see `docs/product/document-storage-boundary.md` §Current at-rest trust
+  boundary.
 - No raw payment-card data is collected or backed up by either system.
 
 Contabo’s DPA is completed in its customer panel; provider guidance is at

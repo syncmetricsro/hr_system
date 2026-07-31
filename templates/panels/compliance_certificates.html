@@ -1,15 +1,16 @@
-{% load i18n rbac icons %}
+{% load i18n icons %}
 <section class="panel workflow-panel">
   <p class="eyebrow">{% trans "Compliance" %}</p>
-  <h2>{% trans "Certificates" %}</h2>
-  {% can 'certificate.manage' as may_manage %}
+  <h2>{% trans "Occupational certificates" %}</h2>
   {% if panel.certificates %}
     <ul class="plain-list">
       {% for certificate in panel.certificates %}
         <li>
           <div class="equipment-issue-row">
-            <span>{{ certificate.get_category_display }} — {{ certificate.name }}</span>
-            {% if certificate.severity == "expired" %}
+            <span>{{ certificate.get_category_display }}{% if certificate.issuer %} — {{ certificate.issuer }}{% endif %}</span>
+            {% if certificate.never_expires %}
+              <span class="badge badge-success">{% trans "Does not expire" %}</span>
+            {% elif certificate.severity == "expired" %}
               <span class="badge">{% trans "Expired" %}</span>
             {% elif certificate.severity == "expiring" %}
               <span class="badge">{% trans "Expiring soon" %}</span>
@@ -20,15 +21,17 @@
           <span class="equipment-unit-price">
             {% if certificate.issue_date %}{% trans "Issued" %}: {{ certificate.issue_date }}{% endif %}
             {% if certificate.expiry_date %} · {% trans "Expires" %}: {{ certificate.expiry_date }}{% endif %}
-            {% if certificate.document %} · <a href="{% url 'certificate_document' certificate.pk %}" target="_blank" rel="noopener">{% trans "View document" %}</a>{% endif %}
+            {% if panel.may_view_files and certificate.front_document %} · <a href="{% url 'certificate_document' certificate.pk %}" target="_blank" rel="noopener">{% trans "View front or PDF" %}</a>{% endif %}
+            {% if panel.may_view_files and certificate.back_document %} · <a href="{% url 'certificate_back_document' certificate.pk %}" target="_blank" rel="noopener">{% trans "View back" %}</a>{% endif %}
           </span>
-          {% if may_manage %}
+          {% if panel.may_manage %}
             <div class="inline-form">
-              <a class="button button-secondary" href="{% url 'certificate_edit' certificate.pk %}" data-tooltip="{% trans 'Edit this certificate or replace its document' %}">{% icon "edit" size="sm" %}{% trans "Edit" %}</a>
-              <form method="post" action="{% url 'certificate_delete' certificate.pk %}">
-                {% csrf_token %}
-                <button class="icon-button" type="submit" data-confirm="{% trans 'Delete this certificate and its document?' %}">{% icon "delete" size="sm" %}</button>
-              </form>
+              {% if certificate.allows_document_upload %}
+                <a class="button button-secondary" href="{% url 'certificate_edit' certificate.pk %}">{% icon "edit" size="sm" %}{% trans "Edit" %}</a>
+                <a class="button button-secondary" href="{% url 'certificate_renew' certificate.pk %}">{% trans "Renew" %}</a>
+              {% endif %}
+              <a class="button button-secondary" href="{% url 'certificate_archive' certificate.pk %}">{% trans "Archive" %}</a>
+              {% if panel.may_purge %}{% if certificate.front_document or certificate.back_document %}<a class="button button-secondary" href="{% url 'certificate_purge_files' certificate.pk %}">{% trans "Remove files" %}</a>{% endif %}{% endif %}
             </div>
           {% endif %}
         </li>
@@ -37,7 +40,24 @@
   {% else %}
     <p>—</p>
   {% endif %}
-  {% if may_manage %}
-    <a class="button button-primary" href="{% url 'certificate_create' panel.person.pk %}" data-tooltip="{% trans 'Add a new certificate, licence, or document for this worker' %}">{% icon "add" size="sm" %}{% trans "Add certificate" %}</a>
+  {% if panel.may_manage %}
+    <a class="button button-primary" href="{% url 'certificate_create' panel.person.pk %}">{% icon "add" size="sm" %}{% trans "Add certificate" %}</a>
+  {% endif %}
+
+  {% if panel.certificate_history %}
+    <details>
+      <summary>{% trans "Certificate history" %} ({{ panel.certificate_history|length }})</summary>
+      <ul class="plain-list">
+        {% for certificate in panel.certificate_history %}
+          <li>
+            {{ certificate.get_category_display }} — {{ certificate.get_record_status_display }}
+            {% if certificate.expiry_date %} · {{ certificate.expiry_date }}{% endif %}
+            {% if panel.may_view_files and certificate.front_document %} · <a href="{% url 'certificate_document' certificate.pk %}" target="_blank" rel="noopener">{% trans "View front or PDF" %}</a>{% endif %}
+            {% if panel.may_view_files and certificate.back_document %} · <a href="{% url 'certificate_back_document' certificate.pk %}" target="_blank" rel="noopener">{% trans "View back" %}</a>{% endif %}
+            {% if panel.may_purge %}{% if certificate.front_document or certificate.back_document %} · <a href="{% url 'certificate_purge_files' certificate.pk %}">{% trans "Remove files" %}</a>{% endif %}{% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+    </details>
   {% endif %}
 </section>

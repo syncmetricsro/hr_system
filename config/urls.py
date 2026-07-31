@@ -401,9 +401,19 @@ if _feature_on("compliance", "documents"):
             name="certificate_edit",
         ),
         path(
-            "certificates/<int:pk>/delete/",
-            compliance_views.certificate_delete,
-            name="certificate_delete",
+            "certificates/<int:pk>/renew/",
+            compliance_views.certificate_renew,
+            name="certificate_renew",
+        ),
+        path(
+            "certificates/<int:pk>/archive/",
+            compliance_views.certificate_archive,
+            name="certificate_archive",
+        ),
+        path(
+            "certificates/<int:pk>/purge-files/",
+            compliance_views.certificate_purge_files,
+            name="certificate_purge_files",
         ),
     ]
     # Not language-prefixed: the document is the same bytes in every locale.
@@ -412,6 +422,11 @@ if _feature_on("compliance", "documents"):
             "media/certificates/<int:pk>/document",
             media_views.certificate_document,
             name="certificate_document",
+        ),
+        path(
+            "media/certificates/<int:pk>/back",
+            media_views.certificate_back_document,
+            name="certificate_back_document",
         ),
     ]
 

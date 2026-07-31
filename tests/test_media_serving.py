@@ -74,11 +74,12 @@ def world(django_user_model):
     certificate = Certificate.objects.create(
         person=mine, name="Medical", expiry_date=TODAY + dt.timedelta(days=30)
     )
-    certificate.document.save("c.pdf", ContentFile(FILE_BYTES), save=True)
+    certificate.front_document.save("c.pdf", ContentFile(FILE_BYTES), save=True)
+    certificate.back_document.save("c.jpg", ContentFile(FILE_BYTES), save=True)
     their_certificate = Certificate.objects.create(
         person=theirs, name="Medical", expiry_date=TODAY + dt.timedelta(days=30)
     )
-    their_certificate.document.save("c.pdf", ContentFile(FILE_BYTES), save=True)
+    their_certificate.front_document.save("c.pdf", ContentFile(FILE_BYTES), save=True)
 
     return {
         "manager": manager,
@@ -171,3 +172,12 @@ def test_certificate_document_blocked_across_offices(client, world):
         reverse("certificate_document", args=[world["their_certificate"].pk])
     )
     assert response.status_code == 403
+
+
+def test_certificate_back_document_is_served_with_the_same_policy(client, world):
+    client.force_login(world["manager"])
+    response = client.get(
+        reverse("certificate_back_document", args=[world["certificate"].pk])
+    )
+    assert response.status_code == 200
+    assert b"".join(response.streaming_content) == FILE_BYTES

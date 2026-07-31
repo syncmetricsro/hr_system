@@ -4,7 +4,7 @@ Tracks what must be true before the Jober app serves real users/data, and the
 state of each gate. "Ready" = verified; "Open" = not done / needs a human or an
 external input. Update this whenever a gate changes state.
 
-Last updated: 2026-07-28
+Last updated: 2026-07-31
 
 ## Pre-production review findings (2026-07-25)
 
@@ -378,6 +378,7 @@ smoke suite doesn't cover.
 | Initial admin user | ⚠️ Open (corrected 2026-07-26) | `manage.py ensure_superuser` — idempotent, env-driven (`DJANGO_SUPERUSER_EMAIL`/`_PASSWORD`), audited. **It is not wired into any release step**, contrary to what this row previously claimed: the `Procfile` declares only `web:`, there is no `app.json`, and the superuser env vars are not in either app's config. It has only ever been run by hand, so a database reset silently leaves the app with no superuser — which is the current state of `jober-staging` (finding 12). Either add a release step with the vars supplied from Doppler, or accept that it is a manual post-reset step and say so in the runbook. `seed_demo` remains fictional/staging only — never against a real-data DB. |
 | Secret management | 🟡 Partial (2026-06-29) | **Doppler** is the secrets source (project `hr_system`, config `dev`); `doppler run --project hr_system --config dev -- scripts/dev_app.sh up` injects env locally (`doppler.yaml`, `docs/deployment/jober-twilio-setup.md`). Still to confirm: prod Doppler config + Dokku wiring (sync or service token) and `DJANGO_SECRET_KEY`/DB-cred rotation. |
 | DB backups / restore | ⚠️ Open — **defined, not installed** (2026-07-26) | Scripts and cron lines are ready (`scripts/offsite_backup.sh`, `scripts/backup_health.sh`; env and schedule in `syncmetric-prime-staging.md` §Phase 6). Blocked on an off-site host (D6), a GPG recipient key, and root shell on the Dokku host. The plugin's own `postgres:backup-schedule` is **S3-only** and covers the database only — not the media volume. Manual dumps taken 2026-07-26 as an interim. Stays open until a restore drill is run and logged. |
+| Uploaded-media protection at rest | ⚠️ Open — blocks real certificate scans (2026-07-31) | Certificate files are sanitized and permission-gated through Django, but are not encrypted with application-managed/per-file keys. VPS root or equivalent Dokku host access can read the mounted media volume. Before real scans: document provider or host-volume encryption and key/recovery ownership; restrict and review privileged access; verify per-client volume isolation and permissions; install encrypted off-site media backups; complete a restore drill; and record explicit security acceptance of the residual active-root risk. Disk encryption alone does not hide a mounted volume from root. If that threat must be covered, commission application-level key isolation or the separate Secure Document Vault. Product decision: `docs/product/document-storage-boundary.md` §Current at-rest trust boundary. |
 
 ## Integrations
 

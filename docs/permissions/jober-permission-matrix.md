@@ -1,6 +1,6 @@
 # Permission Matrix — Jober
 
-Last updated: 2026-07-25
+Last updated: 2026-07-31
 
 This document is the human-readable mirror of `clients/jober/policies.py`
 (`ACTION_ROLES`; the `Action` enum lives in `core/accounts/permissions.py`). When you change one, change the other in the same commit.
@@ -35,7 +35,8 @@ Legend: ✅ permitted · — denied
 | `intake.create_edit` | ✅ | — | ✅ | — |
 | `intake.assign_trial` | ✅ | ✅ | ✅ | — |
 | `person.recycle_available` | ✅ | ✅ | ✅ | — |
-| `certificate.manage` (create/replace/delete a certificate document) | ✅ | ✅ | ✅ | — |
+| `certificate.manage` (create/edit/renew/archive an allowlisted occupational certificate) | ✅ | ✅ | ✅ | — |
+| `certificate.purge_file` (emergency permanent file removal, reason required) | — | — | ✅ | — |
 | `person.archive` | — | — | ✅ | — |
 | `project.assign` (place/reassign a person on a project) | — | ✅ | ✅ | — |
 | `sms.send` | ✅ | ✅ | ✅ | — |

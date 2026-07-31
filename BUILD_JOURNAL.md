@@ -1,5 +1,133 @@
 # Build Journal
 
+## 2026-07-31 - Hungary joins accountant handoff as a separate rulebook
+
+The product-owner follow-up supersedes the Slovakia-only boundary recorded
+below: future accountant handoffs may support **Slovakia and Hungary**, but as
+two versioned country schedules, never one blended export. Each employment must
+resolve to an approved employing entity and explicit `SK` or `HU` jurisdiction;
+an office label, nationality, address, or UI language cannot choose it.
+
+The Hungarian baseline now records NAV's current `08E` structured identity and
+employment fields and the 2026 family-tax-allowance advance-tax declaration.
+The normal family-tax input is the declaration and required dependant/
+co-claimant facts, not a standing birth-certificate archive. Hungarian medical
+fitness remains outside ordinary payroll: the employer gets the conclusion and
+necessary restrictions, while the reason for unsuitability is not disclosed to
+the employer without written consent.
+
+Mixed, posted, unresolved cross-border, third-country, and uncertain cases
+still fail closed to a human legal/payroll process. No export, jurisdiction
+model, family-benefit model, or real-data path was implemented in this
+documentation slice.
+
+## 2026-07-31 - Accountant handoff is facts, conditional evidence, not a worker-file export
+
+The platform now has a researched Slovak baseline for what may flow to an
+external payroll accountant. Recurring payroll is an allowlist of structured
+facts. A child's birth certificate is relevant only when the worker makes the
+particular tax claim, with the signed declaration and only the evidence that
+claim requires. An identity document may be used to verify identifiers, but
+its image is not a routine payroll input. Medical examination details stop at
+the clinician; the employer's restricted fitness conclusion is not part of the
+ordinary accountant export.
+
+This closes an important potential loophole in the document-storage decision:
+“the accountant needs it” does not permit Jober or CorvinumEU to upload and
+relay excluded scans. Required source evidence stays in a separately approved
+employer/accountant custody and secure-transfer process; PeopleOps may retain
+only approved verification metadata. No export or family-benefit data model was
+built in this documentation slice.
+
+The product owner subsequently fixed the jurisdiction boundary at **Slovakia
+only**. Jober's Győr label remains an operational office, not permission to run
+Hungarian payroll rules. Non-Slovak, posted, cross-border, and uncertain cases
+must be refused rather than approximated. C-Q19 and Jober's decision register
+still require the client, payroll owner, and legal/privacy reviewer to confirm
+the employing entity, recipient role/DPA, exact Slovak forms and fields,
+evidence custody, transfer, and retention before real data or implementation.
+
+## 2026-07-31 - Telegram is a channel broadcast, not imaginary per-worker delivery
+
+The Jober Telegram direction is now one coherent design. A client-owned bot may
+post human-approved Ukrainian text to one configured private Ukrainian-worker
+channel. It extends `features/messaging`; it is not a separate Telegram module,
+worker portal, chat-ID registry, inbound feedback bot, or SMS fallback engine.
+The earlier “manual channel, no bot” answer and still older per-worker bot design
+are explicitly historical rather than competing implementation instructions.
+
+Telegram and SMS keep honest domain semantics. SMS remains person-addressed and
+Coordinator-project-scoped. Telegram records one channel post and never claims
+subscriber, person-level delivery, read, project, or opt-in evidence. Because a
+common channel crosses those person/project boundaries, the new
+`telegram.broadcast` action is designed as Jober Manager/Admin-only.
+
+The v1 boundary is outbound text with exact preview/confirm, low-sensitivity
+general announcements, human-approved Ukrainian, minimum bot rights, separate
+test/production bot+channel, Doppler-injected token, audit, and no webhook. The
+design handles the dangerous timeout case explicitly: Telegram has no
+application idempotency key, so an uncertain result becomes `unknown` and is
+never retried automatically.
+
+Implementation remains blocked on the client confirming a private single
+channel, Manager-only posting, content/retention and DPA treatment, Ukrainian
+approval, bot ownership/recovery, test+production access, token rotation, and
+the comments/discussion policy. No runtime behavior changed in this
+documentation slice.
+
+## 2026-07-31 - Occupational certificates, without becoming a document vault
+
+The shared Jober/CorvinumEU compliance feature now stores files only for three
+occupational qualifications: forklift, crane and welding. The narrower boundary
+is deliberate. Identity cards, passports, birth/residence papers, financial
+records, medical reports and health-certificate scans remain metadata-only or
+outside the base platform; if a client insists on those files, the answer is a
+separately scoped Secure Document Vault with its own threat model, legal basis,
+key management, retention, backups and operating budget.
+
+The production trust boundary is explicit too: the base platform does not
+encrypt each certificate with an application-managed key. Django protects the
+web delivery path, but root on the active VPS can read the mounted media volume;
+provider/full-volume encryption does not change that while it is mounted. Real
+certificate scans remain blocked until volume encryption and key ownership,
+privileged-host access, per-client isolation, encrypted off-site media backups,
+a restore drill, and acceptance of that residual root-access risk are reviewed
+and recorded. A requirement to hide files from the application-host
+administrator belongs in an application-level key-isolation or Secure Document
+Vault project.
+
+The workflow accepts one sanitized PDF, one image, or ordered front/back images.
+New records need a file and either an expiry date or “does not expire.” Renewal
+creates a new active row and supersedes the old one; archive preserves history
+and files. There is no ordinary hard delete. A new manager-only emergency purge
+requires a reason, permanently removes bad/wrong-person files, archives the row
+and preserves its audit metadata.
+
+The allowlist is enforced in the form, service and model, not merely taught in
+the UI. Images are decode-verified/re-encoded without EXIF. PDFs are capped at
+four pages, must be unencrypted and non-interactive, and are rebuilt from their
+pages. File delivery retains the office plus per-person sensitive-data check;
+the row can be a broad operational read while its scan remains restricted.
+Mutations audit before/after values and file presence.
+
+Migration `compliance.0003` preserves the original primary file by renaming its
+field, adds front/back and renewal/history fields, and maps legacy undated rows
+to “does not expire.” `enforce_certificate_storage_policy` is dry-run by
+default; its purge mode has an explicit fictional-data confirmation because the
+real-data gate is still closed.
+
+Two deliberate omissions are worth stating. There is no verification queue:
+an added occupational certificate is immediately active. Expiry alerts remain
+advisory and do not block trial, assignment or activation. Both can change only
+after an explicit business decision, not by accident in a migration.
+
+The browser lane uploads and reopens both sides of a fictional card in both
+clients. Its Corvinum path uses HR Admin and completes the client-mandated TOTP
+setup before exercising the shared workflow.
+
+Suites: 908 Jober passed (8 skipped), 538 CorvinumEU passed (15 skipped), and
+52 browser tests passed.
+
 ## 2026-07-28 - The status rail's fetch was racing the tooltip
 
 An unrelated e2e tooltip assertion failed in CI while passing locally, twice

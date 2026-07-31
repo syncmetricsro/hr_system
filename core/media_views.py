@@ -110,15 +110,33 @@ def certificate_document(request: HttpRequest, pk: int) -> HttpResponse:
     certificate = get_object_or_404(Certificate.objects.select_related("person"), pk=pk)
     assert_person_in_scope(request.user, certificate.person)
     if not can_view_sensitive(request.user, certificate.person):
-        # Same rule as DOB/identifiers: a scan of someone's medical or
-        # licence document is more than the broad read that shows the
-        # certificate row exists.
+        # Same rule as DOB/identifiers: a scan of an occupational licence is
+        # more than the broad read that shows the certificate row exists.
         raise PermissionDenied("Not permitted to view this document.")
     person = certificate.person
-    suffix = PurePosixPath(certificate.document.name or "").suffix
+    suffix = PurePosixPath(certificate.front_document.name or "").suffix
     return _serve(
-        certificate.document,
+        certificate.front_document,
         download_name=f"{person.last_name}-{certificate.name}{suffix}".replace(
+            " ", "-"
+        ),
+    )
+
+
+@require_safe
+@login_required
+def certificate_back_document(request: HttpRequest, pk: int) -> HttpResponse:
+    from features.compliance.models import Certificate
+
+    certificate = get_object_or_404(Certificate.objects.select_related("person"), pk=pk)
+    assert_person_in_scope(request.user, certificate.person)
+    if not can_view_sensitive(request.user, certificate.person):
+        raise PermissionDenied("Not permitted to view this document.")
+    person = certificate.person
+    suffix = PurePosixPath(certificate.back_document.name or "").suffix
+    return _serve(
+        certificate.back_document,
+        download_name=f"{person.last_name}-{certificate.name}-back{suffix}".replace(
             " ", "-"
         ),
     )

@@ -106,12 +106,11 @@ computed today and already feed the notification bell
 (`features/compliance/panels.py`). This feature is mostly new UI surface
 wired to existing computations, plus one small schema addition.
 
-**Explicitly out of scope, noted for awareness only:** uploading the actual
-forklift/crane/welding certificate files. That's a real future feature. It
-will reuse the avatar doc's storage decision (filesystem + Dokku volume +
-image/PDF validation) for the certificate document itself, and it will reuse
-the `Certificate.category` field this doc introduces (§2) as its type
-vocabulary — so nothing here needs rework when that feature is built.
+**Implemented follow-on (2026-07-31):** the shared occupational-certificate
+workflow now uploads forklift/crane/welding files, reusing the avatar storage
+decision and this document's `Certificate.category` vocabulary. It also keeps
+renewal/archive history, so the badge surface intentionally reads only active
+certificate rows.
 
 ## 1. Worker status pill
 

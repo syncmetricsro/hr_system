@@ -1,6 +1,6 @@
 # Permission Matrix — CorvinumEU
 
-Last updated: 2026-07-20
+Last updated: 2026-07-31
 
 Human-readable mirror of `clients/corvinum_eu/policies.py` (`ACTION_ROLES`).
 When you change one, change the other in the same commit. The mechanism
@@ -23,7 +23,8 @@ Legend: ✅ permitted · — denied
 | `intake.create_edit` | ✅ | — | ✅ | — |
 | `intake.assign_trial` | ✅ | ✅ | ✅ | — |
 | `person.recycle_available` | ✅ | ✅ | ✅ | — |
-| `certificate.manage` (create/replace/delete a certificate document) | ✅ | ✅ | ✅ | — |
+| `certificate.manage` (create/edit/renew/archive an allowlisted occupational certificate) | ✅ | ✅ | ✅ | — |
+| `certificate.purge_file` (emergency permanent file removal, reason required) | — | — | ✅ | — |
 | `person.archive` | — | — | ✅ | — |
 | `project.assign` | — | ✅ | ✅ | — |
 | `trial.record_outcome` | — | ✅ | ✅ | — |

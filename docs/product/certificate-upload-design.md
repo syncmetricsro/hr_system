@@ -1,190 +1,135 @@
-# Certificate document uploads
+# Occupational certificate uploads
 
-Status: **Implemented 2026-07-24**, exactly as designed below — data model
-(`category` + `document`), Pillow/pypdf validation, RBAC
-(`certificate.manage`), the person-detail Certificates panel, and audit
-events, for both Jober and CorvinumEU. One naming deviation: an edit that
-only changes dates (no new document) audits as `certificate.updated` rather
-than reusing `certificate.replaced`/`certificate.uploaded` — `§5` below
-listed only the create/replace/delete cases and didn't anticipate a
-metadata-only edit. `Certificate.category` (`pill-system-design.md`'s
-schema addition, §2 there) landed in the same migration as `document`, as
-this doc recommended — the rest of that doc (status pill, validity icons,
-nav badges) remains design-only.
+Status: **Implemented platform-wide 2026-07-31**
 
-## Why this doc exists
+This is the shared Jober/CorvinumEU workflow for the only document classes the
+base platform stores as files:
 
-`pill-system-design.md` designed `Certificate.category` and per-category
-validity icons — but rendered *from* whatever certificates a person already
-has. At that point `Certificate` was still, in its own docstring, "metadata
-only — no file storage." There was nothing to actually upload. This doc
-designs that missing piece: HR staff (recruiter, coordinator, manager)
-attaching a real document — a forklift/crane/welding licence, scanned or
-photographed — to a worker.
+- forklift licence;
+- crane licence;
+- welding licence.
 
-The payoff of doing the previous two docs first: this feature doesn't need
-to design *any* new display logic. The worker-list icon row and the
-person-detail avatar already read live from `person.certificates` at render
-time (per `pill-system-design.md`). Once this feature creates a real
-`Certificate` row with a `category`, dates, and a `document`, the next page
-render already shows the right icon with the right validity tint — "their
-information should update and reflect that too on their worker page" is
-satisfied by ordinary server-rendering, not by any special live-update
-mechanism.
+Identity, civil-status, immigration, financial, and medical scans are outside
+this feature. Their minimum operational result may be represented as structured
+metadata elsewhere, but they cannot use `Certificate` as a generic attachment
+escape hatch. See
+[`document-storage-boundary.md`](document-storage-boundary.md).
 
-**No certificate CRUD exists at all today.** `features/compliance/` has
-exactly one view (`compliance_list`, read-only alerts) — no `forms.py`, no
-create/edit/delete URLs. This is greenfield.
+## Product behavior
 
-## 1. Data model
+A recruiter, coordinator, or manager with a sensitive-data relationship to the
+person may add one immediately active certificate. The form records:
 
-Add to `Certificate` (`features/compliance/models.py`) — in the same
-migration as `pill-system-design.md`'s `category` field if that hasn't
-landed yet, since the upload form needs a category selector anyway:
+- the fixed occupational type;
+- issuer and certificate number, both optional;
+- issue date, optional;
+- either an expiry date or “does not expire”;
+- one PDF, one front/paper-scan image, or ordered front and back images.
 
-- `document = models.FileField(upload_to=..., blank=True, null=True)`
-- Existing `name` / `issue_date` / `expiry_date` / `category` unchanged.
+A file is mandatory for every new occupational-certificate record. A PDF is the
+whole certificate and cannot have a separate back side. There is no OCR, no
+free-text document category, and no verification queue in this slice. Expiry
+alerts inform staff but do not block trial, readiness, assignment, or
+activation.
 
-`upload_to` generates `certificates/{uuid4}.{ext}` — same collision/
-enumeration/cache-busting reasoning as the avatar doc's
-`avatars/{model}/{uuid4}.{ext}`.
+Renewal creates a new active row and marks the previous row `superseded`, so the
+historical dates and file remain available under Certificate history. Archive
+marks a row `archived` and retains its files. Ordinary users cannot hard-delete
+a certificate. A manager-only emergency action can permanently purge files
+uploaded for the wrong person or outside policy; it requires a reason, archives
+the row, and leaves the audit/history metadata behind.
 
-This reuses the avatar doc's storage decision wholesale: local filesystem +
-Dokku persistent volume, same `MEDIA_ROOT`, just a different subdirectory of
-the same volume — not a new storage mechanism, not a second infrastructure
-decision.
+## Data model and enforcement
 
-**Serving is *not* shared wholesale, though (added 2026-07-26).** Both go
-through `core/media_views.py` rather than any nginx alias, but a certificate
-document is gated more tightly than an avatar: the office boundary **and**
-`can_view_sensitive` — managers, Observer, the owning recruiter, and the
-person's responsible coordinator(s). The rationale is the same one that made
-DOB and identifiers per-object rather than a flat role grant: the *existence*
-of a certificate is an ordinary broad read within the office, but a scan of
-someone's medical or licence document is not. An unconnected recruiter in the
-same office sees the row and gets a 403 on the file.
+`features.compliance.Certificate` keeps its historical `HEALTH` and `OTHER`
+category values because older metadata and the compliance badge system use
+them. File operations, however, use the server-side `FILE_ALLOWED_CATEGORIES`
+allowlist and accept only `FORKLIFT`, `CRANE`, or `WELDING`.
 
-No `uploaded_by` field is added — who uploaded, replaced, or deleted a
-document is captured by the audit event (§5), not denormalized onto the
-model.
+Relevant fields are:
 
-**Multiple rows per category are allowed.** This matches how `Certificate`
-already works (free-standing rows per person, ordered by `expiry_date`) — a
-worker can have an expired forklift licence and its renewal as two separate
-rows, keeping renewal history. When more than one row shares a category,
-the icon shown for that category (per `pill-system-design.md`) uses
-whichever row is most relevant: the soonest-expiring non-expired row if one
-exists, else the most severe (most-expired) row if none are currently
-valid.
+- `category` and canonical `name`;
+- `issuer` and `certificate_number`;
+- `issue_date`, `expiry_date`, and `never_expires`;
+- `front_document` and optional `back_document`;
+- `record_status` (`active`, `superseded`, `archived`);
+- `supersedes`, linking a renewal to the previous row.
 
-## 2. Upload validation
+The choice list, form, service, and model validation all enforce the allowlist.
+The model also rejects an active occupational record without its primary file,
+a back without a front, and a PDF combined with a back image. This layered
+validation prevents crafted POSTs or service misuse from bypassing the UI.
 
-Unlike an avatar photo, a certificate document must stay **legible**, and
-must support **both image and PDF** sources — a phone photo of a physical
-licence card, or a PDF export from an issuing authority, are both realistic.
+Migration `compliance.0003_occupational_certificate_files` renames the original
+single `document` field to `front_document` without moving stored bytes, adds
+the workflow fields, and marks legacy no-expiry rows as `never_expires`.
 
-- **Images** (JPEG/PNG/WebP): reuse the avatar doc's Pillow validation —
-  decode-and-verify it's a genuine image, reject SVG outright
-  (script-injection risk), strip EXIF (phone photos carry GPS tags) — but
-  **do not center-crop to square**. Only cap maximum dimensions and
-  file size, and re-encode to strip metadata, preserving the original
-  aspect ratio so the document stays readable.
-- **PDFs**: no new dependency needed — `pypdf` is already pinned
-  (`requirements/runtime.lock`, v6.14.2) and already used elsewhere in the
-  codebase (`features/payslips/services.py`, to *generate* encrypted
-  payslip PDFs on the fly, never persisted). For an *uploaded* PDF, the
-  equivalent of Pillow's `Image.verify()` is instantiating
-  `pypdf.PdfReader` on the uploaded bytes and touching `.pages` — this
-  raises (`PdfReadError`/`EmptyFileError`/similar) on malformed or
-  disguised-non-PDF input, which is enough to reject garbage uploads.
-- Reject anything that isn't JPEG/PNG/WebP/PDF (no executables, no SVG, no
-  Office documents).
-- Size cap higher than avatar photos — e.g. ~10MB — since scanned
-  documents run larger than a profile photo.
-- This feature is the one that actually *adds* the Pillow dependency if it
-  ships before the avatar feature does (or vice versa) — either way, it's
-  one shared AGENTS.md §3.1 ADR, not two separate approvals for the same
-  package.
+For a fictional/staging database that predates the allowlist, run:
 
-## 3. RBAC
+```text
+python manage.py enforce_certificate_storage_policy
+```
 
-New `Action.CERTIFICATE_MANAGE = "certificate.manage"`
-(`core/accounts/permissions.py`), covering create, replace-document, and
-delete in one action — matching the project's existing coarse-grained
-action style (e.g. `EQUIPMENT_ISSUE_RETURN` covers both issue and return in
-one action, rather than splitting per verb).
+The default is a read-only report. `--purge-disallowed` requires the explicit
+`--confirm-fictional-data` guard because the real-data gate is not open and the
+command permanently removes disallowed stored files.
 
-**Role-only grant, no per-project scoping**: `{RECRUITER, COORDINATOR,
-MANAGER}` in both `clients/jober/policies.py` and
-`clients/corvinum_eu/policies.py`. This mirrors two existing actions
-already granted to exactly this trio in both clients —
-`Action.INTAKE_ASSIGN_TRIAL` and `Action.PERSON_RECYCLE_AVAILABLE` — neither
-of which restricts by project despite including coordinators, so this stays
-consistent with precedent rather than introducing the first object-scoped
-action in the codebase. (This is a deliberately different grant from
-`Action.INTAKE_CREATE_EDIT`, which excludes coordinators in both clients —
-certificate management is intentionally broader than general person-record
-editing.)
+## Upload and delivery security
 
-Per `CLAUDE.md`'s RBAC convention, the new action must land in the same
-commit as:
-- `core/accounts/permissions.py` (`Action` enum member)
-- `clients/jober/policies.py` and `clients/corvinum_eu/policies.py`
-  (`ACTION_ROLES` grants)
-- `docs/permissions/jober-permission-matrix.md` and
-  `docs/permissions/corvinum-permission-matrix.md` (both explicitly state
-  "when you change one, change the other in the same commit")
+Images (JPEG, PNG, or WebP) are content-decoded, dimension-capped, resized only
+when necessary while preserving aspect ratio, and re-encoded. Re-encoding drops
+EXIF, including phone GPS metadata. SVG and all other formats are rejected.
 
-Read access (seeing a person's existing certificates) stays as broad as
-today's `compliance_list` — no action gate on reading, consistent with the
-broad-internal-read default (ADR 0008).
+PDFs are limited to four pages, must be unencrypted, and are rejected when they
+contain document/page actions, forms, names/attachments, or annotations. An
+accepted PDF is rebuilt from its pages so catalogue actions and metadata are not
+retained. Each uploaded file is capped at 10 MB.
 
-## 4. Views, forms, and where this surfaces
+Files receive UUID storage names under `certificates/` on the protected media
+volume. They are never exposed through a public media alias. Django streams each
+side through a permission-checked endpoint using private cache headers. Access
+requires both office scope and `can_view_sensitive`: managers, observers, the
+owning recruiter, and responsible coordinators. Staff may see that a certificate
+exists without necessarily receiving its scan.
 
-- New `features/compliance/forms.py`: `CertificateForm` (category, name,
-  issue_date, expiry_date, document).
-- New views in `features/compliance/views.py`, each
-  `@require_action(Action.CERTIFICATE_MANAGE)`: create, edit (replace the
-  document and/or update dates), delete. Mounted in `config/urls.py` under
-  the same `_feature_on("compliance", "documents")` gate that
-  `compliance_list` already uses.
-- Surfaced as a new **person-detail panel**, registered with
-  `register_person_panel` in `features/compliance/apps.py` (alongside the
-  app's existing `register_report_tile` and alert-provider registrations)
-  — using the `person_panels` slot that
-  `templates/pages/person_detail.html` and
-  `core/people/views.py::person_detail` already wire up (ADR 0021 Stage B),
-  rather than hand-editing the template. The panel lists the person's
-  certificates (category icon, name, dates, validity) and an "Add
-  certificate" action, gated by `Action.CERTIFICATE_MANAGE` in the panel
-  template itself — hidden buttons still need the server-side check.
-- Standard POST → redirect → GET, using the existing flash-message pattern
-  (`{% if messages %}` in `templates/layouts/base.html`) — no htmx
-  required. Because both the worker-list icon row and the person-detail
-  avatar read `person.certificates` fresh on every render, a normal page
-  reload after upload already shows the new document's icon and updated
-  detail-page section.
+## RBAC and audit
 
-## 5. Audit
+`certificate.manage` is granted to Recruiter, Coordinator, and Manager/Admin in
+both clients. It covers create, metadata/file update, renewal, and archive, but
+the person relationship check still applies. `certificate.purge_file` is
+manager-only. Observer has read access where ordinary read and sensitive-data
+rules permit it, but no write action.
 
-Every mutation is audited via `core.audit.services.record_event` (the
-avatar doc previously cited a stale `apps.audit.services` path — corrected
-there too):
+Every mutation records append-only audit data with old and new values:
 
-- `record_event(request.user, "certificate.uploaded", target=certificate, person=person.pk, category=..., name=...)` on create
-- `"certificate.replaced"` on document swap
-- `"certificate.deleted"` on delete
+- `certificate.created` and `certificate.updated`;
+- `certificate.renewed` and `certificate.superseded`;
+- `certificate.archived`;
+- `certificate.files_purged`.
 
-## Open items for the implementation slice
+The audit snapshot records file presence, not a secret URL or uploaded file
+contents.
 
-- Land the Pillow ADR (§3.1) once, shared with the avatar feature if both
-  are implemented around the same time — don't duplicate the approval.
-- Confirm the exact PDF/image size cap and max dimensions with whoever
-  owns the Dokku volume's disk budget, since certificate documents will
-  accumulate faster than avatar photos (multiple rows per person, kept for
-  renewal history per §1).
-- File cleanup on person erasure/anonymization is **not yet possible** —
-  neither `recycle_to_available()` nor `Person.archive()` deletes
-  anything today. This is a shared open item with the avatar doc: a future
-  real erasure feature needs to delete both avatar and certificate files
-  explicitly, not assume an existing hook does it.
+## Production gates and deliberate omissions
+
+This feature does not open the real-data gate. DPA/hosting, reviewed sensitive
+visibility, retention, encrypted and tested backups, erasure procedures, and a
+security review remain required by `AGENTS.md` before real worker documents are
+stored.
+
+The current implementation uses filesystem storage and does not apply
+application-level or per-file encryption. On Dokku, certificate bytes live on
+the client's persistent media volume. The application never exposes that
+directory directly, but VPS root/Dokku-equivalent host access can read a mounted
+volume. Provider or host-volume encryption may protect detached or disposed
+storage; it does not protect files from active root access. Production approval
+must therefore verify the provider/volume encryption design, restrict and review
+privileged host access, enable encrypted off-site media backups, complete a
+restore drill, and explicitly accept the remaining root-access trust boundary.
+The full checklist and escalation path are in
+[`document-storage-boundary.md`](document-storage-boundary.md#current-at-rest-trust-boundary).
+
+No malware-scanning dependency, OCR, external object store, or document
+verification workflow was added. If the client requires excluded high-value
+documents, that is a separately scoped Secure Document Vault project with its
+own threat model and operating budget; it must not widen this allowlist.

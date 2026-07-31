@@ -50,11 +50,13 @@ All nine staff accounts share one password — the one the owner set. Three
 browser profiles (or one plus two private windows) is the smoothest way to
 switch mid-demo.
 
-**Uploads work — and are worth showing.** The earlier "don't upload anything"
+**Allowlisted uploads work — and are worth showing.** The earlier "don't upload anything"
 warning was based on two things that turned out to be wrong or since fixed:
 staging *does* have a storage mount, so uploads always survived redeploys, and
 they are now served by a permission-checked view instead of 404ing. Uploading
-a worker photo or a certificate scan is a legitimate part of the demo.
+a worker photo or a fictional forklift/crane/welding certificate scan is a
+legitimate part of the demo. Identity, birth, residence, financial, medical,
+and generic HR attachments are deliberately unavailable.
 Better still, it demonstrates the boundary: a certificate document is visible
 to managers, the Observer, the owning recruiter and the responsible
 coordinator — an unconnected recruiter in the same office sees that the
@@ -470,3 +472,6 @@ behavior also remain gated by external access and the Art. 28 DPA review.
 - Confirm whether the age warning ever blocks an action.
 - Obtain the Art. 28 processor DPA and processors/retention list.
 - Obtain Telegram channel access and bot administrator details for its later slice.
+  The approved boundary is Manager/Admin-only, outbound text to one private
+  Ukrainian-worker channel with no per-worker delivery claim or inbound bot;
+  see `docs/product/jober-telegram-channel-design.md`.

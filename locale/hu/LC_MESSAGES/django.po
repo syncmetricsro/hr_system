@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-28 17:36+0200\n"
+"POT-Creation-Date: 2026-07-31 13:47+0200\n"
 "Language: hu\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -99,7 +99,7 @@ msgstr "Műveletek"
 
 # --- compliance ---
 #: clients/corvinum_eu/templates/layouts/base.html:50 core/ui/help.py:43
-#: features/compliance/panels.py:27 features/finance/models.py:68
+#: features/compliance/panels.py:33 features/finance/models.py:68
 #: features/intake/catalog_i18n.py:12 templates/help/getting-started.html:21
 #: templates/layouts/base.html:38 templates/pages/compliance_list.html:4
 #: templates/pages/compliance_list.html:9
@@ -271,7 +271,7 @@ msgstr "megerősítve"
 #: core/projects/models.py:181 core/projects/models.py:259
 #: features/advances/models.py:92 features/blacklist/models.py:66
 #: features/blacklist/models.py:114 features/checklists/models.py:23
-#: features/compliance/models.py:33 features/feedback/models.py:26
+#: features/compliance/models.py:87 features/feedback/models.py:26
 #: features/feedback/models.py:48 features/finance/models.py:39
 #: features/intake/models.py:32 features/logistics/models.py:43
 #: features/logistics/models.py:79 features/logistics/models.py:184
@@ -343,14 +343,15 @@ msgstr "cél azonosítója"
 #: core/projects/models.py:137 core/projects/models.py:209
 #: core/projects/models.py:322 features/advances/models.py:61
 #: features/blacklist/models.py:45 features/blacklist/models.py:105
-#: features/checklists/models.py:57 features/compliance/models.py:24
+#: features/checklists/models.py:57 features/compliance/models.py:51
 #: features/intake/models.py:106 features/logistics/models.py:144
 #: features/logistics/models.py:263 features/messaging/models.py:48
 #: features/payslips/models.py:20 features/wage_ledger/models.py:16
 msgid "person"
 msgstr "személy"
 
-#: core/audit/models.py:44 features/logistics/models.py:466
+#: core/audit/models.py:44 features/compliance/forms.py:128
+#: features/logistics/models.py:466
 msgid "reason"
 msgstr "indok"
 
@@ -431,243 +432,299 @@ msgstr "Döntés rögzítve."
 msgid "Blacklist case proposed"
 msgstr "Feketelista-eset felülvizsgálatra benyújtva."
 
-#: core/audit/presentation.py:29 core/audit/presentation.py:99
+#: core/audit/presentation.py:29 core/audit/presentation.py:105
 msgid "Removed from blacklist"
 msgstr "Eltávolítva a feketelistáról."
 
 #: core/audit/presentation.py:30
-msgid "Certificate deleted"
-msgstr "Tanúsítvány törölve"
+msgid "Certificate archived"
+msgstr "Tanúsítvány archiválva"
 
-#: core/audit/presentation.py:31
-msgid "Certificate document replaced"
-msgstr "A tanúsítvány dokumentuma cserélve"
-
-#: core/audit/presentation.py:32
-msgid "Certificate updated"
-msgstr "Tanúsítvány frissítve"
-
-#: core/audit/presentation.py:33
+#: core/audit/presentation.py:31 core/audit/presentation.py:39
 msgid "Certificate uploaded"
 msgstr "Tanúsítvány feltöltve"
 
+#: core/audit/presentation.py:32
+msgid "Certificate files permanently removed"
+msgstr "A tanúsítvány fájljai véglegesen eltávolítva"
+
+#: core/audit/presentation.py:33
+msgid "Certificate renewed"
+msgstr "Tanúsítvány megújítva"
+
 #: core/audit/presentation.py:34
+msgid "Certificate superseded"
+msgstr "Tanúsítvány újjal felváltva"
+
+#: core/audit/presentation.py:36
+msgid "Certificate deleted"
+msgstr "Tanúsítvány törölve"
+
+#: core/audit/presentation.py:37
+msgid "Certificate document replaced"
+msgstr "A tanúsítvány dokumentuma cserélve"
+
+#: core/audit/presentation.py:38
+msgid "Certificate updated"
+msgstr "Tanúsítvány frissítve"
+
+#: core/audit/presentation.py:40
 msgid "Checklist item completed"
 msgstr "Ellenőrzőlista-tétel teljesítve"
 
-#: core/audit/presentation.py:35
+#: core/audit/presentation.py:41
 msgid "Checklist item reopened"
 msgstr "Ellenőrzőlista-tétel újra megnyitva"
 
-#: core/audit/presentation.py:36
+#: core/audit/presentation.py:42
 msgid "Equipment item created"
 msgstr "Felszerelési tétel létrehozva"
 
-#: core/audit/presentation.py:37
+#: core/audit/presentation.py:43
 msgid "Equipment item updated"
 msgstr "Felszerelési tétel frissítve"
 
-#: core/audit/presentation.py:38
+#: core/audit/presentation.py:44
 msgid "Equipment deduction review recorded"
 msgstr "Felszerelés levonási felülvizsgálata rögzítve"
 
-#: core/audit/presentation.py:39
+#: core/audit/presentation.py:45
 msgid "Equipment flagged as unreturned"
 msgstr "Felszerelés vissza nem adottként jelölve"
 
-#: core/audit/presentation.py:40 core/people/services.py:137
+#: core/audit/presentation.py:46 core/people/services.py:137
 msgid "Equipment issued"
 msgstr "Felszerelés kiadva"
 
-#: core/audit/presentation.py:41
+#: core/audit/presentation.py:47
 msgid "Equipment returned"
 msgstr "Felszerelés visszavéve."
 
-#: core/audit/presentation.py:42
+#: core/audit/presentation.py:48
 msgid "Equipment stock adjusted"
 msgstr "A felszerelés készlete korrigálva"
 
-#: core/audit/presentation.py:43
+#: core/audit/presentation.py:49
 msgid "Equipment stock received"
 msgstr "A felszerelés készlete átvéve"
 
-#: core/audit/presentation.py:44
+#: core/audit/presentation.py:50
 msgid "Finance line item saved"
 msgstr "Pénzügyi tételsor mentve"
 
-#: core/audit/presentation.py:45
+#: core/audit/presentation.py:51
 msgid "Financial month locked"
 msgstr "Pénzügyi hónap zárolva"
 
-#: core/audit/presentation.py:46
+#: core/audit/presentation.py:52
 msgid "Financial month recorded"
 msgstr "Pénzügyi hónap rögzítve"
 
-#: core/audit/presentation.py:47
+#: core/audit/presentation.py:53
 msgid "Finance recalculated"
 msgstr "Mentés és újraszámolás"
 
-#: core/audit/presentation.py:48
+#: core/audit/presentation.py:54
 msgid "Financial month reopened"
 msgstr "Pénzügyi hónap újranyitva"
 
-#: core/audit/presentation.py:49
+#: core/audit/presentation.py:55
 msgid "Worker feedback received"
 msgstr "Dolgozói visszajelzés érkezett"
 
-#: core/audit/presentation.py:50 core/people/services.py:157
+#: core/audit/presentation.py:56 core/people/services.py:157
 msgid "Intake completed"
 msgstr "Felvétel befejezve"
 
-#: core/audit/presentation.py:51
+#: core/audit/presentation.py:57
 msgid "Ledger cycle marked settled"
 msgstr "Főkönyvi ciklus rendezettként jelölve"
 
-#: core/audit/presentation.py:52
+#: core/audit/presentation.py:58
 msgid "Ledger entries included in cycle"
 msgstr "Főkönyvi tételek ciklusba sorolva"
 
-#: core/audit/presentation.py:53
+#: core/audit/presentation.py:59
 msgid "Ledger entry cancelled"
 msgstr "Tétel törölve."
 
-#: core/audit/presentation.py:54
+#: core/audit/presentation.py:60
 msgid "Ledger entry recorded"
 msgstr "Főkönyvi tétel rögzítve."
 
-#: core/audit/presentation.py:55
+#: core/audit/presentation.py:61
 msgid "Ledger entry reversed"
 msgstr "Főkönyvi tétel sztornózva"
 
-#: core/audit/presentation.py:56
+#: core/audit/presentation.py:62
 msgid "Payslip recorded"
 msgstr "Bérlap rögzítve."
 
-#: core/audit/presentation.py:57
+#: core/audit/presentation.py:63
 msgid "Payslip sent"
 msgstr "Bérlap elküldve"
 
-#: core/audit/presentation.py:58
+#: core/audit/presentation.py:64
 msgid "Person archived"
 msgstr "Személy archiválva"
 
-#: core/audit/presentation.py:59 core/audit/presentation.py:79
+#: core/audit/presentation.py:65 core/audit/presentation.py:85
 msgid "Avatar added"
 msgstr "Profilkép hozzáadva"
 
-#: core/audit/presentation.py:60 core/audit/presentation.py:80
+#: core/audit/presentation.py:66 core/audit/presentation.py:86
 msgid "Avatar removed"
 msgstr "Profilkép eltávolítva"
 
-#: core/audit/presentation.py:61 core/audit/presentation.py:81
+#: core/audit/presentation.py:67 core/audit/presentation.py:87
 msgid "Avatar replaced"
 msgstr "Profilkép cserélve"
 
-#: core/audit/presentation.py:62
+#: core/audit/presentation.py:68
 msgid "Person added"
 msgstr "Személy hozzáadva."
 
-#: core/audit/presentation.py:63
+#: core/audit/presentation.py:69
 msgid "Exit completed"
 msgstr "Kilépés befejezve."
 
-#: core/audit/presentation.py:64 core/people/services.py:171
+#: core/audit/presentation.py:70 core/people/services.py:171
 msgid "Status changed"
 msgstr "Állapot megváltozott"
 
-#: core/audit/presentation.py:65 core/audit/presentation.py:104
+#: core/audit/presentation.py:71 core/audit/presentation.py:110
 msgid "Recycled to Available"
 msgstr "Visszaküldve Elérhetőre."
 
-#: core/audit/presentation.py:66
+#: core/audit/presentation.py:72
 msgid "Person updated"
 msgstr "Személy frissítve."
 
-#: core/audit/presentation.py:67
+#: core/audit/presentation.py:73
 msgid "Readiness saved"
 msgstr "Készenlét elmentve."
 
-#: core/audit/presentation.py:68 core/people/services.py:127
+#: core/audit/presentation.py:74 core/people/services.py:127
 msgid "Room assigned"
 msgstr "Szoba hozzárendelve"
 
-#: core/audit/presentation.py:69
+#: core/audit/presentation.py:75
 msgid "Room created"
 msgstr "A szoba létrejött."
 
-#: core/audit/presentation.py:70
+#: core/audit/presentation.py:76
 msgid "Room released"
 msgstr "Szoba felszabadítva."
 
-#: core/audit/presentation.py:71
+#: core/audit/presentation.py:77
 msgid "Room updated"
 msgstr "A szoba frissítve."
 
-#: core/audit/presentation.py:72
+#: core/audit/presentation.py:78
 msgid "Message sent"
 msgstr "Üzenet elküldve."
 
-#: core/audit/presentation.py:73
+#: core/audit/presentation.py:79
 msgid "Transport week created"
 msgstr "Szállítási hét létrehozva"
 
-#: core/audit/presentation.py:74
+#: core/audit/presentation.py:80
 msgid "Transport week recorded"
 msgstr "Szállítási hét rögzítve."
 
-#: core/audit/presentation.py:75
+#: core/audit/presentation.py:81
 msgid "Transport week updated"
 msgstr "A szállítási hét frissítve"
 
-#: core/audit/presentation.py:76
+#: core/audit/presentation.py:82
 msgid "Trial outcome recorded"
 msgstr "Próba eredménye rögzítve."
 
-#: core/audit/presentation.py:77 core/audit/presentation.py:108
+#: core/audit/presentation.py:83 core/audit/presentation.py:114
 #: core/people/services.py:101
 msgid "Trial scheduled"
 msgstr "Próbanap ütemezve"
 
-#: core/audit/presentation.py:78
+#: core/audit/presentation.py:84
 msgid "Trial updated"
 msgstr "A próbanap frissítve."
 
-#: core/audit/presentation.py:82
+#: core/audit/presentation.py:88
 msgid "Gross wage recorded"
 msgstr "A bruttó bér rögzítve."
 
-#: core/audit/presentation.py:98
+#: core/audit/presentation.py:104
 msgid "Activated onto a project"
 msgstr "Aktiválva a projektre"
 
-#: core/audit/presentation.py:100
+#: core/audit/presentation.py:106
 msgid "Added to blacklist"
 msgstr "Feketelistára helyezve"
 
 # --- exit / recycling ---
-#: core/audit/presentation.py:101 templates/pages/person_detail.html:216
+#: core/audit/presentation.py:107 templates/pages/person_detail.html:216
 msgid "Exit"
 msgstr "Kilépés"
 
-#: core/audit/presentation.py:102
+#: core/audit/presentation.py:108
 msgid "Readiness requirements met"
 msgstr "A készenléti követelmények teljesültek"
 
-#: core/audit/presentation.py:103
+#: core/audit/presentation.py:109
 msgid "Room reassigned"
 msgstr "Szoba áthelyezve"
 
-#: core/audit/presentation.py:105
+#: core/audit/presentation.py:111
 msgid "Superseded by a new assignment"
 msgstr "Lecserélve új beosztásra"
 
-#: core/audit/presentation.py:106
+#: core/audit/presentation.py:112
 msgid "Trial failed"
 msgstr "A próbanap sikertelen"
 
-#: core/audit/presentation.py:107
+#: core/audit/presentation.py:113
 msgid "Trial no-show"
 msgstr "A próbanapon nem jelent meg"
+
+#: core/media.py:167
+msgid "File is too large (max 10MB)."
+msgstr "A fájl túl nagy (legfeljebb 10 MB)."
+
+#: core/media.py:176 features/compliance/forms.py:93
+msgid "The back side must be an image."
+msgstr "A hátoldal csak kép lehet."
+
+#: core/media.py:184
+msgid "Encrypted PDFs are not allowed."
+msgstr "Titkosított PDF nem engedélyezett."
+
+#: core/media.py:187
+msgid "PDF has no pages."
+msgstr "A PDF nem tartalmaz oldalt."
+
+#: core/media.py:189
+msgid "PDF has too many pages (max 4)."
+msgstr "A PDF túl sok oldalt tartalmaz (legfeljebb 4)."
+
+#: core/media.py:195 core/media.py:200
+msgid "Interactive PDFs or PDFs with attachments are not allowed."
+msgstr "Interaktív vagy mellékleteket tartalmazó PDF nem engedélyezett."
+
+#: core/media.py:212
+msgid "File is not a valid PDF."
+msgstr "A fájl nem érvényes PDF."
+
+#: core/media.py:224 core/media.py:233
+msgid "File is not a valid image or PDF."
+msgstr "A fájl nem érvényes kép vagy PDF."
+
+#: core/media.py:227
+msgid "Image dimensions are too large."
+msgstr "A kép méretei túl nagyok."
+
+#: core/media.py:237
+msgid "Only JPEG, PNG, WebP images or PDF documents are allowed."
+msgstr "Csak JPEG, PNG, WebP képek vagy PDF dokumentumok engedélyezettek."
 
 #: core/notifications/models.py:21
 msgid "item key"
@@ -728,7 +785,7 @@ msgid "%(first)s +%(count)s"
 msgstr "%(first)s +%(count)s"
 
 #: core/offices/models.py:12 core/projects/models.py:12
-#: features/checklists/models.py:18 features/compliance/models.py:29
+#: features/checklists/models.py:18 features/compliance/models.py:59
 #: features/intake/models.py:25 features/logistics/models.py:29
 #: features/logistics/models.py:216 features/messaging/models.py:11
 msgid "name"
@@ -767,7 +824,7 @@ msgstr "Katonai szolgálat"
 
 #: core/people/catalog_i18n.py:14 features/advances/models.py:40
 #: features/blacklist/catalog_i18n.py:15 features/blacklist/models.py:88
-#: features/blacklist/panels.py:61 features/compliance/models.py:14
+#: features/blacklist/panels.py:61 features/compliance/models.py:15
 #: features/finance/models.py:74 features/intake/catalog_i18n.py:29
 msgid "Other"
 msgstr "Egyéb"
@@ -1129,7 +1186,8 @@ msgstr "projekt"
 msgid "projects"
 msgstr "projektek"
 
-#: core/projects/models.py:49 features/logistics/models.py:135
+#: core/projects/models.py:49 features/compliance/models.py:19
+#: features/logistics/models.py:135
 #: templates/pages/accommodation_detail.html:35
 #: templates/pages/accommodation_list.html:19
 #: templates/pages/equipment_catalog.html:18
@@ -1690,7 +1748,7 @@ msgid "entry type"
 msgstr "tétel típusa"
 
 #: features/advances/models.py:68 features/blacklist/models.py:53
-#: features/compliance/models.py:27 features/finance/models.py:110
+#: features/compliance/models.py:54 features/finance/models.py:110
 msgid "category"
 msgstr "kategória"
 
@@ -1843,7 +1901,7 @@ msgstr "korlátozott indok"
 msgid "proposed by"
 msgstr "javasolta"
 
-#: features/blacklist/models.py:65 features/compliance/models.py:31
+#: features/blacklist/models.py:65 features/compliance/models.py:65
 msgid "expiry date"
 msgstr "lejárati dátum"
 
@@ -2023,37 +2081,136 @@ msgstr "%(person)s · %(count)s kritikus tétel"
 msgid "Activation blocked by open checklist items: %(items)s"
 msgstr "Az aktiválást nyitott ellenőrzőlista-tételek blokkolják: %(items)s"
 
-#: features/compliance/models.py:10
+#: features/compliance/forms.py:31
+msgid "certificate type"
+msgstr "tanúsítvány típusa"
+
+#: features/compliance/forms.py:34
+msgid "front, paper scan, or PDF"
+msgstr "előlap, papíralapú dokumentum beolvasása vagy PDF"
+
+#: features/compliance/forms.py:41
+msgid "back (image only)"
+msgstr "hátlap (csak kép)"
+
+#: features/compliance/forms.py:47
+msgid "remove the current back"
+msgstr "jelenlegi hátlap eltávolítása"
+
+#: features/compliance/forms.py:103
+msgid "A PDF must be the only file for a certificate."
+msgstr "A PDF a tanúsítvány egyetlen fájlja lehet."
+
+#: features/compliance/forms.py:109 features/compliance/services.py:216
+msgid ""
+"Remove the current back side before replacing the certificate with a PDF."
+msgstr ""
+"Távolítsa el a jelenlegi hátlapot, mielőtt PDF-re cseréli a tanúsítványt."
+
+#: features/compliance/forms.py:117
+msgid "Enter an expiry date or select does not expire."
+msgstr "Adjon meg lejárati dátumot, vagy válassza a nem jár le lehetőséget."
+
+#: features/compliance/models.py:11
 msgid "Health"
 msgstr "Egészségügyi"
 
-#: features/compliance/models.py:11
+#: features/compliance/models.py:12
 msgid "Forklift"
 msgstr "Targonca"
 
-#: features/compliance/models.py:12
+#: features/compliance/models.py:13
 msgid "Crane"
 msgstr "Daru"
 
-#: features/compliance/models.py:13
+#: features/compliance/models.py:14
 msgid "Welding"
 msgstr "Hegesztés"
 
-#: features/compliance/models.py:30 features/payslips/models.py:32
+#: features/compliance/models.py:20
+msgid "Superseded"
+msgstr "Felváltva"
+
+#: features/compliance/models.py:21
+msgid "Archived"
+msgstr "Archiválva"
+
+#: features/compliance/models.py:60
+msgid "issuer"
+msgstr "kibocsátó"
+
+#: features/compliance/models.py:62
+msgid "certificate number"
+msgstr "tanúsítvány száma"
+
+#: features/compliance/models.py:64 features/payslips/models.py:32
 msgid "issue date"
 msgstr "kiállítás dátuma"
 
-#: features/compliance/models.py:32
-msgid "document"
-msgstr "dokumentum"
+#: features/compliance/models.py:66
+msgid "does not expire"
+msgstr "nem jár le"
 
-#: features/compliance/models.py:36
+#: features/compliance/models.py:68
+msgid "front or PDF"
+msgstr "előlap vagy PDF"
+
+# --- feedback ---
+#: features/compliance/models.py:71
+msgid "back"
+msgstr "hátlap"
+
+#: features/compliance/models.py:74
+msgid "record status"
+msgstr "bejegyzés állapota"
+
+#: features/compliance/models.py:85
+msgid "supersedes"
+msgstr "felváltja"
+
+#: features/compliance/models.py:90
 msgid "certificate"
 msgstr "tanúsítvány"
 
-#: features/compliance/models.py:37
+#: features/compliance/models.py:91
 msgid "certificates"
 msgstr "tanúsítványok"
+
+#: features/compliance/models.py:118
+msgid ""
+"Choose an expiry date or mark the certificate as not expiring, not both."
+msgstr ""
+"Válasszon lejárati dátumot, vagy jelölje nem lejáróként a tanúsítványt, de "
+"ne mindkettőt."
+
+#: features/compliance/models.py:122
+msgid "Enter an expiry date or mark the certificate as not expiring."
+msgstr ""
+"Adjon meg lejárati dátumot, vagy jelölje nem lejáróként a tanúsítványt."
+
+#: features/compliance/models.py:129 features/compliance/services.py:192
+msgid "Files are allowed only for forklift, crane, and welding certificates."
+msgstr "Fájl csak targonca-, daru- és hegesztői tanúsítványhoz engedélyezett."
+
+#: features/compliance/models.py:134
+msgid "Choose a supported occupational certificate type."
+msgstr "Válasszon támogatott foglalkozási tanúsítványtípust."
+
+#: features/compliance/models.py:137
+msgid "Upload the certificate front, scan, or PDF."
+msgstr "Töltse fel a tanúsítvány előlapját, beolvasott képét vagy PDF-jét."
+
+#: features/compliance/models.py:140
+msgid "Upload the front before adding the back."
+msgstr "A hátlap hozzáadása előtt töltse fel az előlapot."
+
+#: features/compliance/models.py:146
+msgid "A PDF must be the only file; the back side must be an image."
+msgstr "A PDF csak önálló fájl lehet; a hátlapnak képnek kell lennie."
+
+#: features/compliance/models.py:150
+msgid "A certificate cannot supersede itself."
+msgstr "A tanúsítvány nem válthatja fel önmagát."
 
 #: features/compliance/notifications.py:32
 msgid "Compliance problems need attention"
@@ -2064,32 +2221,44 @@ msgstr "A megfelelőségi problémák figyelmet igényelnek"
 msgid "%(count)s open document or medical alerts"
 msgstr "%(count)s nyitott dokumentum- vagy orvosi figyelmeztetés"
 
-#: features/compliance/panels.py:30
+#: features/compliance/panels.py:36
 msgid "Review compliance issues"
 msgstr "Megfelelőségi problémák áttekintése"
 
-#: features/compliance/panels.py:32
+#: features/compliance/panels.py:38
 msgid "Open workers with document or medical requirements that need attention."
 msgstr ""
 "Nyissa meg a figyelmet igénylő dokumentum- vagy orvosi követelményekkel "
 "rendelkező munkavállalókat."
 
-#: features/compliance/panels.py:67
+#: features/compliance/panels.py:75
 #, python-format
 msgid "%(name)s (expires %(date)s)"
 msgstr "%(name)s (lejár: %(date)s)"
 
-#: features/compliance/views.py:53
+#: features/compliance/services.py:212
+msgid "A PDF must be the only certificate file."
+msgstr "A PDF a tanúsítvány egyetlen fájlja lehet."
+
+#: features/compliance/views.py:82
 msgid "Certificate added."
 msgstr "A tanúsítvány hozzáadva."
 
-#: features/compliance/views.py:80
+#: features/compliance/views.py:111
 msgid "Certificate updated."
 msgstr "A tanúsítvány frissítve."
 
-#: features/compliance/views.py:96
-msgid "Certificate deleted."
-msgstr "A tanúsítvány törölve."
+#: features/compliance/views.py:150
+msgid "Certificate renewed."
+msgstr "A tanúsítvány megújítva."
+
+#: features/compliance/views.py:172
+msgid "Certificate archived."
+msgstr "A tanúsítvány archiválva."
+
+#: features/compliance/views.py:190
+msgid "Certificate files permanently removed."
+msgstr "A tanúsítvány fájljai véglegesen eltávolítva."
 
 #: features/feedback/models.py:19
 msgid "token"
@@ -2725,7 +2894,7 @@ msgid "equipment items"
 msgstr "felszerelési tételek"
 
 #: features/logistics/models.py:240
-#: templates/panels/compliance_certificates.html:21
+#: templates/panels/compliance_certificates.html:22
 #: templates/panels/logistics_equipment.html:14
 msgid "Issued"
 msgstr "Kiadva"
@@ -3463,48 +3632,67 @@ msgstr ""
 "tárolná a nyers azonosító adatait."
 
 #: templates/help/compliance.html:8
-#: templates/panels/compliance_certificates.html:4
-msgid "Certificates"
-msgstr "Tanúsítványok"
+msgid "Occupational certificate files"
+msgstr "Foglalkozási tanúsítványok fájljai"
 
 #: templates/help/compliance.html:9
 msgid ""
-"A worker's certificates — health checks, forklift or crane licences, welding "
-"qualifications, and anything else — live on their person page. Recruiters, "
-"Coordinators, and Managers can add a certificate, optionally attaching a "
-"photo or PDF of the document itself, with an issue date and expiry date."
+"The base platform stores files only for forklift, crane, and welding "
+"licences. Do not upload identity cards, passports, birth or residence "
+"documents, financial records, medical reports, or health-certificate scans. "
+"Those requirements are metadata-only or kept outside the platform."
 msgstr ""
-"A munkavállaló tanúsítványai — egészségügyi vizsgálatok, targonca- vagy "
-"darukezelői jogosítványok, hegesztői minősítések és minden más — a személy "
-"oldalán találhatók. A Toborzók, Koordinátorok és Menedzserek tanúsítványt "
-"adhatnak hozzá, opcionálisan a dokumentum fényképének vagy PDF-jének "
-"csatolásával, kiállítási és lejárati dátummal együtt."
+"Az alapplatform csak targonca-, daru- és hegesztői tanúsítványok fájljait "
+"tárolja. Ne töltsön fel személyi igazolványt, útlevelet, születési vagy "
+"tartózkodási okmányt, pénzügyi iratot, orvosi leletet vagy egészségügyi "
+"igazolás másolatát. Ezek a követelmények csak metaadatként vagy a platformon "
+"kívül tárolhatók."
+
+#: templates/help/compliance.html:10
+msgid ""
+"On the person's Occupational certificates panel, an authorized Recruiter, "
+"Coordinator, or Manager can add one PDF, one image, or front and back "
+"images. Record the issuer and certificate number if needed, then enter an "
+"expiry date or mark the certificate as not expiring."
+msgstr ""
+"A személy Foglalkozási tanúsítványok paneljén az arra jogosult toborzó, "
+"koordinátor vagy vezető egy PDF-et, egy képet vagy az elő- és hátlap képét "
+"adhatja hozzá. Szükség esetén adja meg a kibocsátót és a tanúsítvány számát, "
+"majd a lejárati dátumot, vagy jelölje nem lejáróként."
 
 #: templates/help/compliance.html:11
+msgid ""
+"Renew creates a new active certificate and keeps the previous one in "
+"history. Archive also keeps the record and files. Only a Manager can "
+"permanently remove improperly uploaded files, and a reason is required."
+msgstr ""
+"A megújítás új aktív tanúsítványt hoz létre, az előzőt pedig megőrzi az "
+"előzményekben. Az archiválás is megtartja a bejegyzést és a fájlokat. Hibásan "
+"feltöltött fájlokat csak vezető távolíthat el véglegesen, indoklással."
+
+#: templates/help/compliance.html:13
 msgid "Category icons"
 msgstr "Kategória ikonok"
 
-#: templates/help/compliance.html:12
+#: templates/help/compliance.html:14
 msgid ""
-"A small icon next to a worker's photo shows each certificate category they "
-"hold, tinted by how urgent it is: green or uncolored means valid, amber "
-"means expiring soon, red means already expired. If someone holds more than "
-"one certificate in the same category — a renewal, for example — the icon "
-"reflects whichever one is currently most relevant."
+"A small icon next to a worker's photo shows each active certificate category "
+"they hold, tinted by how urgent it is: green or uncolored means valid, amber "
+"means expiring soon, and red means expired. Superseded and archived "
+"certificates remain in history but do not drive the icon or expiry alerts."
 msgstr ""
-"A munkavállaló fényképe mellett egy kis ikon mutatja az általa birtokolt "
-"egyes tanúsítványkategóriákat, a sürgősség szerint színezve: a zöld vagy "
-"színezetlen érvényeset, a borostyán hamarosan lejárót, a piros már lejártat "
-"jelent. Ha valakinek több tanúsítványa is van ugyanabban a kategóriában — "
-"például egy megújítás esetén — az ikon azt tükrözi, amelyik jelenleg a "
-"legrelevánsabb."
+"A munkavállaló fényképe mellett egy kis ikon mutatja az aktív "
+"tanúsítványkategóriákat. A zöld vagy színezetlen érvényeset, a borostyán "
+"hamarosan lejárót, a piros lejártat jelent. A felváltott és archivált "
+"tanúsítványok megmaradnak az előzményekben, de nem befolyásolják az ikont "
+"vagy a lejárati figyelmeztetéseket."
 
 # --- compliance ---
-#: templates/help/compliance.html:14
+#: templates/help/compliance.html:16
 msgid "The Compliance page"
 msgstr "A Megfelelőség oldal"
 
-#: templates/help/compliance.html:15
+#: templates/help/compliance.html:17
 msgid ""
 "The Compliance tab lists every missing, expiring, or expired requirement "
 "across all workers in one place — both certificates and entry medical checks "
@@ -4373,6 +4561,7 @@ msgstr "Szálláskezelés"
 
 # --- compliance ---
 #: templates/pages/accommodation_form.html:9
+#: templates/pages/certificate_action.html:10
 #: templates/pages/certificate_form.html:10
 #: templates/pages/equipment_form.html:10 templates/pages/project_form.html:9
 #: templates/pages/room_form.html:9 templates/pages/transport_trends.html:22
@@ -4586,6 +4775,42 @@ msgstr "Elutasítja a javasolt tiltólista-ügyet és lezárja azt."
 msgid "Nothing awaiting review."
 msgstr "Semmi nem vár ellenőrzésre."
 
+#: templates/pages/certificate_action.html:4
+#: templates/pages/certificate_action.html:9
+msgid "Permanently remove certificate files"
+msgstr "Tanúsítványfájlok végleges eltávolítása"
+
+#: templates/pages/certificate_action.html:4
+#: templates/pages/certificate_action.html:9
+#: templates/pages/certificate_action.html:19
+msgid "Archive certificate"
+msgstr "Tanúsítvány archiválása"
+
+#: templates/pages/certificate_action.html:14
+msgid ""
+"This permanently deletes the stored files and archives the record. Use it "
+"only for a wrong-person or otherwise improper upload."
+msgstr ""
+"Ez véglegesen törli a tárolt fájlokat és archiválja a bejegyzést. Csak rossz "
+"személyhez vagy más módon hibásan feltöltött fájlnál használja."
+
+#: templates/pages/certificate_action.html:16
+msgid ""
+"The certificate and its files remain in history until the applicable "
+"retention process removes them."
+msgstr ""
+"A tanúsítvány és fájljai az előzményekben maradnak, amíg a vonatkozó "
+"megőrzési folyamat el nem távolítja őket."
+
+#: templates/pages/certificate_action.html:19
+msgid "Permanently remove files"
+msgstr "Fájlok végleges eltávolítása"
+
+#: templates/pages/certificate_form.html:4
+#: templates/pages/certificate_form.html:9
+msgid "Renew certificate"
+msgstr "Tanúsítvány megújítása"
+
 #: templates/pages/certificate_form.html:4
 #: templates/pages/certificate_form.html:9
 msgid "Edit certificate"
@@ -4593,23 +4818,35 @@ msgstr "Tanúsítvány szerkesztése"
 
 #: templates/pages/certificate_form.html:4
 #: templates/pages/certificate_form.html:9
-#: templates/panels/compliance_certificates.html:41
+#: templates/panels/compliance_certificates.html:44
 msgid "Add certificate"
 msgstr "Tanúsítvány hozzáadása"
 
-#: templates/pages/certificate_form.html:15
-msgid "Document"
-msgstr "Dokumentum"
+#: templates/pages/certificate_form.html:13
+msgid ""
+"Upload one PDF, one image, or front and back images. PDFs cannot have a "
+"separate back side."
+msgstr ""
+"Töltsön fel egy PDF-et, egy képet vagy az elő- és hátlap képét. A PDF-hez "
+"nem tartozhat külön hátlap."
 
-#: templates/pages/certificate_form.html:18
-msgid "Current document"
-msgstr "Jelenlegi dokumentum"
+#: templates/pages/certificate_form.html:19
+msgid "Current front or PDF"
+msgstr "Jelenlegi előlap vagy PDF"
 
-#: templates/pages/certificate_form.html:18
+#: templates/pages/certificate_form.html:19
 msgid "uploading a new file replaces it"
 msgstr "új fájl feltöltése lecseréli"
 
-#: templates/pages/certificate_form.html:19
+#: templates/pages/certificate_form.html:22
+msgid "Current back"
+msgstr "Jelenlegi hátlap"
+
+#: templates/pages/certificate_form.html:24
+msgid "Save renewal"
+msgstr "Megújítás mentése"
+
+#: templates/pages/certificate_form.html:24
 msgid "Save certificate"
 msgstr "Tanúsítvány mentése"
 
@@ -4618,7 +4855,7 @@ msgid "Alerts"
 msgstr "Figyelmeztetések"
 
 #: templates/pages/compliance_list.html:23
-#: templates/panels/compliance_certificates.html:13
+#: templates/panels/compliance_certificates.html:14
 msgid "Expired"
 msgstr "Lejárt"
 
@@ -4725,7 +4962,7 @@ msgstr "Egységár"
 #: templates/pages/person_detail.html:42 templates/pages/project_detail.html:13
 #: templates/pages/transport_trends.html:45
 #: templates/pages/trials_queue.html:59
-#: templates/panels/compliance_certificates.html:27
+#: templates/panels/compliance_certificates.html:30
 msgid "Edit"
 msgstr "Szerkesztés"
 
@@ -5113,7 +5350,10 @@ msgid ""
 "Every figure here is typed by hand — nothing is pulled from elsewhere in the "
 "system. Create the month, then open it to enter each category; the totals "
 "are the only thing calculated for you."
-msgstr "Itt minden adatot kézzel ír be — semmi sem érkezik a rendszer más részéből. Hozza létre a hónapot, majd nyissa meg és adja meg az egyes kategóriákat; egyedül az összegeket számolja ki a rendszer."
+msgstr ""
+"Itt minden adatot kézzel ír be — semmi sem érkezik a rendszer más részéből. "
+"Hozza létre a hónapot, majd nyissa meg és adja meg az egyes kategóriákat; "
+"egyedül az összegeket számolja ki a rendszer."
 
 #: templates/pages/finance_summary.html:38
 msgid "Record month"
@@ -6038,35 +6278,52 @@ msgstr[1] "%(n)s kritikus tétel nyitott — az aktiválás blokkolva van."
 msgid "All critical items are complete."
 msgstr "Minden kritikus tétel teljesítve."
 
-#: templates/panels/compliance_certificates.html:15
+#: templates/panels/compliance_certificates.html:4
+msgid "Occupational certificates"
+msgstr "Foglalkozási tanúsítványok"
+
+#: templates/panels/compliance_certificates.html:12
+msgid "Does not expire"
+msgstr "Nem jár le"
+
+#: templates/panels/compliance_certificates.html:16
 msgid "Expiring soon"
 msgstr "Hamarosan lejár"
 
-#: templates/panels/compliance_certificates.html:17
+#: templates/panels/compliance_certificates.html:18
 msgid "Valid"
 msgstr "Érvényes"
 
-#: templates/panels/compliance_certificates.html:22
+#: templates/panels/compliance_certificates.html:23
 msgid "Expires"
 msgstr "Lejárat"
 
-#: templates/panels/compliance_certificates.html:23
-msgid "View document"
-msgstr "Dokumentum megtekintése"
+#: templates/panels/compliance_certificates.html:24
+#: templates/panels/compliance_certificates.html:55
+msgid "View front or PDF"
+msgstr "Előlap vagy PDF megtekintése"
 
-#: templates/panels/compliance_certificates.html:27
-msgid "Edit this certificate or replace its document"
-msgstr "A tanúsítvány szerkesztése vagy dokumentumának cseréje"
+#: templates/panels/compliance_certificates.html:25
+#: templates/panels/compliance_certificates.html:56
+msgid "View back"
+msgstr "Hátlap megtekintése"
 
-#: templates/panels/compliance_certificates.html:30
-msgid "Delete this certificate and its document?"
-msgstr "Törli ezt a tanúsítványt és a dokumentumát?"
+#: templates/panels/compliance_certificates.html:31
+msgid "Renew"
+msgstr "Megújítás"
 
-#: templates/panels/compliance_certificates.html:41
-msgid "Add a new certificate, licence, or document for this worker"
-msgstr ""
-"Új tanúsítvány, jogosítvány vagy dokumentum hozzáadása ehhez a "
-"munkavállalóhoz"
+#: templates/panels/compliance_certificates.html:33
+msgid "Archive"
+msgstr "Archiválás"
+
+#: templates/panels/compliance_certificates.html:34
+#: templates/panels/compliance_certificates.html:57
+msgid "Remove files"
+msgstr "Fájlok eltávolítása"
+
+#: templates/panels/compliance_certificates.html:49
+msgid "Certificate history"
+msgstr "Tanúsítványok előzményei"
 
 #: templates/panels/logistics_equipment.html:33
 msgid "Return disposition"
@@ -6385,6 +6642,45 @@ msgstr "A legutóbb frissített %(rail_limit)s látható."
 #: templates/partials/worker_rail_body.html:34
 msgid "Open People"
 msgstr "Emberek megnyitása"
+
+#~ msgid "Certificates"
+#~ msgstr "Tanúsítványok"
+
+#~ msgid ""
+#~ "A worker's certificates — health checks, forklift or crane licences, "
+#~ "welding qualifications, and anything else — live on their person page. "
+#~ "Recruiters, Coordinators, and Managers can add a certificate, optionally "
+#~ "attaching a photo or PDF of the document itself, with an issue date and "
+#~ "expiry date."
+#~ msgstr ""
+#~ "A munkavállaló tanúsítványai — egészségügyi vizsgálatok, targonca- vagy "
+#~ "darukezelői jogosítványok, hegesztői minősítések és minden más — a "
+#~ "személy oldalán találhatók. A Toborzók, Koordinátorok és Menedzserek "
+#~ "tanúsítványt adhatnak hozzá, opcionálisan a dokumentum fényképének vagy "
+#~ "PDF-jének csatolásával, kiállítási és lejárati dátummal együtt."
+
+#~ msgid "document"
+#~ msgstr "dokumentum"
+
+#~ msgid "Document"
+#~ msgstr "Dokumentum"
+
+#~ msgid "Current document"
+#~ msgstr "Jelenlegi dokumentum"
+
+#~ msgid "View document"
+#~ msgstr "Dokumentum megtekintése"
+
+#~ msgid "Edit this certificate or replace its document"
+#~ msgstr "A tanúsítvány szerkesztése vagy dokumentumának cseréje"
+
+#~ msgid "Delete this certificate and its document?"
+#~ msgstr "Törli ezt a tanúsítványt és a dokumentumát?"
+
+#~ msgid "Add a new certificate, licence, or document for this worker"
+#~ msgstr ""
+#~ "Új tanúsítvány, jogosítvány vagy dokumentum hozzáadása ehhez a "
+#~ "munkavállalóhoz"
 
 #~ msgid "Manage projects"
 #~ msgstr "Projektek kezelése"
