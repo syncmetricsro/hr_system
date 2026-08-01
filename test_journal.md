@@ -1,5 +1,15 @@
 # Test Journal
 
+## 2026-08-01 - goods-receipt office tests pin their reporting month
+
+- `tests/test_goods_receipt_log.py` now gives the manager and Observer office-
+  visibility requests an explicit July 2026 period.
+- Root cause: their July fixtures were hidden when the view correctly defaulted
+  to August on 1 August; this was a date-dependent test defect, not a product
+  regression.
+- The focused file passes with the real current date before the full two-client
+  CI gate is rerun.
+
 ## 2026-07-31 - occupational certificate storage boundary
 
 - `tests/test_certificates.py` (22) covers image aspect ratio/EXIF removal,
