@@ -141,9 +141,7 @@ def test_a_manager_sees_only_their_own_offices_receipts(
     manager.offices.set([velky_meder])
     client.force_login(manager)
 
-    response = client.get(
-        reverse("goods_receipt_log") + "?period=month&month=2026-07"
-    )
+    response = client.get(reverse("goods_receipt_log") + "?period=month&month=2026-07")
     suppliers = [r["receipt"].supplier for r in response.context["log"]["rows"]]
     assert suppliers == ["VM supplier"]
     # The headline totals must narrow with the list, not sit above it unscoped.
@@ -201,9 +199,7 @@ def test_an_observer_sees_every_office(client, django_user_model, item, offices)
     )
     client.force_login(observer)
 
-    response = client.get(
-        reverse("goods_receipt_log") + "?period=month&month=2026-07"
-    )
+    response = client.get(reverse("goods_receipt_log") + "?period=month&month=2026-07")
     assert len(response.context["log"]["rows"]) == 2
 
 
