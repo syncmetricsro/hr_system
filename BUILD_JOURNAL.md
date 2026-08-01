@@ -19,6 +19,71 @@ literal tooltip, placeholder, title and accessible-label attributes unless
 they are translated or supplied dynamically. No dependency, schema or stored
 data changed.
 
+## 2026-08-01 - Manual upload fixtures now survive a fresh checkout
+
+A curated 15 MB fictional pack now lives under
+`tests/fixtures/manual_uploads/`: six avatar inputs spanning JPEG/PNG/WebP and
+square/landscape/portrait shapes, two harmless avatar rejection files, and the
+essential allowed forklift/crane/welding plus prohibited birth/ID/medical
+certificate cases. `SHA256SUMS`, provenance, and a pack README make the binary
+set auditable and usable without this workstation's gitignored artifacts.
+
+The large generation originals, processed previews, contact sheet, duplicate
+document forms, and ZIP archives remain under gitignored `test-artifacts/`.
+This avoids committing roughly 30 MB of duplicate working directories plus 30
+MB of duplicate archives while preserving every manual acceptance path. A new
+shared avatar runbook covers positive/rejection UI checks, the 25 MB Dokku
+prerequisite, detail/list/quick-access rendering, audit/permission checks, and
+read-only verification that the server retained only UUID-named 512×512 WebPs
+without EXIF or orphans. Certificate and client runbooks now point to the
+tracked curated directory. No runtime behavior or dependency changed.
+
+The sixth avatar is an age-appropriate portrait for fictional Mira Novakova,
+whose seeded 2009 birth date deliberately exercises the under-18 warning. It
+was generated without an input photograph or real-person reference. The source
+is a 1254×1254 PNG with no EXIF; the real processor produced a 512×512,
+28,256-byte WebP with no EXIF. The acceptance runbook requires confirming that
+uploading it does not alter or hide Mira's under-18 warning.
+
+## 2026-08-01 - Dokku proxy ceiling now matches the upload workflow
+
+The shared staging runbook now requires a 25 MB nginx request ceiling for each
+client app. This lets Django receive a request containing two certificate files
+of up to 10 MB each plus multipart overhead while preserving the stricter
+application limits of 5 MB per avatar and 10 MB per certificate file.
+
+The operational detail matters on syncmetric-prime's Dokku 0.38.25:
+`nginx:set` changed the computed value but the active file stayed at 1 MB until
+`proxy:build-config` regenerated it. The runbook therefore includes rebuild,
+validation and active-config inspection, plus a raw-413 diagnostic. After the
+correction, all four large generated PNGs used in the manual Jober pass
+uploaded and rendered in person detail, the People list and the quick-access
+worker panel. Server inspection proved they were stored only as four referenced
+512×512 WebPs without EXIF: 77,042 bytes instead of 7,770,049 source bytes,
+about 101× smaller, with no originals or orphaned avatar files. Requests above
+the 25 MB outer ceiling can still receive nginx's generic 413 page; branded
+proxy handling or browser-side preflight remains future UX work. No runtime
+code or dependency changed.
+
+## 2026-08-01 - Certificate rehearsal distinguishes translation from recognition
+
+The Jober, CorvinumEU and shared staging runbooks now use one fictional
+certificate-upload acceptance matrix. It covers a front/back forklift card, a
+single crane PDF, a welding scan, private delivery, audit evidence, the
+manager-only purge, and explicit cleanup after an internal wrong-document
+probe. The full generated Testovia working pack stays under gitignored
+`test-artifacts/`; the curated inputs required by the runbook are now tracked
+under `tests/fixtures/manual_uploads/`, so a fresh checkout never needs a real
+document or an out-of-band local pack.
+
+The language boundary is now stated precisely. Jober's manual category UI
+renders EN/SK/HU/UK and CorvinumEU renders SK/HU, but the uploaded scan is
+opaque image/PDF content. There is no OCR, language detection, translation,
+field extraction, issuer validation, or automatic category inference. A
+foreign-language occupational scan can be stored when a human selects the
+right category; a high-risk scan mislabeled as Forklift is not discovered from
+its pixels and must be purged. No runtime behavior or dependency changed.
+
 ## 2026-08-01 - Goods-receipt scope tests stop depending on today's month
 
 The first post-merge CI run after midnight on 1 August exposed two tests whose

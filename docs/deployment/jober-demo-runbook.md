@@ -62,6 +62,16 @@ to managers, the Observer, the owning recruiter and the responsible
 coordinator — an unconnected recruiter in the same office sees that the
 certificate exists and gets a refusal on the file itself.
 
+Before presenting that upload, run the shared
+[`certificate-upload-acceptance.md`](certificate-upload-acceptance.md) check
+with the tracked fictional fixtures under `tests/fixtures/manual_uploads/`.
+Also use the shared
+[`avatar-upload-acceptance.md`](avatar-upload-acceptance.md) check before
+presenting worker photos. The quick certificate route is the front/back
+forklift case. Keep the birth/ID/medical fixtures for an internal boundary
+rehearsal only; never perform the deliberate mislabel probe during a client
+presentation.
+
 **Twilio.** Staging carries live provider credentials, but non-production apps
 now enforce a recipient allowlist, so a send can only reach the configured
 demo handset — editing a person's phone to a real number no longer texts it.
@@ -424,6 +434,20 @@ Everything else — people, projects, stock, accommodation, finance — is walle
 off per office; fraud protection deliberately is not.
 
 ## Supporting flow
+
+**Occupational certificate upload.** Open a fictional worker in the signed-in
+office and add the fictional forklift card from
+`tests/fixtures/manual_uploads/certificates/`: select Forklift, enter
+`DEMO-FL-001`, issue `2026-07-01`, expiry `2027-07-01`, and upload
+`allowed-forklift-front.png` plus `allowed-forklift-back.png`. Open both private
+links after saving, then show the create event in Audit. The full PNG/PDF,
+negative-boundary, language, and cleanup matrix is in
+[`certificate-upload-acceptance.md`](certificate-upload-acceptance.md).
+
+Say this accurately: Jober can store a manually classified occupational
+certificate written in any language, but it does not read or detect that
+language and does not infer whether the pixels really show a forklift, crane,
+or welding certificate.
 
 **Activation now needs two people.** A coordinator completes the four readiness
 pillars and clicks **Request activation** — which does *not* activate. A manager
