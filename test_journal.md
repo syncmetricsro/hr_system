@@ -1,5 +1,17 @@
 # Test Journal
 
+## 2026-08-01 - manual Jober certificate positive paths
+
+- The fictional forklift card saved on staging, and the standard Edit flow
+  corrected its metadata and added the initially omitted back image without
+  losing the front. Both file links rendered afterward.
+- The fictional crane certificate saved as a single PDF and rendered Valid.
+- The fictional welding certificate saved as a single image and rendered
+  Welding, `Testovia Welding School`, the expected dates and Valid.
+- This completes the positive file-shape matrix only. Authorization, Audit,
+  archive/renewal, purge and the optional mislabel probe remain separate
+  acceptance steps and are not claimed by these screenshots.
+
 ## 2026-08-01 - portable manual-upload fixture verification
 
 - `sha256sum --check tests/fixtures/manual_uploads/SHA256SUMS` passed for all
