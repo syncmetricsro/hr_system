@@ -133,3 +133,19 @@ No malware-scanning dependency, OCR, external object store, or document
 verification workflow was added. If the client requires excluded high-value
 documents, that is a separately scoped Secure Document Vault project with its
 own threat model and operating budget; it must not widen this allowlist.
+
+## Language handling
+
+The UI translates the manually selected Forklift/Crane/Welding categories and
+upload controls. Jober exposes EN/SK/HU/UK; CorvinumEU exposes SK/HU. The
+document bytes themselves have no language-dependent path: safe images are
+decoded/re-encoded and PDFs are rebuilt without extracting their text.
+
+Consequently, an occupational certificate written in Slovak, Hungarian,
+Ukrainian, English, or another language can be stored when an operator selects
+an allowlisted category, but the platform does not detect the language,
+recognize the document type, read issuer/number/dates, translate content, or
+compare the scan with entered metadata. A high-risk document mislabeled as an
+allowlisted category is therefore not detected from its pixels. The fictional
+acceptance and cleanup procedure is documented in
+[`../deployment/certificate-upload-acceptance.md`](../deployment/certificate-upload-acceptance.md).

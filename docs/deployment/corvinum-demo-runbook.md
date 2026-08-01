@@ -285,14 +285,32 @@ an idle browser makes no periodic requests.
 1. Open **Compliance** from the navigation or Reports drill-down.
 2. Show missing, expiring, and expired metadata alerts and follow one alert to
    its person record.
-3. As HR Admin, add a fictional forklift, crane, or welding licence as one
-   image/PDF or front/back card images. Show that the private file links work
-   and that renewal preserves history.
-4. Explain the enforced boundary: no identity, birth, residence, financial, or
+3. As HR Admin, open a fictional person's **Occupational certificates** panel.
+   From `tests/fixtures/manual_uploads/certificates/`, select Forklift and
+   upload `allowed-forklift-front.png` plus `allowed-forklift-back.png`; use
+   `DEMO-FL-001`, issue `2026-07-01`, and expiry `2027-07-01`. Save and open
+   both private file links.
+4. If the PDF path matters to the audience, add the fictional crane certificate
+   using `allowed-crane-certificate.pdf` as the only file. A PDF cannot have a
+   separate back image.
+5. Switch the Corvinum UI between Slovak and Hungarian and show that the manual
+   category labels translate. The scan itself may be written in either
+   language: it uploads as pixels/PDF pages, but the system does not detect its
+   language, read its fields, or infer its certificate type.
+6. Show that renewal preserves history and that Audit records the mutation.
+7. Explain the enforced boundary: no identity, birth, residence, financial, or
    medical scans; those are metadata-only/prohibited. A client request for them
    becomes a separately scoped Secure Document Vault project.
-5. Note that the exact metadata catalogue and retention periods remain
+8. Note that the exact metadata catalogue and retention periods remain
    client/legal decisions C-Q7, C-Q13, C-Q16, and C-Q18.
+
+The full positive, negative, deliberate-mislabel, cleanup, and multilingual
+matrix is in
+[`certificate-upload-acceptance.md`](certificate-upload-acceptance.md). The
+mislabel probe is internal-only and must not be performed during the client
+walkthrough. Before presenting worker photos, also run the shared
+[`avatar-upload-acceptance.md`](avatar-upload-acceptance.md) matrix with the
+tracked fictional avatar fixtures.
 
 Talking point: the occupational workflow is working in both thin clients, but
 real documents remain behind the repository's DPA, hosting, backup, retention,
@@ -578,6 +596,9 @@ confirmed client scope.
 | Console email appears instead of real delivery | Restart with `doppler run -- scripts/corvinum_app.sh up` |
 | Payslip creation reports a duplicate | Select the existing person/period row and use Resend, or choose an unused fictional period |
 | Wage and payslip figures appear inconsistent | Verify the four fictional fixture values above, then confirm the two source records and period labels; do not infer statutory deductions from the difference |
+| Certificate fixture is absent or its checksum fails | Restore `tests/fixtures/manual_uploads/` from a clean checkout and rerun `sha256sum --check`; never substitute a real worker document |
+| A foreign-language certificate uploads but nothing is extracted | Expected: the base product stores manually classified safe files and has no OCR, language detection, translation, or field extraction |
+| A prohibited-looking fixture passes when labelled Forklift | Expected current limitation of the internal mislabel probe; immediately use the Manager-only purge and retain the audit event |
 | A risky button is reached accidentally | Use **Cancel** in the confirmation dialog; do not include or settle the cycle during the main walkthrough |
 
 ## Decisions to request from the client

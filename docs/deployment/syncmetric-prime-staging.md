@@ -29,6 +29,7 @@ client demo**:
 | Settings module | `clients.corvinum_eu.production` |
 | Temporary public URL | `https://corvinum-staging.80.211.210.46.sslip.io/sk/prihlasenie/` |
 | Deployed image | `jober-platform:demo-1458ff7` |
+| Proxy upload ceiling | `client_max_body_size 25m` on both staging apps |
 | Seed data | published Recruiter intake v3 and fictional CorvinumEU scenario only |
 
 Verified at deployment: Gunicorn is running on port 8000, the unauthenticated
@@ -118,6 +119,57 @@ ssh syncmetric-prime-dokku \
 
 Never roll a database schema backward casually; stop and assess if a migration
 is not backward compatible.
+
+## Required upload-request ceiling
+
+Set this once for every new Dokku app before testing avatars or occupational
+certificates:
+
+```bash
+APP=<app>                         # jober-staging | corvinum-staging
+sudo dokku nginx:set "$APP" client-max-body-size 25m
+sudo dokku proxy:build-config "$APP"
+sudo dokku nginx:validate-config "$APP"
+sudo dokku nginx:show-config "$APP" | grep client_max_body_size
+```
+
+The final command must show `client_max_body_size 25m;`. On the installed Dokku
+0.38.25, `nginx:set` updated the computed value but did not rewrite the active
+nginx file by itself; `proxy:build-config` was required. A plain
+`dokku nginx:reload` only reloads the file already on disk and is not a
+substitute for rebuilding it.
+
+This 25 MB value is a proxy admission ceiling, not the application's validation
+limit. Django still rejects an avatar above 5 MB and each certificate file
+above 10 MB with a user-facing error. The larger proxy ceiling allows a
+front-and-back certificate request (up to two 10 MB files plus multipart form
+overhead) to reach those validators.
+
+A request larger than 25 MB will still be rejected by nginx with its generic
+413 response. That is an intentional outer resource guard, but a branded proxy
+error page or browser-side size preflight remains separate UX hardening; this
+configuration fix does not claim either one.
+
+If the browser instead shows nginx's unbranded **413 Request Entity Too Large**
+page, the request never reached Django. Compare the computed setting with the
+active file, rebuild, validate, and verify again:
+
+```bash
+sudo dokku nginx:report "$APP" | grep "computed client max body size"
+sudo dokku nginx:show-config "$APP" | grep client_max_body_size
+sudo dokku proxy:build-config "$APP"
+sudo dokku nginx:validate-config "$APP"
+sudo dokku nginx:show-config "$APP" | grep client_max_body_size
+```
+
+The 2026-08-01 staging incident was this exact mismatch: both apps still served
+nginx's 1 MB default, so a roughly 1.9 MB fictional avatar was rejected before
+Django. After both active configs showed 25 MB, all four large generated PNGs
+used in the manual pass uploaded and rendered successfully in Jober. They
+appeared consistently in person detail, the People list and the bottom-right
+quick-access worker panel. Server inspection found only their four referenced
+512×512 WebP outputs, without EXIF or retained originals: 77,042 stored bytes
+for 7,770,049 source bytes. No application redeploy was needed.
 
 ## Jober staging preparation on the same host
 
@@ -252,6 +304,12 @@ dokku ports:set "$APP" http:80:8000       # gunicorn listens on 8000 (Dockerfile
 dokku domains:set "$APP" "$DOMAIN"
 dokku git:from-image "$APP" "jober-platform:$TAG"
 dokku letsencrypt:enable "$APP"
+
+# Required for avatars and front/back certificates; see the section above.
+dokku nginx:set "$APP" client-max-body-size 25m
+dokku proxy:build-config "$APP"
+dokku nginx:validate-config "$APP"
+dokku nginx:show-config "$APP" | grep client_max_body_size
 ```
 
 Per-app extra config (from the owner's local `doppler run` — paste values into
@@ -302,7 +360,14 @@ scripts/deploy_smoke.sh https://corvinum-staging.<PARENT> --https
 ```
 Manual: log into both; enroll 2FA on corvinum (`hradmin`); send one live SMS
 from Olha's card to the separate approved Twilio test recipient and confirm it
-in Twilio's controlled test view; open the **Audit** page.
+in Twilio's controlled test view; open the **Audit** page. For an avatar/media
+release, run [`avatar-upload-acceptance.md`](avatar-upload-acceptance.md) with
+the tracked fictional fixtures. For a certificate-related release, also run
+[`certificate-upload-acceptance.md`](certificate-upload-acceptance.md): at
+minimum upload/open the fictional front/back forklift card in both clients and
+the single crane PDF in one. Record the selected category and UI language. Do
+not upload real documents, and keep the deliberate birth/ID mislabel probe out
+of ordinary deploy smoke checks.
 Register the Twilio inbound webhook now that a public HTTPS host exists:
 `https://jober-staging.<PARENT>/webhooks/twilio/inbound/`.
 

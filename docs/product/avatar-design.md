@@ -25,6 +25,9 @@ User → their own role), same as an uploaded photo. Everything else was
 already built as designed: Pillow (ADR 0027), local filesystem storage,
 `Person.avatar`/`User.avatar`, upload validation, RBAC, and the navbar/
 worker-list/person-detail template surface, for both Jober and CorvinumEU.
+The repeatable fictional UI, rejection, proxy, and stored-file verification is
+maintained in
+[`../deployment/avatar-upload-acceptance.md`](../deployment/avatar-upload-acceptance.md).
 
 ## Why this doc exists
 

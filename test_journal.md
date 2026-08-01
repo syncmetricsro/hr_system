@@ -1,5 +1,81 @@
 # Test Journal
 
+## 2026-08-01 - manual Jober certificate positive paths
+
+- The fictional forklift card saved on staging, and the standard Edit flow
+  corrected its metadata and added the initially omitted back image without
+  losing the front. Both file links rendered afterward.
+- The fictional crane certificate saved as a single PDF and rendered Valid.
+- The fictional welding certificate saved as a single image and rendered
+  Welding, `Testovia Welding School`, the expected dates and Valid.
+- This completes the positive file-shape matrix only. Authorization, Audit,
+  archive/renewal, purge and the optional mislabel probe remain separate
+  acceptance steps and are not claimed by these screenshots.
+
+## 2026-08-01 - portable manual-upload fixture verification
+
+- `sha256sum --check tests/fixtures/manual_uploads/SHA256SUMS` passed for all
+  15 portable binary files: six valid avatars, two avatar rejects, four
+  allowed certificate files, and three prohibited-document boundary files.
+- The real avatar processor accepted all six valid JPEG/PNG/WebP sources and
+  produced 512×512 WebPs with zero EXIF. It rejected both the text-disguised-as
+  JPEG and the SVG without creating output.
+- Mira's new synthetic 1254×1254 PNG contains no EXIF and processed to a
+  28,256-byte 512×512 WebP with no EXIF. No real-person reference was supplied;
+  the asset is restricted to the fictional under-18 staging row.
+- The real certificate sanitizer successfully decoded/rebuilt all seven
+  curated certificate files. Structural acceptance of the three prohibited
+  specimens is expected: the category allowlist rejects `HEALTH`/`OTHER`, while
+  the byte sanitizer deliberately does not perform OCR or infer document type.
+- Metadata inspection found only the intentional harmless avatar EXIF
+  (`Synthetic avatar fixture`, `FICTIONAL TEST CAMERA`), empty EXIF on the
+  other images, and fictional title/timestamp metadata on the PDFs. No real
+  person reference, credential, local path, or secret was present.
+- The curated directory is not ignored, totals approximately 15 MB, and omits
+  originals, previews, duplicate document variants, contact sheets, and ZIPs.
+  Documentation references now resolve to the tracked directory. Markdown
+  whitespace validation remains part of final handoff.
+
+## 2026-08-01 - staging upload-proxy regression check
+
+- Both `jober-staging` and `corvinum-staging` generated nginx configurations
+  passed Dokku validation and exposed `client_max_body_size 25m;` after the
+  explicit proxy-config rebuild.
+- All four generated fictional PNG originals used in the manual Jober pass
+  uploaded successfully after the change. Their resulting avatars rendered in
+  the person detail, People list, and bottom-right quick-access worker panel.
+- A read-only inspection of the mounted staging media then found exactly four
+  avatar files. Every file had a UUID `.webp` name, decoded as WebP at 512×512,
+  contained no EXIF, and matched a database avatar reference; there were no
+  unreferenced files and no references with a missing file. The four source
+  PNGs totalled 7,770,049 bytes while the stored WebPs totalled 77,042 bytes,
+  approximately a 99.0% reduction (about 101× smaller). No uploaded PNG
+  original remained in the avatar media tree.
+- JPEG, WebP and portrait-source coverage was already exercised by the local
+  five-file processor check and automated sanitizer tests; this live manual
+  pass specifically proves the four large PNG sources visible in staging.
+- Corvinum's active proxy setting was verified, but this manual retest did not
+  claim a second Corvinum UI upload. Application sanitizer coverage remains in
+  `tests/test_avatars.py` and `tests/test_certificates.py` for both client
+  settings.
+- This was an operational configuration and documentation change only; no
+  application test suite rerun was required.
+
+## 2026-08-01 - certificate upload and language-boundary runbook check
+
+- Runtime form inspection confirmed Jober's manual categories render as
+  Forklift/Crane/Welding in EN, SK, HU and UK, while CorvinumEU exposes the SK
+  and HU variants configured for that client.
+- Code inspection reconfirmed that `process_certificate_document` performs
+  format, size, dimension, EXIF and PDF-safety processing only. It has no OCR,
+  language classifier, translation, or document-type inference.
+- The local generated pack's 8 PNGs and 3 PDF variants passed the real
+  certificate sanitizer. The complete `tests/test_certificates.py` suite then
+  passed under both Jober and CorvinumEU (22 tests each), including allowed
+  front/back, allowed PDF and disallowed HEALTH/OTHER request coverage.
+- Documentation-only runbook changes add no new runtime test surface; Markdown
+  whitespace and links are checked separately before handoff.
+
 ## 2026-08-01 - goods-receipt office tests pin their reporting month
 
 - `tests/test_goods_receipt_log.py` now gives the manager and Observer office-
