@@ -1,5 +1,18 @@
 # Build Journal
 
+## 2026-08-01 - Goods-receipt scope tests stop depending on today's month
+
+The first post-merge CI run after midnight on 1 August exposed two tests whose
+fixtures were fixed in July but whose page request silently used the current
+month. The goods-receipt view correctly defaulted to August and returned no
+July rows, so the office-scope assertions failed even though the scoping code
+had not changed.
+
+Both tests now request July 2026 explicitly. Their subject is office visibility,
+not the default-period behavior, which already has dedicated coverage in the
+reporting-period suite. This keeps the acceptance fixtures stable across month
+and year boundaries without changing application behavior.
+
 ## 2026-07-31 - Hungary joins accountant handoff as a separate rulebook
 
 The product-owner follow-up supersedes the Slovakia-only boundary recorded
