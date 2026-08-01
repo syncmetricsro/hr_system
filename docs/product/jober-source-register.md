@@ -1,6 +1,6 @@
 # Source Register
 
-Last updated: 2026-07-07
+Last updated: 2026-07-31
 
 | Source | Authority | Phase 0 use |
 |---|---|---|
@@ -8,7 +8,8 @@ Last updated: 2026-07-07
 | `Jober_Product_Design.md` | Authoritative product/build baseline for Jober v3.1. | Phase 0 task list and acceptance. |
 | `Handoff.md` | Entry brief and conflict-order summary. | Confirms Phase 0 only. |
 | `Jober_Finance_Specs.md` | Authoritative finance detail for Phase 4. | Source only; no finance module in Phase 0. |
-| `Jober_Messaging_Specs.md` | Messaging addendum; top banner supersedes old Telegram-bot content. | Source only; no provider integration in Phase 0. |
+| `Jober_Messaging_Specs.md` | Reconciled Jober messaging overview: implemented Twilio SMS and pending Telegram channel broadcast. | Current messaging entrypoint. |
+| `docs/product/jober-telegram-channel-design.md` | Canonical Jober Telegram product/security/implementation design; supersedes “no bot” and per-worker chat-ID variants. | Telegram remains unimplemented and client-gated. |
 | `demo/jober/` | Visual/workflow reference. | Useful for Jober look, folder-tab vocabulary, and mobile density. |
 | `demo/internal/`, `demo/corvinum/` | Historical demo artifacts. | Non-authoritative. Do not copy Corvinum/shared scope into production. |
 | `demo/demo_prototype_build_spec.md` | Historical static-demo spec. | Non-authoritative for production. |

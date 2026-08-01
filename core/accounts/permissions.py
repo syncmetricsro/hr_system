@@ -27,6 +27,7 @@ class Action(str, Enum):
     INTAKE_ASSIGN_TRIAL = "intake.assign_trial"
     PERSON_RECYCLE_AVAILABLE = "person.recycle_available"
     CERTIFICATE_MANAGE = "certificate.manage"
+    CERTIFICATE_PURGE_FILE = "certificate.purge_file"
     PERSON_ARCHIVE = "person.archive"
     SMS_SEND = "sms.send"
 

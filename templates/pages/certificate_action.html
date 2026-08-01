@@ -1,0 +1,22 @@
+{% extends "layouts/base.html" %}
+{% load i18n %}
+
+{% block title %}{% if action == "purge" %}{% trans "Permanently remove certificate files" %}{% else %}{% trans "Archive certificate" %}{% endif %} · {{ BRAND_NAME }}{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <p class="eyebrow">{{ certificate.person }}</p>
+  <h1>{% if action == "purge" %}{% trans "Permanently remove certificate files" %}{% else %}{% trans "Archive certificate" %}{% endif %}</h1>
+  <a class="button button-secondary" href="{% url 'person_detail' certificate.person_id %}">{% trans "Cancel" %}</a>
+</section>
+<section class="panel workflow-panel">
+  {% if action == "purge" %}
+    <p>{% trans "This permanently deletes the stored files and archives the record. Use it only for a wrong-person or otherwise improper upload." %}</p>
+  {% else %}
+    <p>{% trans "The certificate and its files remain in history until the applicable retention process removes them." %}</p>
+  {% endif %}
+  <form class="stack" method="post">{% csrf_token %}{{ form.as_p }}
+    <button class="button button-primary" type="submit">{% if action == "purge" %}{% trans "Permanently remove files" %}{% else %}{% trans "Archive certificate" %}{% endif %}</button>
+  </form>
+</section>
+{% endblock %}

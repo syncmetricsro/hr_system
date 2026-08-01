@@ -128,19 +128,19 @@ dashboard — see extraction-plan slice **B1** for the hook/registry designs.
 | `IntakeQuestionnaireVersion`, `IntakePanel`, `IntakeQuestion`, `RecruitmentIntake`, `IntakeAnswer` | model | feature | `features/intake` | the **engine** (versioned questionnaire, typed-negative gating) is reusable; the *questionnaire content* is seeded per client (`seed_questionnaire` → client seed) |
 | `intake_start`/`intake_panel` views, `intake_panel.html`, `intake.create_edit` action | view/UI | feature | `features/intake` | |
 
-### `apps/messaging` → `features/worker_messaging` (Jober-only)
+### `apps/messaging` → `features/messaging` (Jober-only)
 
 | Artifact | Type | Label | Target | Notes |
 |---|---|---|---|---|
-| `MessageTemplate`, `OutboundMessage`, `InboundMessage` | model | feature | `features/worker_messaging` | Jober selects Twilio SMS plus Telegram channel-bot broadcast; CorvinumEU rejected automated messaging (phone + Messenger) — flag off |
-| `send_sms` (stdlib Twilio), `verify_twilio_signature`, `twilio_inbound` webhook | service/view | feature | `features/worker_messaging` | Telegram adapter/config is a Jober spec delta pending channel access; webhook URL stays un-prefixed infra routing |
-| `sms.send`/`sms.manage_templates` actions, SMS panel on person card | authz/UI | feature | contributed via panel registry (B1) | |
+| `MessageTemplate`, `OutboundMessage`, `InboundMessage` | model | feature | `features/messaging` | Jober selects Twilio SMS plus the separate-semantics Telegram channel broadcast in `docs/product/jober-telegram-channel-design.md`; CorvinumEU rejected automated messaging (phone + Messenger) — flag off |
+| `send_sms` (stdlib Twilio), `verify_twilio_signature`, `twilio_inbound` webhook | service/view | feature | `features/messaging` | Telegram outbound adapter/config remains pending channel access. Its v1 has no inbound route; Twilio's webhook alone stays un-prefixed infrastructure routing |
+| `sms.send`/`sms.manage_templates` actions, SMS panel on person card | authz/UI | feature | contributed via panel registry (B1) | Telegram later adds a distinct Manager/Admin-only `telegram.broadcast` action |
 
 ### `apps/compliance` → `features/documents` family (both clients)
 
 | Artifact | Type | Label | Target | Notes |
 |---|---|---|---|---|
-| `Certificate` (dates-only), `compliance_alerts`, `add_months` | model/service | feature | `features/documents` | Jober = dates-only alerts; CorvinumEU extends the same family with files/verification/visibility in Stage C — design the feature so Certificate is the minimal case |
+| `Certificate`, occupational file validation/history, `compliance_alerts`, `add_months` | model/service | feature | `features/compliance` | Shared Jober/CorvinumEU implementation stores files only for forklift/crane/welding; high-risk requirements remain metadata-only/prohibited and verification workflow is future work |
 | `compliance_list` view/template | view/UI | feature | `features/documents` | |
 
 ### `apps/feedback` → `features/feedback` (Jober-only)
@@ -178,7 +178,7 @@ their feature; the client matrix only grants what its enabled features register.
 |---|---|
 | `intake.create_edit`, `intake.assign_trial` | `features/intake` / `features/recruitment_trials` |
 | `person.recycle_available` | `core/people` |
-| `sms.send`, `sms.manage_templates` | `features/worker_messaging` |
+| `sms.send`, `sms.manage_templates`, future `telegram.broadcast` | `features/messaging` |
 | `project.assign`, `project.manage`, `approval.activate` | `core/organizations` + `core/assignments` |
 | `trial.record_outcome`, `readiness.complete` | `features/recruitment_trials` |
 | `room.assign`, `accommodation.manage` | `features/accommodation` |

@@ -72,7 +72,10 @@ def offices(django_user_model):
 
 def _certificate(person: Person) -> Certificate:
     return Certificate.objects.create(
-        person=person, name="Medical", expiry_date=TODAY + dt.timedelta(days=30)
+        person=person,
+        category="FORKLIFT",
+        name="Forklift licence",
+        expiry_date=TODAY + dt.timedelta(days=30),
     )
 
 
@@ -131,10 +134,12 @@ def test_certificate_edit_in_another_office_is_forbidden(client, offices):
     assert response.status_code == 403
 
 
-def test_certificate_delete_in_another_office_is_forbidden(client, offices):
+def test_certificate_archive_in_another_office_is_forbidden(client, offices):
     certificate = _certificate(offices["theirs"])
     client.force_login(offices["manager"])
-    response = client.post(reverse("certificate_delete", args=[certificate.pk]))
+    response = client.post(
+        reverse("certificate_archive", args=[certificate.pk]), {"reason": "No"}
+    )
     assert response.status_code == 403
     assert Certificate.objects.filter(pk=certificate.pk).exists()
 

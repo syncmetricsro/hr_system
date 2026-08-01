@@ -5,11 +5,13 @@
 {% block help_heading %}{% trans "Compliance: certificates and expiry alerts" %}{% endblock %}
 
 {% block help_content %}
-  <h2>{% trans "Certificates" %}</h2>
-  <p>{% blocktrans %}A worker's certificates — health checks, forklift or crane licences, welding qualifications, and anything else — live on their person page. Recruiters, Coordinators, and Managers can add a certificate, optionally attaching a photo or PDF of the document itself, with an issue date and expiry date.{% endblocktrans %}</p>
+  <h2>{% trans "Occupational certificate files" %}</h2>
+  <p>{% blocktrans %}The base platform stores files only for forklift, crane, and welding licences. Do not upload identity cards, passports, birth or residence documents, financial records, medical reports, or health-certificate scans. Those requirements are metadata-only or kept outside the platform.{% endblocktrans %}</p>
+  <p>{% blocktrans %}On the person's Occupational certificates panel, an authorized Recruiter, Coordinator, or Manager can add one PDF, one image, or front and back images. Record the issuer and certificate number if needed, then enter an expiry date or mark the certificate as not expiring.{% endblocktrans %}</p>
+  <p>{% blocktrans %}Renew creates a new active certificate and keeps the previous one in history. Archive also keeps the record and files. Only a Manager can permanently remove improperly uploaded files, and a reason is required.{% endblocktrans %}</p>
 
   <h2>{% trans "Category icons" %}</h2>
-  <p>{% blocktrans %}A small icon next to a worker's photo shows each certificate category they hold, tinted by how urgent it is: green or uncolored means valid, amber means expiring soon, red means already expired. If someone holds more than one certificate in the same category — a renewal, for example — the icon reflects whichever one is currently most relevant.{% endblocktrans %}</p>
+  <p>{% blocktrans %}A small icon next to a worker's photo shows each active certificate category they hold, tinted by how urgent it is: green or uncolored means valid, amber means expiring soon, and red means expired. Superseded and archived certificates remain in history but do not drive the icon or expiry alerts.{% endblocktrans %}</p>
 
   <h2>{% trans "The Compliance page" %}</h2>
   <p>{% blocktrans %}The Compliance tab lists every missing, expiring, or expired requirement across all workers in one place — both certificates and entry medical checks — so nothing has to be found one worker at a time. A number badge on the tab itself shows how many issues are currently open.{% endblocktrans %}</p>

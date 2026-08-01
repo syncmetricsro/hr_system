@@ -55,6 +55,11 @@ The coding agent must:
 19. Do not add React, Vite, a SPA framework, Node.js, npm, `package.json`, JavaScript lockfiles, or `node_modules`.
 20. Use Playwright through Python and pytest.
 21. Keep htmx, Alpine.js, and Tailwind pinned, local, checksum-verified, and documented.
+22. Any future accountant data handoff supports separate approved Slovak and
+    Hungarian payroll schedules. Refuse missing, uncertain, mixed, posted,
+    unresolved cross-border, and other-country cases; never infer jurisdiction
+    from the worker's office, nationality, address, or UI language. See
+    `docs/product/accountant-data-handoff.md`.
 
 When uncertain, expose the uncertainty. Do not fossilize a guess into a migration and then make humans excavate it.
 
@@ -146,6 +151,8 @@ The following are deliberately excluded:
 - worker login/self-service;
 - Pohoda;
 - payroll calculation;
+- accountant/payroll handoffs outside the separate Slovak and Hungarian
+  schedules, including mixed, posted, and unresolved cross-border cases;
 - invoice generation;
 - bank integration;
 - full document archive;
@@ -2245,11 +2252,16 @@ A work package is done only when:
 - **Four-pillar N/A rules:** medical + gear always required; accommodation + transport may be N/A (#10).
 - **Equipment valuation:** latest purchase price at order date, manual entry; weighted-average not used (#13).
 - **Compliance alert intervals:** 11 and 23 months (#15).
-- **SMS:** no provider yet — SyncMetric selects provider/sender; volume ≥ ~400/month; **coordinators may send to their own project**; **arbitrary per-recipient selection required**; worker messages manually composed; **no Telegram bot** (Jober runs an existing manual Telegram broadcast channel) (#17 — see `messaging_specification.md`).
+- **Messaging:** Twilio SMS remains person-addressed; **coordinators may send only to their own project** and arbitrary per-recipient selection remains the campaign target. The later second-demo requirement adds a Jober-owned bot posting Manager/Admin-approved, low-sensitivity Ukrainian text to one configured Ukrainian-worker Telegram channel. It is a channel broadcast, not per-worker chat-ID onboarding or delivery tracking; see `docs/product/jober-telegram-channel-design.md`.
 - **Feedback retention:** 1 month (#18).
 - **Blacklist:** 5-year archive, **Manager-only removal** (legal basis still pending lawyer) (#20).
 - **Applicant (never-hired) retention:** 5 years (relates to §18.4).
 - **Employment classification:** Jober's own employees, **leased out** to client companies (munkaerő-kölcsönzés); mandatory-document and controller specifics pending lawyer.
+- **Accountant handoff jurisdiction:** Slovakia and Hungary, implemented as
+  separate schedules. Any later handoff sends the selected jurisdiction's
+  allowlisted structured facts and conditional tax evidence; mixed, posted,
+  unresolved cross-border, other-country, and uncertain cases are refused.
+  See `docs/product/accountant-data-handoff.md`.
 - **Financial model:** line items, groups, and calculations reverse-engineered in `finance_module_spec.md` (#21).
 
 **Still open:**
@@ -2311,7 +2323,7 @@ Those require separate projects or explicit future commercial scope.
 | Accommodation pricing | Confirmed | Room rates feed oversight |
 | Inventory valuation/returns | Confirmed (r4) | Latest purchase price at order date, manual entry; no weighted-average |
 | SMS | Confirmed (r4) | SyncMetric picks provider/sender; coordinators send to own project; per-recipient selection; manual worker messages |
-| Telegram | Confirmed (r4) | Existing manual broadcast channel; no bot, no per-worker model in scope |
+| Telegram | Superseded by second demo | Jober channel-broadcast bot is ON/PENDING; no per-worker model. Canonical design: `docs/product/jober-telegram-channel-design.md` |
 | Financial oversight | Confirmed | Manual monthly project/accommodation/transport/company results; line items per `finance_module_spec.md` |
 | Finance sign convention | Open | Confirm via one filled month before sign-off |
 | Blacklist retention/removal | Confirmed (r4) | 5-year archive, Manager-only removal; legal basis pending lawyer |
@@ -2401,7 +2413,7 @@ Folded in the manager's round-4 answers and the reverse-engineered finance model
 - four pillars split into always-required (medical, gear) vs may-be-N/A (accommodation, transport);
 - equipment valuation closed (latest price at order date, manual; no weighted-average);
 - compliance alerts 11/23 months; feedback retention 1 month; blacklist 5-year archive, Manager-only removal; applicant retention 5 years; employment = own employees leased out;
-- SMS refinements (per-recipient selection, coordinator-scoped sending, no Telegram bot — existing manual channel);
+- SMS refinements (per-recipient selection and coordinator-scoped sending); the later second-demo Telegram channel-bot requirement supersedes this revision's “manual channel, no bot” decision and is documented in `docs/product/jober-telegram-channel-design.md`;
 - §28 open-inputs split into resolved vs still-open; §29 register updated; finance line items delegated to `finance_module_spec.md` (sign convention still to confirm from one filled month).
 
 ## v3.0 — Jober-only post-second-interview alignment

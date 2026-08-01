@@ -3,6 +3,12 @@
 Status: Accepted
 Date: 2026-06-28
 
+Amendment note, 2026-07-31: the final bullet in this ADR records the Telegram
+scope at the time Twilio was adopted. The later Jober second-demo requirement
+supersedes “no Telegram bot” with a narrowly scoped, still-unimplemented channel
+broadcast adapter. It does not change this ADR's Twilio decision. See
+`docs/product/jober-telegram-channel-design.md`.
+
 ## Context
 
 Phase 2 includes approved SMS messaging (plan §11.12, `messaging_specification.md`):
@@ -27,7 +33,8 @@ webhooks to be signature-verified and to fail closed; no secrets in the repo.
 - **Authorization**: sending gated by `sms.send` (recruiter/coordinator/manager);
   a coordinator may only message people on their own projects (coordinator-scoped).
   Templates are manager-managed (`sms.manage_templates`).
-- **No Telegram bot** (existing manual channel), per the reconciled plan.
+- **Historical scope at acceptance:** no Telegram bot; later superseded by the
+  channel-broadcast design linked in the amendment note above.
 
 ## Consequences
 

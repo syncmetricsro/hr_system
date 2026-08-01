@@ -280,19 +280,23 @@ server-side activation gates.
 Talking point: the first release refreshes after navigation and mutations, so
 an idle browser makes no periodic requests.
 
-### 8. Compliance and missing-document visibility - 2 minutes
+### 8. Compliance and occupational certificates - 3 minutes
 
 1. Open **Compliance** from the navigation or Reports drill-down.
 2. Show missing, expiring, and expired metadata alerts and follow one alert to
    its person record.
-3. Explain the current boundary precisely: the feature tracks certificate
-   names and issue/expiry dates. It does not yet store document files or OCR
-   results for Corvinum.
-4. Note that the exact mandatory-document catalog and retention periods remain
-   client/legal decisions C-Q7, C-Q13, and C-Q16.
+3. As HR Admin, add a fictional forklift, crane, or welding licence as one
+   image/PDF or front/back card images. Show that the private file links work
+   and that renewal preserves history.
+4. Explain the enforced boundary: no identity, birth, residence, financial, or
+   medical scans; those are metadata-only/prohibited. A client request for them
+   becomes a separately scoped Secure Document Vault project.
+5. Note that the exact metadata catalogue and retention periods remain
+   client/legal decisions C-Q7, C-Q13, C-Q16, and C-Q18.
 
-Talking point: the operational alert surface is working, while real documents
-and personal data remain behind the legal and retention gate.
+Talking point: the occupational workflow is working in both thin clients, but
+real documents remain behind the repository's DPA, hosting, backup, retention,
+permissions, and security-review gate.
 
 ### 9. Equipment custody, review, and ledger trail - 4 minutes
 

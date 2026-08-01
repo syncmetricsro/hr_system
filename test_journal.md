@@ -1,5 +1,24 @@
 # Test Journal
 
+## 2026-07-31 - occupational certificate storage boundary
+
+- `tests/test_certificates.py` (22) covers image aspect ratio/EXIF removal,
+  PDF rebuilding and rejection of interactive/oversized PDFs, front/back and
+  single-PDF creation, the three-category allowlist, required primary files,
+  relationship-scoped writes, renewal/supersession, archive retention,
+  manager-only purge, old/new audit snapshots, and active-vs-history panels.
+- `tests/test_certificate_storage_policy.py` (3) proves the migration-audit
+  command reports first, refuses an unconfirmed purge, then deletes disallowed
+  fictional file bytes and records an audit event.
+- `tests/test_media_serving.py` now checks the primary and back endpoints
+  separately through the existing office plus `can_view_sensitive` boundary.
+- `tests/e2e/test_z_certificate_uploads.py` drives the same front/back-card form
+  through Jober and CorvinumEU, then opens both permission-checked files. The
+  bytes are generated in memory; no demo document is committed. The Corvinum
+  case completes required HR Admin TOTP setup first.
+- Full results: 908 passed / 8 skipped (Jober), 538 passed / 15 skipped / 277
+  deselected (CorvinumEU), 52 passed (Playwright chromium).
+
 ## 2026-07-28 - tests/test_sms_templates_seed.py (4)
 
 - `test_a_reseed_repairs_an_edited_body` pins `update_or_create` on `name`.

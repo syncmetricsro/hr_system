@@ -288,26 +288,42 @@ Routing rule: a leaver who left in good standing and may return should be routed
 
 ## 5.4 Document Management
 
-This module manages uploaded documents, document status, and expiry alerts.
+This module manages structured requirement metadata, the platform's allowlisted
+occupational-certificate uploads, and expiry alerts. It is **not** a general
+HR-document repository. The product-owner decision adopted 2026-07-31 excludes
+high-risk identity, civil-status, immigration, financial, and medical scans
+from the base product; client acceptance remains pending. See
+[`document-storage-boundary.md`](../product/document-storage-boundary.md).
 
-### Document types
+### Metadata-only or prohibited document classes
 
-- identity card;
-- passport;
-- residence permit;
-- work permit;
-- medical certificate;
-- safety training confirmation;
-- employment contract;
-- project-specific forms;
-- certificate/license, for example forklift certificate;
-- other HR attachment.
+- identity cards, passports, birth certificates, and residence documents;
+- medical reports, examination results, diagnoses, and health-certificate
+  scans;
+- bank statements, tax documents, and comparable high-value personal records;
+- unrestricted “other HR attachments.”
 
-### Document fields
+Where verification is genuinely required, store only the minimum structured
+result. Health-related metadata may itself be special-category data and still
+requires a lawful basis, restricted access, retention, and audit.
 
-- document type;
+### File-allowed document classes
+
+The implemented platform allowlist is occupational qualifications only:
+
+- forklift licence;
+- crane licence;
+- welding licence.
+
+Another uploadable type requires an explicit product/security decision; it
+must not be enabled by a free-text category.
+
+### Target metadata-requirement fields
+
+- requirement or certificate type;
 - person;
-- file attachment;
+- storage policy (`metadata_only`, `file_allowed`, or `prohibited`);
+- file attachment, only when `file_allowed`;
 - issue date;
 - expiry date;
 - status;
@@ -315,10 +331,10 @@ This module manages uploaded documents, document status, and expiry alerts.
 - verified by;
 - verification date;
 - rejection reason;
-- notes;
+- constrained operational note, only where justified;
 - visibility level.
 
-### Document statuses
+### Target metadata-requirement statuses
 
 - missing;
 - uploaded;
@@ -361,11 +377,12 @@ The approval system ensures that nobody becomes active without required checks.
 ### Example global activation checklist
 
 - personal data complete;
-- identity document uploaded and verified;
-- work/residence permit uploaded and valid, if applicable;
-- medical certificate uploaded and valid;
+- identity-document requirement verified (original held externally);
+- work/residence-permit requirement verified and valid, if applicable;
+- medical-fitness requirement verified and valid (scan held externally);
 - safety training completed;
-- contract uploaded/signed;
+- contract signed (storage location outside the base product unless separately
+  approved);
 - duplicate check resolved;
 - blacklist check resolved;
 - assigned project/worksite selected;
@@ -792,7 +809,12 @@ Relationships:
 
 ### PersonIdentifier
 
-Stores sensitive identity/permit identifiers separately from the main person table.
+Supports narrowly justified matching/verification without turning PeopleOps
+into an identity-document archive. For CorvinumEU, full identifier values and
+document scans are not stored by default. Duplicate/blacklist matching should
+prefer the existing transient-input/HMAC-fingerprint path; any retained exact
+identifier needs a separate necessity, legal-basis, access, and retention
+decision.
 
 Fields:
 
@@ -820,7 +842,9 @@ Identifier types:
 
 Notes:
 
-- exact values should be encrypted;
+- exact values are optional and disabled for CorvinumEU unless separately
+  approved;
+- if an approved workflow ever retains them, exact values must be encrypted;
 - hash values should be used for duplicate/blacklist matching;
 - access should be restricted and audited.
 
@@ -828,15 +852,17 @@ Notes:
 
 ### Document
 
-Stores metadata about uploaded documents.
+Stores structured verification/certificate metadata and, only for an approved
+occupational type, an optional uploaded file.
 
 Fields:
 
 - id;
 - person_id;
 - document_type_id;
-- file_storage_key;
-- original_filename;
+- storage_policy;
+- file_storage_key, nullable and permitted only for `file_allowed` types;
+- original_filename, nullable and permitted only for `file_allowed` types;
 - issue_date;
 - expiry_date;
 - status;
@@ -863,6 +889,7 @@ Fields:
 - code;
 - is_required_by_default;
 - has_expiry_date;
+- storage_policy (`metadata_only`, `file_allowed`, or `prohibited`);
 - default_alert_days;
 - allowed_roles_to_view;
 - allowed_roles_to_upload;
@@ -1647,7 +1674,8 @@ Warnings:
 
 Purpose:
 
-- HR can process uploaded documents efficiently.
+- HR can process metadata verification and allowlisted occupational
+  certificates efficiently without collecting excluded scans.
 
 Columns:
 
@@ -1662,7 +1690,7 @@ Columns:
 
 Actions:
 
-- view document;
+- view document, only for an allowlisted occupational certificate;
 - verify;
 - reject with reason;
 - request replacement;
@@ -2004,8 +2032,10 @@ Deliver a working internal HR operations system that replaces scattered candidat
 
 ### Documents
 
-- document upload;
-- document metadata;
+- structured requirement and certificate metadata;
+- server-enforced prohibition of high-risk identity/medical/civil-status
+  uploads;
+- file upload only for allowlisted occupational certificates;
 - document expiry date;
 - document verification;
 - missing/expiring/expired states;
@@ -2336,7 +2366,7 @@ CorvinumEU is **not** a greenfield build. It is derived from the existing Jober 
 
 - Django (server-rendered) with htmx for interactivity; **npm-free** front end;
 - PostgreSQL database;
-- object storage for documents;
+- protected storage for allowlisted occupational-certificate files only;
 - Redis for queues/background work if needed;
 - background worker (e.g. Celery/RQ or scheduled jobs) for expiry alerts, retention checks, and weekly advance summaries;
 - role-based access control;
@@ -2367,6 +2397,7 @@ MVP security requirements:
 - RBAC permissions;
 - audit logs;
 - document access restrictions;
+- server-enforced metadata-only/prohibited/file-allowed document policy;
 - backup encryption;
 - server firewall;
 - rate limiting on login;
@@ -2398,7 +2429,7 @@ platform/
 │   ├── equipment            # CorvinumEU
 │   ├── accommodation        # Jober
 │   ├── profitability        # Jober (economic / P&L)
-│   ├── worker_messaging     # Jober (Twilio SMS, Telegram)
+│   ├── messaging            # Jober (Twilio SMS, pending Telegram channel broadcast)
 │   └── advances             # CorvinumEU
 ├── clients/
 │   ├── jober/               # settings · policies · workflows · templates · static
@@ -2533,12 +2564,20 @@ This document is currently a **v0.6 working draft**. To reach implementation-gra
 
 - Which identifier is legally and practically best for duplicate detection?
 - Should the system store full identifier values, hashes, or both?
-- Which documents are mandatory for CorvinumEU specifically?
-- Which document types have expiry dates?
+- Confirm that identity, civil-status, immigration, financial, and medical
+  scans remain outside PeopleOps.
+- Which metadata-only requirements are mandatory for CorvinumEU specifically?
+- Confirm the file-upload allowlist (proposed: forklift, crane, welding).
+- Which metadata/certificate types have expiry dates?
 - What is the exact retention period for candidates who never become workers?
 - What is the exact retention policy for blacklist/hash-only records?
 - How long must advance/deduction ledger and equipment-deduction history be retained?
 - Is bank account data stored for transfer-paid workers, and how is it protected?
+- Payroll/accountant handoffs support separate Slovak and Hungarian schedules.
+  Confirm the employing legal entity, employment-level jurisdiction,
+  accountant role, minimum country-specific field list, and external custody/
+  transfer path for conditional tax evidence; see
+  [`accountant-data-handoff.md`](../product/accountant-data-handoff.md).
 
 ## 13.3 Workflow decisions
 
@@ -2613,6 +2652,9 @@ These assumptions should be confirmed before implementation.
 17. A worker belongs to one company/project (companies are the projects).
 18. GDPR retention/anonymization, including retained financial and equipment-deduction history, needs legal confirmation.
 19. The app's UI follows the existing corvinum.eu design system (bilingual SK/HU, light/dark, Material Symbols) and extends the admin panel already embedded in that site; exact tokens are lifted from its live CSS.
+20. PeopleOps stores metadata for high-risk document requirements and files
+    only for an explicit occupational-certificate allowlist; a high-risk
+    document vault is a separate project if the client insists.
 
 ---
 
@@ -2638,6 +2680,24 @@ Use this section during discussion.
 - Inactive statuses carry a reason (sick / quit / suspended / military) and a date; reactivatable leavers route back to the recruiter.
 - A worker belongs to one company/project.
 - Admin login should have a show-password toggle.
+
+## Product-owner decision adopted 2026-07-31 (client acceptance pending)
+
+- PeopleOps will not store scans of identity cards, passports, birth
+  certificates, residence papers, medical reports, or health certificates.
+- Those requirements are metadata-only or prohibited; the enforced upload
+  allowlist is forklift, crane, and welding licences in both platform clients.
+- If CorvinumEU insists on excluded scans, offer a separately scoped Secure
+  Document Vault tied to PeopleOps by status plus an opaque reference. It must
+  carry its own legal, security, hosting, retention, backup, and operating
+  scope.
+- An accountant request does not reopen that boundary. PeopleOps may later send
+  an approved allowlist of structured payroll facts, but conditional civil-
+  status evidence stays in a separate controlled employer/accountant route and
+  medical details never enter the ordinary payroll handoff.
+- The supported handoff jurisdictions are Slovakia and Hungary, with separate
+  rules and exports. Mixed, posted, unresolved cross-border, and other-country
+  cases are refused rather than approximated with either schedule.
 
 ## Rejected ideas
 

@@ -1,16 +1,25 @@
 # Handoff Brief — Jober Production Build (for Codex / GPT-5.5)
 
-Read this first, then the files below in order. The package was reconciled on 16 June 2026 so there is a single contradiction-free source.
+Read this first, then the files below in order. The original package was
+reconciled on 16 June 2026; later client interviews are recorded in dated
+supplements under `docs/product/` and explicitly supersede the June baseline
+where they say so.
 
 ## Authoritative files (priority order)
 
 1. **`AGENTS.md`** (production folder root) — **governs scope, security, supply chain. Highest authority on those topics, and a primary input, not background.** All npm-free + Python-hardening rules live here, not in the plan.
-2. **`jober_plan_v3.1_reconciled.md`** — the product/build plan, **now reconciled** with round-4 answers and the finance model. This **replaces** the older `_v3_jober_only` plan; use only this one. Authoritative for product/build.
+2. **`Jober_Product_Design.md`** plus **`docs/product/jober-requirements-supplement.md`** — product/build baseline plus the later second-demo requirements. The supplement wins where it explicitly supersedes the baseline.
 3. **`finance_module_spec.md`** — the reverse-engineered finance model (categories, groups, calculations, two template bugs to avoid). Authoritative for finance line-item detail (Phase 4).
-4. **`messaging_specification.md`** — Twilio SMS detail. **No Telegram bot** (existing manual channel); per-recipient selection; coordinator-scoped sending. Read its top banner.
-5. **`jober_answers_round4.md`** — the raw resolved-inputs record behind the reconciliation. Reference if the plan's reasoning is unclear.
+4. **`Jober_Messaging_Specs.md`** — current Twilio SMS behavior plus the later Jober Telegram channel-broadcast direction. The canonical Telegram design is `docs/product/jober-telegram-channel-design.md`; it supersedes both “no bot” and the older per-worker chat-ID bot proposal.
+5. **Dated client-answer records and supplements** — historical provenance. The latest explicit supersession wins; for Telegram that is `docs/product/jober-telegram-channel-design.md`.
+6. **`docs/product/accountant-data-handoff.md`** — separate Slovakia/Hungary
+   design schedules for any future accountant handoff. Mixed, posted,
+   unresolved cross-border, other-country, and uncertain cases are refused;
+   the note does not authorize implementation or real-data use.
 
-Conflict order: security/deps → `AGENTS.md`; product/scope → reconciled plan; finance detail → finance spec.
+Conflict order: security/deps → `AGENTS.md`; product/scope → latest explicit
+client supplement/canonical product design → product baseline; finance detail →
+finance spec.
 
 Older files now superseded (do **not** build from them): `jober_coding_agent_product_design_plan.md` (v1, React/Vite), `jober_coding_agent_product_design_plan_v3_jober_only.md` (pre-reconciliation), `discovery_round3_changes.md` (folded into the plan).
 
@@ -25,6 +34,9 @@ Older files now superseded (do **not** build from them): `jober_coding_agent_pro
 - Downloaded binaries (Tailwind CLI, Playwright browsers): pinned URL, **verify SHA-256 before executing, fail closed.**
 - No secrets in Git; verify inbound webhooks (Twilio signature, Telegram secret token if ever used).
 - No real worker PII before the real-data gate — fictional data only.
+- Accountant handoffs, if later approved, use explicit separate `SK`/`HU`
+  schedules and must fail closed for mixed, unsupported, or uncertain
+  jurisdiction.
 
 ## Still-pending answers — build around them, don't invent
 

@@ -31,9 +31,10 @@ worker-list/person-detail template surface, for both Jober and CorvinumEU.
 The app has never had a photo/avatar concept, and that's not an accident —
 it's a repeated, deliberate pattern elsewhere in the codebase:
 
-- `Certificate` (`features/compliance/models.py`) is dates-only by design —
-  "metadata only — no file storage; matches the demo decision of dates-only
-  certificates."
+- `Certificate` (`features/compliance/models.py`) originally held dates only.
+  Since 2026-07-31 it accepts files for the server-enforced forklift/crane/
+  welding allowlist; high-risk document scans remain excluded by
+  `document-storage-boundary.md`.
 - 2FA setup (`core/accounts/totp.py`) shows a raw `otpauth://` URI instead of
   rendering a QR image — "QR rendering is intentionally absent (an image
   library would need a vendored asset + ADR)."

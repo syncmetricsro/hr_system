@@ -13,7 +13,7 @@ Sources: design doc §5.10/§12.6/§13, Addendum A1.
 | C-Q4 | Partial advance recovery across cycles (§13.3, model-affecting) | **Not in MVP** — an advance settles in one cycle; reversal entries are the correction path. If confirmed needed, add linked recovery entries (`recovers_advance_id`) | Client |
 | C-Q5 | Correction/immutability | No hard deletes; pre-inclusion edits audited; post-inclusion only reversal entries (opposite `pay_effect`) | Client sign-off |
 | C-Q6 | Financial boundary sign-off (§13.1) — **scope changed 2026-07-11**: client asked to store pay amounts + email encrypted payslips (ADR 0023); payroll *calculation* still out of scope | Payslips feature built; written confirmation still wanted | Client (written) |
-| C-Q7 | Mandatory document types + which expire (§13.2) | Compliance certificates seeded with the §5.4 type list; nothing enforced as mandatory yet | Client |
+| C-Q7 | Mandatory metadata/certificate types + which expire (§13.2) | Nothing enforced as mandatory yet; high-risk identity/medical/civil-status scans are proposed metadata-only or prohibited | Client |
 | C-Q8 | Default UI language (SK or HU) + default theme (light/dark) | **SK default**, HU switchable; **Dark default**, with Light and System selectable per browser | Client |
 | C-Q9 | "HR Admin" as a distinct role vs. core `manager` | Mapped to `manager` for MVP | Client |
 | C-Q10 | Private-car fuel money basis/cadence/eligibility (A1.1) | Flat manual `PAY_ADDITION`, category `travel_fuel`, entered per worker | Client |
@@ -24,6 +24,8 @@ Sources: design doc §5.10/§12.6/§13, Addendum A1.
 | C-Q15 | Payslip password delivery channel (ADR 0023 — never by email) | Shown once to the office user; phone/Messenger assumed | Client |
 | C-Q16 | Retention period for stored pay amounts (payslips) | No purge registered yet; joins the GDPR review | Client + legal |
 | C-Q17 | Corvinum wage-source and payroll reconciliation definition | Calendar-month gross wage and calendar-month recorded net payslip are displayed as independent source values. The application does **not** derive net pay or flag their difference as an error; statutory inputs and `radonak.xlsx` remain deferred | Client + payroll owner |
+| C-Q18 | Confirm the platform document-storage boundary ([decision note](document-storage-boundary.md)) | Base PeopleOps stores structured metadata for high-risk requirements; files only for forklift, crane, and welding licences. Excluded scans require a separately scoped Secure Document Vault | Client |
+| C-Q19 | Confirm employing entity and SK/HU accountant handoff ([research/design note](accountant-data-handoff.md)) | **Supported jurisdictions: Slovakia and Hungary, as separate schedules.** Confirm the entity, employment-level jurisdiction, recipient role/DPA, exact country fields/evidence, custody, transfer, and retention. No ID scans or medical details in routine handoff; mixed, posted, unresolved cross-border, and other-country cases are refused | Client + accountant/payroll owner + legal/privacy |
 
 Update this file (and the design doc's §16 back-and-forth notes) as answers
 arrive — the pattern that worked for Jober's Q1–Q5.
