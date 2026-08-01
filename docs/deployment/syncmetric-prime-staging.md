@@ -17,18 +17,18 @@ Production apps and real PII are **out of scope** — gated on the legal items
 > and pastes output back; nothing here transmits secrets through a third party.
 > Root commands are on the VPS; the build/transfer step is on the dev machine.
 
-## Current CorvinumEU staging state — 2026-07-15
+## Current CorvinumEU staging state — 2026-08-01
 
 The CorvinumEU half of this runbook is now deployed as a **fictional-data
 client demo**:
 
 | Item | Current value |
 |---|---|
-| Dokku host | `syncmetric-prime` (Dokku 0.38.23) |
+| Dokku host | `syncmetric-prime` (Dokku 0.38.25) |
 | App / database | `corvinum-staging` / `pg-corvinum-staging` |
 | Settings module | `clients.corvinum_eu.production` |
 | Temporary public URL | `https://corvinum-staging.80.211.210.46.sslip.io/sk/prihlasenie/` |
-| Deployed image | `jober-platform:corvinum-demo-12d0735` |
+| Deployed image | `jober-platform:demo-1458ff7` |
 | Seed data | published Recruiter intake v3 and fictional CorvinumEU scenario only |
 
 Verified at deployment: Gunicorn is running on port 8000, the unauthenticated
@@ -84,9 +84,15 @@ APP=corvinum-staging
 HOSTNAME=corvinum-staging.80.211.210.46.sslip.io
 
 sudo dokku run "$APP" python manage.py migrate --noinput
+sudo dokku run "$APP" python manage.py enforce_certificate_storage_policy
 sudo dokku ps:report "$APP"
 curl -fsS "https://$HOSTNAME/healthz/"
 ```
+
+The certificate-policy command is a read-only report by default. Inspect any
+listed legacy files before acting. Its destructive mode is restricted to a
+confirmed fictional-data environment and must never be made an automatic
+release step.
 
 Back on the development machine, run:
 
@@ -268,11 +274,17 @@ for real HTTPS. (The `=0` overrides are local-demo only.)
 ```bash
 dokku run "$APP" python manage.py migrate --noinput
 dokku run "$APP" python manage.py ensure_superuser        # idempotent, from env
+dokku run "$APP" python manage.py enforce_certificate_storage_policy
 ```
+The certificate-policy command reports only. If it finds a disallowed legacy
+file, inspect the exact fictional staging record before considering the
+explicit `--purge-disallowed --confirm-fictional-data` remediation. Never use
+that destructive confirmation on a real-data database.
+
 Staging is fictional-data by design — seed it so the demo cast is present:
 ```bash
 # jober-staging
-for c in seed_demo seed_people seed_logistics seed_questionnaire seed_finance seed_demo_scenario; do
+for c in seed_demo seed_people seed_logistics seed_questionnaire seed_finance seed_messaging seed_demo_scenario; do
   dokku run jober-staging python manage.py "$c"
 done
 # corvinum-staging

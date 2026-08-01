@@ -1,5 +1,41 @@
 # Deployment Journal
 
+## 2026-08-01 - Restricted certificates release deployed to both staging clients
+
+Deployed merge **`1458ff7`** to `jober-staging` and `corvinum-staging` as the
+shared image `jober-platform:demo-1458ff7` (local image digest
+`sha256:6fee292fe2822b45331ceef88e44f68b5f8bb56a3f07e500e9d05e0500fcdac1`).
+The image was built locally from the clean merged checkout, passed the runtime-
+artifact check, and was streamed through Dokku `git:load-image`; neither VPS
+app built the source tree or received build-time secrets.
+
+Release gates were green on the exact merge: Application CI run `30693027596`
+passed the full Jober/Corvinum quality lane and the two-client browser lane.
+The preceding red `main` run was a July-fixture/current-month test defect; PR
+#149 pinned the two office-scope requests to July and the exact-merge rerun
+passed.
+
+`jober-staging` applied only
+`compliance.0003_occupational_certificate_files`. The read-only
+`enforce_certificate_storage_policy` report found **0** disallowed certificate
+records with files. The process stayed running and the HTTPS smoke passed
+health, login+CSRF, fingerprinted static CSS, X-Frame-Options and HSTS.
+
+`corvinum-staging` had not received the later shared migrations, so this release
+applied `people.0006`/`0007`, `audit.0002`, `compliance.0003`,
+`logistics.0010`/`0011` and `projects.0007`. The required idempotent
+`backfill_audit_persons` command attributed **29 of 62** previously
+unattributed events; the remaining 33 target no person (29 target nothing and
+4 target equipment catalogue items). Its certificate-policy report also found
+**0** disallowed records with files. The process and the same HTTPS smoke suite
+passed.
+
+No seed, SMS, Telegram, SMTP or purge command ran. Both databases remain
+fictional staging data. Production and the real-data gate were not touched.
+Dokku 0.38.25 still reports the known default-bridge deprecation and the apps
+still rely on Dokku's port/uptime checks because no `app.json` healthcheck is
+defined; both checks succeeded for each app.
+
 ## 2026-07-28 - SMS templates deployed and the picker verified rendering
 
 Deployed **`631dd1c`** to `jober-staging` as `jober-platform:demo-631dd1c` -
