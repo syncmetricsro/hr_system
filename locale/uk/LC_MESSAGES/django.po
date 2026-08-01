@@ -6793,3 +6793,993 @@ msgstr "Відкрити Люди"
 
 #~ msgid "Responsible"
 #~ msgstr "Відповідальний"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Start here"
+msgstr "Почніть тут"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Workforce workflows"
+msgstr "Робочі процеси персоналу"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Safety and resources"
+msgstr "Безпека та ресурси"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Reporting and pay"
+msgstr "Звіти й оплата"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Learn the shell, roles, scope, statuses, and built-in guidance."
+msgstr "Ознайомтеся з інтерфейсом, ролями, областю доступу, статусами та вбудованими підказками."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Use this orientation before changing records so the navigation, status colors, office boundary, and permission model make sense."
+msgstr "Перед зміною записів прочитайте цей вступ, щоб зрозуміти навігацію, кольори статусів, межі офісу та модель дозволів."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Every authenticated role can read Help. Buttons and navigation entries still depend on your role and on the modules enabled for this client."
+msgstr "Довідку може читати кожна автентифікована роль. Кнопки й пункти навігації залежать від вашої ролі та модулів, увімкнених для цього клієнта."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Use the main navigation to move between workflows. The Jober top tabs and the Corvinum sidebar show only modules this client supports."
+msgstr "Переходьте між процесами за допомогою головної навігації. Верхні вкладки Jober і бічна панель Corvinum показують лише модулі, які підтримує цей клієнт."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Start from People when you need one worker. Search or filter the list, open the profile, and follow its next-step panel."
+msgstr "Якщо працюєте з одним працівником, почніть зі сторінки Люди. Знайдіть або відфільтруйте список, відкрийте профіль і виконайте вказівки панелі наступного кроку."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Read status dots and alert colors consistently: blue is available, amber needs attention, green is working or valid, gray is inactive, and red is blocked or urgent."
+msgstr "Тлумачте крапки статусів і кольори попереджень однаково: синій — доступний, жовтогарячий — потребує уваги, зелений — працює або чинний, сірий — неактивний, червоний — заблокований або терміновий."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Hover with a mouse or tap with touch to open tooltips. Return to Help for the complete workflow and its safety boundaries."
+msgstr "Наведіть вказівник або торкніться елемента, щоб відкрити підказку. Повний процес і його безпекові межі наведено в Довідці."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Scope is enforced on the server"
+msgstr "Область доступу контролює сервер"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "A missing action normally means your role cannot perform it. A forbidden cross-office link is rejected by the server; changing a URL does not widen access."
+msgstr "Відсутня дія зазвичай означає, що ваша роль не може її виконати. Сервер відхиляє заборонене посилання між офісами; зміна URL не розширює доступ."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "The client-specific application shell with its main navigation and account controls."
+msgstr "Інтерфейс конкретного клієнта з головною навігацією та елементами керування обліковим записом."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Open a module from the client navigation."
+msgstr "Відкрийте модуль із навігації клієнта."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Account, language, theme, office, and role controls stay in the shell."
+msgstr "Елементи керування обліковим записом, мовою, темою, офісом і роллю залишаються в основному інтерфейсі."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Find, create, and maintain worker profiles, avatars, and lifecycle state."
+msgstr "Знаходьте, створюйте й ведіть профілі працівників, аватари та стани життєвого циклу."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "People and intake"
+msgstr "Люди та прийняття"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "People is the operational home for a worker from first intake through assignment, inactivity, and any later return."
+msgstr "Сторінка Люди — операційний центр працівника від першого прийняття через призначення й неактивність до можливого повернення."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "All roles may read profiles in their allowed office scope. Recruiters and Managers normally create or edit people; other actions have their own permission checks."
+msgstr "Усі ролі можуть читати профілі в дозволеній області офісів. Людей зазвичай створюють або редагують Рекрутери й Менеджери; інші дії мають окремі перевірки дозволів."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Search by name and combine the status and inactive-reason filters to narrow the People list without changing any records."
+msgstr "Шукайте за ім’ям і поєднуйте фільтри статусу та причини неактивності, щоб звузити список Людей без зміни записів."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Choose Add person to record the minimum reliable intake details. Review spelling and duplicates before saving."
+msgstr "Виберіть Додати особу й запишіть мінімально необхідні достовірні дані прийняття. Перед збереженням перевірте написання та дублікати."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Open the profile to manage operational details, the owning recruiter, project history, readiness, certificates, and other enabled panels."
+msgstr "Відкрийте профіль, щоб керувати операційними даними, відповідальним Рекрутером, історією проєктів, готовністю, посвідченнями та іншими ввімкненими панелями."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Upload a portrait only when it is useful. Accepted JPEG, PNG, or WebP files are cropped, resized to 512 by 512, stripped of metadata, and stored as WebP."
+msgstr "Завантажуйте портрет лише за потреби. Прийняті файли JPEG, PNG або WebP обрізаються, змінюються до 512 × 512, очищуються від метаданих і зберігаються як WebP."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Personal-data gate"
+msgstr "Шлюз персональних даних"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Use fictional people until the real-data security gate is complete. Record only data needed for the workflow, and never use a real identity document as an avatar."
+msgstr "До завершення шлюзу безпеки реальних даних використовуйте лише вигаданих людей. Записуйте тільки потрібні для процесу дані й ніколи не використовуйте справжній документ, що посвідчує особу, як аватар."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "The People list with fictional workers, status filters, and profile links."
+msgstr "Список Людей із вигаданими працівниками, фільтрами статусів і посиланнями на профілі."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Search and filters narrow the current office-scoped list."
+msgstr "Пошук і фільтри звужують поточний список у межах офісу."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Each row opens the worker profile and shows the lifecycle state."
+msgstr "Кожен рядок відкриває профіль працівника й показує стан життєвого циклу."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Projects and assignments"
+msgstr "Проєкти та призначення"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Create projects, place workers, review headcount, and record exits."
+msgstr "Створюйте проєкти, призначайте працівників, перевіряйте чисельність і фіксуйте вибуття."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Projects connect workers to the site where they are expected to work and provide the source for active headcount reporting."
+msgstr "Проєкти пов’язують працівників із місцем очікуваної роботи та є джерелом звітів про активну чисельність."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "All roles can read allowed projects. Coordinators and Managers normally manage placements; project creation and editing require the configured project permission."
+msgstr "Усі ролі можуть читати дозволені проєкти. Призначеннями зазвичай керують Координатори й Менеджери; створення та редагування проєкту потребує налаштованого дозволу."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Open Projects and choose an existing project, or create one with its office and responsible coordinators."
+msgstr "Відкрийте Проєкти й виберіть наявний проєкт або створіть новий із відповідним офісом і відповідальними Координаторами."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Assign an available worker from the project or person workflow. Confirm the intended project before submitting."
+msgstr "Призначте доступного працівника з процесу проєкту або особи. Перед надсиланням підтвердьте правильний проєкт."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Review active assignments and readiness before asking for activation. Reports update from these assignment records."
+msgstr "Перед запитом на активацію перевірте активні призначення та готовність. Звіти оновлюються з цих записів призначень."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "When work ends, use the exit workflow and record the real reason. The exit reconciles enabled resources and moves the person out of active work."
+msgstr "Після завершення роботи скористайтеся процесом вибуття й запишіть фактичну причину. Вибуття звіряє ввімкнені ресурси та виводить особу з активної роботи."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Assignments drive other modules"
+msgstr "Призначення впливають на інші модулі"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Do not create a second active placement to correct the first. Use the supported exit and assignment actions so history, resources, status, and reports stay consistent."
+msgstr "Не створюйте друге активне призначення для виправлення першого. Використовуйте підтримувані дії вибуття й призначення, щоб історія, ресурси, статус і звіти залишалися узгодженими."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "The Projects workspace with fictional projects and assignment information."
+msgstr "Робоча область Проєктів із вигаданими проєктами й даними призначень."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Open a project to review its people and operational details."
+msgstr "Відкрийте проєкт, щоб переглянути його людей та операційні подробиці."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Use the project actions for assignment and maintenance."
+msgstr "Для призначення й обслуговування використовуйте дії проєкту."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Trials, readiness and activation"
+msgstr "Пробні дні, готовність та активація"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Record trial outcomes, complete readiness, and decide activation requests."
+msgstr "Записуйте результати пробних днів, завершуйте готовність і вирішуйте запити на активацію."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "This workflow moves a candidate from a trial or preparation stage into active work only after the required operational checks are complete."
+msgstr "Цей процес переводить кандидата зі стадії проби або підготовки до активної роботи лише після завершення необхідних операційних перевірок."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Recruiters or Coordinators prepare the worker according to their permissions. Managers decide queued activation requests; reading this article is not role-restricted."
+msgstr "Рекрутери або Координатори готують працівника відповідно до своїх дозволів. Менеджери вирішують запити на активацію в черзі; читання статті не обмежено роллю."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Schedule a trial for the correct worker and project, then record the actual outcome instead of changing lifecycle status by hand."
+msgstr "Заплануйте пробний день для правильного працівника й проєкту, а потім запишіть фактичний результат замість ручної зміни стану життєвого циклу."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Complete each readiness requirement or mark it not applicable with a reason. Client-specific critical checklist items must also be complete where enabled."
+msgstr "Виконайте кожну вимогу готовності або позначте її як незастосовну із причиною. Там, де ввімкнено, також треба виконати критичні пункти контрольного списку клієнта."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Submit the activation request only when the page reports readiness. The request captures the relevant readiness state for review."
+msgstr "Надсилайте запит на активацію лише тоді, коли сторінка повідомляє про готовність. Запит фіксує відповідний стан готовності для перевірки."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "A Manager approves to start the assignment or rejects with a reason so the preparer knows what must be corrected."
+msgstr "Менеджер схвалює початок призначення або відхиляє його із причиною, щоб відповідальний за підготовку знав, що виправити."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "In checklist-enabled clients, tick every critical activation item on the worker profile; a critical open item blocks activation even when the ordinary pillars look complete."
+msgstr "Для клієнтів із контрольними списками відмітьте кожен критичний пункт активації в профілі працівника; відкритий критичний пункт блокує активацію, навіть якщо звичайні складові виглядають завершеними."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Never bypass readiness"
+msgstr "Ніколи не обходьте готовність"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Activation is a controlled state transition. Correct the underlying trial, readiness, or checklist record instead of forcing a status that contradicts it."
+msgstr "Активація — контрольований перехід стану. Виправте базовий запис проби, готовності або контрольного списку замість примусового встановлення суперечливого статусу."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "The activation queue with fictional workers awaiting a decision."
+msgstr "Черга активації з вигаданими працівниками, які очікують рішення."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "The queue identifies the worker and requested project."
+msgstr "Черга визначає працівника та запитаний проєкт."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Decision controls approve or return the request with a reason."
+msgstr "Елементи рішення схвалюють запит або повертають його із причиною."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Certificates and compliance"
+msgstr "Посвідчення та відповідність"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Store allowed occupational licences and manage expiry, renewal, and archive."
+msgstr "Зберігайте дозволені професійні посвідчення та керуйте строком дії, поновленням і архівуванням."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Compliance keeps occupational certificate metadata and the permitted forklift, crane, and welding files visible before they expire."
+msgstr "Відповідність зберігає метадані професійних посвідчень і дозволені файли для навантажувача, крана та зварювання, щоб вони були помітні до завершення строку дії."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Authorized Recruiters, Coordinators, and Managers can add certificates. Permanent file removal is Manager-only; private file delivery rechecks office and sensitive-data access."
+msgstr "Уповноважені Рекрутери, Координатори й Менеджери можуть додавати посвідчення. Остаточне видалення файлів доступне лише Менеджеру; приватна видача файлу повторно перевіряє офіс і доступ до чутливих даних."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Open a worker and choose Add certificate. Select only Forklift, Crane, or Welding and enter the issuer, dates, and optional certificate number."
+msgstr "Відкрийте працівника й виберіть Додати посвідчення. Виберіть лише Навантажувач, Кран або Зварювання та введіть видавця, дати й необов’язковий номер посвідчення."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Upload one PDF, one front image, or front and back images. Review both private links after saving a two-sided card."
+msgstr "Завантажте один PDF, одне зображення лицьового боку або зображення обох боків. Після збереження двосторонньої картки перевірте обидва приватні посилання."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Use Edit to correct metadata or add a missing back image. Use Renew for a replacement certificate so the previous record remains in history."
+msgstr "Використовуйте Редагувати, щоб виправити метадані або додати відсутній зворотний бік. Для заміни посвідчення використовуйте Поновити, щоб попередній запис залишився в історії."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Archive a record that should no longer be active. Use Manager file removal only for an improper upload and provide the required reason."
+msgstr "Архівуйте запис, який більше не має бути активним. Менеджерське видалення файлу використовуйте лише для помилкового завантаження й укажіть обов’язкову причину."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Strict document-storage boundary"
+msgstr "Сувора межа зберігання документів"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Never upload passports, identity cards, birth or residence documents, financial records, medical reports, or health-certificate scans. Those are metadata-only or stay outside this platform. Files are sanitized but not individually encrypted by Django on disk; server storage and encrypted backups are part of the production gate. Use fictional certificates until that gate is complete."
+msgstr "Ніколи не завантажуйте паспорти, посвідчення особи, документи про народження чи проживання, фінансові записи, медичні висновки або скани довідок про здоров’я. Вони залишаються лише метаданими або поза платформою. Файли очищуються, але Django не шифрує кожен із них окремо на диску; серверне сховище й зашифровані резервні копії є частиною виробничого шлюзу. До завершення шлюзу використовуйте вигадані посвідчення."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "The compliance workspace showing fictional occupational certificate alerts."
+msgstr "Робоча область Відповідності з вигаданими попередженнями про професійні посвідчення."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Alerts identify the worker and the occupational requirement."
+msgstr "Попередження визначають працівника й професійну вимогу."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Status and due date show which item needs attention first."
+msgstr "Статус і кінцева дата показують, який пункт потребує уваги першим."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Maintain the catalogue, issue items, and handle stock, returns, or reviews."
+msgstr "Ведіть каталог, видавайте предмети та обробляйте склад, повернення або перевірки."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Equipment records what can be issued, what each worker holds, and how a missing or returned item is resolved under the client's policy."
+msgstr "Спорядження фіксує, що можна видати, що має кожен працівник і як за політикою клієнта вирішується питання відсутнього або поверненого предмета."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "All roles may read the enabled equipment views. Issuing, receiving, returning, adjusting stock, and deciding deductions each require their corresponding operational permission."
+msgstr "Усі ролі можуть читати ввімкнені подання спорядження. Видача, приймання, повернення, коригування складу й рішення про утримання потребують відповідного операційного дозволу."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Maintain catalogue names, sizes, and prices so an issue can be identified and valued consistently."
+msgstr "Підтримуйте назви, розміри й ціни каталогу, щоб виданий предмет можна було послідовно визначити й оцінити."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Issue the correct item from the worker profile and verify the worker and office before submitting."
+msgstr "Видайте правильний предмет із профілю працівника й перед надсиланням перевірте працівника та офіс."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "If an item is not returned, flag it for review. A Manager records whether the cost is charged or waived instead of editing history."
+msgstr "Якщо предмет не повернули, позначте його для перевірки. Менеджер записує, чи стягується вартість, чи її скасовано, замість редагування історії."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Where stock tracking is enabled, record goods receipts before issuing, use adjustments only with a reason, and reconcile the office-specific balance and receipt log."
+msgstr "Там, де ввімкнено облік складу, запишіть надходження товару до видачі, використовуйте коригування лише з причиною та звіряйте залишок офісу з журналом надходжень."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Where returns are enabled, use Return on the original issue so the item state changes through the recorded workflow and the catalogue remains accurate."
+msgstr "Там, де дозволені повернення, використовуйте Повернути в первинній видачі, щоб стан предмета змінювався через зафіксований процес, а каталог залишався точним."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Follow the enabled issue policy"
+msgstr "Дотримуйтеся ввімкненої політики видачі"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Stock-ledger clients reduce office stock when issuing. Return-enabled clients record a return on the original issue. The Help page shows only the policy enabled for this client."
+msgstr "Клієнти зі складським обліком зменшують запас офісу під час видачі. Клієнти з поверненнями фіксують повернення в первинній видачі. Довідка показує лише політику, увімкнену для цього клієнта."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "The client-specific equipment workspace with fictional catalogue or stock data."
+msgstr "Робоча область спорядження конкретного клієнта з вигаданими даними каталогу або складу."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Catalogue or stock rows identify the item and current state."
+msgstr "Рядки каталогу або складу визначають предмет і поточний стан."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Available actions follow this client's stock and return policy."
+msgstr "Доступні дії відповідають політиці складу й повернення цього клієнта."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Manage buildings, rooms, assignments, rates, and monthly costs."
+msgstr "Керуйте будівлями, кімнатами, поселеннями, тарифами та місячними витратами."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Accommodation connects office-owned buildings and rooms to the workers living there and to the rates used in operational cost views."
+msgstr "Проживання пов’язує будівлі й кімнати офісу з працівниками, які там мешкають, і тарифами в операційних поданнях витрат."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Readers see accommodation within their office scope. Coordinators and Managers normally manage rooms and placements; rate and cost actions require their specific permissions."
+msgstr "Читачі бачать проживання в межах свого офісу. Кімнатами й поселеннями зазвичай керують Координатори та Менеджери; дії з тарифами й витратами потребують окремих дозволів."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Create the building in the correct office, then add rooms with a real capacity and the applicable rate."
+msgstr "Створіть будівлю в правильному офісі, а потім додайте кімнати з фактичною місткістю й чинним тарифом."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Assign a worker from the profile and confirm the room still has capacity. Record the assignment-specific rate only when it genuinely differs."
+msgstr "Поселіть працівника з профілю й підтвердьте, що в кімнаті є місце. Окремий тариф поселення записуйте лише за фактичної відмінності."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Release the room when the worker leaves or moves; use a transfer workflow rather than overlapping active placements."
+msgstr "Звільніть кімнату, коли працівник виїжджає або переїжджає; замість перекриття активних поселень використовуйте процес переведення."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Use Accommodation costs with the period controls to review occupancy, room rates, worker payments, and the office-scoped result."
+msgstr "У Витратах на проживання за допомогою вибору періоду перегляньте заповненість, тарифи кімнат, платежі працівників і результат у межах офісу."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Capacity and dates matter"
+msgstr "Місткість і дати важливі"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "A stale room assignment makes both availability and cost reporting wrong. Record moves and releases on the date they actually happen."
+msgstr "Застаріле призначення кімнати спотворює доступність і звіт про витрати. Переїзди й звільнення записуйте в день, коли вони фактично відбулися."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "The accommodation workspace with fictional buildings, occupancy, and cost information."
+msgstr "Робоча область проживання з вигаданими будівлями, заповненістю та даними витрат."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Building and room data define capacity and placement."
+msgstr "Дані будівлі й кімнати визначають місткість і поселення."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Period controls and totals explain the accommodation cost view."
+msgstr "Вибір періоду й підсумки пояснюють подання витрат на проживання."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Propose, review, match, and restrict serious re-entry cases."
+msgstr "Пропонуйте, перевіряйте, зіставляйте й обмежуйте серйозні випадки повторного прийняття."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "The blacklist is a controlled last-resort process for preventing a specifically reviewed person from being re-entered after a serious issue."
+msgstr "Чорний список — контрольований крайній засіб, що після серйозної проблеми запобігає повторному прийняттю конкретно перевіреної особи."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "A Coordinator or Manager may propose a case. Only a Manager decides it; other authenticated roles may read Help even if they cannot open the review queue."
+msgstr "Випадок може запропонувати Координатор або Менеджер. Рішення ухвалює лише Менеджер; інші автентифіковані ролі можуть читати Довідку, навіть якщо не відкривають чергу перевірки."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Open the person's profile, propose a case, choose the approved category, and write a factual reason without unnecessary sensitive detail."
+msgstr "Відкрийте профіль особи, запропонуйте випадок, виберіть затверджену категорію й напишіть фактичну причину без зайвих чутливих подробиць."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "A Manager reviews the proposal and its privacy-preserving identifiers, then approves or rejects with a recorded reason."
+msgstr "Менеджер перевіряє пропозицію та ідентифікатори, що зберігають приватність, а потім схвалює або відхиляє її із зафіксованою причиною."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Approved cases block activation and flag a matching future intake. The system does not merge people automatically."
+msgstr "Схвалені випадки блокують активацію та позначають майбутнє прийняття зі збігом. Система не об’єднує людей автоматично."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "If a restriction must be removed, use the controlled removal action so the reason and actor remain in Audit."
+msgstr "Якщо обмеження треба зняти, використовуйте контрольовану дію видалення, щоб причина й виконавець залишилися в Аудиті."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "High-impact restricted data"
+msgstr "Обмежені дані з великим впливом"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Do not use the blacklist for ordinary performance notes or as an automatic consequence of an exit. Follow the approved legal basis, access, and retention policy before real data is admitted."
+msgstr "Не використовуйте чорний список для звичайних нотаток про роботу або як автоматичний наслідок вибуття. До прийняття реальних даних дотримуйтеся затвердженої правової підстави, доступу й політики зберігання."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "The blacklist review queue with fictional proposed cases."
+msgstr "Черга перевірки чорного списку з вигаданими запропонованими випадками."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "The proposal shows the person, category, and review facts."
+msgstr "Пропозиція показує особу, категорію та факти для перевірки."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "A Manager records the decision through explicit controls."
+msgstr "Менеджер фіксує рішення за допомогою чітких елементів керування."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Reports and staff activity"
+msgstr "Звіти та активність працівників"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Use period filters, drill-downs, office scope, and activity reporting."
+msgstr "Використовуйте фільтри періоду, деталізацію, область офісу та звіти про активність."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Reports summarizes current operational records, while Staff activity counts selected staff actions over a chosen reporting period."
+msgstr "Звіти підсумовують поточні операційні записи, а Активність працівників підраховує вибрані дії персоналу за заданий звітний період."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Report visibility follows office scope and each report action. Staff activity is available only to roles with its reporting permission; Help remains readable to everyone."
+msgstr "Видимість звітів залежить від області офісу й дозволу на кожну звітну дію. Активність працівників доступна лише ролям із відповідним дозволом; Довідку можуть читати всі."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Set the reporting period first. Month, quarter, year, and custom controls change the rows and totals shown on the page."
+msgstr "Спочатку встановіть звітний період. Елементи вибору місяця, кварталу, року й довільного періоду змінюють рядки та підсумки на сторінці."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Open a metric card or linked row to drill down to the underlying People or Projects view instead of copying a headline number."
+msgstr "Замість копіювання підсумкового числа відкрийте картку показника або пов’язаний рядок, щоб перейти до базового подання Людей чи Проєктів."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Use Staff activity to compare recorded operational actions, including zero-activity colleagues where shown."
+msgstr "Використовуйте Активність працівників для порівняння записаних операційних дій, зокрема колег із нульовою активністю, якщо їх показано."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Use Audit—not Staff activity—when you need to know who changed a specific record, what changed, and why."
+msgstr "Якщо треба дізнатися, хто, що й чому змінив у конкретному записі, використовуйте Аудит, а не Активність працівників."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Read totals in scope"
+msgstr "Читайте підсумки в межах області"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Operational totals include only records visible in your office scope. An Observer may see cross-office figures that another role cannot."
+msgstr "Операційні підсумки містять лише записи, видимі у вашій області офісів. Спостерігач може бачити міжофісні показники, недоступні іншій ролі."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "The Reports workspace with fictional metrics, period controls, and drill-down links."
+msgstr "Робоча область Звітів із вигаданими показниками, вибором періоду й посиланнями на деталізацію."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Set the period before interpreting a metric."
+msgstr "Встановіть період перед тлумаченням показника."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Linked cards and rows open the records behind the total."
+msgstr "Пов’язані картки й рядки відкривають записи, з яких складається підсумок."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Record monthly project revenue and cost lines, lock periods, and read results."
+msgstr "Записуйте місячні доходи й витрати проєкту, блокуйте періоди та переглядайте результати."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Finance records project profitability from explicit monthly revenue and cost lines and derives every displayed total from those entries."
+msgstr "Фінанси фіксують прибутковість проєкту з явних місячних рядків доходів і витрат та обчислюють кожен показаний підсумок із цих записів."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Authorized finance readers may inspect reports. Recording, locking, reopening, and export actions require their configured permissions, with Manager approval where specified."
+msgstr "Уповноважені читачі фінансових даних можуть переглядати звіти. Запис, блокування, повторне відкриття та експорт потребують налаштованих дозволів і, де зазначено, схвалення Менеджера."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Choose the project and calendar month, then record each revenue or cost line in its correct category."
+msgstr "Виберіть проєкт і календарний місяць, а потім запишіть кожен рядок доходу чи витрати у правильній категорії."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Enter every amount as a positive decimal. The category determines whether it contributes revenue or cost; net is calculated automatically."
+msgstr "Вводьте кожну суму як додатне десяткове число. Категорія визначає, чи це дохід або витрата; чистий результат обчислюється автоматично."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Review the month detail against source records, then lock the month when it is final. Reopen only for a genuine correction."
+msgstr "Звірте подробиці місяця з вихідними записами, а після завершення заблокуйте місяць. Відкривайте повторно лише для справжнього виправлення."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Use the summary, yearly trend, and category breakdown to inspect the same underlying lines from different angles."
+msgstr "Використовуйте підсумок, річний тренд і розподіл за категоріями, щоб переглядати ті самі базові рядки з різних боків."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Locked periods are deliberate"
+msgstr "Періоди блокуються навмисно"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Do not type a negative cost or a pre-calculated net value. Locking prevents ordinary edits, and every reopen is an audited exception."
+msgstr "Не вводьте від’ємну витрату або попередньо обчислений чистий результат. Блокування запобігає звичайним змінам, а кожне повторне відкриття є аудитованим винятком."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "The Finance workspace with fictional monthly revenue, costs, and derived results."
+msgstr "Робоча область Фінансів із вигаданими місячними доходами, витратами й обчисленими результатами."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Period and project controls select the financial slice."
+msgstr "Елементи періоду й проєкту вибирають фінансовий зріз."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Totals and charts are derived from the recorded line items."
+msgstr "Підсумки й діаграми обчислюються із записаних рядків."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Create public links and QR flyers, then review anonymous submissions."
+msgstr "Створюйте публічні посилання та QR-листівки, а потім переглядайте анонімні звернення."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Feedback gives workers a public, account-free way to submit a message through a controlled link or printed QR flyer."
+msgstr "Зворотний зв’язок дає працівникам публічний спосіб без облікового запису надіслати повідомлення через контрольоване посилання або друковану QR-листівку."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Managers create links and review the inbox. The submission form is public to anyone holding the token; Help itself remains authenticated."
+msgstr "Менеджери створюють посилання й переглядають вхідні повідомлення. Форма подання публічна для кожного, хто має токен; сама Довідка залишається доступною після входу."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Create a clearly labelled feedback link and optionally connect it to the relevant project."
+msgstr "Створіть зрозуміло назване посилання зворотного зв’язку й за потреби пов’яжіть його з відповідним проєктом."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Share the generated URL or download the one-page QR flyer for printing. Retire a distribution point by controlling where its token is published."
+msgstr "Поділіться створеною URL-адресою або завантажте односторінкову QR-листівку для друку. Щоб закрити точку розповсюдження, припиніть публікацію її токена."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "A worker opens the public form, writes a message, and may add a rating without creating an account."
+msgstr "Працівник відкриває публічну форму, пише повідомлення й може додати оцінку без створення облікового запису."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Managers review the newest submissions in the inbox and handle them under the agreed retention and escalation process."
+msgstr "Менеджери переглядають найновіші звернення у вхідних і обробляють їх за узгодженим процесом зберігання та ескалації."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Public token, limited purpose"
+msgstr "Публічний токен, обмежена мета"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Anyone with the link can submit. Do not ask workers to include identity documents, medical details, credentials, or other unnecessary sensitive information in free text."
+msgstr "Кожен, хто має посилання, може надіслати звернення. Не просіть працівників додавати до вільного тексту документи, що посвідчують особу, медичні подробиці, облікові дані чи іншу зайву чутливу інформацію."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "The Feedback inbox with fictional submissions and link-management controls."
+msgstr "Вхідні Зворотного зв’язку з вигаданими зверненнями й елементами керування посиланнями."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Link and QR controls create the public entry point."
+msgstr "Елементи посилання та QR-коду створюють публічну точку входу."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "The authenticated inbox is where Managers review submissions."
+msgstr "Менеджери переглядають звернення у вхідних, захищених входом."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Record advances, additions, deductions, reversals, and settlement cycles."
+msgstr "Записуйте аванси, доплати, утримання, сторнування та цикли розрахунку."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "The ledger records explicit pay additions and deductions, groups them into settlement cycles, and preserves corrections as history."
+msgstr "Реєстр фіксує явні доплати й утримання із заробітку, групує їх у цикли розрахунку та зберігає виправлення в історії."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Authorized readers can inspect cycles. Entry, cancellation, reversal, settlement, and export each require the corresponding ledger or export permission."
+msgstr "Уповноважені читачі можуть переглядати цикли. Внесення, скасування, сторнування, розрахунок та експорт потребують відповідного дозволу реєстру або експорту."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Record the person, optional project, entry type, category, positive amount, and a concise note."
+msgstr "Запишіть особу, необов’язковий проєкт, тип запису, категорію, додатну суму й стислу примітку."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Review the current Thursday summary and select the intended 20th-to-20th cycle before including entries."
+msgstr "Перед включенням записів перевірте поточний підсумок за четвер і виберіть потрібний цикл від 20-го до 20-го числа."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Correct a mistake by cancelling or reversing the original entry with a reason; never overwrite financial history."
+msgstr "Виправляйте помилку обґрунтованим скасуванням або сторнуванням первинного запису; ніколи не перезаписуйте фінансову історію."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "After the external deduction process is complete, mark the included cycle settled and use the approved CSV export when needed."
+msgstr "Після завершення зовнішнього процесу утримань позначте включений цикл розрахованим і за потреби використовуйте схвалений експорт CSV."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Positive amounts, explicit pay effect"
+msgstr "Додатні суми, явний вплив на заробіток"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "The entry type controls whether an amount adds to or deducts from pay. This ledger records source adjustments; it does not calculate statutory payroll."
+msgstr "Тип запису визначає, чи сума додається до заробітку, чи утримується з нього. Цей реєстр записує вихідні коригування; він не розраховує встановлену законом заробітну плату."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "The ledger workspace with fictional entries, cycle controls, and settlement summaries."
+msgstr "Робоча область реєстру з вигаданими записами, елементами циклу й підсумками розрахунку."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Entry controls record an explicit type, category, and amount."
+msgstr "Елементи введення записують явний тип, категорію та суму."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Cycle controls include, export, and settle the selected period."
+msgstr "Елементи циклу включають, експортують і розраховують вибраний період."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Record net payslip values and deliver encrypted PDFs safely."
+msgstr "Записуйте чисті суми розрахункових листків і безпечно доставляйте зашифровані PDF."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Payslips stores the independently supplied net value and can email a freshly generated encrypted PDF to the worker."
+msgstr "Розрахункові листки зберігають незалежно надану чисту суму й можуть надіслати працівнику електронною поштою щойно створений зашифрований PDF."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Payslip amounts are restricted pay data. Only roles with payslip access can read them, and only authorized Managers can record or send them."
+msgstr "Суми розрахункових листків є обмеженими даними про оплату. Їх можуть читати лише ролі з доступом до листків, а записувати чи надсилати — тільки уповноважені Менеджери."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Confirm the worker has the correct email address, then record the calendar month, positive net amount, optional issue date, and note."
+msgstr "Перевірте правильність електронної адреси працівника, а потім запишіть календарний місяць, додатну чисту суму, необов’язкову дату видачі й примітку."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Review the recorded row before sending. Send encrypted PDF generates the attachment and a random one-time password."
+msgstr "Перед надсиланням перевірте записаний рядок. Дія Надіслати зашифрований PDF створює вкладення й випадковий одноразовий пароль."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Tell the worker the password by phone or Messenger, never in the same email as the encrypted PDF."
+msgstr "Повідомте працівнику пароль телефоном або через Messenger, ніколи не в тому самому листі, що й зашифрований PDF."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "If you resend, a new password is generated and the earlier one is invalidated. The password is shown once and is not stored for later retrieval."
+msgstr "Під час повторного надсилання створюється новий пароль, а попередній стає недійсним. Пароль показується один раз і не зберігається для подальшого отримання."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Never capture or copy the password into records"
+msgstr "Ніколи не фіксуйте й не копіюйте пароль до записів"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Do not screenshot the success message, paste the password into notes, email it, or send it through the same channel as the PDF. The generated PDF is not stored by the application."
+msgstr "Не знімайте повідомлення про успіх, не вставляйте пароль у примітки, не надсилайте його електронною поштою чи тим самим каналом, що й PDF. Створений PDF застосунок не зберігає."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "The payslip list with fictional net values and delivery states; no passwords are visible."
+msgstr "Список розрахункових листків із вигаданими чистими сумами й станами доставки; паролів не видно."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "The record form stores the independently supplied net value."
+msgstr "Форма запису зберігає незалежно надану чисту суму."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Delivery state shows whether an encrypted PDF was sent."
+msgstr "Стан доставки показує, чи було надіслано зашифрований PDF."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Record independent monthly gross-wage source values without payroll calculation."
+msgstr "Записуйте незалежні місячні вихідні суми брутто без розрахунку заробітної плати."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Gross wages stores the supplied gross amount for a person and month beside, but independently from, the recorded net payslip."
+msgstr "Заробіток брутто зберігає надану суму брутто для особи й місяця поруч із записаним чистим розрахунковим листком, але незалежно від нього."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Authorized pay-data readers may inspect the list. Recording a gross wage requires the wage-management permission."
+msgstr "Уповноважені читачі даних про оплату можуть переглядати список. Запис суми брутто потребує дозволу на керування оплатою."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Choose the correct person and calendar month, then enter the externally supplied positive gross amount."
+msgstr "Виберіть правильну особу й календарний місяць, а потім введіть надану ззовні додатну суму брутто."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Add a short source or reconciliation note when it helps another authorized reader understand the record."
+msgstr "Додайте коротку примітку про джерело чи звірку, якщо вона допоможе іншому уповноваженому читачеві зрозуміти запис."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Compare gross and net only as independent source values. Investigate discrepancies through the payroll owner outside this application."
+msgstr "Порівнюйте брутто й нетто лише як незалежні вихідні значення. Розбіжності з’ясовуйте з відповідальним за нарахування поза цим застосунком."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Not a payroll calculator"
+msgstr "Це не калькулятор заробітної плати"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "The application does not derive tax, insurance, statutory deductions, or net pay from this amount and does not treat a gross-to-net difference as an automatic error."
+msgstr "Застосунок не обчислює з цієї суми податок, страхування, обов’язкові утримання чи чисту оплату й не вважає різницю між брутто й нетто автоматичною помилкою."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "The gross-wage workspace with fictional independent monthly source values."
+msgstr "Робоча область заробітку брутто з вигаданими незалежними місячними вихідними сумами."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "The form records a person, month, and positive gross amount."
+msgstr "Форма записує особу, місяць і додатну суму брутто."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "The table preserves who recorded each source value."
+msgstr "Таблиця зберігає відомості про того, хто записав кожне вихідне значення."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Trace sensitive actions, old and new values, actors, reasons, and retention."
+msgstr "Відстежуйте чутливі дії, старі й нові значення, виконавців, причини та зберігання."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Audit is the append-only trace for sensitive actions: who acted, what record changed, when it happened, and the reason or value snapshot available for that event."
+msgstr "Аудит — це незмінний журнал чутливих дій: хто діяв, який запис змінився, коли це сталося та яка причина чи знімок значень доступні для події."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Only roles with Audit access can open the log. Help explains it to every role because their own sensitive actions may create events."
+msgstr "Журнал можуть відкрити лише ролі з доступом до Аудиту. Довідка пояснює його всім ролям, адже їхні власні чутливі дії можуть створювати події."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Open Audit and narrow the result by actor, worker, action, record type, or date range."
+msgstr "Відкрийте Аудит і звузьте результат за виконавцем, працівником, дією, типом запису або діапазоном дат."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Read the newest events first and use the record reference to connect an event to the operational workflow."
+msgstr "Спочатку читайте найновіші події та використовуйте посилання на запис, щоб пов’язати подію з операційним процесом."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Use old and new value snapshots where provided to understand the change; free-text reasons remain in the language originally entered."
+msgstr "Де доступно, використовуйте знімки старих і нових значень, щоб зрозуміти зміну; довільні текстові причини залишаються мовою первинного введення."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Use Staff activity for volume reporting. Audit is for traceability and investigation, not performance totals."
+msgstr "Для кількісних звітів використовуйте Активність працівників. Аудит призначений для простежуваності й розслідування, а не для підсумків ефективності."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Append-only and restricted"
+msgstr "Незмінний та обмежений"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Ordinary users cannot edit or delete audit events. Retention follows the approved policy; do not copy restricted event details into a less protected system."
+msgstr "Звичайні користувачі не можуть редагувати чи видаляти події аудиту. Зберігання відповідає затвердженій політиці; не копіюйте обмежені подробиці подій до менш захищеної системи."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "The Audit page heading and filters, captured without event rows or log contents."
+msgstr "Заголовок і фільтри сторінки Аудиту, зняті без рядків подій або вмісту журналу."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Filters narrow the trace without changing stored events."
+msgstr "Фільтри звужують журнал без зміни збережених подій."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Audit access and append-only behavior protect the evidence trail."
+msgstr "Доступ до Аудиту й незмінність захищають доказовий слід."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Choose a workflow to learn its steps, permissions, and important safety boundaries."
+msgstr "Виберіть процес, щоб дізнатися про його кроки, дозволи та важливі безпекові межі."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Purpose"
+msgstr "Мета"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "On this page"
+msgstr "На цій сторінці"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Roles and permissions"
+msgstr "Ролі та дозволи"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Workflow"
+msgstr "Процес"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Important boundary"
+msgstr "Важлива межа"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Screen example"
+msgstr "Приклад екрана"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Related topics"
+msgstr "Пов’язані теми"

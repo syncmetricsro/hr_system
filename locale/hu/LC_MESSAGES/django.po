@@ -6811,3 +6811,993 @@ msgstr "Emberek megnyitása"
 
 #~ msgid "Responsible"
 #~ msgstr "Felelős"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Start here"
+msgstr "Kezdje itt"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Workforce workflows"
+msgstr "Munkaerő-folyamatok"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Safety and resources"
+msgstr "Biztonság és erőforrások"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Reporting and pay"
+msgstr "Kimutatások és bérezés"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Learn the shell, roles, scope, statuses, and built-in guidance."
+msgstr "Ismerje meg a felületet, a szerepköröket, a hozzáférési kört, az állapotokat és a beépített súgót."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Use this orientation before changing records so the navigation, status colors, office boundary, and permission model make sense."
+msgstr "A rekordok módosítása előtt tekintse át ezt a bevezetőt, hogy érthető legyen a navigáció, az állapotszínek, az irodai hatókör és a jogosultsági modell."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Every authenticated role can read Help. Buttons and navigation entries still depend on your role and on the modules enabled for this client."
+msgstr "A Súgót minden bejelentkezett szerepkör olvashatja. A gombok és menüpontok továbbra is a szerepkörtől és az ennél az ügyfélnél engedélyezett moduloktól függenek."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Use the main navigation to move between workflows. The Jober top tabs and the Corvinum sidebar show only modules this client supports."
+msgstr "A folyamatok között a fő navigációval válthat. A Jober felső lapjai és a Corvinum oldalsávja csak az adott ügyfélnél támogatott modulokat mutatja."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Start from People when you need one worker. Search or filter the list, open the profile, and follow its next-step panel."
+msgstr "Ha egy munkavállalóval dolgozik, induljon az Emberek oldalról. Keressen vagy szűrjön, nyissa meg a profilt, majd kövesse a következő lépés paneljét."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Read status dots and alert colors consistently: blue is available, amber needs attention, green is working or valid, gray is inactive, and red is blocked or urgent."
+msgstr "Az állapotpontokat és riasztási színeket egységesen értelmezze: kék az elérhető, borostyán a figyelmet igénylő, zöld a dolgozó vagy érvényes, szürke az inaktív, piros a tiltott vagy sürgős."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Hover with a mouse or tap with touch to open tooltips. Return to Help for the complete workflow and its safety boundaries."
+msgstr "Az elemleírást egérrel rámutatva vagy érintéssel nyithatja meg. A teljes folyamatért és biztonsági korlátaiért térjen vissza a Súgóhoz."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Scope is enforced on the server"
+msgstr "A hatókört a szerver kényszeríti ki"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "A missing action normally means your role cannot perform it. A forbidden cross-office link is rejected by the server; changing a URL does not widen access."
+msgstr "Egy hiányzó művelet általában azt jelenti, hogy a szerepköre nem hajthatja végre. A tiltott, irodák közötti hivatkozást a szerver elutasítja; az URL módosítása nem bővíti a hozzáférést."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "The client-specific application shell with its main navigation and account controls."
+msgstr "Az ügyfélspecifikus alkalmazáskeret a fő navigációval és a fiókvezérlőkkel."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Open a module from the client navigation."
+msgstr "Nyisson meg egy modult az ügyfél navigációjából."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Account, language, theme, office, and role controls stay in the shell."
+msgstr "A fiók-, nyelv-, téma-, iroda- és szerepkörvezérlők az alkalmazáskeretben maradnak."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Find, create, and maintain worker profiles, avatars, and lifecycle state."
+msgstr "Munkavállalói profilok, profilképek és életciklus-állapotok keresése, létrehozása és karbantartása."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "People and intake"
+msgstr "Emberek és felvétel"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "People is the operational home for a worker from first intake through assignment, inactivity, and any later return."
+msgstr "Az Emberek oldal a munkavállaló operatív központja az első felvételtől a beosztáson és inaktivitáson át az esetleges visszatérésig."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "All roles may read profiles in their allowed office scope. Recruiters and Managers normally create or edit people; other actions have their own permission checks."
+msgstr "Minden szerepkör olvashatja az engedélyezett irodai körbe tartozó profilokat. Embereket rendszerint a toborzók és vezetők hoznak létre vagy szerkesztenek; a többi műveletnek külön jogosultságvizsgálata van."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Search by name and combine the status and inactive-reason filters to narrow the People list without changing any records."
+msgstr "Keressen név szerint, és kombinálja az állapot- és inaktivitásiok-szűrőket az Emberek listájának szűkítéséhez, a rekordok módosítása nélkül."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Choose Add person to record the minimum reliable intake details. Review spelling and duplicates before saving."
+msgstr "Válassza a Személy hozzáadása lehetőséget a szükséges, megbízható felvételi adatok rögzítéséhez. Mentés előtt ellenőrizze a helyesírást és a duplikátumokat."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Open the profile to manage operational details, the owning recruiter, project history, readiness, certificates, and other enabled panels."
+msgstr "Nyissa meg a profilt az operatív adatok, a felelős toborzó, a projekttörténet, a felkészültség, a képesítések és más engedélyezett panelek kezeléséhez."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Upload a portrait only when it is useful. Accepted JPEG, PNG, or WebP files are cropped, resized to 512 by 512, stripped of metadata, and stored as WebP."
+msgstr "Csak akkor töltsön fel portrét, ha hasznos. Az elfogadott JPEG-, PNG- és WebP-fájlokat a rendszer négyzetre vágja, 512×512 méretre alakítja, eltávolítja a metaadataikat, és WebP-ként tárolja."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Personal-data gate"
+msgstr "Személyesadat-kapu"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Use fictional people until the real-data security gate is complete. Record only data needed for the workflow, and never use a real identity document as an avatar."
+msgstr "A valódi adatok biztonsági kapujának lezárásáig csak fiktív személyeket használjon. Csak a folyamathoz szükséges adatokat rögzítse, és valódi személyazonosító okmányt soha ne használjon profilképként."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "The People list with fictional workers, status filters, and profile links."
+msgstr "Az Emberek lista fiktív munkavállalókkal, állapotszűrőkkel és profillinkekkel."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Search and filters narrow the current office-scoped list."
+msgstr "A keresés és a szűrők leszűkítik az aktuális, irodai hatókörű listát."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Each row opens the worker profile and shows the lifecycle state."
+msgstr "Minden sor megnyitja a munkavállaló profilját és mutatja az életciklus-állapotot."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Projects and assignments"
+msgstr "Projektek és beosztások"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Create projects, place workers, review headcount, and record exits."
+msgstr "Projektek létrehozása, munkavállalók beosztása, létszám ellenőrzése és kilépések rögzítése."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Projects connect workers to the site where they are expected to work and provide the source for active headcount reporting."
+msgstr "A projektek a munkavállalót a munkavégzés helyéhez kapcsolják, és az aktív létszámkimutatás forrását adják."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "All roles can read allowed projects. Coordinators and Managers normally manage placements; project creation and editing require the configured project permission."
+msgstr "Minden szerepkör olvashatja az engedélyezett projekteket. A beosztásokat általában koordinátorok és vezetők kezelik; projektek létrehozásához és szerkesztéséhez a beállított projektjogosultság kell."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Open Projects and choose an existing project, or create one with its office and responsible coordinators."
+msgstr "Nyissa meg a Projekteket, válasszon meglévő projektet, vagy hozzon létre újat az irodával és a felelős koordinátorokkal."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Assign an available worker from the project or person workflow. Confirm the intended project before submitting."
+msgstr "Rendeljen hozzá elérhető munkavállalót a projekt- vagy személyfolyamatból. Beküldés előtt erősítse meg a kívánt projektet."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Review active assignments and readiness before asking for activation. Reports update from these assignment records."
+msgstr "Aktiválás kérése előtt ellenőrizze az aktív beosztásokat és a felkészültséget. A kimutatások ezekből a beosztási rekordokból frissülnek."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "When work ends, use the exit workflow and record the real reason. The exit reconciles enabled resources and moves the person out of active work."
+msgstr "A munka befejezésekor használja a kilépési folyamatot, és rögzítse a valós okot. A kilépés egyezteti az engedélyezett erőforrásokat, és kivezeti a személyt az aktív munkából."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Assignments drive other modules"
+msgstr "A beosztások más modulokat is vezérelnek"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Do not create a second active placement to correct the first. Use the supported exit and assignment actions so history, resources, status, and reports stay consistent."
+msgstr "Az első beosztás javításához ne hozzon létre második aktív beosztást. Használja a támogatott kilépési és beosztási műveleteket, hogy az előzmények, erőforrások, állapotok és kimutatások összhangban maradjanak."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "The Projects workspace with fictional projects and assignment information."
+msgstr "A Projektek munkaterület fiktív projektekkel és beosztási adatokkal."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Open a project to review its people and operational details."
+msgstr "Nyisson meg egy projektet a munkavállalók és operatív részletek áttekintéséhez."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Use the project actions for assignment and maintenance."
+msgstr "A beosztáshoz és karbantartáshoz használja a projektműveleteket."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Trials, readiness and activation"
+msgstr "Próbanapok, felkészültség és aktiválás"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Record trial outcomes, complete readiness, and decide activation requests."
+msgstr "Próbanaperedmények rögzítése, felkészültség teljesítése és aktiválási kérelmek elbírálása."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "This workflow moves a candidate from a trial or preparation stage into active work only after the required operational checks are complete."
+msgstr "Ez a folyamat csak a szükséges operatív ellenőrzések teljesítése után viszi át a jelöltet a próba- vagy előkészítési szakaszból aktív munkába."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Recruiters or Coordinators prepare the worker according to their permissions. Managers decide queued activation requests; reading this article is not role-restricted."
+msgstr "A munkavállalót jogosultságaik szerint a toborzók vagy koordinátorok készítik fel. A várakozó aktiválási kérelmekről a vezetők döntenek; a cikk olvasása nincs szerepkörhöz kötve."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Schedule a trial for the correct worker and project, then record the actual outcome instead of changing lifecycle status by hand."
+msgstr "Ütemezzen próbanapot a megfelelő munkavállalóhoz és projekthez, majd az életciklus-állapot kézi módosítása helyett rögzítse a tényleges eredményt."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Complete each readiness requirement or mark it not applicable with a reason. Client-specific critical checklist items must also be complete where enabled."
+msgstr "Teljesítsen minden felkészültségi követelményt, vagy indoklással jelölje nem alkalmazhatónak. Ahol engedélyezett, az ügyfélspecifikus kritikus ellenőrzőlista-elemeket is teljesíteni kell."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Submit the activation request only when the page reports readiness. The request captures the relevant readiness state for review."
+msgstr "Csak akkor küldje be az aktiválási kérelmet, amikor az oldal felkészült állapotot jelez. A kérelem rögzíti az elbíráláshoz szükséges felkészültségi állapotot."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "A Manager approves to start the assignment or rejects with a reason so the preparer knows what must be corrected."
+msgstr "A vezető jóváhagyja a beosztás indítását, vagy indoklással elutasítja, hogy a felkészítő tudja, mit kell javítani."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "In checklist-enabled clients, tick every critical activation item on the worker profile; a critical open item blocks activation even when the ordinary pillars look complete."
+msgstr "Ellenőrzőlistát használó ügyfeleknél jelöljön be minden kritikus aktiválási elemet a munkavállaló profilján; egy nyitott kritikus elem akkor is blokkolja az aktiválást, ha a szokásos pillérek teljesnek látszanak."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Never bypass readiness"
+msgstr "A felkészültséget soha ne kerülje meg"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Activation is a controlled state transition. Correct the underlying trial, readiness, or checklist record instead of forcing a status that contradicts it."
+msgstr "Az aktiválás ellenőrzött állapotátmenet. Az ellentmondó állapot kikényszerítése helyett javítsa az alapul szolgáló próbanap-, felkészültségi vagy ellenőrzőlista-rekordot."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "The activation queue with fictional workers awaiting a decision."
+msgstr "Az aktiválási várólista döntésre váró fiktív munkavállalókkal."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "The queue identifies the worker and requested project."
+msgstr "A várólista azonosítja a munkavállalót és a kért projektet."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Decision controls approve or return the request with a reason."
+msgstr "A döntési vezérlők jóváhagyják, vagy indoklással visszaküldik a kérelmet."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Certificates and compliance"
+msgstr "Képesítések és megfelelőség"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Store allowed occupational licences and manage expiry, renewal, and archive."
+msgstr "Engedélyezett szakmai igazolványok tárolása, valamint lejáratuk, megújításuk és archiválásuk kezelése."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Compliance keeps occupational certificate metadata and the permitted forklift, crane, and welding files visible before they expire."
+msgstr "A Megfelelőség a szakmai igazolványok metaadatait és az engedélyezett targoncás, darukezelői és hegesztői fájlokat lejáratuk előtt láthatóvá teszi."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Authorized Recruiters, Coordinators, and Managers can add certificates. Permanent file removal is Manager-only; private file delivery rechecks office and sensitive-data access."
+msgstr "Az arra jogosult toborzók, koordinátorok és vezetők vehetnek fel képesítést. A fájlok végleges törlése csak vezetőnek engedélyezett; a privát letöltés ismét ellenőrzi az irodai és érzékenyadat-hozzáférést."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Open a worker and choose Add certificate. Select only Forklift, Crane, or Welding and enter the issuer, dates, and optional certificate number."
+msgstr "Nyisson meg egy munkavállalót, és válassza a Képesítés hozzáadása műveletet. Kizárólag Targoncás, Darukezelői vagy Hegesztői típust válasszon, majd adja meg a kiadót, a dátumokat és szükség esetén az igazolványszámot."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Upload one PDF, one front image, or front and back images. Review both private links after saving a two-sided card."
+msgstr "Töltsön fel egy PDF-et, egy előoldali képet, vagy elő- és hátoldali képet. Kétoldalas kártya mentése után ellenőrizze mindkét privát hivatkozást."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Use Edit to correct metadata or add a missing back image. Use Renew for a replacement certificate so the previous record remains in history."
+msgstr "A metaadatok javításához vagy hiányzó hátoldal hozzáadásához használja a Szerkesztést. Csereigazolványhoz a Megújítást használja, így az előző rekord megmarad az előzményekben."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Archive a record that should no longer be active. Use Manager file removal only for an improper upload and provide the required reason."
+msgstr "Archiválja a már nem aktív rekordot. A vezetői fájltörlést csak hibás feltöltésnél használja, és adja meg a kötelező indokot."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Strict document-storage boundary"
+msgstr "Szigorú dokumentumtárolási korlát"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Never upload passports, identity cards, birth or residence documents, financial records, medical reports, or health-certificate scans. Those are metadata-only or stay outside this platform. Files are sanitized but not individually encrypted by Django on disk; server storage and encrypted backups are part of the production gate. Use fictional certificates until that gate is complete."
+msgstr "Soha ne töltsön fel útlevelet, személyi igazolványt, születési vagy lakóhelyi okmányt, pénzügyi iratot, orvosi leletet vagy egészségügyi igazolás másolatát. Ezek csak metaadatként szerepelnek, vagy a platformon kívül maradnak. A rendszer megtisztítja a fájlokat, de a Django nem titkosítja őket egyenként a lemezen; a szervertárolás és a titkosított biztonsági mentés a termelési kapu része. A kapu lezárásáig csak fiktív igazolványokat használjon."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "The compliance workspace showing fictional occupational certificate alerts."
+msgstr "A Megfelelőség munkaterület fiktív szakmaiigazolvány-riasztásokkal."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Alerts identify the worker and the occupational requirement."
+msgstr "A riasztások azonosítják a munkavállalót és a szakmai követelményt."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Status and due date show which item needs attention first."
+msgstr "Az állapot és a határidő mutatja, melyik tétel igényel először figyelmet."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Maintain the catalogue, issue items, and handle stock, returns, or reviews."
+msgstr "A katalógus karbantartása, eszközök kiadása, valamint készlet, visszavétel vagy felülvizsgálat kezelése."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Equipment records what can be issued, what each worker holds, and how a missing or returned item is resolved under the client's policy."
+msgstr "A Felszerelés rögzíti, mi adható ki, mi van az egyes munkavállalóknál, és hogyan rendezik a hiányzó vagy visszaadott eszközt az ügyfél szabályzata szerint."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "All roles may read the enabled equipment views. Issuing, receiving, returning, adjusting stock, and deciding deductions each require their corresponding operational permission."
+msgstr "Minden szerepkör olvashatja az engedélyezett felszerelésnézeteket. A kiadás, bevételezés, visszavétel, készletkorrekció és levonási döntés mind a megfelelő operatív jogosultságot igényli."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Maintain catalogue names, sizes, and prices so an issue can be identified and valued consistently."
+msgstr "Tartsa karban a katalógusneveket, méreteket és árakat, hogy a kiadás egységesen azonosítható és értékelhető legyen."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Issue the correct item from the worker profile and verify the worker and office before submitting."
+msgstr "A megfelelő eszközt a munkavállaló profiljáról adja ki, és beküldés előtt ellenőrizze a munkavállalót és az irodát."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "If an item is not returned, flag it for review. A Manager records whether the cost is charged or waived instead of editing history."
+msgstr "Ha egy eszközt nem adnak vissza, jelölje felülvizsgálatra. A vezető az előzmények átírása helyett rögzíti, hogy a költséget felszámítják vagy elengedik."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Where stock tracking is enabled, record goods receipts before issuing, use adjustments only with a reason, and reconcile the office-specific balance and receipt log."
+msgstr "Ahol készletkövetés működik, kiadás előtt rögzítse az áruátvételt, korrekciót csak indoklással végezzen, és egyeztesse az irodai egyenleget az átvételi naplóval."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Where returns are enabled, use Return on the original issue so the item state changes through the recorded workflow and the catalogue remains accurate."
+msgstr "Ahol visszavétel engedélyezett, az eredeti kiadás Visszavétel műveletét használja, hogy az eszköz állapota rögzített folyamatban változzon, a katalógus pedig pontos maradjon."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Follow the enabled issue policy"
+msgstr "Kövesse az engedélyezett kiadási szabályzatot"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Stock-ledger clients reduce office stock when issuing. Return-enabled clients record a return on the original issue. The Help page shows only the policy enabled for this client."
+msgstr "Készletnyilvántartást használó ügyfeleknél a kiadás csökkenti az iroda készletét. Visszavételt használó ügyfeleknél a visszaadást az eredeti kiadáson rögzítik. A Súgó csak az adott ügyfélnél engedélyezett szabályzatot mutatja."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "The client-specific equipment workspace with fictional catalogue or stock data."
+msgstr "Az ügyfélspecifikus Felszerelés munkaterület fiktív katalógus- vagy készletadatokkal."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Catalogue or stock rows identify the item and current state."
+msgstr "A katalógus- vagy készletsorok azonosítják az eszközt és aktuális állapotát."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Available actions follow this client's stock and return policy."
+msgstr "Az elérhető műveletek az ügyfél készlet- és visszavételi szabályzatát követik."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Manage buildings, rooms, assignments, rates, and monthly costs."
+msgstr "Épületek, szobák, elhelyezések, díjak és havi költségek kezelése."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Accommodation connects office-owned buildings and rooms to the workers living there and to the rates used in operational cost views."
+msgstr "A Szállás az irodához tartozó épületeket és szobákat összekapcsolja az ott lakó munkavállalókkal és az operatív költségnézetek díjaival."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Readers see accommodation within their office scope. Coordinators and Managers normally manage rooms and placements; rate and cost actions require their specific permissions."
+msgstr "Az olvasók a saját irodai hatókörük szállásait látják. A szobákat és elhelyezéseket általában koordinátorok és vezetők kezelik; a díj- és költségműveletek külön jogosultságot igényelnek."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Create the building in the correct office, then add rooms with a real capacity and the applicable rate."
+msgstr "Hozza létre az épületet a megfelelő irodában, majd adja hozzá a szobákat valós férőhellyel és az alkalmazandó díjjal."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Assign a worker from the profile and confirm the room still has capacity. Record the assignment-specific rate only when it genuinely differs."
+msgstr "A profilról helyezze el a munkavállalót, és ellenőrizze, hogy a szobában még van férőhely. Elhelyezésspecifikus díjat csak valós eltérés esetén rögzítsen."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Release the room when the worker leaves or moves; use a transfer workflow rather than overlapping active placements."
+msgstr "Szabadítsa fel a szobát, amikor a munkavállaló távozik vagy költözik; egymást átfedő aktív elhelyezések helyett használja az áthelyezési folyamatot."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Use Accommodation costs with the period controls to review occupancy, room rates, worker payments, and the office-scoped result."
+msgstr "A Szállásköltségek időszakvezérlőivel tekintse át a kihasználtságot, a szobadíjakat, a munkavállalói befizetéseket és az irodai hatókörű eredményt."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Capacity and dates matter"
+msgstr "A férőhely és a dátumok számítanak"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "A stale room assignment makes both availability and cost reporting wrong. Record moves and releases on the date they actually happen."
+msgstr "Egy elavult szobabeosztás a rendelkezésre állást és a költségkimutatást is hibássá teszi. A költözéseket és felszabadításokat a tényleges napjukon rögzítse."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "The accommodation workspace with fictional buildings, occupancy, and cost information."
+msgstr "A Szállás munkaterület fiktív épületekkel, kihasználtsági és költségadatokkal."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Building and room data define capacity and placement."
+msgstr "Az épület- és szobaadatok határozzák meg a férőhelyet és az elhelyezést."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Period controls and totals explain the accommodation cost view."
+msgstr "Az időszakvezérlők és összesítések teszik érthetővé a szállásköltség-nézetet."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Propose, review, match, and restrict serious re-entry cases."
+msgstr "Súlyos visszavételi esetek javaslata, felülvizsgálata, egyeztetése és korlátozása."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "The blacklist is a controlled last-resort process for preventing a specifically reviewed person from being re-entered after a serious issue."
+msgstr "A feketelista ellenőrzött, végső eszköz arra, hogy súlyos eset után egy konkrétan felülvizsgált személyt ne lehessen újra felvenni."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "A Coordinator or Manager may propose a case. Only a Manager decides it; other authenticated roles may read Help even if they cannot open the review queue."
+msgstr "Esetet koordinátor vagy vezető javasolhat. Döntést csak vezető hoz; más bejelentkezett szerepkörök akkor is olvashatják a Súgót, ha a felülvizsgálati sort nem nyithatják meg."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Open the person's profile, propose a case, choose the approved category, and write a factual reason without unnecessary sensitive detail."
+msgstr "Nyissa meg a személy profilját, javasoljon esetet, válassza a jóváhagyott kategóriát, és írjon tényszerű indokot szükségtelen érzékeny részletek nélkül."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "A Manager reviews the proposal and its privacy-preserving identifiers, then approves or rejects with a recorded reason."
+msgstr "A vezető áttekinti a javaslatot és az adatvédelmet megőrző azonosítókat, majd rögzített indokkal jóváhagyja vagy elutasítja."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Approved cases block activation and flag a matching future intake. The system does not merge people automatically."
+msgstr "A jóváhagyott esetek blokkolják az aktiválást és jelzik a későbbi egyező felvételt. A rendszer nem egyesít személyeket automatikusan."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "If a restriction must be removed, use the controlled removal action so the reason and actor remain in Audit."
+msgstr "Ha korlátozást kell eltávolítani, használja az ellenőrzött eltávolítási műveletet, hogy az indok és a végrehajtó megmaradjon az Auditban."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "High-impact restricted data"
+msgstr "Nagy hatású, korlátozott adat"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Do not use the blacklist for ordinary performance notes or as an automatic consequence of an exit. Follow the approved legal basis, access, and retention policy before real data is admitted."
+msgstr "Ne használja a feketelistát szokásos teljesítményjegyzetekre vagy a kilépés automatikus következményeként. Valós adatok befogadása előtt kövesse a jóváhagyott jogalapot, hozzáférési és megőrzési szabályzatot."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "The blacklist review queue with fictional proposed cases."
+msgstr "A feketelista felülvizsgálati sora fiktív javasolt esetekkel."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "The proposal shows the person, category, and review facts."
+msgstr "A javaslat mutatja a személyt, a kategóriát és a felülvizsgálati tényeket."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "A Manager records the decision through explicit controls."
+msgstr "A vezető egyértelmű vezérlőkkel rögzíti a döntést."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Reports and staff activity"
+msgstr "Kimutatások és munkatársi aktivitás"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Use period filters, drill-downs, office scope, and activity reporting."
+msgstr "Időszakszűrők, részletezés, irodai hatókör és aktivitási kimutatások használata."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Reports summarizes current operational records, while Staff activity counts selected staff actions over a chosen reporting period."
+msgstr "A Kimutatások az aktuális operatív rekordokat összegzi, a Munkatársi aktivitás pedig a kiválasztott időszak munkatársi műveleteit számolja."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Report visibility follows office scope and each report action. Staff activity is available only to roles with its reporting permission; Help remains readable to everyone."
+msgstr "A kimutatások láthatósága az irodai hatókört és az egyes kimutatási jogosultságokat követi. A Munkatársi aktivitás csak a megfelelő kimutatási joggal érhető el; a Súgót mindenki olvashatja."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Set the reporting period first. Month, quarter, year, and custom controls change the rows and totals shown on the page."
+msgstr "Először állítsa be a kimutatási időszakot. A havi, negyedéves, éves és egyéni vezérlők módosítják az oldalon látható sorokat és összesítéseket."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Open a metric card or linked row to drill down to the underlying People or Projects view instead of copying a headline number."
+msgstr "Egy főszám másolása helyett nyissa meg a mutatókártyát vagy kapcsolt sort az alapul szolgáló Emberek vagy Projektek nézet részletezéséhez."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Use Staff activity to compare recorded operational actions, including zero-activity colleagues where shown."
+msgstr "A Munkatársi aktivitással hasonlítsa össze a rögzített operatív műveleteket, ahol pedig látható, a nulla aktivitású kollégákat is."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Use Audit—not Staff activity—when you need to know who changed a specific record, what changed, and why."
+msgstr "Ha azt kell tudnia, ki, mit és miért módosított egy konkrét rekordon, az Auditot használja, ne a Munkatársi aktivitást."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Read totals in scope"
+msgstr "A hatókörön belüli összesítéseket olvassa"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Operational totals include only records visible in your office scope. An Observer may see cross-office figures that another role cannot."
+msgstr "Az operatív összesítések csak az irodai hatókörében látható rekordokat tartalmazzák. Egy Megfigyelő láthat olyan irodák közötti adatokat, amelyeket más szerepkör nem."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "The Reports workspace with fictional metrics, period controls, and drill-down links."
+msgstr "A Kimutatások munkaterület fiktív mutatókkal, időszakvezérlőkkel és részletező hivatkozásokkal."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Set the period before interpreting a metric."
+msgstr "A mutató értelmezése előtt állítsa be az időszakot."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Linked cards and rows open the records behind the total."
+msgstr "A kapcsolt kártyák és sorok megnyitják az összesítés mögötti rekordokat."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Record monthly project revenue and cost lines, lock periods, and read results."
+msgstr "Havi projektbevétel- és költségsorok rögzítése, időszakok zárolása és eredmények értelmezése."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Finance records project profitability from explicit monthly revenue and cost lines and derives every displayed total from those entries."
+msgstr "A Pénzügy explicit havi bevétel- és költségsorokból rögzíti a projekt jövedelmezőségét, és minden megjelenített összesítést ezekből vezet le."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Authorized finance readers may inspect reports. Recording, locking, reopening, and export actions require their configured permissions, with Manager approval where specified."
+msgstr "A jogosult pénzügyi olvasók megtekinthetik a kimutatásokat. A rögzítéshez, zároláshoz, újranyitáshoz és exporthoz a beállított jogosultság kell, ahol előírt, vezetői jóváhagyással."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Choose the project and calendar month, then record each revenue or cost line in its correct category."
+msgstr "Válassza ki a projektet és a naptári hónapot, majd minden bevétel- vagy költségsort a megfelelő kategóriában rögzítsen."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Enter every amount as a positive decimal. The category determines whether it contributes revenue or cost; net is calculated automatically."
+msgstr "Minden összeget pozitív tizedes számként adjon meg. A kategória határozza meg, hogy bevételhez vagy költséghez számít; a nettó eredmény automatikusan készül."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Review the month detail against source records, then lock the month when it is final. Reopen only for a genuine correction."
+msgstr "Vesse össze a hónap részleteit a forrásrekordokkal, majd végleges állapotban zárolja a hónapot. Csak valós javításhoz nyissa újra."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Use the summary, yearly trend, and category breakdown to inspect the same underlying lines from different angles."
+msgstr "Az összesítés, az éves trend és a kategóriabontás ugyanazokat az alapul szolgáló sorokat mutatja különböző nézőpontokból."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Locked periods are deliberate"
+msgstr "A zárolt időszakok szándékosak"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Do not type a negative cost or a pre-calculated net value. Locking prevents ordinary edits, and every reopen is an audited exception."
+msgstr "Ne írjon be negatív költséget vagy előre kiszámított nettó értéket. A zárolás megakadályozza a szokásos szerkesztést, minden újranyitás auditált kivétel."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "The Finance workspace with fictional monthly revenue, costs, and derived results."
+msgstr "A Pénzügy munkaterület fiktív havi bevétellel, költségekkel és számított eredményekkel."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Period and project controls select the financial slice."
+msgstr "Az időszak- és projektvezérlők választják ki a pénzügyi metszetet."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Totals and charts are derived from the recorded line items."
+msgstr "Az összesítések és diagramok a rögzített tételsorokból származnak."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Create public links and QR flyers, then review anonymous submissions."
+msgstr "Nyilvános hivatkozások és QR-szórólapok létrehozása, majd anonim beküldések áttekintése."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Feedback gives workers a public, account-free way to submit a message through a controlled link or printed QR flyer."
+msgstr "A Visszajelzés nyilvános, fiók nélküli módot ad a munkavállalóknak üzenet beküldésére ellenőrzött hivatkozáson vagy nyomtatott QR-szórólapon át."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Managers create links and review the inbox. The submission form is public to anyone holding the token; Help itself remains authenticated."
+msgstr "A vezetők hozzák létre a hivatkozásokat és tekintik át a beérkezett üzeneteket. A beküldő űrlap nyilvános minden tokenbirtokosnak; maga a Súgó bejelentkezéshez kötött."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Create a clearly labelled feedback link and optionally connect it to the relevant project."
+msgstr "Hozzon létre egyértelműen elnevezett visszajelzési hivatkozást, és szükség esetén kapcsolja a megfelelő projekthez."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Share the generated URL or download the one-page QR flyer for printing. Retire a distribution point by controlling where its token is published."
+msgstr "Ossza meg a létrehozott URL-t, vagy töltse le nyomtatáshoz az egyoldalas QR-szórólapot. Egy terjesztési pont megszüntetéséhez szabályozza, hol jelenik meg a tokenje."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "A worker opens the public form, writes a message, and may add a rating without creating an account."
+msgstr "A munkavállaló megnyitja a nyilvános űrlapot, üzenetet ír, és fiók létrehozása nélkül értékelést is adhat."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Managers review the newest submissions in the inbox and handle them under the agreed retention and escalation process."
+msgstr "A vezetők a legújabb beküldéseket a beérkezett üzenetek között tekintik át, és az elfogadott megőrzési és eszkalációs folyamat szerint kezelik."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Public token, limited purpose"
+msgstr "Nyilvános token, korlátozott cél"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Anyone with the link can submit. Do not ask workers to include identity documents, medical details, credentials, or other unnecessary sensitive information in free text."
+msgstr "A hivatkozás birtokában bárki beküldhet. Ne kérje a munkavállalókat, hogy személyazonosító okmányt, egészségügyi adatot, belépési adatot vagy más szükségtelen érzékeny információt írjanak szabad szövegbe."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "The Feedback inbox with fictional submissions and link-management controls."
+msgstr "A Visszajelzés beérkező nézete fiktív beküldésekkel és hivatkozáskezelő vezérlőkkel."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Link and QR controls create the public entry point."
+msgstr "A hivatkozás- és QR-vezérlők hozzák létre a nyilvános belépési pontot."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "The authenticated inbox is where Managers review submissions."
+msgstr "A vezetők a bejelentkezéshez kötött beérkező nézetben tekintik át a beküldéseket."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Record advances, additions, deductions, reversals, and settlement cycles."
+msgstr "Előlegek, jóváírások, levonások, sztornók és elszámolási ciklusok rögzítése."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "The ledger records explicit pay additions and deductions, groups them into settlement cycles, and preserves corrections as history."
+msgstr "A nyilvántartás explicit bérjóváírásokat és -levonásokat rögzít, elszámolási ciklusokba csoportosítja őket, a javításokat pedig előzményként megőrzi."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Authorized readers can inspect cycles. Entry, cancellation, reversal, settlement, and export each require the corresponding ledger or export permission."
+msgstr "A jogosult olvasók megtekinthetik a ciklusokat. A bevitel, törlés, sztornó, elszámolás és export mind a megfelelő nyilvántartási vagy exportjogosultságot igényli."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Record the person, optional project, entry type, category, positive amount, and a concise note."
+msgstr "Rögzítse a személyt, az opcionális projektet, a tételtípust, kategóriát, pozitív összeget és rövid megjegyzést."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Review the current Thursday summary and select the intended 20th-to-20th cycle before including entries."
+msgstr "A tételek bevonása előtt ellenőrizze az aktuális csütörtöki összesítést, és válassza ki a kívánt 20-ától 20-áig tartó ciklust."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Correct a mistake by cancelling or reversing the original entry with a reason; never overwrite financial history."
+msgstr "A hibát az eredeti tétel indokolt törlésével vagy sztornózásával javítsa; pénzügyi előzményt soha ne írjon felül."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "After the external deduction process is complete, mark the included cycle settled and use the approved CSV export when needed."
+msgstr "A külső levonási folyamat befejezése után jelölje elszámoltnak a bevont ciklust, és szükség esetén használja a jóváhagyott CSV-exportot."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Positive amounts, explicit pay effect"
+msgstr "Pozitív összegek, egyértelmű bérhatás"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "The entry type controls whether an amount adds to or deducts from pay. This ledger records source adjustments; it does not calculate statutory payroll."
+msgstr "A tételtípus szabja meg, hogy az összeg hozzáadódik a bérhez vagy levonódik belőle. Ez a nyilvántartás forráskorrekciókat rögzít; törvényes bérszámfejtést nem végez."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "The ledger workspace with fictional entries, cycle controls, and settlement summaries."
+msgstr "A nyilvántartási munkaterület fiktív tételekkel, ciklusvezérlőkkel és elszámolási összesítésekkel."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Entry controls record an explicit type, category, and amount."
+msgstr "A beviteli vezérlők egyértelmű típust, kategóriát és összeget rögzítenek."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Cycle controls include, export, and settle the selected period."
+msgstr "A ciklusvezérlők bevonják, exportálják és elszámolják a kiválasztott időszakot."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Record net payslip values and deliver encrypted PDFs safely."
+msgstr "Nettó bérlapértékek rögzítése és titkosított PDF-ek biztonságos kézbesítése."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Payslips stores the independently supplied net value and can email a freshly generated encrypted PDF to the worker."
+msgstr "A Bérlapok az önállóan megadott nettó értéket tárolja, és frissen létrehozott, titkosított PDF-et küldhet e-mailben a munkavállalónak."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Payslip amounts are restricted pay data. Only roles with payslip access can read them, and only authorized Managers can record or send them."
+msgstr "A bérlap összegei korlátozott béradatok. Csak bérlap-hozzáféréssel rendelkező szerepkörök olvashatják, rögzíteni vagy küldeni pedig csak jogosult vezetők tudják."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Confirm the worker has the correct email address, then record the calendar month, positive net amount, optional issue date, and note."
+msgstr "Ellenőrizze a munkavállaló e-mail-címét, majd rögzítse a naptári hónapot, a pozitív nettó összeget, az opcionális kiállítási dátumot és a megjegyzést."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Review the recorded row before sending. Send encrypted PDF generates the attachment and a random one-time password."
+msgstr "Küldés előtt ellenőrizze a rögzített sort. A Titkosított PDF küldése létrehozza a mellékletet és egy véletlenszerű egyszeri jelszót."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Tell the worker the password by phone or Messenger, never in the same email as the encrypted PDF."
+msgstr "A jelszót telefonon vagy Messengeren közölje a munkavállalóval, soha ne ugyanabban az e-mailben, mint a titkosított PDF-et."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "If you resend, a new password is generated and the earlier one is invalidated. The password is shown once and is not stored for later retrieval."
+msgstr "Újraküldéskor új jelszó készül, a korábbi érvényét veszti. A jelszó egyszer jelenik meg, és későbbi lekéréshez nem tárolódik."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Never capture or copy the password into records"
+msgstr "A jelszót soha ne rögzítse és ne másolja rekordba"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Do not screenshot the success message, paste the password into notes, email it, or send it through the same channel as the PDF. The generated PDF is not stored by the application."
+msgstr "Ne készítsen képernyőképet a sikerüzenetről, ne illessze a jelszót megjegyzésbe, ne küldje e-mailben vagy a PDF-fel azonos csatornán. A létrehozott PDF-et az alkalmazás nem tárolja."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "The payslip list with fictional net values and delivery states; no passwords are visible."
+msgstr "A bérlaplista fiktív nettó értékekkel és kézbesítési állapotokkal; jelszó nem látható."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "The record form stores the independently supplied net value."
+msgstr "A rögzítőűrlap az önállóan megadott nettó értéket tárolja."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Delivery state shows whether an encrypted PDF was sent."
+msgstr "A kézbesítési állapot mutatja, hogy elküldték-e a titkosított PDF-et."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Record independent monthly gross-wage source values without payroll calculation."
+msgstr "Önálló havi bruttóbér-forrásértékek rögzítése bérszámfejtés nélkül."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Gross wages stores the supplied gross amount for a person and month beside, but independently from, the recorded net payslip."
+msgstr "A Bruttó bérek a személyhez és hónaphoz megadott bruttó összeget a rögzített nettó bérlap mellett, de attól függetlenül tárolja."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Authorized pay-data readers may inspect the list. Recording a gross wage requires the wage-management permission."
+msgstr "A jogosult béradat-olvasók megtekinthetik a listát. Bruttó bér rögzítéséhez bérkezelési jogosultság kell."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Choose the correct person and calendar month, then enter the externally supplied positive gross amount."
+msgstr "Válassza ki a megfelelő személyt és naptári hónapot, majd adja meg a kívülről kapott pozitív bruttó összeget."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Add a short source or reconciliation note when it helps another authorized reader understand the record."
+msgstr "Adjon rövid forrás- vagy egyeztetési megjegyzést, ha az segít egy másik jogosult olvasónak megérteni a rekordot."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Compare gross and net only as independent source values. Investigate discrepancies through the payroll owner outside this application."
+msgstr "A bruttó és nettó összeget csak független forrásértékként hasonlítsa össze. Az eltérést az alkalmazáson kívül, a bérszámfejtés felelősével vizsgálja ki."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Not a payroll calculator"
+msgstr "Nem bérszámfejtő"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "The application does not derive tax, insurance, statutory deductions, or net pay from this amount and does not treat a gross-to-net difference as an automatic error."
+msgstr "Az alkalmazás ebből az összegből nem számít adót, biztosítást, törvényes levonást vagy nettó bért, és a bruttó-nettó eltérést nem kezeli automatikus hibaként."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "The gross-wage workspace with fictional independent monthly source values."
+msgstr "A bruttóbér-munkaterület fiktív, önálló havi forrásértékekkel."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "The form records a person, month, and positive gross amount."
+msgstr "Az űrlap személyt, hónapot és pozitív bruttó összeget rögzít."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "The table preserves who recorded each source value."
+msgstr "A táblázat megőrzi, ki rögzítette az egyes forrásértékeket."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Trace sensitive actions, old and new values, actors, reasons, and retention."
+msgstr "Érzékeny műveletek, régi és új értékek, végrehajtók, indokok és megőrzés nyomon követése."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Audit is the append-only trace for sensitive actions: who acted, what record changed, when it happened, and the reason or value snapshot available for that event."
+msgstr "Az Audit az érzékeny műveletek csak hozzáfűzhető nyoma: ki járt el, mely rekord változott, mikor történt, és milyen indok vagy értékpillanatkép tartozik az eseményhez."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Only roles with Audit access can open the log. Help explains it to every role because their own sensitive actions may create events."
+msgstr "A naplót csak Audit-hozzáféréssel rendelkező szerepkörök nyithatják meg. A Súgó minden szerepkörnek elmagyarázza, mert saját érzékeny műveleteik is létrehozhatnak eseményt."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Open Audit and narrow the result by actor, worker, action, record type, or date range."
+msgstr "Nyissa meg az Auditot, és szűkítse az eredményt végrehajtó, munkavállaló, művelet, rekordtípus vagy dátumtartomány szerint."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Read the newest events first and use the record reference to connect an event to the operational workflow."
+msgstr "Először a legújabb eseményeket olvassa, és a rekordhivatkozással kapcsolja az eseményt az operatív folyamathoz."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Use old and new value snapshots where provided to understand the change; free-text reasons remain in the language originally entered."
+msgstr "Ahol rendelkezésre áll, a régi és új értékpillanatképekből értse meg a változást; a szabad szöveges indokok az eredeti bevitel nyelvén maradnak."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Use Staff activity for volume reporting. Audit is for traceability and investigation, not performance totals."
+msgstr "Mennyiségi kimutatáshoz a Munkatársi aktivitást használja. Az Audit nyomon követésre és vizsgálatra való, nem teljesítményösszesítésre."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Append-only and restricted"
+msgstr "Csak hozzáfűzhető és korlátozott"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Ordinary users cannot edit or delete audit events. Retention follows the approved policy; do not copy restricted event details into a less protected system."
+msgstr "A szokásos felhasználók nem szerkeszthetik és nem törölhetik az auditeseményeket. A megőrzés a jóváhagyott szabályzatot követi; korlátozott eseményrészletet ne másoljon kevésbé védett rendszerbe."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "The Audit page heading and filters, captured without event rows or log contents."
+msgstr "Az Audit oldal fejléce és szűrői, eseménysorok és naplótartalom nélkül rögzítve."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Filters narrow the trace without changing stored events."
+msgstr "A szűrők a tárolt események módosítása nélkül szűkítik a nyomot."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Audit access and append-only behavior protect the evidence trail."
+msgstr "Az Audit-hozzáférés és a csak hozzáfűzhető működés védi a bizonyítékláncot."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Choose a workflow to learn its steps, permissions, and important safety boundaries."
+msgstr "Válasszon folyamatot a lépések, jogosultságok és fontos biztonsági korlátok megismeréséhez."
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Purpose"
+msgstr "Cél"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "On this page"
+msgstr "Ezen az oldalon"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Roles and permissions"
+msgstr "Szerepkörök és jogosultságok"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Workflow"
+msgstr "Folyamat"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Important boundary"
+msgstr "Fontos korlát"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Screen example"
+msgstr "Képernyőpélda"
+
+#. Help area: reviewed 2026-08-01
+#: core/ui/help.py templates/help/article.html templates/pages/help_index.html
+msgid "Related topics"
+msgstr "Kapcsolódó témák"
