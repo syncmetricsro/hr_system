@@ -72,7 +72,7 @@ staff-invitation subsystem deferred) ·
 | `document-storage-boundary.md` | Platform | Metadata-only/prohibited high-risk document boundary and optional separately scoped Secure Document Vault |
 | `accountant-data-handoff.md` | Platform | Separate Slovak/Hungarian accountant handoffs: country-specific payroll facts and tax declarations, medical/ID exclusions, secure routing, and refusal of mixed/unresolved jurisdictions |
 | `feedback-flyer-design.md` | Platform | Downloadable PDF+QR flyer for feedback links, Cyrillic-capable via a vendored font (ADR 0028) — implemented 2026-07-24 |
-| `help-area-design.md` | Platform | In-app Help section (nav tab, 9 articles, full SK/HU/UK i18n) — implemented 2026-07-24; per-client article filtering by feature flag noted as a follow-up |
+| `help-area-design.md` | Platform | Image-rich, feature-aware Help: exactly 12 workflow articles per client, client-specific fictional screenshots, shared article structure and complete SK/HU/UK catalogs |
 | `notification-center.md` | Platform | Floating alerts/updates behavior, privacy, refresh, and extension contract |
 | `client-themes.md` | Platform | Light/Dark/System behavior, client defaults, persistence, and palette ownership |
 | `contextual-tooltips.md` | Platform | Hover/focus help, coverage, touch behavior, and content safety |
