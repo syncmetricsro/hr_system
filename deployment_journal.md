@@ -1,5 +1,47 @@
 # Deployment Journal
 
+## 2026-08-01 - Dokku upload ceiling corrected on both staging apps
+
+A manual Jober avatar upload returned nginx's raw **413 Request Entity Too
+Large** page. The nginx error log showed that the rejected request was roughly
+1.9 MB, while the active configuration for both `jober-staging` and
+`corvinum-staging` still had Dokku's 1 MB default. This failure was entirely at
+the reverse-proxy layer: Django never received the request and therefore could
+not show its existing friendly upload-validation message.
+
+The owner set `client-max-body-size` to `25m` for both apps. On this host's
+Dokku 0.38.25, `nginx:set` changed the computed report but did not immediately
+rewrite the active nginx file. The required completion step was:
+
+```bash
+sudo dokku proxy:build-config jober-staging
+sudo dokku proxy:build-config corvinum-staging
+```
+
+Both generated configurations then passed `nginx:validate-config` and
+`nginx:show-config` reported `client_max_body_size 25m;`. After reload, all four
+large generated PNG originals used in the manual Jober pass uploaded and
+rendered in the person detail, People list, and bottom-right quick-access
+worker panel.
+
+A subsequent read-only inspection of the mounted media found exactly four
+database-referenced avatar files and no orphans. Each had a UUID `.webp` name,
+decoded as WebP at 512×512, and carried no EXIF. The four uploaded PNGs totalled
+7,770,049 bytes; their stored WebPs totalled 77,042 bytes, approximately 99.0%
+less (about 101× smaller). No source PNG remained in the avatar tree. Both
+staging apps remain on the existing application image; no code deployment,
+migration, seed, provider call, or real personal data was involved.
+
+The 25 MB proxy ceiling deliberately sits above the application limits rather
+than replacing them: Django continues to enforce 5 MB per avatar and 10 MB per
+certificate file. The extra room permits a two-sided certificate request plus
+multipart overhead to reach Django and fail there gracefully when an
+individual file is invalid or oversized. The staging runbook now makes this a
+required per-app setting and records that a reload alone does not regenerate a
+stale Dokku nginx configuration. Requests above the 25 MB outer guard can still
+receive nginx's generic 413 page; a branded proxy response or browser-side
+preflight remains future UX hardening, not part of this operational correction.
+
 ## 2026-08-01 - Restricted certificates release deployed to both staging clients
 
 Deployed merge **`1458ff7`** to `jober-staging` and `corvinum-staging` as the

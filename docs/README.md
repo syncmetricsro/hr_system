@@ -53,6 +53,8 @@ staff-invitation subsystem deferred) ·
 | `jober-dokku-staging.md` | Jober | Staging skeleton (pending server names) |
 | `jober-twilio-setup.md` | Jober | Twilio + Doppler secrets |
 | `corvinum-demo-runbook.md` | CorvinumEU | Presenter script (~30 min, port 8001) |
+| `avatar-upload-acceptance.md` | Platform | Shared fictional avatar formats, rejection, UI-consumer, and stored-WebP acceptance check |
+| `certificate-upload-acceptance.md` | Platform | Shared fictional PNG/PDF, storage-boundary, multilingual, and cleanup acceptance check |
 
 ## docs/permissions/
 | Doc | Owner |
