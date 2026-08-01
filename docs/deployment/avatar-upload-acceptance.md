@@ -52,12 +52,15 @@ presenter-critical avatar without agreeing on the cleanup first.
 4. Upload `04-marek-square.png` and `05-eszter-square.png` to separate
    fictional people or as deliberate replacements. These cross the old nginx
    1 MB limit and must now reach Django and succeed.
-5. Replace one existing avatar. Confirm the new UUID file is used, the old
+5. Upload `06-mira-novakova-square.png` only to fictional Mira Novakova. It is
+   an entirely synthetic, age-appropriate portrait for her under-18 test row;
+   confirm the avatar changes without altering or hiding the under-18 warning.
+6. Replace one existing avatar. Confirm the new UUID file is used, the old
    image no longer renders, and Audit shows `Avatar replaced` rather than a
    second independent add.
-6. Remove one test avatar. Confirm the worker default returns in all consumers
+7. Remove one test avatar. Confirm the worker default returns in all consumers
    and Audit records the removal.
-7. Repeat one representative upload under the other client's settings. Jober
+8. Repeat one representative upload under the other client's settings. Jober
    and CorvinumEU share the processor, but this verifies the client UI and
    deployment configuration too.
 

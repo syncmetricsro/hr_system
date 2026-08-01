@@ -1,5 +1,22 @@
 # Deployment Journal
 
+## 2026-08-01 - Jober staging accepted all three occupational file forms
+
+The owner completed the positive certificate-upload matrix against fictional
+Jober staging records after the nginx request ceiling was corrected. A
+forklift card saved with its front image; the normal **Edit certificate** flow
+then corrected the issuer and dates and added the missing back image while
+preserving the front. Both private file links appeared. A crane certificate
+saved as a single PDF, and a welding certificate saved as a single image. All
+three records rendered their expected category, issuer, dates and Valid state.
+
+This proves the ordinary UI accepts the allowlisted front/back, PDF-only and
+single-image forms on the deployed build. It does not yet claim the remaining
+acceptance steps: cross-role/private-link authorization, Audit inspection,
+archive/renewal, manager purge, or the optional fictional mislabel probe. No
+real worker document, provider call, deployment, migration or production data
+was involved.
+
 ## 2026-08-01 - Dokku upload ceiling corrected on both staging apps
 
 A manual Jober avatar upload returned nginx's raw **413 Request Entity Too

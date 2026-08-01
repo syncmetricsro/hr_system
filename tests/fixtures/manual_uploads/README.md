@@ -24,6 +24,7 @@ Use files under `avatars/` with the shared
 | `03-anh-portrait.webp` | Portrait WebP | Accepted; centered square crop; 512×512 WebP stored |
 | `04-marek-square.png` | Large square PNG | Accepted; resized and stored as WebP |
 | `05-eszter-square.png` | Large square PNG with fine edges | Accepted; resized and stored as WebP |
+| `06-mira-novakova-square.png` | Square PNG of an entirely synthetic 17-year-old | Accepted; resized and stored as WebP; use only for fictional Mira |
 | `reject/reject-not-an-image.jpg` | Plain text with a JPEG extension | Rejected as an invalid image |
 | `reject/reject-vector.svg` | Harmless SVG | Rejected; avatars allow JPEG, PNG, or WebP only |
 

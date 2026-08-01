@@ -2,8 +2,8 @@
 
 ## 2026-08-01 - Manual upload fixtures now survive a fresh checkout
 
-A curated 13 MB fictional pack now lives under
-`tests/fixtures/manual_uploads/`: five avatar inputs spanning JPEG/PNG/WebP and
+A curated 15 MB fictional pack now lives under
+`tests/fixtures/manual_uploads/`: six avatar inputs spanning JPEG/PNG/WebP and
 square/landscape/portrait shapes, two harmless avatar rejection files, and the
 essential allowed forklift/crane/welding plus prohibited birth/ID/medical
 certificate cases. `SHA256SUMS`, provenance, and a pack README make the binary
@@ -18,6 +18,13 @@ prerequisite, detail/list/quick-access rendering, audit/permission checks, and
 read-only verification that the server retained only UUID-named 512×512 WebPs
 without EXIF or orphans. Certificate and client runbooks now point to the
 tracked curated directory. No runtime behavior or dependency changed.
+
+The sixth avatar is an age-appropriate portrait for fictional Mira Novakova,
+whose seeded 2009 birth date deliberately exercises the under-18 warning. It
+was generated without an input photograph or real-person reference. The source
+is a 1254×1254 PNG with no EXIF; the real processor produced a 512×512,
+28,256-byte WebP with no EXIF. The acceptance runbook requires confirming that
+uploading it does not alter or hide Mira's under-18 warning.
 
 ## 2026-08-01 - Dokku proxy ceiling now matches the upload workflow
 

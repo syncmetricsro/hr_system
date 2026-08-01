@@ -3,11 +3,13 @@
 Created on 2026-08-01 for this repository's fictional local/staging acceptance
 checks.
 
-- The five avatar portraits were generated independently with Codex's built-in
-  image generation. Each prompt required an entirely synthetic adult who does
-  not resemble a real person; no input photograph or real-person reference was
-  supplied. The JPEG/WebP upload variants and harmless test EXIF were produced
-  locally using the project's already-approved Pillow dependency.
+- The six avatar portraits were generated independently with Codex's built-in
+  image generation. Five depict entirely synthetic adults who do not resemble
+  real people. Mira's explicitly age-appropriate fixture depicts an entirely
+  synthetic 17-year-old matching the fictional record's 2009 birth year. No
+  input photograph or real-person reference was supplied. The JPEG/WebP upload
+  variants and harmless test EXIF were produced locally using the project's
+  already-approved Pillow dependency.
 - The document images were generated independently as product mockups for the
   invented country Testovia. Every prompt prohibited real country names,
   government seals, real issuers, real identifiers, real photographs,

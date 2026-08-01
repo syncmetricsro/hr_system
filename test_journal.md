@@ -3,11 +3,14 @@
 ## 2026-08-01 - portable manual-upload fixture verification
 
 - `sha256sum --check tests/fixtures/manual_uploads/SHA256SUMS` passed for all
-  14 portable binary files: five valid avatars, two avatar rejects, four
+  15 portable binary files: six valid avatars, two avatar rejects, four
   allowed certificate files, and three prohibited-document boundary files.
-- The real avatar processor accepted all five valid JPEG/PNG/WebP sources and
+- The real avatar processor accepted all six valid JPEG/PNG/WebP sources and
   produced 512×512 WebPs with zero EXIF. It rejected both the text-disguised-as
   JPEG and the SVG without creating output.
+- Mira's new synthetic 1254×1254 PNG contains no EXIF and processed to a
+  28,256-byte 512×512 WebP with no EXIF. No real-person reference was supplied;
+  the asset is restricted to the fictional under-18 staging row.
 - The real certificate sanitizer successfully decoded/rebuilt all seven
   curated certificate files. Structural acceptance of the three prohibited
   specimens is expected: the category allowlist rejects `HEALTH`/`OTHER`, while
@@ -16,7 +19,7 @@
   (`Synthetic avatar fixture`, `FICTIONAL TEST CAMERA`), empty EXIF on the
   other images, and fictional title/timestamp metadata on the PDFs. No real
   person reference, credential, local path, or secret was present.
-- The curated directory is not ignored, totals approximately 13 MB, and omits
+- The curated directory is not ignored, totals approximately 15 MB, and omits
   originals, previews, duplicate document variants, contact sheets, and ZIPs.
   Documentation references now resolve to the tracked directory. Markdown
   whitespace validation remains part of final handoff.
