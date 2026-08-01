@@ -1,18 +1,28 @@
-# Help visual aids
+# Help screenshot assets
 
-`screens/` holds screenshots captured from the seeded demo stacks by
-`scripts/capture_help_screens.sh`. They are committed deliberately: a
-screenshot that lies is worse than none, so regeneration is one command rather
-than a manual ritual, and the command should be re-run whenever the shell or a
-captured page changes.
+`screens/` contains reviewable screenshots captured from the committed seeded
+demo stacks by `scripts/capture_help_screens.sh`. The capture starts with a
+1440×900 desktop viewport, crops to 16:9, writes a 1280×720 article WebP and a
+matching 640×360 `-thumb.webp`, and strips metadata through the already-pinned
+Pillow dependency.
 
-`illustrations/` holds generated diagrams for concepts with no screen to
-photograph. **Every illustration must be textless** — labels are HTML with
-`{% trans %}` overlaid on the asset, because a label baked into a raster can
-never be translated and this Help area ships in EN/SK/HU/UK.
+- Jober screenshots are captured in Slovak under `screens/jober/`.
+- Corvinum screenshots are captured in Hungarian under `screens/corvinum/`.
+- Numbered callouts and explanations are translated HTML overlays in the Help
+  article. They are never baked into the raster.
+- Only the repository's fictional demo records may appear.
 
-Screenshots carry the app's own chrome in one language; capture is in Slovak,
-the default and the language most users see, and the numbered callouts carry
-the explanation in the reader's language.
+Never capture TOTP enrollment, one-time payslip passwords, provider
+credentials, logs, production screens, or non-fictional records. The Audit
+figure deliberately removes the event table before capture, and the Payslips
+figure is captured before any send action so no password message can exist.
 
-Fictional seed data only — never a real-data environment.
+Run the capture only through the committed isolated workflow:
+
+```bash
+scripts/capture_help_screens.sh
+```
+
+Manually review every generated image before commit. A screenshot that exposes
+restricted data or describes a screen that no longer exists must be rejected,
+not patched with baked-in labels.

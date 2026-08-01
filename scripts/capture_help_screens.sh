@@ -15,11 +15,11 @@ cd "$(dirname "$0")/.."
 export E2E_PYTEST_ARGS="tests/e2e/capture_help_screens.py"
 export HELP_SCREENS_DIR="${HELP_SCREENS_DIR:-/app/static/help/screens}"
 
-echo "Capturing Help screenshots (this builds both apps and seeds both DBs) ..."
+echo "Capturing Jober SK and Corvinum HU Help screenshots from fictional seeds ..."
 scripts/playwright_e2e.sh "$@"
 
 echo
 echo "Captured:"
-find static/help/screens -type f \( -name '*.png' -o -name '*.webp' \) | sort
+find static/help/screens -type f -name '*.webp' | sort
 echo
 echo "Review these before committing - a screenshot that lies is worse than none."
