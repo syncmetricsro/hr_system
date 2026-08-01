@@ -1,5 +1,5 @@
 {% extends "layouts/base.html" %}
-{% load i18n rbac icons avatars %}
+{% load i18n rbac icons avatars nav %}
 
 {% block title %}{% trans "People" %} · {{ BRAND_NAME }}{% endblock %}
 
@@ -28,7 +28,7 @@
         <option value=""{% if not inactive_reason %} selected{% endif %}>{% trans "All inactive reasons" %}</option>
         <option value="none"{% if inactive_reason == "none" %} selected{% endif %}>{% trans "No reason" %}</option>
         {% for reason in inactive_reasons %}
-          <option value="{{ reason.pk }}"{% if inactive_reason == reason.pk|stringformat:"s" %} selected{% endif %}>{{ reason.label }}</option>
+          <option value="{{ reason.pk }}"{% if inactive_reason == reason.pk|stringformat:"s" %} selected{% endif %}>{{ reason.label|db_trans }}</option>
         {% endfor %}
       </select>
     {% endif %}

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-31 13:47+0200\n"
+"POT-Creation-Date: 2026-08-01 15:51+0200\n"
 "Language: hu\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2081,6 +2081,18 @@ msgstr "%(person)s · %(count)s kritikus tétel"
 msgid "Activation blocked by open checklist items: %(items)s"
 msgstr "Az aktiválást nyitott ellenőrzőlista-tételek blokkolják: %(items)s"
 
+#: features/compliance/catalog_i18n.py:11 features/finance/catalog_i18n.py:17
+msgid "Forklift licence"
+msgstr "Targoncás jogosítvány"
+
+#: features/compliance/catalog_i18n.py:12
+msgid "Crane licence"
+msgstr "Darukezelői jogosítvány"
+
+#: features/compliance/catalog_i18n.py:13
+msgid "Welding licence"
+msgstr "Hegesztői igazolvány"
+
 #: features/compliance/forms.py:31
 msgid "certificate type"
 msgstr "tanúsítvány típusa"
@@ -2231,7 +2243,7 @@ msgstr ""
 "Nyissa meg a figyelmet igénylő dokumentum- vagy orvosi követelményekkel "
 "rendelkező munkavállalókat."
 
-#: features/compliance/panels.py:75
+#: features/compliance/panels.py:76
 #, python-format
 msgid "%(name)s (expires %(date)s)"
 msgstr "%(name)s (lejár: %(date)s)"
@@ -2337,10 +2349,6 @@ msgstr "Károk (költség)"
 #: features/finance/catalog_i18n.py:16
 msgid "Forklift training"
 msgstr "Targoncás képzés"
-
-#: features/finance/catalog_i18n.py:17
-msgid "Forklift licence"
-msgstr "Targoncás jogosítvány"
 
 # --- finance ---
 #: features/finance/catalog_i18n.py:19
@@ -3042,19 +3050,19 @@ msgstr "kiadás"
 msgid "inbound movement"
 msgstr "bejövő mozgás"
 
-#: features/logistics/models.py:521 tests/test_i18n_catalog.py:46
+#: features/logistics/models.py:521 tests/test_i18n_catalog.py:77
 msgid "initial quantity"
 msgstr "kezdő mennyiség"
 
-#: features/logistics/models.py:523 tests/test_i18n_catalog.py:47
+#: features/logistics/models.py:523 tests/test_i18n_catalog.py:78
 msgid "initial value"
 msgstr "kezdő érték"
 
-#: features/logistics/models.py:525 tests/test_i18n_catalog.py:46
+#: features/logistics/models.py:525 tests/test_i18n_catalog.py:77
 msgid "remaining quantity"
 msgstr "fennmaradó mennyiség"
 
-#: features/logistics/models.py:527 tests/test_i18n_catalog.py:47
+#: features/logistics/models.py:527 tests/test_i18n_catalog.py:78
 msgid "remaining value"
 msgstr "fennmaradó érték"
 
@@ -3667,8 +3675,9 @@ msgid ""
 "permanently remove improperly uploaded files, and a reason is required."
 msgstr ""
 "A megújítás új aktív tanúsítványt hoz létre, az előzőt pedig megőrzi az "
-"előzményekben. Az archiválás is megtartja a bejegyzést és a fájlokat. Hibásan "
-"feltöltött fájlokat csak vezető távolíthat el véglegesen, indoklással."
+"előzményekben. Az archiválás is megtartja a bejegyzést és a fájlokat. "
+"Hibásan feltöltött fájlokat csak vezető távolíthat el véglegesen, "
+"indoklással."
 
 #: templates/help/compliance.html:13
 msgid "Category icons"
@@ -6024,6 +6033,9 @@ msgid ""
 "How much each colleague did in the selected period. This is reporting, not "
 "traceability — for who changed a specific record and why, use the Audit log."
 msgstr ""
+"Az egyes kollégák által a kiválasztott időszakban elvégzett műveletek "
+"mennyisége. Ez egy kimutatás, nem változáskövetés — azt, hogy egy adott "
+"rekordot ki és miért módosított, az Auditnaplóban találja."
 
 #: templates/pages/staff_activity.html:16
 msgid "People registered"
@@ -6038,6 +6050,8 @@ msgid ""
 "Every recruiter is listed, including those who registered nobody, so the gap "
 "between two of them is visible."
 msgstr ""
+"Minden toborzó szerepel a listán, azok is, akik senkit sem rögzítettek, így "
+"látható a köztük lévő különbség."
 
 #: templates/pages/staff_activity.html:27
 msgid "No recruiters yet."
@@ -6200,7 +6214,7 @@ msgstr "Nincs rögzített bruttó bér."
 msgid "Money"
 msgstr "Pénz"
 
-#: templates/panels/advances_ledger.html:5 tests/test_i18n_catalog.py:56
+#: templates/panels/advances_ledger.html:5 tests/test_i18n_catalog.py:87
 msgid ""
 "Cash advances and deductions against this person's pay, settled through the "
 "weekly ledger cycle."
@@ -6260,7 +6274,7 @@ msgstr "Jóváhagyások"
 msgid "Activation checklist"
 msgstr "Aktiválási ellenőrzőlista"
 
-#: templates/panels/checklists_items.html:5 tests/test_i18n_catalog.py:53
+#: templates/panels/checklists_items.html:5 tests/test_i18n_catalog.py:84
 msgid ""
 "Items marked critical must all be ticked before this person can be activated."
 msgstr ""
@@ -6425,6 +6439,8 @@ msgid ""
 "A first placement is not a transfer; only moves between accommodations are "
 "listed."
 msgstr ""
+"Az első elhelyezés nem számít áthelyezésnek; csak a szállások közötti "
+"költözések jelennek meg."
 
 #: templates/panels/logistics_staff_activity.html:32
 msgid "Moved by"

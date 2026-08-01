@@ -71,13 +71,14 @@ def certificate_badges(request, person):
     for category, certs in by_category.items():
         best = most_relevant_certificate(certs, today)
         severity = _severity(best.expiry_date, today, 30) if best.expiry_date else None
+        translated_name = _(best.name)
         if best.expiry_date:
             tooltip = _("%(name)s (expires %(date)s)") % {
-                "name": best.name,
+                "name": translated_name,
                 "date": best.expiry_date,
             }
         else:
-            tooltip = best.name
+            tooltip = translated_name
         badges.append(
             {
                 "icon": CATEGORY_ICONS.get(category, "cert-other"),

@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 import pytest
+from django.conf import settings
 from django.urls import reverse
+from django.utils import translation
 
 from core.people.models import InactiveReason, LifecycleStatus, Person
 
@@ -66,6 +68,25 @@ def test_people_list_filters_inactive_reason_and_preserves_search(client, make_u
     assert "Olha Sick" not in no_reason.content.decode()
 
 
+@pytest.mark.parametrize(
+    ("language", "expected"),
+    [("sk", "Choroba"), ("hu", "Beteg"), ("uk", "Хвороба")],
+)
+def test_people_list_translates_seeded_inactive_reason(
+    client, make_user, language, expected
+):
+    if language not in dict(settings.LANGUAGES):
+        pytest.skip(f"{language} is not enabled for this client")
+    client.force_login(make_user("observer"))
+
+    with translation.override(language):
+        response = client.get(reverse("people_list"), {"status": "inactive"})
+
+    body = response.content.decode()
+    assert f">{expected}</option>" in body
+    assert ">Sick</option>" not in body
+
+
 def test_people_list_ignores_invalid_or_inapplicable_inactive_reason(client, make_user):
     reason = InactiveReason.objects.get(label="Sick")
     Person.objects.create(
@@ -94,11 +115,15 @@ def test_people_list_ignores_invalid_or_inapplicable_inactive_reason(client, mak
 
 def test_detail_shows_sensitive_for_manager(client, make_user):
     person = Person.objects.create(
-        first_name="Olha", last_name="Kovalenko",
-        has_disability=True, disability_type="reduced mobility",
+        first_name="Olha",
+        last_name="Kovalenko",
+        has_disability=True,
+        disability_type="reduced mobility",
     )
     client.force_login(make_user("manager"))
-    body = client.get(reverse("person_detail", args=[person.pk])).content.decode("utf-8")
+    body = client.get(reverse("person_detail", args=[person.pk])).content.decode(
+        "utf-8"
+    )
     assert "reduced mobility" in body
 
 
@@ -106,20 +131,30 @@ def test_detail_hides_sensitive_from_unconnected_recruiter(client, make_user):
     owner = make_user("recruiter")
     other = make_user("recruiter", "rec2@demo.jober.test")
     person = Person.objects.create(
-        first_name="Olha", last_name="Kovalenko", owning_recruiter=owner,
-        has_disability=True, disability_type="reduced mobility",
+        first_name="Olha",
+        last_name="Kovalenko",
+        owning_recruiter=owner,
+        has_disability=True,
+        disability_type="reduced mobility",
     )
     client.force_login(other)
-    body = client.get(reverse("person_detail", args=[person.pk])).content.decode("utf-8")
+    body = client.get(reverse("person_detail", args=[person.pk])).content.decode(
+        "utf-8"
+    )
     assert "reduced mobility" not in body
 
 
 def test_detail_shows_sensitive_to_owning_recruiter(client, make_user):
     owner = make_user("recruiter")
     person = Person.objects.create(
-        first_name="Olha", last_name="Kovalenko", owning_recruiter=owner,
-        has_disability=True, disability_type="reduced mobility",
+        first_name="Olha",
+        last_name="Kovalenko",
+        owning_recruiter=owner,
+        has_disability=True,
+        disability_type="reduced mobility",
     )
     client.force_login(owner)
-    body = client.get(reverse("person_detail", args=[person.pk])).content.decode("utf-8")
+    body = client.get(reverse("person_detail", args=[person.pk])).content.decode(
+        "utf-8"
+    )
     assert "reduced mobility" in body

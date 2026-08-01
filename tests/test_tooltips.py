@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 from pathlib import Path
 
 import pytest
@@ -10,6 +11,10 @@ from django.utils.translation import gettext
 
 
 REPO = Path(__file__).resolve().parent.parent
+TRANSLATABLE_ATTRIBUTE = re.compile(
+    r"(?<![\w:-])(?:data-tooltip(?:-heading)?|aria-label|placeholder|title)"
+    r'\s*=\s*(?P<quote>["\'])(?P<value>.*?)(?P=quote)'
+)
 
 
 @pytest.mark.jober_only
@@ -46,10 +51,12 @@ def test_tooltip_controller_contract_covers_accessibility_touch_and_htmx():
 def test_contextual_surfaces_and_native_title_migration_are_declared():
     reports = (REPO / "templates/pages/reports.html").read_text(encoding="utf-8")
     people = (REPO / "templates/pages/people_list.html").read_text(encoding="utf-8")
-    notifications = (REPO / "templates/notifications/panel.html").read_text(encoding="utf-8")
-    corvinum = (
-        REPO / "clients/corvinum_eu/templates/layouts/base.html"
-    ).read_text(encoding="utf-8")
+    notifications = (REPO / "templates/notifications/panel.html").read_text(
+        encoding="utf-8"
+    )
+    corvinum = (REPO / "clients/corvinum_eu/templates/layouts/base.html").read_text(
+        encoding="utf-8"
+    )
 
     assert reports.count("data-tooltip") >= 6
     assert reports.count("data-tooltip-heading") >= 6
@@ -60,13 +67,47 @@ def test_contextual_surfaces_and_native_title_migration_are_declared():
     assert corvinum.count("data-tooltip") >= 9
 
 
+def test_literal_tooltip_and_accessibility_copy_is_marked_for_translation():
+    """Prevent new literal UI copy from bypassing Django's i18n catalog.
+
+    Dynamic values are checked by their producer's tests; this guard covers
+    literal tooltip, placeholder, title, and accessible-label attributes in
+    shared and client templates.
+    """
+    template_roots = [REPO / "templates", *(REPO / "clients").glob("*/templates")]
+    violations = []
+
+    for root in template_roots:
+        for path in root.rglob("*.html"):
+            for line_number, line in enumerate(
+                path.read_text(encoding="utf-8").splitlines(), start=1
+            ):
+                for match in TRANSLATABLE_ATTRIBUTE.finditer(line):
+                    value = match.group("value")
+                    if any(
+                        marker in value
+                        for marker in ("{% trans", "{% blocktrans", "{{")
+                    ):
+                        continue
+                    violations.append(
+                        f"{path.relative_to(REPO)}:{line_number}: {value}"
+                    )
+
+    assert not violations, "Untranslated UI attributes:\n" + "\n".join(violations)
+
+
 def test_linked_report_tile_requires_structured_tooltip_copy(monkeypatch):
     from core.ui import registry
 
     monkeypatch.setattr(
         registry,
         "_report_tiles",
-        [{"context": lambda _request: {"label": "Broken", "value": 1, "url": "/"}, "order": 1}],
+        [
+            {
+                "context": lambda _request: {"label": "Broken", "value": 1, "url": "/"},
+                "order": 1,
+            }
+        ],
     )
     with pytest.raises(ImproperlyConfigured, match="tooltip_heading and tooltip_body"):
         registry.report_tiles(object())
@@ -115,16 +156,18 @@ def test_action_oriented_dashboard_tooltip_is_translated(language, heading, body
     with translation.override(language):
         assert gettext("Review active projects") == heading
         assert (
-            gettext("Open active projects to review their coordinators and assignments.")
+            gettext(
+                "Open active projects to review their coordinators and assignments."
+            )
             == body
         )
 
 
 def test_tooltip_palettes_are_client_and_mode_specific():
     shared = (REPO / "static/src/css/app.css").read_text(encoding="utf-8")
-    corvinum = (
-        REPO / "clients/corvinum_eu/static/corvinum/theme.css"
-    ).read_text(encoding="utf-8")
+    corvinum = (REPO / "clients/corvinum_eu/static/corvinum/theme.css").read_text(
+        encoding="utf-8"
+    )
 
     assert shared.count("--tooltip-bg:") == 2
     assert "--tooltip-bg: #1b2430" in shared
@@ -136,7 +179,7 @@ def test_tooltip_palettes_are_client_and_mode_specific():
 
 
 def _luminance(color: str) -> float:
-    values = [int(color[index:index + 2], 16) / 255 for index in (1, 3, 5)]
+    values = [int(color[index : index + 2], 16) / 255 for index in (1, 3, 5)]
     linear = [
         value / 12.92 if value <= 0.04045 else ((value + 0.055) / 1.055) ** 2.4
         for value in values
@@ -152,5 +195,7 @@ def test_tooltip_text_pairs_meet_wcag_aa_contrast():
         "corvinum-dark": ("#e2e8f0", "#0f192a"),
     }
     for foreground, background in pairs.values():
-        light, dark = sorted((_luminance(foreground), _luminance(background)), reverse=True)
+        light, dark = sorted(
+            (_luminance(foreground), _luminance(background)), reverse=True
+        )
         assert (light + 0.05) / (dark + 0.05) >= 4.5

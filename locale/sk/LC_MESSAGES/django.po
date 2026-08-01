@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-31 13:47+0200\n"
+"POT-Creation-Date: 2026-08-01 15:51+0200\n"
 "Language: sk\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2079,6 +2079,18 @@ msgid "Activation blocked by open checklist items: %(items)s"
 msgstr ""
 "Aktivácia je zablokovaná otvorenými položkami kontrolného zoznamu: %(items)s"
 
+#: features/compliance/catalog_i18n.py:11 features/finance/catalog_i18n.py:17
+msgid "Forklift licence"
+msgstr "Preukaz na VZV"
+
+#: features/compliance/catalog_i18n.py:12
+msgid "Crane licence"
+msgstr "Žeriavnický preukaz"
+
+#: features/compliance/catalog_i18n.py:13
+msgid "Welding licence"
+msgstr "Zváračský preukaz"
+
 #: features/compliance/forms.py:31
 msgid "certificate type"
 msgstr "typ certifikátu"
@@ -2230,7 +2242,7 @@ msgstr ""
 "Otvorte pracovníkov s dokumentmi alebo zdravotnými požiadavkami, ktoré "
 "vyžadujú pozornosť."
 
-#: features/compliance/panels.py:75
+#: features/compliance/panels.py:76
 #, python-format
 msgid "%(name)s (expires %(date)s)"
 msgstr "%(name)s (platnosť do %(date)s)"
@@ -2336,10 +2348,6 @@ msgstr "Škody (náklad)"
 #: features/finance/catalog_i18n.py:16
 msgid "Forklift training"
 msgstr "Školenie na VZV"
-
-#: features/finance/catalog_i18n.py:17
-msgid "Forklift licence"
-msgstr "Preukaz na VZV"
 
 # --- finance ---
 #: features/finance/catalog_i18n.py:19
@@ -3041,19 +3049,19 @@ msgstr "výdaj"
 msgid "inbound movement"
 msgstr "príjmový pohyb"
 
-#: features/logistics/models.py:521 tests/test_i18n_catalog.py:46
+#: features/logistics/models.py:521 tests/test_i18n_catalog.py:77
 msgid "initial quantity"
 msgstr "počiatočné množstvo"
 
-#: features/logistics/models.py:523 tests/test_i18n_catalog.py:47
+#: features/logistics/models.py:523 tests/test_i18n_catalog.py:78
 msgid "initial value"
 msgstr "počiatočná hodnota"
 
-#: features/logistics/models.py:525 tests/test_i18n_catalog.py:46
+#: features/logistics/models.py:525 tests/test_i18n_catalog.py:77
 msgid "remaining quantity"
 msgstr "zostávajúce množstvo"
 
-#: features/logistics/models.py:527 tests/test_i18n_catalog.py:47
+#: features/logistics/models.py:527 tests/test_i18n_catalog.py:78
 msgid "remaining value"
 msgstr "zostávajúca hodnota"
 
@@ -3636,7 +3644,8 @@ msgstr ""
 "Základná platforma ukladá súbory iba pre oprávnenia na vysokozdvižný vozík, "
 "žeriav a zváranie. Nenahrávajte občianske preukazy, pasy, rodné listy ani "
 "doklady o pobyte, finančné záznamy, lekárske správy či skeny zdravotných "
-"potvrdení. Tieto požiadavky sú iba metadáta alebo sa uchovávajú mimo platformy."
+"potvrdení. Tieto požiadavky sú iba metadáta alebo sa uchovávajú mimo "
+"platformy."
 
 #: templates/help/compliance.html:10
 msgid ""
@@ -3645,10 +3654,10 @@ msgid ""
 "images. Record the issuer and certificate number if needed, then enter an "
 "expiry date or mark the certificate as not expiring."
 msgstr ""
-"Na paneli Pracovné oprávnenia osoby môže oprávnený náborár, koordinátor alebo "
-"manažér pridať jeden PDF, jeden obrázok alebo obrázky prednej a zadnej strany. "
-"Podľa potreby zadajte vydávajúcu organizáciu a číslo certifikátu, potom dátum "
-"vypršania alebo označte certifikát ako nevypršateľný."
+"Na paneli Pracovné oprávnenia osoby môže oprávnený náborár, koordinátor "
+"alebo manažér pridať jeden PDF, jeden obrázok alebo obrázky prednej a zadnej "
+"strany. Podľa potreby zadajte vydávajúcu organizáciu a číslo certifikátu, "
+"potom dátum vypršania alebo označte certifikát ako nevypršateľný."
 
 #: templates/help/compliance.html:11
 msgid ""
@@ -3656,9 +3665,9 @@ msgid ""
 "history. Archive also keeps the record and files. Only a Manager can "
 "permanently remove improperly uploaded files, and a reason is required."
 msgstr ""
-"Obnovenie vytvorí nový aktívny certifikát a predchádzajúci ponechá v histórii. "
-"Archivácia tiež zachová záznam a súbory. Nesprávne nahrané súbory môže natrvalo "
-"odstrániť iba manažér a musí uviesť dôvod."
+"Obnovenie vytvorí nový aktívny certifikát a predchádzajúci ponechá v "
+"histórii. Archivácia tiež zachová záznam a súbory. Nesprávne nahrané súbory "
+"môže natrvalo odstrániť iba manažér a musí uviesť dôvod."
 
 #: templates/help/compliance.html:13
 msgid "Category icons"
@@ -3672,9 +3681,9 @@ msgid ""
 "certificates remain in history but do not drive the icon or expiry alerts."
 msgstr ""
 "Malá ikona vedľa fotky pracovníka zobrazuje každú aktívnu kategóriu "
-"certifikátu. Zelená alebo bez farby znamená platný, jantárová čoskoro "
-"vyprší a červená vypršaný. Nahradené a archivované certifikáty zostávajú "
-"v histórii, ale neovplyvňujú ikonu ani upozornenia na vypršanie."
+"certifikátu. Zelená alebo bez farby znamená platný, jantárová čoskoro vyprší "
+"a červená vypršaný. Nahradené a archivované certifikáty zostávajú v "
+"histórii, ale neovplyvňujú ikonu ani upozornenia na vypršanie."
 
 # --- compliance ---
 #: templates/help/compliance.html:16
@@ -5996,6 +6005,9 @@ msgid ""
 "How much each colleague did in the selected period. This is reporting, not "
 "traceability — for who changed a specific record and why, use the Audit log."
 msgstr ""
+"Koľko toho každý kolega vykonal vo vybranom období. Toto je prehľad "
+"činnosti, nie sledovanie zmien — informácie o tom, kto zmenil konkrétny "
+"záznam a prečo, nájdete v Auditnom denníku."
 
 #: templates/pages/staff_activity.html:16
 msgid "People registered"
@@ -6010,6 +6022,8 @@ msgid ""
 "Every recruiter is listed, including those who registered nobody, so the gap "
 "between two of them is visible."
 msgstr ""
+"V zozname je uvedený každý náborár vrátane tých, ktorí nikoho "
+"nezaregistrovali, aby bol rozdiel medzi nimi viditeľný."
 
 #: templates/pages/staff_activity.html:27
 msgid "No recruiters yet."
@@ -6169,7 +6183,7 @@ msgstr "Nie sú zaznamenané žiadne hrubé mzdy."
 msgid "Money"
 msgstr "Peniaze"
 
-#: templates/panels/advances_ledger.html:5 tests/test_i18n_catalog.py:56
+#: templates/panels/advances_ledger.html:5 tests/test_i18n_catalog.py:87
 msgid ""
 "Cash advances and deductions against this person's pay, settled through the "
 "weekly ledger cycle."
@@ -6228,7 +6242,7 @@ msgstr "Schvaľovanie"
 msgid "Activation checklist"
 msgstr "Aktivačný kontrolný zoznam"
 
-#: templates/panels/checklists_items.html:5 tests/test_i18n_catalog.py:53
+#: templates/panels/checklists_items.html:5 tests/test_i18n_catalog.py:84
 msgid ""
 "Items marked critical must all be ticked before this person can be activated."
 msgstr ""
@@ -6391,6 +6405,8 @@ msgid ""
 "A first placement is not a transfer; only moves between accommodations are "
 "listed."
 msgstr ""
+"Prvé pridelenie sa nepovažuje za presun; uvedené sú iba presuny medzi "
+"ubytovaniami."
 
 #: templates/panels/logistics_staff_activity.html:32
 msgid "Moved by"

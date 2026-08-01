@@ -1,5 +1,24 @@
 # Build Journal
 
+## 2026-08-01 - Dynamic UI labels no longer leak English
+
+The SK/HU/UK page audit found three real localization gaps: occupational-
+certificate badge tooltips inserted their canonical English database name into
+an otherwise translated sentence; the People filter rendered seeded inactive
+reasons without the existing `db_trans` filter; and three Staff activity help
+texts had empty translations in every shipped catalog.
+
+Certificate badge rendering now translates the stored canonical name at the
+last possible moment. A compliance catalog registers Forklift/Crane/Welding
+licence as translatable system labels, while unregistered operator-entered
+names still pass through unchanged. The inactive-reason filter now follows the
+same runtime-translation convention already used elsewhere. The missing
+Slovak, Hungarian and Ukrainian Staff activity translations were supplied and
+all three compiled catalogs regenerated. A template guard now rejects new
+literal tooltip, placeholder, title and accessible-label attributes unless
+they are translated or supplied dynamically. No dependency, schema or stored
+data changed.
+
 ## 2026-08-01 - Goods-receipt scope tests stop depending on today's month
 
 The first post-merge CI run after midnight on 1 August exposed two tests whose
