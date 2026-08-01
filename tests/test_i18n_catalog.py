@@ -31,10 +31,41 @@ MUST_FIX_HU = {
     "Damaged or retired": "Sérült vagy selejtezett",
 }
 
+CANONICAL_CERTIFICATE_TRANSLATIONS = {
+    "sk": {
+        "Forklift licence": "Preukaz na VZV",
+        "Crane licence": "Žeriavnický preukaz",
+        "Welding licence": "Zváračský preukaz",
+    },
+    "hu": {
+        "Forklift licence": "Targoncás jogosítvány",
+        "Crane licence": "Darukezelői jogosítvány",
+        "Welding licence": "Hegesztői igazolvány",
+    },
+    "uk": {
+        "Forklift licence": "Посвідчення на навантажувач",
+        "Crane licence": "Посвідчення кранівника",
+        "Welding licence": "Посвідчення зварювальника",
+    },
+}
+
 
 @pytest.mark.parametrize("msgid,expected", sorted(MUST_FIX_HU.items()))
 def test_hu_catalog_corrected_translation(msgid, expected):
     with translation.override("hu"):
+        assert gettext(msgid) == expected
+
+
+@pytest.mark.parametrize(
+    ("language", "msgid", "expected"),
+    [
+        (language, msgid, expected)
+        for language, translations in CANONICAL_CERTIFICATE_TRANSLATIONS.items()
+        for msgid, expected in translations.items()
+    ],
+)
+def test_canonical_certificate_names_are_translated(language, msgid, expected):
+    with translation.override(language):
         assert gettext(msgid) == expected
 
 

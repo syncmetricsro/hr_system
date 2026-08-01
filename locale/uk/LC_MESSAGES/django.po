@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-31 13:47+0200\n"
+"POT-Creation-Date: 2026-08-01 15:51+0200\n"
 "Language: uk\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2081,6 +2081,18 @@ msgid "Activation blocked by open checklist items: %(items)s"
 msgstr ""
 "Активацію заблоковано відкритими пунктами контрольного списку: %(items)s"
 
+#: features/compliance/catalog_i18n.py:11 features/finance/catalog_i18n.py:17
+msgid "Forklift licence"
+msgstr "Посвідчення на навантажувач"
+
+#: features/compliance/catalog_i18n.py:12
+msgid "Crane licence"
+msgstr "Посвідчення кранівника"
+
+#: features/compliance/catalog_i18n.py:13
+msgid "Welding licence"
+msgstr "Посвідчення зварювальника"
+
 #: features/compliance/forms.py:31
 msgid "certificate type"
 msgstr "тип сертифіката"
@@ -2230,7 +2242,7 @@ msgstr ""
 "Відкрийте працівників із документами або медичними вимогами, що потребують "
 "уваги."
 
-#: features/compliance/panels.py:75
+#: features/compliance/panels.py:76
 #, python-format
 msgid "%(name)s (expires %(date)s)"
 msgstr "%(name)s (діє до %(date)s)"
@@ -2336,10 +2348,6 @@ msgstr "Збитки (витрати)"
 #: features/finance/catalog_i18n.py:16
 msgid "Forklift training"
 msgstr "Навчання на навантажувач"
-
-#: features/finance/catalog_i18n.py:17
-msgid "Forklift licence"
-msgstr "Посвідчення на навантажувач"
 
 # --- finance ---
 #: features/finance/catalog_i18n.py:19
@@ -3041,19 +3049,19 @@ msgstr "видача"
 msgid "inbound movement"
 msgstr "вхідний рух"
 
-#: features/logistics/models.py:521 tests/test_i18n_catalog.py:46
+#: features/logistics/models.py:521 tests/test_i18n_catalog.py:77
 msgid "initial quantity"
 msgstr "початкова кількість"
 
-#: features/logistics/models.py:523 tests/test_i18n_catalog.py:47
+#: features/logistics/models.py:523 tests/test_i18n_catalog.py:78
 msgid "initial value"
 msgstr "початкова вартість"
 
-#: features/logistics/models.py:525 tests/test_i18n_catalog.py:46
+#: features/logistics/models.py:525 tests/test_i18n_catalog.py:77
 msgid "remaining quantity"
 msgstr "залишкова кількість"
 
-#: features/logistics/models.py:527 tests/test_i18n_catalog.py:47
+#: features/logistics/models.py:527 tests/test_i18n_catalog.py:78
 msgid "remaining value"
 msgstr "залишкова вартість"
 
@@ -3651,8 +3659,8 @@ msgid ""
 msgstr ""
 "На панелі Професійні посвідчення уповноважений рекрутер, координатор або "
 "менеджер може додати один PDF, одне зображення або зображення лицьового й "
-"зворотного боків. За потреби вкажіть організацію-видавця й номер сертифіката, "
-"потім дату закінчення або позначте його як безстроковий."
+"зворотного боків. За потреби вкажіть організацію-видавця й номер "
+"сертифіката, потім дату закінчення або позначте його як безстроковий."
 
 #: templates/help/compliance.html:11
 msgid ""
@@ -3660,9 +3668,10 @@ msgid ""
 "history. Archive also keeps the record and files. Only a Manager can "
 "permanently remove improperly uploaded files, and a reason is required."
 msgstr ""
-"Поновлення створює новий активний сертифікат і зберігає попередній в історії. "
-"Архівування також зберігає запис і файли. Остаточно видалити неналежно "
-"завантажені файли може лише менеджер із обов’язковим зазначенням причини."
+"Поновлення створює новий активний сертифікат і зберігає попередній в "
+"історії. Архівування також зберігає запис і файли. Остаточно видалити "
+"неналежно завантажені файли може лише менеджер із обов’язковим зазначенням "
+"причини."
 
 #: templates/help/compliance.html:13
 msgid "Category icons"
@@ -3678,7 +3687,8 @@ msgstr ""
 "Невелика іконка біля фото працівника показує кожну активну категорію "
 "сертифіката. Зелений або без кольору означає дійсний, бурштиновий — скоро "
 "закінчується, червоний — прострочений. Замінені й архівовані сертифікати "
-"залишаються в історії, але не впливають на іконку чи сповіщення про строк дії."
+"залишаються в історії, але не впливають на іконку чи сповіщення про строк "
+"дії."
 
 # --- compliance ---
 #: templates/help/compliance.html:16
@@ -6007,6 +6017,9 @@ msgid ""
 "How much each colleague did in the selected period. This is reporting, not "
 "traceability — for who changed a specific record and why, use the Audit log."
 msgstr ""
+"Скільки зробив кожен колега за вибраний період. Це звітність, а не "
+"відстеження змін — щоб дізнатися, хто й чому змінив конкретний запис, "
+"скористайтеся Журналом аудиту."
 
 #: templates/pages/staff_activity.html:16
 msgid "People registered"
@@ -6021,6 +6034,8 @@ msgid ""
 "Every recruiter is listed, including those who registered nobody, so the gap "
 "between two of them is visible."
 msgstr ""
+"У списку є кожен рекрутер, зокрема ті, хто нікого не зареєстрував, щоб було "
+"видно різницю між ними."
 
 #: templates/pages/staff_activity.html:27
 msgid "No recruiters yet."
@@ -6184,7 +6199,7 @@ msgstr "Валові зарплати не зареєстровані."
 msgid "Money"
 msgstr "Гроші"
 
-#: templates/panels/advances_ledger.html:5 tests/test_i18n_catalog.py:56
+#: templates/panels/advances_ledger.html:5 tests/test_i18n_catalog.py:87
 msgid ""
 "Cash advances and deductions against this person's pay, settled through the "
 "weekly ledger cycle."
@@ -6244,7 +6259,7 @@ msgstr "Погодження"
 msgid "Activation checklist"
 msgstr "Контрольний список активації"
 
-#: templates/panels/checklists_items.html:5 tests/test_i18n_catalog.py:53
+#: templates/panels/checklists_items.html:5 tests/test_i18n_catalog.py:84
 msgid ""
 "Items marked critical must all be ticked before this person can be activated."
 msgstr ""
@@ -6407,6 +6422,8 @@ msgid ""
 "A first placement is not a transfer; only moves between accommodations are "
 "listed."
 msgstr ""
+"Перше поселення не є переселенням; у списку наведено лише переміщення між "
+"місцями проживання."
 
 #: templates/panels/logistics_staff_activity.html:32
 msgid "Moved by"

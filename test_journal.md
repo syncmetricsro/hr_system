@@ -1,5 +1,30 @@
 # Test Journal
 
+## 2026-08-01 - localization leak regression coverage
+
+- The compiled SK/HU/UK catalogs now translate all three canonical occupational
+  certificate names and the three previously empty Staff activity explanations.
+- Page-level tests prove canonical Crane badge tooltips contain no English name
+  under SK, HU or UK; arbitrary operator-entered certificate names retain their
+  existing pass-through behavior.
+- Page-level tests prove the People inactive-reason selector renders the seeded
+  `Sick` label as `Choroba`, `Beteg` and `Хвороба` in the respective locales.
+- A static template regression rejects untranslated literal tooltip,
+  placeholder, title and `aria-label` attributes while allowing translated and
+  deliberately dynamic values.
+- Final focused result: 106 tests passed across `test_pills.py`,
+  `test_people_views.py`, `test_staff_activity.py`, `test_i18n_catalog.py` and
+  `test_tooltips.py`. Ruff lint passed; Ruff formatting was applied and then
+  verified for the touched Python files.
+- The complete Jober unit lane passed with exit code 0. The complete CorvinumEU
+  lane passed with 555 tests, 17 expected skips and 280 Jober-only tests
+  deselected; page-level Ukrainian cases skip there because CorvinumEU exposes
+  SK/HU only, while Jober and direct catalog tests continue to cover Ukrainian.
+- Django system checks passed for both client settings and migration generation
+  reported no model changes. The standalone CorvinumEU history check warned
+  that the optional `corvinum` base development database was absent; its full
+  pytest lane nevertheless created and validated the dedicated test database.
+
 ## 2026-08-01 - manual Jober certificate positive paths
 
 - The fictional forklift card saved on staging, and the standard Edit flow

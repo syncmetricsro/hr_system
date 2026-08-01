@@ -28,10 +28,12 @@ def make_user(django_user_model):
         return django_user_model.objects.create_user(
             email=email or f"{role}@demo.jober.test", password="x", role=role
         )
+
     return _make
 
 
 # --- {% status_pill %} tag ---------------------------------------------------
+
 
 @pytest.mark.parametrize(
     ("status", "tone"),
@@ -51,7 +53,9 @@ def test_status_pill_dot_uses_correct_tone(status, tone):
 
 
 def test_status_pill_label_shows_visible_text():
-    person = Person(first_name="A", last_name="B", lifecycle_status=LifecycleStatus.WORKING)
+    person = Person(
+        first_name="A", last_name="B", lifecycle_status=LifecycleStatus.WORKING
+    )
     with translation.override("en"):
         html = status_pill(person, size="label")
     assert "status-pill-label" in html
@@ -59,6 +63,7 @@ def test_status_pill_label_shows_visible_text():
 
 
 # --- Nav badge registry + providers ------------------------------------------
+
 
 def test_compliance_badge_none_when_no_alerts(client, make_user):
     manager = make_user("manager")
@@ -69,7 +74,9 @@ def test_compliance_badge_none_when_no_alerts(client, make_user):
 
 def test_compliance_badge_counts_alerts_and_flags_severe(client, make_user):
     manager = make_user("manager")
-    Person.objects.create(first_name="A", last_name="B", lifecycle_status=LifecycleStatus.WORKING)
+    Person.objects.create(
+        first_name="A", last_name="B", lifecycle_status=LifecycleStatus.WORKING
+    )
     request = client.get(reverse("people_list")).wsgi_request
     request.user = manager
     result = compliance_badge(request)
@@ -79,7 +86,9 @@ def test_compliance_badge_counts_alerts_and_flags_severe(client, make_user):
 def test_compliance_badge_amber_when_only_expiring(client, make_user):
     manager = make_user("manager")
     person = Person.objects.create(first_name="A", last_name="B")
-    Certificate.objects.create(person=person, name="Visa", expiry_date=date.today() + timedelta(days=10))
+    Certificate.objects.create(
+        person=person, name="Visa", expiry_date=date.today() + timedelta(days=10)
+    )
     request = client.get(reverse("people_list")).wsgi_request
     request.user = manager
     result = compliance_badge(request)
@@ -101,9 +110,12 @@ def test_reviews_badge_none_when_no_pending_reviews(client, make_user):
 def test_reviews_badge_counts_pending_and_gated_by_rbac(client, make_user):
     manager = make_user("manager")
     coordinator = make_user("coordinator", email="c@demo.jober.test")
-    item = EquipmentItem.objects.create(name="Boots", size="42", unit_price=Decimal("45.00"))
+    item = EquipmentItem.objects.create(
+        name="Boots", size="42", unit_price=Decimal("45.00")
+    )
     receive_stock(
-        received_on=date.today(), operation_key=uuid4(),
+        received_on=date.today(),
+        operation_key=uuid4(),
         lines=[{"item": item, "quantity": 5, "total_value": Decimal("225.00")}],
         actor=manager,
     )
@@ -116,14 +128,18 @@ def test_reviews_badge_counts_pending_and_gated_by_rbac(client, make_user):
     assert reviews_badge(request) == {"count": 1, "severe": False}
 
     request.user = coordinator
-    assert reviews_badge(request) is None  # coordinator lacks equipment.review_deduction
+    assert (
+        reviews_badge(request) is None
+    )  # coordinator lacks equipment.review_deduction
 
 
 def test_nav_badge_registry_returns_first_non_none_provider():
     from core.ui.registry import register_nav_badge
 
     register_nav_badge("_test_slot", lambda request: None, order=10)
-    register_nav_badge("_test_slot", lambda request: {"count": 3, "severe": True}, order=20)
+    register_nav_badge(
+        "_test_slot", lambda request: {"count": 3, "severe": True}, order=20
+    )
     assert registry_nav_badge(object(), "_test_slot") == {"count": 3, "severe": True}
 
 
@@ -133,9 +149,12 @@ def test_nav_badge_registry_returns_none_for_unknown_slot():
 
 # --- End-to-end rendering -----------------------------------------------------
 
+
 def test_person_detail_renders_status_pill(client, make_user):
     manager = make_user("manager")
-    person = Person.objects.create(first_name="A", last_name="B", lifecycle_status=LifecycleStatus.WORKING)
+    person = Person.objects.create(
+        first_name="A", last_name="B", lifecycle_status=LifecycleStatus.WORKING
+    )
     client.force_login(manager)
     resp = client.get(reverse("person_detail", args=[person.pk]))
     assert resp.status_code == 200
@@ -144,7 +163,9 @@ def test_person_detail_renders_status_pill(client, make_user):
 
 def test_people_list_renders_status_pill_dot(client, make_user):
     manager = make_user("manager")
-    Person.objects.create(first_name="A", last_name="B", lifecycle_status=LifecycleStatus.BLACKLISTED)
+    Person.objects.create(
+        first_name="A", last_name="B", lifecycle_status=LifecycleStatus.BLACKLISTED
+    )
     client.force_login(manager)
     resp = client.get(reverse("people_list"))
     assert resp.status_code == 200
@@ -154,7 +175,9 @@ def test_people_list_renders_status_pill_dot(client, make_user):
 
 def test_nav_shows_compliance_badge_when_alerts_exist(client, make_user):
     manager = make_user("manager")
-    Person.objects.create(first_name="A", last_name="B", lifecycle_status=LifecycleStatus.WORKING)
+    Person.objects.create(
+        first_name="A", last_name="B", lifecycle_status=LifecycleStatus.WORKING
+    )
     client.force_login(manager)
     resp = client.get(reverse("people_list"))
     assert b'notification-count-alert">1</span>' in resp.content
@@ -182,8 +205,12 @@ TODAY = date.today()
 
 def test_most_relevant_certificate_prefers_soonest_expiring_valid():
     person = Person.objects.create(first_name="A", last_name="B")
-    soon = Certificate.objects.create(person=person, name="Soon", expiry_date=TODAY + timedelta(days=5))
-    later = Certificate.objects.create(person=person, name="Later", expiry_date=TODAY + timedelta(days=100))
+    soon = Certificate.objects.create(
+        person=person, name="Soon", expiry_date=TODAY + timedelta(days=5)
+    )
+    later = Certificate.objects.create(
+        person=person, name="Later", expiry_date=TODAY + timedelta(days=100)
+    )
     assert most_relevant_certificate([soon, later], TODAY) == soon
 
 
@@ -195,13 +222,20 @@ def test_most_relevant_certificate_falls_back_to_most_expired_when_none_valid():
     recently_expired = Certificate.objects.create(
         person=person, name="Recent", expiry_date=TODAY - timedelta(days=5)
     )
-    assert most_relevant_certificate([long_expired, recently_expired], TODAY) == long_expired
+    assert (
+        most_relevant_certificate([long_expired, recently_expired], TODAY)
+        == long_expired
+    )
 
 
 def test_most_relevant_certificate_treats_no_expiry_as_valid_but_never_urgent():
     person = Person.objects.create(first_name="A", last_name="B")
-    evergreen = Certificate.objects.create(person=person, name="No expiry", expiry_date=None)
-    soon = Certificate.objects.create(person=person, name="Soon", expiry_date=TODAY + timedelta(days=5))
+    evergreen = Certificate.objects.create(
+        person=person, name="No expiry", expiry_date=None
+    )
+    soon = Certificate.objects.create(
+        person=person, name="Soon", expiry_date=TODAY + timedelta(days=5)
+    )
     assert most_relevant_certificate([evergreen], TODAY) == evergreen
     assert most_relevant_certificate([evergreen, soon], TODAY) == soon
 
@@ -218,11 +252,15 @@ def test_certificate_badges_groups_by_category_and_tints_by_severity(client, mak
     manager = make_user("manager")
     person = Person.objects.create(first_name="A", last_name="B")
     Certificate.objects.create(
-        person=person, name="Forklift", category=CertificateCategory.FORKLIFT,
+        person=person,
+        name="Forklift",
+        category=CertificateCategory.FORKLIFT,
         expiry_date=TODAY - timedelta(days=1),
     )
     Certificate.objects.create(
-        person=person, name="Health check", category=CertificateCategory.HEALTH,
+        person=person,
+        name="Health check",
+        category=CertificateCategory.HEALTH,
         expiry_date=TODAY + timedelta(days=400),
     )
     request = client.get(reverse("people_list")).wsgi_request
@@ -237,11 +275,15 @@ def test_certificate_badges_picks_most_relevant_row_per_category(client, make_us
     manager = make_user("manager")
     person = Person.objects.create(first_name="A", last_name="B")
     Certificate.objects.create(
-        person=person, name="Old forklift", category=CertificateCategory.FORKLIFT,
+        person=person,
+        name="Old forklift",
+        category=CertificateCategory.FORKLIFT,
         expiry_date=TODAY - timedelta(days=100),
     )
     Certificate.objects.create(
-        person=person, name="Renewed forklift", category=CertificateCategory.FORKLIFT,
+        person=person,
+        name="Renewed forklift",
+        category=CertificateCategory.FORKLIFT,
         expiry_date=TODAY + timedelta(days=100),
     )
     request = client.get(reverse("people_list")).wsgi_request
@@ -259,29 +301,67 @@ def test_register_person_badges_and_getter(monkeypatch):
 
     registry_module.register_person_badges(lambda request, p: None, order=10)
     registry_module.register_person_badges(
-        lambda request, p: [{"icon": "cert-other", "tooltip": "x", "severity": None}], order=20
+        lambda request, p: [{"icon": "cert-other", "tooltip": "x", "severity": None}],
+        order=20,
     )
-    assert registry_person_badges(object(), person) == [{"icon": "cert-other", "tooltip": "x", "severity": None}]
+    assert registry_person_badges(object(), person) == [
+        {"icon": "cert-other", "tooltip": "x", "severity": None}
+    ]
 
 
 def test_people_list_shows_certificate_badge(client, make_user):
     manager = make_user("manager")
     person = Person.objects.create(first_name="A", last_name="B")
     Certificate.objects.create(
-        person=person, name="Forklift licence", category=CertificateCategory.FORKLIFT,
+        person=person,
+        name="Forklift licence",
+        category=CertificateCategory.FORKLIFT,
         expiry_date=TODAY - timedelta(days=1),
     )
     client.force_login(manager)
     resp = client.get(reverse("people_list"))
     body = resp.content.decode()
     assert "cert-badge-expired" in body
-    assert "Forklift licence" in body  # tooltip text
+    assert "Preukaz na VZV" in body  # default-Slovak tooltip text
+    assert "Forklift licence" not in body
+
+
+@pytest.mark.parametrize(
+    ("language", "expected_name", "expected_expiry"),
+    [
+        ("sk", "Žeriavnický preukaz", "platnosť do"),
+        ("hu", "Darukezelői jogosítvány", "lejár"),
+        ("uk", "Посвідчення кранівника", "діє до"),
+    ],
+)
+def test_certificate_badge_translates_canonical_name_and_tooltip(
+    client, make_user, language, expected_name, expected_expiry
+):
+    manager = make_user("manager")
+    person = Person.objects.create(first_name="A", last_name="B")
+    Certificate.objects.create(
+        person=person,
+        name="Crane licence",
+        category=CertificateCategory.CRANE,
+        expiry_date=date(2027, 6, 20),
+    )
+    request = client.get(reverse("people_list")).wsgi_request
+    request.user = manager
+
+    with translation.override(language):
+        tooltip = certificate_badges(request, person)[0]["tooltip"]
+
+    assert expected_name in tooltip
+    assert expected_expiry in tooltip
+    assert "Crane licence" not in tooltip
 
 
 def test_person_detail_shows_certificate_badge(client, make_user):
     manager = make_user("manager")
     person = Person.objects.create(first_name="A", last_name="B")
-    Certificate.objects.create(person=person, name="Health check", category=CertificateCategory.HEALTH)
+    Certificate.objects.create(
+        person=person, name="Health check", category=CertificateCategory.HEALTH
+    )
     client.force_login(manager)
     resp = client.get(reverse("person_detail", args=[person.pk]))
     body = resp.content.decode()

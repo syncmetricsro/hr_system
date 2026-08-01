@@ -23,8 +23,9 @@ from uuid import uuid4
 
 import pytest
 from django.apps import apps as django_apps
+from django.conf import settings
 from django.urls import reverse
-from django.utils import timezone
+from django.utils import timezone, translation
 
 from core.accounts.models import Role
 from core.offices.models import Office
@@ -201,6 +202,69 @@ def test_the_page_carries_a_period_control(client, manager):
     client.force_login(manager)
     response = client.get(reverse("staff_activity") + "?period=year&year=2026")
     assert response.context["period"].kind == "year"
+
+
+@pytest.mark.parametrize(
+    ("language", "expected_reporting", "expected_recruiters"),
+    [
+        (
+            "sk",
+            "Koľko toho každý kolega vykonal vo vybranom období.",
+            "V zozname je uvedený každý náborár",
+        ),
+        (
+            "hu",
+            "Az egyes kollégák által a kiválasztott időszakban elvégzett műveletek",
+            "Minden toborzó szerepel a listán",
+        ),
+        (
+            "uk",
+            "Скільки зробив кожен колега за вибраний період.",
+            "У списку є кожен рекрутер",
+        ),
+    ],
+)
+def test_staff_activity_explanations_are_translated(
+    client,
+    manager,
+    language,
+    expected_reporting,
+    expected_recruiters,
+):
+    if language not in dict(settings.LANGUAGES):
+        pytest.skip(f"{language} is not enabled for this client")
+    client.force_login(manager)
+
+    with translation.override(language):
+        response = client.get(reverse("staff_activity"))
+
+    body = response.content.decode()
+    assert expected_reporting in body
+    assert expected_recruiters in body
+    assert "How much each colleague did" not in body
+    assert "Every recruiter is listed" not in body
+
+
+@pytest.mark.jober_only
+@pytest.mark.parametrize(
+    ("language", "expected"),
+    [
+        ("sk", "Prvé pridelenie sa nepovažuje za presun"),
+        ("hu", "Az első elhelyezés nem számít áthelyezésnek"),
+        ("uk", "Перше поселення не є переселенням"),
+    ],
+)
+def test_logistics_staff_activity_explanation_is_translated(
+    client, manager, language, expected
+):
+    client.force_login(manager)
+
+    with translation.override(language):
+        response = client.get(reverse("staff_activity"))
+
+    body = response.content.decode()
+    assert expected in body
+    assert "A first placement is not a transfer" not in body
 
 
 # --- logistics contributions -------------------------------------------------
