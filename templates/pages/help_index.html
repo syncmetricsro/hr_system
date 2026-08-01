@@ -1,24 +1,42 @@
 {% extends "layouts/base.html" %}
-{% load i18n %}
+{% load i18n static icons %}
 
 {% block title %}{% trans "Help" %} · {{ BRAND_NAME }}{% endblock %}
 
 {% block content %}
-<section class="page-head">
+<section class="page-head help-index-head">
   <p class="eyebrow">{% trans "Documentation" %}</p>
   <h1>{% trans "Help" %}</h1>
+  <p class="muted">{% trans "Choose a workflow to learn its steps, permissions, and important safety boundaries." %}</p>
 </section>
 
-<section class="grid-2" aria-label="{% trans 'Help topics' %}">
+<div class="help-groups">
   {% for group in help_groups %}
-    <div class="panel">
-      <p class="eyebrow">{{ group.label }}</p>
-      <ul class="plain-list">
+    <section class="help-group" aria-labelledby="help-group-{{ forloop.counter }}">
+      <h2 id="help-group-{{ forloop.counter }}">{{ group.label }}</h2>
+      <div class="help-card-grid">
         {% for article in group.articles %}
-          <li><a href="{% url 'help_article' article.slug %}">{{ article.title }}</a></li>
+          <a class="help-card" href="{% url 'help_article' article.slug %}">
+            <div class="help-card-media">
+              <img src="{% static article.thumbnail %}"
+                   alt="{{ article.screenshots.0.alt }}"
+                   width="640"
+                   height="360"
+                   loading="lazy"
+                   decoding="async">
+            </div>
+            <div class="help-card-body">
+              <span class="help-card-icon">{% icon article.icon size="lg" %}</span>
+              <span class="help-card-copy">
+                <strong>{{ article.title }}</strong>
+                <span>{{ article.summary }}</span>
+              </span>
+              <span class="help-card-arrow" aria-hidden="true">→</span>
+            </div>
+          </a>
         {% endfor %}
-      </ul>
-    </div>
+      </div>
+    </section>
   {% endfor %}
-</section>
+</div>
 {% endblock %}

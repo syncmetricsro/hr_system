@@ -5,6 +5,7 @@ from urllib.parse import urlsplit
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.http import Http404, HttpRequest, HttpResponse
+from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.urls import translate_url
 from django.utils.translation import gettext as _
@@ -21,9 +22,11 @@ from core.offices.scoping import scope_people
 from core.ui import registry
 from core.ui.help import (
     ARTICLE_TEMPLATES,
-    HELP_GROUPS,
+    LEGACY_REDIRECTS,
+    article_context,
     article_is_available,
     available_groups,
+    raw_article,
 )
 from core.people.models import LifecycleStatus, Person
 from core.people.services import inactive_by_reason
@@ -188,15 +191,29 @@ def help_index(request: HttpRequest) -> TemplateResponse:
 
 @login_required
 def help_article(request: HttpRequest, slug: str) -> TemplateResponse:
+    legacy_target = LEGACY_REDIRECTS.get(slug)
+    if legacy_target is not None:
+        target = raw_article(legacy_target)
+        if target is None or not article_is_available(target):
+            raise Http404
+        return redirect("help_article", slug=legacy_target, permanent=True)
+
     template = ARTICLE_TEMPLATES.get(slug)
     if template is None:
         raise Http404
     # A hidden article must also be unreachable by URL, or the gate is
     # decoration rather than a boundary.
-    article = next(
-        (a for group in HELP_GROUPS for a in group["articles"] if a["slug"] == slug),
-        None,
-    )
+    article = raw_article(slug)
     if article is None or not article_is_available(article):
         raise Http404
-    return TemplateResponse(request, template, {"slug": slug})
+    prepared = article_context(article)
+    related = []
+    for related_slug in article.get("related", ()):
+        related_article = raw_article(related_slug)
+        if related_article is not None and article_is_available(related_article):
+            related.append(article_context(related_article))
+    return TemplateResponse(
+        request,
+        template,
+        {"slug": slug, "article": prepared, "related_articles": related},
+    )

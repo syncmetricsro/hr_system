@@ -17,6 +17,24 @@ requiring its own AGENTS.md §3.1 approval, not a silent addition here.
 from __future__ import annotations
 
 ICONS: dict[str, dict[str, str]] = {
+    # Help topics reuse symbols and ligatures already shipped by both clients.
+    # Do not add a Material name here unless it is present in CorvinumEU's
+    # committed icon subset.
+    "help": {"svg": "help", "material": "info"},
+    "people": {"svg": "people", "material": "groups"},
+    "projects": {"svg": "projects", "material": "engineering"},
+    "readiness": {"svg": "approvals", "material": "task_alt"},
+    "compliance": {"svg": "compliance", "material": "verified_user"},
+    "equipment": {"svg": "warehouse", "material": "precision_manufacturing"},
+    "accommodation": {"svg": "accommodation", "material": "home"},
+    "reports": {"svg": "reports", "material": "trending_up"},
+    "finance": {"svg": "finance", "material": "paid"},
+    "feedback": {"svg": "feedback", "material": "mail"},
+    "ledger": {"svg": "ledger", "material": "payments"},
+    "payslips": {"svg": "payslips", "material": "paid"},
+    "gross-wages": {"svg": "finance", "material": "payments"},
+    "blacklist": {"svg": "blacklist", "material": "gavel"},
+    "audit": {"svg": "audit", "material": "verified"},
     "add": {"svg": "add", "material": "add"},
     "edit": {"svg": "edit", "material": "edit"},
     "delete": {"svg": "delete", "material": "delete"},
