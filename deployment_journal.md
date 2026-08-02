@@ -1,13 +1,38 @@
 # Deployment Journal
 
-## 2026-08-01 - Expanded Help is deliberately not deployed yet
+## 2026-08-02 - Complete Help area deployed to both staging clients
 
-The two-client Help implementation and fictional screenshot pack are being
-prepared on a dedicated Help branch. No Dokku app, database, seed, runtime
-configuration, provider, or production system was changed. Deployment remains
-blocked by the planned Help-only PR review, green Jober and CorvinumEU CI, a
-final production-image build, and the new 12-card staging acceptance gate in
-the shared runbook.
+Merged PR **#153** and deployed exact merge **`c78e962`** to `jober-staging`
+and `corvinum-staging` as the shared image `jober-platform:demo-c78e962`
+(source image digest
+`sha256:e527c80ddaad93ea69c33935d8e90620a623c04110cbc68b3717ba83880d03ce`).
+The image was built locally from the clean merge, passed the Node-artifact,
+vendor-integrity and production-runtime checks, and was streamed through
+Dokku `git:load-image`; the VPS did not build the source tree or receive
+build-time secrets.
+
+GitHub Actions run `30706522432` was green before merge: the complete browser
+job passed in 3m11s and the two-client quality/unit job passed in 12m06s. Both
+staging databases then reported no pending migrations. The read-only
+certificate-policy scan found zero disallowed records with files on each app.
+Both replacement containers passed Dokku uptime and port checks plus the full
+HTTPS smoke suite: health, login/CSRF, fingerprinted CSS, X-Frame-Options and
+HSTS. The active nginx configuration still exposes
+`client_max_body_size 25m;` on both apps.
+
+The authenticated staging acceptance check proved exactly 12 cards and 12
+openable articles for each client, the shared purpose/permission/workflow/
+boundary/example structure, translated HTML callouts, three unsupported
+client topics returning 404, and the former Logistics URL redirecting to
+Equipment. All 24 Jober WebPs and all 24 Corvinum WebPs are discoverable by
+the deployed application and served successfully over public HTTPS. Jober
+uses its Slovak/Jober namespace and CorvinumEU its Hungarian/Corvinum
+namespace, with no cross-client image reference.
+
+No seed, purge, SMS, Telegram, SMTP, payslip-send, runtime configuration, or
+production action ran. Both staging databases remain fictional. The previous
+shared image `jober-platform:demo-1458ff7` remains the immediate rollback
+target for both apps.
 
 ## 2026-08-01 - Jober staging accepted all three occupational file forms
 
