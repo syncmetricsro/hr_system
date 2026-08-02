@@ -17,7 +17,7 @@ Production apps and real PII are **out of scope** — gated on the legal items
 > and pastes output back; nothing here transmits secrets through a third party.
 > Root commands are on the VPS; the build/transfer step is on the dev machine.
 
-## Current CorvinumEU staging state — 2026-08-01
+## Current CorvinumEU staging state — 2026-08-02
 
 The CorvinumEU half of this runbook is now deployed as a **fictional-data
 client demo**:
@@ -28,7 +28,7 @@ client demo**:
 | App / database | `corvinum-staging` / `pg-corvinum-staging` |
 | Settings module | `clients.corvinum_eu.production` |
 | Temporary public URL | `https://corvinum-staging.80.211.210.46.sslip.io/sk/prihlasenie/` |
-| Deployed image | `jober-platform:demo-1458ff7` |
+| Deployed image | `jober-platform:demo-c78e962` |
 | Proxy upload ceiling | `client_max_body_size 25m` on both staging apps |
 | Seed data | published Recruiter intake v3 and fictional CorvinumEU scenario only |
 
