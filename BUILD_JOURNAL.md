@@ -1,5 +1,51 @@
 # Build Journal
 
+## 2026-08-03 - The email recipient allowlist becomes a platform control
+
+The allowlist shipped a day earlier inside `features/messaging`, guarding job
+offers. It guarded the wrong client. CorvinumEU installs `features.payslips` and
+not `features.messaging`, and CorvinumEU is the deployment about to be pointed at
+a live mail server (`noreply@corvinum.eu`). `send_payslip` emailed
+`payslip.sent_to or person.email` unconditionally; the only thing between a demo
+and a real inbox was the runbook telling the presenter to use a controlled
+mailbox. That is exactly the control `tests/test_sms_safety.py` rejects — a
+fictional record with a real address typed into it is indistinguishable from any
+other, so "the data is fake" is not a control.
+
+The deploy check had the same shape of bug and was worse, because it looked like
+protection: `messaging.W001` was gated on `FEATURE_FLAGS["offer_emails"]`, which
+is False on CorvinumEU, so the warning could never fire for the client that
+needed it.
+
+`core/mail.py` now owns the question of whether and where this environment may
+send mail — `assert_recipient_allowed`, `email_configured`, and the list of flags
+whose features can email a worker. It has to be core rather than shared between
+features: the two senders ship to different clients and neither can import the
+other, since importing a non-installed app's services pulls in its models. Same
+reasoning that put the upload pipeline in `core/media.py`. The check moved to
+`core/checks.py` as `mail.W001`, registered from `core.ui`, and now fires for
+payslips as well as offers.
+
+In `send_payslip` the guard sits before the password and the PDF, not merely
+before the send. The one-time password exists only in the caller's flash message,
+so minting one for a refused send would have a presenter read out a password for
+an email nobody received. A refusal raises `PayslipError`, which the existing
+view already turns into an error message, leaves `sent_at` untouched so a blocked
+attempt never reads as a delivery, and writes a new `payslip.send_blocked` audit
+event — previously only successes were audited.
+
+The payslip list also gained the honest disabled state the offer panel has: when
+email is unusable the Send button is disabled with a reason, rather than offering
+a control that fails at the mail server. `scripts/corvinum_app.sh` forwards
+`EMAIL_ALLOWED_RECIPIENTS` and warns when real SMTP is configured without it —
+deliberately a warning, not a hard requirement, because empty means unrestricted
+and that is correct in production.
+
+Recorded, not fixed: `payslip_send` fetches by pk with no office guard. Not
+exploitable today — CorvinumEU creates no `Office` rows so the scope helper
+returns its unrestricted sentinel, and Jober has the feature off — but it is real
+the moment either changes.
+
 ## 2026-08-02 - Job offers reach workers by email, in their own language
 
 Jober could reach a worker by SMS only. `features/messaging` was Twilio-shaped

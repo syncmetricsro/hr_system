@@ -72,8 +72,17 @@ configure_app_email() {
     -e DJANGO_EMAIL_HOST_PASSWORD
     -e DJANGO_EMAIL_USE_TLS
     -e DJANGO_DEFAULT_FROM_EMAIL
+    # Not in the required list above on purpose: empty means unrestricted, which
+    # is what production wants, so demanding it would break the secret-free
+    # console fallback. Unset here only warns (manage.py check, mail.W001).
+    -e EMAIL_ALLOWED_RECIPIENTS
   )
   EMAIL_DELIVERY=smtp
+  if [ -z "${EMAIL_ALLOWED_RECIPIENTS:-}" ]; then
+    echo "WARNING: real SMTP with no EMAIL_ALLOWED_RECIPIENTS." >&2
+    echo "  A fictional worker record holding a real address will be emailed." >&2
+    echo "  Set it to the controlled demo inbox before rehearsing." >&2
+  fi
 }
 
 build_image() { echo "Building $IMAGE ..."; docker build -t "$IMAGE" .; }

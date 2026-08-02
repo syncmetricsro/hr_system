@@ -58,14 +58,19 @@ would make the recruitment pool unusable for its purpose, and Art. 21 objection
   `OutboundEmail` row. `BLOCKED` (we never asked the mail server) stays distinct
   from `FAILED` (it saw the message and refused), so a safety net is never
   mistaken for an outage — or for a delivery.
-- **Environment allowlist.** `EMAIL_ALLOWED_RECIPIENTS` restricts recipients on
+- **Environment allowlist (platform-wide since 2026-08-03).**
+  `EMAIL_ALLOWED_RECIPIENTS` restricts recipients on
   every non-production app. The reasoning is the one `tests/test_sms_safety.py`
   records: a fictional person record with a real address typed into it is
   indistinguishable from any other, so "the data is fake" is not a control.
   Empty means unrestricted, which is production's setting, so it cannot be made
-  mandatory — instead `manage.py check` raises `messaging.W001` when outreach is
-  enabled with a real SMTP backend, DEBUG off, and no allowlist. That warning is
-  the execution gate, the counterpart of `BLACKLIST_MATCHING_ENABLED`.
+  mandatory — instead `manage.py check` raises `mail.W001` when *any*
+  worker-email feature is enabled with a real SMTP backend, DEBUG off, and no
+  allowlist. That warning is the execution gate, the counterpart of
+  `BLACKLIST_MATCHING_ENABLED`. The rule lives in `core/mail.py` and guards
+  CorvinumEU payslip delivery (ADR 0023) as well as offer emails: the two
+  senders ship to different clients and neither can import the other, so a
+  feature-local guard protected only the client that did not need it.
 - **Blast radius is capped.** Bulk sending is manager-only
   (`offer_email.bulk_send`), requires an explicit confirmation box, shows the
   recipient list and a rendered preview first, and is capped by

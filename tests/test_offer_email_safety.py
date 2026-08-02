@@ -30,10 +30,7 @@ from features.messaging.models import (  # noqa: E402
     OfferEmailTemplate,
     OutboundEmail,
 )
-from features.messaging.services import (  # noqa: E402
-    email_configured,
-    send_offer_email,
-)
+from features.messaging.services import send_offer_email  # noqa: E402
 
 pytestmark = [pytest.mark.django_db, pytest.mark.jober_only]
 
@@ -177,18 +174,11 @@ def test_empty_allowlist_is_unrestricted(settings, template, offer, person):
 
 
 # --- honest disabled state -------------------------------------------------
-
-
-def test_console_backend_counts_as_configured(settings):
-    """Otherwise every local demo would render the panel as unavailable."""
-    settings.EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-    assert email_configured() is True
-
-
-def test_smtp_without_a_host_is_unconfigured(settings):
-    settings.EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-    settings.EMAIL_HOST = ""
-    assert email_configured() is False
+#
+# The generic behaviour of `email_configured` and the `mail.W001` deploy check
+# moved to tests/test_core_mail.py when the allowlist became a platform control.
+# What stays here is what is specific to this transport: that an unconfigured
+# backend produces a FAILED record rather than a silent no-op.
 
 
 def test_unconfigured_smtp_records_failed_and_sends_nothing(
@@ -201,26 +191,3 @@ def test_unconfigured_smtp_records_failed_and_sends_nothing(
 
     assert record.status == OutboundEmail.Status.FAILED
     assert mail.outbox == []
-
-
-# --- the deploy-time check -------------------------------------------------
-
-
-def test_check_warns_when_outreach_is_on_with_no_allowlist(settings):
-    from features.messaging.checks import offer_email_allowlist_check
-
-    settings.FEATURE_FLAGS = {**settings.FEATURE_FLAGS, "offer_emails": True}
-    settings.EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-    settings.EMAIL_ALLOWED_RECIPIENTS = []
-
-    assert [w.id for w in offer_email_allowlist_check(None)] == ["messaging.W001"]
-
-
-def test_check_is_quiet_with_an_allowlist(settings):
-    from features.messaging.checks import offer_email_allowlist_check
-
-    settings.FEATURE_FLAGS = {**settings.FEATURE_FLAGS, "offer_emails": True}
-    settings.EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-    settings.EMAIL_ALLOWED_RECIPIENTS = [ALLOWED]
-
-    assert offer_email_allowlist_check(None) == []

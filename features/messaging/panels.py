@@ -10,13 +10,10 @@ from __future__ import annotations
 from core.accounts.models import Role
 from core.accounts.permissions import Action, user_office_scope
 from core.accounts.permissions import can as user_can
+from core.mail import email_configured
 from core.ui.registry import flag_enabled
 from features.messaging.models import JobOffer, MessageTemplate, OfferEmailKind
-from features.messaging.services import (
-    email_configured,
-    offer_email_block_reason,
-    sms_configured,
-)
+from features.messaging.services import offer_email_block_reason, sms_configured
 
 
 def sms_panel(request, person):

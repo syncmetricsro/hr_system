@@ -10,7 +10,6 @@ class MessagingConfig(AppConfig):
         # Feature -> core registrations (ADR 0021).
         from core.retention.services import register_retention
         from core.ui.registry import register_person_panel
-        from features.messaging import checks  # noqa: F401  (registers the check)
         from features.messaging.panels import offer_email_panel, sms_panel
         from features.messaging.services import purge_offer_emails
 

@@ -11,6 +11,7 @@ from django.views.decorators.http import require_POST
 
 from core.accounts.models import Role
 from core.accounts.permissions import Action, require_action, user_office_scope
+from core.mail import email_configured
 from core.offices.models import Office
 from core.offices.scoping import (
     assert_office_in_scope,
@@ -34,7 +35,6 @@ from features.messaging.models import (
 )
 from features.messaging.services import (
     OfferTemplateMissing,
-    email_configured,
     offer_batch_limit,
     offer_email_block_reason,
     render_offer_email,

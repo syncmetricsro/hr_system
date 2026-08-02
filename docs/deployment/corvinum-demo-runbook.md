@@ -49,6 +49,21 @@ The local Corvinum SMTP demo uses Doppler project `hr_system`, config
 doppler configure set --scope . project=hr_system config=dev_corvinum_demo
 ```
 
+**Set the recipient allowlist once, before any real-SMTP run.** Payslip delivery
+consults `EMAIL_ALLOWED_RECIPIENTS` (ADR 0023 amendment); empty means
+*unrestricted*, which is correct in production and dangerous on a demo box:
+
+```bash
+doppler secrets set EMAIL_ALLOWED_RECIPIENTS="<controlled-test-inbox>" \
+  --project hr_system --config dev_corvinum_demo
+```
+
+With it set, a fictional worker record that happens to hold a real address is
+refused before the mail server is contacted, no one-time password is generated,
+and the attempt appears in Audit as `payslip.send_blocked`. Without it, the
+runner prints a warning and `manage.py check` reports `mail.W001`. Procedure —
+"remember to use the test mailbox" — is not a control; this is.
+
 This writes only to your local Doppler CLI configuration; it does not change
 the committed [doppler.yaml](../../doppler.yaml) or add secrets to the
 repository. After this setup, use `doppler run -- scripts/corvinum_app.sh ...`
@@ -113,6 +128,9 @@ opening act.
   promise a QR code when staging already has an enrolled device.
 - Open the controlled, non-personal test mailbox that will receive the payslip.
   Do not use a real worker's address while the real-data gate is closed.
+- Confirm `EMAIL_ALLOWED_RECIPIENTS` names that mailbox: `doppler secrets get
+  EMAIL_ALLOWED_RECIPIENTS --project hr_system --config dev_corvinum_demo --plain`.
+  A blank result means the demo can email any address a record happens to hold.
 - Keep this runbook and
   [the open client decisions](../product/corvinum-open-questions.md) open away
   from the shared screen.

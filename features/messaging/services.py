@@ -18,6 +18,11 @@ from django.utils import timezone, translation
 from django.utils.translation import gettext_lazy as _
 
 from core.audit.services import record_event
+from core.mail import (
+    EmailRecipientNotAllowed,
+    assert_recipient_allowed,
+    email_configured,
+)
 from core.people.models import LifecycleStatus
 from features.messaging.models import (
     EmailBatch,
@@ -151,46 +156,12 @@ class EmailSendError(Exception):
     """The mail server rejected or failed the send."""
 
 
-class EmailRecipientNotAllowed(Exception):
-    """A non-production allowlist stopped the send before the mail server."""
-
-
 class OfferEmailBlocked(Exception):
     """The worker's own state stops this send (opt-out, blacklist, no address)."""
 
 
 class OfferTemplateMissing(Exception):
     """No active template exists for this kind in any usable language."""
-
-
-def email_configured() -> bool:
-    """Whether a send could actually leave the process.
-
-    The console and locmem backends cannot fail, so they count as configured -
-    otherwise every local demo and every test would render the panel as
-    "unavailable". Only the real SMTP backend needs checking. Same purpose as
-    ``sms_configured``: let the UI *say* it, rather than offer a button that
-    files a failure.
-    """
-    backend = getattr(settings, "EMAIL_BACKEND", "")
-    if "smtp" not in backend:
-        return True
-    return bool(
-        getattr(settings, "EMAIL_HOST", "")
-        and getattr(settings, "DEFAULT_FROM_EMAIL", "")
-    )
-
-
-def _assert_email_recipient_allowed(to_email: str) -> None:
-    allowed = getattr(settings, "EMAIL_ALLOWED_RECIPIENTS", []) or []
-    if not allowed:  # Empty = unrestricted; production's setting.
-        return
-    if (to_email or "").strip().casefold() not in {
-        address.strip().casefold() for address in allowed
-    }:
-        raise EmailRecipientNotAllowed(
-            "This environment may only email its configured test addresses."
-        )
 
 
 def _offer_language(person) -> str:
@@ -321,7 +292,7 @@ def send_offer_email(
         reason = offer_email_block_reason(person)
         if reason:
             raise OfferEmailBlocked(reason)
-        _assert_email_recipient_allowed(record.to_email)
+        assert_recipient_allowed(record.to_email)
         if not email_configured():
             raise EmailNotConfigured("Email delivery is not configured.")
 

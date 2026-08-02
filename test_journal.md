@@ -1,5 +1,37 @@
 # Test Journal
 
+## 2026-08-03 - worker email allowlist, both senders
+
+- **20 new tests** across two modules, and neither carries `jober_only` — that
+  is the point. `core.mail` is installed everywhere and `features.payslips` is
+  installed for both clients, so both modules run in the corvinum lane, which is
+  the lane that actually exercises payslip delivery.
+- `tests/test_core_mail.py` pins the allowlist semantics once, where the code now
+  lives: empty means unrestricted (production's setting, and an unset variable
+  must not take email down), case- and whitespace-insensitive matching, a blank
+  address refused when a list exists, and `email_configured` across console,
+  locmem and SMTP backends.
+- The `mail.W001` cases include the regression that prompted the move: the check
+  fires for `payslips` alone, with `offer_emails` explicitly False. It stays
+  quiet on a console backend and under DEBUG, so the warning that matters is not
+  buried in noise on every developer machine.
+- `tests/test_payslip_email_safety.py` covers the refusal end to end: no mail, no
+  `sent_at`, a `payslip.send_blocked` audit event and no `payslip.sent`, and an
+  explode-guard monkeypatching `build_encrypted_pdf` proving **no PDF and no
+  password** are produced for a blocked recipient. The resend case is separate
+  and deliberate — `send_payslip` prefers `sent_to` over `person.email`, so a
+  payslip delivered before the guard existed carries an address that was never
+  checked; correcting the person's address must not launder it.
+- Proven by running the check by hand under `clients.corvinum_eu.settings` with
+  SMTP configured and no allowlist: `mail.W001` fires, naming `payslips`.
+- `tests/test_offer_email_safety.py` lost the moved tests and kept its
+  transport-specific one. Its behaviour assertions are unchanged, which is the
+  point of a move.
+- Full gate green: Ruff clean, dependency-direction tripwire clean, `check` and
+  `makemigrations --check` under both settings modules, **1000 passed / 9
+  skipped** in Jober and **600 passed / 21 skipped / 257 deselected** in
+  CorvinumEU, and **62/62** e2e after the payslip template change.
+
 ## 2026-08-02 - offer emails
 
 - **54 new unit tests** across four modules, all `jober_only` and behind the

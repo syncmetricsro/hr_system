@@ -8077,3 +8077,12 @@ msgstr[0] "%(counter)s príjemca"
 msgstr[1] "%(counter)s príjemcovia"
 msgstr[2] "%(counter)s príjemcov"
 
+#. Worker email allowlist (ADR 0023/0029)
+#: core/mail.py features/payslips/services.py templates/pages/payslips.html
+msgid "Email is not configured in this environment. Payslips can be recorded, but nothing will be sent."
+msgstr "E-mail nie je v tomto prostredí nakonfigurovaný. Výplatné pásky možno zaznamenať, ale nič sa neodošle."
+
+#: core/mail.py features/payslips/services.py templates/pages/payslips.html
+msgid "This environment may only email its configured test addresses."
+msgstr "Toto prostredie môže posielať e-maily len na nakonfigurované testovacie adresy."
+

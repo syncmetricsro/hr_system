@@ -3,6 +3,16 @@
 Status: **Accepted — 2026-08-02.**
 Date drafted: 2026-08-02
 
+Amendment note, 2026-08-03: the recipient allowlist and the configured-state
+helper described below shipped inside `features/messaging`. They have moved
+to **`core/mail.py`**, and the deploy check to **`core/checks.py`** as
+`mail.W001` (superseding `messaging.W001`). Reason: CorvinumEU installs
+`features.payslips` and *not* `features.messaging`, so a guard living in the
+messaging feature protected the one client that did not need it and left the
+one with a live mail server unguarded — and the old check was gated on
+`FEATURE_FLAGS["offer_emails"]`, always False there. The decisions below are
+unchanged; only the module boundary moved.
+
 ## Context
 
 Jober could reach a worker by SMS only. `features/messaging` is Twilio-shaped end
