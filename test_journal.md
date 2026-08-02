@@ -1,5 +1,23 @@
 # Test Journal
 
+## 2026-08-02 - Help card icon containment regression
+
+- The focused two-client Help browser slice passed **4/4** after adding the
+  missing shared `icon-lg` rule.
+- The desktop test measures all 12 card icons for Jober and all 12 for
+  CorvinumEU. Every glyph must be 23–25px in both dimensions and its four edges
+  must remain within the corresponding 44×44 tile.
+- This directly covers Jober's SVG sprite backend and CorvinumEU's Material
+  Symbols backend, so a future fallback to intrinsic SVG dimensions or a font
+  sizing regression fails the browser suite.
+- The complete quality gate passed: supply-chain and production-image/static
+  checks, Ruff, both Django system and migration checks, **927 passed / 8
+  skipped** in Jober, and **575 passed / 17 skipped / 257 deselected** in
+  CorvinumEU.
+- The final complete two-client Chromium suite passed **56/56**, including the
+  new icon geometry assertions plus the existing desktop/mobile, theme,
+  navigation, upload and feature-workflow coverage.
+
 ## 2026-08-01 - complete Help release gate
 
 - Focused Help tests passed under both settings modules: 50 Jober tests and 49

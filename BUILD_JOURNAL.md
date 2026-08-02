@@ -1,5 +1,21 @@
 # Build Journal
 
+## 2026-08-02 - Help card icons share a complete size vocabulary
+
+The shared icon stylesheet now defines the previously missing `lg` size as a
+24×24 glyph. Help cards already requested that size inside their 44×44 icon
+tiles, but Jober's SVG backend fell back to the browser's intrinsic 300×150 SVG
+dimensions because only `sm` and `md` existed. The oversized glyphs escaped
+their tiles and obscured card text. CorvinumEU's Material Symbols happened to
+remain 24px through its client font rule and did not exhibit the defect.
+
+The correction is representation-neutral and lives in the existing shared
+size vocabulary; it does not branch on client identity or alter either icon
+backend. Browser coverage now measures every visible Help-card glyph for both
+clients, requires the intended 24px dimensions, and proves each glyph remains
+inside its 44px tile. No schema, dependency, translation, or Help content
+changed.
+
 ## 2026-08-01 - Help becomes a complete two-client workflow guide
 
 The former nine broad Help pages are replaced by a feature-aware registry and

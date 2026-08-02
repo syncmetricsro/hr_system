@@ -55,6 +55,43 @@ def _contrast(page, selector: str) -> float:
     )
 
 
+def _assert_help_card_icons_fit_tiles(page) -> None:
+    measurements = page.locator(".help-card-icon").evaluate_all(
+        """tiles => tiles.map(tile => {
+          const glyph = tile.querySelector(".icon");
+          const tileBox = tile.getBoundingClientRect();
+          const glyphBox = glyph.getBoundingClientRect();
+          return {
+            tile: {
+              top: tileBox.top,
+              right: tileBox.right,
+              bottom: tileBox.bottom,
+              left: tileBox.left,
+            },
+            glyph: {
+              width: glyphBox.width,
+              height: glyphBox.height,
+              top: glyphBox.top,
+              right: glyphBox.right,
+              bottom: glyphBox.bottom,
+              left: glyphBox.left,
+            },
+          };
+        })"""
+    )
+
+    assert len(measurements) == 12
+    for measurement in measurements:
+        tile = measurement["tile"]
+        glyph = measurement["glyph"]
+        assert 23 <= glyph["width"] <= 25
+        assert 23 <= glyph["height"] <= 25
+        assert glyph["left"] >= tile["left"]
+        assert glyph["right"] <= tile["right"]
+        assert glyph["top"] >= tile["top"]
+        assert glyph["bottom"] <= tile["bottom"]
+
+
 @pytest.mark.parametrize("client_config", CLIENTS)
 def test_help_cards_and_articles_work_on_desktop_and_mobile(page, client_config):
     page.set_viewport_size({"width": 1440, "height": 900})
@@ -67,6 +104,7 @@ def test_help_cards_and_articles_work_on_desktop_and_mobile(page, client_config)
     cards = page.locator("a.help-card")
     expect(cards).to_have_count(12)
     assert page.evaluate("document.documentElement.scrollWidth") == 1440
+    _assert_help_card_icons_fit_tiles(page)
 
     workforce_cards = page.locator(".help-card-grid").nth(1).locator("a.help-card")
     expect(workforce_cards).to_have_count(3)

@@ -340,6 +340,12 @@ svg.icon {
   font-size: 1.25rem;
 }
 
+.icon-lg {
+  width: 1.5rem;
+  height: 1.5rem;
+  font-size: 1.5rem;
+}
+
 /* Avatars (docs/product/avatar-design.md) - {% avatar %} tag,
    core/ui/templatetags/avatars.py. Uploaded photo or an illustrated
    per-role default (core/static/core/avatars/) - always an <img>. */
