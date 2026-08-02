@@ -72,7 +72,14 @@ def email_configured() -> bool:
         return False
     if "smtp" not in backend:
         return True
-    return bool(
-        getattr(settings, "EMAIL_HOST", "")
-        and getattr(settings, "DEFAULT_FROM_EMAIL", "")
-    )
+    # `localhost` is not a mail server anyone chose - it is the os.getenv
+    # fallback in config/settings/base.py, i.e. "nobody set this". Treating it
+    # as configured made every unconfigured environment offer a Send button and
+    # then fail against a refused connection on port 587, which is precisely the
+    # dishonest state this function exists to prevent. An environment genuinely
+    # relaying through a local MTA sets DJANGO_EMAIL_HOST explicitly to
+    # 127.0.0.1 or its hostname.
+    host = (getattr(settings, "EMAIL_HOST", "") or "").strip()
+    if host in ("", "localhost"):
+        return False
+    return bool(getattr(settings, "DEFAULT_FROM_EMAIL", ""))

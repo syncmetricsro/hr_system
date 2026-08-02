@@ -106,6 +106,26 @@ def test_smtp_without_a_host_is_unconfigured(settings):
     assert email_configured() is False
 
 
+def test_the_default_localhost_host_is_unconfigured(settings):
+    """`localhost` is base.py's os.getenv fallback, not a chosen mail server.
+    Reading it as configured made `scripts/dev_app.sh` present an enabled Send
+    button on a Jober demo with no SMTP at all, so every press filed a FAILED
+    record against a refused connection on port 587."""
+    settings.EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+    settings.EMAIL_HOST = "localhost"
+    settings.DEFAULT_FROM_EMAIL = "noreply@localhost"
+    assert email_configured() is False
+
+
+def test_an_explicit_local_mta_is_configured(settings):
+    """Someone genuinely relaying through a local MTA names it explicitly, so
+    the rule above must not lock them out."""
+    settings.EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+    settings.EMAIL_HOST = "127.0.0.1"
+    settings.DEFAULT_FROM_EMAIL = "noreply@example.test"
+    assert email_configured() is True
+
+
 def test_smtp_with_a_host_is_configured(settings):
     settings.EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
     settings.EMAIL_HOST = "smtp.example.test"
