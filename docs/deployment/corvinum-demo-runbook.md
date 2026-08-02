@@ -66,9 +66,18 @@ runner prints a warning and `manage.py check` reports `mail.W001`. Procedure —
 
 This writes only to your local Doppler CLI configuration; it does not change
 the committed [doppler.yaml](../../doppler.yaml) or add secrets to the
-repository. After this setup, use `doppler run -- scripts/corvinum_app.sh ...`
-for the real-SMTP rehearsal. For a Jober provider-backed session in the same
-workspace, always select its configuration explicitly:
+repository.
+
+**Always pass `--project` and `--config` explicitly anyway.** If the CLI scope
+is missing or was cleared, a bare `doppler run --` silently falls back to
+[doppler.yaml](../../doppler.yaml), which selects the **Jober `dev`** config —
+and that config carries working SMTP credentials with **no**
+`EMAIL_ALLOWED_RECIPIENTS`. The Corvinum demo would then start with
+unrestricted real sending from the wrong mail account. Verified on 2026-08-03,
+when exactly that scope was found unset.
+
+So every real-SMTP rehearsal command below names its configuration in full. For
+a Jober provider-backed session in the same workspace, do the same:
 
 ```bash
 doppler run --project hr_system --config dev -- scripts/dev_app.sh up
@@ -87,7 +96,7 @@ client with the dedicated Corvinum demo SMTP configuration, and verify its
 health:
 
 ```bash
-doppler run -- scripts/corvinum_app.sh rebuild
+doppler run --project hr_system --config dev_corvinum_demo -- scripts/corvinum_app.sh rebuild
 scripts/corvinum_app.sh status
 curl -fsS http://localhost:8001/healthz/
 ```
@@ -107,7 +116,7 @@ Reset all mutations without rebuilding the already-tested image:
 
 ```bash
 scripts/corvinum_app.sh down
-doppler run -- scripts/corvinum_app.sh up
+doppler run --project hr_system --config dev_corvinum_demo -- scripts/corvinum_app.sh up
 scripts/corvinum_app.sh status
 curl -fsS http://localhost:8001/healthz/
 ```
@@ -611,7 +620,7 @@ confirmed client scope.
 | Staging already contains Olena/catalogue/payslip records | Use a visibly unique fictional suffix, show the existing row, or use Resend; never assume staging is disposable |
 | Runner reports a missing SMTP variable | Confirm all seven `DJANGO_EMAIL_*` values exist in Doppler `hr_system/dev_corvinum_demo`; do not print their values |
 | SMTP send fails | Confirm Marek has a deliverable controlled test address, then check `scripts/corvinum_app.sh logs`; FORPSI may also require the current country in its GeoIP allow-list |
-| Console email appears instead of real delivery | Restart with `doppler run -- scripts/corvinum_app.sh up` |
+| Console email appears instead of real delivery | Restart with `doppler run --project hr_system --config dev_corvinum_demo -- scripts/corvinum_app.sh up` |
 | Payslip creation reports a duplicate | Select the existing person/period row and use Resend, or choose an unused fictional period |
 | Wage and payslip figures appear inconsistent | Verify the four fictional fixture values above, then confirm the two source records and period labels; do not infer statutory deductions from the difference |
 | Certificate fixture is absent or its checksum fails | Restore `tests/fixtures/manual_uploads/` from a clean checkout and rerun `sha256sum --check`; never substitute a real worker document |
