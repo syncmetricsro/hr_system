@@ -120,6 +120,40 @@ ssh syncmetric-prime-dokku \
 Never roll a database schema backward casually; stop and assess if a migration
 is not backward compatible.
 
+## Help-area staging acceptance gate
+
+Run this gate after the Help-only PR is merged and deployed to both staging
+apps. It is not permission to deploy an unreviewed branch or to use real
+worker records.
+
+1. Sign into Jober in Slovak and open `/sk/help/`. Confirm exactly 12 cards:
+   Getting started, People, Projects, Readiness, Certificates, Equipment,
+   Accommodation, Reports, Finance, Feedback, Blacklist, and Audit.
+2. Sign into CorvinumEU in Hungarian and open `/hu/help/`. Confirm exactly 12
+   cards: Getting started, People, Projects, Readiness, Certificates,
+   Equipment, Reports, Ledger, Payslips, Gross wages, Blacklist, and Audit.
+3. Open every visible card. Each page must contain Purpose, On this page,
+   Roles and permissions, numbered Workflow, a boundary, an annotated image,
+   and working related-topic links.
+4. Confirm every thumbnail and primary screenshot loads from that client's
+   namespace. Jober must not show Corvinum imagery or ledger/pay articles;
+   Corvinum must not show Jober imagery or accommodation/finance/feedback.
+5. Verify Jober Equipment describes goods receipts and stock reconciliation,
+   while Corvinum Equipment describes returning an original issue. Verify the
+   Corvinum Readiness article includes critical checklist guidance.
+6. At 375×667, verify one card per row, no horizontal overflow, and touch the
+   card body—not only its title—to open it. At desktop width, use Tab and Enter
+   to open a focused card.
+7. Switch light and dark themes. Card text, focus rings, callouts, and related
+   links must remain legible.
+8. Request `/help/logistics/` and confirm it permanently redirects to
+   `/help/equipment/`. Direct unsupported article URLs must return 404.
+
+Inspect only seeded fictional screens. In particular, do not open or capture a
+TOTP enrollment secret, one-time payslip password, provider credential, Audit
+event rows/log contents, or a non-fictional record. Record the deployed commit,
+image digest, both 12-card results, and any exception in `deployment_journal.md`.
+
 ## Required upload-request ceiling
 
 Set this once for every new Dokku app before testing avatars or occupational

@@ -1,5 +1,14 @@
 # Deployment Journal
 
+## 2026-08-01 - Expanded Help is deliberately not deployed yet
+
+The two-client Help implementation and fictional screenshot pack are being
+prepared on a dedicated Help branch. No Dokku app, database, seed, runtime
+configuration, provider, or production system was changed. Deployment remains
+blocked by the planned Help-only PR review, green Jober and CorvinumEU CI, a
+final production-image build, and the new 12-card staging acceptance gate in
+the shared runbook.
+
 ## 2026-08-01 - Jober staging accepted all three occupational file forms
 
 The owner completed the positive certificate-upload matrix against fictional

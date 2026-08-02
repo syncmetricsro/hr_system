@@ -1,5 +1,32 @@
 # Build Journal
 
+## 2026-08-01 - Help becomes a complete two-client workflow guide
+
+The former nine broad Help pages are replaced by a feature-aware registry and
+one consistent instructional article template. Jober and CorvinumEU each see
+exactly 12 focused cards; unsupported workflows disappear from the index and
+return 404 directly. The old Logistics URL remains as an unlisted permanent
+redirect to Equipment. Every authenticated role may read Help, while actual
+workflow actions retain their existing server-side authorization.
+
+Every card now has an existing client-native semantic icon, a 16:9
+client-specific thumbnail, and a one-sentence summary. Articles have purpose,
+anchors, permission notes, numbered steps, security boundaries, annotated
+screenshots, and filtered related topics. Generic capability checks split
+Jober's stock/receipt guidance from Corvinum's return guidance and add the
+appropriate readiness and financial material without any client-name branch
+inside core.
+
+The committed fictional asset set contains 24 WebP screens and 24 thumbnails,
+captured in Slovak for Jober and Hungarian for CorvinumEU. They were generated
+through the committed 1440×900 Playwright/Pillow path, reviewed as contact
+sheets, and verified for exact dimensions and absent EXIF. No Audit rows, TOTP
+screen, payslip password, provider credential, log, or real record is pictured.
+All 210 Help msgids have reviewed SK/HU/UK entries, with a dedicated Hungarian
+terminology pass. A standard-library PO compiler regenerates the committed MO
+files without installing gettext or another dependency. No schema or runtime
+dependency changed.
+
 ## 2026-08-01 - Dynamic UI labels no longer leak English
 
 The SK/HU/UK page audit found three real localization gaps: occupational-

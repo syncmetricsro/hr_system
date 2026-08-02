@@ -1,5 +1,33 @@
 # Test Journal
 
+## 2026-08-01 - complete Help release gate
+
+- Focused Help tests passed under both settings modules: 50 Jober tests and 49
+  CorvinumEU tests plus one expected Jober-only deselection. They pin the exact
+  12-topic sets, unsupported 404s, legacy Logistics redirect, card metadata,
+  route coverage, conditional Equipment/Readiness content, client asset
+  isolation, static asset discovery, shared article anatomy, and all-role read
+  access.
+- The Help source contains 210 translatable messages. Catalog checks prove SK,
+  HU and UK each has a reviewed non-empty entry, with only the intentionally
+  shared term `Audit` unchanged in SK/HU. The standard-library PO compiler
+  round-trip test covers context, plural forms, and fuzzy-entry rejection.
+- The capture job passed for both seeded clients and produced 48 WebPs. All 24
+  primary images are 1280×720, all 24 thumbnails are 640×360, every file
+  decodes as WebP, and none contains EXIF. Contact-sheet review confirmed
+  Slovak Jober, Hungarian CorvinumEU, fictional data, Audit without event rows,
+  and Payslips without a password or send-result screen.
+- The Help browser slice passed 4/4 after correcting its group-row assertion.
+  The complete two-client Chromium suite then passed **56/56**, including
+  desktop and mobile card layout, all visible links, keyboard/click navigation,
+  primary and thumbnail dimensions, article anchors and callouts, and light/
+  dark legibility.
+- The complete quality gate passed: no forbidden Node artifacts; vendored
+  checksums valid; production image and collected static files valid; Ruff and
+  changed-file formatting green; both Django system and migration checks green;
+  **927 passed / 8 skipped** in Jober and **575 passed / 17 skipped / 257
+  deselected** in CorvinumEU.
+
 ## 2026-08-01 - localization leak regression coverage
 
 - The compiled SK/HU/UK catalogs now translate all three canonical occupational

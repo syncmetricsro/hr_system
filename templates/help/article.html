@@ -1,0 +1,83 @@
+{% extends "help/_base.html" %}
+{% load i18n static %}
+
+{% block help_content %}
+  <section id="purpose" class="help-purpose" aria-labelledby="purpose-heading">
+    <h2 id="purpose-heading">{% trans "Purpose" %}</h2>
+    <p>{{ article.purpose }}</p>
+  </section>
+
+  <nav class="help-toc" aria-labelledby="help-toc-heading">
+    <h2 id="help-toc-heading">{% trans "On this page" %}</h2>
+    <ol>
+      <li><a href="#purpose">{% trans "Purpose" %}</a></li>
+      <li><a href="#permissions">{% trans "Roles and permissions" %}</a></li>
+      <li><a href="#workflow">{% trans "Workflow" %}</a></li>
+      <li><a href="#boundary">{% trans "Important boundary" %}</a></li>
+      <li><a href="#example">{% trans "Screen example" %}</a></li>
+      {% if related_articles %}<li><a href="#related">{% trans "Related topics" %}</a></li>{% endif %}
+    </ol>
+  </nav>
+
+  <section id="permissions" class="help-section" aria-labelledby="permissions-heading">
+    <h2 id="permissions-heading">{% trans "Roles and permissions" %}</h2>
+    <div class="help-note help-note-info">
+      <p>{{ article.role_note }}</p>
+    </div>
+  </section>
+
+  <section id="workflow" class="help-section" aria-labelledby="workflow-heading">
+    <h2 id="workflow-heading">{% trans "Workflow" %}</h2>
+    <ol class="help-workflow">
+      {% for step in article.steps %}
+        <li><span>{{ step }}</span></li>
+      {% endfor %}
+    </ol>
+  </section>
+
+  <section id="boundary" class="help-section" aria-labelledby="boundary-heading">
+    <h2 id="boundary-heading">{{ article.warning_title }}</h2>
+    <div class="help-note help-note-warning">
+      <p>{{ article.warning }}</p>
+    </div>
+  </section>
+
+  <section id="example" class="help-section" aria-labelledby="example-heading">
+    <h2 id="example-heading">{% trans "Screen example" %}</h2>
+    {% for screenshot in article.screenshots %}
+      <figure class="help-figure">
+        <div class="help-figure-media">
+          <img src="{% static screenshot.path %}"
+               alt="{{ screenshot.alt }}"
+               width="1280"
+               height="720"
+               loading="lazy"
+               decoding="async">
+          {% for callout in screenshot.callouts %}
+            <span class="help-figure-marker"
+                  style="--help-x: {{ callout.x }}%; --help-y: {{ callout.y }}%;"
+                  aria-hidden="true">{{ callout.number }}</span>
+          {% endfor %}
+        </div>
+        <figcaption>
+          <ol class="help-figure-callouts">
+            {% for callout in screenshot.callouts %}
+              <li><span class="help-callout-num" aria-hidden="true">{{ callout.number }}</span>{{ callout.text }}</li>
+            {% endfor %}
+          </ol>
+        </figcaption>
+      </figure>
+    {% endfor %}
+  </section>
+
+  {% if related_articles %}
+    <nav id="related" class="help-related" aria-labelledby="related-heading">
+      <h2 id="related-heading">{% trans "Related topics" %}</h2>
+      <ul>
+        {% for related in related_articles %}
+          <li><a href="{% url 'help_article' related.slug %}">{{ related.title }}</a></li>
+        {% endfor %}
+      </ul>
+    </nav>
+  {% endif %}
+{% endblock %}

@@ -1,146 +1,157 @@
 # In-app Help area
 
-Status: **Implemented 2026-07-24** — the full 8-module set plus Getting
-Started, fully translated in SK/HU/UK, exactly as designed below.
+Status: **implemented on the Help release branch, 2026-08-01; staging release
+pending review and green CI**.
 
-- New `core/ui/help.py` (article registry: slug, title, group — no
-  database model, matching the "hand-authored templates" decision) and
-  `core/ui/views.py::help_index`/`help_article`, mounted unconditionally
-  (`config/urls.py`, no `Action`/`flag_on` gate) at `help/` and
-  `help/<slug>/`.
-- New nav tab in both shells, right after Reports as recommended — a new
-  `nav-icon-help` SVG symbol for Jober, and CorvinumEU reuses its
-  already-subsetted `info` Material Symbol rather than triggering another
-  font-subset regeneration (docs/product/pill-system-design.md §2) for a
-  single icon.
-- `templates/help/_base.html` is a shared wrapper (title/heading blocks +
-  a back-to-index link) that each of the 9 article templates extends,
-  rather than repeating the page-head boilerplate 9 times.
-- Translation was done as one combined authoring+translation pass, not
-  sequential phases, per this doc's own guidance. 72 new msgids (39 short
-  titles/headings + 33 paragraphs) translated into SK/HU/UK by hand, not
-  machine-translated. The extraction step's `msgmerge` fuzzy-matched
-  several of them against unrelated existing strings (e.g. "Getting
-  started" → the Slovak translation of a pre-existing, unrelated "started"
-  msgid) — caught and fixed per the CLAUDE.md fuzzy-match caution rather
-  than accepted blind, using `polib` (installed transiently, not an app
-  dependency) to apply the reviewed translations and clear the fuzzy flags
-  precisely rather than hand-editing ~250 `.po` entries across 3 files.
+The Help area is shared platform code with client-specific availability and
+imagery. Every authenticated role can read it. Feature flags determine which
+articles exist for the running thin client; an unsupported article is absent
+from the index and returns 404 when addressed directly.
 
-## Known follow-up, not fixed in this slice
+## Article set
 
-Every article is visible to every client regardless of that client's
-feature flags — CorvinumEU sees the "Feedback: links, QR codes, and
-submissions" article even though CorvinumEU has `feedback: False` and no
-Feedback tab at all. The content itself is accurate (it describes how
-Jober's feedback feature works); it's just not relevant to a CorvinumEU
-reader. This doc didn't originally scope per-client article filtering, and
-building it now — mapping each article to a required feature flag, hiding
-it from the index, and 404ing the slug when unsupported — is a real,
-separable follow-up, not a bug in what shipped.
+Each client exposes exactly 12 focused workflow cards:
 
-## Why this doc exists
+| Article | Jober | CorvinumEU |
+|---|:---:|:---:|
+| Getting started | yes | yes |
+| People and intake | yes | yes |
+| Projects and assignments | yes | yes |
+| Trials, readiness and activation | yes | yes |
+| Certificates and compliance | yes | yes |
+| Equipment | yes | yes |
+| Accommodation | yes | — |
+| Reports and staff activity | yes | yes |
+| Finance | yes | — |
+| Feedback | yes | — |
+| Ledger | — | yes |
+| Payslips | — | yes |
+| Gross wages | — | yes |
+| Blacklist | yes | yes |
+| Audit | yes | yes |
 
-Jober's people-ops web app has no built-in guidance beyond
-`docs/product/contextual-tooltips.md`'s in-context hover/focus tooltips —
-useful for "what does this button do," not for "how do I complete this
-workflow end to end." This doc plans a dedicated Help section: a real,
-navigable set of documentation pages inside the app itself.
+Existing article URLs are retained where their topic still exists. The former
+`/help/logistics/` route is an unlisted permanent redirect to
+`/help/equipment/`; Logistics is not an index card.
 
-Decisions confirmed with the user:
-- **Hand-authored Django templates, not Markdown.** No Markdown-rendering
-  library (`markdown`/`mistune`) exists as a dependency today, and adding
-  one would need its own ADR under AGENTS.md §3.1 ("Approval gate. New
-  PyPI package → ADR... No silent `uv add`"). Writing help content as
-  ordinary Django templates avoids that entirely and reuses the existing
-  template/i18n system directly — more manual to author than Markdown,
-  but zero approval-gate friction.
-- **Fully translated SK/HU/UK from day one**, matching how the rest of
-  the UI already works. Flagged explicitly: this is a real, sizable
-  translation commitment. The existing `.po` catalogs
-  (`locale/{sk,hu,uk}/LC_MESSAGES/django.po`) are already ~4800-4900
-  lines each of short UI labels — help *prose* (multi-sentence
-  explanations, step-by-step instructions) is a different scale and
-  character of content to translate than a button label, and should be
-  budgeted for accordingly, not treated as "a few more msgids."
+## Architecture and gating
 
-## Design
+`core/ui/help.py` is the single code-backed registry. It contains translated
+titles, summaries, purpose text, role notes, workflow steps, boundaries,
+semantic icon concepts, related topics, route coverage, and screenshot
+metadata. No database model or content-management dependency is involved.
 
-### 1. Navigation
+The registry remains client-neutral:
 
-A new, **always-visible** "Help" nav tab in both shells —
-`templates/layouts/base.html` (Jober's folder-tabs) and
-`clients/corvinum_eu/templates/layouts/base.html` (Corvinum's sidebar) —
-unconditional like People/Projects/Reports, **not** gated by an `Action`
-or `flag_on` check. Every existing nav tab besides those three is
-permission/feature-gated; Help is deliberately the exception, since every
-role needs documentation regardless of what else they can see. Suggested
-placement: right after Reports, before Audit — keeps it visually grouped
-with the other always-present, non-operational tabs.
+- ordinary module feature flags decide article availability;
+- conditional steps use feature flags such as `checklists` and
+  `equipment_returns`, or the generic `EQUIPMENT_STOCK_LEDGER_ENABLED`
+  setting;
+- `HELP_ASSET_NAMESPACE` selects `jober` or `corvinum` imagery and must be a
+  safe path component;
+- `core/` never compares a client name or imports a client package.
 
-### 2. Content structure
+Help is feature-gated, never role-gated. An article can explain a Manager-only
+action to a Recruiter or Observer, while the real action continues to enforce
+server-side authorization.
 
-- New `templates/help/` directory, one template per article, keyed by a
-  slug (e.g. `templates/help/people-intake.html`,
-  `templates/help/finance-recording-a-month.html`).
-- A single `help_article(request, slug)` view resolves a slug to its
-  template (404 on an unknown slug) — simple and extensible; no database
-  model needed for content itself, since it's hand-authored, not
-  user-editable.
-- A `help_index` landing page groups articles by module, mirroring the
-  nav's own organization: People, Projects, Compliance, Logistics
-  (accommodation/equipment/transport), Finance, Feedback, Blacklist,
-  Audit — plus a "Getting started" article that isn't tied to one module.
-- No RBAC gating on reading — every authenticated role can read every
-  article (some articles may only be *relevant* to certain roles, e.g. a
-  Manager-only workflow, but nothing about reading documentation should
-  be permission-restricted; the article's own text can simply note which
-  role a described action requires, consistent with how the rest of the
-  app already surfaces role-gated actions).
+## Index and article presentation
 
-### 3. i18n
+The dashboard Help index groups fully clickable cards into Start here,
+Workforce workflows, Safety and resources, and Reporting and pay. Every card
+has a client-themed semantic icon, a 16:9 screenshot thumbnail, title, concise
+summary, visible keyboard focus, and a touch target larger than 44 pixels.
+Images are lazy-loaded; the grid is three columns on wide screens and one
+column on mobile.
 
-Every string goes through the existing `{% trans %}`/`{% blocktrans %}`
-mechanism — no new i18n infrastructure. New msgids get picked up by the
-standard `scripts/compile_messages.sh --extract` workflow already used
-for everything else, with the same `msgmerge` fuzzy-match caution
-CLAUDE.md already documents (fuzzy matches pair unrelated strings and
-need manual correction, not blind acceptance). Given the confirmed
-decision to translate fully from day one, plan the initial content
-authoring and its SK/HU/UK translation as one combined piece of work, not
-sequential phases — a partially-translated Help section would be worse
-than not having one, since a user landing on an untranslated article mid-
-read is a worse experience than a small, clearly-scoped section that's
-complete in every language.
+All articles use `templates/help/article.html` and the same text-first
+instructional structure:
 
-### 4. Initial content scope (a starting set, not exhaustive)
+1. purpose;
+2. an anchor-linked On this page list;
+3. roles and permissions;
+4. numbered workflow steps;
+5. an important operational, privacy, or security boundary;
+6. a client-specific screenshot with translated HTML callouts;
+7. related topics filtered to articles available for that client.
 
-- Getting started / navigating the app
-- People: intake, lifecycle statuses, trial scheduling, activation
-- Projects: assignments, readiness pillars
-- Compliance: certificates, expiry alerts (cross-reference the pill/
-  certificate-upload designs once those exist)
-- Logistics: accommodation, equipment issue/return, transport
-- Finance: recording a month, locking/reopening, reading the reports
-- Feedback: creating a link, reviewing submissions
-- Blacklist: what it is, how a case is proposed/decided
-- Audit: what's logged and why
+Getting started uses a real fictional client shell rather than a hand-built
+mock. Equipment prose follows the enabled stock-ledger or return workflow, so
+Jober describes receipts and stock reconciliation while CorvinumEU describes
+returns. Readiness and financial guidance follow the same capability-aware
+rule.
 
-## Explicitly deferred (not part of the first version)
+Icons extend only the vocabularies already shipped: Jober SVG sprite symbols
+and Corvinum Material ligatures. The Material subset is not regenerated.
 
-- Full-text search across articles.
-- Screenshot or video embeds (would need an asset-storage decision,
-  echoing the same considerations as `docs/product/avatar-design.md`'s
-  storage design).
-- Per-app-release content versioning (i.e., "this article describes the
-  July 2026 UI") — start with content that's kept current by hand, revisit
-  if drift becomes a real problem.
+## Screenshot assets
 
-## Open items for the implementation slice
+The committed files live under:
 
-- Confirm exact initial article list and who owns writing the source
-  (English) content before translation begins.
-- Confirm nav placement precisely (this doc recommends after Reports,
-  before Audit) with a look at the rendered nav on both narrow/mobile and
-  wide layouts, since Help added to an already-long tab list may need the
-  same responsive treatment already applied elsewhere.
+```text
+static/help/screens/jober/<slug>.webp
+static/help/screens/jober/<slug>-thumb.webp
+static/help/screens/corvinum/<slug>.webp
+static/help/screens/corvinum/<slug>-thumb.webp
+```
+
+There are 24 primary images and 24 thumbnails. Primary images are 1280×720;
+thumbnails are 640×360. They are cropped from 1440×900 browser captures and
+converted by the already-pinned Pillow dependency. Conversion removes EXIF
+and writes WebP without retaining a second source format.
+
+Only the committed Playwright capture workflow may refresh these assets.
+Jober is captured in Slovak and CorvinumEU in Hungarian using seeded fictional
+records. Numbered annotations are translated HTML overlays, not pixels baked
+into the file. The Audit image contains no event rows. TOTP setup, one-time
+payslip passwords, provider credentials, logs, and non-fictional records must
+never be captured. The exact capture and review procedure is in
+`static/help/README.md`.
+
+## Localization
+
+English is the source msgid language. Every Help msgid has a reviewed,
+non-empty SK, HU, and UK catalog entry; Hungarian receives the primary client
+terminology review. CorvinumEU continues to expose SK/HU only, while the UK
+catalog remains complete for the shared platform.
+
+The repository includes `scripts/compile_po.py`, a standard-library PO-to-MO
+compiler because the runtime/test images intentionally omit the gettext OS
+package and installing host packages is prohibited. It compiles committed PO
+sources without extracting or guessing translations, supports contexts and
+plurals, and skips fuzzy entries.
+
+## Security and privacy boundaries
+
+- Screenshots and prose use fictional data only until the real-data gate is
+  complete.
+- Compliance documents are limited to allowed forklift, crane, and welding
+  certificates. Passports, identity cards, birth/residence documents,
+  financial records, medical reports, and health-certificate scans are not
+  upload content.
+- Help states that allowed files are sanitized but not individually encrypted
+  by Django on disk; protected server storage and encrypted backups remain
+  production gates.
+- Payslip Help never reveals, records, or pictures a one-time password and
+  explains that it must travel over a channel separate from the encrypted PDF.
+- Audit Help distinguishes traceability from staff-activity reporting and its
+  screenshot contains filters only, not log contents.
+
+## Verification and release
+
+Automated coverage pins the exact 12-card set for both settings modules,
+unsupported 404 behavior, registry metadata, navigation coverage, namespace
+isolation, conditional prose, static asset discovery, complete translations,
+article structure, desktop/mobile layouts, keyboard navigation, all card
+links, lazy image loading, annotations, and light/dark legibility.
+
+Before release, run both complete unit lanes, migration checks, Ruff,
+production-image/static checks, and the complete two-client Playwright suite.
+Manually review all 48 WebPs, build the final production image after the assets
+are present, and follow the staging acceptance section of the staging runbook.
+Do not deploy Help until the Help-only PR and both-client CI are green.
+
+## Out of scope
+
+Full-text search, video, user-editable documentation, external or stock
+imagery, and a new content dependency remain out of scope.

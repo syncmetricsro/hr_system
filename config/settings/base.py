@@ -223,6 +223,11 @@ FEATURE_FLAGS = {
 }
 CLIENT_POLICIES = os.getenv("CLIENT_POLICIES", "core.accounts.default_policies")
 
+# Shared Help selects screenshots through a generic namespace. Each real thin
+# client overrides this; the neutral fallback keeps smoke/test settings valid
+# without putting client-identity branches in core.
+HELP_ASSET_NAMESPACE = "platform"
+
 # Email delivery (ADR 0023 payslips). Default is Django's SMTP backend —
 # real deployments configure the SMTP host via env/Doppler; the local demo
 # scripts point this at the console backend instead.
