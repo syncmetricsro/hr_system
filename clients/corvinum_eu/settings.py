@@ -53,6 +53,10 @@ FEATURE_FLAGS = {
     "advances": True,  # advance & deduction ledger (§5.10, Stage C2)
     "payslips": True,  # encrypted payslip email (ADR 0023, Stage C5)
     "wage_ledger": True,  # calendar-month gross wage source values
+    # Automated SMS/email notification to workers is rejected for CorvinumEU
+    # (peopleops design §15.9): contact is phone + Messenger. features.messaging
+    # is not installed here either, so this is belt-and-braces.
+    "offer_emails": False,
 }
 
 EQUIPMENT_STOCK_LEDGER_ENABLED = False

@@ -27,6 +27,7 @@ FEATURE_FLAGS = {
     "advances": False,  # CorvinumEU feature (ADR 0022) — not in the Jober product
     "payslips": False,  # CorvinumEU feature (ADR 0023) — not in the Jober product
     "wage_ledger": False,  # CorvinumEU gross-wage source ledger
+    "offer_emails": True,  # job offers by email (ADR 0029)
 }
 
 EQUIPMENT_STOCK_LEDGER_ENABLED = True

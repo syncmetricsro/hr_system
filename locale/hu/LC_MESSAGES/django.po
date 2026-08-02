@@ -7801,3 +7801,315 @@ msgstr "Képernyőpélda"
 #: core/ui/help.py templates/help/article.html templates/pages/help_index.html
 msgid "Related topics"
 msgstr "Kapcsolódó témák"
+
+#. Offer emails (ADR 0029)
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "All my offices"
+msgstr "Minden irodám"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Any"
+msgstr "Bármely"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Blocked (not sent)"
+msgstr "Blokkolva (nem lett elküldve)"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Choose a job offer and an email type."
+msgstr "Válasszon állásajánlatot és e-mail típust."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Close"
+msgstr "Lezárás"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Do not send job offers by email"
+msgstr "Ne küldjön állásajánlatokat e-mailben"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Edit job offer"
+msgstr "Állásajánlat szerkesztése"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Email a job offer"
+msgstr "Állásajánlat küldése e-mailben"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Email is not configured in this environment."
+msgstr "Az e-mail nincs beállítva ebben a környezetben."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Email is not configured in this environment, so nothing can be sent from here."
+msgstr "Az e-mail nincs beállítva ebben a környezetben, így innen semmi nem küldhető el."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Email is not configured in this environment. Offers can be authored, but nothing will be sent."
+msgstr "Az e-mail nincs beállítva ebben a környezetben. Az ajánlatok létrehozhatók, de semmi nem lesz elküldve."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Email templates"
+msgstr "E-mail sablonok"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Email type"
+msgstr "E-mail típusa"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Excluded"
+msgstr "Kizárva"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "I have reviewed the recipient list"
+msgstr "Ellenőriztem a címzettek listáját"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Job offer"
+msgstr "Állásajánlat"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Job offer closed."
+msgstr "Az állásajánlat lezárva."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Job offer created."
+msgstr "Az állásajánlat létrehozva."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Job offer updated."
+msgstr "Az állásajánlat frissítve."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Job offers"
+msgstr "Állásajánlatok"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "New job offer"
+msgstr "Új állásajánlat"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "New offer"
+msgstr "Új ajánlat"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "New template"
+msgstr "Új sablon"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "No active template for this email type."
+msgstr "Nincs aktív sablon ehhez az e-mail típushoz."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "No active template for this email type — nothing can be sent until one exists."
+msgstr "Nincs aktív sablon ehhez az e-mail típushoz – amíg nem készül egy, semmi nem küldhető el."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "No job offers yet."
+msgstr "Még nincsenek állásajánlatok."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "No open job offers for this office yet."
+msgstr "Ehhez az irodához még nincs nyitott állásajánlat."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "No templates yet. Offers cannot be sent until one exists."
+msgstr "Még nincsenek sablonok. Ajánlat nem küldhető, amíg nincs legalább egy."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Nobody in scope can be emailed this offer."
+msgstr "A hatókörben senkinek sem küldhető el ez az ajánlat."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Offer closing soon"
+msgstr "Az ajánlat hamarosan lezárul"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Offer email not sent: %(error)s"
+msgstr "Az ajánlat e-mail nem lett elküldve: %(error)s"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Offer email sent."
+msgstr "Az ajánlat e-mail elküldve."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Offer email template"
+msgstr "Ajánlat e-mail sablon"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Offer emailed to %(count)s people."
+msgstr "Az ajánlat %(count)s személynek lett elküldve."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Offer reminder"
+msgstr "Ajánlat emlékeztető"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Offers"
+msgstr "Ajánlatok"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "One template per email type and language. A worker is written to in their preferred language, falling back to the site default."
+msgstr "E-mail típusonként és nyelvenként egy sablon. A munkavállalónak a preferált nyelvén írunk, ennek hiányában az alkalmazás alapértelmezett nyelvén."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Placeholders"
+msgstr "Helyőrzők"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Preview, as %(name)s would receive it"
+msgstr "Előnézet, ahogy %(name)s megkapná"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Recruiting"
+msgstr "Toborzás"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Seasonal campaign"
+msgstr "Szezonális kampány"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Send \"%(title)s\" to many"
+msgstr "A(z) „%(title)s” küldése többeknek"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Send now"
+msgstr "Küldés most"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Send offer"
+msgstr "Ajánlat küldése"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Send to many"
+msgstr "Küldés többeknek"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Sends to %(address)s in this worker's preferred language."
+msgstr "Elküldi a(z) %(address)s címre a munkavállaló preferált nyelvén."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Capped at %(limit)s; %(extra)s further people were left out of this send."
+msgstr "Korlátozva %(limit)s főre; további %(extra)s személy kimaradt ebből a küldésből."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Starts"
+msgstr "Kezdés"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Template saved."
+msgstr "A sablon elmentve."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "This person has opted out of offer emails."
+msgstr "Ez a személy letiltotta az állásajánlat e-maileket."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "This person is blacklisted."
+msgstr "Ez a személy feketelistán van."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "This project belongs to a different office."
+msgstr "Ez a projekt másik irodához tartozik."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Update preview"
+msgstr "Előnézet frissítése"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Wage"
+msgstr "Bér"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "batch"
+msgstr "köteg"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "closed"
+msgstr "lezárva"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "email batch"
+msgstr "e-mail köteg"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "email batches"
+msgstr "e-mail kötegek"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "email type"
+msgstr "e-mail típusa"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "inactive"
+msgstr "inaktív"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "job offer"
+msgstr "állásajánlat"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "job offers"
+msgstr "állásajánlatok"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "language"
+msgstr "nyelv"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "location"
+msgstr "helyszín"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "no offer emails"
+msgstr "nincs ajánlat e-mail"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "offer email template"
+msgstr "ajánlat e-mail sablon"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "offer email templates"
+msgstr "ajánlat e-mail sablonok"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "outbound email"
+msgstr "kimenő e-mail"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "outbound emails"
+msgstr "kimenő e-mailek"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "per hour"
+msgstr "óránként"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "per month"
+msgstr "havonta"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "recipients"
+msgstr "címzettek"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "subject"
+msgstr "tárgy"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "terms"
+msgstr "feltételek"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "wage"
+msgstr "bér"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "wage unit"
+msgstr "bér egysége"
+
+#: templates/pages/offer_send_bulk.html
+msgid "%(counter)s recipient"
+msgid_plural "%(counter)s recipients"
+msgstr[0] "%(counter)s címzett"
+msgstr[1] "%(counter)s címzett"
+

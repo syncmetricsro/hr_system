@@ -1,0 +1,18 @@
+{% extends "layouts/base.html" %}
+{% load i18n %}
+
+{% block title %}{% if offer %}{% trans "Edit job offer" %}{% else %}{% trans "New job offer" %}{% endif %} · {{ BRAND_NAME }}{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <p class="eyebrow">{% trans "Recruiting" %}</p>
+  <h1>{% if offer %}{{ offer.title }}{% else %}{% trans "New job offer" %}{% endif %}</h1>
+</section>
+
+<form class="stack" method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button class="button button-primary" type="submit">{% trans "Save" %}</button>
+  <a class="button" href="{% url 'offer_list' %}">{% trans "Cancel" %}</a>
+</form>
+{% endblock %}

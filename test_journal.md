@@ -1,5 +1,47 @@
 # Test Journal
 
+## 2026-08-02 - offer emails
+
+- **54 new unit tests** across four modules, all `jober_only` and behind the
+  usual `is_installed("features.messaging")` module skip.
+- `test_offer_email_safety.py` is the important one. Opt-out, blacklisted, no
+  address, and a non-allowlisted address each produce `BLOCKED` with an empty
+  `mail.outbox`; an explode-guard monkeypatching `EmailMessage.send` proves the
+  mail server is never reached for a blocked recipient. Allowlist matching is
+  case-insensitive, an empty allowlist stays unrestricted (production's
+  setting), a console/locmem backend counts as configured, and unconfigured
+  SMTP records FAILED rather than pretending to send. The `messaging.W001`
+  deploy check is covered both ways.
+- `test_offer_emails.py` pins language selection and its two fallbacks -
+  including an unusable `preferred_language`, since that column is a free
+  CharField with no choices validation and would otherwise 500 in front of a
+  manager. Also: an unknown `$token` survives substitution, optional fields
+  render blank rather than "None", a capped batch stops at the limit, and one
+  blocked recipient does not stop the other sends.
+- One of those tests exists because the full suite caught a real bug the
+  focused run had not: `get_wage_unit_display()` resolves against the *active*
+  locale, so a Ukrainian worker's offer rendered "8.50 EUR za hodinu" —
+  Ukrainian body, Slovak wage unit — whenever the sender was working in
+  Slovak. Placeholder building is now wrapped in `translation.override` on the
+  chosen template's language, and the test asserts it from a Slovak sender.
+- `test_offer_email_office_scoping.py` is request-level through `client`, four
+  cases per guarded view, and covers the shape a unit test cannot: that bulk
+  **execution** is scoped and not only the preview. Also asserts a recruiter
+  cannot bulk-send or author, and that Observer - the one cross-office role -
+  cannot send at all.
+- `test_offer_email_seed.py` pins idempotency, that reseeding repairs a
+  hand-edited body, that every kind and all three worker languages are covered,
+  and that a seeded offer always carries an office. That last test exists
+  because its absence is what made the first e2e run fail.
+- **e2e: 6 new specs, 62/62 passing.** They cover what only a browser catches -
+  the panel actually rendering, the Offers tab present for a manager and absent
+  for a recruiter, and the bulk page showing its confirm box. Fixing them
+  required adding `seed_messaging` and `seed_offer_emails` to the e2e seed
+  order, which had never run either.
+- Full gate green: Ruff clean, `manage.py check` and `makemigrations --check`
+  under both settings modules, **980 passed / 8 skipped** in Jober and
+  **575 passed / 21 skipped / 257 deselected** in CorvinumEU.
+
 ## 2026-08-02 - Help card icon containment regression
 
 - The focused two-client Help browser slice passed **4/4** after adding the

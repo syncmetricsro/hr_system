@@ -1,0 +1,25 @@
+{% extends "layouts/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Offer email template" %} · {{ BRAND_NAME }}{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <p class="eyebrow">{% trans "Recruiting" %}</p>
+  <h1>{% trans "Offer email template" %}</h1>
+</section>
+
+<p class="eyebrow">
+  {% trans "One template per email type and language. A worker is written to in their preferred language, falling back to the site default." %}
+</p>
+
+<form class="stack" method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <p class="eyebrow">
+    {% trans "Placeholders" %}: {% for token in placeholders %}<code>{{ token }}</code>{% if not forloop.last %}, {% endif %}{% endfor %}
+  </p>
+  <button class="button button-primary" type="submit">{% trans "Save" %}</button>
+  <a class="button" href="{% url 'offer_list' %}">{% trans "Cancel" %}</a>
+</form>
+{% endblock %}

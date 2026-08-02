@@ -230,7 +230,7 @@ The first deployment follows the same image-stream process, but after the
 app/database/config/domain/TLS setup it runs the Jober fictional scenario:
 
 ```bash
-for command in seed_demo seed_people seed_logistics seed_questionnaire seed_finance seed_messaging seed_demo_scenario; do
+for command in seed_demo seed_people seed_logistics seed_questionnaire seed_finance seed_messaging seed_offer_emails seed_demo_scenario; do
   sudo dokku run jober-staging python manage.py "$command"
 done
 ```
@@ -377,7 +377,7 @@ that destructive confirmation on a real-data database.
 Staging is fictional-data by design — seed it so the demo cast is present:
 ```bash
 # jober-staging
-for c in seed_demo seed_people seed_logistics seed_questionnaire seed_finance seed_messaging seed_demo_scenario; do
+for c in seed_demo seed_people seed_logistics seed_questionnaire seed_finance seed_messaging seed_offer_emails seed_demo_scenario; do
   dokku run jober-staging python manage.py "$c"
 done
 # corvinum-staging

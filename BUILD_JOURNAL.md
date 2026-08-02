@@ -1,5 +1,67 @@
 # Build Journal
 
+## 2026-08-02 - Job offers reach workers by email, in their own language
+
+Jober could reach a worker by SMS only. `features/messaging` was Twilio-shaped
+end to end - `OutboundMessage` stores a phone number, there is no subject, and
+`MessageTemplate.body` is sent verbatim, so `Person.preferred_language` was
+never consulted. That left no channel for the one message that genuinely needs
+long-form text and the recipient's own language, and recruiters were sending
+job offers out of band, which put both the content and the fact of the send
+outside the system.
+
+The transport stays inside `features/messaging` per the messaging spec's
+boundary rule, with its own records rather than a widened `OutboundMessage`:
+`JobOffer` (title, project, office, wage, start date, terms), `OfferEmailTemplate`
+keyed `(kind, language)`, `OutboundEmail`, and `EmailBatch` so a campaign is one
+auditable object. Delivery uses Django's own mail backend - no new dependency,
+the same reasoning ADR 0019 applied to Twilio.
+
+Templates are per-language rows, not gettext, because the bodies are
+operator-authored; the send picks the row matching the worker's preferred
+language and falls back to the site default, then to any active row for that
+kind. A wrong-language offer is recoverable, silence is not. This is the first
+transport to close the gap `seed_messaging`'s docstring recorded. Substitution
+is `string.Template.safe_substitute`, so a typo'd `$token` survives into the
+preview instead of raising mid-batch.
+
+Three guards run in order before anything leaves: the worker's own state
+(opt-out, blacklisted, no address), then the `EMAIL_ALLOWED_RECIPIENTS`
+environment allowlist, then delivery. The first is new relative to SMS, which
+consults neither flag - an operational text to someone on shift is a different
+act from marketing a job to someone who asked us to stop. `BLOCKED` stays
+distinct from `FAILED` for the reason `OutboundMessage` already draws that line.
+`Person.email_opt_out` is the Art. 21 objection mechanism and is deliberately
+ignored by payslip delivery, which has a different basis.
+
+Two surfaces: a person-card panel (recruiter/coordinator/manager, with SMS's
+coordinator narrowing) that renders even when nothing can be sent, with the
+control disabled and the reason shown; and a manager-only bulk page that
+previews the scoped recipient list, the excluded rows with their reasons, and
+the rendered body, then requires a confirmation box. Preview and execution use
+the same scoped query - a page that scoped only its preview would show ten names
+and email four hundred. Unlike `sms.manage_templates`, `offer_template.manage`
+is enforced by a real view rather than left to Django admin.
+
+`EMAIL_ALLOWED_RECIPIENTS` is the execution gate. It cannot be made mandatory
+because empty means unrestricted in production, so `manage.py check` raises
+`messaging.W001` when outreach is on with a real SMTP backend and no allowlist.
+`OutboundEmail` is registered with `core.retention`; the period is unapproved
+and the purge is a deliberate no-op until it is set. CorvinumEU gets neither the
+flag, the routes, nor the permissions - its design rejects automated worker
+notification, and `features.messaging` is not installed there at all.
+
+Two things surfaced while building. The e2e stack turned out to have a
+**fourth** copy of the seed order that omitted `seed_messaging` entirely, so the
+browser suite had been exercising an empty SMS panel; both seeds are wired in
+now. And a seeded offer with no office is visible to Observer alone - unlike a
+Person, a non-Person record has no owning-recruiter fallback - which is how the
+first e2e run failed and is now pinned by a test.
+
+Not done, and recorded rather than hidden: sends are synchronous like `send_sms`,
+so a capped batch of 100 holds the request for 100 SMTP round-trips; there is no
+retry, no bounce handling, and no self-service unsubscribe link.
+
 ## 2026-08-02 - Help card icons share a complete size vocabulary
 
 The shared icon stylesheet now defines the previously missing `lg` size as a

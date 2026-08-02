@@ -7764,3 +7764,316 @@ msgstr "Príklad obrazovky"
 #: core/ui/help.py templates/help/article.html templates/pages/help_index.html
 msgid "Related topics"
 msgstr "Súvisiace témy"
+
+#. Offer emails (ADR 0029)
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "All my offices"
+msgstr "Všetky moje pobočky"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Any"
+msgstr "Ľubovoľné"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Blocked (not sent)"
+msgstr "Zablokované (neodoslané)"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Choose a job offer and an email type."
+msgstr "Vyberte pracovnú ponuku a typ e-mailu."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Close"
+msgstr "Zavrieť"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Do not send job offers by email"
+msgstr "Neposielať pracovné ponuky e-mailom"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Edit job offer"
+msgstr "Upraviť pracovnú ponuku"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Email a job offer"
+msgstr "Odoslať pracovnú ponuku e-mailom"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Email is not configured in this environment."
+msgstr "E-mail nie je v tomto prostredí nakonfigurovaný."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Email is not configured in this environment, so nothing can be sent from here."
+msgstr "E-mail nie je v tomto prostredí nakonfigurovaný, takže odtiaľto nemožno nič odoslať."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Email is not configured in this environment. Offers can be authored, but nothing will be sent."
+msgstr "E-mail nie je v tomto prostredí nakonfigurovaný. Ponuky možno vytvárať, ale nič sa neodošle."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Email templates"
+msgstr "E-mailové šablóny"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Email type"
+msgstr "Typ e-mailu"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Excluded"
+msgstr "Vylúčení"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "I have reviewed the recipient list"
+msgstr "Skontroloval som zoznam príjemcov"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Job offer"
+msgstr "Pracovná ponuka"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Job offer closed."
+msgstr "Pracovná ponuka bola uzavretá."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Job offer created."
+msgstr "Pracovná ponuka bola vytvorená."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Job offer updated."
+msgstr "Pracovná ponuka bola aktualizovaná."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Job offers"
+msgstr "Pracovné ponuky"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "New job offer"
+msgstr "Nová pracovná ponuka"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "New offer"
+msgstr "Nová ponuka"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "New template"
+msgstr "Nová šablóna"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "No active template for this email type."
+msgstr "Pre tento typ e-mailu neexistuje aktívna šablóna."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "No active template for this email type — nothing can be sent until one exists."
+msgstr "Pre tento typ e-mailu neexistuje aktívna šablóna – kým nejakú nevytvoríte, nemožno nič odoslať."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "No job offers yet."
+msgstr "Zatiaľ žiadne pracovné ponuky."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "No open job offers for this office yet."
+msgstr "Pre túto pobočku zatiaľ nie sú otvorené žiadne ponuky."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "No templates yet. Offers cannot be sent until one exists."
+msgstr "Zatiaľ žiadne šablóny. Ponuky nemožno odoslať, kým nejaká neexistuje."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Nobody in scope can be emailed this offer."
+msgstr "Túto ponuku nemožno e-mailom poslať nikomu v rozsahu."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Offer closing soon"
+msgstr "Ponuka sa čoskoro uzatvára"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Offer email not sent: %(error)s"
+msgstr "E-mail s ponukou nebol odoslaný: %(error)s"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Offer email sent."
+msgstr "E-mail s ponukou bol odoslaný."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Offer email template"
+msgstr "Šablóna e-mailu s ponukou"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Offer emailed to %(count)s people."
+msgstr "Ponuka bola e-mailom odoslaná %(count)s osobám."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Offer reminder"
+msgstr "Pripomienka ponuky"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Offers"
+msgstr "Ponuky"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "One template per email type and language. A worker is written to in their preferred language, falling back to the site default."
+msgstr "Jedna šablóna na typ e-mailu a jazyk. Pracovníkovi sa píše v jeho preferovanom jazyku, inak sa použije predvolený jazyk aplikácie."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Placeholders"
+msgstr "Zástupné symboly"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Preview, as %(name)s would receive it"
+msgstr "Náhľad, ako by ho dostal(a) %(name)s"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Recruiting"
+msgstr "Nábor"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Seasonal campaign"
+msgstr "Sezónna kampaň"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Send \"%(title)s\" to many"
+msgstr "Odoslať „%(title)s“ viacerým"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Send now"
+msgstr "Odoslať teraz"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Send offer"
+msgstr "Odoslať ponuku"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Send to many"
+msgstr "Odoslať viacerým"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Sends to %(address)s in this worker's preferred language."
+msgstr "Odošle sa na %(address)s v preferovanom jazyku tohto pracovníka."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Capped at %(limit)s; %(extra)s further people were left out of this send."
+msgstr "Obmedzené na %(limit)s; ďalších %(extra)s osôb nebolo do tohto odoslania zahrnutých."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Starts"
+msgstr "Nástup"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Template saved."
+msgstr "Šablóna bola uložená."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "This person has opted out of offer emails."
+msgstr "Táto osoba odmietla zasielanie pracovných ponúk e-mailom."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "This person is blacklisted."
+msgstr "Táto osoba je na čiernej listine."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "This project belongs to a different office."
+msgstr "Tento projekt patrí inej pobočke."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Update preview"
+msgstr "Aktualizovať náhľad"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Wage"
+msgstr "Mzda"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "batch"
+msgstr "dávka"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "closed"
+msgstr "uzavretá"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "email batch"
+msgstr "e-mailová dávka"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "email batches"
+msgstr "e-mailové dávky"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "email type"
+msgstr "typ e-mailu"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "inactive"
+msgstr "neaktívna"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "job offer"
+msgstr "pracovná ponuka"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "job offers"
+msgstr "pracovné ponuky"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "language"
+msgstr "jazyk"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "location"
+msgstr "miesto"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "no offer emails"
+msgstr "žiadne e-maily s ponukami"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "offer email template"
+msgstr "šablóna e-mailu s ponukou"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "offer email templates"
+msgstr "šablóny e-mailov s ponukami"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "outbound email"
+msgstr "odoslaný e-mail"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "outbound emails"
+msgstr "odoslané e-maily"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "per hour"
+msgstr "za hodinu"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "per month"
+msgstr "za mesiac"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "recipients"
+msgstr "príjemcovia"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "subject"
+msgstr "predmet"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "terms"
+msgstr "podmienky"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "wage"
+msgstr "mzda"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "wage unit"
+msgstr "jednotka mzdy"
+
+#: templates/pages/offer_send_bulk.html
+msgid "%(counter)s recipient"
+msgid_plural "%(counter)s recipients"
+msgstr[0] "%(counter)s príjemca"
+msgstr[1] "%(counter)s príjemcovia"
+msgstr[2] "%(counter)s príjemcov"
+
