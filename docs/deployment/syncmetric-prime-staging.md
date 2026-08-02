@@ -28,7 +28,7 @@ client demo**:
 | App / database | `corvinum-staging` / `pg-corvinum-staging` |
 | Settings module | `clients.corvinum_eu.production` |
 | Temporary public URL | `https://corvinum-staging.80.211.210.46.sslip.io/sk/prihlasenie/` |
-| Deployed image | `jober-platform:demo-c78e962` |
+| Deployed image | `jober-platform:demo-60b730d` |
 | Proxy upload ceiling | `client_max_body_size 25m` on both staging apps |
 | Seed data | published Recruiter intake v3 and fictional CorvinumEU scenario only |
 
@@ -145,7 +145,8 @@ worker records.
    card body—not only its title—to open it. At desktop width, use Tab and Enter
    to open a focused card.
 7. Switch light and dark themes. Card text, focus rings, callouts, and related
-   links must remain legible.
+   links must remain legible. Confirm each semantic glyph is centered inside
+   its darker 44×44 icon tile and does not overlap the title or summary.
 8. Request `/help/logistics/` and confirm it permanently redirects to
    `/help/equipment/`. Direct unsupported article URLs must return 404.
 

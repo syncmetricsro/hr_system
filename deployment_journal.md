@@ -1,5 +1,35 @@
 # Deployment Journal
 
+## 2026-08-02 - Help card icon correction deployed to both staging clients
+
+Merged PR **#155** and deployed exact merge **`60b730d`** to `jober-staging`
+and `corvinum-staging` as the shared image `jober-platform:demo-60b730d`
+(source image digest
+`sha256:59187f93ed59e4b39dedf017718602d3946edd5d00c116ff44978d24dcb00752`).
+This corrects Jober's oversized Help-card SVGs by defining the missing shared
+`icon-lg` size as 24×24 inside the existing 44×44 tile. CorvinumEU's Material
+Symbols retain the same intended dimensions.
+
+GitHub Actions run `30741349514` was green before merge: the complete browser
+job passed in 2m56s and the two-client quality/unit job passed in 12m04s. Both
+replacement containers passed Dokku's uptime and port-listening checks. Both
+databases reported no pending migrations, and the read-only certificate-policy
+scan found zero disallowed records with files in either app. Final process
+reports show one running web process per app, and both active nginx
+configurations still expose `client_max_body_size 25m;`.
+
+Both public HTTPS smoke suites passed health, login/CSRF, fingerprinted static
+CSS, X-Frame-Options and HSTS. The deployed stylesheet fingerprint is
+`app.e91e6f987234.css`; its public contents expose the exact
+`.icon-lg{width:1.5rem;height:1.5rem;font-size:1.5rem}` rule from both client
+hosts. The Hungarian Help route on each host still redirects unauthenticated
+requests to that client's Hungarian login page.
+
+No seed, purge, SMS, Telegram, SMTP, payslip-send, runtime-configuration, or
+production action ran. Both staging databases remain fictional. The previous
+shared image `jober-platform:demo-c78e962` remains the immediate rollback
+target for both apps.
+
 ## 2026-08-02 - Complete Help area deployed to both staging clients
 
 Merged PR **#153** and deployed exact merge **`c78e962`** to `jober-staging`
