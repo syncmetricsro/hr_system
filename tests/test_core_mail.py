@@ -86,6 +86,20 @@ def test_locmem_backend_counts_as_configured(settings):
     assert email_configured() is True
 
 
+def test_an_empty_backend_is_unconfigured(settings):
+    """Not a harmless no-op backend: Django cannot import "" so every send
+    raises ImportError. Jober staging had exactly this — `DJANGO_EMAIL_BACKEND`
+    set to an empty string beside live SMTP credentials — which made the UI
+    offer a Send button that could only ever error."""
+    settings.EMAIL_BACKEND = ""
+    assert email_configured() is False
+
+
+def test_a_whitespace_backend_is_unconfigured(settings):
+    settings.EMAIL_BACKEND = "   "
+    assert email_configured() is False
+
+
 def test_smtp_without_a_host_is_unconfigured(settings):
     settings.EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
     settings.EMAIL_HOST = ""

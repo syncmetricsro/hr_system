@@ -62,7 +62,14 @@ def email_configured() -> bool:
     can *say* email is unavailable rather than offer a button that files a
     failure, the same reason ``sms_configured`` exists.
     """
-    backend = getattr(settings, "EMAIL_BACKEND", "")
+    backend = (getattr(settings, "EMAIL_BACKEND", "") or "").strip()
+    if not backend:
+        # An empty EMAIL_BACKEND is not "some harmless backend that cannot
+        # fail" - Django cannot import it, so every send raises ImportError.
+        # Found on Jober staging 2026-08-03, where DJANGO_EMAIL_BACKEND was an
+        # empty string sitting beside live SMTP credentials: the UI would have
+        # offered a Send button and every press would have errored.
+        return False
     if "smtp" not in backend:
         return True
     return bool(
