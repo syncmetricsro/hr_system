@@ -1,5 +1,56 @@
 # Deployment Journal
 
+## 2026-08-03 - Five merged PRs deployed to both staging clients
+
+Merged **#157, #158, #159, #160 and #161** and deployed the exact merge
+**`6c413b0`** to `jober-staging` and `corvinum-staging` as the shared image
+`jober-platform:demo-6c413b0` (source image digest
+`sha256:4cc2cc737a72809e4c3d09f5e3b1e3939974e5018da9209651ca2e994e8fdbe9`).
+
+The release carries: job-offer emails for Jober with a platform-wide recipient
+allowlist for both clients (#157), the mobile nav toggle moved out from under
+the notification bell (#158), the reporting-period picker's missing spacing
+(#159), payslips brought inside the office boundary (#160), and the legal,
+retention and Secure Document Vault documents (#161, no runtime effect).
+
+Every GitHub Actions run was green before its merge. Merged `main` was then
+verified locally before any deploy: Ruff, Ruff format and the dependency
+direction tripwire clean; `manage.py check` and `makemigrations --check` green
+under both settings modules; **1008 passed / 15 skipped** in Jober, **614
+passed / 21 skipped / 257 deselected** in CorvinumEU, and **65/65** browser
+tests. `check_no_node_artifacts` and `verify_vendor_assets` both passed.
+
+**Migrations.** `people.0008_person_email_opt_out` applied to both databases.
+`messaging.0003_joboffer_emailbatch_outboundemail_offeremailtemplate` applied to
+Jober only, because CorvinumEU does not install `features.messaging` - the
+expected asymmetry, not a partial run. Both apps then reported no pending
+migrations and `manage.py check --deploy` found no issues on either, so the
+`mail.W001` allowlist warning is not firing: `EMAIL_ALLOWED_RECIPIENTS` is set
+on both apps.
+
+Both public HTTPS smoke suites passed health, login/CSRF, fingerprinted static
+CSS, X-Frame-Options and HSTS. The deployed stylesheet fingerprint is
+`app.565fda8125c7.css`, and its public contents expose both corrections from
+this release - `.period-filter{gap:var(--space-3);display:grid}` and
+`.app-header>.icon-button.mobile-only{...position:absolute;left:50%...}`.
+Client isolation was re-checked at the routing layer: `/en/offers/` answers 302
+on `jober-staging` and **404** on `corvinum-staging`, so the offer-email feature
+is mounted for exactly one client.
+
+Because `git:load-image` releases on load, there was a short window on each app
+where the new code ran against the previous schema. Both migrations are
+additive, the window was seconds, and `migrate` ran immediately afterwards.
+Worth noting rather than repeating: a pre-release migration step would remove it.
+
+No seed, purge, SMS, Telegram, SMTP send, payslip-send, runtime-configuration
+or production action ran. Both staging databases remain fictional. The previous
+shared image `jober-platform:demo-60b730d` remains the immediate rollback
+target.
+
+Deployed entirely through the command-restricted `syncmetric-prime-dokku` key;
+the administrative `syncmetric-prime` key is passphrase-protected and its agent
+refused to sign, which the deploy key exists to survive.
+
 ## 2026-08-02 - Help card icon correction deployed to both staging clients
 
 Merged PR **#155** and deployed exact merge **`60b730d`** to `jober-staging`
