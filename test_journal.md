@@ -883,7 +883,7 @@ happened.
   in the changed code's own tests:
   - `tests/test_finance_seed_splits.py` imported the seed command at module
     level, so on the **CorvinumEU lane** - which does not install
-    `features.finance` - it failed during *collection* and aborted all 425
+    `features.profitability` - it failed during *collection* and aborted all 425
     tests rather than skipping one file. `tests/test_office_scoping.py`
     already had the right pattern (`django_apps.is_installed` +
     `allow_module_level=True`); copied it.
@@ -1511,7 +1511,7 @@ happened.
     fixtures reference the demo seed command).
   - CorvinumEU feature-isolation lane: **246 passed, 10 skipped, 135
     deselected** (unaffected, as expected — CorvinumEU doesn't install
-    `features.finance`).
+    `features.profitability`).
 
 ## 2026-07-24 - Office-scoped finance RBAC + executive dashboard (ADR 0026 Phase A)
 
@@ -1557,7 +1557,7 @@ happened.
     `test_office_scoping.py` tests, no regressions).
   - CorvinumEU feature-isolation lane: **246 passed, 10 skipped, 135
     deselected** (+1 skip vs. baseline — the new office-scoping test file
-    correctly self-skips, `features.finance` isn't installed for
+    correctly self-skips, `features.profitability` isn't installed for
     CorvinumEU).
   - Full Playwright e2e lane: **50 passed** (48 baseline + 2 new tests in
     `test_finance_charts.py`) after the heading-text fix above.

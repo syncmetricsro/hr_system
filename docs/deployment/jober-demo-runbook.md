@@ -324,7 +324,7 @@ Section 6 is the demo narrative. This is the operating guide — what a manager
 actually does, and the two things that surprise people.
 
 **Every figure is typed in. Nothing is derived.** Finance reads no data from
-People, Equipment, Accommodation or anywhere else; `features/finance/` imports
+People, Equipment, Accommodation or anywhere else; `features/profitability/` imports
 nothing from those modules. The numbers on screen are exactly the numbers
 somebody entered, taken from the client's own workbook. (An earlier fix list
 recorded the opposite — that Finance pulls from headcount and inventory and

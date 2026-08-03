@@ -8,13 +8,13 @@ import pytest
 from django.apps import apps as django_apps
 from django.urls import reverse
 
-if not django_apps.is_installed("features.finance"):
-    pytest.skip("features.finance is not installed for this client", allow_module_level=True)
+if not django_apps.is_installed("features.profitability"):
+    pytest.skip("features.profitability is not installed for this client", allow_module_level=True)
 
 from core.accounts.permissions import user_office_scope
 from core.offices.models import Office
 from core.projects.models import Project
-from features.finance.services import record_financial_month
+from features.profitability.services import record_financial_month
 
 pytestmark = pytest.mark.django_db
 
@@ -65,7 +65,7 @@ def test_user_office_scope_manager_is_their_offices_only(two_offices):
 
 
 def test_manager_finance_page_shows_only_their_office(client, two_offices):
-    from features.finance.services import company_totals
+    from features.profitability.services import company_totals
 
     client.force_login(two_offices["manager"])
     resp = client.get(reverse("finance_summary"))
@@ -93,7 +93,7 @@ def test_observer_gets_executive_page_with_all_offices(client, two_offices):
 
 
 def test_manager_cannot_view_another_offices_month_detail(client, two_offices):
-    from features.finance.models import FinancialMonth
+    from features.profitability.models import FinancialMonth
 
     client.force_login(two_offices["manager"])
     other_month = FinancialMonth.objects.get(project=two_offices["p_gyr"], year=2026, month=5)
@@ -102,7 +102,7 @@ def test_manager_cannot_view_another_offices_month_detail(client, two_offices):
 
 
 def test_manager_can_view_their_own_offices_month_detail(client, two_offices):
-    from features.finance.models import FinancialMonth
+    from features.profitability.models import FinancialMonth
 
     client.force_login(two_offices["manager"])
     own_month = FinancialMonth.objects.get(project=two_offices["p_vm"], year=2026, month=5)
@@ -120,7 +120,7 @@ def test_manager_cannot_record_month_for_another_offices_project(client, two_off
 
 
 def test_observer_can_view_any_offices_month_detail(client, two_offices):
-    from features.finance.models import FinancialMonth
+    from features.profitability.models import FinancialMonth
 
     client.force_login(two_offices["observer"])
     month = FinancialMonth.objects.get(project=two_offices["p_gyr"], year=2026, month=5)
@@ -131,7 +131,7 @@ def test_observer_can_view_any_offices_month_detail(client, two_offices):
 def test_office_totals_offices_none_returns_unfiltered_including_no_office_project(two_offices):
     """offices=None must mean genuinely unfiltered, not 'all offices' - a
     project with no office assigned at all must still show for the Observer."""
-    from features.finance.services import office_totals
+    from features.profitability.services import office_totals
 
     unassigned_project = Project.objects.create(name="No Office Yet", code="NOOFF")
     record_financial_month(unassigned_project, 2026, 5, "500", "100", actor=two_offices["manager"])

@@ -6,7 +6,7 @@ from django.db import transaction
 from django.db.models import Count, Q, Sum
 
 from core.audit.services import record_event
-from features.finance.models import (
+from features.profitability.models import (
     FinanceCategoryKind,
     FinanceGroup,
     FinanceLineItem,

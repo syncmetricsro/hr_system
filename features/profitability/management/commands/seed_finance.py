@@ -5,8 +5,8 @@ from decimal import Decimal
 from django.core.management.base import BaseCommand
 
 from core.accounts.models import User
-from features.finance.models import FinanceCategory, FinanceCategoryKind, FinanceGroup
-from features.finance.services import (
+from features.profitability.models import FinanceCategory, FinanceCategoryKind, FinanceGroup
+from features.profitability.services import (
     recompute_month,
     record_financial_month,
     set_line_item,

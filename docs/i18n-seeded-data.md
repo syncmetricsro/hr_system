@@ -31,7 +31,7 @@ English rows inside a translated UI.
    |---|---|
    | `core/people/catalog_i18n.py` | inactive reasons (migration 0003) |
    | `features/blacklist/catalog_i18n.py` | blacklist categories (migration 0002) |
-   | `features/finance/catalog_i18n.py` | finance categories (`seed_finance`) |
+   | `features/profitability/catalog_i18n.py` | finance categories (`seed_finance`) |
    | `features/intake/catalog_i18n.py` | questionnaire panels + question labels |
    | `features/logistics/catalog_i18n.py` | seeded equipment names |
    | `clients/corvinum_eu/catalog_i18n.py` | corvinum checklist items + equipment |

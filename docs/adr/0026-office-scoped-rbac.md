@@ -21,7 +21,7 @@ field, `User.offices` M2M (decision point 2's User half), the shared
 `None` for Observer as a genuine "unrestricted" sentinel, not an
 all-offices queryset, since the latter would incorrectly exclude any
 record with no office assigned), full office-scoping of every finance
-service function and view (`features/finance/`), and a new executive
+service function and view (`features/profitability/`), and a new executive
 finance dashboard (`templates/pages/finance_executive.html`) that only
 Observer sees — same `finance_summary` URL, role-branched content, per the
 product decision recorded in `docs/product/jober-multi-office-scoping.md`.

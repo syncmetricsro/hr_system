@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     "core.retention",
     "core.notifications",
     "features.logistics",
-    "features.finance",
+    "features.profitability",
     "features.intake",
     "features.messaging",
     "features.compliance",

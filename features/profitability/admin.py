@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from django.contrib import admin
 
-from features.finance.models import FinanceCategory, FinanceLineItem, FinancialMonth
+from features.profitability.models import FinanceCategory, FinanceLineItem, FinancialMonth
 
 
 @admin.register(FinancialMonth)

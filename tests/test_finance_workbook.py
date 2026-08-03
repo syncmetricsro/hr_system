@@ -5,13 +5,13 @@ from decimal import Decimal
 import pytest
 from django.apps import apps as django_apps
 
-if not django_apps.is_installed("features.finance"):
-    pytest.skip("features.finance is not installed for this client", allow_module_level=True)
+if not django_apps.is_installed("features.profitability"):
+    pytest.skip("features.profitability is not installed for this client", allow_module_level=True)
 
 from core.offices.models import Office
 from core.projects.models import Project
-from features.finance.models import FinanceCategory, FinanceCategoryKind, FinancialMonth
-from features.finance.services import (
+from features.profitability.models import FinanceCategory, FinanceCategoryKind, FinancialMonth
+from features.profitability.services import (
     FinanceError, normalize_source_amount, office_totals, recompute_month, set_line_item,
 )
 

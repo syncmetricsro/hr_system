@@ -181,7 +181,7 @@ Item 4 remains the largest *risk* — deferred, not reduced.
    latter confirmed by inspecting the actual response headers and cookie
    flags.
    *Deliberately left for later:* the last legacy "region" naming is in
-   **code**, not docs — `features/finance/views.py` still passes
+   **code**, not docs — `features/profitability/views.py` still passes
    `regional_results`/`regional_chart_data`, read by
    `templates/pages/finance_summary.html` and `finance_year.html` (including
    the DOM id `chart-data-finance-summary-regional`). The data is already

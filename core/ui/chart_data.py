@@ -1,7 +1,7 @@
 """Shared chart payload shaping (ADR 0025).
 
 Lives in core (not a feature app) because both core/ui/views.py and
-features/finance/views.py need it, and core cannot import from features.
+features/profitability/views.py need it, and core cannot import from features.
 """
 
 from __future__ import annotations

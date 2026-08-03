@@ -7,15 +7,15 @@ from decimal import Decimal
 import pytest
 from django.apps import apps as django_apps
 
-if not django_apps.is_installed("features.finance"):
-    pytest.skip("features.finance is not installed for this client", allow_module_level=True)
+if not django_apps.is_installed("features.profitability"):
+    pytest.skip("features.profitability is not installed for this client", allow_module_level=True)
 
 
 from django.urls import reverse
 
 from core.offices.models import Office
-from features.finance.models import FinanceCategory, FinanceCategoryKind, FinanceGroup, FinancialMonth
-from features.finance.services import record_financial_month, set_line_item
+from features.profitability.models import FinanceCategory, FinanceCategoryKind, FinanceGroup, FinancialMonth
+from features.profitability.services import record_financial_month, set_line_item
 from core.projects.models import Project
 
 pytestmark = pytest.mark.django_db
@@ -74,7 +74,7 @@ def test_finance_summary_renders_expected_canvases_and_trend_data(client, setup)
     assert "labels" in group and "net" in group
 
     # Regional diverging chart moved here from the Reports/Overview page
-    # (features/finance/panels.py::company_totals_panel, now deleted).
+    # (features/profitability/panels.py::company_totals_panel, now deleted).
     regional = extract_json_script(body, "chart-data-finance-summary-regional")
     assert regional["labels"] == ["Test Office"]
     assert Decimal(regional["net"][0]) == Decimal("8000")

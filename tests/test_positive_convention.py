@@ -3,20 +3,20 @@ from __future__ import annotations
 import pytest
 from django.apps import apps as django_apps
 
-if not django_apps.is_installed("features.finance"):
-    pytest.skip("features.finance is not installed for this client", allow_module_level=True)
+if not django_apps.is_installed("features.profitability"):
+    pytest.skip("features.profitability is not installed for this client", allow_module_level=True)
 
 
 from decimal import Decimal
 
 import pytest
 
-from features.finance.models import (
+from features.profitability.models import (
     FinanceCategory,
     FinanceCategoryKind,
     FinancialMonth,
 )
-from features.finance.services import (
+from features.profitability.services import (
     FinanceError,
     record_financial_month,
     recompute_month,

@@ -4,8 +4,8 @@ from django.http import HttpRequest, HttpResponse
 
 from core.accounts.permissions import Action, require_action, user_office_scope
 from core.ui.exports import csv_response
-from features.finance.models import FinanceLineItem
-from features.finance.services import company_totals, office_totals, signed_amount
+from features.profitability.models import FinanceLineItem
+from features.profitability.services import company_totals, office_totals, signed_amount
 
 
 @require_action(Action.FINANCE_VIEW_SUMMARY)

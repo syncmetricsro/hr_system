@@ -13,8 +13,8 @@ from core.accounts.models import Role
 from core.accounts.permissions import Action, require_action, user_office_scope
 from core.accounts.permissions import can as user_can
 from core.ui.chart_data import net_bar_payload
-from features.finance.models import FinanceCategory, FinanceCategoryKind, FinancialMonth
-from features.finance.services import (
+from features.profitability.models import FinanceCategory, FinanceCategoryKind, FinancialMonth
+from features.profitability.services import (
     FinanceError,
     company_totals,
     group_breakdown,

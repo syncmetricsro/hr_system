@@ -18,7 +18,7 @@
 > "region" below as describing **the source workbook**, which is what makes
 > this document useful — it is the provenance record for the sign convention
 > and category structure. Where it looks forward to how the system should
-> behave, the office roll-up in `features/finance` is the implementation, and
+> behave, the office roll-up in `features/profitability` is the implementation, and
 > offices are now an access boundary, not merely a reporting dimension.
 
 ## 1. Source and provenance
@@ -51,7 +51,7 @@ authorize payroll calculation or automatic wage deductions.
 
 Target placement is `features/profitability`, selected ON by Jober and OFF by
 CorvinumEU. The current repository still implements this capability under
-`features/finance` and stores non-negative magnitudes with cost/revenue kind
+`features/profitability` and stores non-negative magnitudes with cost/revenue kind
 providing the sign. The verified workbook uses signed cells. A later build must
 choose and migrate/validate the persistence convention while preserving the
 source's signed behavior at entry, calculation, and export boundaries. This

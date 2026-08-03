@@ -85,7 +85,7 @@ def test_finance_section_not_shown_to_observer_either(client, make_user):
     with translation.override("sk"):
         body = client.get(reverse("reports")).content.decode("utf-8")
     # Even the role with full finance access sees no finance content on Reports -
-    # it's exclusively on the Finance page now (features/finance/views.py::finance_summary).
+    # it's exclusively on the Finance page now (features/profitability/views.py::finance_summary).
     assert "Celkový súčet firmy" not in body
 
 

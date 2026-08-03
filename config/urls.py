@@ -332,9 +332,9 @@ if _feature_on("logistics", "transport"):
         ),
     ]
 
-if _feature_on("finance", "profitability"):
-    from features.finance import exports as finance_exports
-    from features.finance import views as finance_views
+if _feature_on("profitability", "profitability"):
+    from features.profitability import exports as finance_exports
+    from features.profitability import views as finance_views
 
     urlpatterns += [
         path("export/finance.csv", finance_exports.finance_csv, name="export_finance"),

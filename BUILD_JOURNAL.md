@@ -1301,7 +1301,7 @@ carries J4: "the Finance page derives its figures from system data (headcount,
 inventory, accommodation) - remove every automatic derivation". Checked before
 building it, and **there is nothing to remove**: `set_line_item()` stores a
 hand-typed amount, `recompute_month()` only sums line items, and
-`features/finance/` imports nothing from people, logistics or accommodation.
+`features/profitability/` imports nothing from people, logistics or accommodation.
 
 - The likeliest explanation for what the client saw is the **seeded demo data**
   - 54 pre-filled months that look auto-populated but were written by
@@ -1859,7 +1859,7 @@ features.
   `Secure; HttpOnly; SameSite=Lax`. That also surfaced a small real finding:
   nginx emits a second, shorter HSTS header alongside Django's.
 - Left deliberately: the last "region" naming is in code, not docs -
-  `regional_results`/`regional_chart_data` in `features/finance/views.py`
+  `regional_results`/`regional_chart_data` in `features/profitability/views.py`
   and two templates. The data is already per-office; only the names are
   stale. A rename needs both unit lanes plus e2e, which is not a sensible
   thing to run the day before the CEO demo for a change no user can see.
@@ -2697,7 +2697,7 @@ swapping in real art later only touches
 
 ## 2026-07-24 - Richer finance demo data (Jan-Jul 2026); three new design docs
 
-- `features/finance/management/commands/seed_finance.py`: expanded from 2
+- `features/profitability/management/commands/seed_finance.py`: expanded from 2
   `FinancialMonth` rows total (Nov 2025 only, missing CARGO entirely) to a
   full Jan-Jul 2026 year-to-date series across all three projects/offices
   — 21 new rows, plus the original Nov 2025 pair kept for year-over-year
@@ -2745,7 +2745,7 @@ User asked "hopefully these changes were only applied to the jober thin
 client" about the previous slice — a fair challenge that caught a real
 issue. The *behavioral* changes (office-scoped finance queries, the
 executive dashboard, the 403 guard) genuinely are Jober-only in effect,
-since they all live in `features/finance/`, which CorvinumEU doesn't
+since they all live in `features/profitability/`, which CorvinumEU doesn't
 install. But `core/offices/migrations/0002_seed_offices.py` seeded the
 three real office names (Velký Meder, Győr, Dunajská Streda) via a Django
 migration — and `core.offices` was added to every client's
@@ -2834,7 +2834,7 @@ execution note for what's Phase A vs still-pending Phase B).
 ## 2026-07-24 - Move regional finance chart from Reports to Finance; correct §8.1
 
 - The "office financial chart" on Reports/Overview turned out to be
-  `features/finance/panels.py::company_totals_panel` (registered onto the
+  `features/profitability/panels.py::company_totals_panel` (registered onto the
   Reports page via `register_report_panel`) — a linked card showing a
   margin gauge and a profit/loss-by-region diverging chart. Region is the
   closest existing concept to "office" today (`Project.region`); the real
@@ -2844,9 +2844,9 @@ execution note for what's Phase A vs still-pending Phase B).
   section of `templates/pages/finance_summary.html` (which already had
   the same `regional_totals()` data as a chartless table) — added
   `regional_chart_data` to `finance_summary`'s view context
-  (`features/finance/views.py`), mirroring the existing `group_chart_data`
+  (`features/profitability/views.py`), mirroring the existing `group_chart_data`
   pattern exactly.
-- Deleted the now-dead `features/finance/panels.py` and
+- Deleted the now-dead `features/profitability/panels.py` and
   `templates/panels/finance_company_totals.html`, and removed
   `FinanceConfig.ready()`'s report-panel registration entirely — per the
   user's choice, Reports/Overview shows **no** finance content at all now,
@@ -2929,7 +2929,7 @@ independently re-verified (services.py, `reports()`, `vendor/MANIFEST.md`,
 in `docs/adr/0025-chartjs-visualizations.md`; highlights below.
 
 - **New capability, not just visualization**: `monthly_totals(year=None)`
-  in `features/finance/services.py` — the only company-wide monthly
+  in `features/profitability/services.py` — the only company-wide monthly
   (not yearly) revenue/cost/net time series that existed anywhere.
   Ascending order (a trend), deliberately not matching `yearly_totals()`'s
   newest-first convention. `all_locked` flag per bucket for a future
@@ -2965,7 +2965,7 @@ in `docs/adr/0025-chartjs-visualizations.md`; highlights below.
   the feature-panel registry) with a headcount-per-project bar plus a
   real per-project people list; the existing `finance_company_totals`
   Reports panel extended in place (not duplicated) with a compact gauge +
-  regional bar, since `features.finance` isn't even installed for
+  regional bar, since `features.profitability` isn't even installed for
   CorvinumEU so the extension carries zero client-branching risk.
 - **`static/src/js/charts.js`** (new): reads chart colors from CSS custom
   properties at build time, destroys+rebuilds tracked charts on the
