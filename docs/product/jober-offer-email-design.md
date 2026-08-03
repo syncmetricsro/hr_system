@@ -45,10 +45,16 @@ Doppler does not reach syncmetric-prime. Values are pasted into
   today — CorvinumEU creates no `Office` rows so the scope helper returns its
   unrestricted sentinel, and Jober has payslips off — but real the moment
   either changes.
-- **Pre-existing, not from this work:** the i18n catalogs on `main` are stale. A
-  full `scripts/compile_messages.sh --extract` re-syncs ~250 Help msgids that
-  were reworded without re-extraction and *shrinks* the compiled `.mo` files.
-  This branch deliberately appended only its own msgids. Worth its own slice.
+- **Corrected 2026-08-03 — there is no i18n debt.** An earlier revision of this
+  section claimed the catalogs on `main` were stale and that a re-extract would
+  shrink them. That was wrong. `msgfmt --statistics` reports **1576 translated,
+  0 untranslated, 0 fuzzy** in all three languages. The figures behind the claim
+  came from `grep -c '^msgstr ""$'`, which counts the *wrapped* form where
+  `msgstr ""` is followed by continuation lines — a translated long string, not
+  an empty one. Running `--extract` would drop obsolete entries and produce ~44
+  genuine fuzzy matches to review, so it creates work rather than fixing
+  anything. This branch's approach of appending only its own msgids was right,
+  but for a different reason than stated.
 - **Deliberate non-goals** (see the bottom of this doc): no retry, no bounce
   handling, no self-service unsubscribe, and sends are synchronous.
 

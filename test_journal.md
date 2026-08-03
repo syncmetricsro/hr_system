@@ -1,5 +1,21 @@
 # Test Journal
 
+## 2026-08-03 - i18n catalogs: the claim, not the catalogs, was broken
+
+- No code change; recording a measurement that overturned an earlier one.
+- `msgfmt --statistics` on `main`: **1576 translated, 0 untranslated, 0 fuzzy**
+  in sk, hu and uk. The catalogs are complete.
+- The earlier "~110 untranslated" and "~250 msgid churn" figures came from
+  `grep -c '^msgstr ""$'`. That counts the **wrapped** form, where `msgstr ""`
+  is followed by continuation lines — which is a translated long string. Two
+  independently written parsers agreed with `msgfmt` at zero before the claim
+  was withdrawn.
+- Worth keeping as a rule: `.po` files are not line-oriented, so line-oriented
+  greps do not measure them. `msgfmt --statistics` is the only count to quote.
+- Consequence: a re-extract would drop obsolete entries and raise ~44 genuine
+  fuzzy matches for review — work created, nothing fixed. The proposed i18n
+  slice is cancelled and the claim removed from the offer-email design doc.
+
 ## 2026-08-03 - provider-backed send, and two bugs the suite could not see
 
 - **First real-SMTP run** of the payslip path, against `smtp.forpsi.com` with a
