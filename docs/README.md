@@ -23,7 +23,7 @@ they are never renamed or renumbered per client.
 | `i18n-seeded-data.md` | Platform | How seeded catalog data stays localized (db_trans + catalog_i18n) |
 | `session-summary-2026-07-16.md` | Platform | Consolidated product, demo, staging, testing, and remaining-gates handoff for the implementation session |
 
-## docs/adr/ — Platform (shared decision log, 0001–0028)
+## docs/adr/ — Platform (shared decision log, 0001–0029)
 Highlights: 0008 RBAC model · 0016 whitenoise · 0019 Twilio-via-stdlib ·
 0020 white-label sequencing · 0021 Stage B extraction (EXECUTED) ·
 0022 Stage C CorvinumEU thin client (EXECUTED) · 0023 payslips/encrypted PDF ·
@@ -80,6 +80,7 @@ staff-invitation subsystem deferred) ·
 | `jober-open-questions-july-2026.md` | Jober | Handover-call questions (**open**); 4 of 6 block or reshape queued work |
 | `jober-open-decisions.md`, `jober-risk-blockers.md` | Jober | Open decisions / blockers |
 | `jober-multi-office-scoping.md` | Jober | Multi-office (Velký Meder/Győr/Dunajská Streda) RBAC impact analysis — implemented (Phases A+B); only the staff-invitation subsystem §3a remains design-only (revisits ADR 0008) |
+| `jober-offer-email-design.md` | Jober | Job-offer emails: per-language templates, per-person panel and capped bulk send (ADR 0029, implemented) |
 | `jober-telegram-channel-design.md` | Jober | Canonical Manager/Admin-only, outbound Telegram channel-broadcast design — approved direction, not implemented, client/privacy gates open |
 | `jober-demo-inventory.md`, `jober-demo-to-django-map.md`, `jober-removed-feature-inventory.md`, `jober-source-register.md` | Jober | Build-era inventories and source register |
 | `corvinum-open-questions.md` | CorvinumEU | C-Q1…C-Q19 build defaults awaiting client confirmation |
@@ -89,3 +90,4 @@ staff-invitation subsystem deferred) ·
 |---|---|---|
 | `security-review-2026-06-29.md` | Platform | Security review record |
 | `jober-blacklist-legal-basis.md` | Jober | Legitimate-interest basis; LIA pending |
+| `jober-offer-email-legal-basis.md` | Jober | Legitimate-interest basis for job-offer outreach; opt-out implemented, LIA + DPA + retention period pending |

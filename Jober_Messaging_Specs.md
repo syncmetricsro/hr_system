@@ -31,6 +31,16 @@ The current UI sends one manually composed or selected-template message from a
 person card. The broader campaign/audience-preview system described in early
 discovery was not implemented and is not silently promised by this document.
 
+### Offer email
+
+- approved retention for bodies and delivery records
+  (`OFFER_EMAIL_RETENTION_DAYS` defaults to 0 = keep everything);
+- the Art. 28 DPA with the mail provider, and a job-offer-specific LIA
+  (`docs/security/jober-offer-email-legal-basis.md`);
+- whether offers may go to `INACTIVE` people in the recycling pool;
+- bounce handling and a self-service unsubscribe link, both deliberately
+  out of scope for the first slice.
+
 ### Telegram
 
 Telegram is one outbound post to Jober's configured Ukrainian-worker channel.
@@ -71,18 +81,22 @@ tests, and client gates live in the canonical Telegram design linked above.
 
 ## 3. Implementation boundary
 
-Keep both transports in the existing `features/messaging` feature. Provider
+Keep every transport in the existing `features/messaging` feature. Provider
 services may share safe infrastructure helpers, but they do not share false
 domain semantics:
 
 - `OutboundMessage` remains a person/phone-shaped SMS record;
 - Telegram uses a separate channel-broadcast record;
+- **offer email (ADR 0029, implemented 2026-08-02) uses `OutboundEmail`** —
+  subject, body and recipient language, no provider id — plus `JobOffer`,
+  `OfferEmailTemplate` and `EmailBatch`. It is the first transport to read
+  `Person.preferred_language`, via templates keyed `(kind, language)`;
 - Jober policy enables the transports and grants their separate actions;
 - CorvinumEU has neither route nor permission;
 - no `features/telegram` package and no client conditional in `core/`.
 
-Both provider integrations use the standard library unless a separately
-approved dependency ADR changes that rule. Telegram's token-bearing API URL
+Provider integrations use the standard library — or, for email, Django's own
+mail backend — unless a separately approved dependency ADR changes that rule. Telegram's token-bearing API URL
 must never appear in logs or audit.
 
 ## 4. Current open items
@@ -90,7 +104,9 @@ must never appear in logs or audit.
 ### SMS
 
 - approved message/log retention;
-- native review of templates and a decision on multilingual variants;
+- native review of templates and a decision on multilingual variants
+  (offer emails answered this for their own channel with per-language rows;
+  SMS still sends one body to everyone);
 - whether a future campaign/audience workflow is needed;
 - production sender/account and inbound-reply operating policy.
 

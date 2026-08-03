@@ -19,6 +19,131 @@
 - Full browser suite green on the fix branch: **58 passed**. On
   `feat/offer-emails`, which carries six extra specs, **64 passed**.
 
+## 2026-08-03 - i18n catalogs: the claim, not the catalogs, was broken
+
+- No code change; recording a measurement that overturned an earlier one.
+- `msgfmt --statistics` on `main`: **1576 translated, 0 untranslated, 0 fuzzy**
+  in sk, hu and uk. The catalogs are complete.
+- The earlier "~110 untranslated" and "~250 msgid churn" figures came from
+  `grep -c '^msgstr ""$'`. That counts the **wrapped** form, where `msgstr ""`
+  is followed by continuation lines — which is a translated long string. Two
+  independently written parsers agreed with `msgfmt` at zero before the claim
+  was withdrawn.
+- Worth keeping as a rule: `.po` files are not line-oriented, so line-oriented
+  greps do not measure them. `msgfmt --statistics` is the only count to quote.
+- Consequence: a re-extract would drop obsolete entries and raise ~44 genuine
+  fuzzy matches for review — work created, nothing fixed. The proposed i18n
+  slice is cancelled and the claim removed from the offer-email design doc.
+
+## 2026-08-03 - provider-backed send, and two bugs the suite could not see
+
+- **First real-SMTP run** of the payslip path, against `smtp.forpsi.com` with a
+  disposable relay address allowlisted. Both directions were exercised, which is
+  the only thing that makes it evidence rather than a demo:
+  - a **non-allowlisted** recipient was refused **with live credentials
+    loaded** - `sent_at` untouched, `sent_to` empty, one `payslip.send_blocked`
+    audit event, zero `payslip.sent`, nothing left the box. A broken guard here
+    would have sent a real email rather than raising, which is why this case
+    matters more than the happy path.
+  - the **allowlisted** recipient arrived, and the encrypted PDF opened with the
+    one-time password and showed the expected period and net amount.
+  - the password appeared in **no** `payslip.*` audit row - ADR 0023's invariant
+    re-proved on a real send rather than against a mock.
+- **`mail.W001` proved by hand** under `clients.corvinum_eu.settings` with SMTP
+  configured and no allowlist: it fires, naming `payslips`. The superseded
+  `messaging.W001` could not have, being gated on `offer_emails`, which is False
+  for that client. Automated coverage exists too, but the manual run is what
+  showed the warning reaching the client that needed it.
+- **Four new `core/mail` tests** for the two config-honesty bugs: an empty
+  backend and a whitespace-only backend are unconfigured, the default
+  `localhost` host is unconfigured, and an explicit local MTA (`127.0.0.1`)
+  still counts as configured - the last one so the localhost rule cannot lock
+  out a legitimate relay.
+- Neither bug was reachable from the suite as written, because both are about
+  what an environment supplies rather than what the code does. They were found
+  by reading deployment config. Recorded because "the tests were green" was
+  true and irrelevant.
+- Final gate on the branch tip: ruff, ruff format and the dependency-direction
+  tripwire clean; `check` and `makemigrations --check` green under both settings
+  modules; **1004 passed / 9 skipped** in Jober and **604 passed / 21 skipped /
+  257 deselected** in CorvinumEU; **62/62** e2e. CI green on PR #157.
+
+## 2026-08-03 - worker email allowlist, both senders
+
+- **20 new tests** across two modules, and neither carries `jober_only` — that
+  is the point. `core.mail` is installed everywhere and `features.payslips` is
+  installed for both clients, so both modules run in the corvinum lane, which is
+  the lane that actually exercises payslip delivery.
+- `tests/test_core_mail.py` pins the allowlist semantics once, where the code now
+  lives: empty means unrestricted (production's setting, and an unset variable
+  must not take email down), case- and whitespace-insensitive matching, a blank
+  address refused when a list exists, and `email_configured` across console,
+  locmem and SMTP backends.
+- The `mail.W001` cases include the regression that prompted the move: the check
+  fires for `payslips` alone, with `offer_emails` explicitly False. It stays
+  quiet on a console backend and under DEBUG, so the warning that matters is not
+  buried in noise on every developer machine.
+- `tests/test_payslip_email_safety.py` covers the refusal end to end: no mail, no
+  `sent_at`, a `payslip.send_blocked` audit event and no `payslip.sent`, and an
+  explode-guard monkeypatching `build_encrypted_pdf` proving **no PDF and no
+  password** are produced for a blocked recipient. The resend case is separate
+  and deliberate — `send_payslip` prefers `sent_to` over `person.email`, so a
+  payslip delivered before the guard existed carries an address that was never
+  checked; correcting the person's address must not launder it.
+- Proven by running the check by hand under `clients.corvinum_eu.settings` with
+  SMTP configured and no allowlist: `mail.W001` fires, naming `payslips`.
+- `tests/test_offer_email_safety.py` lost the moved tests and kept its
+  transport-specific one. Its behaviour assertions are unchanged, which is the
+  point of a move.
+- Full gate green: Ruff clean, dependency-direction tripwire clean, `check` and
+  `makemigrations --check` under both settings modules, **1000 passed / 9
+  skipped** in Jober and **600 passed / 21 skipped / 257 deselected** in
+  CorvinumEU, and **62/62** e2e after the payslip template change. (Branch tip
+  is now 1004 / 604 — the two config-honesty fixes in the entry above added
+  four more tests.)
+
+## 2026-08-02 - offer emails
+
+- **54 new unit tests** across four modules, all `jober_only` and behind the
+  usual `is_installed("features.messaging")` module skip.
+- `test_offer_email_safety.py` is the important one. Opt-out, blacklisted, no
+  address, and a non-allowlisted address each produce `BLOCKED` with an empty
+  `mail.outbox`; an explode-guard monkeypatching `EmailMessage.send` proves the
+  mail server is never reached for a blocked recipient. Allowlist matching is
+  case-insensitive, an empty allowlist stays unrestricted (production's
+  setting), a console/locmem backend counts as configured, and unconfigured
+  SMTP records FAILED rather than pretending to send. The `messaging.W001`
+  deploy check is covered both ways.
+- `test_offer_emails.py` pins language selection and its two fallbacks -
+  including an unusable `preferred_language`, since that column is a free
+  CharField with no choices validation and would otherwise 500 in front of a
+  manager. Also: an unknown `$token` survives substitution, optional fields
+  render blank rather than "None", a capped batch stops at the limit, and one
+  blocked recipient does not stop the other sends.
+- One of those tests exists because the full suite caught a real bug the
+  focused run had not: `get_wage_unit_display()` resolves against the *active*
+  locale, so a Ukrainian worker's offer rendered "8.50 EUR za hodinu" —
+  Ukrainian body, Slovak wage unit — whenever the sender was working in
+  Slovak. Placeholder building is now wrapped in `translation.override` on the
+  chosen template's language, and the test asserts it from a Slovak sender.
+- `test_offer_email_office_scoping.py` is request-level through `client`, four
+  cases per guarded view, and covers the shape a unit test cannot: that bulk
+  **execution** is scoped and not only the preview. Also asserts a recruiter
+  cannot bulk-send or author, and that Observer - the one cross-office role -
+  cannot send at all.
+- `test_offer_email_seed.py` pins idempotency, that reseeding repairs a
+  hand-edited body, that every kind and all three worker languages are covered,
+  and that a seeded offer always carries an office. That last test exists
+  because its absence is what made the first e2e run fail.
+- **e2e: 6 new specs, 62/62 passing.** They cover what only a browser catches -
+  the panel actually rendering, the Offers tab present for a manager and absent
+  for a recruiter, and the bulk page showing its confirm box. Fixing them
+  required adding `seed_messaging` and `seed_offer_emails` to the e2e seed
+  order, which had never run either.
+- Full gate green: Ruff clean, `manage.py check` and `makemigrations --check`
+  under both settings modules, **980 passed / 8 skipped** in Jober and
+  **575 passed / 21 skipped / 257 deselected** in CorvinumEU.
+
 ## 2026-08-02 - Help card icon containment regression
 
 - The focused two-client Help browser slice passed **4/4** after adding the

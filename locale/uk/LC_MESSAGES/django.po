@@ -7783,3 +7783,325 @@ msgstr "Приклад екрана"
 #: core/ui/help.py templates/help/article.html templates/pages/help_index.html
 msgid "Related topics"
 msgstr "Пов’язані теми"
+
+#. Offer emails (ADR 0029)
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "All my offices"
+msgstr "Усі мої офіси"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Any"
+msgstr "Будь-який"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Blocked (not sent)"
+msgstr "Заблоковано (не надіслано)"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Choose a job offer and an email type."
+msgstr "Виберіть пропозицію роботи та тип листа."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Close"
+msgstr "Закрити"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Do not send job offers by email"
+msgstr "Не надсилати пропозиції роботи електронною поштою"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Edit job offer"
+msgstr "Редагувати пропозицію роботи"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Email a job offer"
+msgstr "Надіслати пропозицію роботи поштою"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Email is not configured in this environment."
+msgstr "Електронну пошту не налаштовано в цьому середовищі."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Email is not configured in this environment, so nothing can be sent from here."
+msgstr "Електронну пошту не налаштовано в цьому середовищі, тому звідси нічого не можна надіслати."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Email is not configured in this environment. Offers can be authored, but nothing will be sent."
+msgstr "Електронну пошту не налаштовано в цьому середовищі. Пропозиції можна створювати, але нічого не буде надіслано."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Email templates"
+msgstr "Шаблони листів"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Email type"
+msgstr "Тип листа"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Excluded"
+msgstr "Виключено"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "I have reviewed the recipient list"
+msgstr "Я переглянув список одержувачів"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Job offer"
+msgstr "Пропозиція роботи"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Job offer closed."
+msgstr "Пропозицію роботи закрито."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Job offer created."
+msgstr "Пропозицію роботи створено."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Job offer updated."
+msgstr "Пропозицію роботи оновлено."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Job offers"
+msgstr "Пропозиції роботи"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "New job offer"
+msgstr "Нова пропозиція роботи"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "New offer"
+msgstr "Нова пропозиція"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "New template"
+msgstr "Новий шаблон"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "No active template for this email type."
+msgstr "Немає активного шаблону для цього типу листа."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "No active template for this email type — nothing can be sent until one exists."
+msgstr "Немає активного шаблону для цього типу листа — доки його не створять, нічого не можна надіслати."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "No job offers yet."
+msgstr "Поки що немає пропозицій роботи."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "No open job offers for this office yet."
+msgstr "Для цього офісу поки немає відкритих пропозицій."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "No templates yet. Offers cannot be sent until one exists."
+msgstr "Поки що немає шаблонів. Пропозиції не можна надіслати, доки не буде створено шаблон."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Nobody in scope can be emailed this offer."
+msgstr "Нікому в межах доступу не можна надіслати цю пропозицію."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Offer closing soon"
+msgstr "Пропозиція скоро закривається"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Offer email not sent: %(error)s"
+msgstr "Лист із пропозицією не надіслано: %(error)s"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Offer email sent."
+msgstr "Лист із пропозицією надіслано."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Offer email template"
+msgstr "Шаблон листа з пропозицією"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Offer emailed to %(count)s people."
+msgstr "Пропозицію надіслано %(count)s особам."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Offer reminder"
+msgstr "Нагадування про пропозицію"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Offers"
+msgstr "Пропозиції"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "One template per email type and language. A worker is written to in their preferred language, falling back to the site default."
+msgstr "Один шаблон на тип листа та мову. Працівнику пишуть його бажаною мовою, інакше — мовою застосунку за замовчуванням."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Placeholders"
+msgstr "Заповнювачі"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Preview, as %(name)s would receive it"
+msgstr "Попередній перегляд, як його отримає %(name)s"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Recruiting"
+msgstr "Набір персоналу"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Seasonal campaign"
+msgstr "Сезонна кампанія"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Send \"%(title)s\" to many"
+msgstr "Надіслати «%(title)s» багатьом"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Send now"
+msgstr "Надіслати зараз"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Send offer"
+msgstr "Надіслати пропозицію"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Send to many"
+msgstr "Надіслати багатьом"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Sends to %(address)s in this worker's preferred language."
+msgstr "Надішле на %(address)s бажаною мовою цього працівника."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Capped at %(limit)s; %(extra)s further people were left out of this send."
+msgstr "Обмежено до %(limit)s; ще %(extra)s осіб не увійшли до цієї розсилки."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Starts"
+msgstr "Початок"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Template saved."
+msgstr "Шаблон збережено."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "This person has opted out of offer emails."
+msgstr "Ця особа відмовилася від листів із пропозиціями роботи."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "This person is blacklisted."
+msgstr "Ця особа в чорному списку."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "This project belongs to a different office."
+msgstr "Цей проєкт належить іншому офісу."
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Update preview"
+msgstr "Оновити попередній перегляд"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "Wage"
+msgstr "Оплата"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "batch"
+msgstr "пакет"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "closed"
+msgstr "закрито"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "email batch"
+msgstr "пакет листів"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "email batches"
+msgstr "пакети листів"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "email type"
+msgstr "тип листа"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "inactive"
+msgstr "неактивний"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "job offer"
+msgstr "пропозиція роботи"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "job offers"
+msgstr "пропозиції роботи"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "language"
+msgstr "мова"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "location"
+msgstr "місце"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "no offer emails"
+msgstr "без листів із пропозиціями"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "offer email template"
+msgstr "шаблон листа з пропозицією"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "offer email templates"
+msgstr "шаблони листів із пропозиціями"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "outbound email"
+msgstr "вихідний лист"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "outbound emails"
+msgstr "вихідні листи"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "per hour"
+msgstr "за годину"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "per month"
+msgstr "за місяць"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "recipients"
+msgstr "одержувачі"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "subject"
+msgstr "тема"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "terms"
+msgstr "умови"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "wage"
+msgstr "оплата"
+
+#: features/messaging/models.py features/messaging/services.py features/messaging/views.py templates/panels/messaging_offer_email.html
+msgid "wage unit"
+msgstr "одиниця оплати"
+
+#: templates/pages/offer_send_bulk.html
+msgid "%(counter)s recipient"
+msgid_plural "%(counter)s recipients"
+msgstr[0] "%(counter)s одержувач"
+msgstr[1] "%(counter)s одержувачі"
+msgstr[2] "%(counter)s одержувачів"
+
+#. Worker email allowlist (ADR 0023/0029)
+#: core/mail.py features/payslips/services.py templates/pages/payslips.html
+msgid "Email is not configured in this environment. Payslips can be recorded, but nothing will be sent."
+msgstr "Електронну пошту не налаштовано в цьому середовищі. Розрахункові листи можна записувати, але нічого не буде надіслано."
+
+#: core/mail.py features/payslips/services.py templates/pages/payslips.html
+msgid "This environment may only email its configured test addresses."
+msgstr "Це середовище може надсилати листи лише на налаштовані тестові адреси."
+

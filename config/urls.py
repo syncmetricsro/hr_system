@@ -385,6 +385,36 @@ if _feature_on("messaging", "worker_messaging"):
         ),
     ]
 
+if _feature_on("messaging", "offer_emails"):
+    from features.messaging import views as offer_views
+
+    app_routes += [
+        path("offers/", offer_views.offer_list, name="offer_list"),
+        path("offers/new/", offer_views.offer_create, name="offer_create"),
+        path("offers/<int:pk>/edit/", offer_views.offer_edit, name="offer_edit"),
+        path("offers/<int:pk>/close/", offer_views.offer_archive, name="offer_archive"),
+        path(
+            "offers/<int:pk>/send/",
+            offer_views.offer_send_bulk,
+            name="offer_send_bulk",
+        ),
+        path(
+            "offers/templates/new/",
+            offer_views.offer_template_edit,
+            name="offer_template_create",
+        ),
+        path(
+            "offers/templates/<int:pk>/",
+            offer_views.offer_template_edit,
+            name="offer_template_edit",
+        ),
+        path(
+            "people/<int:person_pk>/offer-email/",
+            offer_views.send_offer_email_view,
+            name="send_offer_email",
+        ),
+    ]
+
 if _feature_on("compliance", "documents"):
     from features.compliance import views as compliance_views
 
