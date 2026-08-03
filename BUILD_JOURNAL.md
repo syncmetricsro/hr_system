@@ -1,5 +1,35 @@
 # Build Journal
 
+## 2026-08-03 - Payslips join the office boundary
+
+Recorded as a known gap during the recipient-allowlist work and left open on
+the grounds that it was not exploitable: CorvinumEU creates no `Office` rows so
+`user_office_scope` returns its unrestricted sentinel, and Jober has payslips
+switched off. Both halves of that argument are configuration, and configuration
+changes - so it is closed now rather than left as a note.
+
+Looking properly found **three** leaks where the note recorded one.
+`payslip_send` took a pk with no guard, so a manager could email another
+office's worker their payslip; that POST also mints a one-time password and
+displays it, so it leaked a credential as well as the document. `payslip_list`
+showed every office's net pay, which is restricted data - `PAYSLIP_VIEW` sits
+in the sensitive-reads group of the `Action` enum, so a cross-office row is a
+disclosure even though nothing is written. And the record form's person
+dropdown offered every worker in the company, which is how an out-of-scope
+payslip could be created in the first place.
+
+`Payslip` has no office of its own, so all three scope through the worker:
+`assert_person_in_scope` on the object view, and `scope_people(...,
+prefix="person__")` on the list, matching the precedent already used by
+logistics, checklists and audit. `PayslipForm` now takes `user` and scopes its
+person queryset, which doubles as the validation - a hand-crafted POST naming
+an out-of-scope person fails `is_valid()` instead of silently creating a row.
+The argument is passed in rather than read from a global so the boundary stays
+visible in the view, where the request is.
+
+The guard sits before `send_payslip`, so nothing is generated for a refused
+request; a test monkeypatches the PDF builder to explode and proves it.
+
 ## 2026-08-03 - Two placeholders that were being read as configuration
 
 The recipient allowlist landed earlier the same day. Checking whether it was

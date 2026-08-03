@@ -4,6 +4,7 @@ from django import forms
 from django.utils.translation import gettext
 from django.utils.translation import gettext_lazy as _
 
+from core.offices.scoping import scope_people
 from core.people.models import Person
 from features.payslips.models import Payslip
 
@@ -37,8 +38,16 @@ class PayslipForm(forms.ModelForm):
             "net_amount": forms.NumberInput(attrs={"min": "0.01", "step": "0.01"}),
         }
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, user=None, **kwargs):
+        """``user`` scopes the person picker (ADR 0026).
+
+        Without it the dropdown offered every worker in the company, so a
+        manager could record - and then email - a payslip against another
+        office's person. Passed in rather than read from a global so the
+        boundary stays visible in the view, where the request is.
+        """
         super().__init__(*args, **kwargs)
-        self.fields["person"].queryset = Person.objects.order_by(
-            "last_name", "first_name"
-        )
+        people = Person.objects.order_by("last_name", "first_name")
+        if user is not None:
+            people = scope_people(people, user)
+        self.fields["person"].queryset = people
