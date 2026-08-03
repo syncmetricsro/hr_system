@@ -3,6 +3,55 @@
 Implemented under ADR 0029. Legal basis and pending gates:
 `docs/security/jober-offer-email-legal-basis.md`.
 
+## Status — paused 2026-08-03, read this first
+
+**Built and ready to review.** PR #157 on `feat/offer-emails`, six commits, CI
+green, no review yet. Nothing uncommitted.
+
+**Deferred by decision (2026-08-03):** Jober has not supplied a `noreply@`
+address, so Jober email configuration waits until a demo is scheduled. **No code
+change is needed to hold this state** — the `offer_emails` flag stays on and the
+feature now honestly reports itself unavailable (`email_configured()` treats the
+default `localhost` host as unset). To enable later: set `DJANGO_EMAIL_HOST`,
+`DJANGO_EMAIL_PORT`, `DJANGO_EMAIL_HOST_USER`, `DJANGO_EMAIL_HOST_PASSWORD`,
+`DJANGO_EMAIL_USE_TLS`, `DJANGO_DEFAULT_FROM_EMAIL` **and**
+`EMAIL_ALLOWED_RECIPIENTS`.
+
+CorvinumEU payslip delivery is unaffected and verified end to end against real
+SMTP — see `docs/deployment/corvinum-demo-verification-summary.md`.
+
+### Environment state
+
+| Config | State |
+|---|---|
+| `stg_corvinum-staging` | allowlist set in Doppler **and** applied with `dokku config:set` |
+| `stg_jober-staging` | allowlist set both places; `DJANGO_EMAIL_BACKEND` is still an **empty string** — harmless now that empty reads as unconfigured, but `console.EmailBackend` is the correct way to say "no email here" |
+| `dev` (Jober local) | no allowlist. Low priority: `scripts/dev_app.sh` forwards no `DJANGO_EMAIL_*`, so it matters only for the cross-config trap — `corvinum_app.sh` *does* forward them, so running it against this config picks up Jober's SMTP with no allowlist |
+| `prd` | no mail configured; production is blocked on deployment-plan ask **D8** regardless |
+
+Doppler does not reach syncmetric-prime. Values are pasted into
+`dokku config:set`, so a Doppler-only change is invisible to staging
+(`docs/deployment/syncmetric-prime-staging.md`).
+
+### Open, carried forward
+
+- **Legal:** Art. 28 DPA with the mail provider, a job-offer-specific LIA, and an
+  approved retention period. `OFFER_EMAIL_RETENTION_DAYS` is deliberately `0` =
+  keep everything, so the registered purge job is a no-op until one is agreed.
+  Full list in `docs/security/jober-offer-email-legal-basis.md`.
+- **Product:** may offers go to `INACTIVE` people in the recycling pool? The
+  build permits it; nothing in the lifecycle model decides it.
+- **Known gap, not fixed:** `payslip_send` has no office guard. Not exploitable
+  today — CorvinumEU creates no `Office` rows so the scope helper returns its
+  unrestricted sentinel, and Jober has payslips off — but real the moment
+  either changes.
+- **Pre-existing, not from this work:** the i18n catalogs on `main` are stale. A
+  full `scripts/compile_messages.sh --extract` re-syncs ~250 Help msgids that
+  were reworded without re-extraction and *shrinks* the compiled `.mo` files.
+  This branch deliberately appended only its own msgids. Worth its own slice.
+- **Deliberate non-goals** (see the bottom of this doc): no retry, no bounce
+  handling, no self-service unsubscribe, and sends are synchronous.
+
 ## Decision
 
 Jober can email a worker a job offer, in that worker's own language, from the

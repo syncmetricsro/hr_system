@@ -1,5 +1,60 @@
 # Build Journal
 
+## 2026-08-03 - Two placeholders that were being read as configuration
+
+The recipient allowlist landed earlier the same day. Checking whether it was
+safe to deploy turned out to be the more useful exercise: it found two bugs in
+`email_configured()`, and neither would ever have been caught by the test suite,
+because both were about environments rather than code.
+
+They are the same defect twice. `email_configured()` asked only whether a value
+was truthy, so an **empty** `EMAIL_BACKEND` fell through the non-SMTP branch and
+reported *configured* - Django cannot import `""`, so every send raises
+ImportError - and `EMAIL_HOST == "localhost"` did the same, despite being the
+literal `os.getenv` fallback in `config/settings/base.py`, i.e. the value that
+means nobody set it. In both cases the offer panel and the payslip list rendered
+a Send button that could only fail. That is precisely the state the honest
+disabled control exists to prevent, so the guard was lying in exactly the place
+it was supposed to tell the truth.
+
+Both were found by tracing real deployments rather than by testing.
+`stg_jober-staging` has `DJANGO_EMAIL_BACKEND` set to an empty string sitting
+beside live SMTP credentials. And `scripts/dev_app.sh` forwards no
+`DJANGO_EMAIL_*` at all while the image bakes production settings, so the Jober
+demo falls straight through to the localhost default - which is the state Jober
+is in by decision, since no `noreply@` address has been supplied yet. An
+environment genuinely relaying through a local MTA names it explicitly
+(`127.0.0.1` or a hostname) and is unaffected.
+
+The first real-SMTP run also happened here, against CorvinumEU payslips with a
+disposable relay address allowlisted. Both directions were exercised, which is
+the only thing that makes it evidence: a non-allowlisted recipient was refused
+*with live credentials loaded*, and the allowlisted one arrived and decrypted.
+
+Getting there exposed a trap in the demo runbook. The local Doppler CLI scope
+was unset, so the documented bare `doppler run --` falls back to `doppler.yaml`
+and selects the Jober `dev` config - which carries working SMTP and **no**
+allowlist - while `corvinum_app.sh` forwards all seven `DJANGO_EMAIL_*`
+variables. Following the runbook literally would have started the Corvinum demo
+sending unrestricted from the wrong account: the exact failure this feature
+exists to prevent, one step before the step that prevents it. Every rehearsal
+command now names `--project` and `--config` in full.
+
+The staging runbook had two gaps of its own. Its per-app config list never
+mentioned `EMAIL_ALLOWED_RECIPIENTS`, so a bring-up that followed it produced
+real SMTP, fictional records and no allowlist. It also never said that Doppler
+does not reach syncmetric-prime - values are read locally and pasted into
+`dokku config:set`, so setting a secret in Doppler alone changes nothing on
+staging. Both are now stated, along with the note that a scoped service token
+(ask D4) is the answer if direct sync is ever wanted, not an interactive login
+binding app secrets to one person's session.
+
+One correction worth keeping, since this journal is the durable record: while
+reporting the above I described the Jober `dev` Doppler config as a live
+exposure for the Jober demo. It is not - `dev_app.sh` forwards no email
+variables, so those credentials are inert there. The real risk was the
+cross-config trap described above, where `corvinum_app.sh` picks them up.
+
 ## 2026-08-03 - The email recipient allowlist becomes a platform control
 
 The allowlist shipped a day earlier inside `features/messaging`, guarding job

@@ -1,5 +1,38 @@
 # Test Journal
 
+## 2026-08-03 - provider-backed send, and two bugs the suite could not see
+
+- **First real-SMTP run** of the payslip path, against `smtp.forpsi.com` with a
+  disposable relay address allowlisted. Both directions were exercised, which is
+  the only thing that makes it evidence rather than a demo:
+  - a **non-allowlisted** recipient was refused **with live credentials
+    loaded** - `sent_at` untouched, `sent_to` empty, one `payslip.send_blocked`
+    audit event, zero `payslip.sent`, nothing left the box. A broken guard here
+    would have sent a real email rather than raising, which is why this case
+    matters more than the happy path.
+  - the **allowlisted** recipient arrived, and the encrypted PDF opened with the
+    one-time password and showed the expected period and net amount.
+  - the password appeared in **no** `payslip.*` audit row - ADR 0023's invariant
+    re-proved on a real send rather than against a mock.
+- **`mail.W001` proved by hand** under `clients.corvinum_eu.settings` with SMTP
+  configured and no allowlist: it fires, naming `payslips`. The superseded
+  `messaging.W001` could not have, being gated on `offer_emails`, which is False
+  for that client. Automated coverage exists too, but the manual run is what
+  showed the warning reaching the client that needed it.
+- **Four new `core/mail` tests** for the two config-honesty bugs: an empty
+  backend and a whitespace-only backend are unconfigured, the default
+  `localhost` host is unconfigured, and an explicit local MTA (`127.0.0.1`)
+  still counts as configured - the last one so the localhost rule cannot lock
+  out a legitimate relay.
+- Neither bug was reachable from the suite as written, because both are about
+  what an environment supplies rather than what the code does. They were found
+  by reading deployment config. Recorded because "the tests were green" was
+  true and irrelevant.
+- Final gate on the branch tip: ruff, ruff format and the dependency-direction
+  tripwire clean; `check` and `makemigrations --check` green under both settings
+  modules; **1004 passed / 9 skipped** in Jober and **604 passed / 21 skipped /
+  257 deselected** in CorvinumEU; **62/62** e2e. CI green on PR #157.
+
 ## 2026-08-03 - worker email allowlist, both senders
 
 - **20 new tests** across two modules, and neither carries `jober_only` — that
@@ -30,7 +63,9 @@
 - Full gate green: Ruff clean, dependency-direction tripwire clean, `check` and
   `makemigrations --check` under both settings modules, **1000 passed / 9
   skipped** in Jober and **600 passed / 21 skipped / 257 deselected** in
-  CorvinumEU, and **62/62** e2e after the payslip template change.
+  CorvinumEU, and **62/62** e2e after the payslip template change. (Branch tip
+  is now 1004 / 604 — the two config-honesty fixes in the entry above added
+  four more tests.)
 
 ## 2026-08-02 - offer emails
 
