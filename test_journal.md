@@ -23,6 +23,49 @@
   would have called fixed.
 - Full browser suite green: **57 passed**, both clients.
 
+## 2026-08-03 - mobile nav toggle clearance
+
+- Two browser tests in `tests/e2e/test_shell_smoke.py`, written to fail first:
+  the reproduction returned the exact overlapping rectangles, which is what
+  identified the fixed-position notification centre as the cause rather than
+  anything in the header itself.
+- The geometry test measures the toggle against the bell, the brand lockup and
+  the account row, at **375px and 320px**. Both widths matter: the first fix
+  passed at 375 and failed at 320 by roughly one pixel, so a single-width test
+  would have shipped it.
+- It also requires **8px of real separation** rather than mere non-overlap - two
+  44px tap targets sharing an edge are still mis-tappable, and a hairline gap
+  would have satisfied a naive assertion.
+- A second test clicks the toggle and waits for the menu, because the original
+  defect was that the control could not be activated. An assertion that only
+  checked position would have passed against a button nothing could press.
+- Full browser suite green on the fix branch: **58 passed**. On
+  `feat/offer-emails`, which carries six extra specs, **64 passed**.
+
+## 2026-08-03 - payslip office scoping
+
+- **11 tests** in `tests/test_payslip_office_scoping.py`, deliberately **not**
+  `jober_only`: `features.payslips` is installed for both clients and the
+  corvinum lane is where the feature is actually mounted, so that is the lane
+  that matters. The UI cases carry the same `payslip_ui` flag gate
+  `tests/test_payslips.py` already uses; the form cases need no URL and run
+  everywhere.
+- Request-level through `client` rather than unit tests on the helpers, for the
+  reason `test_object_view_office_scoping.py` records: the guards existed and
+  were correct, what was missing was the call.
+- Four cases per surface rather than one - cross-office refused, **own-office
+  still allowed**, unrestricted role unaffected, and a negative side-effect
+  assertion. An account seeing less proves nothing on its own.
+- The send case additionally monkeypatches `build_encrypted_pdf` to raise,
+  proving the boundary check runs before anything is generated. Without that
+  ordering a refused request would still mint a one-time password.
+- The list cases assert on `response.context["payslips"]` so they fail on a
+  leaked row even when the template happens not to render it.
+- Full gate: ruff, ruff format and the dependency-direction tripwire clean;
+  `manage.py check` green under both settings modules; **931 passed / 14
+  skipped** in Jober and **585 passed / 17 skipped / 257 deselected** in
+  CorvinumEU.
+
 ## 2026-08-03 - i18n catalogs: the claim, not the catalogs, was broken
 
 - No code change; recording a measurement that overturned an earlier one.
