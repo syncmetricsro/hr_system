@@ -1,5 +1,33 @@
 # CorvinumEU Demo Walkthrough Verification Summary
 
+## Provider-backed payslip run, 2026-08-03 (local, real SMTP)
+
+First real-SMTP run after the recipient allowlist became a platform control
+(ADR 0023 amendment / ADR 0029). Stack: `doppler run --project hr_system
+--config dev_corvinum_demo -- scripts/corvinum_app.sh rebuild`, image built from
+`feat/offer-emails`. `EMAIL_ALLOWED_RECIPIENTS=<mozmail relay>`.
+
+| Step | Result |
+|---|---|
+| `manage.py check` in the running app | clean — `mail.W001` quiet once the allowlist was set |
+| Runner warning for missing allowlist | did not fire (correct — it was set) |
+| Send to `eszter.varga@demo.corvinum.test` (**not** allowlisted) | **REFUSED.** `sent_at` stayed `None`, `sent_to` stayed empty, one `payslip.send_blocked` event, zero `payslip.sent`, nothing left the box — with live SMTP credentials loaded |
+| Send to the allowlisted relay address | **delivered**, accepted by `smtp.forpsi.com`; `sent_at`/`sent_to` recorded, one `payslip.sent` event |
+| One-time password in the audit log | absent from every `payslip.*` event (ADR 0023 invariant re-proved on a real send) |
+| SMTP errors in the app log | none |
+
+**Finding, fixed in the runbook the same day.** The local Doppler CLI scope was
+**unset**, so the runbook's then-documented bare `doppler run --` would have
+fallen back to `doppler.yaml` → the Jober **`dev`** config, which carries working
+SMTP credentials and **no** `EMAIL_ALLOWED_RECIPIENTS`. That would have started
+the Corvinum demo with unrestricted real sending from the wrong mail account.
+Every rehearsal command in the runbook now names `--project`/`--config` in full.
+
+Caveat that applies to any such run: SMTP acceptance is not delivery. Receipt was
+confirmed separately in the relay inbox; the application has no bounce handling.
+
+---
+
 **Date of Execution:** 2026-07-20
 **Target Environments Tested:**
 - **Public Staging:** `https://corvinum-staging.80.211.210.46.sslip.io` (syncmetric-prime)

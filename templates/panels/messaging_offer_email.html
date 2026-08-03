@@ -1,0 +1,44 @@
+{% load i18n %}
+<section class="panel workflow-panel">
+  <p class="eyebrow">{% trans "Recruiting" %}</p>
+  <h2>{% trans "Email a job offer" %}</h2>
+
+  {% if panel.blocked_reason %}
+    <p class="eyebrow">{{ panel.blocked_reason }}</p>
+  {% elif not panel.offers %}
+    <p class="eyebrow">{% trans "No open job offers for this office yet." %}</p>
+  {% endif %}
+
+  <form class="stack" method="post" action="{% url 'send_offer_email' panel.person.pk %}">
+    {% csrf_token %}
+    <label>{% trans "Job offer" %}
+      <select name="offer">
+        {% for o in panel.offers %}<option value="{{ o.pk }}">{{ o.title }}</option>{% endfor %}
+      </select>
+    </label>
+    <label>{% trans "Email type" %}
+      <select name="kind">
+        {% for value, label in panel.kinds %}<option value="{{ value }}">{{ label }}</option>{% endfor %}
+      </select>
+    </label>
+    {% if panel.blocked_reason or not panel.offers or not panel.email_configured %}
+      <button class="button button-primary" type="submit" disabled>{% trans "Send offer" %}</button>
+      {% if not panel.email_configured %}
+        <p class="eyebrow">{% trans "Email is not configured in this environment, so nothing can be sent from here." %}</p>
+      {% endif %}
+    {% else %}
+      <button class="button button-primary" type="submit">{% trans "Send offer" %}</button>
+      <p class="eyebrow">
+        {% blocktrans with address=panel.person_email %}Sends to {{ address }} in this worker's preferred language.{% endblocktrans %}
+      </p>
+    {% endif %}
+  </form>
+
+  {% if panel.recent_emails %}
+    <ul class="plain-list">
+      {% for e in panel.recent_emails %}
+        <li>{{ e.created_at|date:"Y-m-d H:i" }} — {{ e.get_status_display }}: {{ e.subject|default:e.error|truncatechars:60 }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+</section>

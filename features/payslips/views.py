@@ -6,6 +6,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import gettext as _
 
 from core.accounts.permissions import Action, can, require_action
+from core.mail import email_configured
 from features.payslips.forms import PayslipForm
 from features.payslips.models import Payslip
 from features.payslips.services import PayslipError, record_payslip, send_payslip
@@ -41,6 +42,9 @@ def payslip_list(request):
             "payslips": Payslip.objects.select_related("person")[:100],
             "form": form,
             "may_manage": may_manage,
+            # Say "unavailable" rather than offer a button that fails at the
+            # mail server — the same choice the offer-email panel makes.
+            "email_configured": email_configured(),
         },
         status=status,
     )
@@ -60,8 +64,10 @@ def payslip_send(request, pk: int):
         # exists only in this flash message, nowhere else.
         messages.success(
             request,
-            _("Payslip emailed to %(to)s. One-time password (tell the worker by "
-              "phone/Messenger, NOT email): %(pw)s")
+            _(
+                "Payslip emailed to %(to)s. One-time password (tell the worker by "
+                "phone/Messenger, NOT email): %(pw)s"
+            )
             % {"to": payslip.sent_to, "pw": password},
         )
     return redirect("payslip_list")

@@ -101,7 +101,7 @@ intentionally new or reset **staging demo** database; never run them against
 production or a database containing real data:
 
 ```bash
-for command in seed_demo seed_people seed_logistics seed_questionnaire seed_finance seed_messaging seed_demo_scenario; do
+for command in seed_demo seed_people seed_logistics seed_questionnaire seed_finance seed_messaging seed_offer_emails seed_demo_scenario; do
   sudo dokku run jober-staging python manage.py "$command"
 done
 ```

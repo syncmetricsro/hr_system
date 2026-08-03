@@ -1,6 +1,6 @@
 # Permission Matrix — CorvinumEU
 
-Last updated: 2026-07-31
+Last updated: 2026-08-02
 
 Human-readable mirror of `clients/corvinum_eu/policies.py` (`ACTION_ROLES`).
 When you change one, change the other in the same commit. The mechanism
@@ -52,6 +52,14 @@ Legend: ✅ permitted · — denied
 | `export.approved` | — | — | ✅ | ✅ |
 | `audit.view` | — | — | ✅ | ✅ |
 | `staff_activity.view` | — | — | ✅ | ✅ |
+| `offer_email.send` / `offer.manage` / `offer_template.manage` / `offer_email.bulk_send` (worker messaging not in this product) | — | — | — | — |
+
+> **No worker messaging (ADR 0029, peopleops design §15.9).** Neither SMS nor
+> job-offer emails exist here: worker contact is phone + Messenger. The four
+> `offer*` actions are absent from `clients/corvinum_eu/policies.py` (a missing
+> key is deny), the `offer_emails` flag is `False`, and `features.messaging` is
+> not in `INSTALLED_APPS` — so the routes do not exist either. This is a data
+> and configuration difference, not a client branch in core.
 
 > **Activation needs a manager here too (since 2026-07-27).** The activation
 > route is shared core code, so CorvinumEU gets the same control as Jober: a

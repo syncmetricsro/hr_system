@@ -25,6 +25,7 @@ ACTION_ROLES: dict[Action, frozenset[Role]] = {
     Action.CERTIFICATE_MANAGE: frozenset({_RECRUITER, _COORDINATOR, _MANAGER}),
     Action.CERTIFICATE_PURGE_FILE: frozenset({_MANAGER}),
     Action.SMS_SEND: frozenset({_RECRUITER, _COORDINATOR, _MANAGER}),
+    Action.OFFER_EMAIL_SEND: frozenset({_RECRUITER, _COORDINATOR, _MANAGER}),
     Action.PROJECT_ASSIGN: frozenset({_COORDINATOR, _MANAGER}),
     Action.TRIAL_RECORD_OUTCOME: frozenset({_COORDINATOR, _MANAGER}),
     Action.READINESS_COMPLETE: frozenset({_COORDINATOR, _MANAGER}),
@@ -44,6 +45,11 @@ ACTION_ROLES: dict[Action, frozenset[Role]] = {
     Action.BLACKLIST_DECIDE: frozenset({_MANAGER}),
     Action.PERSON_ARCHIVE: frozenset({_MANAGER}),
     Action.SMS_MANAGE_TEMPLATES: frozenset({_MANAGER}),
+    # Offer emails (ADR 0029). Authoring and bulk send are manager-only; the
+    # per-person send mirrors SMS_SEND above.
+    Action.OFFER_MANAGE: frozenset({_MANAGER}),
+    Action.OFFER_TEMPLATE_MANAGE: frozenset({_MANAGER}),
+    Action.OFFER_EMAIL_BULK_SEND: frozenset({_MANAGER}),
     # Checklists feature is off for Jober (Stage C, ADR 0022); grant mirrors
     # the coordinator/manager pattern should Jober ever enable it.
     Action.CHECKLIST_TICK: frozenset({_COORDINATOR, _MANAGER}),

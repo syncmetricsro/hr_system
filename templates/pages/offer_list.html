@@ -1,0 +1,70 @@
+{% extends "layouts/base.html" %}
+{% load i18n rbac %}
+
+{% block title %}{% trans "Job offers" %} · {{ BRAND_NAME }}{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <p class="eyebrow">{% trans "Recruiting" %}</p>
+  <h1>{% trans "Job offers" %}</h1>
+  <a class="button button-primary" href="{% url 'offer_create' %}">{% trans "New offer" %}</a>
+</section>
+
+{% if not email_configured %}
+  <p class="eyebrow">{% trans "Email is not configured in this environment. Offers can be authored, but nothing will be sent." %}</p>
+{% endif %}
+
+<section class="field-list" aria-label="{% trans 'Job offers' %}">
+  {% for offer in offers %}
+    <div class="field-card person-row">
+      <div>
+        <h3>{{ offer.title }}{% if not offer.is_active %} — {% trans "closed" %}{% endif %}</h3>
+        <p>{{ offer.project|default:"—" }} · {{ offer.office|default:"—" }}</p>
+      </div>
+      <dl>
+        <div>
+          <dt>{% trans "Wage" %}</dt>
+          <dd>{% if offer.wage %}{{ offer.wage }} {{ offer.currency }} {{ offer.get_wage_unit_display }}{% else %}—{% endif %}</dd>
+        </div>
+        <div>
+          <dt>{% trans "Starts" %}</dt>
+          <dd>{% if offer.start_date %}{{ offer.start_date|date:"Y-m-d" }}{% else %}—{% endif %}</dd>
+        </div>
+      </dl>
+      <div class="row-actions">
+        <a class="button" href="{% url 'offer_edit' offer.pk %}">{% trans "Edit" %}</a>
+        {% can 'offer_email.bulk_send' as may_bulk %}
+        {% if may_bulk and offer.is_active %}
+          <a class="button" href="{% url 'offer_send_bulk' offer.pk %}">{% trans "Send to many" %}</a>
+        {% endif %}
+        {% if offer.is_active %}
+          <form method="post" action="{% url 'offer_archive' offer.pk %}">
+            {% csrf_token %}
+            <button class="button" type="submit">{% trans "Close" %}</button>
+          </form>
+        {% endif %}
+      </div>
+    </div>
+  {% empty %}
+    <p>{% trans "No job offers yet." %}</p>
+  {% endfor %}
+</section>
+
+{% can 'offer_template.manage' as may_templates %}
+{% if may_templates %}
+  <section class="page-head">
+    <h2>{% trans "Email templates" %}</h2>
+    <a class="button" href="{% url 'offer_template_create' %}">{% trans "New template" %}</a>
+  </section>
+  <ul class="plain-list">
+    {% for t in templates %}
+      <li>
+        <a href="{% url 'offer_template_edit' t.pk %}">{{ t.get_kind_display }} [{{ t.language }}]</a>
+        — {{ t.subject }}{% if not t.is_active %} ({% trans "inactive" %}){% endif %}
+      </li>
+    {% empty %}
+      <li>{% trans "No templates yet. Offers cannot be sent until one exists." %}</li>
+    {% endfor %}
+  </ul>
+{% endif %}
+{% endblock %}

@@ -34,6 +34,9 @@
         <a class="folder-tab {% nav_active 'project_list' 'project_detail' %}" href="{% url 'project_list' %}" data-tooltip="{% trans 'Projects' %}"><svg class="nav-icon" aria-hidden="true"><use href="#nav-icon-projects"></use></svg><span>{% trans "Projects" %}</span></a>
         {% flag_on 'recruitment_trials' as has_trials %}
         {% if has_trials %}<a class="folder-tab {% nav_active 'trials_queue' %}" href="{% url 'trials_queue' %}" data-tooltip="{% trans 'Field' %}"><svg class="nav-icon" aria-hidden="true"><use href="#nav-icon-field"></use></svg><span>{% trans "Field" %}</span></a>{% endif %}
+        {% flag_on 'offer_emails' as has_offers %}
+        {% can 'offer.manage' as may_offers %}
+        {% if may_offers and has_offers %}<a class="folder-tab {% nav_active 'offer_list' 'offer_create' 'offer_edit' 'offer_send_bulk' 'offer_template_create' 'offer_template_edit' %}" href="{% url 'offer_list' %}" data-tooltip="{% trans 'Job offers' %}"><svg class="nav-icon" aria-hidden="true"><use href="#nav-icon-invite"></use></svg><span>{% trans "Offers" %}</span></a>{% endif %}
         {% flag_on 'documents' as has_documents %}
         {% if has_documents %}<a class="folder-tab {% nav_active 'compliance_list' %}" href="{% url 'compliance_list' %}" data-tooltip="{% trans 'Compliance' %}"><svg class="nav-icon" aria-hidden="true"><use href="#nav-icon-compliance"></use></svg><span>{% trans "Compliance" %}</span>{% nav_badge "compliance" %}</a>{% endif %}
         {% flag_on 'accommodation' as has_accommodation %}
