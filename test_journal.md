@@ -19,6 +19,30 @@
 - Full browser suite green on the fix branch: **58 passed**. On
   `feat/offer-emails`, which carries six extra specs, **64 passed**.
 
+## 2026-08-03 - payslip office scoping
+
+- **11 tests** in `tests/test_payslip_office_scoping.py`, deliberately **not**
+  `jober_only`: `features.payslips` is installed for both clients and the
+  corvinum lane is where the feature is actually mounted, so that is the lane
+  that matters. The UI cases carry the same `payslip_ui` flag gate
+  `tests/test_payslips.py` already uses; the form cases need no URL and run
+  everywhere.
+- Request-level through `client` rather than unit tests on the helpers, for the
+  reason `test_object_view_office_scoping.py` records: the guards existed and
+  were correct, what was missing was the call.
+- Four cases per surface rather than one - cross-office refused, **own-office
+  still allowed**, unrestricted role unaffected, and a negative side-effect
+  assertion. An account seeing less proves nothing on its own.
+- The send case additionally monkeypatches `build_encrypted_pdf` to raise,
+  proving the boundary check runs before anything is generated. Without that
+  ordering a refused request would still mint a one-time password.
+- The list cases assert on `response.context["payslips"]` so they fail on a
+  leaked row even when the template happens not to render it.
+- Full gate: ruff, ruff format and the dependency-direction tripwire clean;
+  `manage.py check` green under both settings modules; **931 passed / 14
+  skipped** in Jober and **585 passed / 17 skipped / 257 deselected** in
+  CorvinumEU.
+
 ## 2026-08-03 - i18n catalogs: the claim, not the catalogs, was broken
 
 - No code change; recording a measurement that overturned an earlier one.
