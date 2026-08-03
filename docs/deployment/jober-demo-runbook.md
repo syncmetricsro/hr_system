@@ -457,6 +457,26 @@ client's auditor asks about, and the seed leaves one request waiting in
 **Dunajská Streda** — so `manazer.ds@` has a queue item while `manazer@`'s
 queue is empty, which demonstrates the queue is office-scoped too.
 
+**Job offers by email.** Open the **Offers** tab as a manager: the seed leaves
+open offers with SK/HU/UK templates for all four email types. Open a worker and
+use the *Email a job offer* panel; the send goes out in that worker's
+`preferred_language`, which is the thing SMS still cannot do. Then show the
+manager-only **Send to many** page — it previews the office-scoped recipient
+list, names everyone it will *skip* and why, and requires a confirmation box.
+
+Two claims worth making precisely, because both are the kind an auditor probes:
+
+- Ticking **Do not send job offers by email** on a worker disables the panel
+  control with a visible reason, and a direct POST records the attempt as
+  BLOCKED without contacting the mail server. Payslip delivery deliberately
+  ignores that flag — different legal basis.
+- A blacklisted worker is never emailed an offer. SMS checks neither flag.
+
+Do **not** claim delivery. The app knows the mail server accepted the message;
+it has no bounce handling and no read tracking. On staging,
+`EMAIL_ALLOWED_RECIPIENTS` must be set to the demo inbox — `manage.py check`
+warns (`messaging.W001`) if outreach is on without it.
+
 If time allows, show the existing trial-readiness-activation flow, compliance
 alerts, role switching, and optional SMS. Compliance and notification queues are
 office-scoped like the rest. Readiness now requires medical, gear, and the
@@ -494,7 +514,13 @@ behavior also remain gated by external access and the Art. 28 DPA review.
 - Confirm stock backdating, adjustments, valuation corrections, and month close.
 - Confirm accommodation proration/payment semantics.
 - Confirm whether the age warning ever blocks an action.
-- Obtain the Art. 28 processor DPA and processors/retention list.
+- Obtain the Art. 28 processor DPA and processors/retention list. This now
+  covers the mail provider too (offer emails, ADR 0029), alongside a
+  job-offer-specific LIA and an approved retention period for message bodies
+  — `OFFER_EMAIL_RETENTION_DAYS` defaults to 0 (keep everything) rather than
+  guessing one. See `docs/security/jober-offer-email-legal-basis.md`.
+- Confirm whether offer emails may go to INACTIVE people in the recycling
+  pool. The build permits it; nothing in the lifecycle model answers it.
 - Obtain Telegram channel access and bot administrator details for its later slice.
   The approved boundary is Manager/Admin-only, outbound text to one private
   Ukrainian-worker channel with no per-worker delivery claim or inbound bot;

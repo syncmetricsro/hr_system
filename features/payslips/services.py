@@ -17,6 +17,7 @@ from django.utils import timezone
 from django.utils.translation import gettext as _
 
 from core.audit.services import record_event
+from core.mail import EmailRecipientNotAllowed, assert_recipient_allowed
 
 # No 0/O/1/l/I — read-aloud safe (ADR 0023).
 PASSWORD_ALPHABET = "23456789abcdefghjkmnpqrstuvwxyzABCDEFGHJKMNPQRSTUVWXYZ"
@@ -55,7 +56,9 @@ def record_payslip(
         payslip.full_clean()
         payslip.save()
         record_event(
-            actor, "payslip.recorded", target=person,
+            actor,
+            "payslip.recorded",
+            target=person,
             reason=(
                 f"{period} {payslip.net_amount} {payslip.currency} "
                 f"issued {payslip.issue_date.isoformat()}"
@@ -94,7 +97,11 @@ def _simple_pdf(lines: list[str]) -> bytes:
         b"<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] "
         b"/Resources << /Font << /F1 4 0 R >> >> /Contents 5 0 R >>",
         b"<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>",
-        b"<< /Length " + str(len(stream)).encode() + b" >>\nstream\n" + stream + b"\nendstream",
+        b"<< /Length "
+        + str(len(stream)).encode()
+        + b" >>\nstream\n"
+        + stream
+        + b"\nendstream",
     ]
     out = io.BytesIO()
     out.write(b"%PDF-1.4\n")
@@ -148,6 +155,25 @@ def send_payslip(payslip, *, actor=None) -> str:
     if not email:
         raise PayslipError(_("This person has no email address on file."))
 
+    # Before the password and the PDF, not just before the send. The one-time
+    # password exists only in the caller's flash message, so minting one for a
+    # send that is about to be refused would show a presenter a password for an
+    # email nobody received. Note this also re-checks the resend path: `email`
+    # may have come from `sent_to`, recorded before this guard existed.
+    try:
+        assert_recipient_allowed(email)
+    except EmailRecipientNotAllowed as exc:
+        # A refused send is evidence. Only successes were audited before.
+        record_event(
+            actor,
+            "payslip.send_blocked",
+            target=payslip.person,
+            reason=str(exc),
+            to=email,
+            period=payslip.period,
+        )
+        raise PayslipError(str(exc)) from exc
+
     password = generate_password()
     pdf = build_encrypted_pdf(payslip, password)
 
@@ -156,7 +182,8 @@ def send_payslip(payslip, *, actor=None) -> str:
         body=_(
             "Your payslip for %(period)s is attached as an encrypted PDF.\n"
             "You will receive the password separately — it is never sent by email."
-        ) % {"period": payslip.period},
+        )
+        % {"period": payslip.period},
         to=[email],
     )
     message.attach(f"payslip-{payslip.period}.pdf", pdf, "application/pdf")
@@ -164,11 +191,15 @@ def send_payslip(payslip, *, actor=None) -> str:
         sent = message.send(fail_silently=False)
     except (OSError, SMTPException) as exc:
         raise PayslipError(
-            _("Unable to send the payslip email. Check the recipient address and mail configuration.")
+            _(
+                "Unable to send the payslip email. Check the recipient address and mail configuration."
+            )
         ) from exc
     if sent != 1:
         raise PayslipError(
-            _("Unable to send the payslip email. Check the recipient address and mail configuration.")
+            _(
+                "Unable to send the payslip email. Check the recipient address and mail configuration."
+            )
         )
 
     payslip.sent_at = timezone.now()
