@@ -1,5 +1,41 @@
 # Build Journal
 
+## 2026-08-03 - The reporting-period picker had no CSS at all
+
+Reported as buttons sitting too close to panels, with a note that not every
+instance had been found. Measuring rather than eyeballing turned up one cause
+and exactly three instances: `.period-filter` had **no stylesheet rule
+whatsoever**, so the shared reporting-period picker rendered as raw block flow
+and its Filter button touched the caption beneath it at a measured **0px** on
+the warehouse stock, goods-receipt and staff-activity pages.
+
+The picker is now a grid with `--space-3` gaps and a button that keeps its
+natural width. Grid rather than a flex row deliberately: the controls stay
+stacked and full-width exactly as the clients have already seen them, so this
+adds the missing rhythm without relaying out a control mid-engagement. The
+"Showing: …" caption sits outside the form, so the grid gap cannot reach it and
+it carries its own `--space-4` margin.
+
+One trap worth recording: `.period-group` must not be given a `display` value.
+`app.js` hides non-matching granularities with `group.hidden = …`, which works
+through the UA stylesheet's `[hidden] { display: none }`, and any author rule
+would override it and render every granularity at once.
+
+**A second suspected cause turned out not to be one.** The vertical-rhythm rule
+matches only `section|aside|article`, so a top-level `<p>` breaks the chain and
+the following panel inherits nothing from it — which reads like a bug and was
+planned as one. Measured, those pairs sit at **14px**, because the paragraph's
+own bottom margin already covers it, against the 16px the rule would give. Two
+pixels is not worth a selector change that moves spacing on every page of both
+clients, so the rule is left alone and the reasoning recorded here instead of
+being rediscovered later.
+
+Also confirmed while looking: yearly inventory periods are **already built**.
+`core/reporting/periods.py` has offered day, week, month, several months and
+year since J7, both stock pages resolve through it, and the picker renders every
+granularity — the screenshots simply had Month selected. No change, and nothing
+to raise with the client.
+
 ## 2026-08-02 - Help card icons share a complete size vocabulary
 
 The shared icon stylesheet now defines the previously missing `lg` size as a
