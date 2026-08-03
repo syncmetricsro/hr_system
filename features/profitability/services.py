@@ -25,7 +25,9 @@ def positive_amount(value) -> Decimal:
     silently flipped, so bad data can't invert a total."""
     amount = Decimal(value or 0)
     if amount < 0:
-        raise FinanceError("Amounts use a positive convention; negative values are not allowed.")
+        raise FinanceError(
+            "Amounts use a positive convention; negative values are not allowed."
+        )
     return amount
 
 
@@ -88,9 +90,13 @@ def group_breakdown(months=None, offices=None) -> list[dict]:
     if offices is not None:
         qs = qs.filter(month__project__office__in=offices)
     by_group: dict[str, dict] = {}
-    for row in qs.values("category__group", "category__kind").annotate(total=Sum("amount")):
+    for row in qs.values("category__group", "category__kind").annotate(
+        total=Sum("amount")
+    ):
         group = row["category__group"]
-        entry = by_group.setdefault(group, {"group": group, "revenue": Decimal("0"), "cost": Decimal("0")})
+        entry = by_group.setdefault(
+            group, {"group": group, "revenue": Decimal("0"), "cost": Decimal("0")}
+        )
         if row["category__kind"] == FinanceCategoryKind.REVENUE:
             entry["revenue"] += row["total"] or Decimal("0")
         else:
@@ -140,17 +146,25 @@ def project_totals(year=None, offices=None):
         qs = qs.filter(project__office__in=offices)
     rows = []
     for r in (
-        qs.values("project_id", "project__name", "project__code", "project__office__name")
+        qs.values(
+            "project_id", "project__name", "project__code", "project__office__name"
+        )
         .annotate(revenue=Sum("revenue"), cost=Sum("cost"))
         .order_by("project__name")
     ):
         rev = r["revenue"] or Decimal("0")
         cost = r["cost"] or Decimal("0")
-        rows.append({
-            "project_id": r["project_id"], "name": r["project__name"],
-            "code": r["project__code"], "office": r["project__office__name"],
-            "revenue": rev, "cost": cost, "net": rev - cost,
-        })
+        rows.append(
+            {
+                "project_id": r["project_id"],
+                "name": r["project__name"],
+                "code": r["project__code"],
+                "office": r["project__office__name"],
+                "revenue": rev,
+                "cost": cost,
+                "net": rev - cost,
+            }
+        )
     return rows
 
 
@@ -178,11 +192,17 @@ def monthly_totals(year=None, offices=None) -> list[dict]:
     ):
         revenue = r["revenue"] or Decimal("0")
         cost = r["cost"] or Decimal("0")
-        rows.append({
-            "year": r["year"], "month": r["month"],
-            "revenue": revenue, "cost": cost, "net": revenue - cost,
-            "all_locked": r["total_count"] > 0 and r["locked_count"] == r["total_count"],
-        })
+        rows.append(
+            {
+                "year": r["year"],
+                "month": r["month"],
+                "revenue": revenue,
+                "cost": cost,
+                "net": revenue - cost,
+                "all_locked": r["total_count"] > 0
+                and r["locked_count"] == r["total_count"],
+            }
+        )
     return rows
 
 
@@ -200,17 +220,25 @@ def yearly_totals(offices=None):
     ):
         rev = r["revenue"] or Decimal("0")
         cost = r["cost"] or Decimal("0")
-        rows.append({"year": r["year"], "revenue": rev, "cost": cost, "net": rev - cost})
+        rows.append(
+            {"year": r["year"], "revenue": rev, "cost": cost, "net": rev - cost}
+        )
     return rows
 
 
 @transaction.atomic
-def record_financial_month(project, year, month, revenue, cost, *, actor=None, note: str = ""):
-    existing = FinancialMonth.objects.filter(project=project, year=year, month=month).first()
+def record_financial_month(
+    project, year, month, revenue, cost, *, actor=None, note: str = ""
+):
+    existing = FinancialMonth.objects.filter(
+        project=project, year=year, month=month
+    ).first()
     if existing and existing.is_locked:
         raise FinanceError("This financial month is locked.")
     obj, _created = FinancialMonth.objects.update_or_create(
-        project=project, year=year, month=month,
+        project=project,
+        year=year,
+        month=month,
         defaults={
             "revenue": positive_amount(revenue),
             "cost": positive_amount(cost),
@@ -258,17 +286,21 @@ def office_totals(year=None, offices=None):
     if offices is not None:
         qs = qs.filter(project__office__in=offices)
     rows = []
-    for row in qs.values("project__office__name").annotate(
-        revenue=Sum("revenue"), cost=Sum("cost")
-    ).order_by("project__office__name"):
+    for row in (
+        qs.values("project__office__name")
+        .annotate(revenue=Sum("revenue"), cost=Sum("cost"))
+        .order_by("project__office__name")
+    ):
         revenue = row["revenue"] or Decimal("0")
         cost = row["cost"] or Decimal("0")
-        rows.append({
-            "office": row["project__office__name"] or "Unassigned",
-            "revenue": revenue,
-            "cost": -cost,
-            "net": revenue - cost,
-        })
+        rows.append(
+            {
+                "office": row["project__office__name"] or "Unassigned",
+                "revenue": revenue,
+                "cost": -cost,
+                "net": revenue - cost,
+            }
+        )
     return rows
 
 
@@ -291,9 +323,216 @@ def office_monthly_totals(year=None, offices=None) -> list[dict]:
     ):
         revenue = r["revenue"] or Decimal("0")
         cost = r["cost"] or Decimal("0")
-        rows.append({
-            "year": r["year"], "month": r["month"],
-            "office": r["project__office__name"] or "Unassigned",
-            "revenue": revenue, "cost": cost, "net": revenue - cost,
-        })
+        rows.append(
+            {
+                "year": r["year"],
+                "month": r["month"],
+                "office": r["project__office__name"] or "Unassigned",
+                "revenue": revenue,
+                "cost": cost,
+                "net": revenue - cost,
+            }
+        )
     return rows
+
+
+# ---------------------------------------------------------------------------
+# Workbook-shaped grids (Jober_Finance_Specs §3, §6)
+#
+# The client's `HV 202510.xlsx` presents one period as projects across the top
+# and categories down the side, with a subtotal per office and a grand total.
+# These two builders produce that shape from stored line items. Neither reads a
+# cached total: spec §7 records a real formula defect in the source workbook
+# (`C24=SUM(C3:C22)` drops one row), and the whole point of computing here is
+# that the same category set is applied to every column.
+# ---------------------------------------------------------------------------
+
+
+def _ordered_categories():
+    """Rows of the grid, in workbook order: costs first, then revenues."""
+    from features.profitability.models import FinanceCategory
+
+    return list(
+        FinanceCategory.objects.filter(is_active=True).order_by(
+            "kind", "order", "label"
+        )
+    )
+
+
+def workbook_grid(year, month, *, offices=None):
+    """One period as the workbook draws it.
+
+    Returns projects (columns), categories (rows), a cell lookup keyed
+    ``(project_id, category_id)``, per-project cost/revenue/net, per-office
+    subtotals and a grand total. ``offices=None`` means unrestricted — the
+    established sentinel, never "every office".
+
+    Amounts are signed for display (costs negative), matching the source; the
+    database keeps magnitudes with ``kind`` carrying the sign.
+    """
+    from core.projects.models import Project
+
+    projects = Project.objects.filter(
+        is_active=True, financial_reporting_eligible=True
+    ).select_related("office")
+    if offices is not None:
+        projects = projects.filter(office__in=offices)
+    projects = list(projects.order_by("office__name", "name"))
+
+    categories = _ordered_categories()
+    months = FinancialMonth.objects.filter(
+        year=year, month=month, project__in=projects
+    ).select_related("project")
+    month_by_project = {m.project_id: m for m in months}
+    # Keyed by month id, not project id. These are different sequences, and they
+    # only coincide on a database where both happen to have been created in
+    # lockstep - which is true of a fresh test database and false of every real
+    # one, so mixing them up fails nowhere until it fails everywhere.
+    project_by_month = {m.pk: m.project_id for m in months}
+
+    cells = {}
+    for item in FinanceLineItem.objects.filter(month__in=months).select_related(
+        "category"
+    ):
+        project_id = project_by_month[item.month_id]
+        cells[(project_id, item.category_id)] = signed_amount(
+            item.category.kind, item.amount
+        )
+
+    columns, by_office = [], {}
+    for project in projects:
+        cost = sum(
+            (
+                cells.get((project.pk, c.pk), Decimal("0"))
+                for c in categories
+                if c.kind == FinanceCategoryKind.COST
+            ),
+            Decimal("0"),
+        )
+        revenue = sum(
+            (
+                cells.get((project.pk, c.pk), Decimal("0"))
+                for c in categories
+                if c.kind == FinanceCategoryKind.REVENUE
+            ),
+            Decimal("0"),
+        )
+        column = {
+            "project": project,
+            "month": month_by_project.get(project.pk),
+            "cost": cost,  # negative or zero
+            "revenue": revenue,  # positive or zero
+            "net": cost + revenue,  # spec §6: P/L is their sum
+        }
+        columns.append(column)
+        office = project.office.name if project.office else "Unassigned"
+        by_office.setdefault(office, []).append(column)
+
+    offices_rows = [
+        {
+            "office": name,
+            "columns": cols,
+            "cost": sum((c["cost"] for c in cols), Decimal("0")),
+            "revenue": sum((c["revenue"] for c in cols), Decimal("0")),
+            "net": sum((c["net"] for c in cols), Decimal("0")),
+        }
+        for name, cols in sorted(by_office.items())
+    ]
+
+    # Rows carry their values already aligned to `columns`. Django templates
+    # cannot look a dict up by a variable key, and a custom filter to do it
+    # would push grid arithmetic into the template — the one place it cannot be
+    # tested.
+    def rows_for(kind):
+        return [
+            {
+                "category": category,
+                "values": [
+                    cells.get((column["project"].pk, category.pk)) for column in columns
+                ],
+            }
+            for category in categories
+            if category.kind == kind
+        ]
+
+    return {
+        "year": year,
+        "month": month,
+        "categories": categories,
+        "columns": columns,
+        "cells": cells,
+        "cost_rows": rows_for(FinanceCategoryKind.COST),
+        "revenue_rows": rows_for(FinanceCategoryKind.REVENUE),
+        "offices": offices_rows,
+        "grand": {
+            "cost": sum((c["cost"] for c in columns), Decimal("0")),
+            "revenue": sum((c["revenue"] for c in columns), Decimal("0")),
+            "net": sum((c["net"] for c in columns), Decimal("0")),
+        },
+    }
+
+
+def project_year_grid(project, year):
+    """One project across a whole year: categories down, 12 months across.
+
+    The caller is responsible for having checked the project is in scope — this
+    takes an object, not a filter, so the office guard belongs in the view where
+    the request is (the pattern `_assert_month_in_scope` already follows).
+    """
+    categories = _ordered_categories()
+    months = {
+        m.month: m for m in FinancialMonth.objects.filter(project=project, year=year)
+    }
+
+    cells = {}
+    for item in FinanceLineItem.objects.filter(
+        month__project=project, month__year=year
+    ).select_related("category", "month"):
+        cells[(item.month.month, item.category_id)] = signed_amount(
+            item.category.kind, item.amount
+        )
+
+    rows = []
+    for category in categories:
+        by_month = [cells.get((m, category.pk)) for m in range(1, 13)]
+        rows.append(
+            {
+                "category": category,
+                "months": by_month,
+                "total": sum((v for v in by_month if v is not None), Decimal("0")),
+            }
+        )
+
+    def column_total(month_number, kind=None):
+        return sum(
+            (
+                cells.get((month_number, c.pk), Decimal("0"))
+                for c in categories
+                if kind is None or c.kind == kind
+            ),
+            Decimal("0"),
+        )
+
+    month_totals = [
+        {
+            "month": m,
+            "recorded": m in months,
+            "cost": column_total(m, FinanceCategoryKind.COST),
+            "revenue": column_total(m, FinanceCategoryKind.REVENUE),
+            "net": column_total(m),
+        }
+        for m in range(1, 13)
+    ]
+
+    return {
+        "project": project,
+        "year": year,
+        "categories": categories,
+        "rows": rows,
+        "month_totals": month_totals,
+        "year_total": {
+            "cost": sum((t["cost"] for t in month_totals), Decimal("0")),
+            "revenue": sum((t["revenue"] for t in month_totals), Decimal("0")),
+            "net": sum((t["net"] for t in month_totals), Decimal("0")),
+        },
+    }

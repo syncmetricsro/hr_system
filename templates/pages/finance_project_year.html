@@ -1,0 +1,59 @@
+{% extends "layouts/base.html" %}
+{% load i18n nav %}
+
+{% block title %}{{ grid.project.name }} {{ grid.year }} · {{ BRAND_NAME }}{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <p class="eyebrow">{% trans "Finance" %}</p>
+  <h1>{{ grid.project.name }} — {{ grid.year }}</h1>
+  <a class="button" href="{% url 'finance_summary' %}">{% trans "Back to finance" %}</a>
+</section>
+
+<p class="muted">
+  {% blocktrans with office=grid.project.office.name|default:"—" %}Twelve months for one project, summed from the months already recorded. Office: {{ office }}.{% endblocktrans %}
+</p>
+
+<section class="panel">
+  <div class="data-table-scroll">
+    <table class="data-table workbook-grid">
+      <thead>
+        <tr>
+          <th scope="col">{% trans "Category" %}</th>
+          {% for total in grid.month_totals %}
+            <th scope="col" class="numeric">{{ total.month }}</th>
+          {% endfor %}
+          <th scope="col" class="numeric">{% trans "Year" %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in grid.rows %}
+          <tr>
+            <th scope="row">{{ row.category.label|db_trans }}</th>
+            {% for value in row.months %}<td class="numeric">{{ value|default_if_none:"—" }}</td>{% endfor %}
+            <td class="numeric">{{ row.total }}</td>
+          </tr>
+        {% endfor %}
+        <tr class="row-total">
+          <th scope="row">{% trans "Total costs" %}</th>
+          {% for total in grid.month_totals %}<td class="numeric">{{ total.cost }}</td>{% endfor %}
+          <td class="numeric">{{ grid.year_total.cost }}</td>
+        </tr>
+        <tr class="row-total">
+          <th scope="row">{% trans "Total revenues" %}</th>
+          {% for total in grid.month_totals %}<td class="numeric">{{ total.revenue }}</td>{% endfor %}
+          <td class="numeric">{{ grid.year_total.revenue }}</td>
+        </tr>
+        <tr class="row-result">
+          <th scope="row">{% trans "Profit/loss" %}</th>
+          {% for total in grid.month_totals %}<td class="numeric">{{ total.net }}</td>{% endfor %}
+          <td class="numeric">{{ grid.year_total.net }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="muted">
+    {% trans "A month with no recorded figures shows as a dash rather than zero — an unrecorded month and a month that genuinely netted nothing are different facts." %}
+  </p>
+</section>
+{% endblock %}

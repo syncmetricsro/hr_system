@@ -341,6 +341,16 @@ if _feature_on("profitability", "profitability"):
     ]
     app_routes += [
         path("finance/", finance_views.finance_summary, name="finance_summary"),
+        path(
+            "finance/workbook/<int:year>/<int:month>/",
+            finance_views.finance_workbook,
+            name="finance_workbook",
+        ),
+        path(
+            "finance/project/<int:pk>/year/<int:year>/",
+            finance_views.finance_project_year,
+            name="finance_project_year",
+        ),
         path("finance/record/", finance_views.record_month, name="finance_record"),
         path(
             "finance/year/<int:year>/", finance_views.finance_year, name="finance_year"

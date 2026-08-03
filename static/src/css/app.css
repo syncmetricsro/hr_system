@@ -1413,6 +1413,41 @@ select {
   font-variant-numeric: tabular-nums;
 }
 
+/* Workbook grid (Jober_Finance_Specs §3) — the client's own layout: projects
+   across, categories down. Numbers are right-aligned and tabular so a column
+   of figures can be scanned like the spreadsheet it replaces; the row-type
+   rules give the same visual weight the workbook's own subtotal rows carry.
+   Wide by nature, so it always lives inside .data-table-scroll. */
+.workbook-grid .numeric,
+.data-table td.numeric,
+.data-table th.numeric {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.workbook-grid tr.row-heading th {
+  background: var(--n100);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.workbook-grid tr.row-total td,
+.workbook-grid tr.row-total th {
+  font-weight: 700;
+  border-top: 1px solid var(--line);
+}
+
+.workbook-grid tr.row-result td,
+.workbook-grid tr.row-result th,
+.data-table tfoot tr.row-result td,
+.data-table tfoot tr.row-result th {
+  font-weight: 700;
+  border-top: 2px solid var(--accent);
+}
+
 .data-table th,
 .data-table td {
   padding: 0.8rem;

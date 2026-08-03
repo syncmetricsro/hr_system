@@ -3,9 +3,10 @@ from __future__ import annotations
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
 from django.db import transaction
-from django.http import HttpRequest, HttpResponse
+from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.template.response import TemplateResponse
+from django.utils import timezone
 from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
 
@@ -13,7 +14,11 @@ from core.accounts.models import Role
 from core.accounts.permissions import Action, require_action, user_office_scope
 from core.accounts.permissions import can as user_can
 from core.ui.chart_data import net_bar_payload
-from features.profitability.models import FinanceCategory, FinanceCategoryKind, FinancialMonth
+from features.profitability.models import (
+    FinanceCategory,
+    FinanceCategoryKind,
+    FinancialMonth,
+)
 from features.profitability.services import (
     FinanceError,
     company_totals,
@@ -25,11 +30,13 @@ from features.profitability.services import (
     office_monthly_totals,
     office_totals,
     project_totals,
+    project_year_grid,
     recompute_month,
     record_financial_month,
     reopen_month,
     set_line_item,
     signed_amount,
+    workbook_grid,
     yearly_totals,
 )
 from core.projects.models import Project
@@ -61,6 +68,15 @@ def _office_trend_chart_data(rows: list[dict]) -> dict:
         for office, points in sorted(by_office.items())
     ]
     return {"labels": labels, "series": series}
+
+
+def _latest_period(months) -> dict:
+    """Newest recorded (year, month) in scope, falling back to today."""
+    newest = months.order_by("-year", "-month").values("year", "month").first()
+    if newest:
+        return {"workbook_year": newest["year"], "workbook_month": newest["month"]}
+    today = timezone.localdate()
+    return {"workbook_year": today.year, "workbook_month": today.month}
 
 
 def _assert_month_in_scope(request: HttpRequest, month: FinancialMonth) -> None:
@@ -128,6 +144,10 @@ def finance_summary(request: HttpRequest) -> HttpResponse:
             "gauge_chart_data": {**totals, "margin_pct": margin},
             "group_chart_data": net_bar_payload(groups),
             "regional_chart_data": net_bar_payload(offices, label_key="office"),
+            # The workbook link needs a period. Use the newest month that has
+            # data in scope rather than today: an empty grid for the current
+            # month is a worse first impression than the last real one.
+            **_latest_period(months),
         },
     )
 
@@ -255,3 +275,48 @@ def record_month(request: HttpRequest) -> HttpResponse:
     except (FinanceError, ValueError, TypeError) as exc:
         messages.error(request, str(exc) or _("Invalid input."))
     return redirect("finance_summary")
+
+
+@require_action(Action.FINANCE_VIEW_SUMMARY)
+def finance_workbook(request: HttpRequest, year: int, month: int) -> HttpResponse:
+    """One period laid out the way Jober's own workbook draws it.
+
+    Projects across, categories down, a subtotal per office and a grand total —
+    the shape of `HV 202510.xlsx` (Jober_Finance_Specs §3). Read-only: entry
+    stays on `finance_month_detail`, so there is one write path, not two.
+
+    Office-scoped through `user_office_scope`, which the workbook has no concept
+    of and the product does: a Velký Meder manager sees Velký Meder columns.
+    """
+    if not 1 <= month <= 12:
+        raise Http404("Month must be between 1 and 12.")
+    grid = workbook_grid(year, month, offices=user_office_scope(request.user))
+    return TemplateResponse(
+        request,
+        "pages/finance_workbook.html",
+        {"grid": grid},
+    )
+
+
+@require_action(Action.FINANCE_VIEW_SUMMARY)
+def finance_project_year(request: HttpRequest, pk: int, year: int) -> HttpResponse:
+    """One project across a whole year: categories down, twelve months across.
+
+    A view over the `FinancialMonth` rows that already exist — no new storage,
+    and no annual figure that could disagree with the months it summarises.
+    """
+    project = get_object_or_404(
+        Project.objects.select_related("office"),
+        pk=pk,
+        financial_reporting_eligible=True,
+    )
+    scope = user_office_scope(request.user)
+    # Same reasoning as `_assert_month_in_scope`: this view takes a pk, so
+    # filtering some other list is not the boundary.
+    if scope is not None and not scope.filter(pk=project.office_id).exists():
+        raise PermissionDenied("This project belongs to another office.")
+    return TemplateResponse(
+        request,
+        "pages/finance_project_year.html",
+        {"grid": project_year_grid(project, year)},
+    )
