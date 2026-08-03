@@ -85,6 +85,93 @@ the wrapped form where `msgstr ""` is followed by continuation lines - a
 translated long string, not an empty one. Running the extract would produce ~44
 genuine fuzzy matches to review and fix nothing. The claim is removed.
 
+## 2026-08-03 - The reporting-period picker had no CSS at all
+
+Reported as buttons sitting too close to panels, with a note that not every
+instance had been found. Measuring rather than eyeballing turned up one cause
+and exactly three instances: `.period-filter` had **no stylesheet rule
+whatsoever**, so the shared reporting-period picker rendered as raw block flow
+and its Filter button touched the caption beneath it at a measured **0px** on
+the warehouse stock, goods-receipt and staff-activity pages.
+
+The picker is now a grid with `--space-3` gaps and a button that keeps its
+natural width. Grid rather than a flex row deliberately: the controls stay
+stacked and full-width exactly as the clients have already seen them, so this
+adds the missing rhythm without relaying out a control mid-engagement. The
+"Showing: …" caption sits outside the form, so the grid gap cannot reach it and
+it carries its own `--space-4` margin.
+
+One trap worth recording: `.period-group` must not be given a `display` value.
+`app.js` hides non-matching granularities with `group.hidden = …`, which works
+through the UA stylesheet's `[hidden] { display: none }`, and any author rule
+would override it and render every granularity at once.
+
+**A second suspected cause turned out not to be one.** The vertical-rhythm rule
+matches only `section|aside|article`, so a top-level `<p>` breaks the chain and
+the following panel inherits nothing from it — which reads like a bug and was
+planned as one. Measured, those pairs sit at **14px**, because the paragraph's
+own bottom margin already covers it, against the 16px the rule would give. Two
+pixels is not worth a selector change that moves spacing on every page of both
+clients, so the rule is left alone and the reasoning recorded here instead of
+being rediscovered later.
+
+Also confirmed while looking: yearly inventory periods are **already built**.
+`core/reporting/periods.py` has offered day, week, month, several months and
+year since J7, both stock pages resolve through it, and the picker renders every
+granularity — the screenshots simply had Month selected. No change, and nothing
+to raise with the client.
+
+## 2026-08-03 - The mobile nav toggle was unreachable, not just hidden
+
+Reported as the alert widget overlapping the hamburger on a phone. It was worse
+than an overlap: `.notification-center` is `position: fixed` in the top-right
+corner below 640px with `z-index: 55`, while `.app-header` is sticky at
+`z-index: 10`. The header put the nav toggle in that same corner, so the bell
+sat on top of it and swallowed the tap - the mobile menu could not be opened at
+all. Measured at 375px, the bell spanned 289-363px and the toggle 318-359px,
+i.e. the toggle was entirely underneath it.
+
+The toggle now anchors to the header's centre. The first attempt used
+`margin-inline: auto`, which centres it in whatever space the brand leaves over
+- fine at 375px, but that space shrinks with the viewport and at 320px it put
+the toggle back under the bell with one pixel to spare. Anchoring to the centre
+with `left: 50%` and a translate is independent of brand width, and taking the
+control out of flow also keeps it clear of the account row that wraps beneath.
+`.app-header` is already `position: sticky`, so it is the containing block.
+
+Clearance is now 81px at 375 and 54px at 320, and the header reads the way its
+layout always implied: brand left, one control centred, account row below.
+
+## 2026-08-03 - Payslips join the office boundary
+
+Recorded as a known gap during the recipient-allowlist work and left open on
+the grounds that it was not exploitable: CorvinumEU creates no `Office` rows so
+`user_office_scope` returns its unrestricted sentinel, and Jober has payslips
+switched off. Both halves of that argument are configuration, and configuration
+changes - so it is closed now rather than left as a note.
+
+Looking properly found **three** leaks where the note recorded one.
+`payslip_send` took a pk with no guard, so a manager could email another
+office's worker their payslip; that POST also mints a one-time password and
+displays it, so it leaked a credential as well as the document. `payslip_list`
+showed every office's net pay, which is restricted data - `PAYSLIP_VIEW` sits
+in the sensitive-reads group of the `Action` enum, so a cross-office row is a
+disclosure even though nothing is written. And the record form's person
+dropdown offered every worker in the company, which is how an out-of-scope
+payslip could be created in the first place.
+
+`Payslip` has no office of its own, so all three scope through the worker:
+`assert_person_in_scope` on the object view, and `scope_people(...,
+prefix="person__")` on the list, matching the precedent already used by
+logistics, checklists and audit. `PayslipForm` now takes `user` and scopes its
+person queryset, which doubles as the validation - a hand-crafted POST naming
+an out-of-scope person fails `is_valid()` instead of silently creating a row.
+The argument is passed in rather than read from a global so the boundary stays
+visible in the view, where the request is.
+
+The guard sits before `send_payslip`, so nothing is generated for a refused
+request; a test monkeypatches the PDF builder to explode and proves it.
+
 ## 2026-08-03 - Two placeholders that were being read as configuration
 
 The recipient allowlist landed earlier the same day. Checking whether it was
