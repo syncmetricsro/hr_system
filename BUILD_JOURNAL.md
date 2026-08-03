@@ -30,6 +30,169 @@ visible in the view, where the request is.
 The guard sits before `send_payslip`, so nothing is generated for a refused
 request; a test monkeypatches the PDF builder to explode and proves it.
 
+## 2026-08-03 - Two placeholders that were being read as configuration
+
+The recipient allowlist landed earlier the same day. Checking whether it was
+safe to deploy turned out to be the more useful exercise: it found two bugs in
+`email_configured()`, and neither would ever have been caught by the test suite,
+because both were about environments rather than code.
+
+They are the same defect twice. `email_configured()` asked only whether a value
+was truthy, so an **empty** `EMAIL_BACKEND` fell through the non-SMTP branch and
+reported *configured* - Django cannot import `""`, so every send raises
+ImportError - and `EMAIL_HOST == "localhost"` did the same, despite being the
+literal `os.getenv` fallback in `config/settings/base.py`, i.e. the value that
+means nobody set it. In both cases the offer panel and the payslip list rendered
+a Send button that could only fail. That is precisely the state the honest
+disabled control exists to prevent, so the guard was lying in exactly the place
+it was supposed to tell the truth.
+
+Both were found by tracing real deployments rather than by testing.
+`stg_jober-staging` has `DJANGO_EMAIL_BACKEND` set to an empty string sitting
+beside live SMTP credentials. And `scripts/dev_app.sh` forwards no
+`DJANGO_EMAIL_*` at all while the image bakes production settings, so the Jober
+demo falls straight through to the localhost default - which is the state Jober
+is in by decision, since no `noreply@` address has been supplied yet. An
+environment genuinely relaying through a local MTA names it explicitly
+(`127.0.0.1` or a hostname) and is unaffected.
+
+The first real-SMTP run also happened here, against CorvinumEU payslips with a
+disposable relay address allowlisted. Both directions were exercised, which is
+the only thing that makes it evidence: a non-allowlisted recipient was refused
+*with live credentials loaded*, and the allowlisted one arrived and decrypted.
+
+Getting there exposed a trap in the demo runbook. The local Doppler CLI scope
+was unset, so the documented bare `doppler run --` falls back to `doppler.yaml`
+and selects the Jober `dev` config - which carries working SMTP and **no**
+allowlist - while `corvinum_app.sh` forwards all seven `DJANGO_EMAIL_*`
+variables. Following the runbook literally would have started the Corvinum demo
+sending unrestricted from the wrong account: the exact failure this feature
+exists to prevent, one step before the step that prevents it. Every rehearsal
+command now names `--project` and `--config` in full.
+
+The staging runbook had two gaps of its own. Its per-app config list never
+mentioned `EMAIL_ALLOWED_RECIPIENTS`, so a bring-up that followed it produced
+real SMTP, fictional records and no allowlist. It also never said that Doppler
+does not reach syncmetric-prime - values are read locally and pasted into
+`dokku config:set`, so setting a secret in Doppler alone changes nothing on
+staging. Both are now stated, along with the note that a scoped service token
+(ask D4) is the answer if direct sync is ever wanted, not an interactive login
+binding app secrets to one person's session.
+
+One correction worth keeping, since this journal is the durable record: while
+reporting the above I described the Jober `dev` Doppler config as a live
+exposure for the Jober demo. It is not - `dev_app.sh` forwards no email
+variables, so those credentials are inert there. The real risk was the
+cross-config trap described above, where `corvinum_app.sh` picks them up.
+
+## 2026-08-03 - The email recipient allowlist becomes a platform control
+
+The allowlist shipped a day earlier inside `features/messaging`, guarding job
+offers. It guarded the wrong client. CorvinumEU installs `features.payslips` and
+not `features.messaging`, and CorvinumEU is the deployment about to be pointed at
+a live mail server (`noreply@corvinum.eu`). `send_payslip` emailed
+`payslip.sent_to or person.email` unconditionally; the only thing between a demo
+and a real inbox was the runbook telling the presenter to use a controlled
+mailbox. That is exactly the control `tests/test_sms_safety.py` rejects — a
+fictional record with a real address typed into it is indistinguishable from any
+other, so "the data is fake" is not a control.
+
+The deploy check had the same shape of bug and was worse, because it looked like
+protection: `messaging.W001` was gated on `FEATURE_FLAGS["offer_emails"]`, which
+is False on CorvinumEU, so the warning could never fire for the client that
+needed it.
+
+`core/mail.py` now owns the question of whether and where this environment may
+send mail — `assert_recipient_allowed`, `email_configured`, and the list of flags
+whose features can email a worker. It has to be core rather than shared between
+features: the two senders ship to different clients and neither can import the
+other, since importing a non-installed app's services pulls in its models. Same
+reasoning that put the upload pipeline in `core/media.py`. The check moved to
+`core/checks.py` as `mail.W001`, registered from `core.ui`, and now fires for
+payslips as well as offers.
+
+In `send_payslip` the guard sits before the password and the PDF, not merely
+before the send. The one-time password exists only in the caller's flash message,
+so minting one for a refused send would have a presenter read out a password for
+an email nobody received. A refusal raises `PayslipError`, which the existing
+view already turns into an error message, leaves `sent_at` untouched so a blocked
+attempt never reads as a delivery, and writes a new `payslip.send_blocked` audit
+event — previously only successes were audited.
+
+The payslip list also gained the honest disabled state the offer panel has: when
+email is unusable the Send button is disabled with a reason, rather than offering
+a control that fails at the mail server. `scripts/corvinum_app.sh` forwards
+`EMAIL_ALLOWED_RECIPIENTS` and warns when real SMTP is configured without it —
+deliberately a warning, not a hard requirement, because empty means unrestricted
+and that is correct in production.
+
+Recorded, not fixed: `payslip_send` fetches by pk with no office guard. Not
+exploitable today — CorvinumEU creates no `Office` rows so the scope helper
+returns its unrestricted sentinel, and Jober has the feature off — but it is real
+the moment either changes.
+
+## 2026-08-02 - Job offers reach workers by email, in their own language
+
+Jober could reach a worker by SMS only. `features/messaging` was Twilio-shaped
+end to end - `OutboundMessage` stores a phone number, there is no subject, and
+`MessageTemplate.body` is sent verbatim, so `Person.preferred_language` was
+never consulted. That left no channel for the one message that genuinely needs
+long-form text and the recipient's own language, and recruiters were sending
+job offers out of band, which put both the content and the fact of the send
+outside the system.
+
+The transport stays inside `features/messaging` per the messaging spec's
+boundary rule, with its own records rather than a widened `OutboundMessage`:
+`JobOffer` (title, project, office, wage, start date, terms), `OfferEmailTemplate`
+keyed `(kind, language)`, `OutboundEmail`, and `EmailBatch` so a campaign is one
+auditable object. Delivery uses Django's own mail backend - no new dependency,
+the same reasoning ADR 0019 applied to Twilio.
+
+Templates are per-language rows, not gettext, because the bodies are
+operator-authored; the send picks the row matching the worker's preferred
+language and falls back to the site default, then to any active row for that
+kind. A wrong-language offer is recoverable, silence is not. This is the first
+transport to close the gap `seed_messaging`'s docstring recorded. Substitution
+is `string.Template.safe_substitute`, so a typo'd `$token` survives into the
+preview instead of raising mid-batch.
+
+Three guards run in order before anything leaves: the worker's own state
+(opt-out, blacklisted, no address), then the `EMAIL_ALLOWED_RECIPIENTS`
+environment allowlist, then delivery. The first is new relative to SMS, which
+consults neither flag - an operational text to someone on shift is a different
+act from marketing a job to someone who asked us to stop. `BLOCKED` stays
+distinct from `FAILED` for the reason `OutboundMessage` already draws that line.
+`Person.email_opt_out` is the Art. 21 objection mechanism and is deliberately
+ignored by payslip delivery, which has a different basis.
+
+Two surfaces: a person-card panel (recruiter/coordinator/manager, with SMS's
+coordinator narrowing) that renders even when nothing can be sent, with the
+control disabled and the reason shown; and a manager-only bulk page that
+previews the scoped recipient list, the excluded rows with their reasons, and
+the rendered body, then requires a confirmation box. Preview and execution use
+the same scoped query - a page that scoped only its preview would show ten names
+and email four hundred. Unlike `sms.manage_templates`, `offer_template.manage`
+is enforced by a real view rather than left to Django admin.
+
+`EMAIL_ALLOWED_RECIPIENTS` is the execution gate. It cannot be made mandatory
+because empty means unrestricted in production, so `manage.py check` raises
+`messaging.W001` when outreach is on with a real SMTP backend and no allowlist.
+`OutboundEmail` is registered with `core.retention`; the period is unapproved
+and the purge is a deliberate no-op until it is set. CorvinumEU gets neither the
+flag, the routes, nor the permissions - its design rejects automated worker
+notification, and `features.messaging` is not installed there at all.
+
+Two things surfaced while building. The e2e stack turned out to have a
+**fourth** copy of the seed order that omitted `seed_messaging` entirely, so the
+browser suite had been exercising an empty SMS panel; both seeds are wired in
+now. And a seeded offer with no office is visible to Observer alone - unlike a
+Person, a non-Person record has no owning-recruiter fallback - which is how the
+first e2e run failed and is now pinned by a test.
+
+Not done, and recorded rather than hidden: sends are synchronous like `send_sms`,
+so a capped batch of 100 holds the request for 100 SMTP round-trips; there is no
+retry, no bounce handling, and no self-service unsubscribe link.
+
 ## 2026-08-02 - Help card icons share a complete size vocabulary
 
 The shared icon stylesheet now defines the previously missing `lg` size as a

@@ -1,6 +1,6 @@
 # Permission Matrix — Jober
 
-Last updated: 2026-07-31
+Last updated: 2026-08-02
 
 This document is the human-readable mirror of `clients/jober/policies.py`
 (`ACTION_ROLES`; the `Action` enum lives in `core/accounts/permissions.py`). When you change one, change the other in the same commit.
@@ -40,6 +40,7 @@ Legend: ✅ permitted · — denied
 | `person.archive` | — | — | ✅ | — |
 | `project.assign` (place/reassign a person on a project) | — | ✅ | ✅ | — |
 | `sms.send` | ✅ | ✅ | ✅ | — |
+| `offer_email.send` (email one worker a job offer; coordinator-scoped like `sms.send`) | ✅ | ✅ | ✅ | — |
 | `trial.record_outcome` | — | ✅ | ✅ | — |
 | `readiness.complete` | — | ✅ | ✅ | — |
 | `room.assign` | — | ✅ | ✅ | — |
@@ -57,6 +58,9 @@ Legend: ✅ permitted · — denied
 | `blacklist.propose` | — | ✅ | ✅ | — |
 | `blacklist.decide` | — | — | ✅ | — |
 | `sms.manage_templates` (**not enforced** — admin-only in practice) | — | — | ✅ | — |
+| `offer.manage` (author/edit/close job offers — ADR 0029) | — | — | ✅ | — |
+| `offer_template.manage` (per-language offer email bodies — ADR 0029) | — | — | ✅ | — |
+| `offer_email.bulk_send` (email an offer to a filtered list; capped + confirmed) | — | — | ✅ | — |
 | `checklist.tick` (Jober: feature off — ADR 0022) | — | ✅ | ✅ | — |
 | `ledger.enter` (Jober: feature off — ADR 0022) | — | — | ✅ | — |
 | `ledger.view` (Jober: feature off — ADR 0022) | — | — | ✅ | ✅ |
@@ -103,12 +107,13 @@ is visible only to their owning recruiter (plus Observer) — see
   unambiguous; a person left without an office is visible to that recruiter
   and nobody else (`core/offices/scoping.py`). Owns intake while it is theirs;
   routes candidates to trial days; recycles Available people; sends approved
-  SMS; sees that a blacklist
+  SMS and emails job offers to one worker at a time; sees that a blacklist
   warning exists but not the restricted reason. Cannot record trial outcomes,
   complete readiness, approve Working, or manage projects/catalogs/users/finance.
 - **Coordinator** — schedules and records project trials, then handles
   readiness data, rooms, equipment issuance, and exit
-  reconciliation; sends approved SMS.
+  reconciliation; sends approved SMS and job-offer emails, both limited to
+  people on their own projects.
   Coordinators may assign existing rooms but cannot create or edit accommodation
   locations or room catalogue records.
   Cannot manage users, decide blacklist, or view feedback.
@@ -118,7 +123,10 @@ is visible only to their owning recruiter (plus Observer) — see
   could activate directly, which is why this line carried a correction.
 - **Manager/Administrator** — within their office(s), all permitted reads plus
   every management action, including finance, users, blacklist decisions,
-  audit, and exports. Not company-wide: another office's person, project,
+  audit, and exports. Authoring job offers and their email templates, and
+  sending an offer to a filtered list, are manager-only (`offer.manage`,
+  `offer_template.manage`, `offer_email.bulk_send`) — a bulk send reaches every
+  worker matching a filter, so the blast radius earns the narrower grant. Not company-wide: another office's person, project,
   accommodation or financial month returns 403, and lists/aggregates/exports
   cover their own office only.
   Accommodation management includes creating, editing, and deactivating
@@ -126,7 +134,9 @@ is visible only to their owning recruiter (plus Observer) — see
 - **Observer** — the only cross-office role: sees all three offices and lands
   on the Observer-only executive finance dashboard. Read-only: approved
   dashboards/lists, warehouse stock, approved financial summaries, exports
-  only where explicitly allowed. No operational/financial writes.
+  only where explicitly allowed. No operational/financial writes, and
+  **no messaging of any kind** — spanning every office is exactly what makes
+  Observer the account that must not be able to email workers.
 
 ## Granted, but not enforced anywhere
 

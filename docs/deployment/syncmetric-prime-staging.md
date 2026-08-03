@@ -230,7 +230,7 @@ The first deployment follows the same image-stream process, but after the
 app/database/config/domain/TLS setup it runs the Jober fictional scenario:
 
 ```bash
-for command in seed_demo seed_people seed_logistics seed_questionnaire seed_finance seed_messaging seed_demo_scenario; do
+for command in seed_demo seed_people seed_logistics seed_questionnaire seed_finance seed_messaging seed_offer_emails seed_demo_scenario; do
   sudo dokku run jober-staging python manage.py "$command"
 done
 ```
@@ -357,6 +357,28 @@ Per-app extra config (from the owner's local `doppler run` — paste values into
 - **corvinum-staging**: `DJANGO_EMAIL_HOST/PORT/HOST_USER/HOST_PASSWORD/USE_TLS`
   + `DJANGO_DEFAULT_FROM_EMAIL` for payslip email (or leave the console backend
   for a first bring-up). 2FA-for-managers is already on via the settings module.
+- **Both apps, whenever a real SMTP backend is configured**:
+  `EMAIL_ALLOWED_RECIPIENTS=<controlled test inbox>`. Staging holds fictional
+  worker records, and a fictional record with a real address typed into it is
+  indistinguishable from any other — so this, not the fictional-data rule, is
+  what stops a demo emailing a stranger. Empty means *unrestricted*, which is
+  correct only in production. `manage.py check` reports `mail.W001` when a
+  worker-email feature is on with real SMTP and no allowlist.
+- **jober-staging, if offer emails are enabled** (ADR 0029): the same
+  `DJANGO_EMAIL_*` set as corvinum-staging, plus the allowlist above. Offer
+  emails include a **bulk** send, so an unset allowlist here has a larger blast
+  radius than payslips. Setting `DJANGO_EMAIL_BACKEND` to an *empty string*
+  does not disable email safely — Django cannot import it and every send raises;
+  use `django.core.mail.backends.console.EmailBackend` to mean "no email here".
+
+> **Doppler does not reach the server.** Values are read on the owner's machine
+> (`doppler secrets get ... --plain`) and pasted into `dokku config:set`. There
+> is no Doppler CLI login on syncmetric-prime and none is wanted: an interactive
+> login binds app secrets to one person's session. Setting a secret in Doppler
+> therefore changes **nothing** on staging until it is also set with
+> `dokku config:set` and the app restarted. If direct sync is ever wanted, that
+> is ask **D4** in the deployment plan — a scoped, revocable *service token* per
+> app/config, not `doppler login`.
 
 Leave `DJANGO_SECURE_SSL_REDIRECT` / `DJANGO_SESSION_COOKIE_SECURE` /
 `DJANGO_CSRF_COOKIE_SECURE` **unset** — they default secure and must stay on
@@ -377,7 +399,7 @@ that destructive confirmation on a real-data database.
 Staging is fictional-data by design — seed it so the demo cast is present:
 ```bash
 # jober-staging
-for c in seed_demo seed_people seed_logistics seed_questionnaire seed_finance seed_messaging seed_demo_scenario; do
+for c in seed_demo seed_people seed_logistics seed_questionnaire seed_finance seed_messaging seed_offer_emails seed_demo_scenario; do
   dokku run jober-staging python manage.py "$c"
 done
 # corvinum-staging

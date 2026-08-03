@@ -1,0 +1,71 @@
+{% extends "layouts/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Send offer" %} · {{ BRAND_NAME }}{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <p class="eyebrow">{% trans "Recruiting" %}</p>
+  <h1>{% blocktrans with title=offer.title %}Send "{{ title }}" to many{% endblocktrans %}</h1>
+</section>
+
+<form class="stack" method="get">
+  <label>{% trans "Email type" %}
+    <select name="kind">
+      {% for value, label in kinds %}<option value="{{ value }}">{{ label }}</option>{% endfor %}
+    </select>
+  </label>
+  <button class="button" type="submit">{% trans "Update preview" %}</button>
+</form>
+
+{% if preview_error %}
+  <p class="eyebrow">{% trans "No active template for this email type — nothing can be sent until one exists." %}</p>
+{% elif preview %}
+  <section class="panel">
+    <p class="eyebrow">{% blocktrans with name=preview.person %}Preview, as {{ name }} would receive it{% endblocktrans %}</p>
+    <h3>{{ preview.subject }}</h3>
+    <pre>{{ preview.body }}</pre>
+  </section>
+{% endif %}
+
+<section class="panel">
+  <p class="eyebrow">{% blocktrans count counter=sendable|length %}{{ counter }} recipient{% plural %}{{ counter }} recipients{% endblocktrans %}</p>
+  <ul class="plain-list">
+    {% for person in sendable %}
+      <li>{{ person }} — {{ person.email }}</li>
+    {% empty %}
+      <li>{% trans "Nobody in scope can be emailed this offer." %}</li>
+    {% endfor %}
+  </ul>
+  {% if truncated %}
+    <p class="eyebrow">
+      {% blocktrans with limit=limit extra=truncated %}Capped at {{ limit }}; {{ extra }} further people were left out of this send.{% endblocktrans %}
+    </p>
+  {% endif %}
+</section>
+
+{% if excluded %}
+  <section class="panel">
+    <p class="eyebrow">{% trans "Excluded" %}</p>
+    <ul class="plain-list">
+      {% for person, reason in excluded %}
+        <li>{{ person }} — {{ reason }}</li>
+      {% endfor %}
+    </ul>
+  </section>
+{% endif %}
+
+<form class="stack" method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  {% if sendable and not preview_error and email_configured %}
+    <button class="button button-primary" type="submit">{% trans "Send now" %}</button>
+  {% else %}
+    <button class="button button-primary" type="submit" disabled>{% trans "Send now" %}</button>
+    {% if not email_configured %}
+      <p class="eyebrow">{% trans "Email is not configured in this environment." %}</p>
+    {% endif %}
+  {% endif %}
+  <a class="button" href="{% url 'offer_list' %}">{% trans "Cancel" %}</a>
+</form>
+{% endblock %}

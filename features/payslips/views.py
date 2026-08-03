@@ -6,6 +6,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import gettext as _
 
 from core.accounts.permissions import Action, can, require_action
+from core.mail import email_configured
 from core.offices.scoping import assert_person_in_scope, scope_people
 from features.payslips.forms import PayslipForm
 from features.payslips.models import Payslip
@@ -49,6 +50,9 @@ def payslip_list(request):
             "payslips": payslips[:100],
             "form": form,
             "may_manage": may_manage,
+            # Say "unavailable" rather than offer a button that fails at the
+            # mail server — the same choice the offer-email panel makes.
+            "email_configured": email_configured(),
         },
         status=status,
     )

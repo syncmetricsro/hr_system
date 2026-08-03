@@ -69,6 +69,11 @@ class Person(models.Model):
     # Optional contact email (ADR 0023: payslip delivery; generic contact
     # attribute, deliberately absent from intake forms for now).
     email = models.EmailField(_("email"), blank=True)
+    # Objection to offer emails (GDPR Art. 21). Operational mail (payslips) is
+    # a separate basis and deliberately ignores this flag; only the outreach
+    # channel in features.messaging consults it. Who set it and when comes from
+    # the audit log, so no extra columns here.
+    email_opt_out = models.BooleanField(_("no offer emails"), default=False)
     address = models.CharField(_("address"), max_length=300, blank=True)
     nationality = models.CharField(_("nationality"), max_length=100, blank=True)
     preferred_language = models.CharField(
