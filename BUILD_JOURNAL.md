@@ -1,5 +1,26 @@
 # Build Journal
 
+## 2026-08-03 - The mobile nav toggle was unreachable, not just hidden
+
+Reported as the alert widget overlapping the hamburger on a phone. It was worse
+than an overlap: `.notification-center` is `position: fixed` in the top-right
+corner below 640px with `z-index: 55`, while `.app-header` is sticky at
+`z-index: 10`. The header put the nav toggle in that same corner, so the bell
+sat on top of it and swallowed the tap - the mobile menu could not be opened at
+all. Measured at 375px, the bell spanned 289-363px and the toggle 318-359px,
+i.e. the toggle was entirely underneath it.
+
+The toggle now anchors to the header's centre. The first attempt used
+`margin-inline: auto`, which centres it in whatever space the brand leaves over
+- fine at 375px, but that space shrinks with the viewport and at 320px it put
+the toggle back under the bell with one pixel to spare. Anchoring to the centre
+with `left: 50%` and a translate is independent of brand width, and taking the
+control out of flow also keeps it clear of the account row that wraps beneath.
+`.app-header` is already `position: sticky`, so it is the containing block.
+
+Clearance is now 81px at 375 and 54px at 320, and the header reads the way its
+layout always implied: brand left, one control centred, account row below.
+
 ## 2026-08-03 - Payslips join the office boundary
 
 Recorded as a known gap during the recipient-allowlist work and left open on

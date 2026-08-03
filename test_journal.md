@@ -1,5 +1,24 @@
 # Test Journal
 
+## 2026-08-03 - mobile nav toggle clearance
+
+- Two browser tests in `tests/e2e/test_shell_smoke.py`, written to fail first:
+  the reproduction returned the exact overlapping rectangles, which is what
+  identified the fixed-position notification centre as the cause rather than
+  anything in the header itself.
+- The geometry test measures the toggle against the bell, the brand lockup and
+  the account row, at **375px and 320px**. Both widths matter: the first fix
+  passed at 375 and failed at 320 by roughly one pixel, so a single-width test
+  would have shipped it.
+- It also requires **8px of real separation** rather than mere non-overlap - two
+  44px tap targets sharing an edge are still mis-tappable, and a hairline gap
+  would have satisfied a naive assertion.
+- A second test clicks the toggle and waits for the menu, because the original
+  defect was that the control could not be activated. An assertion that only
+  checked position would have passed against a button nothing could press.
+- Full browser suite green on the fix branch: **58 passed**. On
+  `feat/offer-emails`, which carries six extra specs, **64 passed**.
+
 ## 2026-08-03 - payslip office scoping
 
 - **11 tests** in `tests/test_payslip_office_scoping.py`, deliberately **not**
