@@ -542,6 +542,37 @@ svg.icon {
   margin-top: var(--space-4);
 }
 
+/* Reporting-period picker (J7). This shipped with no CSS at all, so the form
+   was raw block flow: the Filter button touched the input above it and the
+   "Showing: …" caption below it with a measured 0px gap, on every page that
+   embeds the picker.
+
+   Grid rather than a flex row on purpose — the controls stay stacked and
+   full-width exactly as they render today, so this adds the missing rhythm
+   without relaying out a control the clients have already seen. The button
+   keeps its natural width instead of stretching across the column.
+
+   Deliberately no `display` on `.period-group`: app.js hides non-matching
+   granularities with `group.hidden = …`, which relies on the UA stylesheet's
+   `[hidden] { display: none }`. An author rule here would override it and show
+   every granularity at once. Hidden children create no grid gap. */
+.period-filter {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.period-filter > button {
+  justify-self: start;
+}
+
+/* The caption sits outside the form, so the grid gap above does not reach it
+   and it needs its own margin. `--space-4` rather than the form's `--space-3`:
+   it is a separate block summarising the filter, not another control in the
+   stack, and it reads as one when it is spaced like one. */
+.period-selection {
+  margin-top: var(--space-4);
+}
+
 .page-head {
   display: flex;
   flex-wrap: wrap;

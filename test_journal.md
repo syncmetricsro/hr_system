@@ -1,5 +1,28 @@
 # Test Journal
 
+## 2026-08-03 - button clearance sweep
+
+- One browser test walking **nine pages at 1280px and 375px**, asserting that no
+  button sits within 12px of whatever renders directly beneath it. The sweep is
+  the deliverable: the report said not every instance had been found, so the
+  test's failure output *is* the instance list.
+- Run against unfixed CSS it named six offenders — three pages at two widths,
+  all `[Filter] -> p.muted gap=0px`, all the same cause. After the fix, green.
+- **The first version of this test passed against the broken CSS**, which is
+  the part worth remembering. It compared each button only against top-level
+  `.app-shell` children, and the actual defect is a button and a caption inside
+  the *same* panel, so it stepped straight over it. The probe now compares
+  against the nearest element anywhere below that overlaps the button's column.
+- It also excludes the button's own ancestors on purpose: `.page-head` supplies
+  its separation with `padding-bottom`, which sits inside its bounding box, so
+  a naive comparison reads 0px there and would fail on correct markup. That
+  false positive appears in the raw block-gap measurements and is not a defect.
+- Intermediate result kept as a caution: the first fix moved the caption from
+  0px to 8px, still under the bar, because the caption lives outside the form
+  and the grid gap never reached it. The threshold caught what a screenshot
+  would have called fixed.
+- Full browser suite green: **57 passed**, both clients.
+
 ## 2026-08-03 - mobile nav toggle clearance
 
 - Two browser tests in `tests/e2e/test_shell_smoke.py`, written to fail first:
