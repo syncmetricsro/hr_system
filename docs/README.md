@@ -79,6 +79,7 @@ staff-invitation subsystem deferred) ·
 | `jober-phase1-open-questions.md`, `jober-phase3-4-open-questions.md` | Jober | Client Q&A rounds (answered) |
 | `jober-open-questions-july-2026.md` | Jober | Handover-call questions (**open**); 4 of 6 block or reshape queued work |
 | `jober-open-decisions.md`, `jober-risk-blockers.md` | Jober | Open decisions / blockers |
+| `jober-client-ask-list.md` | Jober | **One page to take to the client** — every outstanding decision grouped by who answers it (lawyer / vendor / business) and what each one blocks |
 | `jober-multi-office-scoping.md` | Jober | Multi-office (Velký Meder/Győr/Dunajská Streda) RBAC impact analysis — implemented (Phases A+B); only the staff-invitation subsystem §3a remains design-only (revisits ADR 0008) |
 | `jober-telegram-channel-design.md` | Jober | Canonical Manager/Admin-only, outbound Telegram channel-broadcast design — approved direction, not implemented, client/privacy gates open |
 | `jober-demo-inventory.md`, `jober-demo-to-django-map.md`, `jober-removed-feature-inventory.md`, `jober-source-register.md` | Jober | Build-era inventories and source register |
@@ -89,3 +90,7 @@ staff-invitation subsystem deferred) ·
 |---|---|---|
 | `security-review-2026-06-29.md` | Platform | Security review record |
 | `jober-blacklist-legal-basis.md` | Jober | Legitimate-interest basis; LIA pending |
+| `jober-blacklist-lia.md` | Jober | **Draft LIA** for do-not-rehire matching — unsigned, needs DPO review; the oldest outstanding legal gate |
+| `jober-offer-email-lia.md` | Jober | **Draft LIA** for job-offer outreach — unsigned, needs DPO review |
+| `jober-data-retention-proposal.md` | Jober | Inventory of every personal-data store with proposed periods and reasoning; records that only 2 of 10 stores have any purge path |
+| `jober-processor-dpa-requirements.md` | Jober | What each Art. 28 agreement must cover, per processor (FORPSI hosting + SMTP, Twilio); none received |
