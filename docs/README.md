@@ -70,6 +70,8 @@ staff-invitation subsystem deferred) ·
 | `pill-system-design.md` | Platform | Worker status pill, certificate-validity icons, Compliance/Reviews nav badges — fully implemented 2026-07-24 |
 | `certificate-upload-design.md` | Platform | Shared forklift/crane/welding upload, renewal/history, RBAC, validation, and emergency purge — implemented 2026-07-31 |
 | `document-storage-boundary.md` | Platform | Metadata-only/prohibited high-risk document boundary and optional separately scoped Secure Document Vault |
+| `secure-document-vault-design.md` | Platform | Engineering design for the deferred, separately priced vault — architecture, data model, integration seam, phasing. **Designed, not built** |
+| `secure-document-vault-proposal.md` | Platform | Client-facing offer for the same module: what it adds, what the client must supply, why it is priced apart (C-Q18) |
 | `accountant-data-handoff.md` | Platform | Separate Slovak/Hungarian accountant handoffs: country-specific payroll facts and tax declarations, medical/ID exclusions, secure routing, and refusal of mixed/unresolved jurisdictions |
 | `feedback-flyer-design.md` | Platform | Downloadable PDF+QR flyer for feedback links, Cyrillic-capable via a vendored font (ADR 0028) — implemented 2026-07-24 |
 | `help-area-design.md` | Platform | Image-rich, feature-aware Help: exactly 12 workflow articles per client, client-specific fictional screenshots, shared article structure and complete SK/HU/UK catalogs |
@@ -79,6 +81,7 @@ staff-invitation subsystem deferred) ·
 | `jober-phase1-open-questions.md`, `jober-phase3-4-open-questions.md` | Jober | Client Q&A rounds (answered) |
 | `jober-open-questions-july-2026.md` | Jober | Handover-call questions (**open**); 4 of 6 block or reshape queued work |
 | `jober-open-decisions.md`, `jober-risk-blockers.md` | Jober | Open decisions / blockers |
+| `jober-client-ask-list.md` | Jober | **One page to take to the client** — every outstanding decision grouped by who answers it (lawyer / vendor / business) and what each one blocks |
 | `jober-multi-office-scoping.md` | Jober | Multi-office (Velký Meder/Győr/Dunajská Streda) RBAC impact analysis — implemented (Phases A+B); only the staff-invitation subsystem §3a remains design-only (revisits ADR 0008) |
 | `jober-offer-email-design.md` | Jober | Job-offer emails: per-language templates, per-person panel and capped bulk send (ADR 0029, implemented) |
 | `jober-telegram-channel-design.md` | Jober | Canonical Manager/Admin-only, outbound Telegram channel-broadcast design — approved direction, not implemented, client/privacy gates open |
@@ -90,4 +93,9 @@ staff-invitation subsystem deferred) ·
 |---|---|---|
 | `security-review-2026-06-29.md` | Platform | Security review record |
 | `jober-blacklist-legal-basis.md` | Jober | Legitimate-interest basis; LIA pending |
+| `jober-blacklist-lia.md` | Jober | **Draft LIA** for do-not-rehire matching — unsigned, needs DPO review; the oldest outstanding legal gate |
+| `jober-offer-email-lia.md` | Jober | **Draft LIA** for job-offer outreach — unsigned, needs DPO review |
+| `jober-data-retention-proposal.md` | Jober | Inventory of every personal-data store with proposed periods and reasoning; records that only 2 of 10 stores have any purge path |
+| `jober-processor-dpa-requirements.md` | Jober | What each Art. 28 agreement must cover, per processor (FORPSI hosting + SMTP, Twilio); none received |
+
 | `jober-offer-email-legal-basis.md` | Jober | Legitimate-interest basis for job-offer outreach; opt-out implemented, LIA + DPA + retention period pending |
