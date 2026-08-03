@@ -107,7 +107,6 @@ def test_language_switch_translates_a_mismatched_url_prefix(page):
     assert cookies["jober_language"] == "en"
 
 
-<<<<<<< HEAD
 # The three pages that embed the shared reporting-period picker, plus a few
 # with their own filter forms and page-head actions for contrast.
 SPACED_PAGES = (
@@ -201,7 +200,8 @@ def test_buttons_keep_clearance_from_what_follows_them(page):
     assert not offenders, "buttons crowd what follows them:\n  " + "\n  ".join(
         offenders
     )
-=======
+
+
 def _header_geometry(page):
     return page.evaluate("""
       () => {
@@ -276,4 +276,3 @@ def test_nav_toggle_still_opens_the_menu_on_mobile(page):
     page.locator(".app-header .icon-button.mobile-only").click()
     nav.wait_for(state="visible")
     assert page.evaluate("document.documentElement.scrollWidth") == 375
->>>>>>> origin/main
