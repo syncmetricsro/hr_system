@@ -117,8 +117,15 @@ Secure Document Vault described below. Do not quietly treat a provider's
 ## Optional Secure Document Vault
 
 If a client insists on storing excluded scans, offer a separately scoped and
-priced Secure Document Vault project that can integrate with this platform. It
-requires its own:
+priced Secure Document Vault project that can integrate with this platform.
+
+**Architecture, data model, phasing and the open commissioning decisions are in
+[`secure-document-vault-design.md`](secure-document-vault-design.md)**; the
+client-facing version is
+[`secure-document-vault-proposal.md`](secure-document-vault-proposal.md). This
+section states the requirements only.
+
+It requires its own:
 
 - necessity/lawful-basis and DPIA assessment;
 - threat model, access model, and separation of duties;

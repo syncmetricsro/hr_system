@@ -1,5 +1,50 @@
 # Build Journal
 
+## 2026-08-03 - The Secure Document Vault gets an architecture
+
+Asked to capture a decision to exclude government IDs, birth certificates and
+medical papers from the product and offer a paid vault instead. Checking first
+turned the task from "write it all" into "write the one part that is missing".
+
+The decision was already made and already enforced.
+`document-storage-boundary.md` adopted it on **2026-07-31**, and
+`FILE_ALLOWED_CATEGORIES` limits uploads to forklift, crane and welding in code
+rather than in policy. The module was already named and already framed as
+"separately scoped and priced", referenced from eight places, and already put to
+the client as **C-Q18**. The accompanying legal analysis existed too, and
+`accountant-data-handoff.md` is more complete than the version we were working
+from - it covers Hungary as well as Slovakia and lists the primary sources it
+checked.
+
+What was missing was architecture. The vault section was an eight-bullet
+requirements list with no design, no data model, no phasing, and nothing a
+client could be quoted from. Two documents now fill that: an engineering design
+and a client-facing offer. The boundary doc keeps the requirements and points at
+the design for the rest.
+
+**Encrypted identifier storage went into the vault rather than the base
+platform**, reversing the shape of the source material. The base stores no raw
+identifier at all today - blacklist matching keeps `identifier_type`, an HMAC
+and a key version, and the value never reaches the database. Putting encrypted
+identifiers in the base would surrender that property for every client including
+the ones who never asked for a vault, so `PersonIdentifier` sits behind the paid
+module and the base keeps a claim worth having: we do not hold your ID number.
+
+The proposal leads on three gaps verified in the code rather than on security
+adjectives. `core/media_views.py` has no `record_event`, so a certificate read is
+correctly *authorised* - `assert_person_in_scope` plus `can_view_sensitive` - and
+then not recorded; who looked at a file is not written down. Files are plain
+`FileField`s on the media volume with no application-managed key, which the
+boundary doc already admits and `production-readiness.md` already tracks as
+blocking real scans. And nothing anywhere asks a user to re-authenticate before
+a sensitive view or export.
+
+The design deliberately does **not** re-specify what the base already provides -
+secret isolation, hash-locked dependencies, encrypted off-site backups whose
+restore drill compares per-table row counts, server-side RBAC, append-only
+audit. Listing those as vault features would invite a client to pay twice for
+things they already have.
+
 ## 2026-08-03 - Written the material the client is being asked to approve
 
 Every remaining item on the worker-email work was blocked on the client rather
