@@ -220,6 +220,10 @@ FEATURE_FLAGS = {
     "checklists": False,  # CorvinumEU feature (ADR 0022); a client opts in
     "advances": False,  # CorvinumEU feature (ADR 0022); a client opts in
     "payslips": False,  # CorvinumEU feature (ADR 0023); a client opts in
+    # Offer emails (ADR 0029). Off by default *and* listed here on purpose:
+    # flag_enabled() treats an unknown key as True, so an omitted flag would
+    # silently turn worker-facing outreach on for every client.
+    "offer_emails": False,
 }
 CLIENT_POLICIES = os.getenv("CLIENT_POLICIES", "core.accounts.default_policies")
 
@@ -240,6 +244,27 @@ EMAIL_HOST_USER = os.getenv("DJANGO_EMAIL_HOST_USER", "")
 EMAIL_HOST_PASSWORD = os.getenv("DJANGO_EMAIL_HOST_PASSWORD", "")
 EMAIL_USE_TLS = os.getenv("DJANGO_EMAIL_USE_TLS", "1") == "1"
 DEFAULT_FROM_EMAIL = os.getenv("DJANGO_DEFAULT_FROM_EMAIL", "noreply@localhost")
+
+# Offer emails (ADR 0029). The exact counterpart of SMS_ALLOWED_RECIPIENTS, and
+# for the same reason: staging holds fictional people, but a real address typed
+# into a fictional record is still a real inbox. Comma-separated addresses;
+# **empty means unrestricted**, which is what production wants. `manage.py check`
+# warns when this is empty on a non-production SMTP environment.
+EMAIL_ALLOWED_RECIPIENTS = [
+    address.strip()
+    for address in os.getenv("EMAIL_ALLOWED_RECIPIENTS", "").split(",")
+    if address.strip()
+]
+
+# Ceiling on one bulk offer send. Not a business rule — a blast-radius limit, so
+# a mis-filtered recipient query cannot become a thousand emails in one POST.
+OFFER_EMAIL_BATCH_LIMIT = int(os.getenv("OFFER_EMAIL_BATCH_LIMIT", "100"))
+
+# Retention for offer-email records. Zero = keep everything, which is the
+# deliberate default: the client has not approved a message/log retention period
+# (the same open item the messaging spec carries for SMS), and guessing one would
+# destroy evidence. Set it once the period is agreed.
+OFFER_EMAIL_RETENTION_DAYS = int(os.getenv("OFFER_EMAIL_RETENTION_DAYS", "0"))
 
 # Roles that must enroll a TOTP device (Stage B4b). Empty for Jober => zero
 # behavior change; CorvinumEU will require it for HR/admin/manager (§5.12).

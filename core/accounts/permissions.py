@@ -30,6 +30,7 @@ class Action(str, Enum):
     CERTIFICATE_PURGE_FILE = "certificate.purge_file"
     PERSON_ARCHIVE = "person.archive"
     SMS_SEND = "sms.send"
+    OFFER_EMAIL_SEND = "offer_email.send"
 
     # Coordinator field operations
     PROJECT_ASSIGN = "project.assign"
@@ -52,6 +53,11 @@ class Action(str, Enum):
     BLACKLIST_PROPOSE = "blacklist.propose"
     BLACKLIST_DECIDE = "blacklist.decide"
     SMS_MANAGE_TEMPLATES = "sms.manage_templates"
+    OFFER_MANAGE = "offer.manage"
+    OFFER_TEMPLATE_MANAGE = "offer_template.manage"
+    # Narrower than OFFER_EMAIL_SEND on purpose: one mistyped filter reaches
+    # every worker in an office, so the blast radius earns a manager-only grant.
+    OFFER_EMAIL_BULK_SEND = "offer_email.bulk_send"
     CHECKLIST_TICK = "checklist.tick"
     LEDGER_ENTER = "ledger.enter"
     WAGE_MANAGE = "wage.manage"

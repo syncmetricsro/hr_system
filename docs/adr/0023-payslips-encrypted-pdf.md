@@ -2,6 +2,16 @@
 
 Status: **Accepted — owner approved 2026-07-11 (deps + password design)**
 
+Amendment note, 2026-08-03: `send_payslip` originally emailed the resolved
+address unconditionally — the only protection against a fictional record
+holding a real address was the runbook telling the presenter to use a
+controlled inbox. It now consults the platform recipient allowlist
+(`core.mail.assert_recipient_allowed`, `EMAIL_ALLOWED_RECIPIENTS`) **before**
+minting the one-time password or building the PDF, and records a
+`payslip.send_blocked` audit event when it refuses. Nothing about the
+encryption or password design changes. See ADR 0029 and
+`docs/security/jober-offer-email-legal-basis.md`.
+
 ## Context / scope change
 
 CorvinumEU now wants to (a) **store what workers were paid** per period and

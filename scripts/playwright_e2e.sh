@@ -85,6 +85,11 @@ run_manage seed_people
 run_manage seed_logistics
 run_manage seed_questionnaire
 run_manage seed_finance
+# Messaging seeds run here too: both the SMS picker and the offer panel render
+# their controls behind "is there anything to pick", so an unseeded e2e stack
+# tests an empty page rather than the feature.
+run_manage seed_messaging
+run_manage seed_offer_emails
 run_manage_corvinum migrate --noinput
 run_manage_corvinum seed_corvinum_demo
 
