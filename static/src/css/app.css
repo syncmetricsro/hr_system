@@ -1648,6 +1648,24 @@ select {
     display: inline-flex;
   }
 
+  /* The nav toggle centres in the header row instead of sitting at its right
+     edge. On narrow screens the notification centre is `position: fixed` in
+     that same corner with z-index 55, above the sticky header's 10 — so a
+     toggle placed there was not merely hidden behind the bell but unclickable,
+     because the bell swallowed the tap.
+
+     Anchored to the header's centre rather than auto-margined into the space
+     the brand leaves over: that free space shrinks as the viewport narrows, and
+     at 320px it put the toggle back under the bell with 1px to spare. Taking it
+     out of flow also keeps it off the account row below. `.app-header` is
+     `position: sticky`, so it is already the containing block. */
+  .app-header > .icon-button.mobile-only {
+    position: absolute;
+    top: var(--space-3);
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
   .icon-button {
     min-height: var(--tap-target);
   }
