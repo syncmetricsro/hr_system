@@ -24,7 +24,7 @@ This file governs **scope, security, supply chain, and how to work**. The **what
 5. **No secrets in Git.** Provider credentials (Twilio, Telegram, SMTP, database) come from environment / a secret manager, never committed.
 6. **No ad-hoc artifact, media, or secret fetching.** The agent may fetch pinned, integrity-verified build/test artifacts only through committed isolated workflows under §7. A human still supplies media, fonts, images, and credentials.
 7. **When a business decision is missing, stop and write a decision note.** Do not fossilize a guess into a migration and make humans excavate it later.
-8. **Small, reviewable PRs**, tests with every business-critical change, permissions + audit treated as part of each feature.
+8. **Small, self-contained commits that each leave `main` working** — landed directly, **not** through a pull request *(changed 2026-08-04; the review UI was ceremony in a single-maintainer repo)*. Because nothing sits between a push and `main`, the local gate is the gate: **ruff plus both unit lanes green before anything is pushed**. Tests with every business-critical change; permissions + audit treated as part of each feature.
 
 ---
 

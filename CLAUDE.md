@@ -73,7 +73,8 @@ docker run --rm --network jober-dev-net \
 #   …same container for: ruff check --no-cache core features clients config tests
 #   …and: python manage.py makemigrations <app>
 
-# Browser e2e (builds current app + Playwright image, seeds both clients, runs tests/e2e)
+# Browser e2e — PRE-DEPLOY ONLY, and only when asked (see Workflow below).
+# Builds the current app + Playwright image, seeds both clients, runs tests/e2e.
 scripts/playwright_e2e.sh
 
 # i18n (gettext is NOT in the runtime/test images — this script apt-installs it)
@@ -100,18 +101,54 @@ scripts/compile_messages.sh --check     # read-only PO/MO completeness check
   or counted with single-line regexes — use the committed semantic checker.
 - Container-created files can land root-owned; run containers with
   `--user "$(id -u):$(id -g)" -e HOME=/tmp`.
+- **The full Jober suite takes ~7 minutes — give it a real timeout.** Killing it
+  part-way leaves `test_jober` behind *with a live session*, and the next run
+  reports hundreds of errors that are all `DuplicateDatabase` / "is being
+  accessed by other users". It looks like catastrophe and is housekeeping:
+  ```bash
+  docker exec jober-dev-db psql -U jober -d postgres \
+    -c "SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname='test_jober';" \
+    -c "DROP DATABASE IF EXISTS test_jober;"
+  ```
 
 ## Workflow (established, follow it)
 
-1. One slice per branch: `git checkout -b <slice-name>` off `main`.
+**No pull requests** (changed 2026-08-04). Work lands through a local branch
+merged locally and pushed. See the note below before "helpfully" reinstating PRs.
+
+1. One slice per branch: `git checkout -b <slice-name>` off an up-to-date `main`.
 2. Build with tests; run **ruff + full unit suite** in the container, plus
    **`scripts/test_corvinum.sh`** (the corvinum-flags lane — Stage D requires
-   both flag sets green; mark genuinely Jober-specific tests `@pytest.mark.jober_only`);
-   e2e if UI/URLs changed.
+   both flag sets green; mark genuinely Jober-specific tests `@pytest.mark.jober_only`).
+   **Do not run the e2e suite** — it is opt-in; see below.
 3. Update `BUILD_JOURNAL.md` + `test_journal.md` (newest-first entries).
-4. Commit (imperative subject; end body with the `Co-Authored-By: Claude …` trailer),
-   push, `gh pr create`, then `gh pr merge --merge --delete-branch`, and
-   fast-forward local `main`.
+4. Commit (imperative subject; end body with the `Co-Authored-By: Claude …`
+   trailer), then land it:
+
+```bash
+git checkout main && git pull --ff-only
+git merge --no-ff <slice-name>     # the merge commit groups the slice
+git push
+git branch -d <slice-name>
+```
+
+**Slice branches stay local — don't push them.** A branch only needed to be on
+the remote so `gh pr create` had a head ref to diff; with no PRs there is
+nothing to push it for, and `main` already carries every commit plus a merge
+commit naming the branch. (Three branches from the old flow are still on the
+remote and fully merged; they are harmless.)
+
+**Why, so this does not get undone:** the GitHub review UI was ceremony for a
+repo with one maintainer — nobody reviewed the PRs, and waiting on CI to merge
+cost ~9 minutes a slice. CI still runs on every push to `main`; it now reports
+*after* the fact instead of gating a merge, which makes **step 2 the real gate**.
+`main` has no branch protection, so a red local run reaches `main` unopposed.
+
+**The e2e suite is opt-in** (changed 2026-08-04). It is no longer part of the
+per-slice loop and is **not** run automatically by CI. Run it **before a staging
+deploy, and only when explicitly asked for** — locally with
+`scripts/playwright_e2e.sh`, or in CI with `gh workflow run browser-e2e.yml`
+(that workflow is `workflow_dispatch` only and never triggers itself).
 
 ## Conventions
 
