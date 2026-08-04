@@ -3420,7 +3420,7 @@ msgstr "záznam v knihe"
 msgid "ledger entries"
 msgstr "záznamy v knihe"
 
-#: features/advances/providers.py:47
+#: features/advances/providers.py:50
 msgid "Ledger deductions"
 msgstr "Zrážky z knihy"
 
@@ -3433,30 +3433,23 @@ msgstr "Suma musí byť kladná — význam určuje typ záznamu."
 msgid "%(t)s entries carry pay effect %(e)s (or none)."
 msgstr "Záznamy typu %(t)s majú vplyv na mzdu %(e)s (alebo žiadny)."
 
-#: features/advances/services.py:85
-#, python-format
-msgid ""
-"The %(key)s cycle is already settled, so this entry cannot be backdated into "
-"it. Record it with today's date, or reverse an existing entry instead."
-msgstr "Cyklus %(key)s je už vyrovnaný, takže tento záznam doň nemožno spätne datovať. Zaznamenajte ho s dnešným dátumom alebo namiesto toho stornujte existujúci záznam."
-
-#: features/advances/services.py:118
+#: features/advances/services.py:95
 msgid "Only open entries can be cancelled; settled entries need a reversal."
 msgstr "Zrušiť možno len otvorené záznamy; vysporiadané vyžadujú storno."
 
-#: features/advances/services.py:136
+#: features/advances/services.py:113
 msgid "Open entries are cancelled, not reversed."
 msgstr "Otvorené záznamy sa rušia, nie stornujú."
 
-#: features/advances/services.py:137
+#: features/advances/services.py:114
 msgid "Entry is already reversed."
 msgstr "Záznam už bol stornovaný."
 
-#: features/advances/services.py:144
+#: features/advances/services.py:121
 msgid "Entries without payroll effect cannot be reversed."
 msgstr "Záznamy bez vplyvu na mzdu nemožno stornovať."
 
-#: features/advances/services.py:324
+#: features/advances/services.py:349
 msgid "Entry is locked after cycle inclusion; record a reversal instead."
 msgstr "Po zahrnutí do cyklu je záznam uzamknutý; zaznamenajte storno."
 
@@ -5870,7 +5863,9 @@ msgstr "Aktuálna zadná strana"
 msgid ""
 "Uploading the certificate — this can take a moment. Do not close or reload "
 "this page."
-msgstr "Nahráva sa certifikát — môže to chvíľu trvať. Nezatvárajte ani neobnovujte túto stránku."
+msgstr ""
+"Nahráva sa certifikát — môže to chvíľu trvať. Nezatvárajte ani neobnovujte "
+"túto stránku."
 
 #: templates/pages/certificate_form.html:26
 msgid "Uploading…"
@@ -7977,17 +7972,14 @@ msgstr "Prehľad mzdy a výplatnej pásky"
 
 #: templates/partials/person_finance_overview.html:6
 msgid ""
-"One row per calendar month. Gross wage and the recorded net payslip are "
-"source values someone entered; After deductions is gross minus this office's "
-"own ledger entries, and nothing else. It is not net pay — no tax or levy is "
-"calculated here, which is why the payslip stays its own column to compare "
-"against."
-msgstr ""
-"Jeden riadok na kalendárny mesiac. Hrubá mzda a zaznamenaná čistá výplatná "
-"páska sú zdrojové hodnoty, ktoré niekto zadal; Po zrážkach je hrubá suma "
-"mínus vlastné záznamy tejto kancelárie v knihe, a nič iné. Nie je to čistá "
-"mzda – nepočíta sa tu žiadna daň ani odvod, a práve preto zostáva výplatná "
-"páska samostatným stĺpcom na porovnanie."
+"One row per payroll run. Ledger deductions are what that run recovers, which "
+"is not always the month the money changed hands: an advance handed over "
+"after the 20th is recovered from the next run. Gross wage and the recorded "
+"net payslip are source values someone entered; After deductions is gross "
+"minus this office's own ledger entries, and nothing else. It is not net pay "
+"— no tax or levy is calculated here, which is why the payslip stays its own "
+"column to compare against."
+msgstr "Jeden riadok na jedno mzdové spracovanie. Zrážky z knihy sú to, čo dané spracovanie vymáha, čo nie je vždy mesiac, v ktorom peniaze zmenili majiteľa: záloha vydaná po 20. sa vymáha až v nasledujúcom spracovaní. Hrubá mzda a zaznamenaná čistá výplatná páska sú zdrojové hodnoty, ktoré niekto zadal; Po zrážkach je hrubá suma mínus vlastné záznamy tejto kancelárie v knihe, a nič iné. Nie je to čistá mzda – nepočíta sa tu žiadna daň ani odvod, a práve preto zostáva výplatná páska samostatným stĺpcom na porovnanie."
 
 #: templates/partials/person_finance_overview.html:8
 msgid ""
@@ -8032,6 +8024,29 @@ msgstr "Zobrazuje sa %(rail_limit)s naposledy aktualizovaných."
 #: templates/partials/worker_rail_body.html:34
 msgid "Open People"
 msgstr "Otvoriť Ľudia"
+
+#, python-format
+#~ msgid ""
+#~ "The %(key)s cycle is already settled, so this entry cannot be backdated "
+#~ "into it. Record it with today's date, or reverse an existing entry "
+#~ "instead."
+#~ msgstr ""
+#~ "Cyklus %(key)s je už vyrovnaný, takže tento záznam doň nemožno spätne "
+#~ "datovať. Zaznamenajte ho s dnešným dátumom alebo namiesto toho stornujte "
+#~ "existujúci záznam."
+
+#~ msgid ""
+#~ "One row per calendar month. Gross wage and the recorded net payslip are "
+#~ "source values someone entered; After deductions is gross minus this "
+#~ "office's own ledger entries, and nothing else. It is not net pay — no tax "
+#~ "or levy is calculated here, which is why the payslip stays its own column "
+#~ "to compare against."
+#~ msgstr ""
+#~ "Jeden riadok na kalendárny mesiac. Hrubá mzda a zaznamenaná čistá "
+#~ "výplatná páska sú zdrojové hodnoty, ktoré niekto zadal; Po zrážkach je "
+#~ "hrubá suma mínus vlastné záznamy tejto kancelárie v knihe, a nič iné. Nie "
+#~ "je to čistá mzda – nepočíta sa tu žiadna daň ani odvod, a práve preto "
+#~ "zostáva výplatná páska samostatným stĺpcom na porovnanie."
 
 #, python-format
 #~ msgid ""

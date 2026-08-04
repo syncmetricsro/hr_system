@@ -33,11 +33,14 @@ from django.urls import reverse  # noqa: E402
 
 from core.people.models import Person  # noqa: E402
 from features.advances.models import EntryType, LedgerCategory  # noqa: E402
+from features.advances.models import SettlementStatus  # noqa: E402
 from features.advances.services import (  # noqa: E402
-    LedgerError,
     cycle_for,
     cycle_is_settled,
+    cycle_report,
     include_cycle,
+    mark_cycle_deducted,
+    open_balance,
     record_entry,
 )
 from features.payslips.services import record_payslip  # noqa: E402
@@ -142,11 +145,14 @@ def test_the_derived_column_is_absent_without_a_gross_figure(client, person, man
     assert cells[2] is None, "after-deductions should be empty with no gross wage"
 
 
-def test_deductions_are_grouped_by_calendar_month_not_by_cycle(client, person, manager):
-    """The settlement cycle runs 21st to 20th, but this table's other columns
-    are calendar months. Mixing the two would silently misalign the rows."""
-    record_wage(person, period="2026-07", gross_amount="1800", actor=manager)
-    # The 25th settles in the August cycle but is still a July calendar entry.
+def test_deductions_are_grouped_by_the_run_that_collects_them(client, person, manager):
+    """Reversed on 2026-08-04 (ADR 0032). This asserted grouping by the entry's
+    calendar month, reasoning that all four columns should mean one period. That
+    was wrong in the way that matters: an advance handed over on the 25th is
+    recovered from the *next* month's pay, so showing it against the current
+    month described a payslip that had already been paid."""
+    record_wage(person, period="2026-08", gross_amount="1800", actor=manager)
+    # A July calendar date, but the August run is what collects it.
     record_entry(
         person,
         entry_type=EntryType.PAY_DEDUCTION,
@@ -186,29 +192,25 @@ def test_the_entry_date_can_be_set_from_the_form(client, person, manager):
     assert person.ledger_entries.get().entry_date == dt.date(2026, 7, 3)
 
 
-def test_backdating_into_a_settled_cycle_is_refused(person, manager):
-    """`include_cycle` sweeps a window once and the windows are disjoint, so an
-    entry backdated into a swept window would be created OPEN and never picked
-    up again — sitting forever in a period whose payroll has already gone out."""
-    record_entry(
-        person,
-        entry_type=EntryType.PAY_DEDUCTION,
-        category=LedgerCategory.CASH_ADVANCE,
-        amount="100",
-        actor=manager,
-        entry_date=dt.date(2026, 7, 10),
-    )
+def test_backdating_into_a_closed_run_is_carried_forward_not_refused(person, manager):
+    """This used to raise, and refusing was the wrong answer twice over.
+
+    It blocked ordinary present-day work on staging — equipment charges default
+    to today, so once the current run was closed, issuing chargeable equipment
+    stopped entirely. And it was solving a problem that carry-forward removes: a
+    late entry now has somewhere to go, so there is nothing to reject (ADR 0032).
+    """
+    _advance(person, manager, "100", dt.date(2026, 7, 10))
     include_cycle(2026, 7, actor=manager)
 
-    with pytest.raises(LedgerError, match="2026-07"):
-        record_entry(
-            person,
-            entry_type=EntryType.PAY_DEDUCTION,
-            category=LedgerCategory.EQUIPMENT,
-            amount="40",
-            actor=manager,
-            entry_date=dt.date(2026, 7, 12),
-        )
+    late = _advance(person, manager, "40", dt.date(2026, 7, 12))
+
+    assert late.settlement_status == SettlementStatus.OPEN
+    assert open_balance(person) == Decimal("140.00")
+
+    include_cycle(2026, 8, actor=manager)
+    late.refresh_from_db()
+    assert late.cycle_key == "2026-08"
 
 
 def test_todays_work_is_never_blocked_by_a_settled_cycle(person, manager):
@@ -303,3 +305,113 @@ def test_a_reversal_is_never_blocked_by_the_settled_guard(person, manager):
 )
 def test_cycle_for_matches_the_21st_to_20th_window(day, expected):
     assert cycle_for(day) == expected
+
+
+# --- carry-forward: a run collects what is outstanding (ADR 0032) -----------
+
+
+def _advance(person, manager, amount, on, category=LedgerCategory.CASH_ADVANCE):
+    return record_entry(
+        person,
+        entry_type=EntryType.PAY_DEDUCTION,
+        category=category,
+        amount=amount,
+        actor=manager,
+        entry_date=on,
+    )
+
+
+def test_an_advance_that_missed_its_run_is_collected_by_the_next_one(person, manager):
+    """The reported problem, end to end.
+
+    An advance handed over on 25 July settles in the August run. If August has
+    already gone out by the time it is recorded, the old sweep never touched it
+    again — the windows are disjoint — so the money was owed for ever and
+    collected never. September must take it.
+    """
+    include_cycle(2026, 8, actor=manager)  # August has already run
+    late = _advance(person, manager, "250", dt.date(2026, 7, 25))
+    assert late.settlement_status == SettlementStatus.OPEN
+
+    include_cycle(2026, 9, actor=manager)
+
+    late.refresh_from_db()
+    assert late.settlement_status == SettlementStatus.INCLUDED_IN_CYCLE
+    assert late.cycle_key == "2026-09"
+
+
+def test_one_run_catches_up_every_stray_whatever_its_age(person, manager):
+    """Strays of different ages, one run, all collected. This is the catch-up
+    the first carry-forward run performs on existing data."""
+    strays = [
+        _advance(person, manager, "10", dt.date(2026, 5, 3)),
+        _advance(person, manager, "20", dt.date(2026, 6, 17)),
+        _advance(person, manager, "30", dt.date(2026, 7, 25)),
+    ]
+
+    assert include_cycle(2026, 9, actor=manager) == len(strays)
+    for stray in strays:
+        stray.refresh_from_db()
+        assert stray.cycle_key == "2026-09", stray.entry_date
+
+
+def test_open_balance_clears_once_a_run_has_collected(person, manager):
+    """The arithmetic the office actually checks: owed, then not owed."""
+    _advance(person, manager, "150", dt.date(2026, 7, 25))
+    assert open_balance(person) == Decimal("150.00")
+
+    include_cycle(2026, 9, actor=manager)
+    mark_cycle_deducted(2026, 9, actor=manager)
+
+    assert open_balance(person) == Decimal("0")
+
+
+def test_a_run_that_has_gone_out_keeps_reporting_what_it_collected(person, manager):
+    """A closed cycle is history and must not absorb later entries, however the
+    sweep rules change afterwards."""
+    _advance(person, manager, "100", dt.date(2026, 8, 3))
+    include_cycle(2026, 8, actor=manager)
+    august = cycle_report(2026, 8)
+    assert [e.amount for e in august["entries"]] == [Decimal("100.00")]
+
+    _advance(person, manager, "40", dt.date(2026, 8, 4))
+
+    again = cycle_report(2026, 8)
+    assert [e.amount for e in again["entries"]] == [Decimal("100.00")], (
+        "a closed run must not pick up entries recorded after it went out"
+    )
+
+
+def test_a_run_not_yet_made_shows_what_it_will_collect(person, manager):
+    """Before it runs, the report is a forecast — including carried strays."""
+    _advance(person, manager, "60", dt.date(2026, 6, 10))
+    _advance(person, manager, "70", dt.date(2026, 9, 2))
+
+    forecast = cycle_report(2026, 9)
+
+    assert sorted(e.amount for e in forecast["entries"]) == [
+        Decimal("60.00"),
+        Decimal("70.00"),
+    ]
+
+
+def test_the_overview_shows_a_deduction_against_the_run_that_collects_it(
+    client, person, manager
+):
+    """The display half of the same problem: a 25 July advance is recovered from
+    August pay, so it belongs in the August row, not July's."""
+    record_wage(person, period="2026-08", gross_amount="1800", actor=manager)
+    _advance(person, manager, "200", dt.date(2026, 7, 25))
+    client.force_login(manager)
+
+    response = client.get(reverse("person_detail", args=[person.pk]))
+    rows = {
+        r["period"]: r["cells"]
+        for r in response.context["person_finance_overview"]["rows"]
+    }
+
+    assert "2026-08" in rows, f"expected an August row, got {sorted(rows)}"
+    gross, deducted, after, _payslip = rows["2026-08"]
+    assert gross["amount"] == Decimal("1800.00")
+    assert deducted["amount"] == Decimal("200.00")
+    assert after["amount"] == Decimal("1600.00")

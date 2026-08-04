@@ -1,5 +1,46 @@
 # Build Journal
 
+## 2026-08-05 - A payroll run now collects what is outstanding
+
+Reported by the owner: an advance given in July was never deducted from the
+August salary. It was worse than a display bug - the money was never recovered
+at all. `include_cycle` swept only its own 21st-to-20th window, and the windows
+are disjoint, so an entry that missed its run was never picked up by any later
+one. It stayed OPEN for ever: reported as owed, collected never.
+
+Two things in the code already disagreed with that, which is what made it a
+defect rather than a decision. `open_balance` counts every unsettled entry and
+calls the result "what the person currently owes against future pay" - the
+office was already being told the money was owed. And `cycle_for` correctly put
+a 25 July advance in the **August** run while the pay overview showed it under
+**July**, because I grouped that column by calendar month on 2026-08-04 and
+wrote a test asserting it was deliberate. The reasoning was tidy and wrong: an
+advance handed over on the 25th is recovered from the next month's pay, so
+showing it against the current month describes a payslip already paid.
+
+A run now sweeps every open entry dated on or before its cutoff. `cycle_report`
+answers "did" or "will" depending on whether the run has happened, so a closed
+run keeps reporting exactly what it took while an unrun one forecasts what it is
+about to take - both the ledger page and the accountant CSV read it.
+`settling_cycle_key` gives the overview the run that collects an entry, walking
+forward past runs that have already gone out.
+
+**The settled-cycle refusal is withdrawn, not narrowed again.** Added yesterday
+to stop an orphaned backdated entry, it was wrong twice: it blocked ordinary
+present-day work, because equipment charges reach the ledger with no date at all
+and default to today, and it solved a problem carry-forward removes. Refusing to
+record something that really happened was the wrong shape of answer - the money
+exists whether or not the bookkeeping is ready for it. ADR 0032 records all of
+it.
+
+Checked what the first run would collect on staging before shipping, because
+this sweeps historical strays by design: four entries, all dated 2026-08-04, all
+pay additions - the reversals created while testing Sztornó. Nothing historical,
+no surprise deduction.
+
+Jober 1076, CorvinumEU 665, browser 70.
+
+
 ## 2026-08-04 - A slow upload could be submitted twice
 
 Reported against certificate upload: the Save button stayed live while the file

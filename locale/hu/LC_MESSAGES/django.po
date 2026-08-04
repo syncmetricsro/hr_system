@@ -3466,7 +3466,7 @@ msgstr "főkönyvi tétel"
 msgid "ledger entries"
 msgstr "főkönyvi tételek"
 
-#: features/advances/providers.py:47
+#: features/advances/providers.py:50
 msgid "Ledger deductions"
 msgstr "Könyvelési levonások"
 
@@ -3480,30 +3480,23 @@ msgstr ""
 msgid "%(t)s entries carry pay effect %(e)s (or none)."
 msgstr "A(z) %(t)s tételek bérhatása %(e)s (vagy nincs)."
 
-#: features/advances/services.py:85
-#, python-format
-msgid ""
-"The %(key)s cycle is already settled, so this entry cannot be backdated into "
-"it. Record it with today's date, or reverse an existing entry instead."
-msgstr "A(z) %(key)s ciklus már lezárult, ezért ez a tétel nem dátumozható vissza bele. Rögzítse a mai dátummal, vagy inkább sztornózzon egy meglévő tételt."
-
-#: features/advances/services.py:118
+#: features/advances/services.py:95
 msgid "Only open entries can be cancelled; settled entries need a reversal."
 msgstr "Csak nyitott tétel törölhető; a rendezett tételhez sztornó kell."
 
-#: features/advances/services.py:136
+#: features/advances/services.py:113
 msgid "Open entries are cancelled, not reversed."
 msgstr "A nyitott tételeket törölni kell, nem sztornózni."
 
-#: features/advances/services.py:137
+#: features/advances/services.py:114
 msgid "Entry is already reversed."
 msgstr "A tétel már sztornózva van."
 
-#: features/advances/services.py:144
+#: features/advances/services.py:121
 msgid "Entries without payroll effect cannot be reversed."
 msgstr "Bérhatás nélküli tétel nem sztornózható."
 
-#: features/advances/services.py:324
+#: features/advances/services.py:349
 msgid "Entry is locked after cycle inclusion; record a reversal instead."
 msgstr "Ciklusba sorolás után a tétel zárolt; rögzítsen sztornót."
 
@@ -5921,7 +5914,9 @@ msgstr "Jelenlegi hátlap"
 msgid ""
 "Uploading the certificate — this can take a moment. Do not close or reload "
 "this page."
-msgstr "A tanúsítvány feltöltése folyamatban — ez eltarthat egy ideig. Ne zárja be és ne töltse újra ezt az oldalt."
+msgstr ""
+"A tanúsítvány feltöltése folyamatban — ez eltarthat egy ideig. Ne zárja be "
+"és ne töltse újra ezt az oldalt."
 
 #: templates/pages/certificate_form.html:26
 msgid "Uploading…"
@@ -8043,17 +8038,14 @@ msgstr "Bér és bérlap áttekintése"
 
 #: templates/partials/person_finance_overview.html:6
 msgid ""
-"One row per calendar month. Gross wage and the recorded net payslip are "
-"source values someone entered; After deductions is gross minus this office's "
-"own ledger entries, and nothing else. It is not net pay — no tax or levy is "
-"calculated here, which is why the payslip stays its own column to compare "
-"against."
-msgstr ""
-"Naptári hónaponként egy sor. A bruttó bér és a rögzített nettó bérpapír "
-"olyan forrásértékek, amelyeket valaki bevitt; a Levonások után a bruttó "
-"mínusz ennek az irodának a saját könyvelési tételei, és semmi más. Ez nem "
-"nettó bér – itt semmilyen adót vagy járulékot nem számol a rendszer, és "
-"éppen ezért marad a bérpapír külön oszlopban az összevetéshez."
+"One row per payroll run. Ledger deductions are what that run recovers, which "
+"is not always the month the money changed hands: an advance handed over "
+"after the 20th is recovered from the next run. Gross wage and the recorded "
+"net payslip are source values someone entered; After deductions is gross "
+"minus this office's own ledger entries, and nothing else. It is not net pay "
+"— no tax or levy is calculated here, which is why the payslip stays its own "
+"column to compare against."
+msgstr "Bérszámfejtésenként egy sor. A könyvelési levonások azt mutatják, mit hajt be az adott bérszámfejtés, ami nem mindig az a hónap, amikor a pénz gazdát cserélt: a 20-a után kiadott előleget a következő bérszámfejtés vonja le. A bruttó bér és a rögzített nettó bérpapír olyan forrásértékek, amelyeket valaki bevitt; a Levonások után a bruttó mínusz ennek az irodának a saját könyvelési tételei, és semmi más. Ez nem nettó bér – itt semmilyen adót vagy járulékot nem számol a rendszer, és éppen ezért marad a bérpapír külön oszlopban az összevetéshez."
 
 #: templates/partials/person_finance_overview.html:8
 msgid ""
@@ -8098,6 +8090,28 @@ msgstr "A legutóbb frissített %(rail_limit)s látható."
 #: templates/partials/worker_rail_body.html:34
 msgid "Open People"
 msgstr "Emberek megnyitása"
+
+#, python-format
+#~ msgid ""
+#~ "The %(key)s cycle is already settled, so this entry cannot be backdated "
+#~ "into it. Record it with today's date, or reverse an existing entry "
+#~ "instead."
+#~ msgstr ""
+#~ "A(z) %(key)s ciklus már lezárult, ezért ez a tétel nem dátumozható vissza "
+#~ "bele. Rögzítse a mai dátummal, vagy inkább sztornózzon egy meglévő tételt."
+
+#~ msgid ""
+#~ "One row per calendar month. Gross wage and the recorded net payslip are "
+#~ "source values someone entered; After deductions is gross minus this "
+#~ "office's own ledger entries, and nothing else. It is not net pay — no tax "
+#~ "or levy is calculated here, which is why the payslip stays its own column "
+#~ "to compare against."
+#~ msgstr ""
+#~ "Naptári hónaponként egy sor. A bruttó bér és a rögzített nettó bérpapír "
+#~ "olyan forrásértékek, amelyeket valaki bevitt; a Levonások után a bruttó "
+#~ "mínusz ennek az irodának a saját könyvelési tételei, és semmi más. Ez nem "
+#~ "nettó bér – itt semmilyen adót vagy járulékot nem számol a rendszer, és "
+#~ "éppen ezért marad a bérpapír külön oszlopban az összevetéshez."
 
 #, python-format
 #~ msgid ""

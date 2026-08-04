@@ -415,22 +415,21 @@ Eszter's seeded figures, to check before you start:
 | `2026-06` | `1920.00 EUR` | `1450.00 EUR` |
 | `2026-07` | `2050.00 EUR` | `1540.00 EUR` |
 
-**Check which cycle is open before the call.** The entries below are refused if
-their date falls in a cycle that has already been settled, and on a
-long-running staging database most cycles have been. Verified on staging
-2026-08-04: `2026-07` and `2026-08` are settled, **`2026-06` is open**, which
-is why the walkthrough below uses June. Confirm before presenting:
+**Check which runs are already closed before the call.** Nothing is refused any
+more — an entry dated inside a closed run is accepted and carried into the next
+one (ADR 0032) — but you still want to know which row a demo entry will land in,
+and on a long-running staging database most runs have been closed. Verified on
+staging 2026-08-04: `2026-07` and `2026-08` are closed, **`2026-06` is open**,
+which is why the walkthrough below uses June:
 
 ```bash
-ssh syncmetric-prime-dokku "run corvinum-staging python manage.py shell -c \"import datetime as dt; from features.advances.services import cycle_is_settled, cycle_for; [print(d, cycle_for(d), 'settled:', cycle_is_settled(d)) for d in (dt.date(2026,6,10), dt.date(2026,6,25), dt.date(2026,7,8))]\""
+ssh syncmetric-prime-dokku "run corvinum-staging python manage.py shell -c \"import datetime as dt; from features.advances.services import cycle_is_settled, cycle_for; [print(d, cycle_for(d), 'closed:', cycle_is_settled(d)) for d in (dt.date(2026,6,10), dt.date(2026,6,25), dt.date(2026,7,8))]\""
 ```
 
-Expected today, and the reason the walkthrough uses June:
-
 ```
-2026-06-10 (2026, 6) settled: False   <- the dates below are accepted
-2026-06-25 (2026, 7) settled: True    <- June date, JULY cycle, refused
-2026-07-08 (2026, 7) settled: True    <- refused on purpose in step 8
+2026-06-10 (2026, 6) closed: False   <- collected by the June run
+2026-06-25 (2026, 7) closed: True    <- June date, JULY run, carried forward
+2026-07-08 (2026, 7) closed: True    <- carried forward, demonstrated in step 8
 ```
 
 The script has to be an **argument** (`shell -c "..."`), not piped in. `dokku run`
@@ -439,8 +438,9 @@ the shell starts, reads EOF, prints `50 objects imported automatically` and exit
 with no output at all. It reads as success. Read-only either way - the check is a
 single `SELECT ... EXISTS` and writes nothing.
 
-If June has since been settled too, pick any month where the check prints
-`False` and adjust the figures — the arithmetic is what matters, not the month.
+If June has since been closed too, the walkthrough still works — the entries are
+carried into the next open run instead. Adjust the figures if you want the
+arithmetic to land in one row.
 
 1. Open **Eszter Varga** and scroll to **Wage and payslip overview**. Four
    columns: gross wage, ledger deductions, after deductions, net payslip.
@@ -493,19 +493,23 @@ If June has since been settled too, pick any month where the check prints
    receives is labelled **Net amount paid**, which reads as *what reached your
    account*, and that label is only correct if they enter the post-advance
    figure. Record the answer against C-Q17.
-8. **Show the guard — it demonstrates well and takes ten seconds.** Record a
-   third entry with entry date **`2026-07-08`**, inside the already-settled
-   July cycle. It is refused with a message naming the cycle, and nothing is
-   written. Say why: a settled cycle has already been paid out, so money cannot
-   be quietly added to it after the fact; corrections from that point are
-   reversals, which leave the original visible. This is a good place to make
-   the calendar-month versus 21st-to-20th distinction concrete.
+8. **Show that nothing falls through — this is the question an office actually
+   worries about.** Record a third entry dated **`2026-07-08`**, inside the
+   already-closed July run. It is accepted and sits outstanding; the person's
+   open balance rises by that amount. Then run the next cycle and show it
+   collected there.
 
-Note on periods, which reliably comes up: gross wage, payslip and the
-deductions column are all keyed by **calendar month**. The settlement cycle is
-the separate 21st-to-20th window. An entry dated the 25th of July therefore
-appears in the July row here while settling in the August cycle — deliberate, so
-this table's four columns always mean the same period.
+   Say why plainly: a run recovers whatever is outstanding when it runs, so an
+   advance that missed its payroll is taken from the next one rather than
+   forgotten (ADR 0032). Money is never lost, and nothing has to be refused or
+   backdated by hand.
+
+Note on periods, which reliably comes up: gross wage and payslip are keyed by
+**calendar month**, and the deductions column is keyed by **the run that
+collects the money** — the 21st-to-20th window. An advance handed over on the
+25th of July is therefore recovered from the **August** run and appears in the
+August row, beside the August wage. That is the point: showing it under July
+would describe a payslip that had already been paid.
 
 A missing source shows as `—` and is never treated as zero: with no gross wage
 recorded, **After deductions is blank rather than negative**.
@@ -717,7 +721,6 @@ confirmed client scope.
 | Runner reports a missing SMTP variable | Confirm all seven `DJANGO_EMAIL_*` values exist in Doppler `hr_system/dev_corvinum_demo`; do not print their values |
 | SMTP send fails | Confirm Marek has a deliverable controlled test address, then check `scripts/corvinum_app.sh logs`; FORPSI may also require the current country in its GeoIP allow-list |
 | Console email appears instead of real delivery | Restart with `doppler run --project hr_system --config dev_corvinum_demo -- scripts/corvinum_app.sh up` |
-| Ledger entry refused, naming a cycle | That cycle is settled; pick a date in an open one. Check with the `cycle_is_settled` snippet in section 11. Never reopen a settled cycle to make a demo work |
 | Payslip creation reports a duplicate | Select the existing person/period row and use Resend, or choose an unused fictional period |
 | Wage and payslip figures appear inconsistent | Verify the four fictional fixture values above, then confirm the two source records and period labels; do not infer statutory deductions from the difference |
 | Certificate fixture is absent or its checksum fails | Restore `tests/fixtures/manual_uploads/` from a clean checkout and rerun `sha256sum --check`; never substitute a real worker document |
