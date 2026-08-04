@@ -1,5 +1,76 @@
 # Deployment Journal
 
+## 2026-08-04 - CorvinumEU pre-demo batch deployed to both staging clients
+
+Deployed the exact `main` merge **`ca94dc4`** to `jober-staging` and
+`corvinum-staging` as the shared image `jober-platform:demo-ca94dc4` (local
+image ID
+`sha256:186ff753417e10665910cdbd96798789dab5b2b9ee2bea3d11cacb2fce5eb08f`),
+streamed with `git:load-image`. No VPS-side source build, no build-time
+secrets.
+
+The release carries the ten-item CorvinumEU pre-demo batch: the ledger
+deduction column and derived **After deductions** total on the pay overview,
+an entry date on the ledger form with a settled-cycle guard, month pickers for
+payslip and wage periods, Audit and Staff activity narrowed to the Observer,
+the office picker removed where no offices exist, bounded date inputs in both
+clients, tooltips on money and approval controls, and a per-field reference in
+Help. Documentation-only additions: C-Q20, C-Q21 and
+`docs/unreviewed-branches.md`.
+
+**No migrations.** `git diff 742f4f2..ca94dc4 -- '*/migrations/*.py'` is empty
+and `migrate --check` exits 0 on both apps, so this release changed no schema
+and needed no database work. Recorded because it is the reason the deploy
+carried unusually little risk, not because nothing was checked.
+
+**Cross-client isolation verified by query, not by inference.** Read from each
+running app rather than trusted from the test suite:
+
+| Check | jober-staging | corvinum-staging |
+|---|---|---|
+| `audit.view` | Manager + Observer | **Observer only** |
+| `staff_activity.view` | Manager + Observer | **Observer only** |
+| `activation.waive_trial` | Manager | Manager |
+| `Office` rows | 3 | **0** (so the picker is absent) |
+
+The office behaviour is data-driven, so the two answers above come from the
+same code path reading different data — which is the property worth confirming
+on real databases.
+
+Both `deploy_smoke.sh --https` runs passed health, login/CSRF, fingerprinted
+static (`app.549ea0e7ad7e.css`), X-Frame-Options and HSTS. `check --deploy`
+exits 0 on both, the last 40 log lines of each app contain no traceback or
+error, and `/sk/wages/`, `/sk/ledger/`, `/sk/payslips/` and Jober's
+`/sk/finance/` all redirect to login while anonymous.
+
+**Pre-deploy suites, all on `ca94dc4`:** Jober **1076 passed / 16 skipped**,
+CorvinumEU **658 passed / 23 skipped / 261 deselected**, Playwright **65
+passed**; ruff check, `ruff format --check` on changed files, and the
+dependency-direction check clean.
+
+The browser suite earned its place as rollout step 0 on its first outing: it
+caught a stale assertion in `test_corvinum_shell.py` expecting three columns on
+the pay overview where there are now five. Fixed in `aad0ba9` before the
+deploy. That is exactly the class of miss the pre-deploy gate exists for now
+that e2e has left the per-slice loop.
+
+Two operational notes worth keeping. `sudo` on the administrative account
+requires a password, so the release used the restricted `dokku@` account
+throughout - `git:load-image`, `run`, `ps:report`, `logs` - and no interactive
+step was needed. And running the Jober and CorvinumEU unit lanes concurrently
+against the shared `jober-dev-db` produces dozens of spurious
+`DuplicateDatabase` failures; they must run sequentially.
+
+No seed, purge, SMS, Telegram, SMTP send, payslip send, provider configuration,
+runtime-secret change or production action ran. Both databases remain
+fictional staging data. The prior shared image `jober-platform:demo-742f4f2`
+remains the immediate rollback target:
+
+```bash
+ssh syncmetric-prime-dokku "git:from-image <app> jober-platform:demo-742f4f2"
+```
+
+
 ## 2026-08-04 - Extraction safety, activation and profitability deployed to both staging clients
 
 Merged **#163, #164 and #162** in that order and deployed exact `main` merge
