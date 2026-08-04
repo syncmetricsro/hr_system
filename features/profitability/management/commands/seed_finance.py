@@ -5,8 +5,12 @@ from decimal import Decimal
 from django.core.management.base import BaseCommand
 
 from core.accounts.models import User
-from features.finance.models import FinanceCategory, FinanceCategoryKind, FinanceGroup
-from features.finance.services import (
+from features.profitability.models import (
+    FinanceCategory,
+    FinanceCategoryKind,
+    FinanceGroup,
+)
+from features.profitability.services import (
     recompute_month,
     record_financial_month,
     set_line_item,
@@ -19,32 +23,32 @@ REV = FinanceCategoryKind.REVENUE
 G = FinanceGroup
 
 CATEGORIES = [
-    # (label, kind, group)
-    ("Gross wage", COST, G.LABOUR),
-    ("Sole-trader (SZČO)", COST, G.LABOUR),
-    ("Payroll levies", COST, G.LABOUR),
-    ("Driver", COST, G.TRANSPORT),
-    ("Damage (cost)", COST, G.DAMAGE),
-    ("Forklift training", COST, G.COMPLIANCE),
-    ("Forklift licence", COST, G.COMPLIANCE),
-    ("Accommodation", COST, G.ACCOMMODATION),
-    ("Insurance", COST, G.COMPLIANCE),
-    ("Medical", COST, G.COMPLIANCE),
-    ("Coordinators", COST, G.OVERHEAD),
-    ("Leasing", COST, G.TRANSPORT),
-    ("Fuel", COST, G.TRANSPORT),
-    ("Toll", COST, G.TRANSPORT),
-    ("Factoring", COST, G.OVERHEAD),
-    ("Office", COST, G.OVERHEAD),
-    ("Recruitment", COST, G.OVERHEAD),
-    ("HR", COST, G.OVERHEAD),
-    ("Clothing/equipment", COST, G.EQUIPMENT),
-    ("Other extraordinary costs", COST, G.OTHER),
-    ("Client invoices", REV, G.REVENUE),
-    ("Deductions received from employees", REV, G.REVENUE),
-    ("Meals", REV, G.WELFARE),
-    ("Accommodation charged", REV, G.ACCOMMODATION),
-    ("Damage recovered", REV, G.DAMAGE),
+    # (label, kind, group, key)
+    ("Gross wage", COST, G.LABOUR, "gross_wage"),
+    ("Sole-trader (SZČO)", COST, G.LABOUR, "szco"),
+    ("Payroll levies", COST, G.LABOUR, "levies"),
+    ("Driver", COST, G.TRANSPORT, "driver"),
+    ("Damage (cost)", COST, G.DAMAGE, "damage_cost"),
+    ("Forklift training", COST, G.COMPLIANCE, "forklift_training"),
+    ("Forklift licence", COST, G.COMPLIANCE, "forklift_licence"),
+    ("Accommodation", COST, G.ACCOMMODATION, "accommodation_cost"),
+    ("Insurance", COST, G.COMPLIANCE, "insurance"),
+    ("Medical", COST, G.COMPLIANCE, "medical"),
+    ("Coordinators", COST, G.OVERHEAD, "coordinators"),
+    ("Leasing", COST, G.TRANSPORT, "leasing"),
+    ("Fuel", COST, G.TRANSPORT, "fuel"),
+    ("Toll", COST, G.TRANSPORT, "toll"),
+    ("Factoring", COST, G.OVERHEAD, "factoring"),
+    ("Office", COST, G.OVERHEAD, "office"),
+    ("Recruitment", COST, G.OVERHEAD, "recruitment"),
+    ("HR", COST, G.OVERHEAD, "hr"),
+    ("Clothing/equipment", COST, G.EQUIPMENT, "clothing"),
+    ("Other extraordinary costs", COST, G.OTHER, "other_extraordinary"),
+    ("Client invoices", REV, G.REVENUE, "invoices"),
+    ("Deductions received from employees", REV, G.REVENUE, "worker_deductions"),
+    ("Meals", REV, G.WELFARE, "meals"),
+    ("Accommodation charged", REV, G.ACCOMMODATION, "accommodation_revenue"),
+    ("Damage recovered", REV, G.DAMAGE, "damage_recovered"),
 ]
 
 # Jan-Jul 2026 (year to date), one distinct growth curve per project/office
@@ -287,9 +291,14 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         created = 0
-        for order, (label, kind, group) in enumerate(CATEGORIES):
-            _obj, was_created = FinanceCategory.objects.get_or_create(
-                label=label, kind=kind, defaults={"group": group, "order": order}
+        for order, (label, kind, group, key) in enumerate(CATEGORIES):
+            # `key` is repaired on every run, not only on create: a catalogue
+            # seeded before the key existed must gain one, or the importer and
+            # the export have nothing stable to join on.
+            _obj, was_created = FinanceCategory.objects.update_or_create(
+                label=label,
+                kind=kind,
+                defaults={"group": group, "order": order, "key": key},
             )
             created += int(was_created)
 

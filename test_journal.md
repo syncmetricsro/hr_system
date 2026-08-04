@@ -62,6 +62,45 @@
      extraction moved 122 dead-source entries into obsolete history rather than
      erasing 111 translations; the unsafe parts were fixture extraction and
      fuzzy guessing.
+## 2026-08-04 - profitability grids and the real workbook
+
+- **31 new tests**: 13 for the two grids, 18 for the importer, reader and CSV.
+  All `jober_only` — profitability is OFF for CorvinumEU and its routes stay
+  unmounted, which the corvinum lane proves by still passing.
+- The importer tests use a deterministic workbook generated with the standard
+  library. The client's `docs/examples/HV 202510.xlsx` remains gitignored, so
+  CI cannot and must not depend on it. The generated archive reproduces the
+  observed unnamed and non-project columns, `škoda` in both sign blocks,
+  `-18676.900000000001`, the short formula and both stale cached totals without
+  carrying client data in Git.
+- Two failures were mine and both are recorded because they are the interesting
+  part:
+  - **The shared-database run caught a real bug.** Cells were assigned via a
+    dict keyed by project id but indexed by month id. Those sequences coincide
+    on a fresh test database, so it passed in isolation and failed seven tests
+    in the full suite. The new test burns project ids first, so the mix-up now
+    fails every time instead of when the ids happen to diverge.
+  - **A CSV test asserted nothing while appearing to pass.** Its manager
+    belonged to no office, so `user_office_scope` returned an empty queryset,
+    the export was correctly empty, and every assertion about cost rows ran
+    over an empty list. Membership added.
+- The CSV test now checks that **every row is the same width including the
+  summaries** — the previous export had an 8-column header and 10-column
+  summary rows, which no assertion had ever looked at.
+- Safe extraction after the rebase found **14 added / 0 newly obsolete / 0
+  revived / 0 fuzzy** messages. SK/HU/UK each validate at **1556 active / 1556
+  translated / 0 fuzzy**; `--check` passes and the second extraction is
+  byte-identical.
+- Final full gate: fresh production and test images; ruff, ruff format and the
+  dependency-direction tripwire clean; `check` and `makemigrations --check`
+  green under both settings modules; **1061 passed / 15 skipped** in Jober,
+  **631 passed / 23 skipped / 261 deselected** in CorvinumEU, and **65 passed**
+  in Playwright.
+- A later GitHub rerun exposed a notification test race: the mobile test read
+  the popover geometry immediately after clicking, while the two adjacent
+  notification scenarios already waited for Alpine to make it visible. The
+  same explicit visible-state wait now guards the mobile assertion; its focused
+  container run passed.
 
 ## 2026-08-03 - button clearance sweep
 
@@ -883,7 +922,7 @@ happened.
   in the changed code's own tests:
   - `tests/test_finance_seed_splits.py` imported the seed command at module
     level, so on the **CorvinumEU lane** - which does not install
-    `features.finance` - it failed during *collection* and aborted all 425
+    `features.profitability` - it failed during *collection* and aborted all 425
     tests rather than skipping one file. `tests/test_office_scoping.py`
     already had the right pattern (`django_apps.is_installed` +
     `allow_module_level=True`); copied it.
@@ -1511,7 +1550,7 @@ happened.
     fixtures reference the demo seed command).
   - CorvinumEU feature-isolation lane: **246 passed, 10 skipped, 135
     deselected** (unaffected, as expected — CorvinumEU doesn't install
-    `features.finance`).
+    `features.profitability`).
 
 ## 2026-07-24 - Office-scoped finance RBAC + executive dashboard (ADR 0026 Phase A)
 
@@ -1557,7 +1596,7 @@ happened.
     `test_office_scoping.py` tests, no regressions).
   - CorvinumEU feature-isolation lane: **246 passed, 10 skipped, 135
     deselected** (+1 skip vs. baseline — the new office-scoping test file
-    correctly self-skips, `features.finance` isn't installed for
+    correctly self-skips, `features.profitability` isn't installed for
     CorvinumEU).
   - Full Playwright e2e lane: **50 passed** (48 baseline + 2 new tests in
     `test_finance_charts.py`) after the heading-text fix above.

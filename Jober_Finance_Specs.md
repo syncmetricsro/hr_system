@@ -6,9 +6,14 @@
 > unblocked at specification level. The current positive-only implementation is
 > not changed by this documentation update and requires later reconciliation.
 
-> **Status: SPECIFICATION AUTHORITY, NOT AN IMPLEMENTATION CLAIM.** This document
-> specifies Jober's target `features/profitability` capability. CorvinumEU keeps
-> profitability OFF. Application changes require a separate build prompt.
+> **Changelog, 2026-08-04 (ADR 0030):** built. The module now *is*
+> `features/profitability`, the workbook grid and per-project year grid render
+> the layout described in §3, and `import_hv_workbook` reads the source file.
+> §10 questions 2 and 4 are answered below. §7 is expanded: reading the file
+> directly found two more defects than it recorded.
+>
+> **Status: specification authority. Much of it is now also implemented.**
+> CorvinumEU keeps profitability OFF.
 
 > **Terminology note, 2026-07-26 — "region" is superseded by "office".** The
 > workbook's *regions* (Megyer, DS) became the `Office` model in ADR 0026;
@@ -18,7 +23,7 @@
 > "region" below as describing **the source workbook**, which is what makes
 > this document useful — it is the provenance record for the sign convention
 > and category structure. Where it looks forward to how the system should
-> behave, the office roll-up in `features/finance` is the implementation, and
+> behave, the office roll-up in `features/profitability` is the implementation, and
 > offices are now an access boundary, not merely a reporting dimension.
 
 ## 1. Source and provenance
@@ -51,7 +56,7 @@ authorize payroll calculation or automatic wage deductions.
 
 Target placement is `features/profitability`, selected ON by Jober and OFF by
 CorvinumEU. The current repository still implements this capability under
-`features/finance` and stores non-negative magnitudes with cost/revenue kind
+`features/profitability` and stores non-negative magnitudes with cost/revenue kind
 providing the sign. The verified workbook uses signed cells. A later build must
 choose and migrate/validate the persistence convention while preserving the
 source's signed behavior at entry, calculation, and export boundaries. This
@@ -125,11 +130,16 @@ EN/SK/HU/UK labels are implementation work; source wording must remain traceable
   timestamps; unique by period/category.
 
 Logical signs are invariant: costs are negative, revenues positive, and zero is
-valid for either category. Whether the database stores the logical signed value
-or a non-negative magnitude plus category kind remains an implementation
-reconciliation decision. In either case, API/form/export behavior must reject a
-cost with revenue effect or a revenue with cost effect rather than silently
-changing business meaning.
+valid for either category.
+
+**Resolved 2026-08-04 (ADR 0030): signed at the boundary, magnitude in storage.**
+Not chosen so much as observed — the build already did this and the question was
+stale rather than open. `normalize_source_amount` requires costs to be entered
+negative and rejects a positive cost; `signed_amount` renders every displayed
+and exported amount signed. A manager types `-18676.90` and reads `-18676.90`
+back, while the row stores `18676.90` with `kind=cost`. The rejection this
+paragraph demands is therefore implemented and tested
+(`tests/test_finance_workbook.py`, `tests/test_positive_convention.py`).
 
 Totals are derived and never persisted as editable line items. Decimal EUR is
 mandatory; floats are forbidden.
@@ -151,20 +161,36 @@ For every project-period:
 Calculations always query the actual project/category sets. No project-specific
 column range or category-specific row range is allowed.
 
-## 7. Verified spreadsheet defect
+## 7. Verified spreadsheet defects
 
-The filled workbook demonstrates one concrete formula defect:
+**Expanded 2026-08-04 (ADR 0030).** This section recorded one defect. Parsing
+the file for the importer found three, and the original description of the first
+one is incomplete.
 
-- Minit is column C. `C24` uses `SUM(C3:C22)` while the complete cost block ends
-  at row 23.
-- The omitted `C23` extraordinary-cost value is `-200` EUR.
-- Cached Minit P/L is therefore `279.09` EUR instead of `79.09` EUR.
-- Megyer's regional result and the grand total are also overstated by `200` EUR.
+**Wrong range.** Minit is column C. `C24` uses `SUM(C3:C22)` while the cost
+block ends at row 23, omitting `C23` = `-200` EUR.
 
-The application must compute every project over the same complete category set,
-making this class of silent omission impossible. The older blank workbook also
-showed a company-total range omission; dynamic project and region queries avoid
-both defects without encoding workbook coordinates.
+**Stale cached totals.** The cached values do not match the cells in two
+columns, and Minit's matches neither the short range nor the correct one:
+
+| Column | Cached row 24 | `SUM(:22)` | `SUM(:23)` | Categories only |
+|---|---|---|---|---|
+| B | `-18996.90` | `-19093.90` | `-19093.90` | `-19096.90` |
+| C | `-15087.17` | `-14987.17` | `-15187.17` | `-15187.17` |
+| D, E, F | — | — | matches | matches |
+
+So the earlier statement that Minit's cached P/L is `279.09` "instead of
+`79.09`" describes the range bug alone; the cell is also stale. Column B is
+wrong as well, which this section did not previously record.
+
+**Annotation inside a summed range.** `B3` holds a headcount (`3`) in the first
+row of the range `SUM(B3:B23)` covers, so a coordinate-based total silently adds
+it to the costs. The rightmost column above — computing over the *category set*
+— excludes it, which is the whole argument for not encoding ranges.
+
+The application computes every project over the same complete category set,
+making all three impossible. `import_hv_workbook` reports each disagreement it
+finds rather than silently correcting the client's file.
 
 ## 8. MVP behavior
 
@@ -211,14 +237,17 @@ amounts.
 ## 10. Open questions
 
 - Is the period October 2025, as `202510` suggests, or November 2025, as the
-  worksheet states?
+  worksheet states? **Still open.** `import_hv_workbook --period` is required so
+  the operator states which, rather than the importer guessing.
 - ~~Are Megyer and DS the complete fixed region list, or must regions be managed
   as growing data?~~ **Answered by ADR 0026:** regions became the `Office`
   model — managed data, not a fixed list — and Jober runs three of them
   (VM, GYR, DS).
 - Is profitability switched on globally for Jober or individually per project?
-- Should persistence adopt signed values or retain positive magnitudes by kind
-  while exposing the workbook's signed convention?
+- ~~Should persistence adopt signed values or retain positive magnitudes by
+  kind while exposing the workbook's signed convention?~~ **Answered 2026-08-04
+  (ADR 0030):** magnitudes in storage, signed at every boundary. Already built
+  and tested; no migration was needed. See §5.
 - Confirm final translated category labels and whether `SZCO` remains active.
 
 The finance Excel gate for Jober is lifted: the structure, categories, signs,

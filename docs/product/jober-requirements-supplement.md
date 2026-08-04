@@ -352,7 +352,7 @@ reporting month remains an open question.
   the complete active category and project sets.
 
 Target placement is `features/profitability`, Jober ON and CorvinumEU OFF. The
-current repository implementation remains under `features/finance` and enforces
+current repository implementation remains under `features/profitability` and enforces
 positive magnitudes with sign derived from category kind; reconciling that
 implementation with the filled workbook is future build work.
 

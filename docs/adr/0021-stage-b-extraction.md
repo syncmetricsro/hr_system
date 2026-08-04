@@ -22,7 +22,7 @@ the full test suite green with **unchanged assertions** (Stage D bar).
 
 - Moved apps keep their **directory basenames** so Django's derived app labels
   (and therefore migrations/FKs/tables) are untouched — e.g. `core/projects`,
-  `features/finance`, not the matrix's cosmetic target names.
+  `features/profitability`, not the matrix's cosmetic target names.
 - The physical sub-splits (logistics → accommodation/equipment/transport;
   trials out of projects) are **deferred to Stage C prep** (they require
   `SeparateDatabaseAndState` label surgery); until then sub-features are gated

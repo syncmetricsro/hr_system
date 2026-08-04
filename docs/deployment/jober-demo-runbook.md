@@ -324,7 +324,7 @@ Section 6 is the demo narrative. This is the operating guide — what a manager
 actually does, and the two things that surprise people.
 
 **Every figure is typed in. Nothing is derived.** Finance reads no data from
-People, Equipment, Accommodation or anywhere else; `features/finance/` imports
+People, Equipment, Accommodation or anywhere else; `features/profitability/` imports
 nothing from those modules. The numbers on screen are exactly the numbers
 somebody entered, taken from the client's own workbook. (An earlier fix list
 recorded the opposite — that Finance pulls from headcount and inventory and
@@ -360,12 +360,56 @@ requires a written reason and is audited — the reason is not optional and not
 free of consequence, it appears in the audit log against your name.
 
 **What you can read back.** The month page charts the net result by finance
-group. The Finance page charts the monthly trend and a margin gauge. The year
-view (`Finance → a year`) gives month-by-month results for comparison across
-the year. Observers get a different, all-offices executive page instead.
-CSV export carries period, office, project, category, kind, group and signed
-amount, followed by per-office and grand summaries — scoped like everything
-else, so a manager's file contains their own office only.
+group. The Finance page charts the monthly trend and a margin gauge. Observers
+get a different, all-offices executive page instead.
+
+**Two views shaped like the client's own workbook** (added 2026-08-04, ADR
+0030), and the ones worth showing first because they are the layout Jober
+already reads:
+
+- **Workbook view** — `Finance → Workbook view`, or
+  `/finance/workbook/<year>/<month>/`. One period with projects across the top
+  and categories down the side, a subtotal per office and a grand total: the
+  shape of `HV 202510.xlsx`. Costs display negative, as the source does. Project
+  headings link into that project's year.
+- **Project year** — twelve months across for one project, with a year total.
+  A month nobody has recorded shows as a dash rather than a zero, because an
+  unrecorded month and a month that netted nothing are different facts.
+
+Say this accurately: **every total on both screens is recomputed from the line
+items.** Nothing is carried over from the spreadsheet. That is worth stating
+plainly, because their own file gets it wrong — see the caveat below.
+
+CSV export carries period, office, project code and name, category key and
+label, kind, group and signed amount, followed by per-office and grand
+summaries — scoped like everything else, so a manager's file contains their own
+office only.
+
+**Importing their workbook.** `manage.py import_hv_workbook` reads an `.xlsx`
+directly. It is a deliberate command, not an upload — the file is never stored.
+Two things to explain if it comes up:
+
+- It **will not guess which column is which project**, because their workbook
+  cannot say: columns B and J hold a headcount in the header row and no project
+  name anywhere, and column G holds headcounts among the figures. Every column
+  needs an explicit `--map C=MINIT` or `--ignore G`.
+- It **reports where their file disagrees with itself** and imports the cells
+  rather than the cached totals. On the supplied November file that is two
+  columns — see below.
+
+**Raise this with them; it is their money.** Reading their workbook found three
+separate ways its totals are wrong (spec §7, expanded 2026-08-04):
+
+| Column | Their total | Their own cells sum to |
+|---|---|---|
+| B | `-18996.90` | `-19096.90` |
+| C (Minit) | `-15087.17` | `-15187.17` |
+
+Minit's `SUM` also stops one row short of the cost block, and column B counts a
+headcount sitting inside the summed range. Two projects' profit has been
+reported incorrectly. Present this as something the system caught, not as a
+criticism — and let them confirm the corrected figures before anyone relies on
+them.
 
 **Open with the client before they rely on this** (unresolved from the July
 interview, and blocking a faithful mapping of their workbook):

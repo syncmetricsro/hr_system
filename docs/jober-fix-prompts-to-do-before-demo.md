@@ -176,7 +176,7 @@ being removed), BUILD_JOURNAL entry.
 
 > **⚠️ The premise is wrong — verified against the code 2026-07-27. Do not build this as
 > written.** Finance is *already* entirely manual. `set_line_item()` stores a hand-typed
-> amount; `recompute_month()` only sums line items; and `features/finance/` imports nothing
+> amount; `recompute_month()` only sums line items; and `features/profitability/` imports nothing
 > from `core.people`, `features.logistics` or accommodation. There is no derivation to remove.
 >
 > What the client saw was most likely the **seeded demo data** — 54 pre-filled financial months

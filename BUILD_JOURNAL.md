@@ -79,6 +79,80 @@ failed", "Skip the trial and start readiness" -> "Review the trial details and
 try again"). The changes were reverted and nine reviewed entries appended by
 hand: 1664/1664 translated in SK, HU and UK, zero fuzzy. Extraction safety
 belongs in its own slice.
+## 2026-08-04 - Profitability: the client's own workbook, three ways
+
+Jober accept the implementation when it looks and totals like `HV 202510.xlsx`.
+Reading that file before writing anything changed the job twice.
+
+**The rows already matched.** All 25 categories line up one-for-one with the
+sheet, because `Jober_Finance_Specs` §2 was derived from this workbook in July
+and `seed_finance` seeds from §2. Nothing to build there. The columns are
+projects, which is data.
+
+**Signed storage was cancelled after being approved.** The spec lists the
+storage convention as an open question (§10 q4) and it is not: the code answered
+it. `normalize_source_amount` already requires costs typed negative and rejects
+a positive cost, `signed_amount` already renders signed, the CSV already exports
+signed, and two test modules already lock both in. Migrating storage would have
+rewritten tested design and every staging row for no visible change. The spec
+was stale, not open.
+
+What was actually missing was layout, a year view, and a way in from the file.
+
+The module moved to `features/profitability`, the placement §2 names and the
+name the flag always used. The Django app *label* stays `finance` on purpose —
+letting it follow would rename every table and rewrite migration history on
+databases holding data, for something no reader sees. `makemigrations --check`
+reports no changes, which is the evidence. One reference no grep for the module
+path could catch: `config/urls.py` gated the whole finance block on
+`_feature_on("finance", …)`, which prefixes `features.` internally, so moving
+the module silently unmounted every route and took 174 tests with it.
+
+Two read surfaces now draw the workbook's shape — one period with projects
+across and offices subtotalled, and one project across twelve months. Both
+compute from the active category set rather than a coordinate range, which is
+not a stylistic preference: see below. Rows carry values pre-aligned to columns,
+because Django templates cannot index a dict by a variable key and a filter to
+do it would move grid arithmetic into the one place it cannot be tested.
+
+`import_hv_workbook` reads the `.xlsx` with `zipfile` and some XML, so no
+spreadsheet library enters the lockfile and AGENTS.md §3.1 never applies. It is
+a command, not an upload: the file is never stored and the document-storage
+boundary stays out of it. It refuses to guess which column is which project,
+because the file cannot say — columns B and J carry a headcount in the header
+row and no project name anywhere, and column G holds headcounts among the
+figures. Unmapped column, hard error.
+
+**Their workbook is wrong in three separate ways, and only one was known.**
+§7 recorded that Minit's `C24=SUM(C3:C22)` stops a row short. Parsing the file
+found the cached value matches *neither* the short sum nor the correct one, so
+that cell is stale as well as mis-ranged; that column B is wrong too and §7
+never mentioned it; and that `B3` holds a headcount inside the range its own
+`SUM` starts at. Two projects' profit has been reported incorrectly. The
+importer reports each disagreement and imports the cells — the discrepancy is
+the client's and they should see it. §7 is expanded and the demo runbook now
+tells the presenter how to raise it without it sounding like an accusation.
+
+One bug worth keeping. Grid cells were assigned through a dict keyed by project
+id but indexed by month id — separate sequences that coincide only on a freshly
+created database. It passed alone and failed seven tests in a shared run. Every
+figure would have landed in the wrong column. The added test burns project ids
+first so the mix-up fails deterministically rather than by luck.
+
+After the extraction-safety work landed, this branch was rebased and refreshed
+with that workflow. Extraction reported 14 genuinely new active messages,
+including "Workbook", with zero fuzzy guesses, newly obsolete entries or
+revivals. All 14 were translated manually in SK, HU and UK; each catalog now
+has 1556 active / 1556 translated / 0 fuzzy entries, the committed MO files
+pass the read-only synchronization check, and a second extraction was
+byte-identical.
+
+CI then exposed a local-only test dependency: all importer tests read the
+gitignored client workbook, so a clean checkout had no fixture and 16 tests
+failed before exercising the importer. The private file remains excluded. A
+small standard-library OOXML builder now recreates only the structural facts
+the tests need — unnamed and non-project columns, duplicate damage labels,
+float noise, a short formula and stale totals — with no client data in Git.
 
 ## 2026-08-03 - The Secure Document Vault gets an architecture
 
@@ -1301,7 +1375,7 @@ carries J4: "the Finance page derives its figures from system data (headcount,
 inventory, accommodation) - remove every automatic derivation". Checked before
 building it, and **there is nothing to remove**: `set_line_item()` stores a
 hand-typed amount, `recompute_month()` only sums line items, and
-`features/finance/` imports nothing from people, logistics or accommodation.
+`features/profitability/` imports nothing from people, logistics or accommodation.
 
 - The likeliest explanation for what the client saw is the **seeded demo data**
   - 54 pre-filled months that look auto-populated but were written by
@@ -1859,7 +1933,7 @@ features.
   `Secure; HttpOnly; SameSite=Lax`. That also surfaced a small real finding:
   nginx emits a second, shorter HSTS header alongside Django's.
 - Left deliberately: the last "region" naming is in code, not docs -
-  `regional_results`/`regional_chart_data` in `features/finance/views.py`
+  `regional_results`/`regional_chart_data` in `features/profitability/views.py`
   and two templates. The data is already per-office; only the names are
   stale. A rename needs both unit lanes plus e2e, which is not a sensible
   thing to run the day before the CEO demo for a change no user can see.
@@ -2697,7 +2771,7 @@ swapping in real art later only touches
 
 ## 2026-07-24 - Richer finance demo data (Jan-Jul 2026); three new design docs
 
-- `features/finance/management/commands/seed_finance.py`: expanded from 2
+- `features/profitability/management/commands/seed_finance.py`: expanded from 2
   `FinancialMonth` rows total (Nov 2025 only, missing CARGO entirely) to a
   full Jan-Jul 2026 year-to-date series across all three projects/offices
   — 21 new rows, plus the original Nov 2025 pair kept for year-over-year
@@ -2745,7 +2819,7 @@ User asked "hopefully these changes were only applied to the jober thin
 client" about the previous slice — a fair challenge that caught a real
 issue. The *behavioral* changes (office-scoped finance queries, the
 executive dashboard, the 403 guard) genuinely are Jober-only in effect,
-since they all live in `features/finance/`, which CorvinumEU doesn't
+since they all live in `features/profitability/`, which CorvinumEU doesn't
 install. But `core/offices/migrations/0002_seed_offices.py` seeded the
 three real office names (Velký Meder, Győr, Dunajská Streda) via a Django
 migration — and `core.offices` was added to every client's
@@ -2834,7 +2908,7 @@ execution note for what's Phase A vs still-pending Phase B).
 ## 2026-07-24 - Move regional finance chart from Reports to Finance; correct §8.1
 
 - The "office financial chart" on Reports/Overview turned out to be
-  `features/finance/panels.py::company_totals_panel` (registered onto the
+  `features/profitability/panels.py::company_totals_panel` (registered onto the
   Reports page via `register_report_panel`) — a linked card showing a
   margin gauge and a profit/loss-by-region diverging chart. Region is the
   closest existing concept to "office" today (`Project.region`); the real
@@ -2844,9 +2918,9 @@ execution note for what's Phase A vs still-pending Phase B).
   section of `templates/pages/finance_summary.html` (which already had
   the same `regional_totals()` data as a chartless table) — added
   `regional_chart_data` to `finance_summary`'s view context
-  (`features/finance/views.py`), mirroring the existing `group_chart_data`
+  (`features/profitability/views.py`), mirroring the existing `group_chart_data`
   pattern exactly.
-- Deleted the now-dead `features/finance/panels.py` and
+- Deleted the now-dead `features/profitability/panels.py` and
   `templates/panels/finance_company_totals.html`, and removed
   `FinanceConfig.ready()`'s report-panel registration entirely — per the
   user's choice, Reports/Overview shows **no** finance content at all now,
@@ -2929,7 +3003,7 @@ independently re-verified (services.py, `reports()`, `vendor/MANIFEST.md`,
 in `docs/adr/0025-chartjs-visualizations.md`; highlights below.
 
 - **New capability, not just visualization**: `monthly_totals(year=None)`
-  in `features/finance/services.py` — the only company-wide monthly
+  in `features/profitability/services.py` — the only company-wide monthly
   (not yearly) revenue/cost/net time series that existed anywhere.
   Ascending order (a trend), deliberately not matching `yearly_totals()`'s
   newest-first convention. `all_locked` flag per bucket for a future
@@ -2965,7 +3039,7 @@ in `docs/adr/0025-chartjs-visualizations.md`; highlights below.
   the feature-panel registry) with a headcount-per-project bar plus a
   real per-project people list; the existing `finance_company_totals`
   Reports panel extended in place (not duplicated) with a compact gauge +
-  regional bar, since `features.finance` isn't even installed for
+  regional bar, since `features.profitability` isn't even installed for
   CorvinumEU so the extension carries zero client-branching risk.
 - **`static/src/js/charts.js`** (new): reads chart colors from CSS custom
   properties at build time, destroys+rebuilds tracked charts on the

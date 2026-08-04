@@ -7,7 +7,7 @@ from django.core.validators import MinValueValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-# Positive sign convention, same as features.finance: money is never stored
+# Positive sign convention, same as features.profitability: money is never stored
 # negative.
 NON_NEGATIVE = [MinValueValidator(Decimal("0"))]
 

@@ -1,6 +1,6 @@
 """The demo finance seed's split tables must sum to exactly 1.00.
 
-``recompute_month`` (features/finance/services.py) derives a month's revenue
+``recompute_month`` (features/profitability/services.py) derives a month's revenue
 and cost *from its line items*, so the figures in MONTHLY_DATA/PRIOR_YEAR_DATA
 are only the initial record - the line items are what survive. A split that
 sums to 0.98 therefore does not raise anything; it silently seeds a month 2%
@@ -17,15 +17,16 @@ from decimal import Decimal
 import pytest
 from django.apps import apps as django_apps
 
-if not django_apps.is_installed("features.finance"):
+if not django_apps.is_installed("features.profitability"):
     # CorvinumEU does not install finance. Importing the seed command at module
     # level would raise during *collection* and take the whole lane down, not
     # just skip this file - which is exactly what it did the first time.
     pytest.skip(
-        "features.finance is not installed for this client", allow_module_level=True
+        "features.profitability is not installed for this client",
+        allow_module_level=True,
     )
 
-from features.finance.management.commands.seed_finance import (
+from features.profitability.management.commands.seed_finance import (
     COST_SPLIT,
     MONTHLY_DATA,
     PRIOR_YEAR_DATA,

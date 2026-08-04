@@ -7,6 +7,7 @@
 <section class="page-head">
   <p class="eyebrow">{% trans "Reports" %}</p>
   <h1>{% trans "Finance" %}</h1>
+  <a class="button" href="{% url 'finance_workbook' workbook_year workbook_month %}">{% trans "Workbook view" %}</a>
   <a class="button button-secondary" href="{% url 'export_finance' %}">{% icon "export" %}{% trans "Export" %}</a>
 </section>
 

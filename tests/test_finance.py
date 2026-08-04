@@ -3,8 +3,11 @@ from __future__ import annotations
 import pytest
 from django.apps import apps as django_apps
 
-if not django_apps.is_installed("features.finance"):
-    pytest.skip("features.finance is not installed for this client", allow_module_level=True)
+if not django_apps.is_installed("features.profitability"):
+    pytest.skip(
+        "features.profitability is not installed for this client",
+        allow_module_level=True,
+    )
 
 
 from decimal import Decimal
@@ -12,8 +15,8 @@ from decimal import Decimal
 import pytest
 
 from core.accounts.permissions import Action, can
-from features.finance.models import FinancialMonth
-from features.finance.services import (
+from features.profitability.models import FinancialMonth
+from features.profitability.services import (
     FinanceError,
     company_totals,
     monthly_totals,
@@ -126,9 +129,15 @@ def test_monthly_totals_all_locked_true_only_when_every_row_locked(setup):
 
 
 def test_finance_rbac(django_user_model):
-    manager = django_user_model.objects.create_user(email="m2@demo.jober.test", password="x", role="manager")
-    observer = django_user_model.objects.create_user(email="o@demo.jober.test", password="x", role="observer")
-    recruiter = django_user_model.objects.create_user(email="r@demo.jober.test", password="x", role="recruiter")
+    manager = django_user_model.objects.create_user(
+        email="m2@demo.jober.test", password="x", role="manager"
+    )
+    observer = django_user_model.objects.create_user(
+        email="o@demo.jober.test", password="x", role="observer"
+    )
+    recruiter = django_user_model.objects.create_user(
+        email="r@demo.jober.test", password="x", role="recruiter"
+    )
     assert can(manager, Action.FINANCE_MANAGE)
     assert not can(observer, Action.FINANCE_MANAGE)
     assert can(observer, Action.FINANCE_VIEW_SUMMARY)

@@ -3,9 +3,10 @@ from __future__ import annotations
 import pytest
 from django.apps import apps as django_apps
 
-if not django_apps.is_installed("features.finance"):
+if not django_apps.is_installed("features.profitability"):
     pytest.skip(
-        "features.finance is not installed for this client", allow_module_level=True
+        "features.profitability is not installed for this client",
+        allow_module_level=True,
     )
 
 
@@ -16,7 +17,7 @@ from core.ui.registry import flag_enabled
 from features.blacklist.models import BlacklistCaseStatus, MatchFingerprint
 from features.blacklist.services import check_match
 from features.compliance.services import compliance_alerts
-from features.finance.models import FinancialMonth
+from features.profitability.models import FinancialMonth
 from features.logistics.models import (
     DeductionReviewStatus,
     EquipmentIssue,

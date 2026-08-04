@@ -27,6 +27,7 @@ def manager_client(client, django_user_model):
 def _active_hrefs(html: str) -> list[str]:
     """hrefs of nav links carrying is-active."""
     import re
+
     return re.findall(r'class="folder-tab is-active"\s+href="([^"]+)"', html)
 
 
@@ -45,7 +46,7 @@ def test_people_tab_active_on_people_pages(manager_client):
 def test_finance_tab_active_on_month_detail(manager_client):
     from core.accounts.models import User
     from core.offices.models import Office
-    from features.finance.models import FinancialMonth
+    from features.profitability.models import FinancialMonth
     from core.projects.models import Project
 
     office = Office.objects.create(name="Test Office", code="TESTOFF", country="SK")
@@ -57,6 +58,12 @@ def test_finance_tab_active_on_month_detail(manager_client):
 
 
 def test_exactly_one_active_tab(manager_client):
-    for path in ["/en/", "/en/people/", "/en/reports/", "/en/blacklist/", "/en/compliance/"]:
+    for path in [
+        "/en/",
+        "/en/people/",
+        "/en/reports/",
+        "/en/blacklist/",
+        "/en/compliance/",
+    ]:
         html = manager_client.get(path).content.decode()
         assert len(_active_hrefs(html)) == 1, path

@@ -332,15 +332,25 @@ if _feature_on("logistics", "transport"):
         ),
     ]
 
-if _feature_on("finance", "profitability"):
-    from features.finance import exports as finance_exports
-    from features.finance import views as finance_views
+if _feature_on("profitability", "profitability"):
+    from features.profitability import exports as finance_exports
+    from features.profitability import views as finance_views
 
     urlpatterns += [
         path("export/finance.csv", finance_exports.finance_csv, name="export_finance"),
     ]
     app_routes += [
         path("finance/", finance_views.finance_summary, name="finance_summary"),
+        path(
+            "finance/workbook/<int:year>/<int:month>/",
+            finance_views.finance_workbook,
+            name="finance_workbook",
+        ),
+        path(
+            "finance/project/<int:pk>/year/<int:year>/",
+            finance_views.finance_project_year,
+            name="finance_project_year",
+        ),
         path("finance/record/", finance_views.record_month, name="finance_record"),
         path(
             "finance/year/<int:year>/", finance_views.finance_year, name="finance_year"

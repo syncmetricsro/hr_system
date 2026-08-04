@@ -1,0 +1,98 @@
+{% extends "layouts/base.html" %}
+{% load i18n nav %}
+
+{% block title %}{% trans "Workbook" %} · {{ BRAND_NAME }}{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <p class="eyebrow">{% trans "Finance" %}</p>
+  <h1>{% trans "Workbook" %} — {{ grid.year }}-{{ grid.month|stringformat:"02d" }}</h1>
+  <a class="button" href="{% url 'finance_summary' %}">{% trans "Back to finance" %}</a>
+</section>
+
+<p class="muted">
+  {% trans "Projects across, categories down — the layout of the source workbook. Costs are shown negative; every total is recomputed from the line items rather than carried over." %}
+</p>
+
+<section class="panel">
+  <div class="data-table-scroll">
+    <table class="data-table workbook-grid">
+      <thead>
+        <tr>
+          <th scope="col">{% trans "Category" %}</th>
+          {% for column in grid.columns %}
+            <th scope="col">
+              <a href="{% url 'finance_project_year' column.project.pk grid.year %}">{{ column.project.name }}</a>
+              <span class="muted">{{ column.project.office.name|default:"—" }}</span>
+            </th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="row-heading"><th scope="row" colspan="{{ grid.columns|length|add:1 }}">{% trans "Costs" %}</th></tr>
+        {% for row in grid.cost_rows %}
+          <tr>
+            <th scope="row">{{ row.category.label|db_trans }}</th>
+            {% for value in row.values %}<td class="numeric">{{ value|default_if_none:"—" }}</td>{% endfor %}
+          </tr>
+        {% endfor %}
+        <tr class="row-total">
+          <th scope="row">{% trans "Total costs" %}</th>
+          {% for column in grid.columns %}<td class="numeric">{{ column.cost }}</td>{% endfor %}
+        </tr>
+
+        <tr class="row-heading"><th scope="row" colspan="{{ grid.columns|length|add:1 }}">{% trans "Revenues" %}</th></tr>
+        {% for row in grid.revenue_rows %}
+          <tr>
+            <th scope="row">{{ row.category.label|db_trans }}</th>
+            {% for value in row.values %}<td class="numeric">{{ value|default_if_none:"—" }}</td>{% endfor %}
+          </tr>
+        {% endfor %}
+        <tr class="row-total">
+          <th scope="row">{% trans "Total revenues" %}</th>
+          {% for column in grid.columns %}<td class="numeric">{{ column.revenue }}</td>{% endfor %}
+        </tr>
+
+        <tr class="row-result">
+          <th scope="row">{% trans "Profit/loss" %}</th>
+          {% for column in grid.columns %}<td class="numeric">{{ column.net }}</td>{% endfor %}
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>{% trans "By office" %}</h2>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th scope="col">{% trans "Office" %}</th>
+        <th scope="col" class="numeric">{% trans "Costs" %}</th>
+        <th scope="col" class="numeric">{% trans "Revenues" %}</th>
+        <th scope="col" class="numeric">{% trans "Profit/loss" %}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for office in grid.offices %}
+        <tr>
+          <th scope="row">{{ office.office }}</th>
+          <td class="numeric">{{ office.cost }}</td>
+          <td class="numeric">{{ office.revenue }}</td>
+          <td class="numeric">{{ office.net }}</td>
+        </tr>
+      {% empty %}
+        <tr><td colspan="4" class="muted">{% trans "No projects in scope for this period." %}</td></tr>
+      {% endfor %}
+    </tbody>
+    <tfoot>
+      <tr class="row-result">
+        <th scope="row">{% trans "Total" %}</th>
+        <td class="numeric">{{ grid.grand.cost }}</td>
+        <td class="numeric">{{ grid.grand.revenue }}</td>
+        <td class="numeric">{{ grid.grand.net }}</td>
+      </tr>
+    </tfoot>
+  </table>
+</section>
+{% endblock %}
