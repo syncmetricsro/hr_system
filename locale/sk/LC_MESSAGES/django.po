@@ -106,18 +106,18 @@ msgstr "Prevádzka"
 msgid "Compliance"
 msgstr "Súlad"
 
-#: clients/corvinum_eu/templates/layouts/base.html:53 core/ui/help.py:640
+#: clients/corvinum_eu/templates/layouts/base.html:53 core/ui/help.py:660
 #: templates/layouts/base.html:67 templates/pages/ledger.html:8
 msgid "Ledger"
 msgstr "Kniha záloh"
 
-#: clients/corvinum_eu/templates/layouts/base.html:56 core/ui/help.py:728
+#: clients/corvinum_eu/templates/layouts/base.html:56 core/ui/help.py:764
 #: templates/layouts/base.html:70 templates/pages/payslips.html:4
 #: templates/pages/payslips.html:9
 msgid "Payslips"
 msgstr "Výplatné pásky"
 
-#: clients/corvinum_eu/templates/layouts/base.html:59 core/ui/help.py:802
+#: clients/corvinum_eu/templates/layouts/base.html:59 core/ui/help.py:848
 #: templates/pages/wages.html:4 templates/pages/wages.html:9
 msgid "Gross wages"
 msgstr "Hrubé mzdy"
@@ -151,7 +151,7 @@ msgstr "Žiadosti o aktiváciu"
 msgid "Activations"
 msgstr "Aktivácie"
 
-#: clients/corvinum_eu/templates/layouts/base.html:69 core/ui/help.py:454
+#: clients/corvinum_eu/templates/layouts/base.html:69 core/ui/help.py:474
 #: templates/layouts/base.html:61 templates/pages/blacklist_queue.html:4
 #: templates/panels/blacklist_banner.html:3
 #: templates/panels/blacklist_case.html:5
@@ -175,7 +175,7 @@ msgstr "Pomocník"
 msgid "Staff activity"
 msgstr "Aktivita personálu"
 
-#: clients/corvinum_eu/templates/layouts/base.html:77 core/ui/help.py:868
+#: clients/corvinum_eu/templates/layouts/base.html:77 core/ui/help.py:922
 #: templates/layouts/base.html:51
 msgid "Audit"
 msgstr "Audit"
@@ -891,7 +891,7 @@ msgid "Disability type"
 msgstr "Typ postihnutia"
 
 #: core/people/forms.py:51 features/logistics/forms.py:75
-#: features/logistics/forms.py:229 features/profitability/catalog_i18n.py:26
+#: features/logistics/forms.py:227 features/profitability/catalog_i18n.py:26
 #: templates/pages/equipment_stock.html:48
 #: templates/pages/finance_workbook.html:70
 #: templates/pages/goods_receipt_detail.html:16
@@ -1098,7 +1098,7 @@ msgstr "Osoba aktualizovaná."
 msgid "Edit person"
 msgstr "Upraviť osobu"
 
-#: core/people/views.py:243 core/ui/help.py:264
+#: core/people/views.py:243 core/ui/help.py:272
 #: templates/pages/activation_queue.html:29
 #: templates/pages/person_detail.html:171
 msgid "Entry medical date"
@@ -1459,7 +1459,7 @@ msgstr "Lekárska"
 msgid "Medical clearance is incomplete."
 msgstr "Lekárska spôsobilosť nie je dokončená."
 
-#: core/projects/services.py:236 core/ui/help.py:249
+#: core/projects/services.py:236 core/ui/help.py:251
 #: templates/pages/activation_queue.html:27
 #: templates/pages/person_detail.html:145
 msgid "Gear"
@@ -1469,7 +1469,7 @@ msgstr "Výstroj"
 msgid "Required equipment is incomplete."
 msgstr "Požadované vybavenie nie je kompletné."
 
-#: core/projects/services.py:237 core/ui/help.py:254 core/ui/help.py:407
+#: core/projects/services.py:237 core/ui/help.py:258 core/ui/help.py:427
 #: features/profitability/catalog_i18n.py:18
 #: features/profitability/models.py:89 templates/layouts/base.html:43
 #: templates/pages/accommodation_costs.html:6
@@ -1487,7 +1487,7 @@ msgstr "Ubytovanie"
 msgid "Accommodation is incomplete."
 msgstr "Ubytovanie nie je zabezpečené."
 
-#: core/projects/services.py:238 core/ui/help.py:259
+#: core/projects/services.py:238 core/ui/help.py:265
 #: features/profitability/models.py:88 templates/layouts/base.html:45
 #: templates/pages/person_detail.html:161
 msgid "Transport"
@@ -1988,118 +1988,139 @@ msgid "Decision controls approve or return the request with a reason."
 msgstr ""
 "Ovládacie prvky rozhodnutia žiadosť schvália alebo ju s dôvodom vrátia."
 
-#: core/ui/help.py:245
+#: core/ui/help.py:246
 msgid ""
 "The entry medical certificate is on file. Required - it cannot be marked not-"
 "applicable, and activation is refused without it."
-msgstr "Vstupná lekárska prehliadka je založená. Povinné – nemožno označiť ako nerelevantné a bez nej sa aktivácia zamietne."
+msgstr ""
+"Vstupná lekárska prehliadka je založená. Povinné – nemožno označiť ako "
+"nerelevantné a bez nej sa aktivácia zamietne."
 
-#: core/ui/help.py:246 core/ui/help.py:251 core/ui/help.py:256
-#: core/ui/help.py:261 core/ui/help.py:266 core/ui/help.py:271
-#: core/ui/help.py:688 core/ui/help.py:693 core/ui/help.py:698
-#: core/ui/help.py:703 core/ui/help.py:708 core/ui/help.py:714
-#: core/ui/help.py:720
+#: core/ui/help.py:248 core/ui/help.py:255 core/ui/help.py:262
+#: core/ui/help.py:269 core/ui/help.py:276 core/ui/help.py:283
+#: core/ui/help.py:710 core/ui/help.py:717 core/ui/help.py:724
+#: core/ui/help.py:731 core/ui/help.py:738 core/ui/help.py:748
+#: core/ui/help.py:756
 msgid "Coordinator or Manager"
 msgstr "Koordinátor alebo manažér"
 
-#: core/ui/help.py:250
+#: core/ui/help.py:253
 msgid ""
 "The worker has the equipment the job needs. Required, like Medical, and "
 "cannot be marked not-applicable."
-msgstr "Pracovník má výstroj, ktorý práca vyžaduje. Povinné, rovnako ako lekárska prehliadka, a nemožno označiť ako nerelevantné."
-
-#: core/ui/help.py:255
-msgid ""
-"A bed is arranged, or genuinely not needed. Marking it not-applicable "
-"requires a written reason."
-msgstr "Ubytovanie je zabezpečené alebo naozaj nie je potrebné. Označenie ako nerelevantné vyžaduje písomný dôvod."
+msgstr ""
+"Pracovník má výstroj, ktorý práca vyžaduje. Povinné, rovnako ako lekárska "
+"prehliadka, a nemožno označiť ako nerelevantné."
 
 #: core/ui/help.py:260
 msgid ""
+"A bed is arranged, or genuinely not needed. Marking it not-applicable "
+"requires a written reason."
+msgstr ""
+"Ubytovanie je zabezpečené alebo naozaj nie je potrebné. Označenie ako "
+"nerelevantné vyžaduje písomný dôvod."
+
+#: core/ui/help.py:267
+msgid ""
 "Travel to site is arranged, or not needed with a reason. Hidden entirely "
 "where the transport feature is switched off."
-msgstr "Doprava na pracovisko je zabezpečená alebo s uvedeným dôvodom nie je potrebná. Úplne skryté tam, kde je funkcia dopravy vypnutá."
+msgstr ""
+"Doprava na pracovisko je zabezpečená alebo s uvedeným dôvodom nie je "
+"potrebná. Úplne skryté tam, kde je funkcia dopravy vypnutá."
 
-#: core/ui/help.py:265
+#: core/ui/help.py:274
 msgid ""
 "The date the medical was carried out. It cannot be in the future; a future "
 "date is a typo, not a plan."
-msgstr "Dátum vykonania lekárskej prehliadky. Nemôže byť v budúcnosti; budúci dátum je preklep, nie plán."
+msgstr ""
+"Dátum vykonania lekárskej prehliadky. Nemôže byť v budúcnosti; budúci dátum "
+"je preklep, nie plán."
 
 # --- projects UI ---
-#: core/ui/help.py:269 templates/pages/person_detail.html:182
+#: core/ui/help.py:279 templates/pages/person_detail.html:182
 msgid "Request activation"
 msgstr "Požiadať o aktiváciu"
 
-#: core/ui/help.py:270
+#: core/ui/help.py:281
 msgid ""
 "Asks a manager to decide. It does not activate anyone, and the four pillars "
 "are re-checked at the moment of the decision in case one regressed in "
 "between."
-msgstr "Požiada manažéra o rozhodnutie. Nikoho neaktivuje a štyri piliere sa v okamihu rozhodnutia znovu overia pre prípad, že sa medzitým niektorý zhoršil."
+msgstr ""
+"Požiada manažéra o rozhodnutie. Nikoho neaktivuje a štyri piliere sa v "
+"okamihu rozhodnutia znovu overia pre prípad, že sa medzitým niektorý zhoršil."
 
-#: core/ui/help.py:274 templates/pages/activation_queue.html:34
+#: core/ui/help.py:286 templates/pages/activation_queue.html:34
 #: templates/pages/blacklist_queue.html:29
 #: templates/panels/blacklist_case.html:20
 msgid "Approve"
 msgstr "Schváliť"
 
-#: core/ui/help.py:275 templates/pages/activation_queue.html:34
+#: core/ui/help.py:288 templates/pages/activation_queue.html:34
 msgid ""
 "Puts this worker to work: they move to Working on this project, the "
 "assignment starts today, and accommodation and equipment are committed."
-msgstr "Nasadí tohto pracovníka do práce: prejde do stavu Pracuje na tomto projekte, priradenie začína dnes a ubytovanie a výstroj sa záväzne vyhradia."
+msgstr ""
+"Nasadí tohto pracovníka do práce: prejde do stavu Pracuje na tomto projekte, "
+"priradenie začína dnes a ubytovanie a výstroj sa záväzne vyhradia."
 
-#: core/ui/help.py:276 core/ui/help.py:282 core/ui/help.py:287
-#: core/ui/help.py:774 core/ui/help.py:779 core/ui/help.py:784
-#: core/ui/help.py:789 core/ui/help.py:794 core/ui/help.py:845
-#: core/ui/help.py:850 core/ui/help.py:855 core/ui/help.py:860
+#: core/ui/help.py:290 core/ui/help.py:300 core/ui/help.py:307
+#: core/ui/help.py:812 core/ui/help.py:819 core/ui/help.py:826
+#: core/ui/help.py:833 core/ui/help.py:840 core/ui/help.py:893
+#: core/ui/help.py:900 core/ui/help.py:907 core/ui/help.py:914
 #: templates/pages/person_detail.html:75
 msgid "Manager"
 msgstr "Manažér"
 
-#: core/ui/help.py:277
+#: core/ui/help.py:292
 msgid "Deciding your own request is allowed, and recorded as a self-approval."
-msgstr "Rozhodnúť o vlastnej žiadosti je povolené a zaznamená sa ako samoschválenie."
+msgstr ""
+"Rozhodnúť o vlastnej žiadosti je povolené a zaznamená sa ako samoschválenie."
 
-#: core/ui/help.py:280 templates/pages/activation_queue.html:35
+#: core/ui/help.py:296 templates/pages/activation_queue.html:35
 #: templates/pages/blacklist_queue.html:30
 #: templates/panels/blacklist_case.html:21
 msgid "Reject"
 msgstr "Zamietnuť"
 
-#: core/ui/help.py:281 templates/pages/activation_queue.html:35
+#: core/ui/help.py:298 templates/pages/activation_queue.html:35
 msgid ""
 "Sends the request back with your reason. The worker stays in readiness and "
 "the coordinator can fix what you name and ask again. A reason is required."
-msgstr "Vráti žiadosť s vaším dôvodom. Pracovník zostáva v pripravenosti a koordinátor môže napraviť to, čo uvediete, a požiadať znova. Dôvod je povinný."
+msgstr ""
+"Vráti žiadosť s vaším dôvodom. Pracovník zostáva v pripravenosti a "
+"koordinátor môže napraviť to, čo uvediete, a požiadať znova. Dôvod je "
+"povinný."
 
-#: core/ui/help.py:285 templates/pages/person_detail.html:76
+#: core/ui/help.py:303 templates/pages/person_detail.html:76
 msgid "Activate without a trial day"
 msgstr "Aktivovať bez skúšobného dňa"
 
-#: core/ui/help.py:286
+#: core/ui/help.py:305
 msgid ""
 "Opens readiness for a worker the office already knows, with no trial. It "
 "waives the trial only - all four pillars still apply before activation."
-msgstr "Otvorí pripravenosť pre pracovníka, ktorého kancelária už pozná, bez skúšobného dňa. Odpúšťa iba skúšobný deň – všetky štyri piliere pred aktiváciou naďalej platia."
+msgstr ""
+"Otvorí pripravenosť pre pracovníka, ktorého kancelária už pozná, bez "
+"skúšobného dňa. Odpúšťa iba skúšobný deň – všetky štyri piliere pred "
+"aktiváciou naďalej platia."
 
-#: core/ui/help.py:296
+#: core/ui/help.py:316
 msgid "Safety and resources"
 msgstr "Bezpečnosť a zdroje"
 
-#: core/ui/help.py:300
+#: core/ui/help.py:320
 msgid "Certificates and compliance"
 msgstr "Preukazy a súlad"
 
-#: core/ui/help.py:302
+#: core/ui/help.py:322
 msgid ""
 "Store allowed occupational licences and manage expiry, renewal, and archive."
 msgstr ""
 "Ukladajte povolené pracovné preukazy a spravujte ich platnosť, obnovu a "
 "archiváciu."
 
-#: core/ui/help.py:307
+#: core/ui/help.py:327
 msgid ""
 "Compliance keeps occupational certificate metadata and the permitted "
 "forklift, crane, and welding files visible before they expire."
@@ -2107,7 +2128,7 @@ msgstr ""
 "Súlad uchováva metadáta pracovných preukazov a povolené súbory pre VZV, "
 "žeriav a zváranie tak, aby boli viditeľné pred uplynutím platnosti."
 
-#: core/ui/help.py:310
+#: core/ui/help.py:330
 msgid ""
 "Authorized Recruiters, Coordinators, and Managers can add certificates. "
 "Permanent file removal is Manager-only; private file delivery rechecks "
@@ -2117,7 +2138,7 @@ msgstr ""
 "môže natrvalo odstrániť iba Manažér; súkromné doručenie súboru znova overí "
 "pobočku a prístup k citlivým údajom."
 
-#: core/ui/help.py:314
+#: core/ui/help.py:334
 msgid ""
 "Open a worker and choose Add certificate. Select only Forklift, Crane, or "
 "Welding and enter the issuer, dates, and optional certificate number."
@@ -2125,7 +2146,7 @@ msgstr ""
 "Otvorte pracovníka a zvoľte Pridať preukaz. Vyberte iba VZV, Žeriav alebo "
 "Zváranie a zadajte vydavateľa, dátumy a voliteľné číslo preukazu."
 
-#: core/ui/help.py:317
+#: core/ui/help.py:337
 msgid ""
 "Upload one PDF, one front image, or front and back images. Review both "
 "private links after saving a two-sided card."
@@ -2134,7 +2155,7 @@ msgstr ""
 "zadnej strany. Po uložení obojstrannej karty skontrolujte oba súkromné "
 "odkazy."
 
-#: core/ui/help.py:320
+#: core/ui/help.py:340
 msgid ""
 "Use Edit to correct metadata or add a missing back image. Use Renew for a "
 "replacement certificate so the previous record remains in history."
@@ -2143,7 +2164,7 @@ msgstr ""
 "Pri náhradnom preukaze použite Obnoviť, aby predchádzajúci záznam zostal v "
 "histórii."
 
-#: core/ui/help.py:323
+#: core/ui/help.py:343
 msgid ""
 "Archive a record that should no longer be active. Use Manager file removal "
 "only for an improper upload and provide the required reason."
@@ -2151,11 +2172,11 @@ msgstr ""
 "Záznam, ktorý už nemá byť aktívny, archivujte. Manažérske odstránenie súboru "
 "použite len pri nesprávnom nahratí a uveďte povinný dôvod."
 
-#: core/ui/help.py:326
+#: core/ui/help.py:346
 msgid "Strict document-storage boundary"
 msgstr "Prísna hranica ukladania dokumentov"
 
-#: core/ui/help.py:328
+#: core/ui/help.py:348
 msgid ""
 "Never upload passports, identity cards, birth or residence documents, "
 "financial records, medical reports, or health-certificate scans. Those are "
@@ -2171,34 +2192,34 @@ msgstr ""
 "zálohy sú súčasťou produkčnej brány. Kým brána nie je dokončená, používajte "
 "fiktívne preukazy."
 
-#: core/ui/help.py:334
+#: core/ui/help.py:354
 msgid ""
 "The compliance workspace showing fictional occupational certificate alerts."
 msgstr "Pracovná plocha Súlad s fiktívnymi upozorneniami na pracovné preukazy."
 
-#: core/ui/help.py:337
+#: core/ui/help.py:357
 msgid "Alerts identify the worker and the occupational requirement."
 msgstr "Upozornenia označujú pracovníka a pracovnú požiadavku."
 
-#: core/ui/help.py:339
+#: core/ui/help.py:359
 msgid "Status and due date show which item needs attention first."
 msgstr ""
 "Stav a termín ukazujú, ktorej položke treba venovať pozornosť ako prvej."
 
 # --- logistics: equipment ---
-#: core/ui/help.py:347 features/advances/models.py:37
+#: core/ui/help.py:367 features/advances/models.py:37
 #: features/profitability/models.py:92 templates/pages/equipment_stock.html:7
 #: templates/panels/logistics_equipment.html:4
 msgid "Equipment"
 msgstr "Vybavenie"
 
-#: core/ui/help.py:349
+#: core/ui/help.py:369
 msgid ""
 "Maintain the catalogue, issue items, and handle stock, returns, or reviews."
 msgstr ""
 "Spravujte katalóg, vydávajte položky a riešte sklad, vrátenia alebo kontroly."
 
-#: core/ui/help.py:354
+#: core/ui/help.py:374
 msgid ""
 "Equipment records what can be issued, what each worker holds, and how a "
 "missing or returned item is resolved under the client's policy."
@@ -2206,7 +2227,7 @@ msgstr ""
 "Výstroj eviduje, čo možno vydať, čo má každý pracovník a ako sa podľa "
 "pravidiel klienta vyrieši chýbajúca alebo vrátená položka."
 
-#: core/ui/help.py:357
+#: core/ui/help.py:377
 msgid ""
 "All roles may read the enabled equipment views. Issuing, receiving, "
 "returning, adjusting stock, and deciding deductions each require their "
@@ -2216,7 +2237,7 @@ msgstr ""
 "vrátenie, úprava skladu a rozhodnutie o zrážke vyžadujú príslušné "
 "prevádzkové oprávnenie."
 
-#: core/ui/help.py:361
+#: core/ui/help.py:381
 msgid ""
 "Maintain catalogue names, sizes, and prices so an issue can be identified "
 "and valued consistently."
@@ -2224,7 +2245,7 @@ msgstr ""
 "Udržiavajte názvy, veľkosti a ceny katalógu, aby sa vydanie dalo jednotne "
 "identifikovať a oceniť."
 
-#: core/ui/help.py:364
+#: core/ui/help.py:384
 msgid ""
 "Issue the correct item from the worker profile and verify the worker and "
 "office before submitting."
@@ -2232,7 +2253,7 @@ msgstr ""
 "Správnu položku vydajte z profilu pracovníka a pred odoslaním overte "
 "pracovníka aj pobočku."
 
-#: core/ui/help.py:367
+#: core/ui/help.py:387
 msgid ""
 "If an item is not returned, flag it for review. A Manager records whether "
 "the cost is charged or waived instead of editing history."
@@ -2240,7 +2261,7 @@ msgstr ""
 "Ak sa položka nevráti, označte ju na kontrolu. Manažér namiesto úpravy "
 "histórie zaznamená, či sa náklad zaúčtuje alebo odpustí."
 
-#: core/ui/help.py:374
+#: core/ui/help.py:394
 msgid ""
 "Where stock tracking is enabled, record goods receipts before issuing, use "
 "adjustments only with a reason, and reconcile the office-specific balance "
@@ -2250,7 +2271,7 @@ msgstr ""
 "tovaru, úpravy používajte iba s dôvodom a zosúlaďte zostatok pobočky s "
 "denníkom príjmov."
 
-#: core/ui/help.py:380
+#: core/ui/help.py:400
 msgid ""
 "Where returns are enabled, use Return on the original issue so the item "
 "state changes through the recorded workflow and the catalogue remains "
@@ -2259,11 +2280,11 @@ msgstr ""
 "Tam, kde sú povolené vrátenia, použite Vrátiť pri pôvodnom výdaji, aby sa "
 "stav položky zmenil zaznamenaným postupom a katalóg zostal presný."
 
-#: core/ui/help.py:384
+#: core/ui/help.py:404
 msgid "Follow the enabled issue policy"
 msgstr "Dodržujte zapnuté pravidlá výdaja"
 
-#: core/ui/help.py:386
+#: core/ui/help.py:406
 msgid ""
 "Stock-ledger clients reduce office stock when issuing. Return-enabled "
 "clients record a return on the original issue. The Help page shows only the "
@@ -2273,7 +2294,7 @@ msgstr ""
 "Klienti s vráteniami zaznamenajú vrátenie pri pôvodnom výdaji. Pomocník "
 "ukazuje iba pravidlá zapnuté pre tohto klienta."
 
-#: core/ui/help.py:392
+#: core/ui/help.py:412
 msgid ""
 "The client-specific equipment workspace with fictional catalogue or stock "
 "data."
@@ -2281,19 +2302,19 @@ msgstr ""
 "Pracovná plocha výstroja konkrétneho klienta s fiktívnymi katalógovými alebo "
 "skladovými údajmi."
 
-#: core/ui/help.py:395
+#: core/ui/help.py:415
 msgid "Catalogue or stock rows identify the item and current state."
 msgstr "Riadky katalógu alebo skladu označujú položku a aktuálny stav."
 
-#: core/ui/help.py:398
+#: core/ui/help.py:418
 msgid "Available actions follow this client's stock and return policy."
 msgstr "Dostupné akcie sa riadia pravidlami skladu a vrátenia tohto klienta."
 
-#: core/ui/help.py:409
+#: core/ui/help.py:429
 msgid "Manage buildings, rooms, assignments, rates, and monthly costs."
 msgstr "Spravujte budovy, izby, ubytovania, sadzby a mesačné náklady."
 
-#: core/ui/help.py:414
+#: core/ui/help.py:434
 msgid ""
 "Accommodation connects office-owned buildings and rooms to the workers "
 "living there and to the rates used in operational cost views."
@@ -2301,7 +2322,7 @@ msgstr ""
 "Ubytovanie spája budovy a izby pobočky s pracovníkmi, ktorí v nich bývajú, a "
 "so sadzbami používanými v prevádzkových nákladoch."
 
-#: core/ui/help.py:417
+#: core/ui/help.py:437
 msgid ""
 "Readers see accommodation within their office scope. Coordinators and "
 "Managers normally manage rooms and placements; rate and cost actions require "
@@ -2311,7 +2332,7 @@ msgstr ""
 "zvyčajne spravujú Koordinátori a Manažéri; akcie sadzieb a nákladov vyžadujú "
 "osobitné oprávnenia."
 
-#: core/ui/help.py:421
+#: core/ui/help.py:441
 msgid ""
 "Create the building in the correct office, then add rooms with a real "
 "capacity and the applicable rate."
@@ -2319,7 +2340,7 @@ msgstr ""
 "Vytvorte budovu v správnej pobočke a potom pridajte izby so skutočnou "
 "kapacitou a platnou sadzbou."
 
-#: core/ui/help.py:424
+#: core/ui/help.py:444
 msgid ""
 "Assign a worker from the profile and confirm the room still has capacity. "
 "Record the assignment-specific rate only when it genuinely differs."
@@ -2327,7 +2348,7 @@ msgstr ""
 "Ubytujte pracovníka z profilu a potvrďte, že izba má voľnú kapacitu. "
 "Osobitnú sadzbu ubytovania zaznamenajte iba pri skutočnom rozdiele."
 
-#: core/ui/help.py:427
+#: core/ui/help.py:447
 msgid ""
 "Release the room when the worker leaves or moves; use a transfer workflow "
 "rather than overlapping active placements."
@@ -2335,7 +2356,7 @@ msgstr ""
 "Keď pracovník odíde alebo sa presťahuje, izbu uvoľnite; namiesto "
 "prekrývajúcich sa aktívnych ubytovaní použite postup presunu."
 
-#: core/ui/help.py:430
+#: core/ui/help.py:450
 msgid ""
 "Use Accommodation costs with the period controls to review occupancy, room "
 "rates, worker payments, and the office-scoped result."
@@ -2343,11 +2364,11 @@ msgstr ""
 "V Nákladoch na ubytovanie pomocou ovládania obdobia skontrolujte obsadenosť, "
 "sadzby izieb, platby pracovníkov a výsledok v rozsahu pobočky."
 
-#: core/ui/help.py:433
+#: core/ui/help.py:453
 msgid "Capacity and dates matter"
 msgstr "Kapacita a dátumy sú dôležité"
 
-#: core/ui/help.py:435
+#: core/ui/help.py:455
 msgid ""
 "A stale room assignment makes both availability and cost reporting wrong. "
 "Record moves and releases on the date they actually happen."
@@ -2355,7 +2376,7 @@ msgstr ""
 "Neaktuálne pridelenie izby skresľuje dostupnosť aj výkaz nákladov. Presuny a "
 "uvoľnenia zaznamenajte v deň, keď skutočne nastanú."
 
-#: core/ui/help.py:441
+#: core/ui/help.py:461
 msgid ""
 "The accommodation workspace with fictional buildings, occupancy, and cost "
 "information."
@@ -2363,22 +2384,22 @@ msgstr ""
 "Pracovná plocha ubytovania s fiktívnymi budovami, obsadenosťou a údajmi o "
 "nákladoch."
 
-#: core/ui/help.py:443
+#: core/ui/help.py:463
 msgid "Building and room data define capacity and placement."
 msgstr "Údaje budovy a izby určujú kapacitu a ubytovanie."
 
-#: core/ui/help.py:445
+#: core/ui/help.py:465
 msgid "Period controls and totals explain the accommodation cost view."
 msgstr ""
 "Ovládanie obdobia a súčty vysvetľujú zobrazenie nákladov na ubytovanie."
 
-#: core/ui/help.py:456
+#: core/ui/help.py:476
 msgid "Propose, review, match, and restrict serious re-entry cases."
 msgstr ""
 "Navrhujte, posudzujte, párujte a obmedzujte závažné prípady opätovného "
 "prijatia."
 
-#: core/ui/help.py:461
+#: core/ui/help.py:481
 msgid ""
 "The blacklist is a controlled last-resort process for preventing a "
 "specifically reviewed person from being re-entered after a serious issue."
@@ -2386,7 +2407,7 @@ msgstr ""
 "Čierna listina je riadený krajný postup, ktorý po závažnom probléme bráni "
 "opätovnému prijatiu konkrétne posúdeného človeka."
 
-#: core/ui/help.py:464
+#: core/ui/help.py:484
 msgid ""
 "A Coordinator or Manager may propose a case. Only a Manager decides it; "
 "other authenticated roles may read Help even if they cannot open the review "
@@ -2396,7 +2417,7 @@ msgstr ""
 "ostatné prihlásené roly môžu čítať Pomocníka, aj keď front posudzovania "
 "neotvoria."
 
-#: core/ui/help.py:468
+#: core/ui/help.py:488
 msgid ""
 "Open the person's profile, propose a case, choose the approved category, and "
 "write a factual reason without unnecessary sensitive detail."
@@ -2404,7 +2425,7 @@ msgstr ""
 "Otvorte profil osoby, navrhnite prípad, vyberte schválenú kategóriu a "
 "napíšte vecný dôvod bez nepotrebných citlivých podrobností."
 
-#: core/ui/help.py:471
+#: core/ui/help.py:491
 msgid ""
 "A Manager reviews the proposal and its privacy-preserving identifiers, then "
 "approves or rejects with a recorded reason."
@@ -2412,7 +2433,7 @@ msgstr ""
 "Manažér posúdi návrh a identifikátory chrániace súkromie a potom ho so "
 "zaznamenaným dôvodom schváli alebo zamietne."
 
-#: core/ui/help.py:474
+#: core/ui/help.py:494
 msgid ""
 "Approved cases block activation and flag a matching future intake. The "
 "system does not merge people automatically."
@@ -2420,7 +2441,7 @@ msgstr ""
 "Schválené prípady blokujú aktiváciu a označia zhodný budúci nástup. Systém "
 "ľudí automaticky nezlučuje."
 
-#: core/ui/help.py:477
+#: core/ui/help.py:497
 msgid ""
 "If a restriction must be removed, use the controlled removal action so the "
 "reason and actor remain in Audit."
@@ -2428,11 +2449,11 @@ msgstr ""
 "Ak treba obmedzenie odstrániť, použite riadenú akciu odstránenia, aby dôvod "
 "a vykonávateľ zostali v Audite."
 
-#: core/ui/help.py:480
+#: core/ui/help.py:500
 msgid "High-impact restricted data"
 msgstr "Obmedzené údaje s veľkým dosahom"
 
-#: core/ui/help.py:482
+#: core/ui/help.py:502
 msgid ""
 "Do not use the blacklist for ordinary performance notes or as an automatic "
 "consequence of an exit. Follow the approved legal basis, access, and "
@@ -2442,33 +2463,33 @@ msgstr ""
 "následok odchodu. Pred prijatím skutočných údajov dodržte schválený právny "
 "základ, prístup a pravidlá uchovávania."
 
-#: core/ui/help.py:487
+#: core/ui/help.py:507
 msgid "The blacklist review queue with fictional proposed cases."
 msgstr "Front posudzovania čiernej listiny s fiktívnymi navrhnutými prípadmi."
 
-#: core/ui/help.py:488
+#: core/ui/help.py:508
 msgid "The proposal shows the person, category, and review facts."
 msgstr "Návrh zobrazuje osobu, kategóriu a skutočnosti na posúdenie."
 
-#: core/ui/help.py:489
+#: core/ui/help.py:509
 msgid "A Manager records the decision through explicit controls."
 msgstr "Manažér zaznamená rozhodnutie jednoznačnými ovládacími prvkami."
 
-#: core/ui/help.py:498
+#: core/ui/help.py:518
 msgid "Reporting and pay"
 msgstr "Výkazy a odmeňovanie"
 
-#: core/ui/help.py:502
+#: core/ui/help.py:522
 msgid "Reports and staff activity"
 msgstr "Výkazy a aktivita pracovníkov"
 
-#: core/ui/help.py:504
+#: core/ui/help.py:524
 msgid "Use period filters, drill-downs, office scope, and activity reporting."
 msgstr ""
 "Používajte filtre období, prechody na podrobnosti, rozsah pobočky a výkazy "
 "aktivity."
 
-#: core/ui/help.py:508
+#: core/ui/help.py:528
 msgid ""
 "Reports summarizes current operational records, while Staff activity counts "
 "selected staff actions over a chosen reporting period."
@@ -2476,7 +2497,7 @@ msgstr ""
 "Výkazy sumarizujú aktuálne prevádzkové záznamy, kým Aktivita pracovníkov "
 "počíta vybrané akcie pracovníkov za zvolené obdobie."
 
-#: core/ui/help.py:511
+#: core/ui/help.py:531
 msgid ""
 "Report visibility follows office scope and each report action. Staff "
 "activity is available only to roles with its reporting permission; Help "
@@ -2486,7 +2507,7 @@ msgstr ""
 "Aktivita pracovníkov je dostupná len rolám s príslušným oprávnením; "
 "Pomocníka môže čítať každý."
 
-#: core/ui/help.py:515
+#: core/ui/help.py:535
 msgid ""
 "Set the reporting period first. Month, quarter, year, and custom controls "
 "change the rows and totals shown on the page."
@@ -2494,7 +2515,7 @@ msgstr ""
 "Najprv nastavte obdobie výkazu. Ovládanie mesiaca, štvrťroka, roka a "
 "vlastného obdobia mení riadky a súčty na stránke."
 
-#: core/ui/help.py:518
+#: core/ui/help.py:538
 msgid ""
 "Open a metric card or linked row to drill down to the underlying People or "
 "Projects view instead of copying a headline number."
@@ -2502,7 +2523,7 @@ msgstr ""
 "Namiesto kopírovania hlavného čísla otvorte kartu metriky alebo prepojený "
 "riadok a prejdite na podkladové zobrazenie Ľudí alebo Projektov."
 
-#: core/ui/help.py:521
+#: core/ui/help.py:541
 msgid ""
 "Use Staff activity to compare recorded operational actions, including zero-"
 "activity colleagues where shown."
@@ -2510,7 +2531,7 @@ msgstr ""
 "Aktivitu pracovníkov použite na porovnanie zaznamenaných prevádzkových akcií "
 "vrátane kolegov s nulovou aktivitou, ak sú zobrazení."
 
-#: core/ui/help.py:524
+#: core/ui/help.py:544
 msgid ""
 "Use Audit—not Staff activity—when you need to know who changed a specific "
 "record, what changed, and why."
@@ -2518,11 +2539,11 @@ msgstr ""
 "Keď potrebujete vedieť, kto zmenil konkrétny záznam, čo zmenil a prečo, "
 "použite Audit, nie Aktivitu pracovníkov."
 
-#: core/ui/help.py:527
+#: core/ui/help.py:547
 msgid "Read totals in scope"
 msgstr "Čítajte súčty v danom rozsahu"
 
-#: core/ui/help.py:529
+#: core/ui/help.py:549
 msgid ""
 "Operational totals include only records visible in your office scope. An "
 "Observer may see cross-office figures that another role cannot."
@@ -2530,7 +2551,7 @@ msgstr ""
 "Prevádzkové súčty zahŕňajú iba záznamy viditeľné vo vašom rozsahu pobočiek. "
 "Pozorovateľ môže vidieť údaje naprieč pobočkami, ktoré iná rola nevidí."
 
-#: core/ui/help.py:535
+#: core/ui/help.py:555
 msgid ""
 "The Reports workspace with fictional metrics, period controls, and drill-"
 "down links."
@@ -2538,16 +2559,16 @@ msgstr ""
 "Pracovná plocha Výkazov s fiktívnymi metrikami, ovládaním obdobia a odkazmi "
 "na podrobnosti."
 
-#: core/ui/help.py:537
+#: core/ui/help.py:557
 msgid "Set the period before interpreting a metric."
 msgstr "Pred vyhodnotením metriky nastavte obdobie."
 
-#: core/ui/help.py:538
+#: core/ui/help.py:558
 msgid "Linked cards and rows open the records behind the total."
 msgstr "Prepojené karty a riadky otvoria záznamy za súčtom."
 
 # --- finance ---
-#: core/ui/help.py:546 templates/layouts/base.html:64
+#: core/ui/help.py:566 templates/layouts/base.html:64
 #: templates/pages/finance_executive.html:4
 #: templates/pages/finance_executive.html:9
 #: templates/pages/finance_month_detail.html:8
@@ -2560,7 +2581,7 @@ msgstr "Prepojené karty a riadky otvoria záznamy za súčtom."
 msgid "Finance"
 msgstr "Financie"
 
-#: core/ui/help.py:548
+#: core/ui/help.py:568
 msgid ""
 "Record monthly project revenue and cost lines, lock periods, and read "
 "results."
@@ -2568,7 +2589,7 @@ msgstr ""
 "Zaznamenávajte mesačné príjmové a nákladové riadky projektu, uzamykajte "
 "obdobia a čítajte výsledky."
 
-#: core/ui/help.py:553
+#: core/ui/help.py:573
 msgid ""
 "Finance records project profitability from explicit monthly revenue and cost "
 "lines and derives every displayed total from those entries."
@@ -2576,7 +2597,7 @@ msgstr ""
 "Financie zaznamenávajú ziskovosť projektu z konkrétnych mesačných príjmových "
 "a nákladových riadkov a každý zobrazený súčet odvodzujú z týchto položiek."
 
-#: core/ui/help.py:556
+#: core/ui/help.py:576
 msgid ""
 "Authorized finance readers may inspect reports. Recording, locking, "
 "reopening, and export actions require their configured permissions, with "
@@ -2586,7 +2607,7 @@ msgstr ""
 "uzamknutie, opätovné otvorenie a export vyžadujú nastavené oprávnenia a tam, "
 "kde je určené, schválenie Manažéra."
 
-#: core/ui/help.py:560
+#: core/ui/help.py:580
 msgid ""
 "Choose the project and calendar month, then record each revenue or cost line "
 "in its correct category."
@@ -2594,7 +2615,7 @@ msgstr ""
 "Vyberte projekt a kalendárny mesiac a potom zaznamenajte každý príjmový "
 "alebo nákladový riadok v správnej kategórii."
 
-#: core/ui/help.py:563
+#: core/ui/help.py:583
 msgid ""
 "Enter every amount as a positive decimal. The category determines whether it "
 "contributes revenue or cost; net is calculated automatically."
@@ -2602,7 +2623,7 @@ msgstr ""
 "Každú sumu zadajte ako kladné desatinné číslo. Kategória určí, či ide o "
 "príjem alebo náklad; čistý výsledok sa vypočíta automaticky."
 
-#: core/ui/help.py:566
+#: core/ui/help.py:586
 msgid ""
 "Review the month detail against source records, then lock the month when it "
 "is final. Reopen only for a genuine correction."
@@ -2610,7 +2631,7 @@ msgstr ""
 "Porovnajte podrobnosti mesiaca so zdrojovými záznamami a po dokončení mesiac "
 "uzamknite. Opätovne ho otvorte iba pre skutočnú opravu."
 
-#: core/ui/help.py:569
+#: core/ui/help.py:589
 msgid ""
 "Use the summary, yearly trend, and category breakdown to inspect the same "
 "underlying lines from different angles."
@@ -2618,11 +2639,11 @@ msgstr ""
 "Pomocou súhrnu, ročného trendu a členenia kategórií preskúmajte rovnaké "
 "podkladové riadky z rôznych pohľadov."
 
-#: core/ui/help.py:572
+#: core/ui/help.py:592
 msgid "Locked periods are deliberate"
 msgstr "Uzamknuté obdobia sú zámerné"
 
-#: core/ui/help.py:574
+#: core/ui/help.py:594
 msgid ""
 "Do not type a negative cost or a pre-calculated net value. Locking prevents "
 "ordinary edits, and every reopen is an audited exception."
@@ -2630,7 +2651,7 @@ msgstr ""
 "Nezadávajte záporný náklad ani vopred vypočítanú čistú hodnotu. Uzamknutie "
 "zabráni bežným úpravám a každé opätovné otvorenie je auditovaná výnimka."
 
-#: core/ui/help.py:580
+#: core/ui/help.py:600
 msgid ""
 "The Finance workspace with fictional monthly revenue, costs, and derived "
 "results."
@@ -2638,26 +2659,26 @@ msgstr ""
 "Pracovná plocha Financií s fiktívnymi mesačnými príjmami, nákladmi a "
 "odvodenými výsledkami."
 
-#: core/ui/help.py:582
+#: core/ui/help.py:602
 msgid "Period and project controls select the financial slice."
 msgstr "Ovládanie obdobia a projektu vyberá finančný výrez."
 
-#: core/ui/help.py:584
+#: core/ui/help.py:604
 msgid "Totals and charts are derived from the recorded line items."
 msgstr "Súčty a grafy sa odvodzujú zo zaznamenaných riadkových položiek."
 
 # --- feedback ---
-#: core/ui/help.py:593 templates/layouts/base.html:73
+#: core/ui/help.py:613 templates/layouts/base.html:73
 #: templates/pages/feedback_form.html:8 templates/pages/feedback_form.html:27
 msgid "Feedback"
 msgstr "Spätná väzba"
 
-#: core/ui/help.py:595
+#: core/ui/help.py:615
 msgid "Create public links and QR flyers, then review anonymous submissions."
 msgstr ""
 "Vytvárajte verejné odkazy a QR letáky a potom posudzujte anonymné podania."
 
-#: core/ui/help.py:600
+#: core/ui/help.py:620
 msgid ""
 "Feedback gives workers a public, account-free way to submit a message "
 "through a controlled link or printed QR flyer."
@@ -2665,7 +2686,7 @@ msgstr ""
 "Spätná väzba poskytuje pracovníkom verejný spôsob bez účtu, ako odoslať "
 "správu cez kontrolovaný odkaz alebo vytlačený QR leták."
 
-#: core/ui/help.py:603
+#: core/ui/help.py:623
 msgid ""
 "Managers create links and review the inbox. The submission form is public to "
 "anyone holding the token; Help itself remains authenticated."
@@ -2673,7 +2694,7 @@ msgstr ""
 "Manažéri vytvárajú odkazy a kontrolujú prijaté správy. Formulár je verejný "
 "pre každého s tokenom; samotný Pomocník zostáva za prihlásením."
 
-#: core/ui/help.py:607
+#: core/ui/help.py:627
 msgid ""
 "Create a clearly labelled feedback link and optionally connect it to the "
 "relevant project."
@@ -2681,7 +2702,7 @@ msgstr ""
 "Vytvorte zrozumiteľne pomenovaný odkaz spätnej väzby a voliteľne ho pripojte "
 "k príslušnému projektu."
 
-#: core/ui/help.py:610
+#: core/ui/help.py:630
 msgid ""
 "Share the generated URL or download the one-page QR flyer for printing. "
 "Retire a distribution point by controlling where its token is published."
@@ -2689,7 +2710,7 @@ msgstr ""
 "Zdieľajte vytvorenú URL alebo stiahnite jednostranový QR leták na tlač. "
 "Distribučné miesto zrušíte tým, že určíte, kde sa jeho token zverejňuje."
 
-#: core/ui/help.py:613
+#: core/ui/help.py:633
 msgid ""
 "A worker opens the public form, writes a message, and may add a rating "
 "without creating an account."
@@ -2697,7 +2718,7 @@ msgstr ""
 "Pracovník otvorí verejný formulár, napíše správu a môže pridať hodnotenie "
 "bez vytvorenia účtu."
 
-#: core/ui/help.py:616
+#: core/ui/help.py:636
 msgid ""
 "Managers review the newest submissions in the inbox and handle them under "
 "the agreed retention and escalation process."
@@ -2705,11 +2726,11 @@ msgstr ""
 "Manažéri kontrolujú najnovšie podania v prijatých správach a riešia ich "
 "podľa dohodnutého postupu uchovávania a eskalácie."
 
-#: core/ui/help.py:619
+#: core/ui/help.py:639
 msgid "Public token, limited purpose"
 msgstr "Verejný token, obmedzený účel"
 
-#: core/ui/help.py:621
+#: core/ui/help.py:641
 msgid ""
 "Anyone with the link can submit. Do not ask workers to include identity "
 "documents, medical details, credentials, or other unnecessary sensitive "
@@ -2719,28 +2740,28 @@ msgstr ""
 "textu vkladali doklady totožnosti, zdravotné údaje, prihlasovacie údaje ani "
 "iné nepotrebné citlivé informácie."
 
-#: core/ui/help.py:627
+#: core/ui/help.py:647
 msgid ""
 "The Feedback inbox with fictional submissions and link-management controls."
 msgstr ""
 "Prijaté správy spätnej väzby s fiktívnymi podaniami a ovládaním odkazov."
 
-#: core/ui/help.py:629
+#: core/ui/help.py:649
 msgid "Link and QR controls create the public entry point."
 msgstr "Ovládanie odkazu a QR kódu vytvára verejný vstupný bod."
 
-#: core/ui/help.py:631
+#: core/ui/help.py:651
 msgid "The authenticated inbox is where Managers review submissions."
 msgstr ""
 "Manažéri posudzujú podania v prijatých správach chránených prihlásením."
 
-#: core/ui/help.py:642
+#: core/ui/help.py:662
 msgid ""
 "Record advances, additions, deductions, reversals, and settlement cycles."
 msgstr ""
 "Zaznamenávajte zálohy, pripočítania, zrážky, storno a zúčtovacie cykly."
 
-#: core/ui/help.py:647
+#: core/ui/help.py:667
 msgid ""
 "The ledger records explicit pay additions and deductions, groups them into "
 "settlement cycles, and preserves corrections as history."
@@ -2748,7 +2769,7 @@ msgstr ""
 "Evidencia zaznamenáva konkrétne pripočítania a zrážky zo mzdy, zoskupuje ich "
 "do zúčtovacích cyklov a opravy uchováva v histórii."
 
-#: core/ui/help.py:650
+#: core/ui/help.py:670
 msgid ""
 "Authorized readers can inspect cycles. Entry, cancellation, reversal, "
 "settlement, and export each require the corresponding ledger or export "
@@ -2757,7 +2778,7 @@ msgstr ""
 "Oprávnení čitatelia môžu kontrolovať cykly. Zadanie, zrušenie, storno, "
 "zúčtovanie a export vyžadujú príslušné oprávnenie evidencie alebo exportu."
 
-#: core/ui/help.py:654
+#: core/ui/help.py:674
 msgid ""
 "Record the person, optional project, entry type, category, positive amount, "
 "and a concise note."
@@ -2765,7 +2786,7 @@ msgstr ""
 "Zaznamenajte osobu, voliteľný projekt, typ položky, kategóriu, kladnú sumu a "
 "stručnú poznámku."
 
-#: core/ui/help.py:657
+#: core/ui/help.py:677
 msgid ""
 "Review the current Thursday summary and select the intended 20th-to-20th "
 "cycle before including entries."
@@ -2773,7 +2794,7 @@ msgstr ""
 "Pred zahrnutím položiek skontrolujte aktuálny štvrtkový súhrn a vyberte "
 "požadovaný cyklus od 20. do 20."
 
-#: core/ui/help.py:660
+#: core/ui/help.py:680
 msgid ""
 "Correct a mistake by cancelling or reversing the original entry with a "
 "reason; never overwrite financial history."
@@ -2781,7 +2802,7 @@ msgstr ""
 "Chybu opravte zrušením alebo stornovaním pôvodnej položky s dôvodom; "
 "finančnú históriu nikdy neprepisujte."
 
-#: core/ui/help.py:663
+#: core/ui/help.py:683
 msgid ""
 "After the external deduction process is complete, mark the included cycle "
 "settled and use the approved CSV export when needed."
@@ -2789,11 +2810,11 @@ msgstr ""
 "Po dokončení externého procesu zrážok označte zahrnutý cyklus ako zúčtovaný "
 "a podľa potreby použite schválený export CSV."
 
-#: core/ui/help.py:666
+#: core/ui/help.py:686
 msgid "Positive amounts, explicit pay effect"
 msgstr "Kladné sumy, jednoznačný vplyv na mzdu"
 
-#: core/ui/help.py:668
+#: core/ui/help.py:688
 msgid ""
 "The entry type controls whether an amount adds to or deducts from pay. This "
 "ledger records source adjustments; it does not calculate statutory payroll."
@@ -2801,7 +2822,7 @@ msgstr ""
 "Typ položky určuje, či sa suma k mzde pripočíta alebo sa z nej odpočíta. "
 "Táto evidencia zaznamenáva zdrojové úpravy; zákonné mzdy nepočíta."
 
-#: core/ui/help.py:674
+#: core/ui/help.py:694
 msgid ""
 "The ledger workspace with fictional entries, cycle controls, and settlement "
 "summaries."
@@ -2809,15 +2830,15 @@ msgstr ""
 "Pracovná plocha evidencie s fiktívnymi položkami, ovládaním cyklov a súhrnmi "
 "zúčtovania."
 
-#: core/ui/help.py:677
+#: core/ui/help.py:697
 msgid "Entry controls record an explicit type, category, and amount."
 msgstr "Ovládanie zadania zaznamenáva jednoznačný typ, kategóriu a sumu."
 
-#: core/ui/help.py:680
+#: core/ui/help.py:700
 msgid "Cycle controls include, export, and settle the selected period."
 msgstr "Ovládanie cyklu zahrnie, exportuje a zúčtuje vybrané obdobie."
 
-#: core/ui/help.py:686 core/ui/help.py:772 core/ui/help.py:843
+#: core/ui/help.py:706 core/ui/help.py:808 core/ui/help.py:889
 #: features/payslips/forms.py:22 templates/pages/ledger.html:21
 #: templates/pages/payslips.html:38 templates/pages/person_detail.html:38
 #: templates/pages/person_detail.html:289 templates/pages/wages.html:38
@@ -2827,34 +2848,40 @@ msgstr "Ovládanie cyklu zahrnie, exportuje a zúčtuje vybrané obdobie."
 msgid "Person"
 msgstr "Osoba"
 
-#: core/ui/help.py:687 templates/pages/ledger.html:21
+#: core/ui/help.py:708 templates/pages/ledger.html:21
 msgid ""
 "The worker this money concerns. The entry appears on their pay overview and "
 "in their open balance."
-msgstr "Pracovník, ktorého sa tieto peniaze týkajú. Záznam sa zobrazí v jeho prehľade mzdy a v jeho otvorenom zostatku."
+msgstr ""
+"Pracovník, ktorého sa tieto peniaze týkajú. Záznam sa zobrazí v jeho "
+"prehľade mzdy a v jeho otvorenom zostatku."
 
-#: core/ui/help.py:691 templates/pages/ledger.html:25
+#: core/ui/help.py:713 templates/pages/ledger.html:25
 msgid "Company / project"
 msgstr "Firma / projekt"
 
-#: core/ui/help.py:692 templates/pages/ledger.html:25
+#: core/ui/help.py:715 templates/pages/ledger.html:25
 msgid ""
 "Optional. Attributes the amount to a partner company for reporting. It does "
 "not change what the worker is paid."
-msgstr "Nepovinné. Priradí sumu partnerskej spoločnosti pre výkazníctvo. Nemení to, koľko pracovník dostane vyplatené."
+msgstr ""
+"Nepovinné. Priradí sumu partnerskej spoločnosti pre výkazníctvo. Nemení to, "
+"koľko pracovník dostane vyplatené."
 
-#: core/ui/help.py:696 templates/pages/ledger.html:30
+#: core/ui/help.py:720 templates/pages/ledger.html:30
 #: templates/panels/advances_ledger.html:24
 msgid "Entry type"
 msgstr "Typ záznamu"
 
-#: core/ui/help.py:697 templates/pages/ledger.html:30
+#: core/ui/help.py:722 templates/pages/ledger.html:30
 msgid ""
 "Decides the direction: an advance or deduction reduces pay, an addition "
 "increases it. The amount stays positive either way."
-msgstr "Určuje smer: záloha alebo zrážka mzdu znižuje, prídavok ju zvyšuje. Suma zostáva v oboch prípadoch kladná."
+msgstr ""
+"Určuje smer: záloha alebo zrážka mzdu znižuje, prídavok ju zvyšuje. Suma "
+"zostáva v oboch prípadoch kladná."
 
-#: core/ui/help.py:701 templates/pages/finance_project_year.html:22
+#: core/ui/help.py:727 templates/pages/finance_project_year.html:22
 #: templates/pages/finance_workbook.html:22 templates/pages/ledger.html:34
 #: templates/panels/advances_ledger.html:28
 #: templates/panels/blacklist_case.html:10
@@ -2863,64 +2890,74 @@ msgstr "Určuje smer: záloha alebo zrážka mzdu znižuje, prídavok ju zvyšuj
 msgid "Category"
 msgstr "Kategória"
 
-#: core/ui/help.py:702 templates/pages/ledger.html:34
+#: core/ui/help.py:729 templates/pages/ledger.html:34
 msgid ""
 "What the money was for - advance, clothing, footwear, equipment, medical, "
 "travel or other. Groups the cycle report; it does not affect the direction "
 "or the amount."
-msgstr "Za čo boli peniaze – záloha, oblečenie, obuv, výstroj, lekárske, cestovné alebo iné. Zoskupuje výkaz cyklu; neovplyvňuje smer ani sumu."
+msgstr ""
+"Za čo boli peniaze – záloha, oblečenie, obuv, výstroj, lekárske, cestovné "
+"alebo iné. Zoskupuje výkaz cyklu; neovplyvňuje smer ani sumu."
 
-#: core/ui/help.py:706 templates/pages/ledger.html:38
+#: core/ui/help.py:734 templates/pages/ledger.html:38
 #: templates/panels/advances_ledger.html:32
 msgid "Amount (EUR)"
 msgstr "Suma (EUR)"
 
-#: core/ui/help.py:707 templates/pages/ledger.html:38
+#: core/ui/help.py:736 templates/pages/ledger.html:38
 msgid ""
 "Always a positive number. Never type a minus sign - the entry type decides "
 "whether this is added or subtracted."
-msgstr "Vždy kladné číslo. Nikdy nepíšte znamienko mínus – o pripočítaní alebo odpočítaní rozhoduje typ záznamu."
+msgstr ""
+"Vždy kladné číslo. Nikdy nepíšte znamienko mínus – o pripočítaní alebo "
+"odpočítaní rozhoduje typ záznamu."
 
-#: core/ui/help.py:709
+#: core/ui/help.py:740
 msgid "Once the cycle is included; correct it with a reversal after that."
 msgstr "Po zahrnutí cyklu; potom ho opravte storno záznamom."
 
-#: core/ui/help.py:712 templates/pages/ledger.html:39
+#: core/ui/help.py:744 templates/pages/ledger.html:39
 msgid "Entry date"
 msgstr "Dátum záznamu"
 
-#: core/ui/help.py:713 templates/pages/ledger.html:39
+#: core/ui/help.py:746 templates/pages/ledger.html:39
 msgid ""
 "The day the money changed hands. It decides which 21st-to-20th payroll cycle "
 "the entry settles in, and which calendar month it appears under on the pay "
 "overview. Leave blank for today; a date inside an already-settled cycle is "
 "refused."
-msgstr "Deň, keď peniaze zmenili majiteľa. Určuje, v ktorom mzdovom cykle od 21. do 20. sa záznam vyrovná a pod ktorý kalendárny mesiac patrí v prehľade mzdy. Nechajte prázdne pre dnešok; dátum vo vnútri už vyrovnaného cyklu sa zamietne."
+msgstr ""
+"Deň, keď peniaze zmenili majiteľa. Určuje, v ktorom mzdovom cykle od 21. do "
+"20. sa záznam vyrovná a pod ktorý kalendárny mesiac patrí v prehľade mzdy. "
+"Nechajte prázdne pre dnešok; dátum vo vnútri už vyrovnaného cyklu sa "
+"zamietne."
 
-#: core/ui/help.py:715
+#: core/ui/help.py:749
 msgid "Once the cycle containing that date is included."
 msgstr "Po zahrnutí cyklu, do ktorého tento dátum patrí."
 
-#: core/ui/help.py:718 core/ui/help.py:792 core/ui/help.py:858
-#: features/logistics/forms.py:179 templates/pages/ledger.html:40
+#: core/ui/help.py:752 core/ui/help.py:836 core/ui/help.py:910
+#: features/logistics/forms.py:177 templates/pages/ledger.html:40
 #: templates/pages/transport_trends.html:44 templates/pages/wages.html:41
 #: templates/panels/advances_ledger.html:33
 msgid "Note"
 msgstr "Poznámka"
 
-#: core/ui/help.py:719 templates/pages/ledger.html:40
+#: core/ui/help.py:754 templates/pages/ledger.html:40
 msgid ""
 "The reason, in words, for whoever reads this months from now. It is carried "
 "into the exports the accountant receives."
-msgstr "Dôvod slovami pre toho, kto to bude čítať o niekoľko mesiacov. Prenáša sa do exportov, ktoré dostáva účtovník."
+msgstr ""
+"Dôvod slovami pre toho, kto to bude čítať o niekoľko mesiacov. Prenáša sa do "
+"exportov, ktoré dostáva účtovník."
 
-#: core/ui/help.py:730
+#: core/ui/help.py:766
 msgid "Record net payslip values and deliver encrypted PDFs safely."
 msgstr ""
 "Zaznamenávajte čisté hodnoty výplatných pások a bezpečne doručujte šifrované "
 "PDF."
 
-#: core/ui/help.py:735
+#: core/ui/help.py:771
 msgid ""
 "Payslips stores the independently supplied net value and can email a freshly "
 "generated encrypted PDF to the worker."
@@ -2928,7 +2965,7 @@ msgstr ""
 "Výplatné pásky uchovávajú nezávisle dodanú čistú hodnotu a môžu pracovníkovi "
 "e-mailom odoslať čerstvo vytvorený šifrovaný PDF."
 
-#: core/ui/help.py:738
+#: core/ui/help.py:774
 msgid ""
 "Payslip amounts are restricted pay data. Only roles with payslip access can "
 "read them, and only authorized Managers can record or send them."
@@ -2937,7 +2974,7 @@ msgstr ""
 "prístupom k páskam a zaznamenať alebo odoslať ich môžu iba oprávnení "
 "Manažéri."
 
-#: core/ui/help.py:742
+#: core/ui/help.py:778
 msgid ""
 "Confirm the worker has the correct email address, then record the calendar "
 "month, positive net amount, optional issue date, and note."
@@ -2945,7 +2982,7 @@ msgstr ""
 "Overte správnu e-mailovú adresu pracovníka a potom zaznamenajte kalendárny "
 "mesiac, kladnú čistú sumu, voliteľný dátum vystavenia a poznámku."
 
-#: core/ui/help.py:745
+#: core/ui/help.py:781
 msgid ""
 "Review the recorded row before sending. Send encrypted PDF generates the "
 "attachment and a random one-time password."
@@ -2953,7 +2990,7 @@ msgstr ""
 "Pred odoslaním skontrolujte zaznamenaný riadok. Odoslať šifrovaný PDF "
 "vytvorí prílohu a náhodné jednorazové heslo."
 
-#: core/ui/help.py:748
+#: core/ui/help.py:784
 msgid ""
 "Tell the worker the password by phone or Messenger, never in the same email "
 "as the encrypted PDF."
@@ -2961,7 +2998,7 @@ msgstr ""
 "Heslo oznámte pracovníkovi telefonicky alebo cez Messenger, nikdy v rovnakom "
 "e-maile ako šifrovaný PDF."
 
-#: core/ui/help.py:751
+#: core/ui/help.py:787
 msgid ""
 "If you resend, a new password is generated and the earlier one is "
 "invalidated. The password is shown once and is not stored for later "
@@ -2970,11 +3007,11 @@ msgstr ""
 "Pri opätovnom odoslaní sa vytvorí nové heslo a predchádzajúce prestane "
 "platiť. Heslo sa zobrazí raz a neukladá sa na neskoršie získanie."
 
-#: core/ui/help.py:754
+#: core/ui/help.py:790
 msgid "Never capture or copy the password into records"
 msgstr "Heslo nikdy nezachytávajte ani nekopírujte do záznamov"
 
-#: core/ui/help.py:756
+#: core/ui/help.py:792
 msgid ""
 "Do not screenshot the success message, paste the password into notes, email "
 "it, or send it through the same channel as the PDF. The generated PDF is not "
@@ -2984,7 +3021,7 @@ msgstr ""
 "neposielajte ho e-mailom ani rovnakým kanálom ako PDF. Vytvorený PDF "
 "aplikácia neukladá."
 
-#: core/ui/help.py:762
+#: core/ui/help.py:798
 msgid ""
 "The payslip list with fictional net values and delivery states; no passwords "
 "are visible."
@@ -2992,55 +3029,62 @@ msgstr ""
 "Zoznam výplatných pások s fiktívnymi čistými hodnotami a stavmi doručenia; "
 "žiadne heslá nie sú viditeľné."
 
-#: core/ui/help.py:765
+#: core/ui/help.py:801
 msgid "The record form stores the independently supplied net value."
 msgstr "Formulár ukladá nezávisle dodanú čistú hodnotu."
 
-#: core/ui/help.py:767
+#: core/ui/help.py:803
 msgid "Delivery state shows whether an encrypted PDF was sent."
 msgstr "Stav doručenia ukazuje, či bol šifrovaný PDF odoslaný."
 
-#: core/ui/help.py:773
+#: core/ui/help.py:810
 msgid ""
 "Who the payslip belongs to. A worker with no email address is marked in the "
 "list, because the encrypted PDF cannot be delivered to them."
-msgstr "Komu výplatná páska patrí. Pracovník bez e-mailovej adresy je v zozname označený, pretože zašifrované PDF mu nemožno doručiť."
+msgstr ""
+"Komu výplatná páska patrí. Pracovník bez e-mailovej adresy je v zozname "
+"označený, pretože zašifrované PDF mu nemožno doručiť."
 
-#: core/ui/help.py:777 features/payslips/forms.py:34
+#: core/ui/help.py:815 features/payslips/forms.py:34
 msgid "Pay month"
 msgstr "Mesiac výplaty"
 
-#: core/ui/help.py:778 features/payslips/forms.py:39
+#: core/ui/help.py:817 features/payslips/forms.py:39
 msgid ""
 "The calendar month this payslip pays for, not the month it was issued in. "
 "One payslip per person per month."
-msgstr "Kalendárny mesiac, za ktorý sa touto páskou platí, nie mesiac vystavenia. Jedna páska na osobu a mesiac."
+msgstr ""
+"Kalendárny mesiac, za ktorý sa touto páskou platí, nie mesiac vystavenia. "
+"Jedna páska na osobu a mesiac."
 
-#: core/ui/help.py:782 features/payslips/forms.py:35
+#: core/ui/help.py:822 features/payslips/forms.py:35
 msgid "Net amount (EUR)"
 msgstr "Čistá suma (EUR)"
 
-#: core/ui/help.py:783 features/payslips/forms.py:43
+#: core/ui/help.py:824 features/payslips/forms.py:43
 msgid ""
 "The net figure printed on the payslip, as paid. It is shown beside the gross "
 "wage and the ledger deductions for the same month; the system does not "
 "calculate it."
-msgstr "Čistá suma vytlačená na výplatnej páske, tak ako bola vyplatená. Zobrazuje sa vedľa hrubej mzdy a zrážok z knihy za ten istý mesiac; systém ju nepočíta."
+msgstr ""
+"Čistá suma vytlačená na výplatnej páske, tak ako bola vyplatená. Zobrazuje "
+"sa vedľa hrubej mzdy a zrážok z knihy za ten istý mesiac; systém ju nepočíta."
 
-#: core/ui/help.py:787 features/payslips/forms.py:25
+#: core/ui/help.py:829 features/payslips/forms.py:25
 msgid "Payslip date (optional)"
 msgstr "Dátum výplatnej pásky (voliteľné)"
 
-#: core/ui/help.py:788
+#: core/ui/help.py:831
 msgid "The date printed on the document. Blank means the day it was recorded."
 msgstr "Dátum vytlačený na dokumente. Prázdne znamená deň zaznamenania."
 
-#: core/ui/help.py:793
+#: core/ui/help.py:838
 msgid ""
 "Free text for the office. It is not included in the PDF sent to the worker."
-msgstr "Voľný text pre kanceláriu. Nie je súčasťou PDF odoslaného pracovníkovi."
+msgstr ""
+"Voľný text pre kanceláriu. Nie je súčasťou PDF odoslaného pracovníkovi."
 
-#: core/ui/help.py:804
+#: core/ui/help.py:850
 msgid ""
 "Record independent monthly gross-wage source values without payroll "
 "calculation."
@@ -3048,7 +3092,7 @@ msgstr ""
 "Zaznamenávajte nezávislé mesačné zdrojové hodnoty hrubej mzdy bez výpočtu "
 "miezd."
 
-#: core/ui/help.py:809
+#: core/ui/help.py:855
 msgid ""
 "Gross wages stores the supplied gross amount for a person and month beside, "
 "but independently from, the recorded net payslip."
@@ -3056,7 +3100,7 @@ msgstr ""
 "Hrubé mzdy uchovávajú dodanú hrubú sumu osoby a mesiaca vedľa zaznamenanej "
 "čistej pásky, ale nezávisle od nej."
 
-#: core/ui/help.py:812
+#: core/ui/help.py:858
 msgid ""
 "Authorized pay-data readers may inspect the list. Recording a gross wage "
 "requires the wage-management permission."
@@ -3064,7 +3108,7 @@ msgstr ""
 "Oprávnení čitatelia mzdových údajov môžu zoznam kontrolovať. Zaznamenanie "
 "hrubej mzdy vyžaduje oprávnenie na správu miezd."
 
-#: core/ui/help.py:816
+#: core/ui/help.py:862
 msgid ""
 "Choose the correct person and calendar month, then enter the externally "
 "supplied positive gross amount."
@@ -3072,7 +3116,7 @@ msgstr ""
 "Vyberte správnu osobu a kalendárny mesiac a potom zadajte externe dodanú "
 "kladnú hrubú sumu."
 
-#: core/ui/help.py:819
+#: core/ui/help.py:865
 msgid ""
 "Add a short source or reconciliation note when it helps another authorized "
 "reader understand the record."
@@ -3080,7 +3124,7 @@ msgstr ""
 "Pridajte krátku poznámku o zdroji alebo odsúhlasení, ak pomôže inému "
 "oprávnenému čitateľovi pochopiť záznam."
 
-#: core/ui/help.py:822
+#: core/ui/help.py:868
 msgid ""
 "Compare gross and net only as independent source values. Investigate "
 "discrepancies through the payroll owner outside this application."
@@ -3088,11 +3132,11 @@ msgstr ""
 "Hrubú a čistú mzdu porovnávajte iba ako nezávislé zdrojové hodnoty. Rozdiely "
 "preskúmajte s vlastníkom mzdového procesu mimo aplikácie."
 
-#: core/ui/help.py:825
+#: core/ui/help.py:871
 msgid "Not a payroll calculator"
 msgstr "Nie je to mzdová kalkulačka"
 
-#: core/ui/help.py:827
+#: core/ui/help.py:873
 msgid ""
 "The application does not derive tax, insurance, statutory deductions, or net "
 "pay from this amount and does not treat a gross-to-net difference as an "
@@ -3101,59 +3145,64 @@ msgstr ""
 "Aplikácia z tejto sumy neodvodzuje daň, poistenie, zákonné zrážky ani čistú "
 "mzdu a rozdiel medzi hrubou a čistou sumou nepovažuje automaticky za chybu."
 
-#: core/ui/help.py:833
+#: core/ui/help.py:879
 msgid ""
 "The gross-wage workspace with fictional independent monthly source values."
 msgstr ""
 "Pracovná plocha hrubých miezd s fiktívnymi nezávislými mesačnými zdrojovými "
 "hodnotami."
 
-#: core/ui/help.py:836
+#: core/ui/help.py:882
 msgid "The form records a person, month, and positive gross amount."
 msgstr "Formulár zaznamenáva osobu, mesiac a kladnú hrubú sumu."
 
-#: core/ui/help.py:838
+#: core/ui/help.py:884
 msgid "The table preserves who recorded each source value."
 msgstr "Tabuľka uchováva informáciu, kto zaznamenal každú zdrojovú hodnotu."
 
-#: core/ui/help.py:844 features/wage_ledger/forms.py:21
+#: core/ui/help.py:891 features/wage_ledger/forms.py:21
 msgid "The worker who earned this wage. One gross figure per person per month."
-msgstr "Pracovník, ktorý si túto mzdu zarobil. Jedna hrubá suma na osobu a mesiac."
+msgstr ""
+"Pracovník, ktorý si túto mzdu zarobil. Jedna hrubá suma na osobu a mesiac."
 
-#: core/ui/help.py:848 features/wage_ledger/forms.py:16
+#: core/ui/help.py:896 features/wage_ledger/forms.py:16
 #: templates/pages/wages.html:39
 msgid "Wage month"
 msgstr "Mzdový mesiac"
 
-#: core/ui/help.py:849 features/wage_ledger/forms.py:25
+#: core/ui/help.py:898 features/wage_ledger/forms.py:25
 msgid ""
 "The calendar month the wage was earned in, not the month it was paid out."
 msgstr "Kalendárny mesiac, v ktorom bola mzda zarobená, nie mesiac vyplatenia."
 
-#: core/ui/help.py:853 features/wage_ledger/forms.py:17
+#: core/ui/help.py:903 features/wage_ledger/forms.py:17
 msgid "Gross wage (EUR)"
 msgstr "Hrubá mzda (EUR)"
 
-#: core/ui/help.py:854 features/wage_ledger/forms.py:29
+#: core/ui/help.py:905 features/wage_ledger/forms.py:29
 msgid ""
 "Gross, before anything is taken off. Ledger deductions are subtracted from "
 "this on the worker's pay overview; tax and levies are not calculated here."
-msgstr "Hrubá suma pred akýmkoľvek odpočtom. V prehľade mzdy pracovníka sa od nej odpočítavajú zrážky z knihy; daň a odvody sa tu nepočítajú."
+msgstr ""
+"Hrubá suma pred akýmkoľvek odpočtom. V prehľade mzdy pracovníka sa od nej "
+"odpočítavajú zrážky z knihy; daň a odvody sa tu nepočítajú."
 
-#: core/ui/help.py:859 features/wage_ledger/forms.py:34
+#: core/ui/help.py:912 features/wage_ledger/forms.py:34
 msgid ""
 "Where this figure came from - a contract, a timesheet, the accountant. It is "
 "what the next reader checks it against."
-msgstr "Odkiaľ toto číslo pochádza – zo zmluvy, z výkazu práce, od účtovníka. Práve podľa toho si to overí ďalší čitateľ."
+msgstr ""
+"Odkiaľ toto číslo pochádza – zo zmluvy, z výkazu práce, od účtovníka. Práve "
+"podľa toho si to overí ďalší čitateľ."
 
-#: core/ui/help.py:870
+#: core/ui/help.py:924
 msgid ""
 "Trace sensitive actions, old and new values, actors, reasons, and retention."
 msgstr ""
 "Sledujte citlivé akcie, staré a nové hodnoty, vykonávateľov, dôvody a "
 "uchovávanie."
 
-#: core/ui/help.py:874
+#: core/ui/help.py:928
 msgid ""
 "Audit is the append-only trace for sensitive actions: who acted, what record "
 "changed, when it happened, and the reason or value snapshot available for "
@@ -3162,7 +3211,7 @@ msgstr ""
 "Audit je nemenná stopa citlivých akcií: kto konal, ktorý záznam sa zmenil, "
 "kedy sa to stalo a aký dôvod alebo snímka hodnôt je pri udalosti dostupná."
 
-#: core/ui/help.py:877
+#: core/ui/help.py:931
 msgid ""
 "Only roles with Audit access can open the log. Help explains it to every "
 "role because their own sensitive actions may create events."
@@ -3170,7 +3219,7 @@ msgstr ""
 "Denník môžu otvoriť iba roly s prístupom k Auditu. Pomocník ho vysvetľuje "
 "každej role, pretože aj jej citlivé akcie môžu vytvoriť udalosti."
 
-#: core/ui/help.py:881
+#: core/ui/help.py:935
 msgid ""
 "Open Audit and narrow the result by actor, worker, action, record type, or "
 "date range."
@@ -3178,7 +3227,7 @@ msgstr ""
 "Otvorte Audit a zúžte výsledok podľa vykonávateľa, pracovníka, akcie, typu "
 "záznamu alebo rozsahu dátumov."
 
-#: core/ui/help.py:884
+#: core/ui/help.py:938
 msgid ""
 "Read the newest events first and use the record reference to connect an "
 "event to the operational workflow."
@@ -3186,7 +3235,7 @@ msgstr ""
 "Najprv čítajte najnovšie udalosti a pomocou odkazu na záznam spojte udalosť "
 "s prevádzkovým postupom."
 
-#: core/ui/help.py:887
+#: core/ui/help.py:941
 msgid ""
 "Use old and new value snapshots where provided to understand the change; "
 "free-text reasons remain in the language originally entered."
@@ -3194,7 +3243,7 @@ msgstr ""
 "Ak sú dostupné, na pochopenie zmeny použite snímky starých a nových hodnôt; "
 "voľné textové dôvody zostávajú v pôvodne zadanom jazyku."
 
-#: core/ui/help.py:890
+#: core/ui/help.py:944
 msgid ""
 "Use Staff activity for volume reporting. Audit is for traceability and "
 "investigation, not performance totals."
@@ -3202,11 +3251,11 @@ msgstr ""
 "Na objemové výkazy použite Aktivitu pracovníkov. Audit slúži na "
 "sledovateľnosť a vyšetrovanie, nie na súčty výkonu."
 
-#: core/ui/help.py:893
+#: core/ui/help.py:947
 msgid "Append-only and restricted"
 msgstr "Nemenné a obmedzené"
 
-#: core/ui/help.py:895
+#: core/ui/help.py:949
 msgid ""
 "Ordinary users cannot edit or delete audit events. Retention follows the "
 "approved policy; do not copy restricted event details into a less protected "
@@ -3216,7 +3265,7 @@ msgstr ""
 "sa riadi schválenými pravidlami; obmedzené podrobnosti udalostí nekopírujte "
 "do menej chráneného systému."
 
-#: core/ui/help.py:901
+#: core/ui/help.py:955
 msgid ""
 "The Audit page heading and filters, captured without event rows or log "
 "contents."
@@ -3224,15 +3273,15 @@ msgstr ""
 "Nadpis a filtre stránky Audit zachytené bez riadkov udalostí a obsahu "
 "denníka."
 
-#: core/ui/help.py:903
+#: core/ui/help.py:957
 msgid "Filters narrow the trace without changing stored events."
 msgstr "Filtre zúžia stopu bez zmeny uložených udalostí."
 
-#: core/ui/help.py:905
+#: core/ui/help.py:959
 msgid "Audit access and append-only behavior protect the evidence trail."
 msgstr "Prístup k Auditu a nemenné správanie chránia dôkaznú stopu."
 
-#: core/ui/registry.py:192
+#: core/ui/registry.py:194
 msgid "After deductions"
 msgstr "Po zrážkach"
 
@@ -3375,72 +3424,72 @@ msgstr "záznamy v knihe"
 msgid "Ledger deductions"
 msgstr "Zrážky z knihy"
 
-#: features/advances/services.py:57
+#: features/advances/services.py:58
 msgid "Amount must be positive — meaning lives in the entry type."
 msgstr "Suma musí byť kladná — význam určuje typ záznamu."
 
-#: features/advances/services.py:62
+#: features/advances/services.py:64
 #, python-format
 msgid "%(t)s entries carry pay effect %(e)s (or none)."
 msgstr "Záznamy typu %(t)s majú vplyv na mzdu %(e)s (alebo žiadny)."
 
-#: features/advances/services.py:71
+#: features/advances/services.py:85
 #, python-format
 msgid ""
-"The %(key)s cycle is already settled. Record this entry in the open cycle, "
-"or reverse an existing entry instead."
-msgstr "Cyklus %(key)s je už vyrovnaný. Zaznamenajte tento záznam v otvorenom cykle alebo namiesto toho stornujte existujúci záznam."
+"The %(key)s cycle is already settled, so this entry cannot be backdated into "
+"it. Record it with today's date, or reverse an existing entry instead."
+msgstr "Cyklus %(key)s je už vyrovnaný, takže tento záznam doň nemožno spätne datovať. Zaznamenajte ho s dnešným dátumom alebo namiesto toho stornujte existujúci záznam."
 
-#: features/advances/services.py:100
+#: features/advances/services.py:118
 msgid "Only open entries can be cancelled; settled entries need a reversal."
 msgstr "Zrušiť možno len otvorené záznamy; vysporiadané vyžadujú storno."
 
-#: features/advances/services.py:112
+#: features/advances/services.py:136
 msgid "Open entries are cancelled, not reversed."
 msgstr "Otvorené záznamy sa rušia, nie stornujú."
 
-#: features/advances/services.py:113
+#: features/advances/services.py:137
 msgid "Entry is already reversed."
 msgstr "Záznam už bol stornovaný."
 
-#: features/advances/services.py:118
+#: features/advances/services.py:144
 msgid "Entries without payroll effect cannot be reversed."
 msgstr "Záznamy bez vplyvu na mzdu nemožno stornovať."
 
-#: features/advances/services.py:272
+#: features/advances/services.py:324
 msgid "Entry is locked after cycle inclusion; record a reversal instead."
 msgstr "Po zahrnutí do cyklu je záznam uzamknutý; zaznamenajte storno."
 
-#: features/advances/views.py:69
+#: features/advances/views.py:73
 msgid "Entry date must be a real date (YYYY-MM-DD)."
 msgstr "Dátum záznamu musí byť skutočný dátum (RRRR-MM-DD)."
 
-#: features/advances/views.py:82
+#: features/advances/views.py:86
 msgid "Ledger entry recorded."
 msgstr "Záznam v knihe uložený."
 
-#: features/advances/views.py:84
+#: features/advances/views.py:88
 msgid "Invalid ledger entry."
 msgstr "Neplatný záznam."
 
-#: features/advances/views.py:98
+#: features/advances/views.py:102
 msgid "Entry cancelled."
 msgstr "Záznam zrušený."
 
-#: features/advances/views.py:101
+#: features/advances/views.py:105
 msgid "Reversal recorded."
 msgstr "Storno zaznamenané."
 
-#: features/advances/views.py:103
+#: features/advances/views.py:107
 msgid "Unknown action."
 msgstr "Neznáma akcia."
 
-#: features/advances/views.py:116
+#: features/advances/views.py:120
 #, python-format
 msgid "%(n)s entries included in the cycle."
 msgstr "Do cyklu bolo zahrnutých %(n)s záznamov."
 
-#: features/advances/views.py:119
+#: features/advances/views.py:123
 #, python-format
 msgid "%(n)s entries marked settled."
 msgstr "%(n)s záznamov označených ako vysporiadané."
@@ -3950,7 +3999,7 @@ msgstr "Dlhý text"
 msgid "Yes/No"
 msgstr "Áno/Nie"
 
-#: features/intake/models.py:19 features/logistics/forms.py:235
+#: features/intake/models.py:19 features/logistics/forms.py:232
 #: templates/pages/equipment_stock.html:49
 #: templates/partials/ledger_activity.html:8
 #: templates/partials/ledger_activity.html:26
@@ -4158,61 +4207,61 @@ msgstr "Kapacita nemôže byť nižšia ako aktuálna obsadenosť."
 msgid "Release all occupants before deactivating this room."
 msgstr "Pred deaktiváciou tejto izby uvoľnite všetkých ubytovaných."
 
-#: features/logistics/forms.py:169
+#: features/logistics/forms.py:168
 msgid "Received on"
 msgstr "Prijaté dňa"
 
-#: features/logistics/forms.py:172
+#: features/logistics/forms.py:170
 msgid "Receiving office"
 msgstr "Prijímajúca pobočka"
 
-#: features/logistics/forms.py:175
+#: features/logistics/forms.py:173
 msgid "The warehouse this stock is received into."
 msgstr "Sklad, do ktorého sa tieto zásoby prijímajú."
 
-#: features/logistics/forms.py:177 templates/pages/goods_receipt_detail.html:15
+#: features/logistics/forms.py:175 templates/pages/goods_receipt_detail.html:15
 msgid "Reference"
 msgstr "Referencia"
 
-#: features/logistics/forms.py:178 templates/pages/goods_receipt_detail.html:14
+#: features/logistics/forms.py:176 templates/pages/goods_receipt_detail.html:14
 msgid "Supplier"
 msgstr "Dodávateľ"
 
-#: features/logistics/forms.py:192 features/logistics/forms.py:226
+#: features/logistics/forms.py:190 features/logistics/forms.py:224
 #: templates/pages/equipment_stock.html:47
 #: templates/panels/logistics_equipment.html:55
 msgid "Item"
 msgstr "Položka"
 
-#: features/logistics/forms.py:194 templates/pages/equipment_stock.html:36
+#: features/logistics/forms.py:192 templates/pages/equipment_stock.html:36
 #: templates/pages/goods_receipt_detail.html:31
 #: templates/panels/logistics_equipment.html:58
 msgid "Quantity"
 msgstr "Množstvo"
 
-#: features/logistics/forms.py:196 templates/pages/goods_receipt_detail.html:19
+#: features/logistics/forms.py:194 templates/pages/goods_receipt_detail.html:19
 #: templates/pages/goods_receipt_detail.html:32
 #: templates/pages/goods_receipts.html:19
 msgid "Total value"
 msgstr "Celková hodnota"
 
-#: features/logistics/forms.py:214
+#: features/logistics/forms.py:212
 msgid "Complete the item, quantity, and total value."
 msgstr "Vyplňte položku, množstvo a celkovú hodnotu."
 
-#: features/logistics/forms.py:232
+#: features/logistics/forms.py:230
 msgid "The warehouse whose stock is being adjusted."
 msgstr "Sklad, ktorého zásoby sa upravujú."
 
-#: features/logistics/forms.py:237 templates/pages/equipment_stock.html:50
+#: features/logistics/forms.py:233 templates/pages/equipment_stock.html:50
 msgid "Quantity adjustment"
 msgstr "Úprava množstva"
 
-#: features/logistics/forms.py:239 templates/pages/equipment_stock.html:51
+#: features/logistics/forms.py:235 templates/pages/equipment_stock.html:51
 msgid "Value for positive adjustment"
 msgstr "Hodnota pri kladnej úprave"
 
-#: features/logistics/forms.py:244 templates/pages/activation_queue.html:33
+#: features/logistics/forms.py:240 templates/pages/activation_queue.html:33
 #: templates/pages/audit_log.html:44 templates/pages/blacklist_queue.html:23
 #: templates/pages/blacklist_queue.html:28
 #: templates/pages/equipment_stock.html:52
@@ -4225,11 +4274,11 @@ msgstr "Hodnota pri kladnej úprave"
 msgid "Reason"
 msgstr "Dôvod"
 
-#: features/logistics/forms.py:257
+#: features/logistics/forms.py:253
 msgid "The adjustment cannot be zero."
 msgstr "Úprava nemôže byť nulová."
 
-#: features/logistics/forms.py:259
+#: features/logistics/forms.py:255
 msgid "A value is required when adding stock."
 msgstr "Pri pridávaní zásob je potrebné zadať hodnotu."
 
@@ -4886,7 +4935,7 @@ msgstr "Táto osoba odmietla zasielanie pracovných ponúk e-mailom."
 msgid "This person is blacklisted."
 msgstr "Táto osoba je na čiernej listine."
 
-#: features/messaging/services.py:271 features/payslips/services.py:156
+#: features/messaging/services.py:271 features/payslips/services.py:177
 msgid "This person has no email address on file."
 msgstr "Táto osoba nemá evidovanú e-mailovú adresu."
 
@@ -4993,12 +5042,12 @@ msgstr "výplatné pásky"
 msgid "Recorded net payslip"
 msgstr "Zaznamenaná čistá mzda z výplatnej pásky"
 
-#: features/payslips/services.py:181
+#: features/payslips/services.py:202
 #, python-format
 msgid "Payslip %(period)s"
 msgstr "Výplatná páska %(period)s"
 
-#: features/payslips/services.py:183
+#: features/payslips/services.py:204
 #, python-format
 msgid ""
 "Your payslip for %(period)s is attached as an encrypted PDF.\n"
@@ -5007,7 +5056,7 @@ msgstr ""
 "V prílohe je vaša výplatná páska za %(period)s ako šifrované PDF.\n"
 "Heslo dostanete samostatne — nikdy sa neposiela e-mailom."
 
-#: features/payslips/services.py:195 features/payslips/services.py:201
+#: features/payslips/services.py:216 features/payslips/services.py:222
 msgid ""
 "Unable to send the payslip email. Check the recipient address and mail "
 "configuration."
@@ -5719,7 +5768,9 @@ msgstr "Zhoda podľa"
 msgid ""
 "Blacklists this person company-wide, at every office. Any future re-entry "
 "attempt is flagged against them."
-msgstr "Zaradí túto osobu na čiernu listinu v celej firme, vo všetkých kanceláriách. Každý budúci pokus o opätovný vstup sa voči nej označí."
+msgstr ""
+"Zaradí túto osobu na čiernu listinu v celej firme, vo všetkých kanceláriách. "
+"Každý budúci pokus o opätovný vstup sa voči nej označí."
 
 #: templates/pages/blacklist_queue.html:29
 #: templates/panels/blacklist_case.html:20
@@ -5734,7 +5785,9 @@ msgstr ""
 msgid ""
 "Closes the case without blacklisting. The person is unaffected and stays "
 "available."
-msgstr "Uzavrie prípad bez zaradenia na čiernu listinu. Osoby sa to nedotkne a zostáva dostupná."
+msgstr ""
+"Uzavrie prípad bez zaradenia na čiernu listinu. Osoby sa to nedotkne a "
+"zostáva dostupná."
 
 #: templates/pages/blacklist_queue.html:30
 #: templates/panels/blacklist_case.html:21
@@ -5813,11 +5866,21 @@ msgstr "nahratie nového súboru ho nahradí"
 msgid "Current back"
 msgstr "Aktuálna zadná strana"
 
-#: templates/pages/certificate_form.html:24
+#: templates/pages/certificate_form.html:25
+msgid ""
+"Uploading the certificate — this can take a moment. Do not close or reload "
+"this page."
+msgstr "Nahráva sa certifikát — môže to chvíľu trvať. Nezatvárajte ani neobnovujte túto stránku."
+
+#: templates/pages/certificate_form.html:26
+msgid "Uploading…"
+msgstr "Nahráva sa…"
+
+#: templates/pages/certificate_form.html:26
 msgid "Save renewal"
 msgstr "Uložiť obnovenie"
 
-#: templates/pages/certificate_form.html:24
+#: templates/pages/certificate_form.html:26
 msgid "Save certificate"
 msgstr "Uložiť certifikát"
 
@@ -5991,7 +6054,9 @@ msgstr "Poznámka ku kontrole"
 msgid ""
 "Confirms the worker owes the value of the item. It is recorded against them "
 "for recovery — it does not deduct from payroll by itself."
-msgstr "Potvrdí, že pracovník dlhuje hodnotu položky. Zaznamená sa voči nemu na vymáhanie – samo o sebe to nič nezráža zo mzdy."
+msgstr ""
+"Potvrdí, že pracovník dlhuje hodnotu položky. Zaznamená sa voči nemu na "
+"vymáhanie – samo o sebe to nič nezráža zo mzdy."
 
 #: templates/pages/equipment_reviews.html:31
 msgid ""
@@ -6009,7 +6074,9 @@ msgstr "Schváliť zrážku"
 msgid ""
 "Writes the loss off. The worker is not charged and nothing is recorded "
 "against their pay."
-msgstr "Odpíše stratu. Pracovníkovi sa nič neúčtuje a voči jeho mzde sa nič nezaznamená."
+msgstr ""
+"Odpíše stratu. Pracovníkovi sa nič neúčtuje a voči jeho mzde sa nič "
+"nezaznamená."
 
 #: templates/pages/equipment_reviews.html:32
 msgid "This waives the charge; the worker will not be charged for the item."
@@ -6282,7 +6349,9 @@ msgstr ""
 msgid ""
 "Unlocks the month so its figures can be edited again. The reopening is "
 "recorded in the audit log."
-msgstr "Odomkne mesiac, aby sa jeho čísla dali znovu upravovať. Znovuotvorenie sa zaznamená do auditného denníka."
+msgstr ""
+"Odomkne mesiac, aby sa jeho čísla dali znovu upravovať. Znovuotvorenie sa "
+"zaznamená do auditného denníka."
 
 #: templates/pages/finance_month_detail.html:23
 msgid ""
@@ -6294,7 +6363,9 @@ msgstr ""
 msgid ""
 "Freezes the figures for this month. Totals stay visible but nothing can be "
 "edited until a manager reopens it."
-msgstr "Zmrazí čísla za tento mesiac. Súčty zostanú viditeľné, ale nič sa nedá upraviť, kým to manažér znovu neotvorí."
+msgstr ""
+"Zmrazí čísla za tento mesiac. Súčty zostanú viditeľné, ale nič sa nedá "
+"upraviť, kým to manažér znovu neotvorí."
 
 #: templates/pages/finance_month_detail.html:25
 msgid "Lock month"
@@ -6308,13 +6379,17 @@ msgstr "Položky"
 msgid ""
 "Costs are entered negative and revenues positive, exactly as the source "
 "workbook writes them. The sign is validated on save."
-msgstr "Náklady sa zadávajú záporné a výnosy kladné, presne tak, ako ich píše zdrojový zošit. Znamienko sa overuje pri uložení."
+msgstr ""
+"Náklady sa zadávajú záporné a výnosy kladné, presne tak, ako ich píše "
+"zdrojový zošit. Znamienko sa overuje pri uložení."
 
 #: templates/pages/finance_month_detail.html:50
 msgid ""
 "Saves every amount above and recomputes the totals from them. Totals are "
 "always derived, never stored, so they cannot drift from the figures."
-msgstr "Uloží všetky sumy vyššie a znovu z nich vypočíta súčty. Súčty sa vždy odvodzujú, nikdy neukladajú, takže sa nemôžu od čísel odchýliť."
+msgstr ""
+"Uloží všetky sumy vyššie a znovu z nich vypočíta súčty. Súčty sa vždy "
+"odvodzujú, nikdy neukladajú, takže sa nemôžu od čísel odchýliť."
 
 #: templates/pages/finance_month_detail.html:50
 msgid "Save & recalculate"
@@ -6580,7 +6655,9 @@ msgstr "Zaznamenať položku"
 msgid ""
 "Records the entry immediately. It can be cancelled while the cycle is open; "
 "once the cycle is settled only a reversal can correct it."
-msgstr "Zaznamená záznam okamžite. Kým je cyklus otvorený, dá sa zrušiť; po vyrovnaní cyklu ho opraví už len storno."
+msgstr ""
+"Zaznamená záznam okamžite. Kým je cyklus otvorený, dá sa zrušiť; po "
+"vyrovnaní cyklu ho opraví už len storno."
 
 # --- login ---
 #: templates/pages/login.html:4 templates/pages/login.html:10
@@ -7437,7 +7514,9 @@ msgstr "Zaznamenať hrubú mzdu"
 msgid ""
 "Saves the gross figure for this person and month. It appears on their pay "
 "overview and is what ledger deductions are subtracted from."
-msgstr "Uloží hrubú sumu pre túto osobu a mesiac. Zobrazí sa v jej prehľade mzdy a práve od nej sa odpočítavajú zrážky z knihy."
+msgstr ""
+"Uloží hrubú sumu pre túto osobu a mesiac. Zobrazí sa v jej prehľade mzdy a "
+"práve od nej sa odpočítavajú zrážky z knihy."
 
 #: templates/pages/wages.html:33
 msgid "Recorded gross wages"
@@ -7533,7 +7612,9 @@ msgstr "Všetky kritické položky sú splnené."
 msgid ""
 "Records that you completed this item, with your name and the time. Critical "
 "items must all be complete before the worker can be activated."
-msgstr "Zaznamená, že ste túto položku splnili, s vaším menom a časom. Všetky kritické položky musia byť splnené, aby sa pracovník dal aktivovať."
+msgstr ""
+"Zaznamená, že ste túto položku splnili, s vaším menom a časom. Všetky "
+"kritické položky musia byť splnené, aby sa pracovník dal aktivovať."
 
 #: templates/panels/compliance_certificates.html:4
 msgid "Occupational certificates"
@@ -7834,14 +7915,19 @@ msgstr "Čistý vplyv na mzdu"
 msgid ""
 "Exports the entries in this cycle for the accountant. Reading only — it "
 "changes nothing and does not settle the cycle."
-msgstr "Vyexportuje záznamy v tomto cykle pre účtovníka. Iba na čítanie – nič nemení a cyklus nevyrovnáva."
+msgstr ""
+"Vyexportuje záznamy v tomto cykle pre účtovníka. Iba na čítanie – nič nemení "
+"a cyklus nevyrovnáva."
 
 #: templates/partials/ledger_cycle.html:30
 msgid ""
 "Closes the 21st-to-20th window: every open entry in it is locked to this "
 "cycle and can then only be corrected by a reversal. New entries can no "
 "longer be backdated into it."
-msgstr "Uzavrie okno od 21. do 20.: každý otvorený záznam v ňom sa uzamkne do tohto cyklu a potom ho opraví už len storno. Nové záznamy sa doň už nedajú spätne datovať."
+msgstr ""
+"Uzavrie okno od 21. do 20.: každý otvorený záznam v ňom sa uzamkne do tohto "
+"cyklu a potom ho opraví už len storno. Nové záznamy sa doň už nedajú spätne "
+"datovať."
 
 #: templates/partials/ledger_cycle.html:30
 msgid ""
@@ -7859,7 +7945,9 @@ msgstr "Zahrnúť otvorené záznamy do cyklu"
 msgid ""
 "Marks this cycle as paid out. Use it once payroll has actually settled the "
 "amounts — it records that the money changed hands."
-msgstr "Označí tento cyklus ako vyplatený. Použite ho až vtedy, keď mzdová agenda sumy skutočne vyrovnala – zaznamenáva, že peniaze zmenili majiteľa."
+msgstr ""
+"Označí tento cyklus ako vyplatený. Použite ho až vtedy, keď mzdová agenda "
+"sumy skutočne vyrovnala – zaznamenáva, že peniaze zmenili majiteľa."
 
 #: templates/partials/ledger_cycle.html:31
 msgid "This marks the whole cycle as settled with pay."
@@ -7894,7 +7982,12 @@ msgid ""
 "own ledger entries, and nothing else. It is not net pay — no tax or levy is "
 "calculated here, which is why the payslip stays its own column to compare "
 "against."
-msgstr "Jeden riadok na kalendárny mesiac. Hrubá mzda a zaznamenaná čistá výplatná páska sú zdrojové hodnoty, ktoré niekto zadal; Po zrážkach je hrubá suma mínus vlastné záznamy tejto kancelárie v knihe, a nič iné. Nie je to čistá mzda – nepočíta sa tu žiadna daň ani odvod, a práve preto zostáva výplatná páska samostatným stĺpcom na porovnanie."
+msgstr ""
+"Jeden riadok na kalendárny mesiac. Hrubá mzda a zaznamenaná čistá výplatná "
+"páska sú zdrojové hodnoty, ktoré niekto zadal; Po zrážkach je hrubá suma "
+"mínus vlastné záznamy tejto kancelárie v knihe, a nič iné. Nie je to čistá "
+"mzda – nepočíta sa tu žiadna daň ani odvod, a práve preto zostáva výplatná "
+"páska samostatným stĺpcom na porovnanie."
 
 #: templates/partials/person_finance_overview.html:8
 msgid ""
@@ -7939,6 +8032,14 @@ msgstr "Zobrazuje sa %(rail_limit)s naposledy aktualizovaných."
 #: templates/partials/worker_rail_body.html:34
 msgid "Open People"
 msgstr "Otvoriť Ľudia"
+
+#, python-format
+#~ msgid ""
+#~ "The %(key)s cycle is already settled. Record this entry in the open "
+#~ "cycle, or reverse an existing entry instead."
+#~ msgstr ""
+#~ "Cyklus %(key)s je už vyrovnaný. Zaznamenajte tento záznam v otvorenom "
+#~ "cykle alebo namiesto toho stornujte existujúci záznam."
 
 #~ msgid "Period (YYYY-MM)"
 #~ msgstr "Obdobie (RRRR-MM)"

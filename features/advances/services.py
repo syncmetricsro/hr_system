@@ -64,16 +64,27 @@ def record_entry(
         _("%(t)s entries carry pay effect %(e)s (or none).")
         % {"t": entry_type, "e": expected},
     )
-    on = entry_date or timezone.localdate()
-    # Backdating is allowed — an advance handed over last week is recorded this
-    # week — but not into a cycle whose payroll has already been settled.
-    # A reversal is exempt: it is the sanctioned way to correct a settled cycle
-    # (C-Q5), and refusing it would leave no correction path at all.
+    today = timezone.localdate()
+    on = entry_date or today
+    # Only an *explicitly backdated* entry is refused, and only into a settled
+    # cycle. The first version refused anything whose date landed in a settled
+    # cycle, which blocked ordinary present-day work the moment the current
+    # cycle was marked settled: equipment charges reach this through
+    # `equipment_charge_to_ledger` with no date at all, so issuing chargeable
+    # equipment stopped entirely. The business keeps operating regardless of
+    # where the bookkeeping has got to, so an entry for *now* is always
+    # accepted; it stays OPEN and the next `include_cycle` over that window
+    # picks it up.
+    #
+    # A reversal is exempt too: it is the sanctioned way to correct a settled
+    # cycle (C-Q5), and refusing it would leave no correction path at all.
+    backdated = entry_date is not None and entry_date < today
     _require(
-        reversal_of is not None or not cycle_is_settled(on),
+        reversal_of is not None or not backdated or not cycle_is_settled(on),
         _(
-            "The %(key)s cycle is already settled. Record this entry in the open "
-            "cycle, or reverse an existing entry instead."
+            "The %(key)s cycle is already settled, so this entry cannot be "
+            "backdated into it. Record it with today's date, or reverse an "
+            "existing entry instead."
         )
         % {"key": cycle_key(*cycle_for(on))},
     )
