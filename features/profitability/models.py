@@ -24,17 +24,36 @@ class FinancialMonth(models.Model):
     """
 
     project = models.ForeignKey(
-        "projects.Project", on_delete=models.CASCADE, related_name="financial_months", verbose_name=_("project")
+        "projects.Project",
+        on_delete=models.CASCADE,
+        related_name="financial_months",
+        verbose_name=_("project"),
     )
     year = models.PositiveIntegerField(_("year"))
     month = models.PositiveSmallIntegerField(_("month"))
-    revenue = models.DecimalField(_("revenue"), max_digits=12, decimal_places=2, default=Decimal("0"), validators=NON_NEGATIVE)
-    cost = models.DecimalField(_("cost"), max_digits=12, decimal_places=2, default=Decimal("0"), validators=NON_NEGATIVE)
+    revenue = models.DecimalField(
+        _("revenue"),
+        max_digits=12,
+        decimal_places=2,
+        default=Decimal("0"),
+        validators=NON_NEGATIVE,
+    )
+    cost = models.DecimalField(
+        _("cost"),
+        max_digits=12,
+        decimal_places=2,
+        default=Decimal("0"),
+        validators=NON_NEGATIVE,
+    )
     note = models.CharField(_("note"), max_length=300, blank=True)
     is_locked = models.BooleanField(_("locked"), default=False)
     recorded_by = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True,
-        related_name="recorded_financial_months", verbose_name=_("recorded by"),
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="recorded_financial_months",
+        verbose_name=_("recorded by"),
     )
     created_at = models.DateTimeField(_("created"), auto_now_add=True)
     updated_at = models.DateTimeField(_("updated"), auto_now=True)
@@ -44,7 +63,10 @@ class FinancialMonth(models.Model):
         verbose_name_plural = _("financial months")
         ordering = ("-year", "-month", "project__name")
         constraints = [
-            models.UniqueConstraint(fields=["project", "year", "month"], name="unique_financial_month_per_project")
+            models.UniqueConstraint(
+                fields=["project", "year", "month"],
+                name="unique_financial_month_per_project",
+            )
         ]
 
     def __str__(self) -> str:
@@ -82,9 +104,20 @@ class FinanceCategory(models.Model):
     (2026-06-29). ``group`` powers the manager's transport/accommodation/overhead
     breakdowns."""
 
+    # Stable identifier (Jober_Finance_Specs §5). The label is display text and
+    # is translated; the key is what an export column, an import mapping, or a
+    # later integration can rely on without depending on wording.
+    key = models.SlugField(_("key"), max_length=60, blank=True)
     label = models.CharField(_("label"), max_length=120)
-    kind = models.CharField(_("kind"), max_length=10, choices=FinanceCategoryKind.choices)
-    group = models.CharField(_("group"), max_length=20, choices=FinanceGroup.choices, default=FinanceGroup.OTHER)
+    kind = models.CharField(
+        _("kind"), max_length=10, choices=FinanceCategoryKind.choices
+    )
+    group = models.CharField(
+        _("group"),
+        max_length=20,
+        choices=FinanceGroup.choices,
+        default=FinanceGroup.OTHER,
+    )
     is_active = models.BooleanField(_("active"), default=True)
     order = models.PositiveIntegerField(_("order"), default=0)
 
@@ -93,7 +126,9 @@ class FinanceCategory(models.Model):
         verbose_name_plural = _("finance categories")
         ordering = ("kind", "order", "label")
         constraints = [
-            models.UniqueConstraint(fields=["label", "kind"], name="unique_finance_category_label_kind")
+            models.UniqueConstraint(
+                fields=["label", "kind"], name="unique_finance_category_label_kind"
+            )
         ]
 
     def __str__(self) -> str:
@@ -104,19 +139,33 @@ class FinanceLineItem(models.Model):
     """One amount for one category on one project-month. Amount is positive."""
 
     month = models.ForeignKey(
-        FinancialMonth, on_delete=models.CASCADE, related_name="line_items", verbose_name=_("month")
+        FinancialMonth,
+        on_delete=models.CASCADE,
+        related_name="line_items",
+        verbose_name=_("month"),
     )
     category = models.ForeignKey(
-        FinanceCategory, on_delete=models.PROTECT, related_name="line_items", verbose_name=_("category")
+        FinanceCategory,
+        on_delete=models.PROTECT,
+        related_name="line_items",
+        verbose_name=_("category"),
     )
-    amount = models.DecimalField(_("amount"), max_digits=12, decimal_places=2, default=Decimal("0"), validators=NON_NEGATIVE)
+    amount = models.DecimalField(
+        _("amount"),
+        max_digits=12,
+        decimal_places=2,
+        default=Decimal("0"),
+        validators=NON_NEGATIVE,
+    )
 
     class Meta:
         verbose_name = _("finance line item")
         verbose_name_plural = _("finance line items")
         ordering = ("category__kind", "category__order")
         constraints = [
-            models.UniqueConstraint(fields=["month", "category"], name="unique_line_item_per_month_category")
+            models.UniqueConstraint(
+                fields=["month", "category"], name="unique_line_item_per_month_category"
+            )
         ]
 
     def __str__(self) -> str:

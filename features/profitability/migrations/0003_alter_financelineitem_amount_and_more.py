@@ -6,25 +6,42 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('finance', '0002_financecategory_financelineitem'),
+        ("finance", "0002_financecategory_financelineitem"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='financelineitem',
-            name='amount',
-            field=models.DecimalField(decimal_places=2, default=Decimal('0'), max_digits=12, validators=[django.core.validators.MinValueValidator(Decimal('0'))], verbose_name='amount'),
+            model_name="financelineitem",
+            name="amount",
+            field=models.DecimalField(
+                decimal_places=2,
+                default=Decimal("0"),
+                max_digits=12,
+                validators=[django.core.validators.MinValueValidator(Decimal("0"))],
+                verbose_name="amount",
+            ),
         ),
         migrations.AlterField(
-            model_name='financialmonth',
-            name='cost',
-            field=models.DecimalField(decimal_places=2, default=Decimal('0'), max_digits=12, validators=[django.core.validators.MinValueValidator(Decimal('0'))], verbose_name='cost'),
+            model_name="financialmonth",
+            name="cost",
+            field=models.DecimalField(
+                decimal_places=2,
+                default=Decimal("0"),
+                max_digits=12,
+                validators=[django.core.validators.MinValueValidator(Decimal("0"))],
+                verbose_name="cost",
+            ),
         ),
         migrations.AlterField(
-            model_name='financialmonth',
-            name='revenue',
-            field=models.DecimalField(decimal_places=2, default=Decimal('0'), max_digits=12, validators=[django.core.validators.MinValueValidator(Decimal('0'))], verbose_name='revenue'),
+            model_name="financialmonth",
+            name="revenue",
+            field=models.DecimalField(
+                decimal_places=2,
+                default=Decimal("0"),
+                max_digits=12,
+                validators=[django.core.validators.MinValueValidator(Decimal("0"))],
+                verbose_name="revenue",
+            ),
         ),
     ]
