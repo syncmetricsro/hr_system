@@ -1,5 +1,47 @@
 # Build Journal
 
+## 2026-08-04 - A slow upload could be submitted twice
+
+Reported against certificate upload: the Save button stayed live while the file
+POST was in flight, so it could be pressed again. `Certificate` carries **no
+uniqueness constraint**, so the second press genuinely created a second row -
+confirmed by counting requests, not by reading code: without the guard the
+interface sent **2 create requests**, with it **1**.
+
+The guard is generic rather than bolted onto that one page, because the ledger
+entry, payslip and wage forms create rows exactly the same way and are exposed
+to exactly the same double-click. It is deliberately narrow about what it
+touches: GET forms are search and filter controls where re-submitting is
+harmless, htmx owns its own submissions, and a submission another listener
+already prevented (the confirm dialog) is left alone - the real submit arrives
+afterwards and is guarded then.
+
+Two implementation details that were not optional:
+
+* **The submitter's `name`/`value` is carried as a hidden input before the
+  button is disabled.** A disabled submitter contributes nothing to the form
+  data, so without this an approval would post with no `decision=approve` in it.
+* **The busy state is applied synchronously, not on a `setTimeout(0)`.** The
+  first version used a timer to avoid that same name/value problem, and the
+  timer never ran: once a form starts navigating the browser may drop queued
+  timeouts - which is precisely the window the second press lands in. That
+  version passed nothing and looked correct.
+
+Visible feedback beyond the disable, since a silent wait is what makes people
+press again: the button shows a spinner and swaps to its `data-busy-label`, and
+the certificate form reveals a bordered notice saying an upload is running and
+not to close the page. Both respect `prefers-reduced-motion`.
+
+**Not fixed, and worth stating: this is a client-side guard.** It stops the
+reported cause - an impatient double-click - but not a re-POST from the back
+button or a retried request. The durable fix is server-side, either an
+idempotency token on the form or a uniqueness constraint on the certificate.
+That is a schema and workflow decision rather than a UI one, so it is not
+bundled here.
+
+Jober 1076, CorvinumEU 658, browser 70.
+
+
 ## 2026-08-04 - The worker rail was reserving 320px on a phone
 
 The reported mobile symptom - a ledger heading wrapping one character per line -
