@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('projects', '0007_activationapproval'),
+        ("projects", "0007_activationapproval"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='readinessrecord',
-            name='trial_waived',
-            field=models.BooleanField(default=False, verbose_name='trial waived'),
+            model_name="readinessrecord",
+            name="trial_waived",
+            field=models.BooleanField(default=False, verbose_name="trial waived"),
         ),
     ]
