@@ -139,7 +139,7 @@ Jober, suite green.
 |---|---|
 | Migration/table breakage during the reshape | `AppConfig.label` pinning + `db_table` preservation; `migrate --check` against a real dump is a B2 gate; no schema changes allowed in B2 |
 | Hidden coupling beyond the three known sites | B0 dep-check script is the tripwire; B1 isn't done until it passes |
-| i18n catalog split loses translations | msgids move with their apps; `compile_messages.sh --extract` diff reviewed per slice; catalogs are append-only during Stage B |
+| i18n catalog split loses translations | safe extraction refuses unapproved active-to-obsolete changes; reviewed removals remain as recoverable `#~` history and every semantic report is reviewed per slice |
 | e2e instability from URL/template moves | URLs are frozen during Stage B (client URL config lands in B3 without changing paths); e2e suite runs per slice |
 | Estimate creep in B1 | The four designs above are fixed-scope; anything discovered beyond them becomes an explicit new slice, not silent scope growth |
 | Supply-chain rules (AGENTS.md) | No new runtime deps anywhere in Stage B; registries/hooks are stdlib + Django only |

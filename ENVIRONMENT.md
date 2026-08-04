@@ -19,7 +19,7 @@ WebSocket, SSE, broker, or additional runtime dependency is used.
   the source language when a stale or missing cookie disagrees with it; no new
   environment setting is required.
 
-Last updated: 2026-07-13
+Last updated: 2026-08-04
 
 ## Secrets during human and automated testing
 
@@ -48,7 +48,16 @@ Phase 1 additions:
 - Custom user model (`AUTH_USER_MODEL = accounts.User`); deploys must run `accounts`/`audit` migrations.
 - Deploy-time env vars: `JOBER_BROAD_INTERNAL_READS` (default on); `DJANGO_SESSION_COOKIE_SECURE` / `DJANGO_CSRF_COOKIE_SECURE` (default secure — only set to `0` on the HTTP-only smoke network, never on staging/production).
 - Local manual testing runs the production image over HTTP with those two flags + `DJANGO_SECURE_SSL_REDIRECT` set to `0`, app published on `:8000`, against a Postgres container on a shared (non-internal) Docker network. Seed with `manage.py seed_demo` (fictional `@demo.jober.test` users). The simplest path is `scripts/dev_app.sh up` / `down`.
-- i18n: English is the base language, Slovak the visible default; EN/SK/HU/UK offered (ADR 0017). gettext is not on the host or runtime/test images. Use `scripts/compile_messages.sh --extract` only when source msgids must be extracted or merged through the committed isolated workflow. When reviewed PO entries already exist, regenerate committed MO files dependency-free with `python3 scripts/compile_po.py locale/{sk,hu,uk}/LC_MESSAGES/django.po`. `.po` remains the source of truth and `.mo` is committed beside it. **Do not invoke the host `/usr/bin/pybabel` for these catalogs:** Babel defaults to the `messages` domain rather than Django's `django` domain, is not the repository's pinned toolchain, and a missing-domain invocation caused an Ubuntu Apport crash report on 2026-07-13.
+- i18n: English is the base language, Slovak the visible default; EN/SK/HU/UK
+  are offered (ADR 0017). gettext is absent from the host and runtime/test
+  images. Use `scripts/compile_messages.sh --extract` for safe extraction,
+  translate all blank additions, run the script without arguments to validate
+  and compile, then run `--check` for a read-only PO/MO synchronization check.
+  Extraction temporarily installs gettext inside the app container, ignores
+  tests, disables fuzzy matching, and refuses unapproved active-to-obsolete
+  changes. `.po` remains the source of truth and `.mo` is committed beside
+  it. **Do not invoke host `pybabel`, raw `makemessages`, or `msgmerge`:**
+  they bypass the repository's domain, exclusions, and loss guards.
 
 System:
 - OS: Ubuntu 24.04.4 LTS in VirtualBox, Linux kernel `6.17.0-35-generic`.
