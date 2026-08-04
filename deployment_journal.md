@@ -1,5 +1,51 @@
 # Deployment Journal
 
+## 2026-08-04 - Card layout and the worker-rail gutter deployed to both clients
+
+Deployed the exact `main` merge **`29f5984`** to `jober-staging` and
+`corvinum-staging` as `jober-platform:demo-29f5984` (image ID
+`sha256:f31b8267f8980fef6b9e60ab8ed7d78e126c9af49261ec188444d0079761b018`),
+streamed with `git:load-image`. Second release today, after `ca94dc4`.
+
+Two layout fixes, both in the shared stylesheet, so both clients get them:
+
+- **Decision cards** no longer squeeze their own form. Measured before and
+  after on the activation queue: the reason input went from **99px to 320px**
+  at 1280px. Seven templates gave the two-column `.field-card` three children;
+  one `:nth-child(n+3)` rule spans the third across both columns.
+- **The worker status rail** no longer reserves its 20rem gutter on a phone.
+  Reported as a ledger heading wrapping one character per line; measured from
+  the reporter's browser as `.cv-main` computing `padding-right: 320px` at a
+  375px viewport, leaving a **39px content box**. The `max-width: 1100px`
+  release never worked because `:has()` carries its argument's specificity and
+  media queries add none. Now scoped with `min-width: 1101px`.
+
+**No migrations.** The migration diff since `ca94dc4` is empty; this release is
+CSS, three template class attributes, and tests.
+
+Verified on the live hosts rather than assumed: both serve
+`app.1b7a2ad4f58d.css`, which contains `min-width:1101px` and
+`field-card-decision`, and no longer contains the ineffective
+`max-width:1100px` release. Both `deploy_smoke.sh --https` runs passed health,
+login/CSRF, fingerprinted static, X-Frame-Options and HSTS.
+
+Pre-deploy suites on `29f5984`: Jober **1076 passed / 16 skipped**, CorvinumEU
+**658 passed / 23 skipped**, Playwright **68 passed**; ruff check and
+`ruff format --check` clean.
+
+Both new browser tests were confirmed to fail without their fix - 99px for the
+card, and `padding-right: 320px` with a 39px content box for the rail - because
+a layout test that has never failed is not measuring anything. The rail one has
+to **expand the rail first**: it ships collapsed, every previous responsive test
+left it collapsed, and the bug only exists while it is open.
+
+Rollback target is the previous shared image:
+
+```bash
+ssh syncmetric-prime-dokku "git:from-image <app> jober-platform:demo-ca94dc4"
+```
+
+
 ## 2026-08-04 - CorvinumEU pre-demo batch deployed to both staging clients
 
 Deployed the exact `main` merge **`ca94dc4`** to `jober-staging` and
