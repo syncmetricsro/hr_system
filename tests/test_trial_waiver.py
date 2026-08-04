@@ -12,6 +12,8 @@ exist mostly to keep that distinction from eroding.
 
 from __future__ import annotations
 
+import datetime as dt
+
 import pytest
 from django.urls import reverse
 
@@ -81,6 +83,7 @@ def _complete_pillars(readiness, actor):
             "accommodation": PillarState.COMPLETE,
             "transport": PillarState.NOT_APPLICABLE,
         },
+        entry_medical_date=dt.date(2026, 7, 1),
         na_reasons={"transport": "own car"},
     )
 
@@ -121,6 +124,7 @@ def test_readiness_still_gates_a_waived_activation(world):
             "accommodation": PillarState.COMPLETE,
             "transport": PillarState.NOT_APPLICABLE,
         },
+        entry_medical_date=dt.date(2026, 7, 1),
         na_reasons={"transport": "own car"},
     )
 

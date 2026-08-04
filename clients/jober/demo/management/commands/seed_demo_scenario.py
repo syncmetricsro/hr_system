@@ -6,6 +6,8 @@ from datetime import timedelta
 from uuid import NAMESPACE_URL, uuid5
 
 from django.core.management.base import BaseCommand
+import datetime as dt
+
 from django.utils import timezone
 
 from core.accounts.models import User
@@ -250,6 +252,9 @@ class Command(BaseCommand):
                     "transport": PillarState.NOT_APPLICABLE,
                 },
                 na_reasons={"transport": "own car"},
+                # Required alongside a complete Medical: it is what the annual
+                # expiry counts from, and what the compliance alert reads.
+                entry_medical_date=timezone.localdate() - dt.timedelta(days=30),
             )
             request_activation(tran, cargo, actor=ds_coordinator)
 

@@ -309,15 +309,15 @@ msgstr "Érvénytelen kód."
 msgid "Two-factor authentication enabled."
 msgstr "Kétlépcsős azonosítás bekapcsolva."
 
-#: core/accounts/views.py:161 core/people/views.py:354
+#: core/accounts/views.py:161 core/people/views.py:365
 msgid "No file was selected."
 msgstr "Nem választott ki fájlt."
 
-#: core/accounts/views.py:176 core/people/views.py:369
+#: core/accounts/views.py:176 core/people/views.py:380
 msgid "Avatar updated."
 msgstr "A profilkép frissítve."
 
-#: core/accounts/views.py:186 core/people/views.py:381
+#: core/accounts/views.py:186 core/people/views.py:392
 msgid "Avatar removed."
 msgstr "A profilkép eltávolítva."
 
@@ -662,7 +662,7 @@ msgid "Added to blacklist"
 msgstr "Feketelistára helyezve"
 
 # --- exit / recycling ---
-#: core/audit/presentation.py:107 templates/pages/person_detail.html:237
+#: core/audit/presentation.py:107 templates/pages/person_detail.html:259
 msgid "Exit"
 msgstr "Kilépés"
 
@@ -852,17 +852,17 @@ msgid "Do not send job offers by email"
 msgstr "Ne küldjön állásajánlatokat e-mailben"
 
 #: core/people/forms.py:43 features/intake/catalog_i18n.py:17
-#: templates/pages/person_detail.html:202
+#: templates/pages/person_detail.html:224
 msgid "Phone"
 msgstr "Telefon"
 
 #: core/people/forms.py:44 features/intake/catalog_i18n.py:19
-#: templates/pages/person_detail.html:203
+#: templates/pages/person_detail.html:225
 msgid "Address"
 msgstr "Cím"
 
 #: core/people/forms.py:45 features/intake/catalog_i18n.py:20
-#: templates/pages/person_detail.html:204
+#: templates/pages/person_detail.html:226
 msgid "Nationality"
 msgstr "Állampolgárság"
 
@@ -871,12 +871,12 @@ msgid "Preferred language"
 msgstr "Preferált nyelv"
 
 #: core/people/forms.py:47 features/intake/catalog_i18n.py:15
-#: templates/pages/person_detail.html:216
+#: templates/pages/person_detail.html:238
 msgid "Date of birth"
 msgstr "Születési dátum"
 
 #: core/people/forms.py:48 features/intake/catalog_i18n.py:16
-#: templates/pages/person_detail.html:217
+#: templates/pages/person_detail.html:239
 msgid "Place of birth"
 msgstr "Születési hely"
 
@@ -920,7 +920,7 @@ msgstr "Dolgozik"
 #: templates/pages/accommodation_list.html:33
 #: templates/pages/equipment_catalog.html:19
 #: templates/pages/equipment_catalog.html:33
-#: templates/pages/person_detail.html:260 templates/pages/project_detail.html:8
+#: templates/pages/person_detail.html:282 templates/pages/project_detail.html:8
 #: templates/pages/project_list.html:23 templates/pages/project_list.html:39
 msgid "Inactive"
 msgstr "Inaktív"
@@ -1099,6 +1099,7 @@ msgstr "Személy szerkesztése"
 #: core/people/views.py:243 core/ui/help.py:272
 #: templates/pages/activation_queue.html:29
 #: templates/pages/person_detail.html:171
+#: templates/pages/person_detail.html:210
 msgid "Entry medical date"
 msgstr "Belépő orvosi dátuma"
 
@@ -1106,11 +1107,11 @@ msgstr "Belépő orvosi dátuma"
 msgid "Review this future date."
 msgstr "Ellenőrizze ezt a jövőbeli dátumot."
 
-#: core/people/views.py:324
+#: core/people/views.py:335
 msgid "Person archived. Blacklist protection remains in place."
 msgstr "A személy archiválva. A feketelista-védelem megmarad."
 
-#: core/people/views.py:338
+#: core/people/views.py:349
 msgid "Recycled to Available."
 msgstr "Visszaküldve Elérhetőre."
 
@@ -1435,40 +1436,49 @@ msgstr "aktiválás jóváhagyása"
 msgid "activation approvals"
 msgstr "aktiválás-jóváhagyások"
 
-#: core/projects/services.py:131
+#: core/projects/services.py:132
 msgid "Only pending trials can be edited."
 msgstr "Csak függő próbanapok szerkeszthetők."
 
-#: core/projects/services.py:133
+#: core/projects/services.py:134
 msgid "Trials can only be scheduled for active projects."
 msgstr "Próbanap csak aktív projekthez ütemezhető."
 
-#: core/projects/services.py:211
+#: core/projects/services.py:212
 msgid "Only an available person can be activated without a trial day."
 msgstr "Próbanap nélkül csak elérhető személy aktiválható."
 
-#: core/projects/services.py:235 core/ui/help.py:244
+#: core/projects/services.py:233
+msgid "Entry medical date is invalid."
+msgstr "Belépő orvosi dátuma érvénytelen."
+
+#: core/projects/services.py:235
+msgid "Entry medical date cannot be in the future."
+msgstr "Belépő orvosi dátuma nem lehet jövőbeli."
+
+#: core/projects/services.py:271 core/ui/help.py:244
 #: features/advances/models.py:38 features/profitability/catalog_i18n.py:20
 #: templates/pages/activation_queue.html:26
 #: templates/pages/person_detail.html:139
+#: templates/pages/person_detail.html:201
 msgid "Medical"
 msgstr "Orvosi"
 
-#: core/projects/services.py:235
+#: core/projects/services.py:271
 msgid "Medical clearance is incomplete."
 msgstr "Az orvosi alkalmasság hiányos."
 
-#: core/projects/services.py:236 core/ui/help.py:251
+#: core/projects/services.py:272 core/ui/help.py:251
 #: templates/pages/activation_queue.html:27
 #: templates/pages/person_detail.html:145
 msgid "Gear"
 msgstr "Felszerelés"
 
-#: core/projects/services.py:236
+#: core/projects/services.py:272
 msgid "Required equipment is incomplete."
 msgstr "A szükséges felszerelés hiányos."
 
-#: core/projects/services.py:237 core/ui/help.py:258 core/ui/help.py:427
+#: core/projects/services.py:273 core/ui/help.py:258 core/ui/help.py:427
 #: features/profitability/catalog_i18n.py:18
 #: features/profitability/models.py:89 templates/layouts/base.html:43
 #: templates/pages/accommodation_costs.html:6
@@ -1482,108 +1492,112 @@ msgstr "A szükséges felszerelés hiányos."
 msgid "Accommodation"
 msgstr "Szállás"
 
-#: core/projects/services.py:237
+#: core/projects/services.py:273
 msgid "Accommodation is incomplete."
 msgstr "A szállás nincs rendezve."
 
-#: core/projects/services.py:238 core/ui/help.py:265
+#: core/projects/services.py:274 core/ui/help.py:265
 #: features/profitability/models.py:88 templates/layouts/base.html:45
 #: templates/pages/person_detail.html:161
 msgid "Transport"
 msgstr "Szállítás"
 
-#: core/projects/services.py:238
+#: core/projects/services.py:274
 msgid "Transport is incomplete."
 msgstr "A szállítás nincs rendezve."
 
-#: core/projects/services.py:257
+#: core/projects/services.py:293
 msgid "A reason is required when this is not applicable."
 msgstr "Ha nem alkalmazható, indoklás szükséges."
 
-#: core/projects/services.py:310
-msgid "Entry medical date is invalid."
-msgstr "Belépő orvosi dátuma érvénytelen."
+#: core/projects/services.py:349
+msgid "Record the entry medical date before marking Medical complete."
+msgstr "A belépő orvosi vizsgálat dátumát rögzítse, mielőtt az Orvosit késznek jelöli."
 
-#: core/projects/services.py:312
-msgid "Entry medical date cannot be in the future."
-msgstr "Belépő orvosi dátuma nem lehet jövőbeli."
-
-#: core/projects/services.py:334
+#: core/projects/services.py:371
 msgid ""
 "Cannot activate this worker because no readiness record has been completed."
 msgstr ""
 "A munkavállaló nem aktiválható, mert nincs kitöltött készenléti adatlapja."
 
-#: core/projects/services.py:340
+#: core/projects/services.py:377
 #, python-format
 msgid "Cannot activate this worker until: %(items)s"
 msgstr "A munkavállaló nem aktiválható, amíg ezek nem teljesülnek: %(items)s"
 
-#: core/projects/services.py:360
+#: core/projects/services.py:397
 msgid "An activation request is already awaiting a decision."
 msgstr "Már van döntésre váró aktiválási kérelem."
 
-#: core/projects/services.py:402
+#: core/projects/services.py:439
 msgid "Only a pending activation request can be decided."
 msgstr "Csak függőben lévő aktiválási kérelemről lehet dönteni."
 
-#: core/projects/services.py:420
+#: core/projects/services.py:457
 msgid "A rejection must state a reason."
 msgstr "Az elutasításnál meg kell adni az indoklást."
 
-#: core/projects/services.py:423
+#: core/projects/services.py:460
 msgid "Decision must be 'approve' or 'reject'."
 msgstr "A döntésnek „jóváhagyás” vagy „elutasítás” kell legyen."
 
-#: core/projects/views.py:215 core/projects/views.py:279
+#: core/projects/views.py:216 core/projects/views.py:280
 msgid "Trial scheduled."
 msgstr "Próbanap ütemezve."
 
-#: core/projects/views.py:246
+#: core/projects/views.py:247
 msgid "Trial updated."
 msgstr "A próbanap frissítve."
 
-#: core/projects/views.py:271
+#: core/projects/views.py:272
 msgid "Review the trial details and try again."
 msgstr "Ellenőrizze a próbanap adatait, majd próbálja újra."
 
-#: core/projects/views.py:295
+#: core/projects/views.py:296
 msgid "Trial outcome recorded."
 msgstr "Próba eredménye rögzítve."
 
-#: core/projects/views.py:325
+#: core/projects/views.py:326
 msgid "Readiness saved."
 msgstr "Készenlét elmentve."
 
-#: core/projects/views.py:347
+#: core/projects/views.py:348
 msgid "Trial day waived — complete readiness to activate."
 msgstr "A próbanap elengedve — az aktiváláshoz töltse ki a készenlétet."
 
-#: core/projects/views.py:372
+#: core/projects/views.py:369
+msgid "This worker has no active assignment to record a medical for."
+msgstr "Ennek a munkavállalónak nincs aktív beosztása, amelyhez orvosit lehetne rögzíteni."
+
+#: core/projects/views.py:380
+msgid "Entry medical date recorded."
+msgstr "A belépő orvosi vizsgálat dátuma rögzítve."
+
+#: core/projects/views.py:404
 msgid "Exit completed."
 msgstr "Kilépés befejezve."
 
-#: core/projects/views.py:391
+#: core/projects/views.py:423
 msgid "Activation requested — a manager will decide."
 msgstr "Az aktiválást kérelmezték — a menedzser dönt."
 
-#: core/projects/views.py:428 features/blacklist/views.py:85
+#: core/projects/views.py:460 features/blacklist/views.py:85
 msgid "Decision recorded."
 msgstr "Döntés rögzítve."
 
-#: core/projects/views.py:447
+#: core/projects/views.py:479
 msgid "Project created."
 msgstr "Projekt létrehozva."
 
-#: core/projects/views.py:466
+#: core/projects/views.py:498
 msgid "Project updated."
 msgstr "Projekt frissítve."
 
-#: core/projects/views.py:484
+#: core/projects/views.py:516
 msgid "Project reactivated."
 msgstr "Projekt újraaktiválva."
 
-#: core/projects/views.py:484
+#: core/projects/views.py:516
 msgid "Project deactivated."
 msgstr "Projekt inaktiválva."
 
@@ -2884,7 +2898,7 @@ msgstr ""
 #: core/ui/help.py:706 core/ui/help.py:808 core/ui/help.py:889
 #: features/payslips/forms.py:22 templates/pages/ledger.html:21
 #: templates/pages/payslips.html:38 templates/pages/person_detail.html:38
-#: templates/pages/person_detail.html:289 templates/pages/wages.html:38
+#: templates/pages/person_detail.html:311 templates/pages/wages.html:38
 #: templates/partials/ledger_activity.html:8
 #: templates/partials/ledger_activity.html:26
 #: templates/partials/ledger_cycle.html:16
@@ -4305,7 +4319,7 @@ msgstr "Pozitív korrekció értéke"
 #: templates/pages/blacklist_queue.html:28
 #: templates/pages/equipment_stock.html:52
 #: templates/pages/finance_month_detail.html:19
-#: templates/pages/person_detail.html:262
+#: templates/pages/person_detail.html:284
 #: templates/panels/blacklist_case.html:11
 #: templates/panels/blacklist_case.html:19
 #: templates/panels/blacklist_case.html:26
@@ -5647,7 +5661,7 @@ msgstr "Összes"
 
 #: templates/pages/accommodation_list.html:29
 #: templates/pages/compliance_list.html:14 templates/pages/people_list.html:41
-#: templates/pages/person_detail.html:200
+#: templates/pages/person_detail.html:222
 #: templates/pages/project_detail.html:31 templates/pages/project_list.html:31
 msgid "Details"
 msgstr "Részletek"
@@ -6673,14 +6687,14 @@ msgstr "Felvétel"
 msgid "Step"
 msgstr "Lépés"
 
-#: templates/pages/intake_panel.html:24 templates/pages/person_detail.html:207
-#: templates/pages/person_detail.html:220
+#: templates/pages/intake_panel.html:24 templates/pages/person_detail.html:229
+#: templates/pages/person_detail.html:242
 #: templates/pages/project_detail.html:47
 msgid "Yes"
 msgstr "Igen"
 
-#: templates/pages/intake_panel.html:25 templates/pages/person_detail.html:207
-#: templates/pages/person_detail.html:220
+#: templates/pages/intake_panel.html:25 templates/pages/person_detail.html:229
+#: templates/pages/person_detail.html:242
 #: templates/pages/project_detail.html:47
 msgid "No"
 msgstr "Nem"
@@ -6963,7 +6977,7 @@ msgstr "Keresés név szerint"
 msgid "All statuses"
 msgstr "Minden állapot"
 
-#: templates/pages/people_list.html:27 templates/pages/person_detail.html:247
+#: templates/pages/people_list.html:27 templates/pages/person_detail.html:269
 msgid "Inactive reason"
 msgstr "Inaktivitás oka"
 
@@ -7105,36 +7119,64 @@ msgstr "Orvosi és felszerelés szükséges"
 msgid "Previous request rejected"
 msgstr "Az előző kérelmet elutasították"
 
-#: templates/pages/person_detail.html:199
+#: templates/pages/person_detail.html:202
+msgid "Entry medical certificate"
+msgstr "Belépő orvosi igazolás"
+
+#: templates/pages/person_detail.html:204
+msgid "Recorded"
+msgstr "Rögzítve"
+
+#: templates/pages/person_detail.html:204
+msgid "record a new date when the certificate is renewed."
+msgstr "az igazolás megújításakor rögzítsen új dátumot."
+
+#: templates/pages/person_detail.html:206
+msgid ""
+"No date on file. Compliance reports this worker as missing a medical until "
+"one is recorded."
+msgstr "Nincs rögzített dátum. Amíg nem rögzítik, a Megfelelőség hiányzó orvosiként jelzi ezt a munkavállalót."
+
+#: templates/pages/person_detail.html:213
+msgid ""
+"Records the date on the certificate. It is what the annual expiry counts "
+"from, and what clears the compliance alert."
+msgstr "Rögzíti az igazoláson szereplő dátumot. Ettől számít az éves lejárat, és ez szünteti meg a megfelelőségi figyelmeztetést."
+
+#: templates/pages/person_detail.html:213
+msgid "Record medical date"
+msgstr "Orvosi dátum rögzítése"
+
+#: templates/pages/person_detail.html:221
 #: templates/pages/project_detail.html:30
 msgid "Operational"
 msgstr "Üzemeltetési"
 
-#: templates/pages/person_detail.html:205
+#: templates/pages/person_detail.html:227
 msgid "Current project"
 msgstr "Jelenlegi projekt"
 
-#: templates/pages/person_detail.html:206
+#: templates/pages/person_detail.html:228
 msgid "Owning recruiter"
 msgstr "Felelős toborzó"
 
-#: templates/pages/person_detail.html:207
+#: templates/pages/person_detail.html:229
 msgid "Rehire eligible"
 msgstr "Újrafoglalkoztatható"
 
-#: templates/pages/person_detail.html:212
+#: templates/pages/person_detail.html:234
 msgid "Restricted"
 msgstr "Korlátozott"
 
-#: templates/pages/person_detail.html:213
+#: templates/pages/person_detail.html:235
 msgid "Personal data"
 msgstr "Személyes adatok"
 
-#: templates/pages/person_detail.html:219
+#: templates/pages/person_detail.html:241
 msgid "Disability"
 msgstr "Fogyatékosság"
 
-#: templates/pages/person_detail.html:224
+#: templates/pages/person_detail.html:246
 msgid ""
 "Restricted — visible only to managers, observers, the owning recruiter, and "
 "the responsible coordinator."
@@ -7142,18 +7184,18 @@ msgstr ""
 "Korlátozott — csak a menedzserek, megfigyelők, a felelős toborzó és a "
 "felelős koordinátor számára látható."
 
-#: templates/pages/person_detail.html:238
+#: templates/pages/person_detail.html:260
 msgid "Exit & reconcile"
 msgstr "Kilépés és elszámolás"
 
-#: templates/pages/person_detail.html:239
+#: templates/pages/person_detail.html:261
 msgid ""
 "Ends the project assignment, releases the room, and returns issued equipment."
 msgstr ""
 "Lezárja a projekt-hozzárendelést, felszabadítja a szobát és visszaveszi a "
 "kiadott felszerelést."
 
-#: templates/pages/person_detail.html:241
+#: templates/pages/person_detail.html:263
 msgid ""
 "This ends the active assignment, releases the room, returns issued "
 "equipment, and sets the person to Available."
@@ -7161,11 +7203,11 @@ msgstr ""
 "Lezárja az aktív kihelyezést, felszabadítja a szobát, visszaveszi a kiadott "
 "felszerelést, és a személyt Elérhető állapotba teszi."
 
-#: templates/pages/person_detail.html:243
+#: templates/pages/person_detail.html:265
 msgid "Exit to Available"
 msgstr "Kilépés Elérhető állapotba"
 
-#: templates/pages/person_detail.html:245
+#: templates/pages/person_detail.html:267
 msgid ""
 "This ends the active assignment, releases the room, returns issued "
 "equipment, and sets the person to Inactive with the chosen reason."
@@ -7173,43 +7215,43 @@ msgstr ""
 "Lezárja az aktív kihelyezést, felszabadítja a szobát, visszaveszi a kiadott "
 "felszerelést, és a személyt Inaktív állapotba teszi a kiválasztott indokkal."
 
-#: templates/pages/person_detail.html:248
+#: templates/pages/person_detail.html:270
 msgid "Reason…"
 msgstr "Ok…"
 
-#: templates/pages/person_detail.html:251
+#: templates/pages/person_detail.html:273
 msgid "Exit to Inactive"
 msgstr "Kilépés Inaktív állapotba"
 
-#: templates/pages/person_detail.html:259
+#: templates/pages/person_detail.html:281
 msgid "Lifecycle"
 msgstr "Életciklus"
 
-#: templates/pages/person_detail.html:263
+#: templates/pages/person_detail.html:285
 msgid "Since"
 msgstr "Mióta"
 
-#: templates/pages/person_detail.html:266
+#: templates/pages/person_detail.html:288
 msgid ""
 "This reactivates the person from Inactive, setting their status to Available."
 msgstr ""
 "Újraaktiválja a személyt Inaktív állapotból, és Elérhető állapotba állítja."
 
-#: templates/pages/person_detail.html:268
+#: templates/pages/person_detail.html:290
 msgid "Recycle to Available"
 msgstr "Visszaküldés Elérhetőre"
 
-#: templates/pages/person_detail.html:276
+#: templates/pages/person_detail.html:298
 #: templates/pages/transport_trends.html:42
 msgid "Records"
 msgstr "Bejegyzések"
 
-#: templates/pages/person_detail.html:277
-#: templates/pages/person_detail.html:282
+#: templates/pages/person_detail.html:299
+#: templates/pages/person_detail.html:304
 msgid "Archive person"
 msgstr "Személy archiválása"
 
-#: templates/pages/person_detail.html:278
+#: templates/pages/person_detail.html:300
 msgid ""
 "Hides this operational record from the People list. It is not a deletion and "
 "does not remove blacklist protection or audit history."
@@ -7217,7 +7259,7 @@ msgstr ""
 "Elrejti ezt a működési rekordot az Emberek listájáról. Nem törlés, és nem "
 "távolítja el a feketelista-védelmet vagy az auditnaplót."
 
-#: templates/pages/person_detail.html:279
+#: templates/pages/person_detail.html:301
 msgid ""
 "This archives the person from the operational list. It does not delete their "
 "record, audit history, or blacklist protection."
@@ -7225,16 +7267,16 @@ msgstr ""
 "Ezzel archiválja a személyt a működési listáról. Nem törli a rekordját, az "
 "auditnaplót vagy a feketelista-védelmet."
 
-#: templates/pages/person_detail.html:281
+#: templates/pages/person_detail.html:303
 msgid "Archive reason"
 msgstr "Archiválás oka"
 
 # --- person card: history + filter ---
-#: templates/pages/person_detail.html:290
+#: templates/pages/person_detail.html:312
 msgid "History"
 msgstr "Előzmények"
 
-#: templates/pages/person_detail.html:295
+#: templates/pages/person_detail.html:317
 msgid "No history yet."
 msgstr "Még nincs előzmény."
 
@@ -7889,6 +7931,11 @@ msgstr "Biztosan meg akarja tenni?"
 msgid "Yes, proceed"
 msgstr "Igen, folytatás"
 
+#: templates/partials/flash_messages.html:25
+#: templates/partials/flash_messages.html:26
+msgid "Dismiss this message"
+msgstr "Üzenet bezárása"
+
 #: templates/partials/ledger_activity.html:3
 msgid "Thursday summary"
 msgstr "Csütörtöki összesítő"
@@ -8045,7 +8092,15 @@ msgid ""
 "minus this office's own ledger entries, and nothing else. It is not net pay "
 "— no tax or levy is calculated here, which is why the payslip stays its own "
 "column to compare against."
-msgstr "Bérszámfejtésenként egy sor. A könyvelési levonások azt mutatják, mit hajt be az adott bérszámfejtés, ami nem mindig az a hónap, amikor a pénz gazdát cserélt: a 20-a után kiadott előleget a következő bérszámfejtés vonja le. A bruttó bér és a rögzített nettó bérpapír olyan forrásértékek, amelyeket valaki bevitt; a Levonások után a bruttó mínusz ennek az irodának a saját könyvelési tételei, és semmi más. Ez nem nettó bér – itt semmilyen adót vagy járulékot nem számol a rendszer, és éppen ezért marad a bérpapír külön oszlopban az összevetéshez."
+msgstr ""
+"Bérszámfejtésenként egy sor. A könyvelési levonások azt mutatják, mit hajt "
+"be az adott bérszámfejtés, ami nem mindig az a hónap, amikor a pénz gazdát "
+"cserélt: a 20-a után kiadott előleget a következő bérszámfejtés vonja le. A "
+"bruttó bér és a rögzített nettó bérpapír olyan forrásértékek, amelyeket "
+"valaki bevitt; a Levonások után a bruttó mínusz ennek az irodának a saját "
+"könyvelési tételei, és semmi más. Ez nem nettó bér – itt semmilyen adót vagy "
+"járulékot nem számol a rendszer, és éppen ezért marad a bérpapír külön "
+"oszlopban az összevetéshez."
 
 #: templates/partials/person_finance_overview.html:8
 msgid ""

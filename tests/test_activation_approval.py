@@ -19,6 +19,8 @@ rather than enforced: a self-approval goes through and says so.
 
 from __future__ import annotations
 
+import datetime as dt
+
 import pytest
 from django.urls import reverse
 
@@ -80,6 +82,7 @@ def world(django_user_model):
             "accommodation": PillarState.COMPLETE,
             "transport": PillarState.NOT_APPLICABLE,
         },
+        entry_medical_date=dt.date(2026, 7, 1),
         na_reasons={"transport": "own car"},
     )
     return {

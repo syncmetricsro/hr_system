@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import datetime as dt
+
 from datetime import timedelta
 
 import pytest
@@ -108,6 +110,7 @@ def test_readiness_ready_when_required_complete_optional_na(fixtures):
             "accommodation": PillarState.NOT_APPLICABLE,
             "transport": PillarState.NOT_APPLICABLE,
         },
+        entry_medical_date=dt.date(2026, 7, 1),
         na_reasons={"accommodation": "private flat", "transport": "own car"},
     )
     assert r.is_ready()
@@ -203,6 +206,7 @@ def test_full_path_to_working(fixtures, django_user_model):
             "accommodation": PillarState.COMPLETE,
             "transport": PillarState.NOT_APPLICABLE,
         },
+        entry_medical_date=dt.date(2026, 7, 1),
         na_reasons={"transport": "own car"},
     )
 

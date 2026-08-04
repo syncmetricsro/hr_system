@@ -1,5 +1,40 @@
 # Build Journal
 
+## 2026-08-05 - A medical you could never record, and flashes nobody could read
+
+**The compliance alert that could not be cleared.** A worker showed "Medical —
+missing" with no way to fix it. Their readiness said `medical_state = complete`
+and `entry_medical_date = None`: activation checks the pillar *state*, the
+compliance alert reads the *date*, and nothing ever required the two to agree.
+Not stale data - the person was created on 2026-07-20 by the walkthrough
+checker, well after the medical features existed.
+
+Two holes, and the second is the one everybody reaches:
+
+* a worker could be activated with Medical ticked and no date, straight into an
+  alert. `update_readiness` now refuses to mark Medical complete without one.
+* readiness is only editable on the way *in* - the form disappears once someone
+  is Working - so no screen anywhere set this field for an activated worker.
+  `MEDICAL_VALIDITY_MONTHS` is 12, so **every** worker eventually needs a
+  renewal recorded and nobody could record one. A working person's profile now
+  carries a medical panel: `record_entry_medical` touches the date and nothing
+  else, audited, manager-gated, and deliberately not a back door into the
+  activation workflow.
+
+Requiring the date made the demo seed and three test files fail, which is the
+rule working: each was creating exactly the inconsistency that produced the live
+alert.
+
+**Flash messages.** Three seconds for a two-line message, so they were gone
+before they could be read. Now ten seconds, with a dismiss button, and the timer
+holds while the pointer or keyboard focus is on the message - reading it should
+not race it. The markup was duplicated in both client shells, identical and free
+to drift, so it moved to `templates/partials/flash_messages.html` and the shell
+test now checks the include on each side and the behaviour once, where it lives.
+
+Jober 1076, CorvinumEU 671, browser 70.
+
+
 ## 2026-08-05 - A payroll run now collects what is outstanding
 
 Reported by the owner: an advance given in July was never deducted from the

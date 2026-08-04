@@ -1,5 +1,32 @@
 # Test Journal
 
+## 2026-08-05 - the guard on a browser test earned its keep
+
+- **`tests/test_entry_medical.py` is new (7 tests).** The pair that matter are
+  the two holes: Medical cannot be marked complete without a date, and a
+  *working* person can still have one recorded. The second exists because the
+  certificate is valid 12 months, so the renewal path is not an edge case.
+- `test_recording_a_medical_touches_only_the_date` guards the shape of the fix:
+  it must not become a way to edit readiness after activation.
+- **A required-date rule broke 11 tests and the demo seed, and every one of them
+  was creating the same inconsistency the live bug came from** - Medical ticked,
+  date blank. Fixed at source rather than by relaxing the rule.
+- **`test_zz_card_layout` failed with "no activation card rendered, so this
+  proves nothing".** That guard was added yesterday after an earlier version of
+  the same test measured an empty page; today it caught a real break - the
+  browser test builds its request through the readiness form, which now needs a
+  medical date. Without the guard it would have passed against nothing.
+- Walked into the documented Slovak-locale trap again: `pytest.raises(match=...)`
+  on a translated message passes on the Jober lane and fails on CorvinumEU.
+  `translation.override("en")` is the fix and is in `CLAUDE.md`.
+- `test_flash_notifications_are_timed_and_shared_by_both_client_shells` kept its
+  intent and changed its method: "shared" used to mean the same markup pasted
+  into two files, which is shared only until someone edits one. It now asserts
+  the include on each side, asserts the markup is **absent** from the shells,
+  and checks the timing and dismiss control in the partial.
+- Suites: **Jober 1076 / CorvinumEU 671 / browser 70**.
+
+
 ## 2026-08-05 - reversing two tests that asserted the wrong thing
 
 - **Six new tests in `tests/test_pay_deductions.py`** for carry-forward, led by

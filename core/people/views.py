@@ -274,6 +274,17 @@ def person_detail(request: HttpRequest, pk: int) -> TemplateResponse:
             "last_activation_rejection": last_activation_rejection,
             "PillarState": PillarState,
             "is_available": person.lifecycle_status == LifecycleStatus.AVAILABLE,
+            # Readiness closes behind an activated worker, but their medical
+            # still expires annually, so the date stays editable from here.
+            "is_working": person.lifecycle_status == LifecycleStatus.WORKING,
+            "working_medical_date": (
+                assignment
+                and ReadinessRecord.objects.filter(
+                    person=person, project=assignment.project
+                )
+                .values_list("entry_medical_date", flat=True)
+                .first()
+            ),
             "active_projects": operable_projects(request.user),
             "person_banners": registry.person_banners(request, person),
             "person_panels": registry.person_panels(request, person),

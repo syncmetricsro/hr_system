@@ -129,13 +129,7 @@
           {% get_current_language as CURRENT_LANGUAGE %}
         </div>
         {% endif %}
-        {% if messages %}
-          <ul class="messages flash-stack" aria-live="polite" aria-atomic="true">
-            {% for message in messages %}
-              <li class="message message-{{ message.tags }}" x-data="{ visible: true }" x-init="setTimeout(() => visible = false, 3000)" x-show="visible" x-transition.opacity.duration.200ms>{{ message }}</li>
-            {% endfor %}
-          </ul>
-        {% endif %}
+        {% include "partials/flash_messages.html" %}
         {% block content %}{% endblock %}
       </main>
     </div>
