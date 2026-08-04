@@ -78,6 +78,7 @@ scripts/playwright_e2e.sh
 
 # i18n (gettext is NOT in the runtime/test images — this script apt-installs it)
 scripts/compile_messages.sh --extract   # then compile with no args
+scripts/compile_messages.sh --check     # read-only PO/MO completeness check
 ```
 
 ## Gotchas that have actually bitten
@@ -85,17 +86,18 @@ scripts/compile_messages.sh --extract   # then compile with no args
 - **Container-name collision:** `dev_db.sh` and `dev_app.sh` both use a container
   named `jober-dev-db` with *different passwords*. If `dev_app.sh up` fails with
   password-auth errors: `scripts/dev_app.sh down && scripts/dev_app.sh up`.
-- **msgmerge fuzzy matches are wrong more often than right.** After
-  `--extract`, check every new msgid: fuzzies pair unrelated strings (e.g.
-  "Reject" → "Projekt"). Fix the msgstr *and* remove the `#, fuzzy` flag (it may
-  sit 1–3 lines above the msgid with `#|` lines between).
+- **Never bypass the safe translation extractor.** Raw msgmerge fuzzy matches
+  pair unrelated strings (for example, "trial waived" with "Trial failed").
+  `compile_messages.sh --extract` disables fuzzy matching, excludes tests,
+  refuses unreviewed active-to-obsolete changes, and does not compile.
+  Translate every blank addition, then run the script without arguments.
 - **Tests run under the Slovak default locale.** Assertions on translated
   strings need `translation.override("en")` (see `tests/test_i18n.py` pattern).
 - **Django 6 needs `DJANGO_DEBUG=1`** (or a real `DJANGO_SECRET_KEY`) for
   management commands in the test container — base settings refuse the dev key
   when DEBUG is off.
 - Long/wrapped `.po` entries (`msgid ""` + continuation lines) can't be patched
-  with single-line regexes — handle the wrapped block explicitly.
+  or counted with single-line regexes — use the committed semantic checker.
 - Container-created files can land root-owned; run containers with
   `--user "$(id -u):$(id -g)" -e HOME=/tmp`.
 

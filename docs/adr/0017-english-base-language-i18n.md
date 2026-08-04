@@ -33,10 +33,11 @@ English.
   catalog (it is the source). The Slovak catalog reproduces the previous Slovak
   source text exactly, so the default rendering — and existing tests — are
   unchanged.
-- **Tooling:** gettext (`xgettext`/`msgfmt`) is not in the runtime/test images
-  (and the runtime must stay minimal), so extraction/compilation runs the app
-  image with gettext apt-installed at run time, via `scripts/compile_messages.sh`.
-  The runtime image just `COPY`s the committed `locale/` (no gettext at runtime).
+- **Tooling:** gettext is not in the runtime/test images (and the runtime must
+  stay minimal). Safe extraction temporarily installs gettext in the app image;
+  validation and deterministic MO compilation use committed standard-library
+  tooling, all via `scripts/compile_messages.sh`. The runtime image just
+  `COPY`s the committed `locale/` (no gettext at runtime).
 
 ## Consequences
 

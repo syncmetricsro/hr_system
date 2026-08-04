@@ -20,11 +20,11 @@ this doc doesn't repeat it.
   - **`.po`** — human-readable source of truth, hand-edited, committed.
   - **`.mo`** — compiled binary the running app actually loads. Editing
     `.po` alone does nothing until you recompile.
-- `gettext` (`msgfmt`/`msgmerge`, used by Django's `makemessages`/
-  `compilemessages`) is **not installed in the runtime/test images** —
-  `scripts/compile_messages.sh` apt-installs it inside the app image at
-  run time, so always use that script rather than calling Django's
-  management commands directly on the host.
+- GNU gettext is **not installed in the runtime/test images**. Extraction
+  temporarily installs it inside the app image; validation and deterministic
+  MO compilation use the repository's standard-library tooling. Always use
+  `scripts/compile_messages.sh` rather than calling Django's management
+  commands directly.
 
 ## Editing an existing translation
 
@@ -46,20 +46,36 @@ this doc doesn't repeat it.
 
 1. Mark the string in source: `{% translate "..." %}` / `{% blocktranslate %}`
    in templates, `gettext(...)` / `gettext_lazy(...)` in Python.
-2. Re-extract and compile:
+2. Re-extract without compiling:
    ```bash
    scripts/compile_messages.sh --extract
    ```
-   This runs `makemessages` first (updates all three `.po` files with
-   new/changed msgids from source — excluding `demo`, `test-artifacts`,
-   `vendor`, `staticfiles`), then compiles.
-3. **Check every new/changed msgid.** `makemessages`/`msgmerge` fuzzy-
-   matches are wrong more often than right (e.g. it has paired "Reject"
-   with "Projekt" before) — fix the `msgstr` and clear the `#, fuzzy` flag
-   for anything it guessed at.
-4. Translate the new msgid in **all three** catalogs (SK/HU/UK) before
+   This updates all three `.po` files from runtime source while excluding
+   `tests`, `demo`, `test-artifacts`, `vendor`, and `staticfiles`. It
+   disables msgmerge fuzzy matching, prints semantic active/obsolete/addition
+   counts, and deliberately does not compile.
+3. If extraction would make an active message obsolete, it lists every
+   affected msgid, restores all three catalogs byte-for-byte, and fails.
+   Confirm the source really was removed, then rerun explicitly:
+   ```bash
+   scripts/compile_messages.sh --extract --accept-obsolete
+   ```
+   Approved removed translations stay in the PO files as recoverable `#~`
+   history; they are not active and therefore do not enter the MO files.
+4. Translate every added msgid in **all three** catalogs (SK/HU/UK) before
    shipping — a missing translation just falls back to showing the raw
    English `msgid`.
+5. Validate and compile:
+   ```bash
+   scripts/compile_messages.sh
+   ```
+   Compilation fails on an active fuzzy or untranslated entry, an incomplete
+   plural, or different active msgid sets between the three languages.
+6. Confirm the committed binaries match the reviewed PO sources:
+   ```bash
+   scripts/compile_messages.sh --check
+   ```
+   This is read-only and fails on a missing or stale MO file.
 
 ## Seeded / database catalog data
 
@@ -99,13 +115,17 @@ conflate but need different treatment:
 
 ## Retrieving / verifying translation state
 
-- **Per-catalog completeness:**
+- **Whole-catalog completeness and MO synchronization:**
   ```bash
-  msgfmt --statistics locale/<lang>/LC_MESSAGES/django.po
+  scripts/compile_messages.sh --check
   ```
-  Reports translated/fuzzy/untranslated counts. Prefer this over grepping
-  the raw `.po` — long/wrapped entries (`msgid ""` + continuation lines)
-  make single-line regex checks unreliable.
+  The committed parser understands wrapped messages, contexts, plurals,
+  fuzzy flags, and obsolete entries. Do not count `msgid` or `msgstr` lines:
+  wrapped blocks make line-oriented counts incorrect.
+- **Extraction report:** `--extract` prints active, translated, fuzzy,
+  obsolete, added, newly-obsolete and revived counts. An obsolete entry is
+  retained translation history, not an active UI string and not a deleted PO
+  block.
 - **Viewing a specific language at runtime:** URLs are language-prefixed —
   `/sk/`, `/hu/`, `/uk/` (an unprefixed root request redirects to the
   Slovak default, `/sk/`).
@@ -127,9 +147,12 @@ assertions) for the pattern in use.
 
 ## Gotchas
 
-- msgmerge fuzzy matches pair unrelated strings more often than not —
-  always review, never trust-and-compile.
+- Raw msgmerge fuzzy matching has paired unrelated strings such as "trial
+  waived" and "Trial failed". The committed extractor disables fuzzy matching;
+  never replace it with a direct `makemessages` invocation.
+- Test fixtures are not product UI and are excluded from extraction. Runtime
+  code or a `catalog_i18n.py` registry must own every shipped msgid.
 - Wrapped `.po` entries can't be patched with single-line regexes — edit
   the whole wrapped block.
-- gettext isn't in the runtime/test images — don't try to run
-  `makemessages`/`compilemessages` outside `scripts/compile_messages.sh`.
+- gettext isn't in the runtime/test images — don't try to run extraction
+  outside `scripts/compile_messages.sh`.

@@ -1,5 +1,22 @@
 # Test Journal
 
+## 2026-08-04 - safe translation extraction
+
+- Added focused coverage for wrapped/context/plural parsing, fuzzy and obsolete
+  classification, exact translation preservation, rename behavior, language
+  set divergence, incomplete plurals, deterministic MO checks, and the
+  compile-test fixtures staying out of real catalogs.
+- The removal guard is tested as a transaction: snapshot three catalogs,
+  simulate an active translation becoming obsolete, require refusal, restore,
+  and compare the original text exactly. A separate case proves explicit
+  approval retains the obsolete translation.
+- The actual containerized `--extract` failure path was also exercised against
+  the real repository: **122 newly obsolete listed, 0 added, 0 revived, 0
+  fuzzy; 1542 active and translated per language**. It exited 1 and restored
+  all three PO files byte-for-byte.
+- Focused result before the generated refresh: **41 passed**; Ruff lint clean.
+  Full unit/e2e results will be recorded after the reviewed catalog commit.
+
 ## 2026-08-04 - activation without a trial day, and self-approval
 
 - **`tests/test_trial_waiver.py` is new (9 tests).** The one that earns its
@@ -36,10 +53,10 @@
      `pg_terminate_backend` + `DROP DATABASE` and rerun. The full Jober suite
      takes ~7 minutes, so it needs a real timeout, not the 2-minute default.
   2. `.po` files still cannot be measured with line-oriented tools (see the
-     2026-08-03 correction). The parser used here splits on blank lines and
-     treats a block as translated only when `msgstr` has content *and* the block
-     carries no `#, fuzzy` — which is what caught that `--extract` had silently
-     dropped 111 translated msgids.
+     2026-08-03 correction). The follow-up semantic parser established that
+     extraction moved 122 dead-source entries into obsolete history rather than
+     erasing 111 translations; the unsafe parts were fixture extraction and
+     fuzzy guessing.
 
 ## 2026-08-03 - button clearance sweep
 

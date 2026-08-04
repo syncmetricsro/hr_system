@@ -43,10 +43,12 @@ English rows inside a translated UI.
    app has none — copy any existing header).
 3. Render sites: `{{ obj.label|db_trans }}` (load the `nav` tag library);
    Python messages: `gettext(label)`.
-4. `scripts/compile_messages.sh --extract`, translate **SK/HU/UK** (check
-   every msgmerge fuzzy — they pair wrong more often than right), compile.
-5. Verify with `msgfmt --statistics` (regex greps false-positive on wrapped
-   entries): all three catalogs must report zero untranslated/fuzzy.
+4. Run `scripts/compile_messages.sh --extract`. The safe extractor disables
+   fuzzy matching; translate the new blank entry in **SK/HU/UK**, then run
+   `scripts/compile_messages.sh`.
+5. Verify with `scripts/compile_messages.sh --check` (regex greps
+   false-positive on wrapped entries): all three catalogs must be complete,
+   aligned, and compiled.
 6. Tests asserting label text run under the Slovak default locale — pin
    with `translation.override("en")` (see tests/test_checklists.py).
 7. **Reseeding an existing demo DB**: seeds `get_or_create` by label, so a

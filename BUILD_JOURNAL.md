@@ -1,5 +1,33 @@
 # Build Journal
 
+## 2026-08-04 - Translation extraction now fails safe
+
+The catalog incident on the activation branch had two genuine tooling bugs and
+one misleading symptom. Raw Django extraction scanned
+`tests/test_compile_po.py`, so its context/plural compiler fixtures became
+product msgids. GNU msgmerge also guessed fuzzy translations, including pairing
+"trial waived" with the translation of "Trial failed". Those are now prevented
+at source: the shared `safe_makemessages` command adds
+`--no-fuzzy-matching`, and the workflow excludes `tests`.
+
+The apparent deletion was different. Extraction moved 122 no-longer-referenced
+active entries into recoverable `#~` obsolete history; it did not erase their
+PO blocks. Of those, 111 referenced only the deleted, pre-redesign Help
+templates. The workflow now reports additions, removals and revivals
+semantically, snapshots all catalogs before extraction, and restores them if an
+active-to-obsolete transition was not explicitly approved.
+
+Compilation is deliberately separate. A standard-library parser understands
+wrapped entries, contexts, plurals, fuzzy flags and obsolete blocks; it rejects
+fuzzy, untranslated, incomplete or language-divergent active catalogs before
+writing deterministic MO files. `--check` compares those bytes without
+writing. No dependency or runtime behavior changed.
+
+Failure-path verification: ordinary extraction reported 1542 active / 1542
+translated / 0 fuzzy and 165 obsolete per language, listed all 122 transitions,
+returned failure, and restored SK/HU/UK byte-for-byte. The reviewed catalog
+refresh and full two-client gates follow in the generated-catalog commit.
+
 ## 2026-08-04 - Activation stops assuming two people and a trial day
 
 Two client complaints, one root cause: an office may have exactly one
@@ -37,16 +65,16 @@ visibility rather than prevention — a deliberate reduction, on the reasoning
 that a control which blocks the job gets worked around, and being worked around
 leaves no record while this does.
 
-**`makemessages` is dropping translations, and it is not this slice's bug.**
-Running `compile_messages.sh --extract` rewrote all three catalogs and took them
-from 1655 msgids to 1544 — **111 already-translated strings gone** — while also
-pulling in fixture strings from `tests/test_compile_po.py`. Reverted, and the
-nine new entries were appended by hand instead: 1664/1664 translated in SK, HU
-and UK, zero fuzzy, +36 lines per catalog. Every one of the five fuzzy matches
-msgmerge had proposed was wrong in the way `CLAUDE.md` warns about ("trial
-waived" -> the translation of "Trial failed", "Skip the trial and start
-readiness" -> "Review the trial details and try again"). The catalog regression
-needs its own slice.
+**Catalog extraction is unsafe, and it is not this slice's bug.** Running the
+old `compile_messages.sh --extract` moved 122 no-longer-referenced strings from
+the active set into recoverable obsolete history, including 111 tied only to
+deleted Help templates. That cleanup was legitimate but silent. The real bugs
+were pulling fixture strings from `tests/test_compile_po.py` and proposing
+five wrong fuzzy translations ("trial waived" -> the translation of "Trial
+failed", "Skip the trial and start readiness" -> "Review the trial details and
+try again"). The changes were reverted and nine reviewed entries appended by
+hand: 1664/1664 translated in SK, HU and UK, zero fuzzy. Extraction safety
+belongs in its own slice.
 
 ## 2026-08-03 - The Secure Document Vault gets an architecture
 
