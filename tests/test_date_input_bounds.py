@@ -30,9 +30,7 @@ from core.ui.forms import (
 
 REPO = Path(__file__).resolve().parent.parent
 TEMPLATE_DIRS = [REPO / "templates", REPO / "clients"]
-DATED_INPUT = re.compile(
-    r'<input[^>]*type="(date|datetime-local|month)"[^>]*>', re.I
-)
+DATED_INPUT = re.compile(r'<input[^>]*type="(date|datetime-local|month)"[^>]*>', re.I)
 
 
 def _template_files():

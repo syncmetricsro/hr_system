@@ -40,18 +40,22 @@ def _report_args(request) -> tuple[int, int]:
 @require_action(Action.LEDGER_VIEW)
 def ledger_overview(request):
     year, month = _report_args(request)
-    return render(request, "pages/ledger.html", {
-        "summary": thursday_summary(timezone.localdate()),
-        "cycle": cycle_report(year, month),
-        "cycle_year": year,
-        "cycle_month": month,
-        "entry_types": EntryType.choices,
-        "categories": LedgerCategory.choices,
-        "people": Person.objects.order_by("last_name", "first_name"),
-        "projects": Project.objects.order_by("name"),
-        # Pre-fills the entry date, which is what it is nine times in ten.
-        "today_iso": timezone.localdate().isoformat(),
-    })
+    return render(
+        request,
+        "pages/ledger.html",
+        {
+            "summary": thursday_summary(timezone.localdate()),
+            "cycle": cycle_report(year, month),
+            "cycle_year": year,
+            "cycle_month": month,
+            "entry_types": EntryType.choices,
+            "categories": LedgerCategory.choices,
+            "people": Person.objects.order_by("last_name", "first_name"),
+            "projects": Project.objects.order_by("name"),
+            # Pre-fills the entry date, which is what it is nine times in ten.
+            "today_iso": timezone.localdate().isoformat(),
+        },
+    )
 
 
 @require_action(Action.LEDGER_ENTER)
@@ -117,14 +121,23 @@ def ledger_cycle_action(request):
     elif request.POST.get("action") == "deducted":
         n = mark_cycle_deducted(year, month, actor=request.user)
         messages.success(request, _("%(n)s entries marked settled.") % {"n": n})
-    return redirect(f"{request.POST.get('next') or '/ledger/'}?year={year}&month={month}")
+    return redirect(
+        f"{request.POST.get('next') or '/ledger/'}?year={year}&month={month}"
+    )
 
 
 # --- CSV exports (layout per C-Q2/C-Q3 proposed columns) ---------------------
 
 _CSV_COLUMNS = [
-    "company", "person", "date", "entry_type", "category",
-    "amount", "pay_effect", "cycle", "settlement_status",
+    "company",
+    "person",
+    "date",
+    "entry_type",
+    "category",
+    "amount",
+    "pay_effect",
+    "cycle",
+    "settlement_status",
 ]
 
 
@@ -132,17 +145,19 @@ def _write_entries(response, entries):
     writer = csv.writer(response)
     writer.writerow(_CSV_COLUMNS)
     for e in entries:
-        writer.writerow([
-            e.project.name if e.project else "",
-            str(e.person),
-            e.entry_date.isoformat(),
-            e.entry_type,
-            e.category,
-            f"{e.amount}",
-            e.pay_effect,
-            e.cycle_key,
-            e.settlement_status,
-        ])
+        writer.writerow(
+            [
+                e.project.name if e.project else "",
+                str(e.person),
+                e.entry_date.isoformat(),
+                e.entry_type,
+                e.category,
+                f"{e.amount}",
+                e.pay_effect,
+                e.cycle_key,
+                e.settlement_status,
+            ]
+        )
     return response
 
 
@@ -158,5 +173,7 @@ def thursday_csv(request):
 def cycle_csv(request, year: int, month: int):
     report = cycle_report(year, month)
     response = HttpResponse(content_type="text/csv")
-    response["Content-Disposition"] = f'attachment; filename="cycle-{year:04d}-{month:02d}.csv"'
+    response["Content-Disposition"] = (
+        f'attachment; filename="cycle-{year:04d}-{month:02d}.csv"'
+    )
     return _write_entries(response, report["entries"])

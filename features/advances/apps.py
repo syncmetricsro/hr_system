@@ -10,7 +10,10 @@ class AdvancesConfig(AppConfig):
         # Feature -> core registration (ADR 0022): person-card ledger panel.
         from django.apps import apps as django_apps
 
-        from core.ui.registry import register_person_finance_series, register_person_panel
+        from core.ui.registry import (
+            register_person_finance_series,
+            register_person_panel,
+        )
         from features.advances.panels import ledger_panel
         from features.advances.providers import ledger_deduction_series
 

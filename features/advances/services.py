@@ -54,12 +54,15 @@ def record_entry(
     reversal_of: LedgerEntry | None = None,
 ) -> LedgerEntry:
     amount = Decimal(amount)
-    _require(amount > 0, _("Amount must be positive — meaning lives in the entry type."))
+    _require(
+        amount > 0, _("Amount must be positive — meaning lives in the entry type.")
+    )
     expected = TYPE_PAY_EFFECTS[EntryType(entry_type)]
     effect = pay_effect or expected
     _require(
         effect in (expected, PayEffect.NONE),
-        _("%(t)s entries carry pay effect %(e)s (or none).") % {"t": entry_type, "e": expected},
+        _("%(t)s entries carry pay effect %(e)s (or none).")
+        % {"t": entry_type, "e": expected},
     )
     on = entry_date or timezone.localdate()
     # Backdating is allowed — an advance handed over last week is recorded this
@@ -68,8 +71,10 @@ def record_entry(
     # (C-Q5), and refusing it would leave no correction path at all.
     _require(
         reversal_of is not None or not cycle_is_settled(on),
-        _("The %(key)s cycle is already settled. Record this entry in the open "
-          "cycle, or reverse an existing entry instead.")
+        _(
+            "The %(key)s cycle is already settled. Record this entry in the open "
+            "cycle, or reverse an existing entry instead."
+        )
         % {"key": cycle_key(*cycle_for(on))},
     )
     entry = LedgerEntry.objects.create(
@@ -85,7 +90,9 @@ def record_entry(
         created_by=actor if getattr(actor, "is_authenticated", False) else None,
     )
     record_event(
-        actor, "ledger.entry_recorded", target=person,
+        actor,
+        "ledger.entry_recorded",
+        target=person,
         reason=f"{entry_type} {category} {amount} EUR",
         entry_id=entry.pk,
     )
@@ -101,7 +108,13 @@ def cancel_entry(entry: LedgerEntry, *, actor=None, reason: str = "") -> LedgerE
     )
     entry.settlement_status = SettlementStatus.CANCELLED
     entry.save(update_fields=["settlement_status"])
-    record_event(actor, "ledger.entry_cancelled", target=entry.person, reason=reason, entry_id=entry.pk)
+    record_event(
+        actor,
+        "ledger.entry_cancelled",
+        target=entry.person,
+        reason=reason,
+        entry_id=entry.pk,
+    )
     return entry
 
 
@@ -115,7 +128,10 @@ def reverse_entry(entry: LedgerEntry, *, actor=None, reason: str = "") -> Ledger
         PayEffect.DEDUCT: EntryType.PAY_ADDITION,
         PayEffect.ADD: EntryType.PAY_DEDUCTION,
     }
-    _require(entry.pay_effect in opposite, _("Entries without payroll effect cannot be reversed."))
+    _require(
+        entry.pay_effect in opposite,
+        _("Entries without payroll effect cannot be reversed."),
+    )
     reversal = record_entry(
         entry.person,
         entry_type=opposite[entry.pay_effect],
@@ -126,11 +142,18 @@ def reverse_entry(entry: LedgerEntry, *, actor=None, reason: str = "") -> Ledger
         note=reason or f"reversal of #{entry.pk}",
         reversal_of=entry,
     )
-    record_event(actor, "ledger.entry_reversed", target=entry.person, reason=reason, entry_id=entry.pk)
+    record_event(
+        actor,
+        "ledger.entry_reversed",
+        target=entry.person,
+        reason=reason,
+        entry_id=entry.pk,
+    )
     return reversal
 
 
 # --- Thursday weekly summary (C-Q2) -----------------------------------------
+
 
 def week_cutoff(on: dt.date) -> dt.datetime:
     """The Thursday-14:00 cut-off of the week containing ``on`` (local time)."""
@@ -160,6 +183,7 @@ def thursday_summary(on: dt.date):
 
 
 # --- 20th-to-20th cycle (C-Q3) -----------------------------------------------
+
 
 def cycle_bounds(year: int, month: int) -> tuple[dt.date, dt.date]:
     """Cycle keyed by end month: 21st of the previous month → 20th of
@@ -214,7 +238,8 @@ def cycle_report(year: int, month: int):
     per_person: dict = {}
     for e in entries:
         row = per_person.setdefault(
-            e.person_id, {"person": e.person, "deduct": Decimal("0"), "add": Decimal("0")}
+            e.person_id,
+            {"person": e.person, "deduct": Decimal("0"), "add": Decimal("0")},
         )
         if e.pay_effect == PayEffect.DEDUCT:
             row["deduct"] += e.amount
@@ -222,7 +247,12 @@ def cycle_report(year: int, month: int):
             row["add"] += e.amount
     for row in per_person.values():
         row["net"] = row["add"] - row["deduct"]
-    return {"start": start, "end": end, "entries": list(entries), "rows": list(per_person.values())}
+    return {
+        "start": start,
+        "end": end,
+        "entries": list(entries),
+        "rows": list(per_person.values()),
+    }
 
 
 @transaction.atomic
@@ -241,7 +271,9 @@ def include_cycle(year: int, month: int, *, actor=None) -> int:
         entry.cycle_key = cycle_key(year, month)
         entry.save(update_fields=["settlement_status", "cycle_key"])
         count += 1
-    record_event(actor, "ledger.cycle_included", reason=cycle_key(year, month), count=count)
+    record_event(
+        actor, "ledger.cycle_included", reason=cycle_key(year, month), count=count
+    )
     return count
 
 
@@ -261,12 +293,22 @@ def open_balance(person) -> Decimal:
     what the person currently owes against future pay."""
     rows = LedgerEntry.objects.filter(
         person=person,
-        settlement_status__in=(SettlementStatus.OPEN, SettlementStatus.INCLUDED_IN_CYCLE),
+        settlement_status__in=(
+            SettlementStatus.OPEN,
+            SettlementStatus.INCLUDED_IN_CYCLE,
+        ),
     ).exclude(pay_effect=PayEffect.NONE)
-    deduct = rows.filter(pay_effect=PayEffect.DEDUCT).aggregate(t=Sum("amount"))["t"] or Decimal("0")
-    add = rows.filter(pay_effect=PayEffect.ADD).aggregate(t=Sum("amount"))["t"] or Decimal("0")
+    deduct = rows.filter(pay_effect=PayEffect.DEDUCT).aggregate(t=Sum("amount"))[
+        "t"
+    ] or Decimal("0")
+    add = rows.filter(pay_effect=PayEffect.ADD).aggregate(t=Sum("amount"))[
+        "t"
+    ] or Decimal("0")
     return deduct - add
 
 
 def guard_editable(entry: LedgerEntry) -> None:
-    _require(not entry.is_locked, _("Entry is locked after cycle inclusion; record a reversal instead."))
+    _require(
+        not entry.is_locked,
+        _("Entry is locked after cycle inclusion; record a reversal instead."),
+    )
