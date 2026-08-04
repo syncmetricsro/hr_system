@@ -1,24 +1,26 @@
-name: Application CI
+name: Browser end-to-end tests
 
-# This project does not use pull requests (2026-08-04): work is merged locally
-# and pushed, so CI reports on `main` after the fact rather than gating a merge.
-# The browser suite deliberately lives in browser-e2e.yml, which is manual only.
+# Manual only, on purpose (2026-08-04). The suite outgrew running it per slice,
+# so it is not part of the per-commit gate and application-ci.yml does not
+# invoke it. Run it before a staging deploy:
+#
+#   gh workflow run browser-e2e.yml --ref <sha-or-branch>
+#
+# or locally with scripts/playwright_e2e.sh. Adding any automatic trigger here
+# puts it back in the per-commit loop, which is what this change removed.
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
 
 permissions:
   contents: read
 
 concurrency:
-  group: application-ci-${{ github.ref }}
+  group: browser-e2e-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  quality:
-    name: Quality and unit tests
+  browser:
+    name: Browser end-to-end tests
     runs-on: ubuntu-24.04
     timeout-minutes: 45
     steps:
@@ -28,7 +30,6 @@ jobs:
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
-          BASE_SHA: ${{ github.event.before }}
         run: |
           set -euo pipefail
           auth="$(printf 'x-access-token:%s' "$GH_TOKEN" | base64 -w0)"
@@ -37,15 +38,8 @@ jobs:
           git remote add origin "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY.git"
           git -c "http.extraheader=AUTHORIZATION: basic $auth" \
             fetch --no-tags --depth=1 origin "$GITHUB_SHA"
-          if [[ "$BASE_SHA" =~ ^[0-9a-f]{40}$ ]] \
-            && [[ "$BASE_SHA" != "0000000000000000000000000000000000000000" ]]; then
-            git -c "http.extraheader=AUTHORIZATION: basic $auth" \
-              fetch --no-tags --depth=1 origin "$BASE_SHA"
-          fi
           git checkout --detach "$GITHUB_SHA"
           unset auth
 
-      - name: Run quality and unit gate
-        env:
-          CI_BASE_SHA: ${{ github.event.before }}
-        run: scripts/ci_quality.sh
+      - name: Run both-client browser gate
+        run: scripts/playwright_e2e.sh

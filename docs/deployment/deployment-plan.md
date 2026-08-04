@@ -113,6 +113,11 @@ Client-specific env:
 
 ## Rollout order
 
+0. **Run the browser suite against the exact revision being deployed.** Since
+   2026-08-04 it is not part of the per-commit gate and CI does not run it by
+   itself, so **this is the one place it is required** — a deploy is the moment
+   the accumulated UI risk is worth 45 minutes. Locally
+   `scripts/playwright_e2e.sh`, or `gh workflow run browser-e2e.yml --ref <sha>`.
 1. **Jober staging** → smoke (healthz, login, three headline screens, one
    Twilio Virtual-Phone SMS), then hold for the Jober demo/acceptance.
 2. **CorvinumEU staging** → smoke (2FA enrollment with a real phone, checklist

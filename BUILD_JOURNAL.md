@@ -1,5 +1,46 @@
 # Build Journal
 
+## 2026-08-04 - No more pull requests, and the browser suite becomes opt-in
+
+Two process changes, both asked for, both about cost rather than code. Recorded
+here with the reasoning because a future session reading only the diff would see
+rules getting *looser* and reasonably try to put them back.
+
+**Pull requests are gone.** They were ceremony for a repo with one maintainer:
+nobody reviewed them, and waiting on CI before merging cost ~9 minutes a slice.
+Work still gets its own branch — that part was never the problem — but it is
+merged locally with `git merge --no-ff` and pushed. `AGENTS.md` §1 item 8 is the
+binding statement and had to change first; `CLAUDE.md`'s workflow now spells out
+the four steps and the `git` commands.
+
+The honest consequence, written into both files: **CI stops being a gate and
+becomes a report.** It still runs on every push to `main`, but after the fact,
+and `main` has no branch protection — so a red local run reaches `main`
+unopposed. That makes step 2 (ruff + both unit lanes, ~1640 tests) the only
+thing standing in front of `main`, which is worth knowing before skipping it.
+
+**The browser suite is opt-in.** It had grown to the point where running it per
+slice was not worth it, and CI was running it on *every* push to `main` as well.
+The `browser` job moved out of `application-ci.yml` into its own
+`browser-e2e.yml` with `workflow_dispatch` and nothing else, so it is one
+command away (`gh workflow run browser-e2e.yml --ref <sha>`) and never runs
+itself. `application-ci.yml` also loses its `pull_request` trigger and the now
+dead `github.event.pull_request.base.sha` half of `CI_BASE_SHA`.
+
+`scripts/ci_quality.sh` needed no change: its format check already falls back to
+`git merge-base HEAD main` when `CI_BASE_SHA` is not a valid sha, so losing PR
+events does not affect it.
+
+The one place e2e is now *required* is a staging deploy, so
+`docs/deployment/deployment-plan.md` gains it as rollout step 0 — a deploy is
+the moment the accumulated UI risk is worth 45 minutes.
+
+Not done: the three merged branches (`feat/activation-without-trial`,
+`feat/profitability-workbook`, `fix/i18n-extraction-safety`) still exist on the
+remote, since without PRs nothing deletes them automatically. All three carry
+zero commits that are not in `main`; deleting the pointers was raised and left
+for the owner to decide.
+
 ## 2026-08-04 - Translation extraction now fails safe
 
 The catalog incident on the activation branch had two genuine tooling bugs and

@@ -1,5 +1,25 @@
 # Test Journal
 
+## 2026-08-04 - the e2e suite leaves the per-commit gate
+
+- **`scripts/playwright_e2e.sh` is no longer run per slice, and CI no longer
+  runs it at all on its own.** The `browser` job moved to `browser-e2e.yml`
+  behind `workflow_dispatch`. Run it before a staging deploy — that is now
+  rollout step 0 in `docs/deployment/deployment-plan.md` — and when asked.
+- **What covers that ground now:** ruff, `manage.py check` and
+  `makemigrations --check` under both settings modules, and both unit lanes —
+  roughly **1018 Jober + 620 CorvinumEU**. That is the gate, and with pull
+  requests gone it is the *only* gate: CI reports on `main` after the push
+  rather than blocking a merge, and `main` is unprotected.
+- **What is genuinely less covered.** The unit lanes exercise views through the
+  Django test client, so URL/permission/template-context regressions still fail
+  fast. What stops being caught per-commit is the browser-only class: Alpine
+  interactions, the confirm dialog, theme switching, tooltip and button-clearance
+  geometry, and real navigation across both client shells. The last two exist
+  *because* they were found by eye and not by a unit test — so a UI-heavy slice
+  is a reasonable place to ask for an e2e run even outside a deploy.
+- No test code changed here; this entry records where the boundary moved.
+
 ## 2026-08-04 - safe translation extraction
 
 - Added focused coverage for wrapped/context/plural parsing, fuzzy and obsolete
