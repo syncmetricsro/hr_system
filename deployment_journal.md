@@ -1,5 +1,50 @@
 # Deployment Journal
 
+## 2026-08-04 - Extraction safety, activation and profitability deployed to both staging clients
+
+Merged **#163, #164 and #162** in that order and deployed exact `main` merge
+**`742f4f2`** to `jober-staging` and `corvinum-staging` as the shared image
+`jober-platform:demo-742f4f2` (local image ID
+`sha256:0956d3487134d9d33538e3c6a47a37195aea387a4da8cae8391fe757b5e93b57`).
+The release adds trial-waiver/self-approval behavior, the safe translation
+extraction workflow, and Jober's profitability workbook, year grid and
+command-line HV importer. The client workbook remains gitignored; no client
+data entered the image or repository.
+
+The final Application CI run **30904085083** was green before merge: browser
+passed in 3m22s and the full quality/unit lane in 12m58s. Local release checks
+also passed the no-Node rule, vendor checks, deterministic PO/MO synchronization
+and production-runtime artifact inspection. The final suites recorded **1061
+passed / 15 skipped** for Jober, **631 passed / 23 skipped / 261 deselected**
+for CorvinumEU and **65 passed** in Playwright.
+
+**Migrations.** Jober applied `finance.0004_financecategory_key` and
+`projects.0008_readinessrecord_trial_waived`. CorvinumEU applied only the
+shared `projects.0008` migration; profitability remains uninstalled and its
+`/en/finance/` route returns 404, while Jober's route redirects to login as
+expected. The optional Jober `ensure_superuser` command refused safely because
+`DJANGO_SUPERUSER_EMAIL` and `DJANGO_SUPERUSER_PASSWORD` remain unset; it made
+no database change and the known manual-superuser readiness gap remains open.
+
+Both certificate-policy reports found **0** disallowed records with files,
+both `manage.py check --deploy` runs reported no issues, and each app has one
+running web process. The public HTTPS smoke suites passed health, login/CSRF,
+fingerprinted static CSS, X-Frame-Options and HSTS; both serve
+`app.549ea0e7ad7e.css`. Both regenerated nginx configurations retain
+`client_max_body_size 25m;`, and recent app logs contain clean Gunicorn startup
+only.
+
+The host briefly refused additional SSH connections after several parallel
+read-only Jober checks. Corvinum's first stream failed before data was received
+and changed no state; both public health endpoints stayed available. After a
+short pause, the restricted Dokku connection recovered and the complete stream,
+release and verification succeeded sequentially.
+
+No seed, purge, SMS, Telegram, SMTP send, payslip send, provider configuration,
+runtime-secret change or production action ran. Both databases remain
+fictional staging data. The prior shared image
+`jober-platform:demo-6c413b0` remains the immediate rollback target.
+
 ## 2026-08-03 - Five merged PRs deployed to both staging clients
 
 Merged **#157, #158, #159, #160 and #161** and deployed the exact merge
