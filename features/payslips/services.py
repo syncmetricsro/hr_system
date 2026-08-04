@@ -123,6 +123,27 @@ def _simple_pdf(lines: list[str]) -> bytes:
 
 
 def build_encrypted_pdf(payslip, password: str) -> bytes:
+    """The worker-facing document. **Deliberately one figure, pending C-Q21.**
+
+    Since 2026-08-04 the office-facing pay overview shows gross wage, the
+    ledger deductions taken off it, and the remainder. None of that is here:
+    a worker who had an advance deducted sees only the net figure someone
+    typed, and no mention of the advance anywhere on the document.
+
+    That gap is known and is **not** an oversight to fix in passing. Adding a
+    breakdown needs written client confirmation because:
+
+    * C-Q20 is unanswered — ``net_amount`` is stored exactly as typed and never
+      checked against anything, so nobody knows whether an advance is already
+      inside it. Itemising it again would understate someone's pay.
+    * "After deductions" is not net pay, and a PDF cannot carry the caption
+      that says so on screen. The document travels; the explanation does not.
+    * It moves the C-Q6 payroll-calculation boundary.
+
+    The proposed shape and the reasoning are in
+    ``docs/product/corvinum-open-questions.md`` under C-Q21. Do not add lines
+    here without that answer in writing.
+    """
     from pypdf import PdfReader, PdfWriter
 
     lines = [

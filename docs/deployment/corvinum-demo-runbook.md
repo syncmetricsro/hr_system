@@ -500,6 +500,18 @@ recorded, **After deductions is blank rather than negative**.
    person. It is never included in the email or audit log.
 7. Open the received message in the test inbox and use the separately displayed
    password to open its encrypted PDF attachment.
+8. **Say what the PDF contains before they read it.** Four lines: worker,
+   period, `Net amount paid`, and an optional note. It does **not** itemise the
+   advance or the equipment deduction you recorded in section 11 — those live on
+   the internal ledger and the office-facing pay overview only.
+
+   Expect the question *"so can the worker see what was deducted?"*. The answer
+   is **not today, and it needs your decision** (C-Q21). Do not promise it in
+   the room: it depends on the C-Q20 answer, because if the entered net is
+   already post-advance then printing the advance again would understate the
+   pay. Offer the shape instead — gross, the deductions the office recorded, a
+   subtotal, then the recorded net stated separately — and take the answer away
+   in writing.
 
 **Resend** delivers a newly encrypted PDF to the same address as the last
 successful delivery and displays a new one-time password. If the send fails,
