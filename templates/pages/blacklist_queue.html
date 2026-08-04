@@ -13,7 +13,7 @@
 
 <section class="field-list" aria-label="{% trans 'Blacklist review' %}">
   {% for case in cases %}
-    <article class="field-card">
+    <article class="field-card field-card-decision">
       <div>
         <h3><a href="{% url 'person_detail' case.person_id %}">{{ case.person }}</a></h3>
         <p>{% if case.category %}{{ case.category.label|db_trans }}{% endif %}</p>

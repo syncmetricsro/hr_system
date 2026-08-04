@@ -1,5 +1,39 @@
 # Test Journal
 
+## 2026-08-04 - measuring a layout bug instead of eyeballing it
+
+- **`tests/e2e/test_zz_card_layout.py` is new (2 tests)**, and the first thing
+  it does is assert `cards >= 1`. Without that it is worthless: neither browser
+  stack seeds a pending activation approval, so the queue is empty and every
+  measurement passes trivially. The first draft did exactly that and "passed"
+  against the broken CSS - the same trap as the 2026-08-03 button-clearance
+  sweep, hit again.
+- The test therefore **builds the request through the UI** - waive the trial,
+  complete readiness, request activation, all as one manager - which also
+  reproduces the reported card exactly, including the long requester value that
+  overflowed.
+- **Proved the test fails without the fix**, by stashing the CSS and re-running:
+  `reason input is 99px at 1280px`. A layout test that has never failed is a
+  layout test that is not measuring anything.
+- The numbers, since a screenshot is not a regression test: input width
+  **99px -> 320px** at 1280px; page overflow 0 at 375px and 1280px; zero values
+  rendering left of their own label.
+- **What did not reproduce:** the mobile overflow from the second screenshot.
+  With seeded data the card is 359px in a 375px viewport, before and after. The
+  test asserts the property anyway - it is cheap and it is the thing that would
+  regress - but the entry says plainly that this half is a guard rather than a
+  reproduction.
+- `tests/e2e/corvinum_auth.py` is new: `test_z_certificate_uploads` and this
+  test drive the same 2FA-enforced manager, and only the first login sees the
+  enrolment secret, so whichever ran second failed on a page it never reached.
+  Renaming files to force an order was the first attempt and it only moved the
+  failure; caching the secret in the shared process removes the ordering
+  dependency instead of encoding it in filenames.
+- Suites: **Jober 1076 / CorvinumEU 658 / browser 67**. Two unrelated browser
+  flakes (`test_finance_charts`, `test_themes`) appeared in one run and passed
+  on rerun; they run before the new tests and are unaffected by them.
+
+
 ## 2026-08-04 - the CorvinumEU pre-demo batch
 
 - **`tests/test_pay_deductions.py` is new (11 tests)** and exists mostly to

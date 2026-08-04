@@ -1,13 +1,11 @@
 from __future__ import annotations
 
 import base64
-import hmac
 import os
-import struct
-import time
-from hashlib import sha1
 
 from playwright.sync_api import expect
+
+from corvinum_auth import login_manager
 
 
 # A genuine two-pixel-square PNG. Browser tests generate upload bytes in
@@ -17,26 +15,11 @@ PNG_BYTES = base64.b64decode(
 )
 
 
-def _totp_at(secret: str, timestamp: int) -> str:
-    key = base64.b32decode(secret, casefold=True)
-    counter = timestamp // 30
-    digest = hmac.new(key, struct.pack(">Q", counter), sha1).digest()
-    offset = digest[-1] & 0x0F
-    code = struct.unpack(">I", digest[offset : offset + 4])[0] & 0x7FFFFFFF
-    return str(code % 1_000_000).zfill(6)
-
-
 def _login(page, *, app_url: str, email: str, password: str) -> None:
-    page.goto(f"{app_url}/prihlasenie/")
-    page.fill("input[name='email']", email)
-    page.fill("input[name='password']", password)
-    page.click("form button[type='submit']")
-    page.wait_for_load_state("networkidle")
-    if "/2fa/setup/" in page.url:
-        secret = page.locator(".detail-grid code").inner_text()
-        page.fill("input[name='code']", _totp_at(secret, int(time.time())))
-        page.locator("main form.stack button[type='submit']").click()
-        page.wait_for_load_state("networkidle")
+    """Delegates to the shared helper: managers here have 2FA enforced and only
+    the first test to reach the setup screen ever sees the secret, so the
+    enrolment has to be shared rather than repeated (see corvinum_auth)."""
+    login_manager(page, app_url=app_url, email=email, password=password)
 
 
 def _upload_front_and_back(page, *, app_url: str, language: str, category: str) -> None:
