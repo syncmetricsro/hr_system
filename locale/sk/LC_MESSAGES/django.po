@@ -8086,3 +8086,39 @@ msgstr "E-mail nie je v tomto prostredí nakonfigurovaný. Výplatné pásky mo�
 msgid "This environment may only email its configured test addresses."
 msgstr "Toto prostredie môže posielať e-maily len na nakonfigurované testovacie adresy."
 
+
+#: core/projects/models.py:255
+msgid "trial waived"
+msgstr "skúšobný deň odpustený"
+
+#: core/projects/services.py:211
+msgid "Only an available person can be activated without a trial day."
+msgstr "Bez skúšobného dňa možno aktivovať iba dostupnú osobu."
+
+#: core/projects/views.py:347
+msgid "Trial day waived — complete readiness to activate."
+msgstr "Skúšobný deň bol odpustený — na aktiváciu dokončite pripravenosť."
+
+#: templates/pages/person_detail.html:75
+msgid "Manager"
+msgstr "Manažér"
+
+#: templates/pages/person_detail.html:76
+msgid "Activate without a trial day"
+msgstr "Aktivovať bez skúšobného dňa"
+
+#: templates/pages/person_detail.html:77
+msgid "For a known or returning worker. Readiness still applies — medical and gear must be complete before activation."
+msgstr "Pre známeho alebo vracajúceho sa pracovníka. Pripravenosť naďalej platí — lekárska prehliadka a výstroj musia byť pred aktiváciou kompletné."
+
+#: templates/pages/person_detail.html:85
+msgid "Skip the trial and start readiness"
+msgstr "Preskočiť skúšobný deň a začať pripravenosť"
+
+#: templates/pages/person_detail.html:124
+msgid "Trial day waived by a manager — readiness still applies."
+msgstr "Skúšobný deň odpustil manažér — pripravenosť naďalej platí."
+
+#: templates/pages/activation_queue.html:23
+msgid "your own request"
+msgstr "vaša vlastná žiadosť"

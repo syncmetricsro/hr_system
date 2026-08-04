@@ -48,8 +48,10 @@
 {% for panel in person_banners %}{% include panel.template %}{% endfor %}
 
 {# --- Workflow action panel (state-driven) --- #}
-{% if is_available %}
+{# A waived trial leaves the person Available with readiness open, so this panel steps aside (ADR 0031). #}
+{% if is_available and not in_readiness %}
   {% can 'intake.assign_trial' as may_assign %}
+  {% can 'activation.waive_trial' as may_waive_trial %}
   {% if may_assign %}
     <section class="panel workflow-panel">
       <p class="eyebrow">{% trans "Next step" %}</p>
@@ -65,6 +67,22 @@
           <input type="datetime-local" name="scheduled_for" required>
         </label>
         <button class="button button-secondary" type="submit">{% trans "Schedule trial" %}</button>
+      </form>
+    </section>
+  {% endif %}
+  {% if may_waive_trial %}
+    <section class="panel workflow-panel">
+      <p class="eyebrow">{% trans "Manager" %}</p>
+      <h2>{% trans "Activate without a trial day" %}</h2>
+      <p>{% trans "For a known or returning worker. Readiness still applies — medical and gear must be complete before activation." %}</p>
+      <form class="people-search" method="post" action="{% url 'readiness_waive_trial' person.pk %}">
+        {% csrf_token %}
+        <select name="project" aria-label="{% trans 'Project' %}">
+          {% for project in active_projects %}
+            <option value="{{ project.pk }}">{{ project.name }}</option>
+          {% endfor %}
+        </select>
+        <button class="button button-secondary" type="submit">{% trans "Skip the trial and start readiness" %}</button>
       </form>
     </section>
   {% endif %}
@@ -100,8 +118,11 @@
 
 {% if in_readiness and readiness %}
   <section class="panel workflow-panel">
-    <p class="eyebrow">{% trans "Readiness" %} · {{ passed_trial.project.name }}</p>
+    <p class="eyebrow">{% trans "Readiness" %} · {{ readiness_project.name }}</p>
     <h2>{% if transport_enabled %}{% trans "Four-pillar readiness" %}{% else %}{% trans "Readiness" %}{% endif %}</h2>
+    {% if readiness.trial_waived %}
+      <p class="eyebrow">{% trans "Trial day waived by a manager — readiness still applies." %}</p>
+    {% endif %}
     {% can 'readiness.complete' as may_ready %}
     {% if may_ready %}
       {% if readiness_issues %}
@@ -114,7 +135,7 @@
       {% endif %}
       <form class="stack" method="post" action="{% url 'readiness_update' person.pk %}" x-data="{ medical: '{{ readiness.medical_state }}', gear: '{{ readiness.gear_state }}', accommodation: '{{ readiness.accommodation_state }}', transport: '{{ readiness.transport_state }}' }">
         {% csrf_token %}
-        <input type="hidden" name="project" value="{{ passed_trial.project.pk }}">
+        <input type="hidden" name="project" value="{{ readiness_project.pk }}">
         <label{% if readiness.medical_state == "incomplete" %} class="readiness-field-error"{% endif %} x-bind:class="{ 'readiness-field-error': medical === 'incomplete' }">{% trans "Medical" %}
           <select name="medical" x-model="medical">
             <option value="incomplete" {% if readiness.medical_state == "incomplete" %}selected{% endif %}>{% trans "Incomplete" %}</option>
@@ -157,7 +178,7 @@
       {% else %}
         <form class="activate-form" method="post" action="{% url 'activate_person' person.pk %}">
           {% csrf_token %}
-          <input type="hidden" name="project" value="{{ passed_trial.project.pk }}">
+          <input type="hidden" name="project" value="{{ readiness_project.pk }}">
           <button class="button button-primary" type="submit" data-tooltip="{% trans 'Sends this worker to a manager for the activation decision. It does not activate them.' %}">{% trans "Request activation" %}</button>
           {% if is_ready %}
             <span class="eyebrow">{% trans "Ready to request" %}</span>

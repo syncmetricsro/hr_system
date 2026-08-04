@@ -8122,3 +8122,39 @@ msgstr "Az e-mail nincs beállítva ebben a környezetben. A bérlapok rögzíth
 msgid "This environment may only email its configured test addresses."
 msgstr "Ez a környezet csak a beállított teszt e-mail címekre küldhet levelet."
 
+
+#: core/projects/models.py:255
+msgid "trial waived"
+msgstr "próbanap elengedve"
+
+#: core/projects/services.py:211
+msgid "Only an available person can be activated without a trial day."
+msgstr "Próbanap nélkül csak elérhető személy aktiválható."
+
+#: core/projects/views.py:347
+msgid "Trial day waived — complete readiness to activate."
+msgstr "A próbanap elengedve — az aktiváláshoz töltse ki a készenlétet."
+
+#: templates/pages/person_detail.html:75
+msgid "Manager"
+msgstr "Menedzser"
+
+#: templates/pages/person_detail.html:76
+msgid "Activate without a trial day"
+msgstr "Aktiválás próbanap nélkül"
+
+#: templates/pages/person_detail.html:77
+msgid "For a known or returning worker. Readiness still applies — medical and gear must be complete before activation."
+msgstr "Ismert vagy visszatérő munkavállalóhoz. A készenlét továbbra is érvényes — az orvosi vizsgálatnak és a felszerelésnek az aktiválás előtt teljesnek kell lennie."
+
+#: templates/pages/person_detail.html:85
+msgid "Skip the trial and start readiness"
+msgstr "Próbanap kihagyása és készenlét indítása"
+
+#: templates/pages/person_detail.html:124
+msgid "Trial day waived by a manager — readiness still applies."
+msgstr "A próbanapot egy menedzser elengedte — a készenlét továbbra is érvényes."
+
+#: templates/pages/activation_queue.html:23
+msgid "your own request"
+msgstr "az Ön saját kérelme"

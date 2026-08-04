@@ -19,7 +19,8 @@
         <p>{{ approval.project.name }}{% if approval.project.office %} · {{ approval.project.office.name }}{% endif %}</p>
       </div>
       <dl>
-        <div><dt>{% trans "Requested by" %}</dt><dd>{{ approval.requested_by|default:"—" }}</dd></div>
+        {# A single-administrator office may decide its own requests, but it is named — here and in the audit log. #}
+        <div><dt>{% trans "Requested by" %}</dt><dd>{{ approval.requested_by|default:"—" }}{% if approval.requested_by_id == request.user.pk %} · <strong>{% trans "your own request" %}</strong>{% endif %}</dd></div>
         <div><dt>{% trans "Requested" %}</dt><dd>{{ approval.requested_at|date:"Y-m-d H:i" }}</dd></div>
         {# What was true when the request was raised - readiness stays editable afterwards. #}
         <div><dt>{% trans "Medical" %}</dt><dd>{{ approval.pillar_snapshot.medical|default:"—" }}</dd></div>

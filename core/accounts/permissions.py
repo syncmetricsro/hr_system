@@ -43,6 +43,7 @@ class Action(str, Enum):
 
     # Manager / Administrator only
     APPROVAL_ACTIVATE = "approval.activate"
+    ACTIVATION_WAIVE_TRIAL = "activation.waive_trial"
     PROJECT_MANAGE = "project.manage"
     ACCOMMODATION_MANAGE = "accommodation.manage"
     EQUIPMENT_REVIEW_DEDUCTION = "equipment.review_deduction"

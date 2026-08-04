@@ -34,6 +34,8 @@ ACTION_ROLES: dict[Action, frozenset[Role]] = {
     Action.TRANSPORT_RECORD: frozenset({_COORDINATOR, _MANAGER}),
     Action.EXIT_RECONCILE: frozenset({_COORDINATOR, _MANAGER}),
     Action.APPROVAL_ACTIVATE: frozenset({_MANAGER}),
+    # Skipping the trial day is a manager's call, not a coordinator's (ADR 0031).
+    Action.ACTIVATION_WAIVE_TRIAL: frozenset({_MANAGER}),
     Action.PROJECT_MANAGE: frozenset({_MANAGER}),
     Action.ACCOMMODATION_MANAGE: frozenset({_MANAGER}),
     Action.EQUIPMENT_REVIEW_DEDUCTION: frozenset({_MANAGER}),

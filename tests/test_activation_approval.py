@@ -1,4 +1,4 @@
-"""Activating a worker needs two people, and they must be different people.
+"""Activating a worker is a decision, not a status change, and it is recorded.
 
 Before this existed, the coordinator who completed the four readiness pillars
 could activate in the next click — so the person filling in the checklist was
@@ -8,7 +8,13 @@ approval the design specified simply was not implemented.
 
 "Activate" is not a status label: it is the moment the worker is deployed to a
 client site, accommodation is committed, equipment is issued and billing
-starts. That is why it gets a second pair of eyes.
+starts. That is why a manager decides it.
+
+The decider used to be *required* to be someone other than the requester. An
+office can have a single administrator, and that rule left them unable to
+activate anyone at all — proved on CorvinumEU staging, where two requests sat
+permanently undecidable. Since ADR 0031 the separation of duties is recorded
+rather than enforced: a self-approval goes through and says so.
 """
 
 from __future__ import annotations
@@ -17,6 +23,7 @@ import pytest
 from django.urls import reverse
 
 from core.accounts.models import Role
+from core.audit.models import AuditEvent
 from core.offices.models import Office
 from core.people.models import LifecycleStatus, Person
 from core.projects.models import (
@@ -26,7 +33,6 @@ from core.projects.models import (
     TrialOutcome,
 )
 from core.projects.services import (
-    SelfApprovalError,
     WorkflowError,
     decide_activation,
     get_or_create_readiness,
@@ -123,9 +129,10 @@ def test_coordinator_cannot_reach_the_decision_endpoint(client, world):
 
 
 @pytest.mark.jober_only
-def test_a_manager_cannot_decide_their_own_request(client, world):
-    """Managers may both request and decide, so the role gate alone does not
-    give separation of duties — the requester is excluded by identity."""
+def test_a_manager_can_decide_their_own_request(client, world):
+    """The single-administrator case (ADR 0031). This used to answer 403, which
+    made activation impossible in an office with one manager rather than making
+    it stricter."""
     approval = request_activation(
         world["person"], world["project"], actor=world["manager"]
     )
@@ -133,21 +140,35 @@ def test_a_manager_cannot_decide_their_own_request(client, world):
     response = client.post(
         reverse("activation_decide", args=[approval.pk]), {"decision": "approve"}
     )
-    assert response.status_code == 403
+    assert response.status_code == 302
     approval.refresh_from_db()
-    assert approval.status == ActivationApprovalStatus.PENDING
+    assert approval.status == ActivationApprovalStatus.APPROVED
+    world["person"].refresh_from_db()
+    assert world["person"].lifecycle_status == LifecycleStatus.WORKING
 
 
-def test_self_approval_is_blocked_at_the_service_not_just_the_view(world):
-    """The rule has to hold for every caller. When it lived in the view alone,
-    a management command or a future API could approve its own request."""
+def test_a_self_approval_says_so_in_the_audit_log(world):
+    """Allowing it is only defensible if it is visible afterwards. This is the
+    query an auditor asks: which activations had no second pair of eyes?"""
     approval = request_activation(
         world["person"], world["project"], actor=world["manager"]
     )
-    with pytest.raises(SelfApprovalError):
-        decide_activation(approval, "approve", actor=world["manager"])
-    world["person"].refresh_from_db()
-    assert world["person"].lifecycle_status != LifecycleStatus.WORKING
+    decide_activation(approval, "approve", actor=world["manager"])
+
+    event = AuditEvent.objects.filter(action="activation.approved").latest("id")
+    assert event.metadata.get("self_approved") is True
+
+
+def test_an_ordinary_approval_carries_no_self_approved_marker(world):
+    """Otherwise the marker is on every row and searching for it finds nothing
+    — the requester and the decider are different people here."""
+    approval = request_activation(
+        world["person"], world["project"], actor=world["coordinator"]
+    )
+    decide_activation(approval, "approve", actor=world["manager"])
+
+    event = AuditEvent.objects.filter(action="activation.approved").latest("id")
+    assert "self_approved" not in event.metadata
 
 
 # --- rejection is only useful if it says why -------------------------------

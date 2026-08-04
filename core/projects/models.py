@@ -247,6 +247,12 @@ class ReadinessRecord(models.Model):
     entry_medical_date = models.DateField(
         _("entry medical date"), null=True, blank=True
     )
+    #: A manager started readiness on an Available person, skipping the trial
+    #: day (ADR 0031). Stored rather than derived: it is what keeps the readiness
+    #: panel open for a person who is still Available, and it is the record's own
+    #: answer to "did this worker ever do a trial?". The pillars still apply —
+    #: only the trial is waived.
+    trial_waived = models.BooleanField(_("trial waived"), default=False)
     submitted_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,

@@ -20,14 +20,6 @@ from core.projects.models import (
 )
 
 
-class SelfApprovalError(Exception):
-    """The requester tried to decide their own activation request.
-
-    Separate from WorkflowError so the view can answer 403 (a permission
-    outcome) rather than re-rendering with a message.
-    """
-
-
 class WorkflowError(Exception):
     """Raised when a workflow step is attempted from an invalid state."""
 
@@ -196,6 +188,38 @@ def record_trial_outcome(trial, outcome, *, actor=None, note: str = ""):
 def get_or_create_readiness(person, project) -> ReadinessRecord:
     readiness, _created = ReadinessRecord.objects.get_or_create(
         person=person, project=project
+    )
+    return readiness
+
+
+@transaction.atomic
+def waive_trial(person, project, *, actor=None) -> ReadinessRecord:
+    """Open readiness for an Available person without a trial day (ADR 0031).
+
+    For a known or returning worker the trial is a detour, and an office with a
+    single administrator has nobody to hand the steps to. This skips **only**
+    the trial: the four pillars still gate activation through ``_assert_ready``,
+    so medical and gear must still be complete and the entry medical date is
+    still recorded.
+
+    The person deliberately stays Available. Moving them to Trial-day would make
+    the lifecycle claim a trial that never happened, and ``AVAILABLE ->
+    WORKING`` is already a permitted transition in both clients.
+    """
+    if person.lifecycle_status != LifecycleStatus.AVAILABLE:
+        raise WorkflowError(
+            _("Only an available person can be activated without a trial day.")
+        )
+    readiness = get_or_create_readiness(person, project)
+    if not readiness.trial_waived:
+        readiness.trial_waived = True
+        readiness.save(update_fields=["trial_waived", "updated_at"])
+    record_event(
+        actor,
+        "readiness.trial_waived",
+        target=readiness,
+        person=str(person),
+        project=project.code,
     )
     return readiness
 
@@ -376,13 +400,13 @@ def decide_activation(approval, decision, *, actor=None, reason=""):
     """
     if approval.status != ActivationApprovalStatus.PENDING:
         raise WorkflowError(_("Only a pending activation request can be decided."))
-    # Separation of duties lives here rather than in the view: a manager holds
-    # both actions, so the role gate alone does not stop self-approval, and a
-    # management command or future API calling this service would otherwise
-    # bypass the control entirely.
+    # Separation of duties used to be enforced here by refusing the decision.
+    # An office can have a single administrator, and refusing left activation
+    # permanently impossible for them (ADR 0031). The control is now visibility
+    # rather than prevention: the decision goes through and the audit event says
+    # it was self-approved.
     actor_pk = getattr(actor, "pk", None)
-    if actor_pk is not None and approval.requested_by_id == actor_pk:
-        raise SelfApprovalError(_("You cannot decide your own activation request."))
+    self_approved = actor_pk is not None and approval.requested_by_id == actor_pk
 
     if decision == "approve":
         # Re-check the gate: readiness may have regressed since the request.
@@ -404,12 +428,16 @@ def decide_activation(approval, decision, *, actor=None, reason=""):
     approval.save(
         update_fields=["status", "decision_reason", "decided_by", "decided_at"]
     )
+    # Only carried when true, so the ordinary two-person decision stays quiet
+    # and a search for self-approvals returns exactly them.
+    extra = {"self_approved": True} if self_approved else {}
     record_event(
         actor,
         f"activation.{approval.status}",
         target=approval,
         person=str(approval.person),
         project=approval.project.code,
+        **extra,
     )
     return approval
 
@@ -439,6 +467,13 @@ def exit_person(
     end_assignment(person, actor=actor, reason=reason or "exit")
     for hook in exit_hooks:
         hook(person, actor=actor)
+
+    # A waiver is spent once it has been used. Leaving it set would reopen the
+    # readiness panel the moment this person is recycled to Available, on a
+    # record describing work they have already finished (ADR 0031).
+    ReadinessRecord.objects.filter(person=person, trial_waived=True).update(
+        trial_waived=False
+    )
 
     if outcome == "inactive" and person.lifecycle_status == LifecycleStatus.AVAILABLE:
         person.set_status(

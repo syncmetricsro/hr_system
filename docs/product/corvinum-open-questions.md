@@ -29,3 +29,17 @@ Sources: design doc §5.10/§12.6/§13, Addendum A1.
 
 Update this file (and the design doc's §16 back-and-forth notes) as answers
 arrive — the pattern that worked for Jober's Q1–Q5.
+
+## Answered by observation
+
+**How many administrators does an office actually have? — at least sometimes,
+one.** Raised by the client on 2026-08-04 and confirmed on CorvinumEU staging,
+which runs with a single HR Manager. Two consequences, both fixed in ADR 0031:
+the separation-of-duties rule made activation permanently impossible for that
+manager (two approvals sat undecidable, answering 403), and the trial day could
+not be skipped for a worker the office already knows.
+
+This is worth carrying into C-Q9 ("HR Admin" as a distinct role): a role split
+that assumes two people is a role split this deployment cannot staff. Any future
+control that requires a *distinct* second person should be checked against the
+single-admin case before it is built.

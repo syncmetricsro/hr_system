@@ -449,13 +449,27 @@ certificate written in any language, but it does not read or detect that
 language and does not infer whether the pixels really show a forklift, crane,
 or welding certificate.
 
-**Activation now needs two people.** A coordinator completes the four readiness
-pillars and clicks **Request activation** — which does *not* activate. A manager
-of that office decides from the **Activations** tab, and cannot decide a request
-they raised themselves. Worth showing: it is the separation-of-duties control a
-client's auditor asks about, and the seed leaves one request waiting in
-**Dunajská Streda** — so `manazer.ds@` has a queue item while `manazer@`'s
-queue is empty, which demonstrates the queue is office-scoped too.
+**Activation is a decision, and it is recorded.** A coordinator completes the
+four readiness pillars and clicks **Request activation** — which does *not*
+activate. A manager of that office decides from the **Activations** tab. The
+seed leaves one request waiting in **Dunajská Streda** — so `manazer.ds@` has a
+queue item while `manazer@`'s queue is empty, which demonstrates the queue is
+office-scoped too.
+
+A manager *may* decide a request they raised themselves, because an office can
+have a single administrator and refusing left them unable to activate anyone at
+all (ADR 0031). It is not silent: the queue row says **your own request** and
+the audit event carries `self_approved`. If the auditor question comes up, that
+is the answer — "which activations had no second pair of eyes" is a query, not a
+guess.
+
+**Activating without a trial day.** Open an Available person as a manager: below
+*Send to a project trial* is **Activate without a trial day**. Pick a project,
+choose *Skip the trial and start readiness*, and the readiness panel opens with
+the person still Available. Worth saying out loud that this waives the **trial
+only** — medical and gear must still be complete before the request is accepted,
+so the entry medical certificate is never skipped. Coordinators do not see this
+control (`activation.waive_trial` is manager-only).
 
 **Job offers by email.** Open the **Offers** tab as a manager: the seed leaves
 open offers with SK/HU/UK templates for all four email types. Open a worker and
