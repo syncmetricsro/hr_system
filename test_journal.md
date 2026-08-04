@@ -1,5 +1,46 @@
 # Test Journal
 
+## 2026-08-04 - activation without a trial day, and self-approval
+
+- **`tests/test_trial_waiver.py` is new (9 tests).** The one that earns its
+  keep is `test_a_manager_activates_without_any_trial`: the full route by one
+  person — waive, complete readiness, request, approve — which only passes if
+  *both* halves of ADR 0031 are in. It also asserts no `TrialAssignment` row was
+  invented along the way, so a future "trial pass rate" is not diluted by trials
+  that never happened.
+- `test_readiness_still_gates_a_waived_activation` is the one guarding the
+  distinction the whole ADR rests on: the **trial** is waived, the four pillars
+  are not. Incomplete medical must still refuse. Easy thing to lose quietly.
+- Authorisation is tested through the URL, not the button: a coordinator POSTing
+  to `readiness_waive_trial` gets 403, and a manager gets 403 both for another
+  office's project and for another office's person. Hiding a control is
+  presentation; these are the control.
+- `test_exiting_clears_the_waiver` covers the state bug this design creates:
+  the flag keeps the readiness panel open for an *Available* person, so without
+  clearing it a recycled worker reappears in readiness on a finished record.
+- **Two tests reversed, not deleted.**
+  `test_self_approval_is_blocked_at_the_service_not_just_the_view` and
+  `test_a_manager_cannot_decide_their_own_request` are now
+  `test_a_self_approval_says_so_in_the_audit_log` and
+  `test_a_manager_can_decide_their_own_request`. Allowing the thing is only
+  defensible if it is visible afterwards, so the replacement asserts the audit
+  metadata rather than just the happy path — plus
+  `test_an_ordinary_approval_carries_no_self_approved_marker`, because a marker
+  present on every row is a marker that finds nothing.
+- Suites: **Jober 1018 passed / 15 skipped**, **CorvinumEU 620 passed / 21
+  skipped**, **e2e 65 passed**. ruff and `check_dependency_direction.py` clean.
+- **Two process notes worth more than the tests.**
+  1. Killing a timed-out pytest run leaves `test_jober` behind with a live
+     session, and the next run reports **827 errors** that are all
+     `DuplicateDatabase`. It looks like catastrophe and is housekeeping:
+     `pg_terminate_backend` + `DROP DATABASE` and rerun. The full Jober suite
+     takes ~7 minutes, so it needs a real timeout, not the 2-minute default.
+  2. `.po` files still cannot be measured with line-oriented tools (see the
+     2026-08-03 correction). The parser used here splits on blank lines and
+     treats a block as translated only when `msgstr` has content *and* the block
+     carries no `#, fuzzy` — which is what caught that `--extract` had silently
+     dropped 111 translated msgids.
+
 ## 2026-08-03 - button clearance sweep
 
 - One browser test walking **nine pages at 1280px and 375px**, asserting that no

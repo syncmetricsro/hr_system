@@ -30,6 +30,7 @@ Legend: ✅ permitted · — denied
 | `trial.record_outcome` | — | ✅ | ✅ | — |
 | `readiness.complete` | — | ✅ | ✅ | — |
 | `approval.activate` (decide a pending activation request) | — | — | ✅ | — |
+| `activation.waive_trial` (open readiness without a trial day) | — | — | ✅ | — |
 | `project.manage` | — | — | ✅ | — |
 | `exit.reconcile` | — | ✅ | ✅ | — |
 | `equipment.issue_return` | — | ✅ | ✅ | — |

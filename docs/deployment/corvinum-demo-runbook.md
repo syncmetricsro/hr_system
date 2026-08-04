@@ -294,6 +294,16 @@ Talking point: passing a trial, completing readiness, and approving a checklist
 are separate auditable decisions. No browser-only state can bypass the
 server-side activation gates.
 
+**If asked about small offices** (ADR 0031, and worth raising unprompted since
+CorvinumEU runs with a single HR Manager): the trial day can be skipped. On an
+Available person, a manager gets **Activate without a trial day** — pick a
+project and readiness opens directly, with the person still Available. This
+waives the *trial*, not readiness: medical and gear must still be complete, so
+the entry medical certificate is never skipped. The same manager may then decide
+their own activation request; the queue row says **your own request** and the
+audit event records `self_approved`. Coordinators hold neither the waiver nor
+the decision.
+
 ### 7. Work waiting for the user - 2 minutes
 
 1. Now open the bell in the top-right. The checklist opened in the previous

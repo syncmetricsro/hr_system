@@ -29,6 +29,7 @@ from core.projects.models import (
     ActivationApproval,
     ActivationApprovalStatus,
     PillarState,
+    ReadinessRecord,
     TrialOutcome,
 )
 from core.projects.services import get_or_create_readiness, readiness_blockers
@@ -185,11 +186,30 @@ def person_detail(request: HttpRequest, pk: int) -> TemplateResponse:
     passed_trial = (
         person.trials.filter(outcome=TrialOutcome.PASS).order_by("-created_at").first()
     )
-    in_readiness = (
+    after_trial = (
         person.lifecycle_status == LifecycleStatus.TRIAL_DAY
         and pending_trial is None
         and passed_trial is not None
     )
+    # The second way into readiness: a manager waived the trial day (ADR 0031),
+    # which leaves the person Available with an open readiness record. Cleared
+    # by exit_person, so a recycled worker does not reopen the panel.
+    waived_readiness = (
+        ReadinessRecord.objects.filter(person=person, trial_waived=True)
+        .select_related("project")
+        .order_by("-updated_at")
+        .first()
+        if person.lifecycle_status == LifecycleStatus.AVAILABLE
+        else None
+    )
+    in_readiness = after_trial or waived_readiness is not None
+    # Whichever route got here, the panel and both its forms act on one project.
+    if after_trial:
+        readiness_project = passed_trial.project
+    elif waived_readiness is not None:
+        readiness_project = waived_readiness.project
+    else:
+        readiness_project = None
     pending_activation = (
         ActivationApproval.objects.filter(
             person=person, status=ActivationApprovalStatus.PENDING
@@ -211,7 +231,7 @@ def person_detail(request: HttpRequest, pk: int) -> TemplateResponse:
     readiness = None
     readiness_issues = []
     if in_readiness:
-        readiness = get_or_create_readiness(person, passed_trial.project)
+        readiness = get_or_create_readiness(person, readiness_project)
         readiness_issues = readiness_blockers(readiness)
         if (
             readiness.entry_medical_date
@@ -239,6 +259,7 @@ def person_detail(request: HttpRequest, pk: int) -> TemplateResponse:
             "pending_trial": pending_trial,
             "passed_trial": passed_trial,
             "in_readiness": in_readiness,
+            "readiness_project": readiness_project,
             "readiness": readiness,
             "readiness_issues": readiness_issues,
             "readiness_future_medical_date": bool(

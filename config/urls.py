@@ -134,6 +134,14 @@ if getattr(settings, "FEATURE_FLAGS", {}).get("recruitment_trials", True):
             project_views.readiness_update,
             name="readiness_update",
         ),
+        # Waiving the trial leads straight to the readiness form above, so it
+        # belongs behind the same flag: without that form there is nothing to
+        # waive into.
+        path(
+            "people/<int:person_pk>/readiness/waive-trial/",
+            project_views.readiness_waive_trial,
+            name="readiness_waive_trial",
+        ),
     ]
 
 # Activation/exit are core assignment workflow.

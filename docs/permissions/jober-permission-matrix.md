@@ -50,6 +50,7 @@ Legend: ✅ permitted · — denied
 | `transport.record` (Jober: feature off) | — | ✅ | ✅ | — |
 | `exit.reconcile` | — | ✅ | ✅ | — |
 | `approval.activate` (decide a pending activation request) | — | — | ✅ | — |
+| `activation.waive_trial` (open readiness without a trial day) | — | — | ✅ | — |
 | `project.manage` | — | — | ✅ | — |
 | `accommodation.manage` | — | — | ✅ | — |
 | `equipment.review_deduction` | — | — | ✅ | — |
@@ -121,6 +122,7 @@ is visible only to their owning recruiter (plus Observer) — see
   readiness is complete and a manager of that office decides
   (`approval.activate`). Enforced since 2026-07-27; before then coordinators
   could activate directly, which is why this line carried a correction.
+  A coordinator also cannot skip the trial day (`activation.waive_trial`).
 - **Manager/Administrator** — within their office(s), all permitted reads plus
   every management action, including finance, users, blacklist decisions,
   audit, and exports. Authoring job offers and their email templates, and
@@ -141,11 +143,13 @@ is visible only to their owning recruiter (plus Observer) — see
 ## Granted, but not enforced anywhere
 
 **A row in the Actions table means "this role is permitted this action". It
-does not mean the action is enforced somewhere.** **2 of the 37 actions have no
+does not mean the action is enforced somewhere.** **2 of the 38 actions have no
 server-side enforcement at all** (was 4 until `approval.activate` was wired on
 2026-07-27, and 3 until `project.manage` was wired on 2026-07-28), so granting or revoking them changes nothing today. They are marked **not enforced** in the tables above.
+`activation.waive_trial` (added 2026-08-04) is enforced by
+`readiness_waive_trial`, so it does not join that list.
 
-Re-run the check before trusting any row (last done 2026-07-27). The criterion
+Re-run the check before trusting any row (last done 2026-08-04). The criterion
 is a reference from a view, panel or service — a `{% can %}` in a template only
 hides a button and enforces nothing:
 

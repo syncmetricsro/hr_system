@@ -31,7 +31,6 @@ from core.projects.models import (
     TrialOutcome,
 )
 from core.projects.services import (
-    SelfApprovalError,
     WorkflowError,
     decide_activation,
     exit_person,
@@ -43,6 +42,7 @@ from core.projects.services import (
     schedule_trial,
     update_pending_trial,
     update_readiness,
+    waive_trial,
 )
 
 
@@ -329,6 +329,29 @@ def readiness_update(request: HttpRequest, person_pk: int) -> HttpResponse:
 
 
 @require_POST
+@require_action(Action.ACTIVATION_WAIVE_TRIAL)
+def readiness_waive_trial(request: HttpRequest, person_pk: int) -> HttpResponse:
+    """Open readiness on an Available person without a trial day (ADR 0031).
+
+    Manager-only, and office-scoped on both sides: hiding the button is not a
+    control, and a manager must not waive a worker into another office's
+    project.
+    """
+    person = get_object_or_404(Person, pk=person_pk)
+    _assert_person_in_scope(request, person)
+    project = get_object_or_404(Project, pk=request.POST.get("project"))
+    _assert_project_in_scope(request, project)
+    try:
+        waive_trial(person, project, actor=request.user)
+        messages.success(
+            request, _("Trial day waived — complete readiness to activate.")
+        )
+    except WorkflowError as exc:
+        messages.error(request, str(exc))
+    return redirect("person_detail", pk=person.pk)
+
+
+@require_POST
 @require_action(Action.EXIT_RECONCILE)
 def exit_view(request: HttpRequest, person_pk: int) -> HttpResponse:
     person = get_object_or_404(Person, pk=person_pk)
@@ -403,10 +426,6 @@ def activation_decide(request: HttpRequest, pk: int) -> HttpResponse:
             reason=request.POST.get("reason", ""),
         )
         messages.success(request, _("Decision recorded."))
-    except SelfApprovalError as exc:
-        # A permission outcome, not a workflow one: answer 403 rather than
-        # bouncing back with a message.
-        raise PermissionDenied(str(exc)) from exc
     except WorkflowError as exc:
         messages.error(request, str(exc))
     return redirect("activation_queue")

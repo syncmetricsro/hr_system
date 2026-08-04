@@ -1,5 +1,53 @@
 # Build Journal
 
+## 2026-08-04 - Activation stops assuming two people and a trial day
+
+Two client complaints, one root cause: an office may have exactly one
+administrator, and the activation workflow was built assuming at least two
+people and always a trial day. ADR 0031 records both fixes; they apply to Jober
+and CorvinumEU, and both live in `core/`, so each is written once.
+
+**Reading the code first shrank half the job to a template condition.** Nothing
+in the activation chain ever required a trial — `get_or_create_readiness`,
+`update_readiness`, `_assert_ready`, `request_activation` and
+`activate_on_project` never reference `Trial`, `readiness_update` and
+`activate_person` accept any project pk, and *both* clients already permitted
+`AVAILABLE -> WORKING` (Jober's entry even carries the comment
+`# CARGO manager override / direct activation`). The requirement lived entirely
+in `person_detail`'s `in_readiness` flag, which demanded `TRIAL_DAY` plus a
+passed trial, and in the template reading its project from
+`passed_trial.project.pk`. A presentation constraint that read like a business
+rule.
+
+So: a manager-only `activation.waive_trial`, a `ReadinessRecord.trial_waived`
+flag, and `waive_trial()` opening readiness on an Available person for a chosen
+project. The person **stays Available** until the decision — moving them to
+Trial-day would make the lifecycle claim a trial that never happened. The four
+pillars are untouched, which is the entire point: the trial is waivable, the
+entry medical certificate is not. `exit_person` clears the flag, or a recycled
+worker would land back in readiness on a record describing finished work.
+
+**The self-approval 403 was a control that made the product unusable.** One
+manager on CorvinumEU staging, two pending approvals both raised by that
+manager, neither ever decidable. `SelfApprovalError` is gone; `decide_activation`
+now computes `self_approved` and puts it in the audit event **only when true**,
+so the ordinary decision stays quiet and searching for self-approvals returns
+exactly them. The queue row says "your own request". Separation of duties became
+visibility rather than prevention — a deliberate reduction, on the reasoning
+that a control which blocks the job gets worked around, and being worked around
+leaves no record while this does.
+
+**`makemessages` is dropping translations, and it is not this slice's bug.**
+Running `compile_messages.sh --extract` rewrote all three catalogs and took them
+from 1655 msgids to 1544 — **111 already-translated strings gone** — while also
+pulling in fixture strings from `tests/test_compile_po.py`. Reverted, and the
+nine new entries were appended by hand instead: 1664/1664 translated in SK, HU
+and UK, zero fuzzy, +36 lines per catalog. Every one of the five fuzzy matches
+msgmerge had proposed was wrong in the way `CLAUDE.md` warns about ("trial
+waived" -> the translation of "Trial failed", "Skip the trial and start
+readiness" -> "Review the trial details and try again"). The catalog regression
+needs its own slice.
+
 ## 2026-08-03 - The Secure Document Vault gets an architecture
 
 Asked to capture a decision to exclude government IDs, birth certificates and
