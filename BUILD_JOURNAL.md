@@ -139,6 +139,14 @@ created database. It passed alone and failed seven tests in a shared run. Every
 figure would have landed in the wrong column. The added test burns project ids
 first so the mix-up fails deterministically rather than by luck.
 
+After the extraction-safety work landed, this branch was rebased and refreshed
+with that workflow. Extraction reported 14 genuinely new active messages,
+including "Workbook", with zero fuzzy guesses, newly obsolete entries or
+revivals. All 14 were translated manually in SK, HU and UK; each catalog now
+has 1556 active / 1556 translated / 0 fuzzy entries, the committed MO files
+pass the read-only synchronization check, and a second extraction was
+byte-identical.
+
 ## 2026-08-03 - The Secure Document Vault gets an architecture
 
 Asked to capture a decision to exclude government IDs, birth certificates and

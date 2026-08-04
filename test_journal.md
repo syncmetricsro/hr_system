@@ -87,10 +87,15 @@
 - The CSV test now checks that **every row is the same width including the
   summaries** — the previous export had an 8-column header and 10-column
   summary rows, which no assertion had ever looked at.
-- Full gate: ruff, ruff format and the dependency-direction tripwire clean;
-  `check` and `makemigrations --check` green under both settings modules;
-  **1040 passed / 15 skipped** in Jober, **614 passed / 23 skipped / 257
-  deselected** in CorvinumEU.
+- Safe extraction after the rebase found **14 added / 0 newly obsolete / 0
+  revived / 0 fuzzy** messages. SK/HU/UK each validate at **1556 active / 1556
+  translated / 0 fuzzy**; `--check` passes and the second extraction is
+  byte-identical.
+- Final full gate: fresh production and test images; ruff, ruff format and the
+  dependency-direction tripwire clean; `check` and `makemigrations --check`
+  green under both settings modules; **1061 passed / 15 skipped** in Jober,
+  **631 passed / 23 skipped / 261 deselected** in CorvinumEU, and **65 passed**
+  in Playwright.
 
 ## 2026-08-03 - button clearance sweep
 

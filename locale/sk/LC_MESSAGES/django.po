@@ -97,8 +97,8 @@ msgstr "Prevádzka"
 
 # --- compliance ---
 #: clients/corvinum_eu/templates/layouts/base.html:50
-#: features/compliance/panels.py:33 features/finance/models.py:68
-#: features/intake/catalog_i18n.py:12 templates/layouts/base.html:41
+#: features/compliance/panels.py:33 features/intake/catalog_i18n.py:12
+#: features/profitability/models.py:90 templates/layouts/base.html:41
 #: templates/pages/compliance_list.html:4
 #: templates/pages/compliance_list.html:9
 #: templates/pages/compliance_list.html:12
@@ -269,15 +269,15 @@ msgstr "potvrdené"
 #: features/advances/models.py:92 features/blacklist/models.py:66
 #: features/blacklist/models.py:114 features/checklists/models.py:23
 #: features/compliance/models.py:87 features/feedback/models.py:26
-#: features/feedback/models.py:48 features/finance/models.py:39
-#: features/intake/models.py:32 features/logistics/models.py:43
-#: features/logistics/models.py:79 features/logistics/models.py:184
-#: features/logistics/models.py:228 features/logistics/models.py:365
-#: features/logistics/models.py:467 features/logistics/models.py:591
-#: features/messaging/models.py:28 features/messaging/models.py:71
-#: features/messaging/models.py:176 features/messaging/models.py:221
-#: features/messaging/models.py:261 features/messaging/models.py:331
-#: features/payslips/models.py:37 features/wage_ledger/models.py:43
+#: features/feedback/models.py:48 features/intake/models.py:32
+#: features/logistics/models.py:43 features/logistics/models.py:79
+#: features/logistics/models.py:184 features/logistics/models.py:228
+#: features/logistics/models.py:365 features/logistics/models.py:467
+#: features/logistics/models.py:591 features/messaging/models.py:28
+#: features/messaging/models.py:71 features/messaging/models.py:176
+#: features/messaging/models.py:221 features/messaging/models.py:261
+#: features/messaging/models.py:331 features/payslips/models.py:37
+#: features/profitability/models.py:58 features/wage_ledger/models.py:43
 msgid "created"
 msgstr "vytvorené"
 
@@ -832,7 +832,7 @@ msgstr "Vojenská služba"
 #: core/people/catalog_i18n.py:14 features/advances/models.py:40
 #: features/blacklist/catalog_i18n.py:15 features/blacklist/models.py:88
 #: features/blacklist/panels.py:61 features/compliance/models.py:15
-#: features/finance/models.py:74 features/intake/catalog_i18n.py:29
+#: features/intake/catalog_i18n.py:29 features/profitability/models.py:96
 msgid "Other"
 msgstr "Ostatné"
 
@@ -890,9 +890,10 @@ msgstr "Má zdravotné postihnutie"
 msgid "Disability type"
 msgstr "Typ postihnutia"
 
-#: core/people/forms.py:50 features/finance/catalog_i18n.py:26
-#: features/logistics/forms.py:74 features/logistics/forms.py:228
+#: core/people/forms.py:50 features/logistics/forms.py:74
+#: features/logistics/forms.py:228 features/profitability/catalog_i18n.py:26
 #: templates/pages/equipment_stock.html:48
+#: templates/pages/finance_workbook.html:70
 #: templates/pages/goods_receipt_detail.html:16
 #: templates/pages/project_detail.html:35
 msgid "Office"
@@ -932,24 +933,24 @@ msgstr "Na čiernej listine"
 
 #: core/people/models.py:47 features/blacklist/models.py:16
 #: features/checklists/models.py:37 features/feedback/models.py:20
-#: features/finance/models.py:85 features/intake/models.py:66
-#: features/logistics/models.py:101
+#: features/intake/models.py:66 features/logistics/models.py:101
+#: features/profitability/models.py:111
 msgid "label"
 msgstr "označenie"
 
 #: core/people/models.py:48 core/projects/models.py:23
 #: features/blacklist/models.py:17 features/blacklist/models.py:113
 #: features/checklists/models.py:22 features/feedback/models.py:25
-#: features/finance/models.py:88 features/logistics/models.py:31
-#: features/logistics/models.py:103 features/logistics/models.py:227
-#: features/messaging/models.py:20 features/messaging/models.py:168
-#: features/messaging/models.py:213
+#: features/logistics/models.py:31 features/logistics/models.py:103
+#: features/logistics/models.py:227 features/messaging/models.py:20
+#: features/messaging/models.py:168 features/messaging/models.py:213
+#: features/profitability/models.py:121
 msgid "active"
 msgstr "aktívne"
 
 #: core/people/models.py:49 features/blacklist/models.py:18
-#: features/checklists/models.py:41 features/finance/models.py:89
-#: features/intake/models.py:52 features/intake/models.py:69
+#: features/checklists/models.py:41 features/intake/models.py:52
+#: features/intake/models.py:69 features/profitability/models.py:122
 msgid "order"
 msgstr "poradie"
 
@@ -1043,7 +1044,7 @@ msgstr "vyhľadávací tvar mena"
 
 #: core/people/models.py:153 core/projects/models.py:37
 #: core/projects/models.py:97 core/projects/models.py:266
-#: features/blacklist/models.py:67 features/finance/models.py:40
+#: features/blacklist/models.py:67 features/profitability/models.py:59
 msgid "updated"
 msgstr "aktualizované"
 
@@ -1124,7 +1125,7 @@ msgstr "Naplánovať možno iba dostupných uchádzačov."
 
 #: core/projects/forms.py:30 core/projects/forms.py:56
 #: templates/pages/feedback_inbox.html:32
-#: templates/pages/finance_summary.html:21
+#: templates/pages/finance_summary.html:22
 #: templates/pages/person_detail.html:61 templates/pages/person_detail.html:80
 #: templates/pages/project_detail.html:8
 #: templates/pages/transport_trends.html:31
@@ -1190,8 +1191,8 @@ msgstr "zahrnuté do finančného výkazníctva"
 #: core/projects/models.py:40 core/projects/models.py:70
 #: core/projects/models.py:143 core/projects/models.py:215
 #: core/projects/models.py:334 features/feedback/models.py:23
-#: features/finance/models.py:27 features/logistics/models.py:578
-#: features/messaging/models.py:139
+#: features/logistics/models.py:578 features/messaging/models.py:139
+#: features/profitability/models.py:30
 msgid "project"
 msgstr "projekt"
 
@@ -1297,9 +1298,9 @@ msgid "outcome"
 msgstr "výsledok"
 
 #: core/projects/models.py:161 features/advances/models.py:83
-#: features/checklists/models.py:68 features/finance/models.py:33
-#: features/logistics/models.py:345 features/logistics/models.py:582
-#: features/payslips/models.py:31 features/wage_ledger/models.py:34
+#: features/checklists/models.py:68 features/logistics/models.py:345
+#: features/logistics/models.py:582 features/payslips/models.py:31
+#: features/profitability/models.py:48 features/wage_ledger/models.py:34
 msgid "note"
 msgstr "poznámka"
 
@@ -1443,7 +1444,8 @@ msgid "Only an available person can be activated without a trial day."
 msgstr "Bez skúšobného dňa možno aktivovať iba dostupnú osobu."
 
 #: core/projects/services.py:235 features/advances/models.py:38
-#: features/finance/catalog_i18n.py:20 templates/pages/activation_queue.html:26
+#: features/profitability/catalog_i18n.py:20
+#: templates/pages/activation_queue.html:26
 #: templates/pages/person_detail.html:139
 msgid "Medical"
 msgstr "Lekárska"
@@ -1462,8 +1464,9 @@ msgid "Required equipment is incomplete."
 msgstr "Požadované vybavenie nie je kompletné."
 
 #: core/projects/services.py:237 core/ui/help.py:347
-#: features/finance/catalog_i18n.py:18 features/finance/models.py:67
-#: templates/layouts/base.html:43 templates/pages/accommodation_costs.html:6
+#: features/profitability/catalog_i18n.py:18
+#: features/profitability/models.py:89 templates/layouts/base.html:43
+#: templates/pages/accommodation_costs.html:6
 #: templates/pages/accommodation_detail.html:8
 #: templates/pages/accommodation_list.html:4
 #: templates/pages/accommodation_list.html:9
@@ -1478,7 +1481,7 @@ msgstr "Ubytovanie"
 msgid "Accommodation is incomplete."
 msgstr "Ubytovanie nie je zabezpečené."
 
-#: core/projects/services.py:238 features/finance/models.py:66
+#: core/projects/services.py:238 features/profitability/models.py:88
 #: templates/layouts/base.html:45 templates/pages/person_detail.html:161
 msgid "Transport"
 msgstr "Doprava"
@@ -1586,7 +1589,7 @@ msgstr "Deň"
 msgid "Week"
 msgstr "Týždeň"
 
-#: core/reporting/periods.py:47 templates/pages/finance_summary.html:29
+#: core/reporting/periods.py:47 templates/pages/finance_summary.html:30
 #: templates/partials/ledger_cycle.html:8
 #: templates/partials/period_filter.html:32
 msgid "Month"
@@ -1596,7 +1599,8 @@ msgstr "Mesiac"
 msgid "Several months"
 msgstr "Viac mesiacov"
 
-#: core/reporting/periods.py:49 templates/pages/finance_summary.html:26
+#: core/reporting/periods.py:49 templates/pages/finance_project_year.html:26
+#: templates/pages/finance_summary.html:27
 #: templates/partials/ledger_cycle.html:5
 #: templates/partials/period_filter.html:43
 #: templates/partials/period_filter.html:57
@@ -2080,7 +2084,7 @@ msgstr ""
 
 # --- logistics: equipment ---
 #: core/ui/help.py:287 features/advances/models.py:37
-#: features/finance/models.py:70 templates/pages/equipment_stock.html:7
+#: features/profitability/models.py:92 templates/pages/equipment_stock.html:7
 #: templates/panels/logistics_equipment.html:4
 msgid "Equipment"
 msgstr "Vybavenie"
@@ -2445,8 +2449,10 @@ msgstr "Prepojené karty a riadky otvoria záznamy za súčtom."
 #: templates/pages/finance_executive.html:9
 #: templates/pages/finance_month_detail.html:8
 #: templates/pages/finance_month_detail.html:39
+#: templates/pages/finance_project_year.html:8
 #: templates/pages/finance_summary.html:4
-#: templates/pages/finance_summary.html:9 templates/pages/finance_year.html:4
+#: templates/pages/finance_summary.html:9
+#: templates/pages/finance_workbook.html:8 templates/pages/finance_year.html:4
 #: templates/pages/finance_year.html:8
 msgid "Finance"
 msgstr "Financie"
@@ -3038,11 +3044,11 @@ msgid "entry type"
 msgstr "typ záznamu"
 
 #: features/advances/models.py:68 features/blacklist/models.py:53
-#: features/compliance/models.py:54 features/finance/models.py:110
+#: features/compliance/models.py:54 features/profitability/models.py:151
 msgid "category"
 msgstr "kategória"
 
-#: features/advances/models.py:70 features/finance/models.py:112
+#: features/advances/models.py:70 features/profitability/models.py:154
 msgid "amount"
 msgstr "suma"
 
@@ -3296,9 +3302,9 @@ msgstr "Aktivácia"
 msgid "Reactivation"
 msgstr "Reaktivácia"
 
-#: features/checklists/models.py:20 features/finance/models.py:86
-#: features/messaging/models.py:209 features/messaging/models.py:252
-#: features/messaging/models.py:314
+#: features/checklists/models.py:20 features/messaging/models.py:209
+#: features/messaging/models.py:252 features/messaging/models.py:314
+#: features/profitability/models.py:113
 msgid "kind"
 msgstr "druh"
 
@@ -3372,7 +3378,8 @@ msgid "Activation blocked by open checklist items: %(items)s"
 msgstr ""
 "Aktivácia je zablokovaná otvorenými položkami kontrolného zoznamu: %(items)s"
 
-#: features/compliance/catalog_i18n.py:11 features/finance/catalog_i18n.py:17
+#: features/compliance/catalog_i18n.py:11
+#: features/profitability/catalog_i18n.py:17
 msgid "Forklift licence"
 msgstr "Preukaz na VZV"
 
@@ -3617,195 +3624,6 @@ msgstr "Odkaz na spätnú väzbu vytvorený."
 #: features/feedback/views.py:123
 msgid "Label is required."
 msgstr "Označenie je povinné."
-
-#: features/finance/catalog_i18n.py:11 templates/pages/wages.html:40
-msgid "Gross wage"
-msgstr "Hrubá mzda"
-
-#: features/finance/catalog_i18n.py:12
-msgid "Sole-trader (SZČO)"
-msgstr "Živnostník (SZČO)"
-
-#: features/finance/catalog_i18n.py:13
-msgid "Payroll levies"
-msgstr "Odvody zo mzdy"
-
-#: features/finance/catalog_i18n.py:14
-msgid "Driver"
-msgstr "Vodič"
-
-#: features/finance/catalog_i18n.py:15
-msgid "Damage (cost)"
-msgstr "Škody (náklad)"
-
-#: features/finance/catalog_i18n.py:16
-msgid "Forklift training"
-msgstr "Školenie na VZV"
-
-# --- finance ---
-#: features/finance/catalog_i18n.py:19
-msgid "Insurance"
-msgstr "Poistenie"
-
-#: features/finance/catalog_i18n.py:21
-msgid "Coordinators"
-msgstr "Koordinátori"
-
-#: features/finance/catalog_i18n.py:22
-msgid "Leasing"
-msgstr "Lízing"
-
-#: features/finance/catalog_i18n.py:23
-msgid "Fuel"
-msgstr "Palivo"
-
-#: features/finance/catalog_i18n.py:24
-msgid "Toll"
-msgstr "Mýto"
-
-#: features/finance/catalog_i18n.py:25
-msgid "Factoring"
-msgstr "Faktoring"
-
-#: features/finance/catalog_i18n.py:27
-msgid "Recruitment"
-msgstr "Nábor"
-
-#: features/finance/catalog_i18n.py:28
-msgid "Clothing/equipment"
-msgstr "Oblečenie/výbava"
-
-#: features/finance/catalog_i18n.py:29
-msgid "Other extraordinary costs"
-msgstr "Iné mimoriadne náklady"
-
-#: features/finance/catalog_i18n.py:30
-msgid "Client invoices"
-msgstr "Faktúry klientom"
-
-#: features/finance/catalog_i18n.py:31
-msgid "Deductions received from employees"
-msgstr "Zrážky prijaté od zamestnancov"
-
-#: features/finance/catalog_i18n.py:32
-msgid "Meals"
-msgstr "Strava"
-
-#: features/finance/catalog_i18n.py:33
-msgid "Accommodation charged"
-msgstr "Ubytovanie fakturované"
-
-#: features/finance/catalog_i18n.py:34
-msgid "Damage recovered"
-msgstr "Vymožené škody"
-
-#: features/finance/models.py:29
-msgid "year"
-msgstr "rok"
-
-#: features/finance/models.py:30 features/finance/models.py:107
-msgid "month"
-msgstr "mesiac"
-
-#: features/finance/models.py:31
-msgid "revenue"
-msgstr "výnosy"
-
-#: features/finance/models.py:32
-msgid "cost"
-msgstr "náklady"
-
-#: features/finance/models.py:34
-msgid "locked"
-msgstr "uzamknuté"
-
-#: features/finance/models.py:37 features/logistics/models.py:77
-#: features/logistics/models.py:363 features/logistics/models.py:589
-msgid "recorded by"
-msgstr "zaznamenal"
-
-#: features/finance/models.py:43
-msgid "financial month"
-msgstr "finančný mesiac"
-
-#: features/finance/models.py:44
-msgid "financial months"
-msgstr "finančné mesiace"
-
-#: features/finance/models.py:60 templates/pages/finance_executive.html:15
-#: templates/pages/finance_month_detail.html:33
-#: templates/pages/finance_summary.html:35
-#: templates/pages/finance_summary.html:45
-#: templates/pages/finance_summary.html:58 templates/pages/finance_year.html:27
-#: templates/pages/finance_year.html:40
-msgid "Cost"
-msgstr "Náklady"
-
-#: features/finance/models.py:61 features/finance/models.py:73
-#: templates/pages/finance_executive.html:14
-#: templates/pages/finance_month_detail.html:32
-#: templates/pages/finance_summary.html:32
-#: templates/pages/finance_summary.html:44
-#: templates/pages/finance_summary.html:58 templates/pages/finance_year.html:26
-#: templates/pages/finance_year.html:40
-msgid "Revenue"
-msgstr "Príjmy"
-
-#: features/finance/models.py:65
-msgid "Labour"
-msgstr "Práca"
-
-#: features/finance/models.py:69
-msgid "Overhead"
-msgstr "Réžia"
-
-#: features/finance/models.py:71
-msgid "Damage"
-msgstr "Škody"
-
-#: features/finance/models.py:72
-msgid "Welfare"
-msgstr "Benefity"
-
-#: features/finance/models.py:87
-msgid "group"
-msgstr "skupina"
-
-#: features/finance/models.py:92
-msgid "finance category"
-msgstr "finančná kategória"
-
-#: features/finance/models.py:93
-msgid "finance categories"
-msgstr "finančné kategórie"
-
-#: features/finance/models.py:115
-msgid "finance line item"
-msgstr "finančná položka"
-
-#: features/finance/models.py:116
-msgid "finance line items"
-msgstr "finančné položky"
-
-#: features/finance/views.py:203
-msgid "Saved and recalculated."
-msgstr "Uložené a prepočítané."
-
-#: features/finance/views.py:205 features/finance/views.py:256
-msgid "Invalid input."
-msgstr "Neplatný vstup."
-
-#: features/finance/views.py:215
-msgid "Month locked."
-msgstr "Mesiac uzamknutý."
-
-#: features/finance/views.py:226
-msgid "Month reopened."
-msgstr "Mesiac znovu otvorený."
-
-#: features/finance/views.py:254
-msgid "Financial month saved."
-msgstr "Finančný mesiac uložený."
 
 #: features/intake/catalog_i18n.py:10
 msgid "Identity"
@@ -4147,6 +3965,11 @@ msgstr "kapacita"
 #: features/logistics/models.py:66
 msgid "per-head monthly cost"
 msgstr "mesačný náklad na osobu"
+
+#: features/logistics/models.py:77 features/logistics/models.py:363
+#: features/logistics/models.py:589 features/profitability/models.py:56
+msgid "recorded by"
+msgstr "zaznamenal"
 
 #: features/logistics/models.py:106
 msgid "monthly rate"
@@ -4943,6 +4766,195 @@ msgstr ""
 "Výplatná páska odoslaná na %(to)s. Jednorazové heslo (oznámte pracovníkovi "
 "telefonicky/cez Messenger, NIE e-mailom): %(pw)s"
 
+#: features/profitability/catalog_i18n.py:11 templates/pages/wages.html:40
+msgid "Gross wage"
+msgstr "Hrubá mzda"
+
+#: features/profitability/catalog_i18n.py:12
+msgid "Sole-trader (SZČO)"
+msgstr "Živnostník (SZČO)"
+
+#: features/profitability/catalog_i18n.py:13
+msgid "Payroll levies"
+msgstr "Odvody zo mzdy"
+
+#: features/profitability/catalog_i18n.py:14
+msgid "Driver"
+msgstr "Vodič"
+
+#: features/profitability/catalog_i18n.py:15
+msgid "Damage (cost)"
+msgstr "Škody (náklad)"
+
+#: features/profitability/catalog_i18n.py:16
+msgid "Forklift training"
+msgstr "Školenie na VZV"
+
+# --- finance ---
+#: features/profitability/catalog_i18n.py:19
+msgid "Insurance"
+msgstr "Poistenie"
+
+#: features/profitability/catalog_i18n.py:21
+msgid "Coordinators"
+msgstr "Koordinátori"
+
+#: features/profitability/catalog_i18n.py:22
+msgid "Leasing"
+msgstr "Lízing"
+
+#: features/profitability/catalog_i18n.py:23
+msgid "Fuel"
+msgstr "Palivo"
+
+#: features/profitability/catalog_i18n.py:24
+msgid "Toll"
+msgstr "Mýto"
+
+#: features/profitability/catalog_i18n.py:25
+msgid "Factoring"
+msgstr "Faktoring"
+
+#: features/profitability/catalog_i18n.py:27
+msgid "Recruitment"
+msgstr "Nábor"
+
+#: features/profitability/catalog_i18n.py:28
+msgid "Clothing/equipment"
+msgstr "Oblečenie/výbava"
+
+#: features/profitability/catalog_i18n.py:29
+msgid "Other extraordinary costs"
+msgstr "Iné mimoriadne náklady"
+
+#: features/profitability/catalog_i18n.py:30
+msgid "Client invoices"
+msgstr "Faktúry klientom"
+
+#: features/profitability/catalog_i18n.py:31
+msgid "Deductions received from employees"
+msgstr "Zrážky prijaté od zamestnancov"
+
+#: features/profitability/catalog_i18n.py:32
+msgid "Meals"
+msgstr "Strava"
+
+#: features/profitability/catalog_i18n.py:33
+msgid "Accommodation charged"
+msgstr "Ubytovanie fakturované"
+
+#: features/profitability/catalog_i18n.py:34
+msgid "Damage recovered"
+msgstr "Vymožené škody"
+
+#: features/profitability/models.py:32
+msgid "year"
+msgstr "rok"
+
+#: features/profitability/models.py:33 features/profitability/models.py:145
+msgid "month"
+msgstr "mesiac"
+
+#: features/profitability/models.py:35
+msgid "revenue"
+msgstr "výnosy"
+
+#: features/profitability/models.py:42
+msgid "cost"
+msgstr "náklady"
+
+#: features/profitability/models.py:49
+msgid "locked"
+msgstr "uzamknuté"
+
+#: features/profitability/models.py:62
+msgid "financial month"
+msgstr "finančný mesiac"
+
+#: features/profitability/models.py:63
+msgid "financial months"
+msgstr "finančné mesiace"
+
+#: features/profitability/models.py:82
+#: templates/pages/finance_executive.html:15
+#: templates/pages/finance_month_detail.html:33
+#: templates/pages/finance_summary.html:36
+#: templates/pages/finance_summary.html:46
+#: templates/pages/finance_summary.html:59 templates/pages/finance_year.html:27
+#: templates/pages/finance_year.html:40
+msgid "Cost"
+msgstr "Náklady"
+
+#: features/profitability/models.py:83 features/profitability/models.py:95
+#: templates/pages/finance_executive.html:14
+#: templates/pages/finance_month_detail.html:32
+#: templates/pages/finance_summary.html:33
+#: templates/pages/finance_summary.html:45
+#: templates/pages/finance_summary.html:59 templates/pages/finance_year.html:26
+#: templates/pages/finance_year.html:40
+msgid "Revenue"
+msgstr "Príjmy"
+
+#: features/profitability/models.py:87
+msgid "Labour"
+msgstr "Práca"
+
+#: features/profitability/models.py:91
+msgid "Overhead"
+msgstr "Réžia"
+
+#: features/profitability/models.py:93
+msgid "Damage"
+msgstr "Škody"
+
+#: features/profitability/models.py:94
+msgid "Welfare"
+msgstr "Benefity"
+
+#: features/profitability/models.py:110
+msgid "key"
+msgstr "kľúč"
+
+#: features/profitability/models.py:116
+msgid "group"
+msgstr "skupina"
+
+#: features/profitability/models.py:125
+msgid "finance category"
+msgstr "finančná kategória"
+
+#: features/profitability/models.py:126
+msgid "finance categories"
+msgstr "finančné kategórie"
+
+#: features/profitability/models.py:162
+msgid "finance line item"
+msgstr "finančná položka"
+
+#: features/profitability/models.py:163
+msgid "finance line items"
+msgstr "finančné položky"
+
+#: features/profitability/views.py:223
+msgid "Saved and recalculated."
+msgstr "Uložené a prepočítané."
+
+#: features/profitability/views.py:225 features/profitability/views.py:276
+msgid "Invalid input."
+msgstr "Neplatný vstup."
+
+#: features/profitability/views.py:235
+msgid "Month locked."
+msgstr "Mesiac uzamknutý."
+
+#: features/profitability/views.py:246
+msgid "Month reopened."
+msgstr "Mesiac znovu otvorený."
+
+#: features/profitability/views.py:274
+msgid "Financial month saved."
+msgstr "Finančný mesiac uložený."
+
 #: features/wage_ledger/forms.py:15
 msgid "Wage month (YYYY-MM)"
 msgstr "Mzdový mesiac (RRRR-MM)"
@@ -5685,13 +5697,13 @@ msgstr ""
 #: templates/pages/finance_executive.html:13
 #: templates/pages/finance_executive.html:34
 #: templates/pages/finance_executive.html:70
-#: templates/pages/finance_summary.html:43
-#: templates/pages/finance_summary.html:51
-#: templates/pages/finance_summary.html:66
-#: templates/pages/finance_summary.html:84
-#: templates/pages/finance_summary.html:96
-#: templates/pages/finance_summary.html:117
-#: templates/pages/finance_summary.html:129
+#: templates/pages/finance_summary.html:44
+#: templates/pages/finance_summary.html:52
+#: templates/pages/finance_summary.html:67
+#: templates/pages/finance_summary.html:85
+#: templates/pages/finance_summary.html:97
+#: templates/pages/finance_summary.html:118
+#: templates/pages/finance_summary.html:130
 #: templates/pages/finance_year.html:25
 #: templates/pages/transport_trends.html:51
 msgid "Company total"
@@ -5894,7 +5906,7 @@ msgid "Executive overview"
 msgstr "Manažérsky prehľad"
 
 #: templates/pages/finance_executive.html:10
-#: templates/pages/finance_summary.html:10 templates/pages/people_list.html:16
+#: templates/pages/finance_summary.html:11 templates/pages/people_list.html:16
 #: templates/pages/project_list.html:16
 msgid "Export"
 msgstr "Export"
@@ -5902,10 +5914,10 @@ msgstr "Export"
 #: templates/pages/finance_executive.html:16
 #: templates/pages/finance_executive.html:74
 #: templates/pages/finance_month_detail.html:34
-#: templates/pages/finance_summary.html:46
-#: templates/pages/finance_summary.html:59
-#: templates/pages/finance_summary.html:88
-#: templates/pages/finance_summary.html:133
+#: templates/pages/finance_summary.html:47
+#: templates/pages/finance_summary.html:60
+#: templates/pages/finance_summary.html:89
+#: templates/pages/finance_summary.html:134
 #: templates/pages/finance_year.html:28 templates/pages/finance_year.html:41
 #: templates/pages/finance_year.html:86
 msgid "Net"
@@ -5922,56 +5934,56 @@ msgstr "Čistý výsledok podľa mesiacov, jedna čiara na pobočku"
 
 #: templates/pages/finance_executive.html:35
 #: templates/pages/finance_executive.html:42
-#: templates/pages/finance_summary.html:67
-#: templates/pages/finance_summary.html:74
+#: templates/pages/finance_summary.html:68
+#: templates/pages/finance_summary.html:75
 msgid "Margin"
 msgstr "Marža"
 
 #: templates/pages/finance_executive.html:37
-#: templates/pages/finance_summary.html:69
+#: templates/pages/finance_summary.html:70
 #, python-format
 msgid "Margin gauge: %(margin_pct)s%% of revenue"
 msgstr "Ukazovateľ marže: %(margin_pct)s %% z príjmov"
 
 #: templates/pages/finance_executive.html:39
-#: templates/pages/finance_summary.html:71
+#: templates/pages/finance_summary.html:72
 msgid "Net as a share of revenue"
 msgstr "Čisté ako podiel z príjmov"
 
 #: templates/pages/finance_executive.html:44
-#: templates/pages/finance_summary.html:76
+#: templates/pages/finance_summary.html:77
 msgid "margin"
 msgstr "marža"
 
 #: templates/pages/finance_executive.html:52
-#: templates/pages/finance_summary.html:143
+#: templates/pages/finance_summary.html:144
 #: templates/pages/finance_year.html:15
 msgid "Profit/loss by office"
 msgstr "Zisk/strata podľa pobočiek"
 
 #: templates/pages/finance_executive.html:57
-#: templates/pages/finance_summary.html:148
+#: templates/pages/finance_summary.html:149
 msgid "Net result by office chart"
 msgstr "Graf čistého výsledku podľa pobočiek"
 
 #: templates/pages/finance_executive.html:64
 #: templates/pages/finance_executive.html:76
-#: templates/pages/finance_summary.html:90
-#: templates/pages/finance_summary.html:123
-#: templates/pages/finance_summary.html:135
-#: templates/pages/finance_summary.html:155
+#: templates/pages/finance_summary.html:91
+#: templates/pages/finance_summary.html:124
+#: templates/pages/finance_summary.html:136
+#: templates/pages/finance_summary.html:156
 #: templates/pages/finance_year.html:20 templates/pages/finance_year.html:63
 #: templates/pages/finance_year.html:88
 msgid "No financial months."
 msgstr "Žiadne finančné mesiace."
 
 #: templates/pages/finance_executive.html:71
-#: templates/pages/finance_summary.html:130 templates/pages/finance_year.html:8
+#: templates/pages/finance_summary.html:131 templates/pages/finance_year.html:8
 msgid "Yearly results"
 msgstr "Ročné výsledky"
 
 #: templates/pages/finance_month_detail.html:8
-#: templates/pages/finance_summary.html:88 templates/pages/finance_year.html:86
+#: templates/pages/finance_summary.html:89 templates/pages/finance_year.html:86
 msgid "Locked"
 msgstr "Uzamknuté"
 
@@ -6007,7 +6019,7 @@ msgid "Save & recalculate"
 msgstr "Uložiť a prepočítať"
 
 #: templates/pages/finance_month_detail.html:60
-#: templates/pages/finance_summary.html:97 templates/pages/finance_year.html:69
+#: templates/pages/finance_summary.html:98 templates/pages/finance_year.html:69
 msgid "Group breakdown"
 msgstr "Rozpis podľa skupín"
 
@@ -6016,23 +6028,76 @@ msgid "By group"
 msgstr "Podľa skupiny"
 
 #: templates/pages/finance_month_detail.html:66
-#: templates/pages/finance_summary.html:102
+#: templates/pages/finance_summary.html:103
 msgid "Net result by finance group chart"
 msgstr "Graf čistého výsledku podľa finančnej skupiny"
 
-#: templates/pages/finance_summary.html:15
+#: templates/pages/finance_project_year.html:10
+#: templates/pages/finance_workbook.html:10
+msgid "Back to finance"
+msgstr "Späť na financie"
+
+#: templates/pages/finance_project_year.html:14
+#, python-format
+msgid ""
+"Twelve months for one project, summed from the months already recorded. "
+"Office: %(office)s."
+msgstr ""
+"Dvanásť mesiacov jedného projektu, sčítaných z už zaznamenaných mesiacov. "
+"Pobočka: %(office)s."
+
+#: templates/pages/finance_project_year.html:22
+#: templates/pages/finance_workbook.html:22 templates/pages/ledger.html:34
+#: templates/panels/advances_ledger.html:28
+#: templates/panels/blacklist_case.html:10
+#: templates/panels/blacklist_case.html:33
+#: templates/partials/ledger_activity.html:26
+msgid "Category"
+msgstr "Kategória"
+
+#: templates/pages/finance_project_year.html:38
+#: templates/pages/finance_workbook.html:40
+msgid "Total costs"
+msgstr "Náklady spolu"
+
+#: templates/pages/finance_project_year.html:43
+#: templates/pages/finance_workbook.html:52
+msgid "Total revenues"
+msgstr "Príjmy spolu"
+
+#: templates/pages/finance_project_year.html:48
+#: templates/pages/finance_workbook.html:57
+#: templates/pages/finance_workbook.html:73
+msgid "Profit/loss"
+msgstr "Zisk/strata"
+
+#: templates/pages/finance_project_year.html:56
+msgid ""
+"A month with no recorded figures shows as a dash rather than zero — an "
+"unrecorded month and a month that genuinely netted nothing are different "
+"facts."
+msgstr ""
+"Mesiac bez zaznamenaných údajov sa zobrazuje ako pomlčka namiesto nuly — "
+"nezaznamenaný mesiac a mesiac, ktorý skutočne skončil na nule, sú dve "
+"odlišné skutočnosti."
+
+#: templates/pages/finance_summary.html:10
+msgid "Workbook view"
+msgstr "Zobrazenie pracovného zošita"
+
+#: templates/pages/finance_summary.html:16
 msgid "Record a financial month"
 msgstr "Zaznamenať finančný mesiac"
 
-#: templates/pages/finance_summary.html:16
+#: templates/pages/finance_summary.html:17
 msgid "Manual entry"
 msgstr "Ručné zadávanie"
 
-#: templates/pages/finance_summary.html:17
+#: templates/pages/finance_summary.html:18
 msgid "Record a month"
 msgstr "Zaznamenať mesiac"
 
-#: templates/pages/finance_summary.html:18
+#: templates/pages/finance_summary.html:19
 msgid ""
 "Every figure here is typed by hand — nothing is pulled from elsewhere in the "
 "system. Create the month, then open it to enter each category; the totals "
@@ -6042,41 +6107,79 @@ msgstr ""
 "Vytvorte mesiac a potom ho otvorte a zadajte jednotlivé kategórie; jediné, "
 "čo sa počíta za vás, sú súčty."
 
-#: templates/pages/finance_summary.html:38
+#: templates/pages/finance_summary.html:39
 msgid "Record month"
 msgstr "Zaznamenať mesiac"
 
-#: templates/pages/finance_summary.html:52 templates/pages/finance_year.html:34
+#: templates/pages/finance_summary.html:53 templates/pages/finance_year.html:34
 msgid "Monthly trend"
 msgstr "Mesačný trend"
 
-#: templates/pages/finance_summary.html:55
+#: templates/pages/finance_summary.html:56
 msgid "Revenue, cost, and net by month"
 msgstr "Príjmy, náklady a čisté podľa mesiacov"
 
-#: templates/pages/finance_summary.html:60 templates/pages/finance_year.html:42
+#: templates/pages/finance_summary.html:61 templates/pages/finance_year.html:42
 msgid "Monthly revenue, cost, and net trend chart"
 msgstr "Graf mesačného trendu príjmov, nákladov a čistého výsledku"
 
-#: templates/pages/finance_summary.html:85 templates/pages/finance_year.html:33
+#: templates/pages/finance_summary.html:86 templates/pages/finance_year.html:33
 #: templates/pages/finance_year.html:82
 msgid "Financial months"
 msgstr "Finančné mesiace"
 
-#: templates/pages/finance_summary.html:109
+#: templates/pages/finance_summary.html:110
 #: templates/pages/finance_year.html:75
 msgid "No line items yet."
 msgstr "Zatiaľ žiadne položky."
 
-#: templates/pages/finance_summary.html:118
+#: templates/pages/finance_summary.html:119
 #: templates/pages/finance_year.html:50
 msgid "Per-project results"
 msgstr "Výsledky podľa projektu"
 
-#: templates/pages/finance_summary.html:142
+#: templates/pages/finance_summary.html:143
 #: templates/pages/finance_year.html:14
 msgid "Office roll-up"
 msgstr "Súhrn podľa pobočiek"
+
+#: templates/pages/finance_workbook.html:4
+#: templates/pages/finance_workbook.html:9
+msgid "Workbook"
+msgstr "Pracovný zošit"
+
+#: templates/pages/finance_workbook.html:14
+msgid ""
+"Projects across, categories down — the layout of the source workbook. Costs "
+"are shown negative; every total is recomputed from the line items rather "
+"than carried over."
+msgstr ""
+"Projekty sú v stĺpcoch a kategórie v riadkoch — podľa rozloženia zdrojového "
+"zošita. Náklady sa zobrazujú ako záporné hodnoty; každý súčet sa prepočíta "
+"z položiek a nepreberá sa zo zdroja."
+
+#: templates/pages/finance_workbook.html:32
+#: templates/pages/finance_workbook.html:71
+msgid "Costs"
+msgstr "Náklady"
+
+#: templates/pages/finance_workbook.html:44
+#: templates/pages/finance_workbook.html:72
+msgid "Revenues"
+msgstr "Príjmy"
+
+#: templates/pages/finance_workbook.html:66
+msgid "By office"
+msgstr "Podľa pobočky"
+
+#: templates/pages/finance_workbook.html:85
+msgid "No projects in scope for this period."
+msgstr "Pre toto obdobie nie sú v rozsahu žiadne projekty."
+
+#: templates/pages/finance_workbook.html:90
+#: templates/partials/ledger_activity.html:14
+msgid "Total"
+msgstr "Spolu"
 
 #: templates/pages/finance_year.html:37
 #, python-format
@@ -6187,13 +6290,6 @@ msgstr "Firma / projekt"
 #: templates/pages/ledger.html:30 templates/panels/advances_ledger.html:24
 msgid "Entry type"
 msgstr "Typ záznamu"
-
-#: templates/pages/ledger.html:34 templates/panels/advances_ledger.html:28
-#: templates/panels/blacklist_case.html:10
-#: templates/panels/blacklist_case.html:33
-#: templates/partials/ledger_activity.html:26
-msgid "Category"
-msgstr "Kategória"
 
 #: templates/pages/ledger.html:38 templates/panels/advances_ledger.html:32
 msgid "Amount (EUR)"
@@ -7392,10 +7488,6 @@ msgstr "Firma"
 #: templates/partials/ledger_activity.html:26
 msgid "Amount"
 msgstr "Suma"
-
-#: templates/partials/ledger_activity.html:14
-msgid "Total"
-msgstr "Spolu"
 
 #: templates/partials/ledger_activity.html:17
 #: templates/partials/ledger_cycle.html:23

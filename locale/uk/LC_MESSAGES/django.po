@@ -98,8 +98,8 @@ msgstr "Операції"
 
 # --- compliance ---
 #: clients/corvinum_eu/templates/layouts/base.html:50
-#: features/compliance/panels.py:33 features/finance/models.py:68
-#: features/intake/catalog_i18n.py:12 templates/layouts/base.html:41
+#: features/compliance/panels.py:33 features/intake/catalog_i18n.py:12
+#: features/profitability/models.py:90 templates/layouts/base.html:41
 #: templates/pages/compliance_list.html:4
 #: templates/pages/compliance_list.html:9
 #: templates/pages/compliance_list.html:12
@@ -270,15 +270,15 @@ msgstr "підтверджено"
 #: features/advances/models.py:92 features/blacklist/models.py:66
 #: features/blacklist/models.py:114 features/checklists/models.py:23
 #: features/compliance/models.py:87 features/feedback/models.py:26
-#: features/feedback/models.py:48 features/finance/models.py:39
-#: features/intake/models.py:32 features/logistics/models.py:43
-#: features/logistics/models.py:79 features/logistics/models.py:184
-#: features/logistics/models.py:228 features/logistics/models.py:365
-#: features/logistics/models.py:467 features/logistics/models.py:591
-#: features/messaging/models.py:28 features/messaging/models.py:71
-#: features/messaging/models.py:176 features/messaging/models.py:221
-#: features/messaging/models.py:261 features/messaging/models.py:331
-#: features/payslips/models.py:37 features/wage_ledger/models.py:43
+#: features/feedback/models.py:48 features/intake/models.py:32
+#: features/logistics/models.py:43 features/logistics/models.py:79
+#: features/logistics/models.py:184 features/logistics/models.py:228
+#: features/logistics/models.py:365 features/logistics/models.py:467
+#: features/logistics/models.py:591 features/messaging/models.py:28
+#: features/messaging/models.py:71 features/messaging/models.py:176
+#: features/messaging/models.py:221 features/messaging/models.py:261
+#: features/messaging/models.py:331 features/payslips/models.py:37
+#: features/profitability/models.py:58 features/wage_ledger/models.py:43
 msgid "created"
 msgstr "створено"
 
@@ -831,7 +831,7 @@ msgstr "Військова служба"
 #: core/people/catalog_i18n.py:14 features/advances/models.py:40
 #: features/blacklist/catalog_i18n.py:15 features/blacklist/models.py:88
 #: features/blacklist/panels.py:61 features/compliance/models.py:15
-#: features/finance/models.py:74 features/intake/catalog_i18n.py:29
+#: features/intake/catalog_i18n.py:29 features/profitability/models.py:96
 msgid "Other"
 msgstr "Інше"
 
@@ -889,9 +889,10 @@ msgstr "Має інвалідність"
 msgid "Disability type"
 msgstr "Тип інвалідності"
 
-#: core/people/forms.py:50 features/finance/catalog_i18n.py:26
-#: features/logistics/forms.py:74 features/logistics/forms.py:228
+#: core/people/forms.py:50 features/logistics/forms.py:74
+#: features/logistics/forms.py:228 features/profitability/catalog_i18n.py:26
 #: templates/pages/equipment_stock.html:48
+#: templates/pages/finance_workbook.html:70
 #: templates/pages/goods_receipt_detail.html:16
 #: templates/pages/project_detail.html:35
 msgid "Office"
@@ -931,24 +932,24 @@ msgstr "У чорному списку"
 
 #: core/people/models.py:47 features/blacklist/models.py:16
 #: features/checklists/models.py:37 features/feedback/models.py:20
-#: features/finance/models.py:85 features/intake/models.py:66
-#: features/logistics/models.py:101
+#: features/intake/models.py:66 features/logistics/models.py:101
+#: features/profitability/models.py:111
 msgid "label"
 msgstr "позначка"
 
 #: core/people/models.py:48 core/projects/models.py:23
 #: features/blacklist/models.py:17 features/blacklist/models.py:113
 #: features/checklists/models.py:22 features/feedback/models.py:25
-#: features/finance/models.py:88 features/logistics/models.py:31
-#: features/logistics/models.py:103 features/logistics/models.py:227
-#: features/messaging/models.py:20 features/messaging/models.py:168
-#: features/messaging/models.py:213
+#: features/logistics/models.py:31 features/logistics/models.py:103
+#: features/logistics/models.py:227 features/messaging/models.py:20
+#: features/messaging/models.py:168 features/messaging/models.py:213
+#: features/profitability/models.py:121
 msgid "active"
 msgstr "активний"
 
 #: core/people/models.py:49 features/blacklist/models.py:18
-#: features/checklists/models.py:41 features/finance/models.py:89
-#: features/intake/models.py:52 features/intake/models.py:69
+#: features/checklists/models.py:41 features/intake/models.py:52
+#: features/intake/models.py:69 features/profitability/models.py:122
 msgid "order"
 msgstr "порядок"
 
@@ -1042,7 +1043,7 @@ msgstr "пошуковий вигляд імені"
 
 #: core/people/models.py:153 core/projects/models.py:37
 #: core/projects/models.py:97 core/projects/models.py:266
-#: features/blacklist/models.py:67 features/finance/models.py:40
+#: features/blacklist/models.py:67 features/profitability/models.py:59
 msgid "updated"
 msgstr "оновлено"
 
@@ -1121,7 +1122,7 @@ msgstr "Можна планувати лише доступних кандида
 
 #: core/projects/forms.py:30 core/projects/forms.py:56
 #: templates/pages/feedback_inbox.html:32
-#: templates/pages/finance_summary.html:21
+#: templates/pages/finance_summary.html:22
 #: templates/pages/person_detail.html:61 templates/pages/person_detail.html:80
 #: templates/pages/project_detail.html:8
 #: templates/pages/transport_trends.html:31
@@ -1188,8 +1189,8 @@ msgstr "включено до фінансової звітності"
 #: core/projects/models.py:40 core/projects/models.py:70
 #: core/projects/models.py:143 core/projects/models.py:215
 #: core/projects/models.py:334 features/feedback/models.py:23
-#: features/finance/models.py:27 features/logistics/models.py:578
-#: features/messaging/models.py:139
+#: features/logistics/models.py:578 features/messaging/models.py:139
+#: features/profitability/models.py:30
 msgid "project"
 msgstr "проєкт"
 
@@ -1295,9 +1296,9 @@ msgid "outcome"
 msgstr "результат"
 
 #: core/projects/models.py:161 features/advances/models.py:83
-#: features/checklists/models.py:68 features/finance/models.py:33
-#: features/logistics/models.py:345 features/logistics/models.py:582
-#: features/payslips/models.py:31 features/wage_ledger/models.py:34
+#: features/checklists/models.py:68 features/logistics/models.py:345
+#: features/logistics/models.py:582 features/payslips/models.py:31
+#: features/profitability/models.py:48 features/wage_ledger/models.py:34
 msgid "note"
 msgstr "нотатка"
 
@@ -1441,7 +1442,8 @@ msgid "Only an available person can be activated without a trial day."
 msgstr "Без пробного дня можна активувати лише доступну особу."
 
 #: core/projects/services.py:235 features/advances/models.py:38
-#: features/finance/catalog_i18n.py:20 templates/pages/activation_queue.html:26
+#: features/profitability/catalog_i18n.py:20
+#: templates/pages/activation_queue.html:26
 #: templates/pages/person_detail.html:139
 msgid "Medical"
 msgstr "Медичне"
@@ -1460,8 +1462,9 @@ msgid "Required equipment is incomplete."
 msgstr "Необхідне спорядження не укомплектовано."
 
 #: core/projects/services.py:237 core/ui/help.py:347
-#: features/finance/catalog_i18n.py:18 features/finance/models.py:67
-#: templates/layouts/base.html:43 templates/pages/accommodation_costs.html:6
+#: features/profitability/catalog_i18n.py:18
+#: features/profitability/models.py:89 templates/layouts/base.html:43
+#: templates/pages/accommodation_costs.html:6
 #: templates/pages/accommodation_detail.html:8
 #: templates/pages/accommodation_list.html:4
 #: templates/pages/accommodation_list.html:9
@@ -1476,7 +1479,7 @@ msgstr "Проживання"
 msgid "Accommodation is incomplete."
 msgstr "Проживання не забезпечено."
 
-#: core/projects/services.py:238 features/finance/models.py:66
+#: core/projects/services.py:238 features/profitability/models.py:88
 #: templates/layouts/base.html:45 templates/pages/person_detail.html:161
 msgid "Transport"
 msgstr "Транспорт"
@@ -1584,7 +1587,7 @@ msgstr "День"
 msgid "Week"
 msgstr "Тиждень"
 
-#: core/reporting/periods.py:47 templates/pages/finance_summary.html:29
+#: core/reporting/periods.py:47 templates/pages/finance_summary.html:30
 #: templates/partials/ledger_cycle.html:8
 #: templates/partials/period_filter.html:32
 msgid "Month"
@@ -1594,7 +1597,8 @@ msgstr "Місяць"
 msgid "Several months"
 msgstr "Кілька місяців"
 
-#: core/reporting/periods.py:49 templates/pages/finance_summary.html:26
+#: core/reporting/periods.py:49 templates/pages/finance_project_year.html:26
+#: templates/pages/finance_summary.html:27
 #: templates/partials/ledger_cycle.html:5
 #: templates/partials/period_filter.html:43
 #: templates/partials/period_filter.html:57
@@ -2093,7 +2097,7 @@ msgstr "Статус і кінцева дата показують, який п�
 
 # --- logistics: equipment ---
 #: core/ui/help.py:287 features/advances/models.py:37
-#: features/finance/models.py:70 templates/pages/equipment_stock.html:7
+#: features/profitability/models.py:92 templates/pages/equipment_stock.html:7
 #: templates/panels/logistics_equipment.html:4
 msgid "Equipment"
 msgstr "Спорядження"
@@ -2461,8 +2465,10 @@ msgstr ""
 #: templates/pages/finance_executive.html:9
 #: templates/pages/finance_month_detail.html:8
 #: templates/pages/finance_month_detail.html:39
+#: templates/pages/finance_project_year.html:8
 #: templates/pages/finance_summary.html:4
-#: templates/pages/finance_summary.html:9 templates/pages/finance_year.html:4
+#: templates/pages/finance_summary.html:9
+#: templates/pages/finance_workbook.html:8 templates/pages/finance_year.html:4
 #: templates/pages/finance_year.html:8
 msgid "Finance"
 msgstr "Фінанси"
@@ -3064,11 +3070,11 @@ msgid "entry type"
 msgstr "тип запису"
 
 #: features/advances/models.py:68 features/blacklist/models.py:53
-#: features/compliance/models.py:54 features/finance/models.py:110
+#: features/compliance/models.py:54 features/profitability/models.py:151
 msgid "category"
 msgstr "категорія"
 
-#: features/advances/models.py:70 features/finance/models.py:112
+#: features/advances/models.py:70 features/profitability/models.py:154
 msgid "amount"
 msgstr "сума"
 
@@ -3323,9 +3329,9 @@ msgstr "Активація"
 msgid "Reactivation"
 msgstr "Повторна активація"
 
-#: features/checklists/models.py:20 features/finance/models.py:86
-#: features/messaging/models.py:209 features/messaging/models.py:252
-#: features/messaging/models.py:314
+#: features/checklists/models.py:20 features/messaging/models.py:209
+#: features/messaging/models.py:252 features/messaging/models.py:314
+#: features/profitability/models.py:113
 msgid "kind"
 msgstr "різновид"
 
@@ -3399,7 +3405,8 @@ msgid "Activation blocked by open checklist items: %(items)s"
 msgstr ""
 "Активацію заблоковано відкритими пунктами контрольного списку: %(items)s"
 
-#: features/compliance/catalog_i18n.py:11 features/finance/catalog_i18n.py:17
+#: features/compliance/catalog_i18n.py:11
+#: features/profitability/catalog_i18n.py:17
 msgid "Forklift licence"
 msgstr "Посвідчення на навантажувач"
 
@@ -3642,195 +3649,6 @@ msgstr "Посилання для відгуків створено."
 #: features/feedback/views.py:123
 msgid "Label is required."
 msgstr "Назва обов’язкова."
-
-#: features/finance/catalog_i18n.py:11 templates/pages/wages.html:40
-msgid "Gross wage"
-msgstr "Валова зарплата"
-
-#: features/finance/catalog_i18n.py:12
-msgid "Sole-trader (SZČO)"
-msgstr "ФОП (SZČO)"
-
-#: features/finance/catalog_i18n.py:13
-msgid "Payroll levies"
-msgstr "Нарахування на зарплату"
-
-#: features/finance/catalog_i18n.py:14
-msgid "Driver"
-msgstr "Водій"
-
-#: features/finance/catalog_i18n.py:15
-msgid "Damage (cost)"
-msgstr "Збитки (витрати)"
-
-#: features/finance/catalog_i18n.py:16
-msgid "Forklift training"
-msgstr "Навчання на навантажувач"
-
-# --- finance ---
-#: features/finance/catalog_i18n.py:19
-msgid "Insurance"
-msgstr "Страхування"
-
-#: features/finance/catalog_i18n.py:21
-msgid "Coordinators"
-msgstr "Координатори"
-
-#: features/finance/catalog_i18n.py:22
-msgid "Leasing"
-msgstr "Лізинг"
-
-#: features/finance/catalog_i18n.py:23
-msgid "Fuel"
-msgstr "Пальне"
-
-#: features/finance/catalog_i18n.py:24
-msgid "Toll"
-msgstr "Плата за дороги"
-
-#: features/finance/catalog_i18n.py:25
-msgid "Factoring"
-msgstr "Факторинг"
-
-#: features/finance/catalog_i18n.py:27
-msgid "Recruitment"
-msgstr "Рекрутинг"
-
-#: features/finance/catalog_i18n.py:28
-msgid "Clothing/equipment"
-msgstr "Одяг/спорядження"
-
-#: features/finance/catalog_i18n.py:29
-msgid "Other extraordinary costs"
-msgstr "Інші надзвичайні витрати"
-
-#: features/finance/catalog_i18n.py:30
-msgid "Client invoices"
-msgstr "Рахунки клієнтам"
-
-#: features/finance/catalog_i18n.py:31
-msgid "Deductions received from employees"
-msgstr "Утримання, отримані від працівників"
-
-#: features/finance/catalog_i18n.py:32
-msgid "Meals"
-msgstr "Харчування"
-
-#: features/finance/catalog_i18n.py:33
-msgid "Accommodation charged"
-msgstr "Житло, виставлене до оплати"
-
-#: features/finance/catalog_i18n.py:34
-msgid "Damage recovered"
-msgstr "Відшкодовані збитки"
-
-#: features/finance/models.py:29
-msgid "year"
-msgstr "рік"
-
-#: features/finance/models.py:30 features/finance/models.py:107
-msgid "month"
-msgstr "місяць"
-
-#: features/finance/models.py:31
-msgid "revenue"
-msgstr "дохід"
-
-#: features/finance/models.py:32
-msgid "cost"
-msgstr "витрати"
-
-#: features/finance/models.py:34
-msgid "locked"
-msgstr "заблоковано"
-
-#: features/finance/models.py:37 features/logistics/models.py:77
-#: features/logistics/models.py:363 features/logistics/models.py:589
-msgid "recorded by"
-msgstr "записав"
-
-#: features/finance/models.py:43
-msgid "financial month"
-msgstr "фінансовий місяць"
-
-#: features/finance/models.py:44
-msgid "financial months"
-msgstr "фінансові місяці"
-
-#: features/finance/models.py:60 templates/pages/finance_executive.html:15
-#: templates/pages/finance_month_detail.html:33
-#: templates/pages/finance_summary.html:35
-#: templates/pages/finance_summary.html:45
-#: templates/pages/finance_summary.html:58 templates/pages/finance_year.html:27
-#: templates/pages/finance_year.html:40
-msgid "Cost"
-msgstr "Витрати"
-
-#: features/finance/models.py:61 features/finance/models.py:73
-#: templates/pages/finance_executive.html:14
-#: templates/pages/finance_month_detail.html:32
-#: templates/pages/finance_summary.html:32
-#: templates/pages/finance_summary.html:44
-#: templates/pages/finance_summary.html:58 templates/pages/finance_year.html:26
-#: templates/pages/finance_year.html:40
-msgid "Revenue"
-msgstr "Дохід"
-
-#: features/finance/models.py:65
-msgid "Labour"
-msgstr "Праця"
-
-#: features/finance/models.py:69
-msgid "Overhead"
-msgstr "Накладні витрати"
-
-#: features/finance/models.py:71
-msgid "Damage"
-msgstr "Збитки"
-
-#: features/finance/models.py:72
-msgid "Welfare"
-msgstr "Соціальні витрати"
-
-#: features/finance/models.py:87
-msgid "group"
-msgstr "група"
-
-#: features/finance/models.py:92
-msgid "finance category"
-msgstr "фінансова категорія"
-
-#: features/finance/models.py:93
-msgid "finance categories"
-msgstr "фінансові категорії"
-
-#: features/finance/models.py:115
-msgid "finance line item"
-msgstr "фінансова позиція"
-
-#: features/finance/models.py:116
-msgid "finance line items"
-msgstr "фінансові позиції"
-
-#: features/finance/views.py:203
-msgid "Saved and recalculated."
-msgstr "Збережено та перераховано."
-
-#: features/finance/views.py:205 features/finance/views.py:256
-msgid "Invalid input."
-msgstr "Невірні дані."
-
-#: features/finance/views.py:215
-msgid "Month locked."
-msgstr "Місяць заблоковано."
-
-#: features/finance/views.py:226
-msgid "Month reopened."
-msgstr "Місяць знову відкрито."
-
-#: features/finance/views.py:254
-msgid "Financial month saved."
-msgstr "Фінансовий місяць збережено."
 
 #: features/intake/catalog_i18n.py:10
 msgid "Identity"
@@ -4172,6 +3990,11 @@ msgstr "місткість"
 #: features/logistics/models.py:66
 msgid "per-head monthly cost"
 msgstr "місячна вартість на одну особу"
+
+#: features/logistics/models.py:77 features/logistics/models.py:363
+#: features/logistics/models.py:589 features/profitability/models.py:56
+msgid "recorded by"
+msgstr "записав"
 
 #: features/logistics/models.py:106
 msgid "monthly rate"
@@ -4971,6 +4794,195 @@ msgstr ""
 "Розрахунковий лист надіслано на %(to)s. Одноразовий пароль (повідомте "
 "працівнику телефоном/через Messenger, НЕ електронною поштою): %(pw)s"
 
+#: features/profitability/catalog_i18n.py:11 templates/pages/wages.html:40
+msgid "Gross wage"
+msgstr "Валова зарплата"
+
+#: features/profitability/catalog_i18n.py:12
+msgid "Sole-trader (SZČO)"
+msgstr "ФОП (SZČO)"
+
+#: features/profitability/catalog_i18n.py:13
+msgid "Payroll levies"
+msgstr "Нарахування на зарплату"
+
+#: features/profitability/catalog_i18n.py:14
+msgid "Driver"
+msgstr "Водій"
+
+#: features/profitability/catalog_i18n.py:15
+msgid "Damage (cost)"
+msgstr "Збитки (витрати)"
+
+#: features/profitability/catalog_i18n.py:16
+msgid "Forklift training"
+msgstr "Навчання на навантажувач"
+
+# --- finance ---
+#: features/profitability/catalog_i18n.py:19
+msgid "Insurance"
+msgstr "Страхування"
+
+#: features/profitability/catalog_i18n.py:21
+msgid "Coordinators"
+msgstr "Координатори"
+
+#: features/profitability/catalog_i18n.py:22
+msgid "Leasing"
+msgstr "Лізинг"
+
+#: features/profitability/catalog_i18n.py:23
+msgid "Fuel"
+msgstr "Пальне"
+
+#: features/profitability/catalog_i18n.py:24
+msgid "Toll"
+msgstr "Плата за дороги"
+
+#: features/profitability/catalog_i18n.py:25
+msgid "Factoring"
+msgstr "Факторинг"
+
+#: features/profitability/catalog_i18n.py:27
+msgid "Recruitment"
+msgstr "Рекрутинг"
+
+#: features/profitability/catalog_i18n.py:28
+msgid "Clothing/equipment"
+msgstr "Одяг/спорядження"
+
+#: features/profitability/catalog_i18n.py:29
+msgid "Other extraordinary costs"
+msgstr "Інші надзвичайні витрати"
+
+#: features/profitability/catalog_i18n.py:30
+msgid "Client invoices"
+msgstr "Рахунки клієнтам"
+
+#: features/profitability/catalog_i18n.py:31
+msgid "Deductions received from employees"
+msgstr "Утримання, отримані від працівників"
+
+#: features/profitability/catalog_i18n.py:32
+msgid "Meals"
+msgstr "Харчування"
+
+#: features/profitability/catalog_i18n.py:33
+msgid "Accommodation charged"
+msgstr "Житло, виставлене до оплати"
+
+#: features/profitability/catalog_i18n.py:34
+msgid "Damage recovered"
+msgstr "Відшкодовані збитки"
+
+#: features/profitability/models.py:32
+msgid "year"
+msgstr "рік"
+
+#: features/profitability/models.py:33 features/profitability/models.py:145
+msgid "month"
+msgstr "місяць"
+
+#: features/profitability/models.py:35
+msgid "revenue"
+msgstr "дохід"
+
+#: features/profitability/models.py:42
+msgid "cost"
+msgstr "витрати"
+
+#: features/profitability/models.py:49
+msgid "locked"
+msgstr "заблоковано"
+
+#: features/profitability/models.py:62
+msgid "financial month"
+msgstr "фінансовий місяць"
+
+#: features/profitability/models.py:63
+msgid "financial months"
+msgstr "фінансові місяці"
+
+#: features/profitability/models.py:82
+#: templates/pages/finance_executive.html:15
+#: templates/pages/finance_month_detail.html:33
+#: templates/pages/finance_summary.html:36
+#: templates/pages/finance_summary.html:46
+#: templates/pages/finance_summary.html:59 templates/pages/finance_year.html:27
+#: templates/pages/finance_year.html:40
+msgid "Cost"
+msgstr "Витрати"
+
+#: features/profitability/models.py:83 features/profitability/models.py:95
+#: templates/pages/finance_executive.html:14
+#: templates/pages/finance_month_detail.html:32
+#: templates/pages/finance_summary.html:33
+#: templates/pages/finance_summary.html:45
+#: templates/pages/finance_summary.html:59 templates/pages/finance_year.html:26
+#: templates/pages/finance_year.html:40
+msgid "Revenue"
+msgstr "Дохід"
+
+#: features/profitability/models.py:87
+msgid "Labour"
+msgstr "Праця"
+
+#: features/profitability/models.py:91
+msgid "Overhead"
+msgstr "Накладні витрати"
+
+#: features/profitability/models.py:93
+msgid "Damage"
+msgstr "Збитки"
+
+#: features/profitability/models.py:94
+msgid "Welfare"
+msgstr "Соціальні витрати"
+
+#: features/profitability/models.py:110
+msgid "key"
+msgstr "ключ"
+
+#: features/profitability/models.py:116
+msgid "group"
+msgstr "група"
+
+#: features/profitability/models.py:125
+msgid "finance category"
+msgstr "фінансова категорія"
+
+#: features/profitability/models.py:126
+msgid "finance categories"
+msgstr "фінансові категорії"
+
+#: features/profitability/models.py:162
+msgid "finance line item"
+msgstr "фінансова позиція"
+
+#: features/profitability/models.py:163
+msgid "finance line items"
+msgstr "фінансові позиції"
+
+#: features/profitability/views.py:223
+msgid "Saved and recalculated."
+msgstr "Збережено та перераховано."
+
+#: features/profitability/views.py:225 features/profitability/views.py:276
+msgid "Invalid input."
+msgstr "Невірні дані."
+
+#: features/profitability/views.py:235
+msgid "Month locked."
+msgstr "Місяць заблоковано."
+
+#: features/profitability/views.py:246
+msgid "Month reopened."
+msgstr "Місяць знову відкрито."
+
+#: features/profitability/views.py:274
+msgid "Financial month saved."
+msgstr "Фінансовий місяць збережено."
+
 #: features/wage_ledger/forms.py:15
 msgid "Wage month (YYYY-MM)"
 msgstr "Місяць зарплати (РРРР-ММ)"
@@ -5713,13 +5725,13 @@ msgstr ""
 #: templates/pages/finance_executive.html:13
 #: templates/pages/finance_executive.html:34
 #: templates/pages/finance_executive.html:70
-#: templates/pages/finance_summary.html:43
-#: templates/pages/finance_summary.html:51
-#: templates/pages/finance_summary.html:66
-#: templates/pages/finance_summary.html:84
-#: templates/pages/finance_summary.html:96
-#: templates/pages/finance_summary.html:117
-#: templates/pages/finance_summary.html:129
+#: templates/pages/finance_summary.html:44
+#: templates/pages/finance_summary.html:52
+#: templates/pages/finance_summary.html:67
+#: templates/pages/finance_summary.html:85
+#: templates/pages/finance_summary.html:97
+#: templates/pages/finance_summary.html:118
+#: templates/pages/finance_summary.html:130
 #: templates/pages/finance_year.html:25
 #: templates/pages/transport_trends.html:51
 msgid "Company total"
@@ -5921,7 +5933,7 @@ msgid "Executive overview"
 msgstr "Огляд для керівництва"
 
 #: templates/pages/finance_executive.html:10
-#: templates/pages/finance_summary.html:10 templates/pages/people_list.html:16
+#: templates/pages/finance_summary.html:11 templates/pages/people_list.html:16
 #: templates/pages/project_list.html:16
 msgid "Export"
 msgstr "Експорт"
@@ -5929,10 +5941,10 @@ msgstr "Експорт"
 #: templates/pages/finance_executive.html:16
 #: templates/pages/finance_executive.html:74
 #: templates/pages/finance_month_detail.html:34
-#: templates/pages/finance_summary.html:46
-#: templates/pages/finance_summary.html:59
-#: templates/pages/finance_summary.html:88
-#: templates/pages/finance_summary.html:133
+#: templates/pages/finance_summary.html:47
+#: templates/pages/finance_summary.html:60
+#: templates/pages/finance_summary.html:89
+#: templates/pages/finance_summary.html:134
 #: templates/pages/finance_year.html:28 templates/pages/finance_year.html:41
 #: templates/pages/finance_year.html:86
 msgid "Net"
@@ -5949,56 +5961,56 @@ msgstr "Чистий результат за місяцями, по одній �
 
 #: templates/pages/finance_executive.html:35
 #: templates/pages/finance_executive.html:42
-#: templates/pages/finance_summary.html:67
-#: templates/pages/finance_summary.html:74
+#: templates/pages/finance_summary.html:68
+#: templates/pages/finance_summary.html:75
 msgid "Margin"
 msgstr "Маржа"
 
 #: templates/pages/finance_executive.html:37
-#: templates/pages/finance_summary.html:69
+#: templates/pages/finance_summary.html:70
 #, python-format
 msgid "Margin gauge: %(margin_pct)s%% of revenue"
 msgstr "Індикатор маржі: %(margin_pct)s %% від доходу"
 
 #: templates/pages/finance_executive.html:39
-#: templates/pages/finance_summary.html:71
+#: templates/pages/finance_summary.html:72
 msgid "Net as a share of revenue"
 msgstr "Чистий результат як частка доходу"
 
 #: templates/pages/finance_executive.html:44
-#: templates/pages/finance_summary.html:76
+#: templates/pages/finance_summary.html:77
 msgid "margin"
 msgstr "маржа"
 
 #: templates/pages/finance_executive.html:52
-#: templates/pages/finance_summary.html:143
+#: templates/pages/finance_summary.html:144
 #: templates/pages/finance_year.html:15
 msgid "Profit/loss by office"
 msgstr "Прибуток/збиток за офісами"
 
 #: templates/pages/finance_executive.html:57
-#: templates/pages/finance_summary.html:148
+#: templates/pages/finance_summary.html:149
 msgid "Net result by office chart"
 msgstr "Діаграма чистого результату за офісами"
 
 #: templates/pages/finance_executive.html:64
 #: templates/pages/finance_executive.html:76
-#: templates/pages/finance_summary.html:90
-#: templates/pages/finance_summary.html:123
-#: templates/pages/finance_summary.html:135
-#: templates/pages/finance_summary.html:155
+#: templates/pages/finance_summary.html:91
+#: templates/pages/finance_summary.html:124
+#: templates/pages/finance_summary.html:136
+#: templates/pages/finance_summary.html:156
 #: templates/pages/finance_year.html:20 templates/pages/finance_year.html:63
 #: templates/pages/finance_year.html:88
 msgid "No financial months."
 msgstr "Немає фінансових місяців."
 
 #: templates/pages/finance_executive.html:71
-#: templates/pages/finance_summary.html:130 templates/pages/finance_year.html:8
+#: templates/pages/finance_summary.html:131 templates/pages/finance_year.html:8
 msgid "Yearly results"
 msgstr "Річні результати"
 
 #: templates/pages/finance_month_detail.html:8
-#: templates/pages/finance_summary.html:88 templates/pages/finance_year.html:86
+#: templates/pages/finance_summary.html:89 templates/pages/finance_year.html:86
 msgid "Locked"
 msgstr "Заблоковано"
 
@@ -6035,7 +6047,7 @@ msgid "Save & recalculate"
 msgstr "Зберегти та перерахувати"
 
 #: templates/pages/finance_month_detail.html:60
-#: templates/pages/finance_summary.html:97 templates/pages/finance_year.html:69
+#: templates/pages/finance_summary.html:98 templates/pages/finance_year.html:69
 msgid "Group breakdown"
 msgstr "Розподіл за групами"
 
@@ -6044,23 +6056,75 @@ msgid "By group"
 msgstr "За групою"
 
 #: templates/pages/finance_month_detail.html:66
-#: templates/pages/finance_summary.html:102
+#: templates/pages/finance_summary.html:103
 msgid "Net result by finance group chart"
 msgstr "Графік чистого результату за фінансовою групою"
 
-#: templates/pages/finance_summary.html:15
+#: templates/pages/finance_project_year.html:10
+#: templates/pages/finance_workbook.html:10
+msgid "Back to finance"
+msgstr "Назад до фінансів"
+
+#: templates/pages/finance_project_year.html:14
+#, python-format
+msgid ""
+"Twelve months for one project, summed from the months already recorded. "
+"Office: %(office)s."
+msgstr ""
+"Дванадцять місяців для одного проєкту, підсумовані за вже записаними "
+"місяцями. Офіс: %(office)s."
+
+#: templates/pages/finance_project_year.html:22
+#: templates/pages/finance_workbook.html:22 templates/pages/ledger.html:34
+#: templates/panels/advances_ledger.html:28
+#: templates/panels/blacklist_case.html:10
+#: templates/panels/blacklist_case.html:33
+#: templates/partials/ledger_activity.html:26
+msgid "Category"
+msgstr "Категорія"
+
+#: templates/pages/finance_project_year.html:38
+#: templates/pages/finance_workbook.html:40
+msgid "Total costs"
+msgstr "Загальні витрати"
+
+#: templates/pages/finance_project_year.html:43
+#: templates/pages/finance_workbook.html:52
+msgid "Total revenues"
+msgstr "Загальні доходи"
+
+#: templates/pages/finance_project_year.html:48
+#: templates/pages/finance_workbook.html:57
+#: templates/pages/finance_workbook.html:73
+msgid "Profit/loss"
+msgstr "Прибуток/збиток"
+
+#: templates/pages/finance_project_year.html:56
+msgid ""
+"A month with no recorded figures shows as a dash rather than zero — an "
+"unrecorded month and a month that genuinely netted nothing are different "
+"facts."
+msgstr ""
+"Місяць без записаних даних показано рискою, а не нулем — місяць без запису "
+"та місяць із фактичним нульовим чистим результатом означають різні речі."
+
+#: templates/pages/finance_summary.html:10
+msgid "Workbook view"
+msgstr "Подання робочої книги"
+
+#: templates/pages/finance_summary.html:16
 msgid "Record a financial month"
 msgstr "Записати фінансовий місяць"
 
-#: templates/pages/finance_summary.html:16
+#: templates/pages/finance_summary.html:17
 msgid "Manual entry"
 msgstr "Ручне введення"
 
-#: templates/pages/finance_summary.html:17
+#: templates/pages/finance_summary.html:18
 msgid "Record a month"
 msgstr "Записати місяць"
 
-#: templates/pages/finance_summary.html:18
+#: templates/pages/finance_summary.html:19
 msgid ""
 "Every figure here is typed by hand — nothing is pulled from elsewhere in the "
 "system. Create the month, then open it to enter each category; the totals "
@@ -6070,41 +6134,79 @@ msgstr ""
 "системи. Створіть місяць, потім відкрийте його та введіть кожну категорію; "
 "єдине, що обчислюється за вас, — це підсумки."
 
-#: templates/pages/finance_summary.html:38
+#: templates/pages/finance_summary.html:39
 msgid "Record month"
 msgstr "Записати місяць"
 
-#: templates/pages/finance_summary.html:52 templates/pages/finance_year.html:34
+#: templates/pages/finance_summary.html:53 templates/pages/finance_year.html:34
 msgid "Monthly trend"
 msgstr "Місячна тенденція"
 
-#: templates/pages/finance_summary.html:55
+#: templates/pages/finance_summary.html:56
 msgid "Revenue, cost, and net by month"
 msgstr "Дохід, витрати та чистий результат за місяцями"
 
-#: templates/pages/finance_summary.html:60 templates/pages/finance_year.html:42
+#: templates/pages/finance_summary.html:61 templates/pages/finance_year.html:42
 msgid "Monthly revenue, cost, and net trend chart"
 msgstr "Графік місячної тенденції доходу, витрат і чистого результату"
 
-#: templates/pages/finance_summary.html:85 templates/pages/finance_year.html:33
+#: templates/pages/finance_summary.html:86 templates/pages/finance_year.html:33
 #: templates/pages/finance_year.html:82
 msgid "Financial months"
 msgstr "Фінансові місяці"
 
-#: templates/pages/finance_summary.html:109
+#: templates/pages/finance_summary.html:110
 #: templates/pages/finance_year.html:75
 msgid "No line items yet."
 msgstr "Позицій поки немає."
 
-#: templates/pages/finance_summary.html:118
+#: templates/pages/finance_summary.html:119
 #: templates/pages/finance_year.html:50
 msgid "Per-project results"
 msgstr "Результати за проєктами"
 
-#: templates/pages/finance_summary.html:142
+#: templates/pages/finance_summary.html:143
 #: templates/pages/finance_year.html:14
 msgid "Office roll-up"
 msgstr "Зведення за офісами"
+
+#: templates/pages/finance_workbook.html:4
+#: templates/pages/finance_workbook.html:9
+msgid "Workbook"
+msgstr "Робоча книга"
+
+#: templates/pages/finance_workbook.html:14
+msgid ""
+"Projects across, categories down — the layout of the source workbook. Costs "
+"are shown negative; every total is recomputed from the line items rather "
+"than carried over."
+msgstr ""
+"Проєкти розташовані по горизонталі, категорії — по вертикалі, як у вихідній "
+"робочій книзі. Витрати показано від’ємними; кожен підсумок повторно "
+"обчислюється з позицій, а не переноситься."
+
+#: templates/pages/finance_workbook.html:32
+#: templates/pages/finance_workbook.html:71
+msgid "Costs"
+msgstr "Витрати"
+
+#: templates/pages/finance_workbook.html:44
+#: templates/pages/finance_workbook.html:72
+msgid "Revenues"
+msgstr "Доходи"
+
+#: templates/pages/finance_workbook.html:66
+msgid "By office"
+msgstr "За офісами"
+
+#: templates/pages/finance_workbook.html:85
+msgid "No projects in scope for this period."
+msgstr "За цей період немає проєктів у межах доступу."
+
+#: templates/pages/finance_workbook.html:90
+#: templates/partials/ledger_activity.html:14
+msgid "Total"
+msgstr "Разом"
 
 #: templates/pages/finance_year.html:37
 #, python-format
@@ -6215,13 +6317,6 @@ msgstr "Компанія / проєкт"
 #: templates/pages/ledger.html:30 templates/panels/advances_ledger.html:24
 msgid "Entry type"
 msgstr "Тип запису"
-
-#: templates/pages/ledger.html:34 templates/panels/advances_ledger.html:28
-#: templates/panels/blacklist_case.html:10
-#: templates/panels/blacklist_case.html:33
-#: templates/partials/ledger_activity.html:26
-msgid "Category"
-msgstr "Категорія"
 
 #: templates/pages/ledger.html:38 templates/panels/advances_ledger.html:32
 msgid "Amount (EUR)"
@@ -7426,10 +7521,6 @@ msgstr "Компанія"
 #: templates/partials/ledger_activity.html:26
 msgid "Amount"
 msgstr "Сума"
-
-#: templates/partials/ledger_activity.html:14
-msgid "Total"
-msgstr "Разом"
 
 #: templates/partials/ledger_activity.html:17
 #: templates/partials/ledger_cycle.html:23
