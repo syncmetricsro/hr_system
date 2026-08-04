@@ -36,6 +36,7 @@ from features.advances.models import EntryType, LedgerCategory  # noqa: E402
 from features.advances.services import (  # noqa: E402
     LedgerError,
     cycle_for,
+    cycle_is_settled,
     include_cycle,
     record_entry,
 )
@@ -208,6 +209,53 @@ def test_backdating_into_a_settled_cycle_is_refused(person, manager):
             actor=manager,
             entry_date=dt.date(2026, 7, 12),
         )
+
+
+def test_todays_work_is_never_blocked_by_a_settled_cycle(person, manager):
+    """The regression that reached staging: the guard refused anything landing
+    in a settled cycle, including entries dated **today**.
+
+    Equipment charges arrive through `equipment_charge_to_ledger` with no date
+    at all, so they default to today - and once the current cycle had been
+    marked settled, issuing chargeable equipment stopped working entirely. The
+    office keeps operating regardless of where the bookkeeping has got to.
+    """
+    from django.utils import timezone
+
+    today = timezone.localdate()
+    # Settle the cycle that today falls into.
+    record_entry(
+        person,
+        entry_type=EntryType.PAY_DEDUCTION,
+        category=LedgerCategory.CASH_ADVANCE,
+        amount="100",
+        actor=manager,
+        entry_date=today,
+    )
+    year, month = cycle_for(today)
+    include_cycle(year, month, actor=manager)
+    assert cycle_is_settled(today)
+
+    # No date at all - the equipment-charge path.
+    undated = record_entry(
+        person,
+        entry_type=EntryType.PAY_DEDUCTION,
+        category=LedgerCategory.EQUIPMENT,
+        amount="20",
+        actor=manager,
+    )
+    assert undated.entry_date == today
+
+    # And an explicit date of today, which is what the ledger form posts.
+    dated = record_entry(
+        person,
+        entry_type=EntryType.PAY_DEDUCTION,
+        category=LedgerCategory.EQUIPMENT,
+        amount="30",
+        actor=manager,
+        entry_date=today,
+    )
+    assert dated.entry_date == today
 
 
 def test_an_open_cycle_still_accepts_a_backdated_entry(person, manager):
