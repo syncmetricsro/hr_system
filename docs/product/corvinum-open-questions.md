@@ -44,9 +44,36 @@ post-advance convention. Under the pre-advance convention the worker is shown a
 figure larger than they received, with no mention of the advance anywhere on the
 document — the deduction lives only on the internal ledger.
 
-Once answered, either the label or the entry rule needs to change, and the
-question of whether the PDF should itemise deductions at all (see C-Q6 on the
-payroll-calculation boundary) can be settled with it.
+Once answered, either the label or the entry rule needs to change.
+
+**C-Q21 — should the payslip PDF itemise what was deducted?** Today it prints
+four lines: worker, period, `Net amount paid`, and an optional note. A worker
+who had 200 EUR taken as an advance and 50 EUR for equipment sees neither on
+the document they receive; both live only on the internal ledger and on the
+office-facing pay overview.
+
+**Not built, and deliberately so — it needs written client confirmation first.**
+The blockers are not technical; the data has joined since 2026-08-04 and the PDF
+writer is four lines of `build_encrypted_pdf`. They are:
+
+1. **C-Q20 must be answered first.** If the entered net is already
+   post-advance, itemising the advance again reads as a second deduction and
+   understates the pay by that amount to the person least able to challenge it.
+2. **After deductions is not net pay**, and a PDF cannot carry the caption that
+   makes that clear on the internal screen. A worker forwards the document; the
+   explanation does not travel with it. Printing `1800.00` beside `1540.00`
+   with no statutory line invites exactly the dispute the office wants to avoid.
+3. **It moves the C-Q6 payroll boundary.** A document that shows gross, minus
+   deductions, arriving at a figure that is not the paid figure, is a partial
+   payroll calculation whatever the labels say.
+
+The shape to propose, if confirmed: gross, the itemised deductions the office
+recorded, a subtotal, then the recorded net as a **separately stated** figure,
+with one line saying the remaining difference is applied by payroll and not
+calculated by this system. That answers "what was taken off me" without the
+document claiming to derive net pay.
+
+Get the answer in writing, like C-Q6. This is a document about someone's pay.
 
 ## Answered by observation
 
