@@ -308,11 +308,19 @@ def test_corvinum_wage_and_payslip_sources_are_aligned_and_responsive(page):
     page.get_by_role("link", name="Eszter Varga").first.click()
     overview = page.locator("[data-testid='person-finance-overview']")
     expect(overview).to_be_visible()
-    expect(overview.locator("thead th")).to_have_count(3)
+    # Five columns since 2026-08-04: month, gross, ledger deductions, after
+    # deductions, net payslip. Was three before the deduction column and its
+    # derived total landed (ADR-less change, C-Q17 narrowed).
+    expect(overview.locator("thead th")).to_have_count(5)
+    expect(overview).to_contain_text("Zrážky z knihy")
+    expect(overview).to_contain_text("Po zrážkach")
     expect(overview).to_contain_text("2050,00")
     expect(overview).to_contain_text("1540,00")
     expect(overview).to_contain_text("1920,00")
     expect(overview).to_contain_text("1450,00")
+    # The derived column must never be labelled as calculated net pay: the seed
+    # records no ledger entries, so "after deductions" here simply repeats the
+    # gross figure, and the payslip stays a separate recorded value.
     assert "Vypočítaná čistá mzda" not in overview.inner_text()
 
     layout = page.evaluate("""
