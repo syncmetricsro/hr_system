@@ -1,7 +1,8 @@
-"""Importing Jober's real HV workbook.
+"""Importing the structural edge cases observed in Jober's HV workbook.
 
-These run against `docs/examples/HV 202510.xlsx` itself rather than a fixture,
-because the things worth testing are the ways that specific file misbehaves:
+The supplied `docs/examples/HV 202510.xlsx` is private and intentionally
+gitignored.  A standard-library-generated workbook reproduces the facts the
+importer must handle without putting client data into Git:
 
 * two of its nine projects have **no name anywhere in the sheet** (columns B and
   J carry a headcount in the header row), so the importer must refuse to guess;
@@ -10,14 +11,12 @@ because the things worth testing are the ways that specific file misbehaves:
 * its cached totals disagree with its own cells in two columns, and `B3` puts a
   headcount inside the summed cost block.
 
-A fixture reproducing all that would just be the file with extra steps.
 """
 
 from __future__ import annotations
 
 from decimal import Decimal
 from io import StringIO
-from pathlib import Path
 
 import pytest
 from django.apps import apps as django_apps
@@ -38,10 +37,10 @@ from features.profitability.models import (  # noqa: E402
     FinancialMonth,
 )
 from features.profitability.workbook import WorkbookError, read_sheet  # noqa: E402
+from tests.hv_workbook_fixture import build_hv_test_workbook  # noqa: E402
 
 pytestmark = [pytest.mark.django_db, pytest.mark.jober_only]
 
-WORKBOOK = Path("docs/examples/HV 202510.xlsx")
 PERIOD = "2025-11"
 
 # Column -> (project code, office). Columns B and J are named from
@@ -83,9 +82,14 @@ def projects():
     return made
 
 
-def _import(*extra, **kwargs):
+@pytest.fixture
+def workbook(tmp_path):
+    return build_hv_test_workbook(tmp_path / "hv-test-workbook.xlsx")
+
+
+def _import(workbook, *extra, **kwargs):
     out = StringIO()
-    args = [str(WORKBOOK), "--period", PERIOD]
+    args = [str(workbook), "--period", PERIOD]
     for column, code, _office in COLUMNS:
         args += ["--map", f"{column}={code}"]
     args += ["--ignore", "G", *extra]
@@ -96,13 +100,15 @@ def _import(*extra, **kwargs):
 # --- refusing to guess -----------------------------------------------------
 
 
-def test_it_refuses_when_a_populated_column_has_no_mapping(catalogue, projects):
+def test_it_refuses_when_a_populated_column_has_no_mapping(
+    workbook, catalogue, projects
+):
     """Columns B and J are unnamed in the sheet. Importing them by position
     would file a month against the wrong project and look entirely normal."""
     with pytest.raises(CommandError) as excinfo:
         call_command(
             "import_hv_workbook",
-            str(WORKBOOK),
+            str(workbook),
             "--period",
             PERIOD,
             "--map",
@@ -117,10 +123,10 @@ def test_it_refuses_when_a_populated_column_has_no_mapping(catalogue, projects):
     assert FinanceLineItem.objects.count() == 0
 
 
-def test_a_non_project_column_must_be_ignored_explicitly(catalogue, projects):
+def test_a_non_project_column_must_be_ignored_explicitly(workbook, catalogue, projects):
     """`G` holds headcounts inside two category rows, so it reads as populated.
     Excluding it is a decision the operator states."""
-    args = [str(WORKBOOK), "--period", PERIOD]
+    args = [str(workbook), "--period", PERIOD]
     for column, code, _office in COLUMNS:
         args += ["--map", f"{column}={code}"]
 
@@ -130,15 +136,15 @@ def test_a_non_project_column_must_be_ignored_explicitly(catalogue, projects):
     assert "G" in str(excinfo.value)
 
 
-def test_a_column_cannot_be_both_mapped_and_ignored(catalogue, projects):
+def test_a_column_cannot_be_both_mapped_and_ignored(workbook, catalogue, projects):
     with pytest.raises(CommandError, match="both mapped and ignored"):
-        _import("--ignore", "C")
+        _import(workbook, "--ignore", "C")
 
 
-def test_an_unknown_project_code_is_refused(catalogue, projects):
+def test_an_unknown_project_code_is_refused(workbook, catalogue, projects):
     """Every column mapped, so this gets past the mapping check and fails on
     the code itself — otherwise the earlier guard masks what is being tested."""
-    args = [str(WORKBOOK), "--period", PERIOD]
+    args = [str(workbook), "--period", PERIOD]
     for column, code, _office in COLUMNS:
         args += ["--map", f"{column}={'NOPE' if column == 'C' else code}"]
     args += ["--ignore", "G"]
@@ -152,8 +158,8 @@ def test_an_unknown_project_code_is_refused(catalogue, projects):
 # --- reading the cells -----------------------------------------------------
 
 
-def test_it_imports_every_project_and_category(catalogue, projects):
-    _import()
+def test_it_imports_every_project_and_category(workbook, catalogue, projects):
+    _import(workbook)
 
     assert FinancialMonth.objects.count() == len(COLUMNS)
     minit = FinancialMonth.objects.get(project__code="MINIT", year=2025, month=11)
@@ -168,10 +174,10 @@ def test_it_imports_every_project_and_category(catalogue, projects):
     assert by_key["invoices"] == Decimal("14246.26")
 
 
-def test_damage_is_split_into_cost_and_recovered_revenue(catalogue, projects):
+def test_damage_is_split_into_cost_and_recovered_revenue(workbook, catalogue, projects):
     """`škoda` is a row in both blocks. Only the row number distinguishes them,
     so a label-only mapping would collapse two categories into one."""
-    _import()
+    _import(workbook)
 
     dhlba = FinancialMonth.objects.get(project__code="DHLBA", year=2025, month=11)
     by_key = {i.category.key: i for i in dhlba.line_items.select_related("category")}
@@ -182,18 +188,18 @@ def test_damage_is_split_into_cost_and_recovered_revenue(catalogue, projects):
     assert by_key["damage_recovered"].amount == Decimal("4550.00")
 
 
-def test_binary_float_noise_is_quantised(catalogue, projects):
+def test_binary_float_noise_is_quantised(workbook, catalogue, projects):
     """`B4` reads -18676.900000000001 in the file. Money does not."""
-    _import()
+    _import(workbook)
 
     rls = FinancialMonth.objects.get(project__code="RLS", year=2025, month=11)
     wage = rls.line_items.get(category__key="gross_wage")
     assert wage.amount == Decimal("18676.90")
 
 
-def test_totals_rows_are_never_imported_as_categories(catalogue, projects):
+def test_totals_rows_are_never_imported_as_categories(workbook, catalogue, projects):
     """`celkové náklady` and `celkové výnosy` are the workbook's own sums."""
-    _import()
+    _import(workbook)
 
     labels = set(
         FinanceLineItem.objects.values_list("category__label", flat=True).distinct()
@@ -204,11 +210,13 @@ def test_totals_rows_are_never_imported_as_categories(catalogue, projects):
 # --- reporting the workbook's own errors -----------------------------------
 
 
-def test_it_reports_where_the_workbook_disagrees_with_itself(catalogue, projects):
+def test_it_reports_where_the_workbook_disagrees_with_itself(
+    workbook, catalogue, projects
+):
     """The point of recomputing. Column C is the defect Jober_Finance_Specs §7
     records; column B is a second one the spec does not mention. Both are
     reported rather than silently corrected."""
-    output = _import()
+    output = _import(workbook)
 
     assert "column C: workbook costs total -15087.17" in output
     assert "its own cells sum to -15187.17" in output
@@ -216,10 +224,12 @@ def test_it_reports_where_the_workbook_disagrees_with_itself(catalogue, projects
     assert "Imported the cells." in output
 
 
-def test_the_stray_headcount_inside_the_cost_block_is_not_imported(catalogue, projects):
+def test_the_stray_headcount_inside_the_cost_block_is_not_imported(
+    workbook, catalogue, projects
+):
     """`B3` holds a headcount in the row the workbook's own SUM range starts at.
     Summing categories rather than a coordinate range excludes it."""
-    _import()
+    _import(workbook)
 
     rls = FinancialMonth.objects.get(project__code="RLS", year=2025, month=11)
     total = sum(
@@ -236,38 +246,38 @@ def test_the_stray_headcount_inside_the_cost_block_is_not_imported(catalogue, pr
 # --- operational behaviour -------------------------------------------------
 
 
-def test_dry_run_writes_nothing(catalogue, projects):
-    output = _import("--dry-run")
+def test_dry_run_writes_nothing(workbook, catalogue, projects):
+    output = _import(workbook, "--dry-run")
 
     assert "Would import" in output
     assert FinanceLineItem.objects.count() == 0
     assert FinancialMonth.objects.count() == 0
 
 
-def test_import_is_idempotent(catalogue, projects):
-    _import()
+def test_import_is_idempotent(workbook, catalogue, projects):
+    _import(workbook)
     first = FinanceLineItem.objects.count()
 
-    _import()
+    _import(workbook)
 
     assert FinanceLineItem.objects.count() == first
 
 
-def test_a_locked_month_is_refused(catalogue, projects):
-    _import()
+def test_a_locked_month_is_refused(workbook, catalogue, projects):
+    _import(workbook)
     month = FinancialMonth.objects.get(project__code="MINIT")
     month.is_locked = True
     month.save(update_fields=["is_locked"])
 
     with pytest.raises(CommandError, match="locked"):
-        _import()
+        _import(workbook)
 
 
-def test_a_bad_period_is_rejected(catalogue, projects):
+def test_a_bad_period_is_rejected(workbook, catalogue, projects):
     with pytest.raises(CommandError, match="YYYY-MM"):
         call_command(
             "import_hv_workbook",
-            str(WORKBOOK),
+            str(workbook),
             "--period",
             "November",
             "--map",
@@ -297,8 +307,8 @@ def test_a_non_workbook_file_fails_cleanly(tmp_path, catalogue, projects):
 # --- the reader itself -----------------------------------------------------
 
 
-def test_the_reader_returns_values_and_formulas():
-    cells = read_sheet(WORKBOOK)
+def test_the_reader_returns_values_and_formulas(workbook):
+    cells = read_sheet(workbook)
 
     assert cells[("A", 3)].text == "NAKLADY"
     assert cells[("C", 4)].number == Decimal("-7351.03")
@@ -316,7 +326,7 @@ def test_the_reader_rejects_a_non_zip():
 
 
 def test_the_csv_carries_the_spec_columns(
-    client, django_user_model, catalogue, projects
+    workbook, client, django_user_model, catalogue, projects
 ):
     """Jober_Finance_Specs §8 names the columns. `category_key` and
     `project_name` matter most: a bookkeeper reads names, anything downstream
@@ -325,7 +335,7 @@ def test_the_csv_carries_the_spec_columns(
     import csv
     from django.urls import reverse
 
-    _import()
+    _import(workbook)
     manager = django_user_model.objects.create_user(
         email="csv-mgr@demo.jober.test", password="x", role="manager"
     )

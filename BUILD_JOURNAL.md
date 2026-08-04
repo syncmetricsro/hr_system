@@ -147,6 +147,13 @@ has 1556 active / 1556 translated / 0 fuzzy entries, the committed MO files
 pass the read-only synchronization check, and a second extraction was
 byte-identical.
 
+CI then exposed a local-only test dependency: all importer tests read the
+gitignored client workbook, so a clean checkout had no fixture and 16 tests
+failed before exercising the importer. The private file remains excluded. A
+small standard-library OOXML builder now recreates only the structural facts
+the tests need — unnamed and non-project columns, duplicate damage labels,
+float noise, a short formula and stale totals — with no client data in Git.
+
 ## 2026-08-03 - The Secure Document Vault gets an architecture
 
 Asked to capture a decision to exclude government IDs, birth certificates and

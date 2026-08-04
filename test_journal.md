@@ -67,12 +67,12 @@
 - **31 new tests**: 13 for the two grids, 18 for the importer, reader and CSV.
   All `jober_only` — profitability is OFF for CorvinumEU and its routes stay
   unmounted, which the corvinum lane proves by still passing.
-- The importer tests run against **`docs/examples/HV 202510.xlsx` itself**, not
-  a fixture. The things worth testing are the ways that specific file
-  misbehaves, and a fixture reproducing them would be the file with extra steps.
-  They assert the refusal to guess an unmapped column, the `škoda` split into
-  cost and recovered revenue by row position, quantising `-18676.900000000001`,
-  and that both cached-total disagreements are reported verbatim.
+- The importer tests use a deterministic workbook generated with the standard
+  library. The client's `docs/examples/HV 202510.xlsx` remains gitignored, so
+  CI cannot and must not depend on it. The generated archive reproduces the
+  observed unnamed and non-project columns, `škoda` in both sign blocks,
+  `-18676.900000000001`, the short formula and both stale cached totals without
+  carrying client data in Git.
 - Two failures were mine and both are recorded because they are the interesting
   part:
   - **The shared-database run caught a real bug.** Cells were assigned via a
