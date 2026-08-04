@@ -8,13 +8,21 @@ import pytest
 from django.apps import apps as django_apps
 
 if not django_apps.is_installed("features.profitability"):
-    pytest.skip("features.profitability is not installed for this client", allow_module_level=True)
+    pytest.skip(
+        "features.profitability is not installed for this client",
+        allow_module_level=True,
+    )
 
 
 from django.urls import reverse
 
 from core.offices.models import Office
-from features.profitability.models import FinanceCategory, FinanceCategoryKind, FinanceGroup, FinancialMonth
+from features.profitability.models import (
+    FinanceCategory,
+    FinanceCategoryKind,
+    FinanceGroup,
+    FinancialMonth,
+)
 from features.profitability.services import record_financial_month, set_line_item
 from core.projects.models import Project
 
@@ -24,7 +32,8 @@ pytestmark = pytest.mark.django_db
 def extract_json_script(html: str, element_id: str) -> dict:
     match = re.search(
         rf'<script id="{re.escape(element_id)}" type="application/json">(.*?)</script>',
-        html, re.DOTALL,
+        html,
+        re.DOTALL,
     )
     assert match, f"json_script #{element_id} not found in response"
     return json.loads(match.group(1))
@@ -45,7 +54,9 @@ def setup(django_user_model):
         label="Gross wage", kind=FinanceCategoryKind.COST, group=FinanceGroup.LABOUR
     )
     invoice = FinanceCategory.objects.create(
-        label="Client invoices", kind=FinanceCategoryKind.REVENUE, group=FinanceGroup.REVENUE
+        label="Client invoices",
+        kind=FinanceCategoryKind.REVENUE,
+        group=FinanceGroup.REVENUE,
     )
     set_line_item(month1, wage, "12000", actor=actor)
     set_line_item(month1, invoice, "18000", actor=actor)
@@ -68,7 +79,9 @@ def test_finance_summary_renders_expected_canvases_and_trend_data(client, setup)
     assert Decimal(trend["net"][0]) == Decimal("8000")
 
     gauge = extract_json_script(body, "chart-data-finance-summary-gauge")
-    assert Decimal(gauge["margin_pct"]) == (Decimal("8000") / Decimal("27000") * 100).quantize(Decimal("0.1"))
+    assert Decimal(gauge["margin_pct"]) == (
+        Decimal("8000") / Decimal("27000") * 100
+    ).quantize(Decimal("0.1"))
 
     group = extract_json_script(body, "chart-data-finance-summary-group")
     assert "labels" in group and "net" in group

@@ -22,7 +22,8 @@ if not django_apps.is_installed("features.profitability"):
     # level would raise during *collection* and take the whole lane down, not
     # just skip this file - which is exactly what it did the first time.
     pytest.skip(
-        "features.profitability is not installed for this client", allow_module_level=True
+        "features.profitability is not installed for this client",
+        allow_module_level=True,
     )
 
 from features.profitability.management.commands.seed_finance import (

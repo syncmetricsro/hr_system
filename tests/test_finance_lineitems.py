@@ -4,7 +4,10 @@ import pytest
 from django.apps import apps as django_apps
 
 if not django_apps.is_installed("features.profitability"):
-    pytest.skip("features.profitability is not installed for this client", allow_module_level=True)
+    pytest.skip(
+        "features.profitability is not installed for this client",
+        allow_module_level=True,
+    )
 
 
 from decimal import Decimal
@@ -51,7 +54,9 @@ def setup(django_user_model):
         label="Fuel", kind=FinanceCategoryKind.COST, group=FinanceGroup.TRANSPORT
     )
     invoice = FinanceCategory.objects.create(
-        label="Client invoices", kind=FinanceCategoryKind.REVENUE, group=FinanceGroup.REVENUE
+        label="Client invoices",
+        kind=FinanceCategoryKind.REVENUE,
+        group=FinanceGroup.REVENUE,
     )
     return actor, month, wage, fuel, invoice
 
@@ -102,10 +107,14 @@ def test_locked_month_blocks_edits(setup):
 def test_group_breakdown_nets_revenue_minus_cost(setup):
     actor, month, wage, fuel, invoice = setup
     accom_cost = FinanceCategory.objects.create(
-        label="Accommodation", kind=FinanceCategoryKind.COST, group=FinanceGroup.ACCOMMODATION
+        label="Accommodation",
+        kind=FinanceCategoryKind.COST,
+        group=FinanceGroup.ACCOMMODATION,
     )
     accom_rev = FinanceCategory.objects.create(
-        label="Accommodation charged", kind=FinanceCategoryKind.REVENUE, group=FinanceGroup.ACCOMMODATION
+        label="Accommodation charged",
+        kind=FinanceCategoryKind.REVENUE,
+        group=FinanceGroup.ACCOMMODATION,
     )
     set_line_item(month, accom_cost, "1000", actor=actor)
     set_line_item(month, accom_rev, "1500", actor=actor)
@@ -186,7 +195,9 @@ def test_lock_view_blocks_save(client, setup):
         {f"cat_{wage.pk}": "999"},
     )
     assert resp.status_code == 302
-    assert not month.line_items.filter(category=wage).exists()  # locked: nothing written
+    assert not month.line_items.filter(
+        category=wage
+    ).exists()  # locked: nothing written
 
 
 def test_project_and_yearly_totals(setup):

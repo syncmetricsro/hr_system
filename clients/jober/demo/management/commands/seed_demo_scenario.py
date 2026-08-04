@@ -13,7 +13,11 @@ from core.offices.models import Office
 from features.blacklist.models import BlacklistCategory
 from features.blacklist.services import decide_case, propose_case
 from features.compliance.models import Certificate, CertificateCategory
-from features.profitability.models import FinanceCategory, FinanceCategoryKind, FinancialMonth
+from features.profitability.models import (
+    FinanceCategory,
+    FinanceCategoryKind,
+    FinancialMonth,
+)
 from features.profitability.services import recompute_month, set_line_item
 from features.logistics.models import EquipmentItem
 from core.ui.registry import flag_enabled

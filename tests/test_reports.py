@@ -19,6 +19,7 @@ def make_user(django_user_model):
         return django_user_model.objects.create_user(
             email=f"{role}@demo.jober.test", password="x", role=role
         )
+
     return _make
 
 
@@ -30,12 +31,14 @@ def test_reports_requires_login(client):
 
 def test_reports_shows_counts(client, make_user):
     Project.objects.create(name="DHL", code="DHLBA")
-    Person.objects.create(first_name="A", last_name="B", lifecycle_status=LifecycleStatus.AVAILABLE)
+    Person.objects.create(
+        first_name="A", last_name="B", lifecycle_status=LifecycleStatus.AVAILABLE
+    )
     client.force_login(make_user("manager"))
     with translation.override("sk"):
         body = client.get(reverse("reports")).content.decode("utf-8")
-    assert "Reporty" in body                    # heading (sk)
-    assert "Ľudia podľa stavu" in body          # people-by-status section
+    assert "Reporty" in body  # heading (sk)
+    assert "Ľudia podľa stavu" in body  # people-by-status section
     assert 'href="/sk/projects/?status=active"' in body
     assert 'href="/sk/people/?status=available"' in body
 
@@ -89,7 +92,9 @@ def test_finance_section_not_shown_to_observer_either(client, make_user):
     assert "Celkový súčet firmy" not in body
 
 
-def test_projects_and_personnel_section_shows_headcount_and_names(client, make_user, settings):
+def test_projects_and_personnel_section_shows_headcount_and_names(
+    client, make_user, settings
+):
     project = Project.objects.create(name="DHL", code="DHLBA", is_active=True)
     empty_project = Project.objects.create(name="WEBASTO", code="WEB", is_active=True)
     person = Person.objects.create(first_name="Olha", last_name="Kovalenko")
@@ -99,7 +104,8 @@ def test_projects_and_personnel_section_shows_headcount_and_names(client, make_u
     # used above in test_reports_use_action_oriented_structured_tooltips.
     language = "en" if "en" in dict(settings.LANGUAGES) else "sk"
     expected_heading = {
-        "en": "Projects and assigned personnel", "sk": "Projekty a pridelení pracovníci",
+        "en": "Projects and assigned personnel",
+        "sk": "Projekty a pridelení pracovníci",
     }[language]
     with translation.override(language):
         body = client.get(reverse("reports")).content.decode("utf-8")
@@ -110,7 +116,8 @@ def test_projects_and_personnel_section_shows_headcount_and_names(client, make_u
 
     match = re.search(
         r'<script id="chart-data-reports-projects" type="application/json">(.*?)</script>',
-        body, re.DOTALL,
+        body,
+        re.DOTALL,
     )
     assert match
     payload = json.loads(match.group(1))

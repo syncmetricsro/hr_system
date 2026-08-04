@@ -5,7 +5,8 @@ from django.apps import apps as django_apps
 
 if not django_apps.is_installed("features.profitability"):
     pytest.skip(
-        "features.profitability is not installed for this client", allow_module_level=True
+        "features.profitability is not installed for this client",
+        allow_module_level=True,
     )
 
 
