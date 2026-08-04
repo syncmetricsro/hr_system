@@ -133,3 +133,61 @@ def test_the_decision_modifier_is_only_on_cards_that_act(page):
         for index in range(cards.count()):
             classes = cards.nth(index).get_attribute("class") or ""
             assert "field-card-decision" not in classes, f"{path} card {index}"
+
+
+def test_the_worker_rail_reserves_no_gutter_on_a_phone(page):
+    """The rail's 20rem gutter must not apply where the rail floats.
+
+    Reported from a phone: the ledger's heading wrapped one character per line.
+    The cause was not the ledger at all - `.cv-main` had `padding-right: 320px`
+    on a 375px viewport, leaving a 39px content box, so every block on every
+    page collapsed to min-content.
+
+    It survived a `@media (max-width: 1100px)` override because `:has()` carries
+    the specificity of its argument and media queries add none, so
+    `:has(.worker-rail:not([data-collapsed="true"]))` kept winning. It only
+    appears while the rail is **expanded**, which is why it never showed up in a
+    test that left it collapsed - so this expands it first.
+    """
+    _login_manager(page)
+    page.set_viewport_size({"width": 375, "height": 812})
+    page.goto(f"{base_url()}/sk/ledger/")
+    page.wait_for_load_state("networkidle")
+
+    rail = page.locator(".worker-rail")
+    if not rail.count():
+        return  # rail not mounted for this client/role; nothing to reserve
+    if rail.get_attribute("data-collapsed") == "true":
+        page.locator(".worker-rail-toggle").click()
+        page.wait_for_timeout(150)
+    assert page.locator(".worker-rail").get_attribute("data-collapsed") != "true"
+
+    layout = page.evaluate("""
+      () => {
+        const main = document.querySelector('.cv-main');
+        const head = document.querySelector('.page-head');
+        return {
+          paddingLeft: getComputedStyle(main).paddingLeft,
+          paddingRight: getComputedStyle(main).paddingRight,
+          contentWidth: Math.round(main.clientWidth
+            - parseFloat(getComputedStyle(main).paddingLeft)
+            - parseFloat(getComputedStyle(main).paddingRight)),
+          headWidth: head ? Math.round(head.getBoundingClientRect().width) : null,
+        };
+      }
+    """)
+
+    # Not zero — the shell keeps its ordinary gutter. The point is that the
+    # rail's 20rem is not *added* to it, so the two sides stay symmetric.
+    assert layout["paddingRight"] == layout["paddingLeft"], (
+        f"rail gutter still reserved: {layout}"
+    )
+    # 39px before the fix. Anything near the viewport width means the page is
+    # usable; the exact number moves with the shell's own padding.
+    assert layout["contentWidth"] > 300, (
+        f"content box is {layout['contentWidth']}px: {layout}"
+    )
+    if layout["headWidth"] is not None:
+        assert layout["headWidth"] > 300, (
+            f"page head is {layout['headWidth']}px: {layout}"
+        )

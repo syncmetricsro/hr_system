@@ -2184,16 +2184,21 @@ select {
    overlay on a centred, max-width layout covers content and swallows clicks,
    which is worse than not having a rail. Both shells centre their content
    (.app-shell here, .cv-main for CorvinumEU), so both get the same reserved
-   gutter while the rail is expanded, and it is released when collapsed. */
-body:has(.worker-rail:not([data-collapsed="true"])) .app-shell,
-body:has(.worker-rail:not([data-collapsed="true"])) .cv-main {
-  padding-right: 20rem;
-}
+   gutter while the rail is expanded, and it is released when collapsed.
 
-@media (max-width: 1100px) {
-  body:has(.worker-rail) .app-shell,
-  body:has(.worker-rail) .cv-main {
-    padding-right: 0;
+   Scoped to wide screens with `min-width`, rather than reserved everywhere and
+   released again below 1100px. That released it on paper only: `:has()` carries
+   the specificity of its argument, so `:has(.worker-rail:not([data-collapsed]))`
+   outscores `:has(.worker-rail)`, and a media query adds no specificity of its
+   own - so the 20rem gutter survived on a phone. Measured at 375px: 320px of
+   padding-right, a 39px content box, and every block on the page collapsed to
+   min-content. Below this width the rail is a floating panel pinned to the
+   bottom-right corner, so there is nothing beside the content to reserve room
+   for. */
+@media (min-width: 1101px) {
+  body:has(.worker-rail:not([data-collapsed="true"])) .app-shell,
+  body:has(.worker-rail:not([data-collapsed="true"])) .cv-main {
+    padding-right: 20rem;
   }
 }
 /* Persistent worker status rail (J8). Pinned right, below the notification

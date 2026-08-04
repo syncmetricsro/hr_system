@@ -1,5 +1,43 @@
 # Build Journal
 
+## 2026-08-04 - The worker rail was reserving 320px on a phone
+
+The reported mobile symptom - a ledger heading wrapping one character per line -
+turned out to have nothing to do with the ledger, or with the card layout fixed
+earlier today. Four rounds of measurement from the reporter's own browser found
+`.cv-main` computing **`padding: 24px 320px 48px 16px`** at a 375px viewport: a
+39px content box, so every block on every page collapsed to min-content.
+
+The 320px is the worker status rail's reserved gutter. It *was* released below
+1100px, on paper:
+
+```css
+body:has(.worker-rail:not([data-collapsed="true"])) .cv-main { padding-right: 20rem; }
+@media (max-width: 1100px) { body:has(.worker-rail) .cv-main { padding-right: 0; } }
+```
+
+`:has()` carries the specificity of its argument, and a media query adds none of
+its own, so `:has(.worker-rail:not([data-collapsed="true"]))` outscores
+`:has(.worker-rail)` and the gutter survived the override. The rule now sits
+inside `@media (min-width: 1101px)` instead, which removes the specificity
+contest rather than trying to win it - and matches the intent, since below that
+width the rail is a floating panel in the bottom-right corner with nothing
+beside it to make room for.
+
+**It only appears while the rail is expanded**, which is why nothing caught it:
+the rail ships collapsed, every existing responsive test left it collapsed, and
+the reporter had opened it. The new test expands it first, and was confirmed to
+fail without the fix with the reporter's exact numbers - `padding-right: 320px`,
+content box 39px - and to pass with it at 16px and 343px.
+
+Worth recording as a pattern, because this is the third instance today: a test
+that never puts the UI in the state the bug needs will pass forever. The other
+two were the activation queue measured on a page with no cards, and the ledger
+measured as a role that cannot see the entry form.
+
+Jober 1076, CorvinumEU 658, browser 68.
+
+
 ## 2026-08-04 - Decision cards stop squeezing their own form
 
 Reported with two screenshots of CorvinumEU's activation queue: a reason input
