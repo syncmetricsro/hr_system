@@ -21,7 +21,9 @@
     {% if certificate.back_document %}
       <p class="eyebrow"><a href="{% url 'certificate_back_document' certificate.pk %}" target="_blank" rel="noopener">{% trans "Current back" %}</a></p>
     {% endif %}
-    <button class="button button-primary" type="submit">{% if renewing %}{% trans "Save renewal" %}{% else %}{% trans "Save certificate" %}{% endif %}</button>
+    {# Revealed by the double-submit guard while the POST is in flight. Files can take a while and a silent wait reads as a page that ignored the click. #}
+    <p data-busy-region role="status">{% trans "Uploading the certificate — this can take a moment. Do not close or reload this page." %}</p>
+    <button class="button button-primary" type="submit" data-busy-label="{% trans 'Uploading…' %}">{% if renewing %}{% trans "Save renewal" %}{% else %}{% trans "Save certificate" %}{% endif %}</button>
   </form>
 </section>
 {% endblock %}

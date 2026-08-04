@@ -343,3 +343,74 @@ window.JoberShell = {
 
   apply();
 })();
+
+/* Double-submit guard (2026-08-04).
+
+   Reported against certificate upload: the file POST is slow enough to press
+   the button twice, and `Certificate` carries no uniqueness constraint, so the
+   second press genuinely creates a second row. Applies to every POST form
+   rather than that one page, because the ledger entry, payslip and wage forms
+   all create rows the same way and are exposed to the same double-click.
+
+   Deliberately narrow about what it touches:
+   * GET forms are search and filter controls - re-submitting one is harmless.
+   * htmx owns its own submissions, so anything with hx-post/hx-get is skipped.
+   * a submission another listener already prevented (the confirm dialog) is
+     left alone; the real submit arrives later and is guarded then. */
+(function () {
+  var BUSY = "data-busy";
+
+  function submitButtons(form) {
+    return form.querySelectorAll(
+      "button[type='submit'], input[type='submit'], button:not([type])"
+    );
+  }
+
+  document.addEventListener("submit", function (event) {
+    if (event.defaultPrevented) return;
+
+    var form = event.target;
+    if (!form || form.tagName !== "FORM") return;
+    if ((form.getAttribute("method") || "get").toLowerCase() !== "post") return;
+    if (form.hasAttribute("hx-post") || form.hasAttribute("hx-get")) return;
+    if (form.hasAttribute("data-no-busy")) return;
+
+    if (form.getAttribute(BUSY) === "true") {
+      // Already in flight. Swallow the repeat rather than let it through.
+      event.preventDefault();
+      return;
+    }
+    form.setAttribute(BUSY, "true");
+    form.setAttribute("aria-busy", "true");
+
+    var buttons = submitButtons(form);
+    var submitter = event.submitter;
+
+    /* The submitter's own name/value is dropped from the request once it is
+       disabled - which would post an approval with no `decision=approve` in
+       it - so carry it as a hidden input first. */
+    if (submitter && submitter.name) {
+      var carried = document.createElement("input");
+      carried.type = "hidden";
+      carried.name = submitter.name;
+      carried.value = submitter.value;
+      form.appendChild(carried);
+    }
+
+    /* Applied synchronously, not on a timer: once the form starts navigating
+       the browser may never run a queued timeout, which is exactly the window
+       the second press lands in. */
+    for (var i = 0; i < buttons.length; i += 1) {
+      var button = buttons[i];
+      if (button === submitter || buttons.length === 1) {
+        button.classList.add("is-busy");
+        var busyLabel = button.getAttribute("data-busy-label");
+        if (busyLabel) {
+          button.setAttribute("data-idle-label", button.textContent.trim());
+          button.textContent = busyLabel;
+        }
+      }
+      button.disabled = true;
+    }
+  });
+})();

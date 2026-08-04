@@ -1,5 +1,39 @@
 # Test Journal
 
+## 2026-08-04 - four attempts before the upload test measured anything
+
+The double-submit regression test took four rewrites, and each failure is worth
+keeping because each was a different way for a browser test to look right and
+assert nothing.
+
+1. **Two clicks, no interference.** Passed with *and* without the fix: on a
+   local stack the first click navigates before a second can land, so the window
+   the bug needs never existed.
+2. **`time.sleep` in a sync route handler** to widen that window. It blocks
+   Playwright's own thread, so no assertion can run while it waits.
+3. **`route.abort()`** to stop the navigation. Chromium replaces the page with a
+   network-error page, so the form was gone before anything could be asserted
+   about it - `document.querySelector('main form.stack')` returned null.
+4. **`route.fulfill(status=204)`**, which keeps the page exactly where it is.
+
+Only then did the test measure the actual thing: **how many create requests the
+interface allows**. Without the guard, 2. With it, 1. That number is the bug, so
+that number is the assertion.
+
+- Also corrected during this: the helper clicked through the person page to
+  reach the form, which stops being reliable once earlier tests have added
+  certificates. It now reads the person id and navigates straight to the add
+  URL.
+- The button-state test asserts `to_be_disabled` and the notice visible, both
+  scoped inside the form, because the person page it would otherwise land on
+  carries four more `form.stack` panels and the locator silently re-resolves.
+- Suites: **Jober 1076 / CorvinumEU 658 / browser 70**. The guard touches every
+  POST form, so the full browser suite mattered here more than usual - the
+  confirm-dialog flow in particular re-submits through `requestSubmit`, and a
+  guard that engaged on the first, prevented submit would have blocked every
+  confirmed action in the product.
+
+
 ## 2026-08-04 - measuring a layout bug instead of eyeballing it
 
 - **`tests/e2e/test_zz_card_layout.py` is new (2 tests)**, and the first thing

@@ -2306,3 +2306,77 @@ select {
   font-size: 0.8125rem;
   line-height: 1.4;
 }
+
+/* --------------------------------------------------- busy forms (2026-08-04)
+
+   A slow POST - a certificate upload with two images especially - used to look
+   identical to a page that had ignored the click, so people pressed again and
+   created a second record. The button now says what it is doing and stops
+   accepting presses; `[data-busy-region]` is the louder version for uploads,
+   where the wait is long enough to need more than a spinner. */
+@keyframes button-spin {
+  to { transform: rotate(360deg); }
+}
+
+.button.is-busy {
+  position: relative;
+  color: transparent;
+}
+
+.button.is-busy::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 1.1em;
+  height: 1.1em;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: button-spin 700ms linear infinite;
+  /* The label is transparent, not removed, so the button keeps its width and
+     the form does not jump while it works. */
+  color: var(--on-accent, #fff);
+}
+
+.button.button-secondary.is-busy::after {
+  color: var(--text, currentColor);
+}
+
+.button:disabled {
+  cursor: progress;
+  opacity: 0.85;
+}
+
+[data-busy-region] {
+  display: none;
+}
+
+form[aria-busy="true"] [data-busy-region] {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  background: var(--panel);
+  font-weight: 600;
+}
+
+[data-busy-region]::before {
+  content: "";
+  flex: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 3px solid var(--accent);
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: button-spin 700ms linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button.is-busy::after,
+  [data-busy-region]::before {
+    animation-duration: 2.4s;
+  }
+}
