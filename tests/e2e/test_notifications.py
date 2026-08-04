@@ -26,7 +26,14 @@ def test_jober_notification_center_opens_links_dismisses_and_does_not_poll(page)
     center.wait_for()
 
     notification_requests = []
-    page.on("request", lambda request: notification_requests.append(request.url) if "/notifications/" in request.url else None)
+    page.on(
+        "request",
+        lambda request: (
+            notification_requests.append(request.url)
+            if "/notifications/" in request.url
+            else None
+        ),
+    )
     page.wait_for_timeout(1500)
     assert notification_requests == []
 
@@ -44,9 +51,11 @@ def test_jober_notification_center_opens_links_dismisses_and_does_not_poll(page)
     center.locator(".notification-toggle").click()
     popover = center.locator(".notification-popover")
     popover.wait_for(state="visible")
-    first_item = popover.locator(".notification-item").filter(
-        has=page.locator("input[name='key'][value^='trial-outcome:']")
-    ).first
+    first_item = (
+        popover.locator(".notification-item")
+        .filter(has=page.locator("input[name='key'][value^='trial-outcome:']"))
+        .first
+    )
     assert first_item.locator("a.notification-link").get_attribute("href")
 
     # Manual refresh preserves a still-current notification.
@@ -56,21 +65,29 @@ def test_jober_notification_center_opens_links_dismisses_and_does_not_poll(page)
     center.locator(".notification-toggle").click()
     popover = center.locator(".notification-popover")
     popover.wait_for(state="visible")
-    first_item = popover.locator(".notification-item").filter(
-        has=page.locator("input[name='key'][value^='trial-outcome:']")
-    ).first
+    first_item = (
+        popover.locator(".notification-item")
+        .filter(has=page.locator("input[name='key'][value^='trial-outcome:']"))
+        .first
+    )
 
     key = first_item.locator("input[name='key']").get_attribute("value")
-    with page.expect_response(lambda response: "/notifications/dismiss/" in response.url):
+    with page.expect_response(
+        lambda response: "/notifications/dismiss/" in response.url
+    ):
         first_item.locator("button[type='submit']").click()
-    page.locator(f'#notification-center input[name="key"][value="{key}"]').wait_for(state="detached")
+    page.locator(f'#notification-center input[name="key"][value="{key}"]').wait_for(
+        state="detached"
+    )
 
 
 def test_jober_notification_center_fits_phone_viewport(page):
     page.set_viewport_size({"width": 375, "height": 667})
     _login_manager(page)
     page.locator("#notification-center .notification-toggle").click()
-    box = page.locator("#notification-center .notification-popover").bounding_box()
+    popover = page.locator("#notification-center .notification-popover")
+    popover.wait_for(state="visible")
+    box = popover.bounding_box()
     assert box is not None
     assert box["x"] >= 0
     assert box["x"] + box["width"] <= 375

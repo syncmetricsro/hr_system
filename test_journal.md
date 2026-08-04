@@ -96,6 +96,11 @@
   green under both settings modules; **1061 passed / 15 skipped** in Jober,
   **631 passed / 23 skipped / 261 deselected** in CorvinumEU, and **65 passed**
   in Playwright.
+- A later GitHub rerun exposed a notification test race: the mobile test read
+  the popover geometry immediately after clicking, while the two adjacent
+  notification scenarios already waited for Alpine to make it visible. The
+  same explicit visible-state wait now guards the mobile assertion; its focused
+  container run passed.
 
 ## 2026-08-03 - button clearance sweep
 
