@@ -30,6 +30,24 @@ Sources: design doc §5.10/§12.6/§13, Addendum A1.
 Update this file (and the design doc's §16 back-and-forth notes) as answers
 arrive — the pattern that worked for Jober's Q1–Q5.
 
+## Raised 2026-08-04, ask at the demo
+
+**C-Q20 — when the office enters a net payslip figure, is it before or after an
+advance already handed over in cash?** `Payslip.net_amount` is stored and
+printed exactly as typed; the system never computes it and never checks it
+against the gross wage or the ledger. Both conventions therefore produce an
+identical payslip, and only the office knows which one it used.
+
+It matters for the worker-facing document: the PDF prints **"Net amount paid"**,
+which reads as *what reached your account*. That label is correct only under the
+post-advance convention. Under the pre-advance convention the worker is shown a
+figure larger than they received, with no mention of the advance anywhere on the
+document — the deduction lives only on the internal ledger.
+
+Once answered, either the label or the entry rule needs to change, and the
+question of whether the PDF should itemise deductions at all (see C-Q6 on the
+payroll-calculation boundary) can be settled with it.
+
 ## Answered by observation
 
 **How many administrators does an office actually have? — at least sometimes,

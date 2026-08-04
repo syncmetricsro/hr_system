@@ -440,13 +440,26 @@ Eszter's seeded figures, to check before you start:
    row is untouched, which shows the entry date really did place the money in
    July.
 5. **Now name the remaining gap, before the client does.** After deductions is
-   `1800.00` and the recorded payslip is `1540.00`. The `260.00` difference is
-   statutory — tax and levies — and the application does not calculate it. The
-   product shows what the office controls and stops there.
+   `1800.00` and the recorded payslip is `1540.00`. Say that the difference is
+   **whatever payroll applied, and that this system does not calculate it** —
+   the product shows what the office controls and stops there.
+
+   Do **not** attribute the difference to tax and levies, or to any other
+   specific cause. Both figures here are fictional fixtures entered by hand and
+   the `260.00` is arbitrary; naming a cause invites "why exactly 260?", which
+   has no answer. The honest sentence is about what the system does, not about
+   what the number means.
 6. If asked to close that gap: it needs the client's statutory rules and the
    deferred wage workbook (`radonak.xlsx`), and it is a payroll-calculation
    scope decision (C-Q6, C-Q17), not a switch to flip. Do not promise it.
-7. Mention the guard if the client asks about corrections: once a cycle is
+7. **Ask the client which convention they enter.** The net figure is stored and
+   printed exactly as typed — the system never computes or checks it — so
+   whether an advance already handed over in cash is *inside* that number is
+   the office's habit, not a product rule. It matters: the PDF the worker
+   receives is labelled **Net amount paid**, which reads as *what reached your
+   account*, and that label is only correct if they enter the post-advance
+   figure. Record the answer against C-Q17.
+8. Mention the guard if the client asks about corrections: once a cycle is
    included, an entry can no longer be backdated into it — the system refuses
    and says which cycle. Corrections after that are reversals, which keep the
    original visible. Show it by trying to add an entry dated inside a settled
