@@ -1,5 +1,28 @@
 # Test Journal
 
+## 2026-08-05 - reversing two tests that asserted the wrong thing
+
+- **Six new tests in `tests/test_pay_deductions.py`** for carry-forward, led by
+  the reported case: an advance dated 25 July, the August run already gone out,
+  and September collecting it. Also the catch-up across ages, `open_balance`
+  falling to zero once a run has collected, a closed run refusing to absorb
+  later entries, and an unrun cycle forecasting what it will take.
+- **Two existing tests were reversed, and both had been mine, written the day
+  before.** `test_deductions_are_grouped_by_calendar_month_not_by_cycle` and
+  `test_backdating_into_a_settled_cycle_is_refused` each faithfully asserted
+  behaviour that turned out to be wrong. A green test is only as good as the
+  decision behind it; both now carry the reasoning for the reversal in their
+  docstrings rather than being quietly rewritten.
+- `cycle_is_settled` was left called only from a test after the refusal came
+  out - production code alive because a test imported it. Split into a
+  `cycle_key_is_settled(year, month)` primitive that both it and
+  `settling_cycle_key` use, instead of the helper duplicating the query inline.
+- Verified against staging before shipping rather than only in tests: forecast
+  what the first carry-forward run would collect there. Four entries, all pay
+  additions from yesterday's Sztornó testing.
+- Suites: **Jober 1076 / CorvinumEU 665 / browser 70**.
+
+
 ## 2026-08-04 - four attempts before the upload test measured anything
 
 The double-submit regression test took four rewrites, and each failure is worth

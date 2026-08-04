@@ -13,7 +13,7 @@ import datetime as dt
 from decimal import Decimal
 
 from django.db import transaction
-from django.db.models import Sum
+from django.db.models import Q, Sum
 from django.utils import timezone
 from django.utils.translation import gettext as _
 
@@ -64,30 +64,7 @@ def record_entry(
         _("%(t)s entries carry pay effect %(e)s (or none).")
         % {"t": entry_type, "e": expected},
     )
-    today = timezone.localdate()
-    on = entry_date or today
-    # Only an *explicitly backdated* entry is refused, and only into a settled
-    # cycle. The first version refused anything whose date landed in a settled
-    # cycle, which blocked ordinary present-day work the moment the current
-    # cycle was marked settled: equipment charges reach this through
-    # `equipment_charge_to_ledger` with no date at all, so issuing chargeable
-    # equipment stopped entirely. The business keeps operating regardless of
-    # where the bookkeeping has got to, so an entry for *now* is always
-    # accepted; it stays OPEN and the next `include_cycle` over that window
-    # picks it up.
-    #
-    # A reversal is exempt too: it is the sanctioned way to correct a settled
-    # cycle (C-Q5), and refusing it would leave no correction path at all.
-    backdated = entry_date is not None and entry_date < today
-    _require(
-        reversal_of is not None or not backdated or not cycle_is_settled(on),
-        _(
-            "The %(key)s cycle is already settled, so this entry cannot be "
-            "backdated into it. Record it with today's date, or reverse an "
-            "existing entry instead."
-        )
-        % {"key": cycle_key(*cycle_for(on))},
-    )
+    on = entry_date or timezone.localdate()
     entry = LedgerEntry.objects.create(
         person=person,
         project=project,
@@ -218,15 +195,8 @@ def cycle_for(day: dt.date) -> tuple[int, int]:
     return (day.year + 1, 1) if day.month == 12 else (day.year, day.month + 1)
 
 
-def cycle_is_settled(day: dt.date) -> bool:
-    """Has the cycle containing ``day`` already been closed?
-
-    Matters because ``include_cycle`` sweeps a window *once*. An entry
-    backdated into a window that has already been swept is created OPEN and no
-    later sweep covers it — the windows are disjoint — so it would sit in the
-    ledger forever, in a period whose payroll has already gone out.
-    """
-    year, month = cycle_for(day)
+def cycle_key_is_settled(year: int, month: int) -> bool:
+    """Has this run already been closed - included in a cycle, or paid out?"""
     return LedgerEntry.objects.filter(
         cycle_key=cycle_key(year, month),
         settlement_status__in=(
@@ -236,12 +206,59 @@ def cycle_is_settled(day: dt.date) -> bool:
     ).exists()
 
 
+def cycle_is_settled(day: dt.date) -> bool:
+    """Has the run covering ``day`` already been closed?
+
+    Used to work out which run will collect a still-open entry, not to refuse
+    anything: an entry landing in a closed window is carried forward (ADR 0032).
+    """
+    return cycle_key_is_settled(*cycle_for(day))
+
+
+def settling_cycle_key(entry) -> str:
+    """The run that collects this entry: the one it went into, or the next one.
+
+    An entry already assigned to a cycle reports under that cycle for ever —
+    that is history. A still-open entry reports under the next run that has not
+    been closed yet, which under carry-forward is the run that will actually
+    take it (ADR 0032). Walking forward matters: an advance dated 25 July whose
+    August run has already gone out is collected in September, and saying "July"
+    would describe a payslip that has already been paid.
+    """
+    if entry.cycle_key:
+        return entry.cycle_key
+    year, month = cycle_for(entry.entry_date)
+    # Bounded so an odd data state cannot spin. Two years is far past anything
+    # an office would leave outstanding.
+    for _attempt in range(24):
+        if not cycle_key_is_settled(year, month):
+            break
+        year, month = (year + 1, 1) if month == 12 else (year, month + 1)
+    return cycle_key(year, month)
+
+
 def cycle_report(year: int, month: int):
-    """Per-person net payroll effect for the cycle (ADD − DEDUCT, both from
-    positive magnitudes), plus the raw entries."""
+    """Per-person net payroll effect for one run (ADD − DEDUCT), plus its entries.
+
+    What a run *did* and what a run *will do* are different questions, and this
+    answers whichever applies:
+
+    * entries already carrying this cycle key are what the run collected — a
+      closed cycle keeps reporting exactly that, however the rules change later;
+    * while the cycle has not been run yet, every still-open entry dated on or
+      before its cutoff is added, because that is what it is about to collect
+      (ADR 0032) — including strays carried forward from earlier windows.
+    """
     start, end = cycle_bounds(year, month)
+    key = cycle_key(year, month)
+    collected = Q(cycle_key=key)
+    if not LedgerEntry.objects.filter(cycle_key=key).exists():
+        # Not run yet: show what it would take with it.
+        collected = collected | Q(
+            settlement_status=SettlementStatus.OPEN, entry_date__lte=end
+        )
     entries = (
-        LedgerEntry.objects.filter(entry_date__gte=start, entry_date__lte=end)
+        LedgerEntry.objects.filter(collected)
         .exclude(settlement_status=SettlementStatus.CANCELLED)
         .select_related("person", "project")
         .order_by("person__last_name", "entry_date")
@@ -268,12 +285,20 @@ def cycle_report(year: int, month: int):
 
 @transaction.atomic
 def include_cycle(year: int, month: int, *, actor=None) -> int:
-    """Assign every open entry of the cycle window to the cycle and lock it
-    (OPEN → INCLUDED_IN_CYCLE)."""
-    start, end = cycle_bounds(year, month)
+    """Lock everything this run recovers into the cycle (OPEN -> INCLUDED).
+
+    **Everything outstanding at the cutoff, not only this window's own dates.**
+    The windows are disjoint, so when the sweep was bounded at both ends an
+    entry that missed its run — dated earlier, or recorded after that window
+    closed — was never picked up by any later run and stayed OPEN for ever. The
+    money was reported as owed by `open_balance` and then never collected
+    (ADR 0032).
+
+    A payroll run recovers what is outstanding when it runs. That is the rule.
+    """
+    _start, end = cycle_bounds(year, month)
     entries = LedgerEntry.objects.select_for_update().filter(
         settlement_status=SettlementStatus.OPEN,
-        entry_date__gte=start,
         entry_date__lte=end,
     )
     count = 0

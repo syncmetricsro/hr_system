@@ -3448,7 +3448,7 @@ msgstr "запис у книзі"
 msgid "ledger entries"
 msgstr "записи в книзі"
 
-#: features/advances/providers.py:47
+#: features/advances/providers.py:50
 msgid "Ledger deductions"
 msgstr "Утримання книги"
 
@@ -3461,30 +3461,23 @@ msgstr "Сума має бути додатною — зміст визнача�
 msgid "%(t)s entries carry pay effect %(e)s (or none)."
 msgstr "Записи типу %(t)s мають вплив на зарплату %(e)s (або жодного)."
 
-#: features/advances/services.py:85
-#, python-format
-msgid ""
-"The %(key)s cycle is already settled, so this entry cannot be backdated into "
-"it. Record it with today's date, or reverse an existing entry instead."
-msgstr "Цикл %(key)s уже врегульовано, тож цей запис не можна датувати заднім числом у нього. Внесіть його сьогоднішньою датою або натомість сторнуйте наявний запис."
-
-#: features/advances/services.py:118
+#: features/advances/services.py:95
 msgid "Only open entries can be cancelled; settled entries need a reversal."
 msgstr "Скасувати можна лише відкриті записи; погашені потребують сторно."
 
-#: features/advances/services.py:136
+#: features/advances/services.py:113
 msgid "Open entries are cancelled, not reversed."
 msgstr "Відкриті записи скасовуються, а не сторнуються."
 
-#: features/advances/services.py:137
+#: features/advances/services.py:114
 msgid "Entry is already reversed."
 msgstr "Запис уже сторновано."
 
-#: features/advances/services.py:144
+#: features/advances/services.py:121
 msgid "Entries without payroll effect cannot be reversed."
 msgstr "Записи без впливу на зарплату не можна сторнувати."
 
-#: features/advances/services.py:324
+#: features/advances/services.py:349
 msgid "Entry is locked after cycle inclusion; record a reversal instead."
 msgstr "Після включення в цикл запис заблоковано; внесіть сторно."
 
@@ -5901,7 +5894,9 @@ msgstr "Поточний зворотний бік"
 msgid ""
 "Uploading the certificate — this can take a moment. Do not close or reload "
 "this page."
-msgstr "Триває завантаження сертифіката — це може зайняти хвилину. Не закривайте і не перезавантажуйте цю сторінку."
+msgstr ""
+"Триває завантаження сертифіката — це може зайняти хвилину. Не закривайте і "
+"не перезавантажуйте цю сторінку."
 
 #: templates/pages/certificate_form.html:26
 msgid "Uploading…"
@@ -8015,17 +8010,14 @@ msgstr "Огляд зарплати та розрахункового листа
 
 #: templates/partials/person_finance_overview.html:6
 msgid ""
-"One row per calendar month. Gross wage and the recorded net payslip are "
-"source values someone entered; After deductions is gross minus this office's "
-"own ledger entries, and nothing else. It is not net pay — no tax or levy is "
-"calculated here, which is why the payslip stays its own column to compare "
-"against."
-msgstr ""
-"Один рядок на календарний місяць. Валова зарплата та записаний чистий "
-"розрахунковий листок — це вихідні значення, які хтось вніс; Після утримань — "
-"це валова сума мінус власні записи цього офісу в книзі, і нічого більше. Це "
-"не чиста зарплата — тут не обчислюються жодні податки чи внески, і саме тому "
-"листок залишається окремим стовпцем для порівняння."
+"One row per payroll run. Ledger deductions are what that run recovers, which "
+"is not always the month the money changed hands: an advance handed over "
+"after the 20th is recovered from the next run. Gross wage and the recorded "
+"net payslip are source values someone entered; After deductions is gross "
+"minus this office's own ledger entries, and nothing else. It is not net pay "
+"— no tax or levy is calculated here, which is why the payslip stays its own "
+"column to compare against."
+msgstr "Один рядок на один розрахунок зарплати. Утримання книги — це те, що стягує цей розрахунок, і це не завжди місяць, коли гроші змінили власника: аванс, виданий після 20-го, стягується вже наступним розрахунком. Валова зарплата та записаний чистий розрахунковий листок — це вихідні значення, які хтось вніс; Після утримань — це валова сума мінус власні записи цього офісу в книзі, і нічого більше. Це не чиста зарплата — тут не обчислюються жодні податки чи внески, і саме тому листок залишається окремим стовпцем для порівняння."
 
 #: templates/partials/person_finance_overview.html:8
 msgid ""
@@ -8070,6 +8062,29 @@ msgstr "Показано %(rail_limit)s останніх оновлених."
 #: templates/partials/worker_rail_body.html:34
 msgid "Open People"
 msgstr "Відкрити Люди"
+
+#, python-format
+#~ msgid ""
+#~ "The %(key)s cycle is already settled, so this entry cannot be backdated "
+#~ "into it. Record it with today's date, or reverse an existing entry "
+#~ "instead."
+#~ msgstr ""
+#~ "Цикл %(key)s уже врегульовано, тож цей запис не можна датувати заднім "
+#~ "числом у нього. Внесіть його сьогоднішньою датою або натомість сторнуйте "
+#~ "наявний запис."
+
+#~ msgid ""
+#~ "One row per calendar month. Gross wage and the recorded net payslip are "
+#~ "source values someone entered; After deductions is gross minus this "
+#~ "office's own ledger entries, and nothing else. It is not net pay — no tax "
+#~ "or levy is calculated here, which is why the payslip stays its own column "
+#~ "to compare against."
+#~ msgstr ""
+#~ "Один рядок на календарний місяць. Валова зарплата та записаний чистий "
+#~ "розрахунковий листок — це вихідні значення, які хтось вніс; Після "
+#~ "утримань — це валова сума мінус власні записи цього офісу в книзі, і "
+#~ "нічого більше. Це не чиста зарплата — тут не обчислюються жодні податки "
+#~ "чи внески, і саме тому листок залишається окремим стовпцем для порівняння."
 
 #, python-format
 #~ msgid ""
