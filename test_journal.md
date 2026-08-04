@@ -62,6 +62,35 @@
      extraction moved 122 dead-source entries into obsolete history rather than
      erasing 111 translations; the unsafe parts were fixture extraction and
      fuzzy guessing.
+## 2026-08-04 - profitability grids and the real workbook
+
+- **31 new tests**: 13 for the two grids, 18 for the importer, reader and CSV.
+  All `jober_only` — profitability is OFF for CorvinumEU and its routes stay
+  unmounted, which the corvinum lane proves by still passing.
+- The importer tests run against **`docs/examples/HV 202510.xlsx` itself**, not
+  a fixture. The things worth testing are the ways that specific file
+  misbehaves, and a fixture reproducing them would be the file with extra steps.
+  They assert the refusal to guess an unmapped column, the `škoda` split into
+  cost and recovered revenue by row position, quantising `-18676.900000000001`,
+  and that both cached-total disagreements are reported verbatim.
+- Two failures were mine and both are recorded because they are the interesting
+  part:
+  - **The shared-database run caught a real bug.** Cells were assigned via a
+    dict keyed by project id but indexed by month id. Those sequences coincide
+    on a fresh test database, so it passed in isolation and failed seven tests
+    in the full suite. The new test burns project ids first, so the mix-up now
+    fails every time instead of when the ids happen to diverge.
+  - **A CSV test asserted nothing while appearing to pass.** Its manager
+    belonged to no office, so `user_office_scope` returned an empty queryset,
+    the export was correctly empty, and every assertion about cost rows ran
+    over an empty list. Membership added.
+- The CSV test now checks that **every row is the same width including the
+  summaries** — the previous export had an 8-column header and 10-column
+  summary rows, which no assertion had ever looked at.
+- Full gate: ruff, ruff format and the dependency-direction tripwire clean;
+  `check` and `makemigrations --check` green under both settings modules;
+  **1040 passed / 15 skipped** in Jober, **614 passed / 23 skipped / 257
+  deselected** in CorvinumEU.
 
 ## 2026-08-03 - button clearance sweep
 

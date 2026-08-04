@@ -79,6 +79,65 @@ failed", "Skip the trial and start readiness" -> "Review the trial details and
 try again"). The changes were reverted and nine reviewed entries appended by
 hand: 1664/1664 translated in SK, HU and UK, zero fuzzy. Extraction safety
 belongs in its own slice.
+## 2026-08-04 - Profitability: the client's own workbook, three ways
+
+Jober accept the implementation when it looks and totals like `HV 202510.xlsx`.
+Reading that file before writing anything changed the job twice.
+
+**The rows already matched.** All 25 categories line up one-for-one with the
+sheet, because `Jober_Finance_Specs` §2 was derived from this workbook in July
+and `seed_finance` seeds from §2. Nothing to build there. The columns are
+projects, which is data.
+
+**Signed storage was cancelled after being approved.** The spec lists the
+storage convention as an open question (§10 q4) and it is not: the code answered
+it. `normalize_source_amount` already requires costs typed negative and rejects
+a positive cost, `signed_amount` already renders signed, the CSV already exports
+signed, and two test modules already lock both in. Migrating storage would have
+rewritten tested design and every staging row for no visible change. The spec
+was stale, not open.
+
+What was actually missing was layout, a year view, and a way in from the file.
+
+The module moved to `features/profitability`, the placement §2 names and the
+name the flag always used. The Django app *label* stays `finance` on purpose —
+letting it follow would rename every table and rewrite migration history on
+databases holding data, for something no reader sees. `makemigrations --check`
+reports no changes, which is the evidence. One reference no grep for the module
+path could catch: `config/urls.py` gated the whole finance block on
+`_feature_on("finance", …)`, which prefixes `features.` internally, so moving
+the module silently unmounted every route and took 174 tests with it.
+
+Two read surfaces now draw the workbook's shape — one period with projects
+across and offices subtotalled, and one project across twelve months. Both
+compute from the active category set rather than a coordinate range, which is
+not a stylistic preference: see below. Rows carry values pre-aligned to columns,
+because Django templates cannot index a dict by a variable key and a filter to
+do it would move grid arithmetic into the one place it cannot be tested.
+
+`import_hv_workbook` reads the `.xlsx` with `zipfile` and some XML, so no
+spreadsheet library enters the lockfile and AGENTS.md §3.1 never applies. It is
+a command, not an upload: the file is never stored and the document-storage
+boundary stays out of it. It refuses to guess which column is which project,
+because the file cannot say — columns B and J carry a headcount in the header
+row and no project name anywhere, and column G holds headcounts among the
+figures. Unmapped column, hard error.
+
+**Their workbook is wrong in three separate ways, and only one was known.**
+§7 recorded that Minit's `C24=SUM(C3:C22)` stops a row short. Parsing the file
+found the cached value matches *neither* the short sum nor the correct one, so
+that cell is stale as well as mis-ranged; that column B is wrong too and §7
+never mentioned it; and that `B3` holds a headcount inside the range its own
+`SUM` starts at. Two projects' profit has been reported incorrectly. The
+importer reports each disagreement and imports the cells — the discrepancy is
+the client's and they should see it. §7 is expanded and the demo runbook now
+tells the presenter how to raise it without it sounding like an accusation.
+
+One bug worth keeping. Grid cells were assigned through a dict keyed by project
+id but indexed by month id — separate sequences that coincide only on a freshly
+created database. It passed alone and failed seven tests in a shared run. Every
+figure would have landed in the wrong column. The added test burns project ids
+first so the mix-up fails deterministically rather than by luck.
 
 ## 2026-08-03 - The Secure Document Vault gets an architecture
 
