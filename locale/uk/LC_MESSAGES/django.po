@@ -310,15 +310,15 @@ msgstr "Недійсний код."
 msgid "Two-factor authentication enabled."
 msgstr "Двофакторну автентифікацію ввімкнено."
 
-#: core/accounts/views.py:161 core/people/views.py:354
+#: core/accounts/views.py:161 core/people/views.py:365
 msgid "No file was selected."
 msgstr "Файл не вибрано."
 
-#: core/accounts/views.py:176 core/people/views.py:369
+#: core/accounts/views.py:176 core/people/views.py:380
 msgid "Avatar updated."
 msgstr "Аватар оновлено."
 
-#: core/accounts/views.py:186 core/people/views.py:381
+#: core/accounts/views.py:186 core/people/views.py:392
 msgid "Avatar removed."
 msgstr "Аватар видалено."
 
@@ -663,7 +663,7 @@ msgid "Added to blacklist"
 msgstr "Додано до чорного списку"
 
 # --- exit / recycling ---
-#: core/audit/presentation.py:107 templates/pages/person_detail.html:237
+#: core/audit/presentation.py:107 templates/pages/person_detail.html:259
 msgid "Exit"
 msgstr "Вихід"
 
@@ -853,17 +853,17 @@ msgid "Do not send job offers by email"
 msgstr "Не надсилати пропозиції роботи електронною поштою"
 
 #: core/people/forms.py:43 features/intake/catalog_i18n.py:17
-#: templates/pages/person_detail.html:202
+#: templates/pages/person_detail.html:224
 msgid "Phone"
 msgstr "Телефон"
 
 #: core/people/forms.py:44 features/intake/catalog_i18n.py:19
-#: templates/pages/person_detail.html:203
+#: templates/pages/person_detail.html:225
 msgid "Address"
 msgstr "Адреса"
 
 #: core/people/forms.py:45 features/intake/catalog_i18n.py:20
-#: templates/pages/person_detail.html:204
+#: templates/pages/person_detail.html:226
 msgid "Nationality"
 msgstr "Громадянство"
 
@@ -872,12 +872,12 @@ msgid "Preferred language"
 msgstr "Бажана мова"
 
 #: core/people/forms.py:47 features/intake/catalog_i18n.py:15
-#: templates/pages/person_detail.html:216
+#: templates/pages/person_detail.html:238
 msgid "Date of birth"
 msgstr "Дата народження"
 
 #: core/people/forms.py:48 features/intake/catalog_i18n.py:16
-#: templates/pages/person_detail.html:217
+#: templates/pages/person_detail.html:239
 msgid "Place of birth"
 msgstr "Місце народження"
 
@@ -921,7 +921,7 @@ msgstr "Працює"
 #: templates/pages/accommodation_list.html:33
 #: templates/pages/equipment_catalog.html:19
 #: templates/pages/equipment_catalog.html:33
-#: templates/pages/person_detail.html:260 templates/pages/project_detail.html:8
+#: templates/pages/person_detail.html:282 templates/pages/project_detail.html:8
 #: templates/pages/project_list.html:23 templates/pages/project_list.html:39
 msgid "Inactive"
 msgstr "Неактивний"
@@ -1098,6 +1098,7 @@ msgstr "Редагувати особу"
 #: core/people/views.py:243 core/ui/help.py:272
 #: templates/pages/activation_queue.html:29
 #: templates/pages/person_detail.html:171
+#: templates/pages/person_detail.html:210
 msgid "Entry medical date"
 msgstr "Дата вхідного медогляду"
 
@@ -1105,11 +1106,11 @@ msgstr "Дата вхідного медогляду"
 msgid "Review this future date."
 msgstr "Перевірте цю майбутню дату."
 
-#: core/people/views.py:324
+#: core/people/views.py:335
 msgid "Person archived. Blacklist protection remains in place."
 msgstr "Особу архівовано. Захист чорного списку залишається чинним."
 
-#: core/people/views.py:338
+#: core/people/views.py:349
 msgid "Recycled to Available."
 msgstr "Повернено до доступних."
 
@@ -1434,40 +1435,49 @@ msgstr "затвердження активації"
 msgid "activation approvals"
 msgstr "затвердження активацій"
 
-#: core/projects/services.py:131
+#: core/projects/services.py:132
 msgid "Only pending trials can be edited."
 msgstr "Редагувати можна лише очікувані пробні дні."
 
-#: core/projects/services.py:133
+#: core/projects/services.py:134
 msgid "Trials can only be scheduled for active projects."
 msgstr "Пробні дні можна планувати лише для активних проєктів."
 
-#: core/projects/services.py:211
+#: core/projects/services.py:212
 msgid "Only an available person can be activated without a trial day."
 msgstr "Без пробного дня можна активувати лише доступну особу."
 
-#: core/projects/services.py:235 core/ui/help.py:244
+#: core/projects/services.py:233
+msgid "Entry medical date is invalid."
+msgstr "Дата вступного медогляду недійсна."
+
+#: core/projects/services.py:235
+msgid "Entry medical date cannot be in the future."
+msgstr "Дата вступного медогляду не може бути в майбутньому."
+
+#: core/projects/services.py:271 core/ui/help.py:244
 #: features/advances/models.py:38 features/profitability/catalog_i18n.py:20
 #: templates/pages/activation_queue.html:26
 #: templates/pages/person_detail.html:139
+#: templates/pages/person_detail.html:201
 msgid "Medical"
 msgstr "Медичне"
 
-#: core/projects/services.py:235
+#: core/projects/services.py:271
 msgid "Medical clearance is incomplete."
 msgstr "Медичний допуск не завершено."
 
-#: core/projects/services.py:236 core/ui/help.py:251
+#: core/projects/services.py:272 core/ui/help.py:251
 #: templates/pages/activation_queue.html:27
 #: templates/pages/person_detail.html:145
 msgid "Gear"
 msgstr "Спорядження"
 
-#: core/projects/services.py:236
+#: core/projects/services.py:272
 msgid "Required equipment is incomplete."
 msgstr "Необхідне спорядження не укомплектовано."
 
-#: core/projects/services.py:237 core/ui/help.py:258 core/ui/help.py:427
+#: core/projects/services.py:273 core/ui/help.py:258 core/ui/help.py:427
 #: features/profitability/catalog_i18n.py:18
 #: features/profitability/models.py:89 templates/layouts/base.html:43
 #: templates/pages/accommodation_costs.html:6
@@ -1481,108 +1491,112 @@ msgstr "Необхідне спорядження не укомплектова�
 msgid "Accommodation"
 msgstr "Проживання"
 
-#: core/projects/services.py:237
+#: core/projects/services.py:273
 msgid "Accommodation is incomplete."
 msgstr "Проживання не забезпечено."
 
-#: core/projects/services.py:238 core/ui/help.py:265
+#: core/projects/services.py:274 core/ui/help.py:265
 #: features/profitability/models.py:88 templates/layouts/base.html:45
 #: templates/pages/person_detail.html:161
 msgid "Transport"
 msgstr "Транспорт"
 
-#: core/projects/services.py:238
+#: core/projects/services.py:274
 msgid "Transport is incomplete."
 msgstr "Транспорт не забезпечено."
 
-#: core/projects/services.py:257
+#: core/projects/services.py:293
 msgid "A reason is required when this is not applicable."
 msgstr "Якщо це не застосовується, потрібно вказати причину."
 
-#: core/projects/services.py:310
-msgid "Entry medical date is invalid."
-msgstr "Дата вступного медогляду недійсна."
+#: core/projects/services.py:349
+msgid "Record the entry medical date before marking Medical complete."
+msgstr "Запишіть дату вхідного медогляду, перш ніж позначати Медичне як завершене."
 
-#: core/projects/services.py:312
-msgid "Entry medical date cannot be in the future."
-msgstr "Дата вступного медогляду не може бути в майбутньому."
-
-#: core/projects/services.py:334
+#: core/projects/services.py:371
 msgid ""
 "Cannot activate this worker because no readiness record has been completed."
 msgstr ""
 "Працівника неможливо активувати, оскільки запис готовності не заповнено."
 
-#: core/projects/services.py:340
+#: core/projects/services.py:377
 #, python-format
 msgid "Cannot activate this worker until: %(items)s"
 msgstr "Працівника неможливо активувати, доки не буде виконано: %(items)s"
 
-#: core/projects/services.py:360
+#: core/projects/services.py:397
 msgid "An activation request is already awaiting a decision."
 msgstr "Запит на активацію вже очікує рішення."
 
-#: core/projects/services.py:402
+#: core/projects/services.py:439
 msgid "Only a pending activation request can be decided."
 msgstr "Рішення можна ухвалити лише щодо запиту, який очікує на розгляд."
 
-#: core/projects/services.py:420
+#: core/projects/services.py:457
 msgid "A rejection must state a reason."
 msgstr "Відхилення має містити причину."
 
-#: core/projects/services.py:423
+#: core/projects/services.py:460
 msgid "Decision must be 'approve' or 'reject'."
 msgstr "Рішення має бути «затвердити» або «відхилити»."
 
-#: core/projects/views.py:215 core/projects/views.py:279
+#: core/projects/views.py:216 core/projects/views.py:280
 msgid "Trial scheduled."
 msgstr "Пробний день заплановано."
 
-#: core/projects/views.py:246
+#: core/projects/views.py:247
 msgid "Trial updated."
 msgstr "Пробний день оновлено."
 
-#: core/projects/views.py:271
+#: core/projects/views.py:272
 msgid "Review the trial details and try again."
 msgstr "Перевірте дані пробного дня та спробуйте ще раз."
 
-#: core/projects/views.py:295
+#: core/projects/views.py:296
 msgid "Trial outcome recorded."
 msgstr "Результат пробного дня записано."
 
-#: core/projects/views.py:325
+#: core/projects/views.py:326
 msgid "Readiness saved."
 msgstr "Готовність збережено."
 
-#: core/projects/views.py:347
+#: core/projects/views.py:348
 msgid "Trial day waived — complete readiness to activate."
 msgstr "Пробний день скасовано — для активації завершіть готовність."
 
-#: core/projects/views.py:372
+#: core/projects/views.py:369
+msgid "This worker has no active assignment to record a medical for."
+msgstr "У цього працівника немає активного призначення, до якого можна записати медогляд."
+
+#: core/projects/views.py:380
+msgid "Entry medical date recorded."
+msgstr "Дату вхідного медогляду записано."
+
+#: core/projects/views.py:404
 msgid "Exit completed."
 msgstr "Вихід завершено."
 
-#: core/projects/views.py:391
+#: core/projects/views.py:423
 msgid "Activation requested — a manager will decide."
 msgstr "Активацію запитано — рішення прийме менеджер."
 
-#: core/projects/views.py:428 features/blacklist/views.py:85
+#: core/projects/views.py:460 features/blacklist/views.py:85
 msgid "Decision recorded."
 msgstr "Рішення записано."
 
-#: core/projects/views.py:447
+#: core/projects/views.py:479
 msgid "Project created."
 msgstr "Проєкт створено."
 
-#: core/projects/views.py:466
+#: core/projects/views.py:498
 msgid "Project updated."
 msgstr "Проєкт оновлено."
 
-#: core/projects/views.py:484
+#: core/projects/views.py:516
 msgid "Project reactivated."
 msgstr "Проєкт знову активовано."
 
-#: core/projects/views.py:484
+#: core/projects/views.py:516
 msgid "Project deactivated."
 msgstr "Проєкт деактивовано."
 
@@ -2864,7 +2878,7 @@ msgstr "Елементи циклу включають, експортують �
 #: core/ui/help.py:706 core/ui/help.py:808 core/ui/help.py:889
 #: features/payslips/forms.py:22 templates/pages/ledger.html:21
 #: templates/pages/payslips.html:38 templates/pages/person_detail.html:38
-#: templates/pages/person_detail.html:289 templates/pages/wages.html:38
+#: templates/pages/person_detail.html:311 templates/pages/wages.html:38
 #: templates/partials/ledger_activity.html:8
 #: templates/partials/ledger_activity.html:26
 #: templates/partials/ledger_cycle.html:16
@@ -4286,7 +4300,7 @@ msgstr "Вартість для додатного коригування"
 #: templates/pages/blacklist_queue.html:28
 #: templates/pages/equipment_stock.html:52
 #: templates/pages/finance_month_detail.html:19
-#: templates/pages/person_detail.html:262
+#: templates/pages/person_detail.html:284
 #: templates/panels/blacklist_case.html:11
 #: templates/panels/blacklist_case.html:19
 #: templates/panels/blacklist_case.html:26
@@ -5628,7 +5642,7 @@ msgstr "Усі"
 
 #: templates/pages/accommodation_list.html:29
 #: templates/pages/compliance_list.html:14 templates/pages/people_list.html:41
-#: templates/pages/person_detail.html:200
+#: templates/pages/person_detail.html:222
 #: templates/pages/project_detail.html:31 templates/pages/project_list.html:31
 msgid "Details"
 msgstr "Деталі"
@@ -6646,14 +6660,14 @@ msgstr "Прийом"
 msgid "Step"
 msgstr "Крок"
 
-#: templates/pages/intake_panel.html:24 templates/pages/person_detail.html:207
-#: templates/pages/person_detail.html:220
+#: templates/pages/intake_panel.html:24 templates/pages/person_detail.html:229
+#: templates/pages/person_detail.html:242
 #: templates/pages/project_detail.html:47
 msgid "Yes"
 msgstr "Так"
 
-#: templates/pages/intake_panel.html:25 templates/pages/person_detail.html:207
-#: templates/pages/person_detail.html:220
+#: templates/pages/intake_panel.html:25 templates/pages/person_detail.html:229
+#: templates/pages/person_detail.html:242
 #: templates/pages/project_detail.html:47
 msgid "No"
 msgstr "Ні"
@@ -6937,7 +6951,7 @@ msgstr "Пошук за іменем"
 msgid "All statuses"
 msgstr "Усі статуси"
 
-#: templates/pages/people_list.html:27 templates/pages/person_detail.html:247
+#: templates/pages/people_list.html:27 templates/pages/person_detail.html:269
 msgid "Inactive reason"
 msgstr "Причина неактивності"
 
@@ -7077,36 +7091,64 @@ msgstr "Потрібні медичне та спорядження"
 msgid "Previous request rejected"
 msgstr "Попередній запит відхилено"
 
-#: templates/pages/person_detail.html:199
+#: templates/pages/person_detail.html:202
+msgid "Entry medical certificate"
+msgstr "Довідка про вхідний медогляд"
+
+#: templates/pages/person_detail.html:204
+msgid "Recorded"
+msgstr "Записано"
+
+#: templates/pages/person_detail.html:204
+msgid "record a new date when the certificate is renewed."
+msgstr "після оновлення довідки запишіть нову дату."
+
+#: templates/pages/person_detail.html:206
+msgid ""
+"No date on file. Compliance reports this worker as missing a medical until "
+"one is recorded."
+msgstr "Дата не внесена. Доки її не записано, розділ Відповідність показує цього працівника як без медогляду."
+
+#: templates/pages/person_detail.html:213
+msgid ""
+"Records the date on the certificate. It is what the annual expiry counts "
+"from, and what clears the compliance alert."
+msgstr "Записує дату, зазначену в довідці. Від неї відлічується річний термін дії, і саме вона знімає попередження про відповідність."
+
+#: templates/pages/person_detail.html:213
+msgid "Record medical date"
+msgstr "Записати дату медогляду"
+
+#: templates/pages/person_detail.html:221
 #: templates/pages/project_detail.html:30
 msgid "Operational"
 msgstr "Операційні"
 
-#: templates/pages/person_detail.html:205
+#: templates/pages/person_detail.html:227
 msgid "Current project"
 msgstr "Поточний проєкт"
 
-#: templates/pages/person_detail.html:206
+#: templates/pages/person_detail.html:228
 msgid "Owning recruiter"
 msgstr "Відповідальний рекрутер"
 
-#: templates/pages/person_detail.html:207
+#: templates/pages/person_detail.html:229
 msgid "Rehire eligible"
 msgstr "Можливість повторного найму"
 
-#: templates/pages/person_detail.html:212
+#: templates/pages/person_detail.html:234
 msgid "Restricted"
 msgstr "Обмежено"
 
-#: templates/pages/person_detail.html:213
+#: templates/pages/person_detail.html:235
 msgid "Personal data"
 msgstr "Особисті дані"
 
-#: templates/pages/person_detail.html:219
+#: templates/pages/person_detail.html:241
 msgid "Disability"
 msgstr "Інвалідність"
 
-#: templates/pages/person_detail.html:224
+#: templates/pages/person_detail.html:246
 msgid ""
 "Restricted — visible only to managers, observers, the owning recruiter, and "
 "the responsible coordinator."
@@ -7114,18 +7156,18 @@ msgstr ""
 "Обмежено — видно лише менеджерам, спостерігачам, відповідальному рекрутеру "
 "та відповідальному координатору."
 
-#: templates/pages/person_detail.html:238
+#: templates/pages/person_detail.html:260
 msgid "Exit & reconcile"
 msgstr "Вихід та звірка"
 
-#: templates/pages/person_detail.html:239
+#: templates/pages/person_detail.html:261
 msgid ""
 "Ends the project assignment, releases the room, and returns issued equipment."
 msgstr ""
 "Завершує призначення на проєкт, звільняє кімнату та повертає видане "
 "спорядження."
 
-#: templates/pages/person_detail.html:241
+#: templates/pages/person_detail.html:263
 msgid ""
 "This ends the active assignment, releases the room, returns issued "
 "equipment, and sets the person to Available."
@@ -7133,11 +7175,11 @@ msgstr ""
 "Завершує активне призначення, звільняє кімнату, повертає видане спорядження "
 "та переводить особу в статус Доступний."
 
-#: templates/pages/person_detail.html:243
+#: templates/pages/person_detail.html:265
 msgid "Exit to Available"
 msgstr "Вихід до Доступний"
 
-#: templates/pages/person_detail.html:245
+#: templates/pages/person_detail.html:267
 msgid ""
 "This ends the active assignment, releases the room, returns issued "
 "equipment, and sets the person to Inactive with the chosen reason."
@@ -7145,43 +7187,43 @@ msgstr ""
 "Завершує активне призначення, звільняє кімнату, повертає видане спорядження "
 "та переводить особу в статус Неактивний з обраною причиною."
 
-#: templates/pages/person_detail.html:248
+#: templates/pages/person_detail.html:270
 msgid "Reason…"
 msgstr "Причина…"
 
-#: templates/pages/person_detail.html:251
+#: templates/pages/person_detail.html:273
 msgid "Exit to Inactive"
 msgstr "Вихід до Неактивний"
 
-#: templates/pages/person_detail.html:259
+#: templates/pages/person_detail.html:281
 msgid "Lifecycle"
 msgstr "Життєвий цикл"
 
-#: templates/pages/person_detail.html:263
+#: templates/pages/person_detail.html:285
 msgid "Since"
 msgstr "З"
 
-#: templates/pages/person_detail.html:266
+#: templates/pages/person_detail.html:288
 msgid ""
 "This reactivates the person from Inactive, setting their status to Available."
 msgstr ""
 "Повторно активує особу зі статусу Неактивний і встановлює статус Доступний."
 
-#: templates/pages/person_detail.html:268
+#: templates/pages/person_detail.html:290
 msgid "Recycle to Available"
 msgstr "Повернути до доступних"
 
-#: templates/pages/person_detail.html:276
+#: templates/pages/person_detail.html:298
 #: templates/pages/transport_trends.html:42
 msgid "Records"
 msgstr "Записи"
 
-#: templates/pages/person_detail.html:277
-#: templates/pages/person_detail.html:282
+#: templates/pages/person_detail.html:299
+#: templates/pages/person_detail.html:304
 msgid "Archive person"
 msgstr "Архівувати особу"
 
-#: templates/pages/person_detail.html:278
+#: templates/pages/person_detail.html:300
 msgid ""
 "Hides this operational record from the People list. It is not a deletion and "
 "does not remove blacklist protection or audit history."
@@ -7189,7 +7231,7 @@ msgstr ""
 "Приховує цей робочий запис зі списку людей. Це не видалення й не скасовує "
 "захист чорного списку чи історію аудиту."
 
-#: templates/pages/person_detail.html:279
+#: templates/pages/person_detail.html:301
 msgid ""
 "This archives the person from the operational list. It does not delete their "
 "record, audit history, or blacklist protection."
@@ -7197,16 +7239,16 @@ msgstr ""
 "Це архівує особу з робочого списку. Її запис, історію аудиту та захист "
 "чорного списку не буде видалено."
 
-#: templates/pages/person_detail.html:281
+#: templates/pages/person_detail.html:303
 msgid "Archive reason"
 msgstr "Причина архівування"
 
 # --- person card: history + filter ---
-#: templates/pages/person_detail.html:290
+#: templates/pages/person_detail.html:312
 msgid "History"
 msgstr "Історія"
 
-#: templates/pages/person_detail.html:295
+#: templates/pages/person_detail.html:317
 msgid "No history yet."
 msgstr "Ще немає історії."
 
@@ -7859,6 +7901,11 @@ msgstr "Ви справді хочете це зробити?"
 msgid "Yes, proceed"
 msgstr "Так, продовжити"
 
+#: templates/partials/flash_messages.html:25
+#: templates/partials/flash_messages.html:26
+msgid "Dismiss this message"
+msgstr "Закрити це повідомлення"
+
 #: templates/partials/ledger_activity.html:3
 msgid "Thursday summary"
 msgstr "Четверговий підсумок"
@@ -8017,7 +8064,15 @@ msgid ""
 "minus this office's own ledger entries, and nothing else. It is not net pay "
 "— no tax or levy is calculated here, which is why the payslip stays its own "
 "column to compare against."
-msgstr "Один рядок на один розрахунок зарплати. Утримання книги — це те, що стягує цей розрахунок, і це не завжди місяць, коли гроші змінили власника: аванс, виданий після 20-го, стягується вже наступним розрахунком. Валова зарплата та записаний чистий розрахунковий листок — це вихідні значення, які хтось вніс; Після утримань — це валова сума мінус власні записи цього офісу в книзі, і нічого більше. Це не чиста зарплата — тут не обчислюються жодні податки чи внески, і саме тому листок залишається окремим стовпцем для порівняння."
+msgstr ""
+"Один рядок на один розрахунок зарплати. Утримання книги — це те, що стягує "
+"цей розрахунок, і це не завжди місяць, коли гроші змінили власника: аванс, "
+"виданий після 20-го, стягується вже наступним розрахунком. Валова зарплата "
+"та записаний чистий розрахунковий листок — це вихідні значення, які хтось "
+"вніс; Після утримань — це валова сума мінус власні записи цього офісу в "
+"книзі, і нічого більше. Це не чиста зарплата — тут не обчислюються жодні "
+"податки чи внески, і саме тому листок залишається окремим стовпцем для "
+"порівняння."
 
 #: templates/partials/person_finance_overview.html:8
 msgid ""

@@ -985,6 +985,9 @@ dd {
 }
 
 .message {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
   padding: var(--space-3) var(--space-4);
   background: var(--panel);
   border: 1px solid var(--line);
@@ -992,6 +995,37 @@ dd {
   border-radius: var(--radius);
   box-shadow: var(--shadow-xs);
   pointer-events: auto;
+}
+
+.message-text {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* A flash carrying two lines of text needs a way out that does not depend on
+   waiting. 44px so it is a real touch target, not a decorative glyph. */
+.message-dismiss {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin: calc(var(--space-2) * -1) calc(var(--space-2) * -1) 0 0;
+  padding: 0;
+  background: none;
+  border: 0;
+  border-radius: var(--radius);
+  color: var(--muted);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.message-dismiss:hover,
+.message-dismiss:focus-visible {
+  color: var(--text);
+  background: var(--surface-raised, rgba(0, 0, 0, 0.05));
 }
 
 .message-success {

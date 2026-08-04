@@ -194,6 +194,28 @@
   </section>
 {% endif %}
 
+{% if is_working and assignment %}
+  {% can 'readiness.complete' as may_medical %}
+  {% if may_medical %}
+    <section class="panel workflow-panel">
+      <p class="eyebrow">{% trans "Medical" %}</p>
+      <h2>{% trans "Entry medical certificate" %}</h2>
+      {% if working_medical_date %}
+        <p>{% trans "Recorded" %}: <strong>{{ working_medical_date|date:"Y-m-d" }}</strong> — {% trans "record a new date when the certificate is renewed." %}</p>
+      {% else %}
+        <p>{% trans "No date on file. Compliance reports this worker as missing a medical until one is recorded." %}</p>
+      {% endif %}
+      <form class="people-search" method="post" action="{% url 'medical_record' person.pk %}">
+        {% csrf_token %}
+        <label>{% trans "Entry medical date" %}
+          <input type="date" name="entry_medical_date" min="1900-01-01" max="2099-12-31" value="{{ working_medical_date|date:'Y-m-d' }}" required>
+        </label>
+        <button class="button button-secondary" type="submit" data-tooltip="{% trans 'Records the date on the certificate. It is what the annual expiry counts from, and what clears the compliance alert.' %}">{% icon "save" %}{% trans "Record medical date" %}</button>
+      </form>
+    </section>
+  {% endif %}
+{% endif %}
+
 <section class="two-column">
   <div class="panel">
     <p class="eyebrow">{% trans "Operational" %}</p>

@@ -1,0 +1,32 @@
+{% load i18n %}
+{# One flash stack for both client shells; it used to be copied into each base.html, free to drift. #}
+{% if messages %}
+  <ul class="messages flash-stack" aria-live="polite" aria-atomic="true">
+    {% for message in messages %}
+      <li class="message message-{{ message.tags }}"
+          x-data="{
+            visible: true,
+            timer: null,
+            /* Ten seconds, not three. Some of these run to two lines and were
+               gone before they could be read. */
+            start() { this.timer = setTimeout(() => { this.visible = false }, 10000) },
+            hold() { clearTimeout(this.timer) }
+          }"
+          x-init="start()"
+          {# Reading it should not race the timer. #}
+          @mouseenter="hold()"
+          @mouseleave="start()"
+          @focusin="hold()"
+          @focusout="start()"
+          x-show="visible"
+          x-transition.opacity.duration.200ms>
+        <span class="message-text">{{ message }}</span>
+        <button type="button" class="message-dismiss" @click="visible = false"
+                aria-label="{% trans 'Dismiss this message' %}"
+                data-tooltip="{% trans 'Dismiss this message' %}">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </li>
+    {% endfor %}
+  </ul>
+{% endif %}

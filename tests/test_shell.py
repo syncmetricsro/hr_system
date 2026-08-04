@@ -36,7 +36,9 @@ def test_shared_page_templates_never_hardcode_a_client_identity():
         if "jober" in source or "corvinum" in source:
             offenders.append(str(path.relative_to(REPO)))
 
-    assert offenders == [], "client identity leaked into shared templates: " + ", ".join(offenders)
+    assert offenders == [], (
+        "client identity leaked into shared templates: " + ", ".join(offenders)
+    )
 
 
 def test_every_authentication_screen_uses_the_shared_brand_lockup():
@@ -47,14 +49,33 @@ def test_every_authentication_screen_uses_the_shared_brand_lockup():
 
 
 def test_flash_notifications_are_timed_and_shared_by_both_client_shells():
+    """Both shells must show the same flash stack, and it must stay readable.
+
+    "Shared" used to mean the same markup pasted into each base.html, which is
+    shared only until someone edits one. It is now a single partial that both
+    include, so this checks the include on each side and the behaviour once, in
+    the one place it lives.
+    """
     for template in (
         REPO / "templates/layouts/base.html",
         REPO / "clients/corvinum_eu/templates/layouts/base.html",
     ):
         source = template.read_text(encoding="utf-8")
-        assert 'class="messages flash-stack"' in source
-        assert "setTimeout(() => visible = false, 3000)" in source
-        assert "x-transition.opacity.duration.200ms" in source
+        assert '{% include "partials/flash_messages.html" %}' in source
+        assert "flash-stack" not in source, (
+            "the flash markup is back in a client shell; it belongs in the partial"
+        )
+
+    partial = (REPO / "templates/partials/flash_messages.html").read_text(
+        encoding="utf-8"
+    )
+    assert 'class="messages flash-stack"' in partial
+    assert "x-transition.opacity.duration.200ms" in partial
+    # Ten seconds, not three: two-line messages were gone before they could be
+    # read. Hovering holds it, and the button dismisses it outright.
+    assert "this.visible = false }, 10000)" in partial
+    assert '@mouseenter="hold()"' in partial
+    assert 'class="message-dismiss"' in partial
 
 
 def test_jober_shell_separates_adjacent_operational_sections():
@@ -68,7 +89,10 @@ def test_jober_shell_separates_adjacent_operational_sections():
 def test_trial_outcome_actions_are_neutral_until_chosen():
     source = (REPO / "templates/pages/person_detail.html").read_text(encoding="utf-8")
     assert 'name="scheduled_for" required' in source
-    assert 'name="outcome" value="pass">\n          <button class="button button-secondary"' in source
+    assert (
+        'name="outcome" value="pass">\n          <button class="button button-secondary"'
+        in source
+    )
     assert "Trial destination" in source
     assert "Arrival time" in source
 

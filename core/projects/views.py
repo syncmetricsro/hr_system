@@ -35,6 +35,7 @@ from core.projects.services import (
     decide_activation,
     exit_person,
     get_or_create_readiness,
+    record_entry_medical,
     record_trial_outcome,
     request_activation,
     save_project,
@@ -346,6 +347,37 @@ def readiness_waive_trial(request: HttpRequest, person_pk: int) -> HttpResponse:
         messages.success(
             request, _("Trial day waived — complete readiness to activate.")
         )
+    except WorkflowError as exc:
+        messages.error(request, str(exc))
+    return redirect("person_detail", pk=person.pk)
+
+
+@require_POST
+@require_action(Action.READINESS_COMPLETE)
+def medical_record(request: HttpRequest, person_pk: int) -> HttpResponse:
+    """Record or renew the entry medical date for someone already working.
+
+    The readiness form only exists on the way in, so before this there was no
+    screen anywhere that could set this field for an activated worker - and the
+    medical expires annually, so every worker eventually needed one.
+    """
+    person = get_object_or_404(Person, pk=person_pk)
+    _assert_person_in_scope(request, person)
+    assignment = person.current_assignment()
+    if assignment is None:
+        messages.error(
+            request, _("This worker has no active assignment to record a medical for.")
+        )
+        return redirect("person_detail", pk=person.pk)
+    _assert_project_in_scope(request, assignment.project)
+    try:
+        record_entry_medical(
+            person,
+            assignment.project,
+            request.POST.get("entry_medical_date", ""),
+            actor=request.user,
+        )
+        messages.success(request, _("Entry medical date recorded."))
     except WorkflowError as exc:
         messages.error(request, str(exc))
     return redirect("person_detail", pk=person.pk)

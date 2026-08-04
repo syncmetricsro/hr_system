@@ -152,6 +152,13 @@ app_routes += [
         name="activate_person",
     ),
     path("people/<int:person_pk>/exit/", project_views.exit_view, name="exit_person"),
+    # Recording a medical is not part of the activation workflow and must stay
+    # reachable after it: the certificate expires annually.
+    path(
+        "people/<int:person_pk>/medical/",
+        project_views.medical_record,
+        name="medical_record",
+    ),
     # Manager decision queue for activation requests (plan §12.4). Core
     # workflow, not a feature flag: both clients run the lifecycle.
     path("activations/", project_views.activation_queue, name="activation_queue"),

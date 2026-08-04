@@ -79,6 +79,11 @@ def _raise_a_pending_request(page) -> None:
             field = readiness.locator(f"select[name='{pillar}']")
             if field.count():
                 field.select_option("complete")
+        # Required alongside a complete Medical since 2026-08-05: a tick with no
+        # date used to activate straight into an unclearable compliance alert.
+        date = readiness.locator("input[name='entry_medical_date']")
+        if date.count():
+            date.fill("2026-07-01")
         readiness.locator("button[type='submit']").click()
         page.wait_for_load_state("networkidle")
 

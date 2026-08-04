@@ -3,6 +3,7 @@ from __future__ import annotations
 from django.conf import settings
 from django.db import transaction
 from django.utils import timezone
+from django.utils.dateparse import parse_date
 from django.utils.translation import gettext as _
 
 from core.audit.services import record_event
@@ -224,6 +225,41 @@ def waive_trial(person, project, *, actor=None) -> ReadinessRecord:
     return readiness
 
 
+def _clean_entry_medical_date(value):
+    """Parse and sanity-check an entry medical date. Shared, because it is now
+    set from two places: the readiness form and a working person's profile."""
+    parsed = parse_date(value) if isinstance(value, str) else value
+    if parsed is None:
+        raise WorkflowError(_("Entry medical date is invalid."))
+    if parsed > timezone.localdate():
+        raise WorkflowError(_("Entry medical date cannot be in the future."))
+    return parsed
+
+
+@transaction.atomic
+def record_entry_medical(person, project, entry_medical_date, *, actor=None):
+    """Record or renew a working person's entry medical date.
+
+    Readiness is only editable on the way *in* — the form disappears once the
+    person is Working. The medical expires annually, so without this there was
+    no way to record a renewal, and no way to clear a compliance alert on
+    anyone already activated. The date is the only thing this touches; the
+    pillars belong to the activation workflow.
+    """
+    readiness = get_or_create_readiness(person, project)
+    readiness.entry_medical_date = _clean_entry_medical_date(entry_medical_date)
+    readiness.save(update_fields=["entry_medical_date", "updated_at"])
+    record_event(
+        actor,
+        "readiness.entry_medical_recorded",
+        target=readiness,
+        person=str(person),
+        project=project.code,
+        reason=str(readiness.entry_medical_date),
+    )
+    return readiness
+
+
 def readiness_blockers(readiness: ReadinessRecord) -> list[dict[str, str]]:
     """Return the concrete operational reasons activation is blocked.
 
@@ -271,8 +307,6 @@ def update_readiness(
 ):
     """Set the four pillar states (§11.6). Medical and gear cannot be N/A;
     accommodation/transport require an explicit reason when marked N/A."""
-    from django.utils.dateparse import parse_date
-
     na_reasons = na_reasons or {}
     valid = set(PillarState.values)
     transport_enabled = getattr(settings, "FEATURE_FLAGS", {}).get("transport", True)
@@ -301,16 +335,19 @@ def update_readiness(
                 setattr(readiness, f"{pillar}_na_reason", "")
 
     if entry_medical_date is not None:
-        parsed_medical_date = (
-            parse_date(entry_medical_date)
-            if isinstance(entry_medical_date, str)
-            else entry_medical_date
+        readiness.entry_medical_date = _clean_entry_medical_date(entry_medical_date)
+
+    # A ticked Medical with no date passes activation and then leaves a
+    # compliance alert nobody can clear: the alert keys on the date, and once
+    # the person is Working the readiness form is no longer shown. It is also
+    # what the annual expiry counts from, so a blank date has no expiry at all.
+    if (
+        readiness.medical_state == PillarState.COMPLETE
+        and not readiness.entry_medical_date
+    ):
+        raise WorkflowError(
+            _("Record the entry medical date before marking Medical complete.")
         )
-        if parsed_medical_date is None:
-            raise WorkflowError(_("Entry medical date is invalid."))
-        if parsed_medical_date > timezone.localdate():
-            raise WorkflowError(_("Entry medical date cannot be in the future."))
-        readiness.entry_medical_date = parsed_medical_date
     readiness.submitted_by = (
         actor if getattr(actor, "is_authenticated", False) else None
     )
