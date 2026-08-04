@@ -25,8 +25,12 @@ writing. No dependency or runtime behavior changed.
 
 Failure-path verification: ordinary extraction reported 1542 active / 1542
 translated / 0 fuzzy and 165 obsolete per language, listed all 122 transitions,
-returned failure, and restored SK/HU/UK byte-for-byte. The reviewed catalog
-refresh and full two-client gates follow in the generated-catalog commit.
+returned failure, and restored SK/HU/UK byte-for-byte. Review classified 111 as
+references only to deleted Help files; the remaining 11 are ten superseded Help
+labels/titles and PR 163's removed self-approval error. The explicit refresh
+retained all 165 obsolete translations, compiled the 1542 reviewed active
+entries, and a later second extraction was byte-identical. Creation timestamps
+are preserved deliberately so time alone cannot dirty a catalog.
 
 ## 2026-08-04 - Activation stops assuming two people and a trial day
 

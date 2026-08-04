@@ -14,8 +14,13 @@
   the real repository: **122 newly obsolete listed, 0 added, 0 revived, 0
   fuzzy; 1542 active and translated per language**. It exited 1 and restored
   all three PO files byte-for-byte.
-- Focused result before the generated refresh: **41 passed**; Ruff lint clean.
-  Full unit/e2e results will be recorded after the reviewed catalog commit.
+- The approved refresh retained **165 obsolete** entries per language. A second
+  extraction in a later minute reported zero semantic changes and was
+  byte-identical; `--check` then verified all three deterministic MO files.
+- Final gate: production and test images rebuilt; dependency/vendor/no-Node,
+  production-image, Ruff, formatting, migration and both-client system checks
+  green. **Jober 1029 passed / 15 skipped; CorvinumEU 631 passed / 21 skipped /
+  261 deselected; Playwright 65 passed.**
 
 ## 2026-08-04 - activation without a trial day, and self-approval
 
