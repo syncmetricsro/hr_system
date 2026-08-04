@@ -415,38 +415,63 @@ Eszter's seeded figures, to check before you start:
 | `2026-06` | `1920.00 EUR` | `1450.00 EUR` |
 | `2026-07` | `2050.00 EUR` | `1540.00 EUR` |
 
+**Check which cycle is open before the call.** The entries below are refused if
+their date falls in a cycle that has already been settled, and on a
+long-running staging database most cycles have been. Verified on staging
+2026-08-04: `2026-07` and `2026-08` are settled, **`2026-06` is open**, which
+is why the walkthrough below uses June. Confirm before presenting:
+
+```bash
+ssh syncmetric-prime-dokku "run corvinum-staging python manage.py shell" <<'EOF'
+import datetime as dt
+from features.advances.services import cycle_is_settled, cycle_for
+for d in (dt.date(2026, 6, 10), dt.date(2026, 7, 8)):
+    print(d, cycle_for(d), "settled:", cycle_is_settled(d))
+EOF
+```
+
+If June has since been settled too, pick any month where the check prints
+`False` and adjust the figures — the arithmetic is what matters, not the month.
+
 1. Open **Eszter Varga** and scroll to **Wage and payslip overview**. Four
    columns: gross wage, ledger deductions, after deductions, net payslip.
    Ledger deductions is empty for both months and **After deductions equals the
    gross figure** — nothing has been taken off yet. Say that out loud; it is
-   the "before" picture and the contrast is the whole point.
+   the "before" picture and the contrast is the whole point. (Eszter carries no
+   ledger entries in the seed, which is what makes her the right subject.)
 2. Open **Ledger** and record a cash advance against Eszter:
    - Entry type **Pay deduction**, category **Cash advance**, amount `200`
-   - **Entry date `2026-07-08`** — the field that makes this demonstrable. It
+   - **Entry date `2026-06-08`** — the field that makes this demonstrable. It
      decides both the settlement cycle and the calendar month the entry shows
-     under. Without it every entry would land on today and July could not be
+     under. Without it every entry would land on today and June could not be
      shown at all.
    - Note: `advance paid in cash on site`
 3. Record a second entry the same way: **Pay deduction**, category
-   **Equipment**, amount `50`, entry date `2026-07-15`.
-4. Return to Eszter's profile. The July row now reads:
+   **Equipment**, amount `50`, entry date `2026-06-15`.
+
+   **Keep both dates on the 1st–20th.** A date of 21–30 June is still the June
+   *calendar month* on this table, but it settles in the **July** cycle — which
+   is closed, so the entry would be refused. That split trips people up; it is
+   worth understanding before you are in front of the client, and it is a fair
+   thing to show deliberately in step 8.
+4. Return to Eszter's profile. The June row now reads:
 
    | Month | Gross | Ledger deductions | After deductions | Net payslip |
    |---|---:|---:|---:|---:|
-   | `2026-07` | `2050.00` | `250.00` | `1800.00` | `1540.00` |
-   | `2026-06` | `1920.00` | — | `1920.00` | `1450.00` |
+   | `2026-07` | `2050.00` | — | `2050.00` | `1540.00` |
+   | `2026-06` | `1920.00` | `250.00` | `1670.00` | `1450.00` |
 
-   `2050.00 − 250.00 = 1800.00`. Point at the three figures in order. The June
+   `1920.00 − 250.00 = 1670.00`. Point at the three figures in order. The July
    row is untouched, which shows the entry date really did place the money in
-   July.
+   June.
 5. **Now name the remaining gap, before the client does.** After deductions is
-   `1800.00` and the recorded payslip is `1540.00`. Say that the difference is
+   `1670.00` and the recorded payslip is `1450.00`. Say that the difference is
    **whatever payroll applied, and that this system does not calculate it** —
    the product shows what the office controls and stops there.
 
    Do **not** attribute the difference to tax and levies, or to any other
    specific cause. Both figures here are fictional fixtures entered by hand and
-   the `260.00` is arbitrary; naming a cause invites "why exactly 260?", which
+   the `220.00` is arbitrary; naming a cause invites "why exactly 220?", which
    has no answer. The honest sentence is about what the system does, not about
    what the number means.
 6. If asked to close that gap: it needs the client's statutory rules and the
@@ -459,11 +484,13 @@ Eszter's seeded figures, to check before you start:
    receives is labelled **Net amount paid**, which reads as *what reached your
    account*, and that label is only correct if they enter the post-advance
    figure. Record the answer against C-Q17.
-8. Mention the guard if the client asks about corrections: once a cycle is
-   included, an entry can no longer be backdated into it — the system refuses
-   and says which cycle. Corrections after that are reversals, which keep the
-   original visible. Show it by trying to add an entry dated inside a settled
-   cycle if there is time.
+8. **Show the guard — it demonstrates well and takes ten seconds.** Record a
+   third entry with entry date **`2026-07-08`**, inside the already-settled
+   July cycle. It is refused with a message naming the cycle, and nothing is
+   written. Say why: a settled cycle has already been paid out, so money cannot
+   be quietly added to it after the fact; corrections from that point are
+   reversals, which leave the original visible. This is a good place to make
+   the calendar-month versus 21st-to-20th distinction concrete.
 
 Note on periods, which reliably comes up: gross wage, payslip and the
 deductions column are all keyed by **calendar month**. The settlement cycle is
@@ -681,6 +708,7 @@ confirmed client scope.
 | Runner reports a missing SMTP variable | Confirm all seven `DJANGO_EMAIL_*` values exist in Doppler `hr_system/dev_corvinum_demo`; do not print their values |
 | SMTP send fails | Confirm Marek has a deliverable controlled test address, then check `scripts/corvinum_app.sh logs`; FORPSI may also require the current country in its GeoIP allow-list |
 | Console email appears instead of real delivery | Restart with `doppler run --project hr_system --config dev_corvinum_demo -- scripts/corvinum_app.sh up` |
+| Ledger entry refused, naming a cycle | That cycle is settled; pick a date in an open one. Check with the `cycle_is_settled` snippet in section 11. Never reopen a settled cycle to make a demo work |
 | Payslip creation reports a duplicate | Select the existing person/period row and use Resend, or choose an unused fictional period |
 | Wage and payslip figures appear inconsistent | Verify the four fictional fixture values above, then confirm the two source records and period labels; do not infer statutory deductions from the difference |
 | Certificate fixture is absent or its checksum fails | Restore `tests/fixtures/manual_uploads/` from a clean checkout and rerun `sha256sum --check`; never substitute a real worker document |
