@@ -422,13 +422,22 @@ long-running staging database most cycles have been. Verified on staging
 is why the walkthrough below uses June. Confirm before presenting:
 
 ```bash
-ssh syncmetric-prime-dokku "run corvinum-staging python manage.py shell" <<'EOF'
-import datetime as dt
-from features.advances.services import cycle_is_settled, cycle_for
-for d in (dt.date(2026, 6, 10), dt.date(2026, 7, 8)):
-    print(d, cycle_for(d), "settled:", cycle_is_settled(d))
-EOF
+ssh syncmetric-prime-dokku "run corvinum-staging python manage.py shell -c \"import datetime as dt; from features.advances.services import cycle_is_settled, cycle_for; [print(d, cycle_for(d), 'settled:', cycle_is_settled(d)) for d in (dt.date(2026,6,10), dt.date(2026,6,25), dt.date(2026,7,8))]\""
 ```
+
+Expected today, and the reason the walkthrough uses June:
+
+```
+2026-06-10 (2026, 6) settled: False   <- the dates below are accepted
+2026-06-25 (2026, 7) settled: True    <- June date, JULY cycle, refused
+2026-07-08 (2026, 7) settled: True    <- refused on purpose in step 8
+```
+
+The script has to be an **argument** (`shell -c "..."`), not piped in. `dokku run`
+over the restricted account does not forward stdin, so a heredoc reaches nothing:
+the shell starts, reads EOF, prints `50 objects imported automatically` and exits
+with no output at all. It reads as success. Read-only either way - the check is a
+single `SELECT ... EXISTS` and writes nothing.
 
 If June has since been settled too, pick any month where the check prints
 `False` and adjust the figures — the arithmetic is what matters, not the month.
