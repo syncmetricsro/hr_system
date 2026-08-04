@@ -5,7 +5,7 @@
 {% block content %}
 <section class="page-head"><p class="eyebrow">{% trans "Accommodation" %}</p><h1>{% trans "Monthly accommodation cost" %}</h1><a class="button button-secondary" href="{% url 'accommodation_list' %}">{% trans "Back" %}</a></section>
 <p class="muted">{% trans "Reporting only — no amounts are deducted from workers." %}</p>
-<section class="panel"><form class="people-search" method="get"><label>{% trans "Report month" %}<input type="month" name="month" value="{{ month_value }}"></label><button class="button button-secondary" type="submit">{% trans "Filter" %}</button></form></section>
+<section class="panel"><form class="people-search" method="get"><label>{% trans "Report month" %}<input type="month" name="month" value="{{ month_value }}" min="1900-01" max="2099-12"></label><button class="button button-secondary" type="submit">{% trans "Filter" %}</button></form></section>
 <section class="dashboard-grid">
   <article class="metric-card"><span>{% trans "Capacity" %}</span><strong>{{ company.capacity }}</strong></article>
   <article class="metric-card"><span>{% trans "Occupied beds" %}</span><strong>{{ company.occupied_beds }}</strong></article>

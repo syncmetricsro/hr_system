@@ -10,10 +10,18 @@ class AdvancesConfig(AppConfig):
         # Feature -> core registration (ADR 0022): person-card ledger panel.
         from django.apps import apps as django_apps
 
-        from core.ui.registry import register_person_panel
+        from core.ui.registry import register_person_finance_series, register_person_panel
         from features.advances.panels import ledger_panel
+        from features.advances.providers import ledger_deduction_series
 
         register_person_panel("panels/advances_ledger.html", ledger_panel, order=45)
+
+        # Sits between the gross wage (10) and the net payslip (20), so the
+        # overview reads left to right as gross, taken off, what is left,
+        # and what payroll actually paid.
+        register_person_finance_series(
+            ledger_deduction_series, order=15, role="deduction"
+        )
 
         # Feature -> feature (flag-guarded): approved equipment charges land
         # in the ledger as linked PAY_DEDUCTIONs (§5.8). Only when logistics

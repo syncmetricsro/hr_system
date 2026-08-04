@@ -21,7 +21,7 @@ chosen `period`, so a stale value in a hidden field is harmless.
   </label>
 
   <span class="period-group" data-period-group="day">
-    <label>{% trans "Day" %}<input type="date" name="date" value="{{ period.params.date|default:today_iso }}"></label>
+    <label>{% trans "Day" %}<input type="date" name="date" value="{{ period.params.date|default:today_iso }}" min="1900-01-01" max="2099-12-31"></label>
   </span>
 
   <span class="period-group" data-period-group="week">
@@ -29,7 +29,7 @@ chosen `period`, so a stale value in a hidden field is harmless.
   </span>
 
   <span class="period-group" data-period-group="month">
-    <label>{% trans "Month" %}<input type="month" name="month" value="{{ month_value }}"></label>
+    <label>{% trans "Month" %}<input type="month" name="month" value="{{ month_value }}" min="1900-01" max="2099-12"></label>
   </span>
 
   {% comment %}

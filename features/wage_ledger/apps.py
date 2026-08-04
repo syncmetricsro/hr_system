@@ -10,4 +10,6 @@ class WageLedgerConfig(AppConfig):
         from core.ui.registry import register_person_finance_series
         from features.wage_ledger.providers import gross_wage_series
 
-        register_person_finance_series(gross_wage_series, order=10)
+        # role="gross": the figure core subtracts ledger deductions from when
+        # both columns are present.
+        register_person_finance_series(gross_wage_series, order=10, role="gross")

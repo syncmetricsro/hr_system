@@ -1,5 +1,67 @@
 # Build Journal
 
+## 2026-08-04 - CorvinumEU pre-demo batch: the subtraction they could not show
+
+Ten requested items before a customer demo. Two were bigger than they looked,
+one was not the bug it appeared to be, and one turned out to be a template
+condition.
+
+**"I was unable to demonstrate the subtracted payslip from the Brutto salary"
+was not a defect — the product refused to do it by design.** Gross wage and net
+payslip were two independent source values (C-Q17) and nothing joined them; the
+panel said as much in its own caption. The fix shows what the office actually
+controls: a **Ledger deductions** column from `features/advances` and a derived
+**After deductions** column. The join has to happen in core, because a feature
+may not import another feature, so `register_person_finance_series` gained a
+`role` (`gross` / `deduction` / `source`) and core relates two columns without
+knowing which feature supplies either. C-Q17 narrows rather than reverses: the
+remaining gap to the payslip is statutory, and naming that gap out loud is now
+step 5 of the runbook rather than an awkward silence.
+
+**The ledger form had no date field at all.** Every entry landed on today, so a
+July deduction could not be entered in August — which is precisely why the demo
+could not be given. `record_entry()` already accepted `entry_date`; only the
+form and view never passed it. Adding it exposed a real hazard: `include_cycle`
+sweeps its window **once**, and the windows are disjoint, so an entry backdated
+into a swept window would be created OPEN and never picked up again — sitting
+forever in a period whose payroll had already gone out. `record_entry` now
+refuses that and names the cycle. Reversals are exempt, or the sanctioned
+correction path for a settled cycle would have no way to run.
+
+**Office separation needed no client branching.** `apply_office_scope` already
+set the queryset to `Office.objects.all()`, empty on CorvinumEU — so the picker
+rendered as an empty dropdown asking for something the client does not have. It
+now drops the field when **no Office rows exist at all**: keyed on data, never
+on client identity, so seeding one office brings it straight back. One change
+covered all five call sites. The header badge already handled this correctly.
+
+**Audit and Staff activity are Observer-only on CorvinumEU.** Done at the policy
+layer rather than by hiding links, so a manager loses the tab *and* gets 403 on
+a typed URL. The staff-activity icon moved from `trending_up` to `badge`; the
+first choice, `supervisor_account`, was caught by a test proving it is not in
+the self-hosted font subset and would have rendered as raw ligature text.
+
+**Dates are bounded, both clients.** A native date input always submits ISO, so
+the format was never the problem — the year was. Unbounded, `12345-06-07` parses
+as a valid date and lands in the database looking plausible. `core/ui/forms.py`
+now defines the bounds once; every form widget and all 14 raw template inputs
+use them, and a sweep test fails when the next unbounded one is added.
+
+**Tooltips and help were written as one job, and that caught a mistake.** The
+extractor reported near-duplicate msgids differing only by an em dash — proof
+that the "same sentence in both places" claim in the `_f` docstring was already
+false. Unified before translating, which also removed 7 strings from the batch.
+
+The safe extractor from #164 did its job twice: it refused the run outright
+until the two genuinely obsolete labels were acknowledged with
+`--accept-obsolete`, and it surfaced the duplicates. 54 new msgids, translated
+by hand into SK/HU/UK, zero fuzzy.
+
+Suites: **Jober 1076 / CorvinumEU 658**, ruff and dependency direction clean.
+E2E deliberately not run, per the workflow agreed earlier today — it touches
+many templates, so it is a fair one to ask for before deploying.
+
+
 ## 2026-08-04 - No more pull requests, and the browser suite becomes opt-in
 
 Two process changes, both asked for, both about cost rather than code. Recorded

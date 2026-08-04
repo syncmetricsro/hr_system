@@ -59,8 +59,14 @@ ACTION_ROLES: dict[Action, frozenset[Role]] = {
     Action.CATALOG_MANAGE: frozenset({_MANAGER}),
     Action.USER_MANAGE: frozenset({_MANAGER}),
     Action.EXPORT_APPROVED: frozenset({_MANAGER, _OBSERVER}),
-    Action.AUDIT_VIEW: frozenset({_MANAGER, _OBSERVER}),
-    Action.STAFF_ACTIVITY_VIEW: frozenset({_MANAGER, _OBSERVER}),
+    # Observer-only from 2026-08-04, at the client's request: below the CEO
+    # nobody acts on either of these, and both were carrying Jober-shaped
+    # oversight into an office that does not want it. Revoking the action is
+    # what matters — the nav entries are `{% can %}`-gated and both views are
+    # `@require_action`-gated, so a manager loses the tab *and* gets 403 on a
+    # typed URL. Jober keeps both for its managers.
+    Action.AUDIT_VIEW: frozenset({_OBSERVER}),
+    Action.STAFF_ACTIVITY_VIEW: frozenset({_OBSERVER}),
 }
 
 # Core lifecycle with TRIAL_DAY enabled for the CorvinumEU demo (C-Q1).

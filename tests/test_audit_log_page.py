@@ -4,6 +4,7 @@ import pytest
 from django.urls import reverse
 from django.utils import translation
 
+from core.accounts.permissions import Action, can
 from core.audit.services import record_event
 from core.audit.presentation import audit_action_label, audit_reason_label
 from core.people.models import Person
@@ -33,11 +34,19 @@ def events(users):
     return person
 
 
-def test_managers_and_observers_can_view(client, users, events):
-    for role in ("manager", "observer"):
-        client.force_login(users[role])
+def test_exactly_the_roles_the_policy_allows_can_view(client, users, events):
+    """Asserted against the running client's policy rather than a fixed role
+    list. CorvinumEU narrowed audit to the Observer on 2026-08-04 while Jober
+    keeps it for managers, and a hard-coded role would only ever test one of
+    them — this way each client tests its own answer, and that the answer is
+    actually enforced."""
+    for role, user in users.items():
+        client.force_login(user)
         response = client.get(reverse("audit_log"))
-        assert response.status_code == 200, role
+        allowed = can(user, Action.AUDIT_VIEW)
+        assert response.status_code == (200 if allowed else 403), role
+        if not allowed:
+            continue
         assert b"person.status_changed" in response.content
         assert b'class="data-table-scroll"' in response.content
         assert b'class="data-table audit-table"' in response.content
@@ -52,7 +61,7 @@ def test_coordinator_denied(client, users, events):
 def test_filters_by_actor_and_action(client, users, events):
     # The action dropdown always lists every known action, so assertions use
     # the row-only reason strings ("test A"/"test B") to check the table.
-    client.force_login(users["manager"])
+    client.force_login(users["observer"])
     resp = client.get(reverse("audit_log"), {"actor": "au-o@"})
     body = resp.content.decode()
     assert "test B" in body and "test A" not in body
@@ -75,7 +84,7 @@ def test_filters_by_target_worker(client, users, events):
         reason="test C",
     )
 
-    client.force_login(users["manager"])
+    client.force_login(users["observer"])
 
     resp = client.get(reverse("audit_log"), {"worker": "audit subject"})
     body = resp.content.decode()

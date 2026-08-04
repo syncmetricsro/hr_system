@@ -8,6 +8,7 @@ from core.accounts.permissions import user_office_scope
 from core.offices.forms import apply_office_scope
 from core.people.models import LifecycleStatus, Person
 from core.projects.models import Project, TrialAssignment
+from core.ui.forms import datetime_input
 
 
 def operable_projects(user):
@@ -32,9 +33,7 @@ class TrialCreateForm(forms.Form):
     scheduled_for = forms.DateTimeField(
         label=_("Arrival time"),
         input_formats=["%Y-%m-%dT%H:%M"],
-        widget=forms.DateTimeInput(
-            format="%Y-%m-%dT%H:%M", attrs={"type": "datetime-local"}
-        ),
+        widget=datetime_input(format="%Y-%m-%dT%H:%M"),
     )
     note = forms.CharField(
         label=_("Operational note"),
@@ -58,9 +57,7 @@ class TrialEditForm(forms.Form):
     scheduled_for = forms.DateTimeField(
         label=_("Arrival time"),
         input_formats=["%Y-%m-%dT%H:%M"],
-        widget=forms.DateTimeInput(
-            format="%Y-%m-%dT%H:%M", attrs={"type": "datetime-local"}
-        ),
+        widget=datetime_input(format="%Y-%m-%dT%H:%M"),
     )
     note = forms.CharField(
         label=_("Operational note"),
@@ -136,6 +133,13 @@ class ProjectForm(forms.ModelForm):
         apply_office_scope(self, user)
         self.fields["responsible_coordinators"].queryset = self._coordinators(user)
         self.fields["responsible_coordinators"].required = False
+        if "office" not in self.fields:
+            # No offices exist, so the picker is gone and the help text that
+            # promised office narrowing would describe a boundary the install
+            # does not have.
+            self.fields["responsible_coordinators"].help_text = _(
+                "Coordinators responsible for this project."
+            )
 
     def _coordinators(self, user):
         """Coordinators the chosen office may draw on.

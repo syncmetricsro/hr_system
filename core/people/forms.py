@@ -5,6 +5,7 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from core.offices.forms import apply_office_scope
+from core.ui.forms import date_input
 from core.ui import registry
 from core.people.models import Person
 
@@ -49,7 +50,7 @@ class PersonForm(forms.ModelForm):
             "disability_type": _("Disability type"),
             "office": _("Office"),
         }
-        widgets = {"date_of_birth": forms.DateInput(attrs={"type": "date"})}
+        widgets = {"date_of_birth": date_input()}
 
     def __init__(self, *args, user=None, **kwargs):
         super().__init__(*args, **kwargs)

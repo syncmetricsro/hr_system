@@ -7,6 +7,7 @@ from django.contrib import messages
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
+from django.utils.dateparse import parse_date
 from django.utils.translation import gettext as _
 
 from core.accounts.permissions import Action, require_action
@@ -48,6 +49,8 @@ def ledger_overview(request):
         "categories": LedgerCategory.choices,
         "people": Person.objects.order_by("last_name", "first_name"),
         "projects": Project.objects.order_by("name"),
+        # Pre-fills the entry date, which is what it is nine times in ten.
+        "today_iso": timezone.localdate().isoformat(),
     })
 
 
@@ -59,6 +62,12 @@ def ledger_record(request):
     project = None
     if request.POST.get("project"):
         project = get_object_or_404(Project, pk=request.POST["project"])
+    # Blank means today. Supplying it lets an office record last week's advance
+    # against the cycle it actually belongs to instead of the current one.
+    entry_date = parse_date(request.POST.get("entry_date", "") or "")
+    if request.POST.get("entry_date") and entry_date is None:
+        messages.error(request, _("Entry date must be a real date (YYYY-MM-DD)."))
+        return redirect(request.POST.get("next") or "ledger_overview")
     try:
         record_entry(
             person,
@@ -68,6 +77,7 @@ def ledger_record(request):
             actor=request.user,
             project=project,
             note=request.POST.get("note", "").strip(),
+            entry_date=entry_date,
         )
         messages.success(request, _("Ledger entry recorded."))
     except (LedgerError, ValueError, KeyError) as exc:

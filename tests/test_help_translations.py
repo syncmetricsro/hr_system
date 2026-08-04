@@ -41,7 +41,10 @@ def test_every_help_message_has_a_reviewed_nonempty_translation(language):
     catalog = parse_po(po_path.read_text(encoding="utf-8"))
     help_msgids = _help_msgids()
 
-    assert len(help_msgids) == 210
+    # A canary, not a target: it fails when help text is added so the
+    # translations cannot be forgotten. 210 -> 263 on 2026-08-04, when the
+    # money and approval articles gained a per-field reference.
+    assert len(help_msgids) == 263
     assert not (help_msgids - catalog.keys())
     assert all(catalog[msgid].strip() for msgid in help_msgids)
     unchanged = {msgid for msgid in help_msgids if catalog[msgid] == msgid}

@@ -17,14 +17,14 @@
     {% csrf_token %}
     {% if form.non_field_errors %}<div class="form-errors">{{ form.non_field_errors }}</div>{% endif %}
     {% for field in form %}
-      <label>
+      <label{% if field.help_text %} data-tooltip-heading="{{ field.label }}" data-tooltip="{{ field.help_text }}"{% endif %}>
         <span>{{ field.label }}</span>
         {{ field }}
         {% if field.help_text %}<small class="muted">{{ field.help_text }}</small>{% endif %}
         {{ field.errors }}
       </label>
     {% endfor %}
-    <button class="button button-primary" type="submit">{% trans "Record gross wage" %}</button>
+    <button class="button button-primary" type="submit" data-tooltip="{% trans 'Saves the gross figure for this person and month. It appears on their pay overview and is what ledger deductions are subtracted from.' %}">{% trans "Record gross wage" %}</button>
   </form>
 </section>
 {% endif %}

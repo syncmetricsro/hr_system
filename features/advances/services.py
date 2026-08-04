@@ -61,6 +61,17 @@ def record_entry(
         effect in (expected, PayEffect.NONE),
         _("%(t)s entries carry pay effect %(e)s (or none).") % {"t": entry_type, "e": expected},
     )
+    on = entry_date or timezone.localdate()
+    # Backdating is allowed — an advance handed over last week is recorded this
+    # week — but not into a cycle whose payroll has already been settled.
+    # A reversal is exempt: it is the sanctioned way to correct a settled cycle
+    # (C-Q5), and refusing it would leave no correction path at all.
+    _require(
+        reversal_of is not None or not cycle_is_settled(on),
+        _("The %(key)s cycle is already settled. Record this entry in the open "
+          "cycle, or reverse an existing entry instead.")
+        % {"key": cycle_key(*cycle_for(on))},
+    )
     entry = LedgerEntry.objects.create(
         person=person,
         project=project,
@@ -68,7 +79,7 @@ def record_entry(
         category=category,
         amount=amount,
         pay_effect=effect,
-        entry_date=entry_date or timezone.localdate(),
+        entry_date=on,
         note=note,
         reversal_of=reversal_of,
         created_by=actor if getattr(actor, "is_authenticated", False) else None,
@@ -160,6 +171,34 @@ def cycle_bounds(year: int, month: int) -> tuple[dt.date, dt.date]:
 
 def cycle_key(year: int, month: int) -> str:
     return f"{year:04d}-{month:02d}"
+
+
+def cycle_for(day: dt.date) -> tuple[int, int]:
+    """The cycle a date belongs to, keyed by its end month (C-Q3).
+
+    Days 1-20 settle in their own month; 21 onwards roll into the next one.
+    """
+    if day.day <= 20:
+        return day.year, day.month
+    return (day.year + 1, 1) if day.month == 12 else (day.year, day.month + 1)
+
+
+def cycle_is_settled(day: dt.date) -> bool:
+    """Has the cycle containing ``day`` already been closed?
+
+    Matters because ``include_cycle`` sweeps a window *once*. An entry
+    backdated into a window that has already been swept is created OPEN and no
+    later sweep covers it — the windows are disjoint — so it would sit in the
+    ledger forever, in a period whose payroll has already gone out.
+    """
+    year, month = cycle_for(day)
+    return LedgerEntry.objects.filter(
+        cycle_key=cycle_key(year, month),
+        settlement_status__in=(
+            SettlementStatus.INCLUDED_IN_CYCLE,
+            SettlementStatus.DEDUCTED,
+        ),
+    ).exists()
 
 
 def cycle_report(year: int, month: int):

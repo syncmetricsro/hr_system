@@ -39,11 +39,14 @@ def test_accommodation_form_offers_all_offices_to_observer(
     assert set(form.fields["office"].queryset) == {velky_meder, gyor}
 
 
-def test_accommodation_form_office_field_optional_and_empty_when_no_offices_exist(
+def test_accommodation_form_drops_the_office_field_when_no_offices_exist(
     django_user_model,
 ):
-    """CorvinumEU: no Office rows anywhere - the field stays present but
-    offers nothing, and the form still validates without it."""
+    """CorvinumEU: no Office rows anywhere - the field is removed entirely.
+
+    It used to stay present and offer nothing, which asked the office to
+    choose from an empty list (changed 2026-08-04). The form still validates
+    without it, and the switch is keyed on the data, not the client."""
     manager = django_user_model.objects.create_user(
         email="m@demo.corvinum.test", password="x", role="manager"
     )
@@ -51,5 +54,5 @@ def test_accommodation_form_office_field_optional_and_empty_when_no_offices_exis
         data={"name": "Test House", "address": "", "notes": "", "is_active": True},
         user=manager,
     )
-    assert list(form.fields["office"].queryset) == []
+    assert "office" not in form.fields
     assert form.is_valid(), form.errors

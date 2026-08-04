@@ -20,15 +20,15 @@
         {% endfor %}
       </tbody>
     </table>
-    {% if may_export %}<a class="button button-secondary" href="{% url 'ledger_cycle_csv' cycle_year cycle_month %}">{% trans "Download CSV" %}</a>{% endif %}
+    {% if may_export %}<a class="button button-secondary" href="{% url 'ledger_cycle_csv' cycle_year cycle_month %}" data-tooltip="{% trans 'Exports the entries in this cycle for the accountant. Reading only — it changes nothing and does not settle the cycle.' %}">{% trans "Download CSV" %}</a>{% endif %}
     </div>
     {% if may_enter %}
       <form method="post" action="{% url 'ledger_cycle_action' %}" class="ledger-cycle-actions">
         {% csrf_token %}
         <input type="hidden" name="year" value="{{ cycle_year }}">
         <input type="hidden" name="month" value="{{ cycle_month }}">
-        <button class="button button-secondary" type="submit" name="action" value="include" data-confirm="{% trans 'This locks every open entry of the window into the cycle; locked entries can only be corrected by reversal.' %}">{% trans "Include open entries in cycle" %}</button>
-        <button class="button button-secondary" type="submit" name="action" value="deducted" data-confirm="{% trans 'This marks the whole cycle as settled with pay.' %}">{% trans "Mark cycle settled" %}</button>
+        <button class="button button-secondary" type="submit" name="action" value="include" data-tooltip="{% trans 'Closes the 21st-to-20th window: every open entry in it is locked to this cycle and can then only be corrected by a reversal. New entries can no longer be backdated into it.' %}" data-confirm="{% trans 'This locks every open entry of the window into the cycle; locked entries can only be corrected by reversal.' %}">{% trans "Include open entries in cycle" %}</button>
+        <button class="button button-secondary" type="submit" name="action" value="deducted" data-tooltip="{% trans 'Marks this cycle as paid out. Use it once payroll has actually settled the amounts — it records that the money changed hands.' %}" data-confirm="{% trans 'This marks the whole cycle as settled with pay.' %}">{% trans "Mark cycle settled" %}</button>
       </form>
     {% endif %}
   {% else %}

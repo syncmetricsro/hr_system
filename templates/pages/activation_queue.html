@@ -31,8 +31,8 @@
       <form class="people-search" method="post" action="{% url 'activation_decide' approval.pk %}">
         {% csrf_token %}
         <input type="text" name="reason" aria-label="{% trans 'Reason' %}" placeholder="{% trans 'Reason (required to reject)' %}">
-        <button class="button button-primary" type="submit" name="decision" value="approve" data-confirm="{% trans 'This activates the worker: they move to Working on this project and the commitment starts.' %}">{% icon "approve" %}{% trans "Approve" %}</button>
-        <button class="button button-secondary" type="submit" name="decision" value="reject" data-confirm="{% trans 'This rejects the request and leaves the worker in readiness.' %}">{% icon "reject" %}{% trans "Reject" %}</button>
+        <button class="button button-primary" type="submit" name="decision" value="approve" data-tooltip="{% trans 'Puts this worker to work: they move to Working on this project, the assignment starts today, and accommodation and equipment are committed.' %}" data-confirm="{% trans 'This activates the worker: they move to Working on this project and the commitment starts.' %}">{% icon "approve" %}{% trans "Approve" %}</button>
+        <button class="button button-secondary" type="submit" name="decision" value="reject" data-tooltip="{% trans 'Sends the request back with your reason. The worker stays in readiness and the coordinator can fix what you name and ask again. A reason is required.' %}" data-confirm="{% trans 'This rejects the request and leaves the worker in readiness.' %}">{% icon "reject" %}{% trans "Reject" %}</button>
       </form>
     </article>
   {% empty %}

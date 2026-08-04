@@ -397,44 +397,69 @@ the per-person custody/value view, not Jober's warehouse-stock report.
 Do not claim the proposed Thursday cut-off or 20th-to-20th cycle is final. Ask
 the client to confirm C-Q2 and C-Q3.
 
-### 11. Gross wage and payslip source reconciliation - 6 minutes
+### 11. What was taken off the gross wage - 8 minutes
 
-This is the required numeric checkpoint. Do not improvise arithmetic or call
-the difference between gross and net a discrepancy.
+**This is the section the client asked for, and the one to rehearse.** Changed
+2026-08-04: the overview now shows the office's own ledger deductions and an
+**After deductions** column. Do the arithmetic on screen, not in your head.
 
-1. Open **Gross wages**. Explain that one entry is the gross wage earned for a
-   calendar month, from the first through the last day. It is a recorded source
-   value, not an hours-times-rate calculation.
-2. Find Eszter's two seeded rows and verify the values on screen before moving
-   on:
+The line to hold throughout: **After deductions is not net pay.** It is gross
+minus what *this office* recorded — advances, equipment, damage. Tax and levies
+are not in it. That is exactly why the recorded net payslip keeps its own
+column: so the two can be compared instead of confused.
 
-   | Calendar month | Recorded gross wage | Recorded net payslip |
-   |---|---:|---:|
-   | `2026-06` | `1920.00 EUR` | `1450.00 EUR` |
-   | `2026-07` | `2050.00 EUR` | `1540.00 EUR` |
+Eszter's seeded figures, to check before you start:
 
-3. Open **Eszter Varga** from the wage table. In **Wage and payslip
-   overview**, verify that each calendar month occupies one row and that the
-   gross and net source values appear in separate, clearly labelled columns.
-4. State the boundary explicitly: `1920.00 - 1450.00 = 470.00` and
-   `2050.00 - 1540.00 = 510.00`, but neither difference is presented as an
-   error or as an application-calculated deduction. The demo does not yet have
-   the client's statutory tax, levy, or complete payroll input structure.
-5. Contrast this with the **Ledger** shown in the previous section. Gross wage
-   and payslip use the same calendar-month key. Advances, equipment recovery,
-   and additions use the separate cycle from the 21st of the previous month
-   through the 20th of the named month. The ledger does not silently rewrite
-   either recorded source value.
-6. If the client challenges a figure, ask which source field is wrong: the
-   recorded gross wage, the recorded net payslip, or the operational ledger
-   period. Do not claim the system can calculate legal net pay until the
-   deferred Corvinum wage workbook (`radonak.xlsx`) and payroll rules are
-   received and approved.
+| Calendar month | Recorded gross wage | Recorded net payslip |
+|---|---:|---:|
+| `2026-06` | `1920.00 EUR` | `1450.00 EUR` |
+| `2026-07` | `2050.00 EUR` | `1540.00 EUR` |
 
-Expected presentation: no **Computed net**, **Mismatch**, or red variance
-indicator appears. A missing source is shown as `—`; it is not treated as zero.
-The two seeded periods are fictional acceptance fixtures, not client payroll
-data.
+1. Open **Eszter Varga** and scroll to **Wage and payslip overview**. Four
+   columns: gross wage, ledger deductions, after deductions, net payslip.
+   Ledger deductions is empty for both months and **After deductions equals the
+   gross figure** — nothing has been taken off yet. Say that out loud; it is
+   the "before" picture and the contrast is the whole point.
+2. Open **Ledger** and record a cash advance against Eszter:
+   - Entry type **Pay deduction**, category **Cash advance**, amount `200`
+   - **Entry date `2026-07-08`** — the field that makes this demonstrable. It
+     decides both the settlement cycle and the calendar month the entry shows
+     under. Without it every entry would land on today and July could not be
+     shown at all.
+   - Note: `advance paid in cash on site`
+3. Record a second entry the same way: **Pay deduction**, category
+   **Equipment**, amount `50`, entry date `2026-07-15`.
+4. Return to Eszter's profile. The July row now reads:
+
+   | Month | Gross | Ledger deductions | After deductions | Net payslip |
+   |---|---:|---:|---:|---:|
+   | `2026-07` | `2050.00` | `250.00` | `1800.00` | `1540.00` |
+   | `2026-06` | `1920.00` | — | `1920.00` | `1450.00` |
+
+   `2050.00 − 250.00 = 1800.00`. Point at the three figures in order. The June
+   row is untouched, which shows the entry date really did place the money in
+   July.
+5. **Now name the remaining gap, before the client does.** After deductions is
+   `1800.00` and the recorded payslip is `1540.00`. The `260.00` difference is
+   statutory — tax and levies — and the application does not calculate it. The
+   product shows what the office controls and stops there.
+6. If asked to close that gap: it needs the client's statutory rules and the
+   deferred wage workbook (`radonak.xlsx`), and it is a payroll-calculation
+   scope decision (C-Q6, C-Q17), not a switch to flip. Do not promise it.
+7. Mention the guard if the client asks about corrections: once a cycle is
+   included, an entry can no longer be backdated into it — the system refuses
+   and says which cycle. Corrections after that are reversals, which keep the
+   original visible. Show it by trying to add an entry dated inside a settled
+   cycle if there is time.
+
+Note on periods, which reliably comes up: gross wage, payslip and the
+deductions column are all keyed by **calendar month**. The settlement cycle is
+the separate 21st-to-20th window. An entry dated the 25th of July therefore
+appears in the July row here while settling in the August cycle — deliberate, so
+this table's four columns always mean the same period.
+
+A missing source shows as `—` and is never treated as zero: with no gross wage
+recorded, **After deductions is blank rather than negative**.
 
 ### 12. Encrypted payslip delivery - 4 minutes
 
