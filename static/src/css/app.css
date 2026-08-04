@@ -828,6 +828,20 @@ dd {
   box-shadow: var(--shadow-xs);
 }
 
+/* Grid items default to `min-width: auto`, so one unbreakable token - an email
+   address is the usual culprit - can force a card wider than its container and
+   push the whole page sideways. */
+.field-card > * {
+  min-width: 0;
+}
+
+/* Seven templates give this two-column card a *third* child. Without this it
+   wraps into column one, which the details list has already squeezed: that is
+   how the activation queue's reason input ended up 99px wide at 1280px. */
+.field-card > *:nth-child(n + 3) {
+  grid-column: 1 / -1;
+}
+
 .field-card h3 {
   margin-bottom: var(--space-1);
 }
@@ -839,7 +853,10 @@ dd {
 
 .field-card dl {
   display: grid;
-  grid-template-columns: max-content 10rem;
+  /* `minmax(0, …)` rather than a bare `10rem`: a fixed track does not grow, so
+     a longer value overflowed it and, being right-aligned, spilled leftward
+     across its own label. */
+  grid-template-columns: max-content minmax(0, 10rem);
   column-gap: var(--space-6);
   row-gap: var(--space-2);
   margin: 0;
@@ -849,6 +866,37 @@ dd {
 .field-card dl dd {
   font-variant-numeric: tabular-nums;
   text-align: right;
+  /* Emails and reference codes have no break opportunities of their own. */
+  overflow-wrap: anywhere;
+}
+
+/* A card you act on rather than only read: the activation queue, the blacklist
+   queue, the equipment deduction review. These carry a form, so they stack at
+   every width - the actions get the full card, and the detail pairs flow as a
+   wrapping row instead of a right-aligned column that fights the form for
+   space. Applied by class rather than `:has(form)` so it is greppable, and so
+   adding a form to some other card does not silently restyle it. */
+.field-card-decision {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.field-card-decision dl {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: var(--space-6);
+  row-gap: var(--space-3);
+}
+
+.field-card-decision dl > div {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.field-card-decision dl dd {
+  /* Left, not right: right-alignment is what made a long value spill across
+     its label, and there is no column edge to align to once these wrap. */
+  text-align: left;
 }
 
 .plain-list {

@@ -13,7 +13,7 @@
 
 <section class="field-list" aria-label="{% trans 'Activation requests' %}">
   {% for approval in approvals %}
-    <article class="field-card">
+    <article class="field-card field-card-decision">
       <div>
         <h3><a href="{% url 'person_detail' approval.person_id %}">{{ approval.person }}</a></h3>
         <p>{{ approval.project.name }}{% if approval.project.office %} · {{ approval.project.office.name }}{% endif %}</p>

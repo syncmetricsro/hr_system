@@ -1,5 +1,54 @@
 # Build Journal
 
+## 2026-08-04 - Decision cards stop squeezing their own form
+
+Reported with two screenshots of CorvinumEU's activation queue: a reason input
+about 70px wide on a desktop browser, and a card running off a phone screen with
+the intro paragraph crushed beside it.
+
+**The desktop symptom reproduced exactly and was measured before anything
+changed: 99px at 1280px.** `.field-card` is a two-column grid, and *seven*
+templates give it three children - the third wraps into column one, which the
+details list has already squeezed. Not three templates, as the screenshots
+suggested: `accommodation_detail`, `equipment_catalog`, `offer_list` and
+`trials_queue` have the same shape with a link or a div as the third child, so
+one rule (`:nth-child(n+3) { grid-column: 1 / -1 }`) repairs all seven.
+
+Two more structural weaknesses fixed alongside it: the details list had a fixed
+`10rem` right-aligned value track, which a longer value overflows *leftward*
+across its own label, and nothing set `min-width: 0`, so an unbreakable token
+like an email address can force a card wider than the viewport. The
+`· your own request` marker added earlier today lengthened exactly that value.
+
+Decision cards - the three with a form - now stack at every width behind a
+`field-card-decision` class, so the actions get the whole card and the detail
+pairs flow as a wrapping row. An explicit class rather than `:has(form)`: it is
+greppable, assertable, and does not silently restyle some other card the day
+someone adds a form to it. The four non-form three-child cards keep their
+two-column look and are fixed by the shared rule alone.
+
+**The mobile symptom did not reproduce**, and that is worth saying plainly
+rather than quietly claiming a fix. With the seeded demo data the Corvinum card
+measures 359px inside a 375px viewport with zero page overflow, before and
+after. The structural causes that would produce it are fixed, but the exact
+screenshot is not reproduced - most likely because the reported view had three
+cards and a longer Hungarian requester string than the seed generates. If it
+persists, the viewport width it was taken at would pin it down.
+
+Measured, not eyeballed: **inputWidth 99px -> 320px** at 1280px, page overflow 0
+at both widths, no value rendering left of its label.
+
+Two test-infrastructure notes. The browser stacks seed **no** pending activation
+approval, so a naive test on that page asserts nothing while passing - the new
+test builds the request through the UI and asserts a card exists before
+measuring anything. And `test_z_certificate_uploads` and the new layout test
+both drive the same 2FA-enforced manager, where only the first login is ever
+shown the enrolment secret; they now share `tests/e2e/corvinum_auth.py`, which
+caches it, so neither depends on running before the other.
+
+Jober 1076, CorvinumEU 658, browser 67; ruff check and format clean.
+
+
 ## 2026-08-04 - CorvinumEU pre-demo batch: the subtraction they could not show
 
 Ten requested items before a customer demo. Two were bigger than they looked,
