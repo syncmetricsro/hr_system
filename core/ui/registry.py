@@ -18,6 +18,7 @@ from __future__ import annotations
 
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
+from django.utils.translation import gettext as _
 
 
 def flag_enabled(name: str) -> bool:
@@ -93,8 +94,15 @@ def register_report_panel(template: str, context, order: int = 100) -> None:
         _report_panels.append(entry)
 
 
-def register_person_finance_series(provider, order: int = 100) -> None:
-    entry = {"provider": provider, "order": order}
+def register_person_finance_series(provider, order: int = 100, role: str = "source") -> None:
+    """Register a per-person, per-calendar-month money column.
+
+    ``role`` lets core relate two columns without knowing which feature
+    supplies either. ``"gross"`` and ``"deduction"`` together produce the
+    derived *after deductions* column in `person_finance_overview`; the default
+    ``"source"`` is a column that stands alone and is never arithmetic input.
+    """
+    entry = {"provider": provider, "order": order, "role": role}
     if entry not in _person_finance_series:
         _person_finance_series.append(entry)
 
@@ -156,27 +164,64 @@ def person_panels(request, person) -> list[dict]:
 
 
 def person_finance_overview(request, person) -> dict | None:
-    """Align feature-owned source values by calendar month."""
+    """Align feature-owned source values by calendar month.
+
+    Where a ``gross`` column and a ``deduction`` column are both present, a
+    derived **after deductions** column is appended. That subtraction is the
+    company's own recorded money only — the deductions it entered against a
+    gross figure it entered. It is deliberately **not** net pay: no tax or levy
+    is involved, and the separately recorded net payslip stays its own column so
+    the two can be compared rather than conflated (C-Q17).
+    """
     series = []
     for entry in sorted(_person_finance_series, key=lambda item: item["order"]):
         rendered = entry["provider"](request, person)
         if rendered is not None:
-            series.append(rendered)
+            series.append({**rendered, "role": entry["role"]})
     periods = sorted(
         {period for item in series for period in item["periods"]}, reverse=True
     )
     if not periods:
         return None
+
+    gross = next((s for s in series if s["role"] == "gross"), None)
+    deduction = next((s for s in series if s["role"] == "deduction"), None)
+    derived = None
+    if gross is not None and deduction is not None:
+        derived = {
+            "label": _("After deductions"),
+            "role": "derived",
+            "periods": {},
+        }
+        for period in periods:
+            base = gross["periods"].get(period)
+            if base is None:
+                continue  # nothing to subtract from; leave the cell empty
+            taken = deduction["periods"].get(period)
+            amount = base[0] - (taken[0] if taken else 0)
+            derived["periods"][period] = (amount, base[1])
+        # Immediately after the deductions it is computed from, so the table
+        # reads left to right as: gross, taken off, what is left, what payroll
+        # actually paid. Appending it last would put the arithmetic after its
+        # own comparison figure.
+        series.insert(series.index(deduction) + 1, derived)
+
     rows = []
     for period in periods:
         cells = []
         for item in series:
             value = item["periods"].get(period)
             cells.append(
-                None if value is None else {"amount": value[0], "currency": value[1]}
+                None
+                if value is None
+                else {
+                    "amount": value[0],
+                    "currency": value[1],
+                    "derived": item["role"] == "derived",
+                }
             )
         rows.append({"period": period, "cells": cells})
-    return {"series": series, "rows": rows}
+    return {"series": series, "rows": rows, "has_derived": derived is not None}
 
 
 def exit_relevant(person) -> bool:

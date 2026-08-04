@@ -13,6 +13,7 @@
       <li><a href="#purpose">{% trans "Purpose" %}</a></li>
       <li><a href="#permissions">{% trans "Roles and permissions" %}</a></li>
       <li><a href="#workflow">{% trans "Workflow" %}</a></li>
+      {% if article.fields %}<li><a href="#fields">{% trans "Every field on this screen" %}</a></li>{% endif %}
       <li><a href="#boundary">{% trans "Important boundary" %}</a></li>
       <li><a href="#example">{% trans "Screen example" %}</a></li>
       {% if related_articles %}<li><a href="#related">{% trans "Related topics" %}</a></li>{% endif %}
@@ -34,6 +35,24 @@
       {% endfor %}
     </ol>
   </section>
+
+  {% if article.fields %}
+    <section id="fields" class="help-section" aria-labelledby="fields-heading">
+      <h2 id="fields-heading">{% trans "Every field on this screen" %}</h2>
+      <dl class="help-fields">
+        {% for field in article.fields %}
+          <div>
+            <dt>{{ field.name }}</dt>
+            <dd>
+              {{ field.text }}
+              {% if field.who %}<p class="muted">{% trans "Who may set it" %}: {{ field.who }}</p>{% endif %}
+              {% if field.locks %}<p class="muted">{% trans "Locks" %}: {{ field.locks }}</p>{% endif %}
+            </dd>
+          </div>
+        {% endfor %}
+      </dl>
+    </section>
+  {% endif %}
 
   <section id="boundary" class="help-section" aria-labelledby="boundary-heading">
     <h2 id="boundary-heading">{{ article.warning_title }}</h2>

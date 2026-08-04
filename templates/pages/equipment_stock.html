@@ -45,7 +45,7 @@
     {% csrf_token %}
     <label>{% trans "Item" %}<select name="item" required>{% for row in balance.rows %}<option value="{{ row.item_id }}">{{ row.item__name|db_trans }} {{ row.item__size }}</option>{% endfor %}</select></label>
     {% if adjust_offices %}<label>{% trans "Office" %}<select name="office" required>{% for office in adjust_offices %}<option value="{{ office.pk }}">{{ office.name }}</option>{% endfor %}</select></label>{% endif %}
-    <label>{% trans "Date" %}<input type="date" name="occurred_on" required></label>
+    <label>{% trans "Date" %}<input type="date" name="occurred_on" required min="1900-01-01" max="2099-12-31"></label>
     <label>{% trans "Quantity adjustment" %}<input type="number" name="quantity_delta" required></label>
     <label>{% trans "Value for positive adjustment" %}<input type="number" step="0.01" min="0" name="value"></label>
     <label>{% trans "Reason" %}<input type="text" name="reason" required></label>

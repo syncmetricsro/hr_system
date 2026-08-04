@@ -2,7 +2,11 @@
 <section class="panel" data-testid="person-finance-overview">
   <p class="eyebrow">{% trans "Pay" %}</p>
   <h2>{% trans "Wage and payslip overview" %}</h2>
-  <p class="muted">{% trans "Both columns are recorded source values for the same calendar month. Gross wage is not converted into net pay here; taxes, levies, and other statutory payroll calculations remain outside this feature." %}</p>
+  {% if overview.has_derived %}
+    <p class="muted">{% trans "One row per calendar month. Gross wage and the recorded net payslip are source values someone entered; After deductions is gross minus this office's own ledger entries, and nothing else. It is not net pay — no tax or levy is calculated here, which is why the payslip stays its own column to compare against." %}</p>
+  {% else %}
+    <p class="muted">{% trans "Both columns are recorded source values for the same calendar month. Gross wage is not converted into net pay here; taxes, levies, and other statutory payroll calculations remain outside this feature." %}</p>
+  {% endif %}
   <div class="data-table-scroll">
     <table class="data-table">
       <thead>
@@ -16,7 +20,7 @@
           <tr>
             <th scope="row">{{ row.period }}</th>
             {% for cell in row.cells %}
-              <td>{% if cell %}{{ cell.amount }} {{ cell.currency }}{% else %}—{% endif %}</td>
+              <td{% if cell.derived %} class="cell-derived"{% endif %}>{% if cell %}{{ cell.amount }} {{ cell.currency }}{% else %}—{% endif %}</td>
             {% endfor %}
           </tr>
         {% endfor %}

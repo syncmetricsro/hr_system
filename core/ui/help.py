@@ -29,6 +29,18 @@ def _screen(slug: str, alt, first, second) -> dict:
     }
 
 
+def _f(name, text, who=None, locks=None) -> dict:
+    """One row of an article's field reference.
+
+    Money and approval screens document every field they show, because "what
+    does this box actually do" is the question a client asks in a demo and the
+    one an office asks six months later. The wording here is deliberately the
+    **same sentence** used in that field's `data-tooltip`, so the two cannot
+    drift into disagreeing about the same control.
+    """
+    return {"name": name, "text": text, "who": who, "locks": locks}
+
+
 HELP_GROUPS = [
     {
         "label": _("Start here"),
@@ -225,6 +237,54 @@ HELP_GROUPS = [
                         _(
                             "Decision controls approve or return the request with a reason."
                         ),
+                    ),
+                ),
+                "fields": (
+                    _f(
+                        _("Medical"),
+                        _("The entry medical certificate is on file. Required - it cannot be marked not-applicable, and activation is refused without it."),
+                        who=_("Coordinator or Manager"),
+                    ),
+                    _f(
+                        _("Gear"),
+                        _("The worker has the equipment the job needs. Required, like Medical, and cannot be marked not-applicable."),
+                        who=_("Coordinator or Manager"),
+                    ),
+                    _f(
+                        _("Accommodation"),
+                        _("A bed is arranged, or genuinely not needed. Marking it not-applicable requires a written reason."),
+                        who=_("Coordinator or Manager"),
+                    ),
+                    _f(
+                        _("Transport"),
+                        _("Travel to site is arranged, or not needed with a reason. Hidden entirely where the transport feature is switched off."),
+                        who=_("Coordinator or Manager"),
+                    ),
+                    _f(
+                        _("Entry medical date"),
+                        _("The date the medical was carried out. It cannot be in the future; a future date is a typo, not a plan."),
+                        who=_("Coordinator or Manager"),
+                    ),
+                    _f(
+                        _("Request activation"),
+                        _("Asks a manager to decide. It does not activate anyone, and the four pillars are re-checked at the moment of the decision in case one regressed in between."),
+                        who=_("Coordinator or Manager"),
+                    ),
+                    _f(
+                        _("Approve"),
+                        _("Puts this worker to work: they move to Working on this project, the assignment starts today, and accommodation and equipment are committed."),
+                        who=_("Manager"),
+                        locks=_("Deciding your own request is allowed, and recorded as a self-approval."),
+                    ),
+                    _f(
+                        _("Reject"),
+                        _("Sends the request back with your reason. The worker stays in readiness and the coordinator can fix what you name and ask again. A reason is required."),
+                        who=_("Manager"),
+                    ),
+                    _f(
+                        _("Activate without a trial day"),
+                        _("Opens readiness for a worker the office already knows, with no trial. It waives the trial only - all four pillars still apply before activation."),
+                        who=_("Manager"),
                     ),
                 ),
                 "related": ("people", "projects", "compliance"),
@@ -621,6 +681,45 @@ HELP_GROUPS = [
                         ),
                     ),
                 ),
+                "fields": (
+                    _f(
+                        _("Person"),
+                        _("The worker this money concerns. The entry appears on their pay overview and in their open balance."),
+                        who=_("Coordinator or Manager"),
+                    ),
+                    _f(
+                        _("Company / project"),
+                        _("Optional. Attributes the amount to a partner company for reporting. It does not change what the worker is paid."),
+                        who=_("Coordinator or Manager"),
+                    ),
+                    _f(
+                        _("Entry type"),
+                        _("Decides the direction: an advance or deduction reduces pay, an addition increases it. The amount stays positive either way."),
+                        who=_("Coordinator or Manager"),
+                    ),
+                    _f(
+                        _("Category"),
+                        _("What the money was for - advance, clothing, footwear, equipment, medical, travel or other. Groups the cycle report; it does not affect the direction or the amount."),
+                        who=_("Coordinator or Manager"),
+                    ),
+                    _f(
+                        _("Amount (EUR)"),
+                        _("Always a positive number. Never type a minus sign - the entry type decides whether this is added or subtracted."),
+                        who=_("Coordinator or Manager"),
+                        locks=_("Once the cycle is included; correct it with a reversal after that."),
+                    ),
+                    _f(
+                        _("Entry date"),
+                        _("The day the money changed hands. It decides which 21st-to-20th payroll cycle the entry settles in, and which calendar month it appears under on the pay overview. Leave blank for today; a date inside an already-settled cycle is refused."),
+                        who=_("Coordinator or Manager"),
+                        locks=_("Once the cycle containing that date is included."),
+                    ),
+                    _f(
+                        _("Note"),
+                        _("The reason, in words, for whoever reads this months from now. It is carried into the exports the accountant receives."),
+                        who=_("Coordinator or Manager"),
+                    ),
+                ),
                 "related": ("payslips", "gross-wages", "audit"),
                 "covers": ("ledger_overview",),
             },
@@ -668,6 +767,33 @@ HELP_GROUPS = [
                         _("Delivery state shows whether an encrypted PDF was sent."),
                     ),
                 ),
+                "fields": (
+                    _f(
+                        _("Person"),
+                        _("Who the payslip belongs to. A worker with no email address is marked in the list, because the encrypted PDF cannot be delivered to them."),
+                        who=_("Manager"),
+                    ),
+                    _f(
+                        _("Pay month"),
+                        _("The calendar month this payslip pays for, not the month it was issued in. One payslip per person per month."),
+                        who=_("Manager"),
+                    ),
+                    _f(
+                        _("Net amount (EUR)"),
+                        _("The net figure printed on the payslip, as paid. It is shown beside the gross wage and the ledger deductions for the same month; the system does not calculate it."),
+                        who=_("Manager"),
+                    ),
+                    _f(
+                        _("Payslip date (optional)"),
+                        _("The date printed on the document. Blank means the day it was recorded."),
+                        who=_("Manager"),
+                    ),
+                    _f(
+                        _("Note"),
+                        _("Free text for the office. It is not included in the PDF sent to the worker."),
+                        who=_("Manager"),
+                    ),
+                ),
                 "related": ("gross-wages", "ledger", "audit"),
                 "covers": ("payslip_list",),
             },
@@ -710,6 +836,28 @@ HELP_GROUPS = [
                             "The form records a person, month, and positive gross amount."
                         ),
                         _("The table preserves who recorded each source value."),
+                    ),
+                ),
+                "fields": (
+                    _f(
+                        _("Person"),
+                        _("The worker who earned this wage. One gross figure per person per month."),
+                        who=_("Manager"),
+                    ),
+                    _f(
+                        _("Wage month"),
+                        _("The calendar month the wage was earned in, not the month it was paid out."),
+                        who=_("Manager"),
+                    ),
+                    _f(
+                        _("Gross wage (EUR)"),
+                        _("Gross, before anything is taken off. Ledger deductions are subtracted from this on the worker's pay overview; tax and levies are not calculated here."),
+                        who=_("Manager"),
+                    ),
+                    _f(
+                        _("Note"),
+                        _("Where this figure came from - a contract, a timesheet, the accountant. It is what the next reader checks it against."),
+                        who=_("Manager"),
                     ),
                 ),
                 "related": ("payslips", "ledger", "audit"),

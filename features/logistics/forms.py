@@ -12,6 +12,7 @@ from core.accounts.permissions import user_office_scope
 from core.offices.forms import apply_office_scope
 from core.offices.models import Office
 from core.projects.models import Project
+from core.ui.forms import date_input, month_input
 from features.logistics.models import (
     Accommodation,
     AccommodationCostPeriod,
@@ -37,7 +38,7 @@ class TransportWeekForm(forms.ModelForm):
         model = TransportWeek
         fields = ("project", "week_start", "headcount", "note")
         widgets = {
-            "week_start": forms.DateInput(attrs={"type": "date"}),
+            "week_start": date_input(),
             "note": forms.Textarea(attrs={"rows": 2}),
         }
         labels = {"note": _("Operational note")}
@@ -111,7 +112,7 @@ class AccommodationCostPeriodForm(forms.ModelForm):
     effective_month = forms.DateField(
         label=_("Effective month"),
         input_formats=["%Y-%m"],
-        widget=forms.DateInput(format="%Y-%m", attrs={"type": "month"}),
+        widget=month_input(),
     )
 
     class Meta:
@@ -165,7 +166,7 @@ class EquipmentItemForm(forms.ModelForm):
 class StockReceiptForm(forms.Form):
     operation_key = forms.UUIDField(widget=forms.HiddenInput, initial=uuid4)
     received_on = forms.DateField(
-        label=_("Received on"), widget=forms.DateInput(attrs={"type": "date"})
+        label=_("Received on"), widget=date_input()
     )
     office = forms.ModelChoiceField(
         label=_("Receiving office"),
@@ -231,7 +232,7 @@ class StockAdjustmentForm(forms.Form):
         help_text=_("The warehouse whose stock is being adjusted."),
     )
     occurred_on = forms.DateField(
-        label=_("Date"), widget=forms.DateInput(attrs={"type": "date"})
+        label=_("Date"), widget=date_input()
     )
     quantity_delta = forms.IntegerField(label=_("Quantity adjustment"))
     value = forms.DecimalField(

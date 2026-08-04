@@ -83,6 +83,10 @@ def test_wage_page_permissions_are_server_enforced(client, person, staff):
 def test_person_overview_aligns_independent_sources_without_computing_net(
     client, person, staff
 ):
+    """Four columns since 2026-08-04: gross, ledger deductions, after
+    deductions, net payslip. The derived column is the office's own arithmetic
+    on its own entries; the payslip stays separate so the two can be compared
+    rather than conflated (C-Q17)."""
     record_wage(person, period="2026-07", gross_amount="2050", actor=staff["manager"])
     record_payslip(person, period="2026-07", net_amount="1540", actor=staff["manager"])
     record_wage(person, period="2026-06", gross_amount="1920", actor=staff["manager"])
@@ -94,24 +98,27 @@ def test_person_overview_aligns_independent_sources_without_computing_net(
     with override(response.headers["Content-Language"]):
         assert gettext("Recorded gross wage") in body
         assert gettext("Recorded net payslip") in body
-        assert gettext(
-            "Both columns are recorded source values for the same calendar month. "
-            "Gross wage is not converted into net pay here; taxes, levies, and "
-            "other statutory payroll calculations remain outside this feature."
-        ) in body
+        assert gettext("Ledger deductions") in body
+        assert gettext("After deductions") in body
     rows = response.context["person_finance_overview"]["rows"]
+    # No ledger entries yet, so nothing is taken off and the derived column
+    # simply repeats the gross figure.
     assert rows == [
         {
             "period": "2026-07",
             "cells": [
-                {"amount": Decimal("2050.00"), "currency": "EUR"},
-                {"amount": Decimal("1540.00"), "currency": "EUR"},
+                {"amount": Decimal("2050.00"), "currency": "EUR", "derived": False},
+                None,
+                {"amount": Decimal("2050.00"), "currency": "EUR", "derived": True},
+                {"amount": Decimal("1540.00"), "currency": "EUR", "derived": False},
             ],
         },
         {
             "period": "2026-06",
             "cells": [
-                {"amount": Decimal("1920.00"), "currency": "EUR"},
+                {"amount": Decimal("1920.00"), "currency": "EUR", "derived": False},
+                None,
+                {"amount": Decimal("1920.00"), "currency": "EUR", "derived": True},
                 None,
             ],
         },
@@ -126,7 +133,9 @@ def test_observer_reads_both_sources_but_cannot_manage_payslips(client, person, 
 
     detail = client.get(reverse("person_detail", args=[person.pk]))
     cells = detail.context["person_finance_overview"]["rows"][0]["cells"]
-    assert [cell["amount"] for cell in cells] == [
+    assert [None if cell is None else cell["amount"] for cell in cells] == [
+        Decimal("2050.00"),
+        None,
         Decimal("2050.00"),
         Decimal("1540.00"),
     ]

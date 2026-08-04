@@ -28,8 +28,8 @@
       <form class="people-search" method="post" action="{% url 'review_deduction' issue.pk %}">
         {% csrf_token %}
         <input type="text" name="note" aria-label="{% trans 'Review note' %}" placeholder="{% trans 'Review note' %}">
-        <button class="button button-primary" type="submit" name="decision" value="approve" data-confirm="{% trans 'This approves charging the item value to the worker (recorded for recovery; no automatic payroll deduction).' %}">{% icon "approve" %}{% trans "Approve charge" %}</button>
-        <button class="button button-secondary" type="submit" name="decision" value="waive" data-confirm="{% trans 'This waives the charge; the worker will not be charged for the item.' %}">{% icon "reject" %}{% trans "Waive" %}</button>
+        <button class="button button-primary" type="submit" name="decision" value="approve" data-tooltip="{% trans 'Confirms the worker owes the value of the item. It is recorded against them for recovery — it does not deduct from payroll by itself.' %}" data-confirm="{% trans 'This approves charging the item value to the worker (recorded for recovery; no automatic payroll deduction).' %}">{% icon "approve" %}{% trans "Approve charge" %}</button>
+        <button class="button button-secondary" type="submit" name="decision" value="waive" data-tooltip="{% trans 'Writes the loss off. The worker is not charged and nothing is recorded against their pay.' %}" data-confirm="{% trans 'This waives the charge; the worker will not be charged for the item.' %}">{% icon "reject" %}{% trans "Waive" %}</button>
       </form>
     </article>
   {% empty %}

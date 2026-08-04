@@ -51,8 +51,8 @@ Legend: ✅ permitted · — denied
 | `catalog.manage` | — | — | ✅ | — |
 | `user.manage` | — | — | ✅ | — |
 | `export.approved` | — | — | ✅ | ✅ |
-| `audit.view` | — | — | ✅ | ✅ |
-| `staff_activity.view` | — | — | ✅ | ✅ |
+| `audit.view` (Observer only from 2026-08-04) | — | — | — | ✅ |
+| `staff_activity.view` (Observer only from 2026-08-04) | — | — | — | ✅ |
 | `offer_email.send` / `offer.manage` / `offer_template.manage` / `offer_email.bulk_send` (worker messaging not in this product) | — | — | — | — |
 
 > **No worker messaging (ADR 0029, peopleops design §15.9).** Neither SMS nor

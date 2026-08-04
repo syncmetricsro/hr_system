@@ -1,5 +1,59 @@
 # Test Journal
 
+## 2026-08-04 - the CorvinumEU pre-demo batch
+
+- **`tests/test_pay_deductions.py` is new (11 tests)** and exists mostly to
+  defend what the derived column is *not*. `test_gross_minus_ledger_deductions_is_shown`
+  is the runbook walkthrough as a test — 1800 gross, 250 deducted, 1550 after —
+  and it asserts the recorded payslip stays `1512.40` and is **not** overwritten
+  by the derived figure. The gap between them is statutory, and the day someone
+  "helpfully" reconciles the two is the day the product starts lying about pay.
+- `test_the_derived_column_is_absent_without_a_gross_figure` covers the case
+  that would otherwise print a negative: deductions with no wage recorded. Empty
+  is not zero.
+- `test_deductions_are_grouped_by_calendar_month_not_by_cycle` pins the join
+  key. The settlement cycle runs 21st-to-20th, the other three columns are
+  calendar months, and an entry dated the 25th proves the table does not mix the
+  two.
+- `test_backdating_into_a_settled_cycle_is_refused` is the one that found a real
+  hazard rather than confirming an intention: `include_cycle` sweeps a window
+  once and the windows are disjoint, so an entry backdated into a swept window
+  would be created OPEN and never swept again. Paired with
+  `test_a_reversal_is_never_blocked_by_the_settled_guard`, because a guard that
+  also caught reversals would leave a settled cycle with no correction path.
+- **`tests/test_office_field_absent.py` (7 tests) tests both directions on
+  purpose.** Four assert the field disappears with no offices; three assert it
+  returns and still scopes the moment one exists. The second half is the whole
+  proof that this is data-driven and not a client special case — without it the
+  test suite would be satisfied by an `if client == "corvinum"`.
+- **`tests/test_date_input_bounds.py` (8 tests) is a sweep, not a unit test.**
+  The failure mode is *someone adds one more input later*, which a per-widget
+  test passes straight over. One test walks every template and fails with the
+  offending tags listed.
+  - Worth recording: Django's `Input.__init__` **pops** `type` out of `attrs`
+    into `input_type`, so `widget.attrs["type"]` is a `KeyError` and asserting on
+    it tests nothing. The rendered tag comes from `input_type`.
+- **Two existing tests were reversed, not deleted**, and two were made
+  policy-driven rather than role-hardcoded:
+  - the office-form tests asserted the field "stays present but offers nothing";
+    they now assert it is gone, with the old behaviour named in the docstring;
+  - `test_managers_and_observers_can_view` became
+    `test_exactly_the_roles_the_policy_allows_can_view`, asserting 200/403 from
+    `can(user, Action.AUDIT_VIEW)`. A hard-coded role list could only ever be
+    right for one client; this way each lane tests its own answer **and** that
+    the answer is enforced. Same treatment for the staff-activity page tests,
+    which moved to the Observer fixture that holds the action in both clients.
+- `test_help_translations.py`'s msgid canary went 210 -> 263. It is a canary,
+  not a target: it fails when help text is added so the translations cannot be
+  quietly skipped, and it did exactly that here.
+- Suites: **Jober 1076 passed / 16 skipped**, **CorvinumEU 658 passed / 23
+  skipped**. ruff and `check_dependency_direction.py` clean — the last one
+  matters here, since the deduction provider must not reach into
+  `features/wage_ledger`.
+- **E2E not run**, per the workflow agreed earlier today. This batch touches
+  many templates, so it is a reasonable one to request before a staging deploy.
+
+
 ## 2026-08-04 - the e2e suite leaves the per-commit gate
 
 - **`scripts/playwright_e2e.sh` is no longer run per slice, and CI no longer

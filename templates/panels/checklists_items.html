@@ -23,7 +23,7 @@
             hx-disabled-elt="button"
           >
             {% csrf_token %}
-            <button class="button button-secondary" id="checklist-toggle-{{ item.pk }}" type="submit">
+            <button class="button button-secondary" id="checklist-toggle-{{ item.pk }}" type="submit" data-tooltip="{% trans 'Records that you completed this item, with your name and the time. Critical items must all be complete before the worker can be activated.' %}">
               {% if item.done %}✓{% else %}○{% endif %}
             </button>
             <span>{{ item.item_template.label|db_trans }}</span>

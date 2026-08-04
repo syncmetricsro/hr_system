@@ -107,18 +107,18 @@ msgstr "Операції"
 msgid "Compliance"
 msgstr "Відповідність"
 
-#: clients/corvinum_eu/templates/layouts/base.html:53 core/ui/help.py:580
+#: clients/corvinum_eu/templates/layouts/base.html:53 core/ui/help.py:640
 #: templates/layouts/base.html:67 templates/pages/ledger.html:8
 msgid "Ledger"
 msgstr "Книга"
 
-#: clients/corvinum_eu/templates/layouts/base.html:56 core/ui/help.py:629
+#: clients/corvinum_eu/templates/layouts/base.html:56 core/ui/help.py:728
 #: templates/layouts/base.html:70 templates/pages/payslips.html:4
 #: templates/pages/payslips.html:9
 msgid "Payslips"
 msgstr "Розрахункові листи"
 
-#: clients/corvinum_eu/templates/layouts/base.html:59 core/ui/help.py:676
+#: clients/corvinum_eu/templates/layouts/base.html:59 core/ui/help.py:802
 #: templates/pages/wages.html:4 templates/pages/wages.html:9
 msgid "Gross wages"
 msgstr "Валові зарплати"
@@ -152,7 +152,7 @@ msgstr "Запити на активацію"
 msgid "Activations"
 msgstr "Активації"
 
-#: clients/corvinum_eu/templates/layouts/base.html:69 core/ui/help.py:394
+#: clients/corvinum_eu/templates/layouts/base.html:69 core/ui/help.py:454
 #: templates/layouts/base.html:61 templates/pages/blacklist_queue.html:4
 #: templates/panels/blacklist_banner.html:3
 #: templates/panels/blacklist_case.html:5
@@ -176,7 +176,7 @@ msgstr "Довідка"
 msgid "Staff activity"
 msgstr "Активність персоналу"
 
-#: clients/corvinum_eu/templates/layouts/base.html:77 core/ui/help.py:720
+#: clients/corvinum_eu/templates/layouts/base.html:77 core/ui/help.py:868
 #: templates/layouts/base.html:51
 msgid "Audit"
 msgstr "Аудит"
@@ -351,7 +351,7 @@ msgstr "ідентифікатор цілі"
 msgid "person"
 msgstr "особа"
 
-#: core/audit/models.py:44 features/compliance/forms.py:128
+#: core/audit/models.py:44 features/compliance/forms.py:129
 #: features/logistics/models.py:466
 msgid "reason"
 msgstr "причина"
@@ -695,7 +695,7 @@ msgstr "Це середовище може надсилати листи лиш�
 msgid "File is too large (max 10MB)."
 msgstr "Файл завеликий (макс. 10 МБ)."
 
-#: core/media.py:176 features/compliance/forms.py:93
+#: core/media.py:176 features/compliance/forms.py:94
 msgid "The back side must be an image."
 msgstr "Зворотний бік має бути зображенням."
 
@@ -835,62 +835,62 @@ msgstr "Військова служба"
 msgid "Other"
 msgstr "Інше"
 
-#: core/people/forms.py:38 features/intake/catalog_i18n.py:13
+#: core/people/forms.py:39 features/intake/catalog_i18n.py:13
 msgid "First name"
 msgstr "Ім’я"
 
-#: core/people/forms.py:39 features/intake/catalog_i18n.py:14
+#: core/people/forms.py:40 features/intake/catalog_i18n.py:14
 msgid "Last name"
 msgstr "Прізвище"
 
-#: core/people/forms.py:40 features/intake/catalog_i18n.py:18
+#: core/people/forms.py:41 features/intake/catalog_i18n.py:18
 #: features/intake/models.py:16 templates/pages/login.html:17
 msgid "Email"
 msgstr "Електронна пошта"
 
-#: core/people/forms.py:41
+#: core/people/forms.py:42
 msgid "Do not send job offers by email"
 msgstr "Не надсилати пропозиції роботи електронною поштою"
 
-#: core/people/forms.py:42 features/intake/catalog_i18n.py:17
+#: core/people/forms.py:43 features/intake/catalog_i18n.py:17
 #: templates/pages/person_detail.html:202
 msgid "Phone"
 msgstr "Телефон"
 
-#: core/people/forms.py:43 features/intake/catalog_i18n.py:19
+#: core/people/forms.py:44 features/intake/catalog_i18n.py:19
 #: templates/pages/person_detail.html:203
 msgid "Address"
 msgstr "Адреса"
 
-#: core/people/forms.py:44 features/intake/catalog_i18n.py:20
+#: core/people/forms.py:45 features/intake/catalog_i18n.py:20
 #: templates/pages/person_detail.html:204
 msgid "Nationality"
 msgstr "Громадянство"
 
-#: core/people/forms.py:45 features/intake/catalog_i18n.py:21
+#: core/people/forms.py:46 features/intake/catalog_i18n.py:21
 msgid "Preferred language"
 msgstr "Бажана мова"
 
-#: core/people/forms.py:46 features/intake/catalog_i18n.py:15
+#: core/people/forms.py:47 features/intake/catalog_i18n.py:15
 #: templates/pages/person_detail.html:216
 msgid "Date of birth"
 msgstr "Дата народження"
 
-#: core/people/forms.py:47 features/intake/catalog_i18n.py:16
+#: core/people/forms.py:48 features/intake/catalog_i18n.py:16
 #: templates/pages/person_detail.html:217
 msgid "Place of birth"
 msgstr "Місце народження"
 
-#: core/people/forms.py:48
+#: core/people/forms.py:49
 msgid "Has disability"
 msgstr "Має інвалідність"
 
-#: core/people/forms.py:49 features/intake/catalog_i18n.py:23
+#: core/people/forms.py:50 features/intake/catalog_i18n.py:23
 msgid "Disability type"
 msgstr "Тип інвалідності"
 
-#: core/people/forms.py:50 features/logistics/forms.py:74
-#: features/logistics/forms.py:228 features/profitability/catalog_i18n.py:26
+#: core/people/forms.py:51 features/logistics/forms.py:75
+#: features/logistics/forms.py:229 features/profitability/catalog_i18n.py:26
 #: templates/pages/equipment_stock.html:48
 #: templates/pages/finance_workbook.html:70
 #: templates/pages/goods_receipt_detail.html:16
@@ -898,7 +898,7 @@ msgstr "Тип інвалідності"
 msgid "Office"
 msgstr "Офіс"
 
-#: core/people/forms.py:77
+#: core/people/forms.py:78
 msgid "Date of birth cannot be in the future."
 msgstr "Дата народження не може бути в майбутньому."
 
@@ -1095,7 +1095,8 @@ msgstr "Особу оновлено."
 msgid "Edit person"
 msgstr "Редагувати особу"
 
-#: core/people/views.py:243 templates/pages/activation_queue.html:29
+#: core/people/views.py:243 core/ui/help.py:264
+#: templates/pages/activation_queue.html:29
 #: templates/pages/person_detail.html:171
 msgid "Entry medical date"
 msgstr "Дата вхідного медогляду"
@@ -1112,15 +1113,15 @@ msgstr "Особу архівовано. Захист чорного списк�
 msgid "Recycled to Available."
 msgstr "Повернено до доступних."
 
-#: core/projects/forms.py:25
+#: core/projects/forms.py:26
 msgid "Candidate"
 msgstr "Кандидат"
 
-#: core/projects/forms.py:27
+#: core/projects/forms.py:28
 msgid "Only available candidates can be scheduled."
 msgstr "Можна планувати лише доступних кандидатів."
 
-#: core/projects/forms.py:30 core/projects/forms.py:56
+#: core/projects/forms.py:31 core/projects/forms.py:55
 #: templates/pages/feedback_inbox.html:32
 #: templates/pages/finance_summary.html:22
 #: templates/pages/person_detail.html:61 templates/pages/person_detail.html:80
@@ -1132,26 +1133,26 @@ msgstr "Можна планувати лише доступних кандида
 msgid "Project"
 msgstr "Проєкт"
 
-#: core/projects/forms.py:33 core/projects/forms.py:59
+#: core/projects/forms.py:34 core/projects/forms.py:58
 #: templates/pages/person_detail.html:66 templates/pages/person_detail.html:95
 msgid "Arrival time"
 msgstr "Час прибуття"
 
-#: core/projects/forms.py:40 core/projects/forms.py:66
-#: features/logistics/forms.py:43
+#: core/projects/forms.py:39 core/projects/forms.py:63
+#: features/logistics/forms.py:44
 msgid "Operational note"
 msgstr "Операційна примітка"
 
-#: core/projects/forms.py:122
+#: core/projects/forms.py:119
 msgid "Include this project in Finance"
 msgstr "Включити цей проєкт до Фінансів"
 
-#: core/projects/forms.py:124
+#: core/projects/forms.py:121
 msgid "Short unique reference, for example DHLBA. Cannot be reused."
 msgstr ""
 "Коротке унікальне позначення, наприклад DHLBA. Не можна використати повторно."
 
-#: core/projects/forms.py:126
+#: core/projects/forms.py:123
 msgid ""
 "Unticking hides this project's months from Finance. The figures are kept, "
 "not deleted."
@@ -1159,11 +1160,15 @@ msgstr ""
 "Знявши позначку, місяці цього проєкту зникнуть із Фінансів. Дані "
 "зберігаються, не видаляються."
 
-#: core/projects/forms.py:130
+#: core/projects/forms.py:127
 msgid "Only coordinators of the selected office can be chosen."
 msgstr "Можна обрати лише координаторів обраного офісу."
 
-#: core/projects/forms.py:169
+#: core/projects/forms.py:141
+msgid "Coordinators responsible for this project."
+msgstr "Координатори, відповідальні за цей проєкт."
+
+#: core/projects/forms.py:173
 #, python-format
 msgid ""
 "%(names)s do not belong to this office and would have no access to the "
@@ -1441,8 +1446,8 @@ msgstr "Пробні дні можна планувати лише для акт
 msgid "Only an available person can be activated without a trial day."
 msgstr "Без пробного дня можна активувати лише доступну особу."
 
-#: core/projects/services.py:235 features/advances/models.py:38
-#: features/profitability/catalog_i18n.py:20
+#: core/projects/services.py:235 core/ui/help.py:244
+#: features/advances/models.py:38 features/profitability/catalog_i18n.py:20
 #: templates/pages/activation_queue.html:26
 #: templates/pages/person_detail.html:139
 msgid "Medical"
@@ -1452,7 +1457,8 @@ msgstr "Медичне"
 msgid "Medical clearance is incomplete."
 msgstr "Медичний допуск не завершено."
 
-#: core/projects/services.py:236 templates/pages/activation_queue.html:27
+#: core/projects/services.py:236 core/ui/help.py:249
+#: templates/pages/activation_queue.html:27
 #: templates/pages/person_detail.html:145
 msgid "Gear"
 msgstr "Спорядження"
@@ -1461,7 +1467,7 @@ msgstr "Спорядження"
 msgid "Required equipment is incomplete."
 msgstr "Необхідне спорядження не укомплектовано."
 
-#: core/projects/services.py:237 core/ui/help.py:347
+#: core/projects/services.py:237 core/ui/help.py:254 core/ui/help.py:407
 #: features/profitability/catalog_i18n.py:18
 #: features/profitability/models.py:89 templates/layouts/base.html:43
 #: templates/pages/accommodation_costs.html:6
@@ -1479,8 +1485,9 @@ msgstr "Проживання"
 msgid "Accommodation is incomplete."
 msgstr "Проживання не забезпечено."
 
-#: core/projects/services.py:238 features/profitability/models.py:88
-#: templates/layouts/base.html:45 templates/pages/person_detail.html:161
+#: core/projects/services.py:238 core/ui/help.py:259
+#: features/profitability/models.py:88 templates/layouts/base.html:45
+#: templates/pages/person_detail.html:161
 msgid "Transport"
 msgstr "Транспорт"
 
@@ -1610,21 +1617,21 @@ msgstr "Рік"
 msgid "Week %(week)s, %(year)s"
 msgstr "Тиждень %(week)s, %(year)s"
 
-#: core/ui/help.py:34
+#: core/ui/help.py:46
 msgid "Start here"
 msgstr "Почніть тут"
 
-#: core/ui/help.py:38
+#: core/ui/help.py:50
 msgid "Getting started"
 msgstr "Початок роботи"
 
-#: core/ui/help.py:40
+#: core/ui/help.py:52
 msgid "Learn the shell, roles, scope, statuses, and built-in guidance."
 msgstr ""
 "Ознайомтеся з інтерфейсом, ролями, областю доступу, статусами та вбудованими "
 "підказками."
 
-#: core/ui/help.py:44
+#: core/ui/help.py:56
 msgid ""
 "Use this orientation before changing records so the navigation, status "
 "colors, office boundary, and permission model make sense."
@@ -1632,7 +1639,7 @@ msgstr ""
 "Перед зміною записів прочитайте цей вступ, щоб зрозуміти навігацію, кольори "
 "статусів, межі офісу та модель дозволів."
 
-#: core/ui/help.py:47
+#: core/ui/help.py:59
 msgid ""
 "Every authenticated role can read Help. Buttons and navigation entries still "
 "depend on your role and on the modules enabled for this client."
@@ -1640,7 +1647,7 @@ msgstr ""
 "Довідку може читати кожна автентифікована роль. Кнопки й пункти навігації "
 "залежать від вашої ролі та модулів, увімкнених для цього клієнта."
 
-#: core/ui/help.py:51
+#: core/ui/help.py:63
 msgid ""
 "Use the main navigation to move between workflows. The Jober top tabs and "
 "the Corvinum sidebar show only modules this client supports."
@@ -1649,7 +1656,7 @@ msgstr ""
 "Jober і бічна панель Corvinum показують лише модулі, які підтримує цей "
 "клієнт."
 
-#: core/ui/help.py:54
+#: core/ui/help.py:66
 msgid ""
 "Start from People when you need one worker. Search or filter the list, open "
 "the profile, and follow its next-step panel."
@@ -1658,7 +1665,7 @@ msgstr ""
 "відфільтруйте список, відкрийте профіль і виконайте вказівки панелі "
 "наступного кроку."
 
-#: core/ui/help.py:57
+#: core/ui/help.py:69
 msgid ""
 "Read status dots and alert colors consistently: blue is available, amber "
 "needs attention, green is working or valid, gray is inactive, and red is "
@@ -1668,7 +1675,7 @@ msgstr ""
 "жовтогарячий — потребує уваги, зелений — працює або чинний, сірий — "
 "неактивний, червоний — заблокований або терміновий."
 
-#: core/ui/help.py:60
+#: core/ui/help.py:72
 msgid ""
 "Hover with a mouse or tap with touch to open tooltips. Return to Help for "
 "the complete workflow and its safety boundaries."
@@ -1676,11 +1683,11 @@ msgstr ""
 "Наведіть вказівник або торкніться елемента, щоб відкрити підказку. Повний "
 "процес і його безпекові межі наведено в Довідці."
 
-#: core/ui/help.py:63
+#: core/ui/help.py:75
 msgid "Scope is enforced on the server"
 msgstr "Область доступу контролює сервер"
 
-#: core/ui/help.py:65
+#: core/ui/help.py:77
 msgid ""
 "A missing action normally means your role cannot perform it. A forbidden "
 "cross-office link is rejected by the server; changing a URL does not widen "
@@ -1689,7 +1696,7 @@ msgstr ""
 "Відсутня дія зазвичай означає, що ваша роль не може її виконати. Сервер "
 "відхиляє заборонене посилання між офісами; зміна URL не розширює доступ."
 
-#: core/ui/help.py:71
+#: core/ui/help.py:83
 msgid ""
 "The client-specific application shell with its main navigation and account "
 "controls."
@@ -1697,32 +1704,32 @@ msgstr ""
 "Інтерфейс конкретного клієнта з головною навігацією та елементами керування "
 "обліковим записом."
 
-#: core/ui/help.py:73
+#: core/ui/help.py:85
 msgid "Open a module from the client navigation."
 msgstr "Відкрийте модуль із навігації клієнта."
 
-#: core/ui/help.py:75
+#: core/ui/help.py:87
 msgid "Account, language, theme, office, and role controls stay in the shell."
 msgstr ""
 "Елементи керування обліковим записом, мовою, темою, офісом і роллю "
 "залишаються в основному інтерфейсі."
 
-#: core/ui/help.py:85
+#: core/ui/help.py:97
 msgid "Workforce workflows"
 msgstr "Робочі процеси персоналу"
 
-#: core/ui/help.py:89
+#: core/ui/help.py:101
 msgid "People and intake"
 msgstr "Люди та прийняття"
 
-#: core/ui/help.py:91
+#: core/ui/help.py:103
 msgid ""
 "Find, create, and maintain worker profiles, avatars, and lifecycle state."
 msgstr ""
 "Знаходьте, створюйте й ведіть профілі працівників, аватари та стани "
 "життєвого циклу."
 
-#: core/ui/help.py:95
+#: core/ui/help.py:107
 msgid ""
 "People is the operational home for a worker from first intake through "
 "assignment, inactivity, and any later return."
@@ -1730,7 +1737,7 @@ msgstr ""
 "Сторінка Люди — операційний центр працівника від першого прийняття через "
 "призначення й неактивність до можливого повернення."
 
-#: core/ui/help.py:98
+#: core/ui/help.py:110
 msgid ""
 "All roles may read profiles in their allowed office scope. Recruiters and "
 "Managers normally create or edit people; other actions have their own "
@@ -1740,7 +1747,7 @@ msgstr ""
 "створюють або редагують Рекрутери й Менеджери; інші дії мають окремі "
 "перевірки дозволів."
 
-#: core/ui/help.py:102
+#: core/ui/help.py:114
 msgid ""
 "Search by name and combine the status and inactive-reason filters to narrow "
 "the People list without changing any records."
@@ -1748,7 +1755,7 @@ msgstr ""
 "Шукайте за ім’ям і поєднуйте фільтри статусу та причини неактивності, щоб "
 "звузити список Людей без зміни записів."
 
-#: core/ui/help.py:105
+#: core/ui/help.py:117
 msgid ""
 "Choose Add person to record the minimum reliable intake details. Review "
 "spelling and duplicates before saving."
@@ -1756,7 +1763,7 @@ msgstr ""
 "Виберіть Додати особу й запишіть мінімально необхідні достовірні дані "
 "прийняття. Перед збереженням перевірте написання та дублікати."
 
-#: core/ui/help.py:108
+#: core/ui/help.py:120
 msgid ""
 "Open the profile to manage operational details, the owning recruiter, "
 "project history, readiness, certificates, and other enabled panels."
@@ -1765,7 +1772,7 @@ msgstr ""
 "Рекрутером, історією проєктів, готовністю, посвідченнями та іншими "
 "ввімкненими панелями."
 
-#: core/ui/help.py:111
+#: core/ui/help.py:123
 msgid ""
 "Upload a portrait only when it is useful. Accepted JPEG, PNG, or WebP files "
 "are cropped, resized to 512 by 512, stripped of metadata, and stored as WebP."
@@ -1774,11 +1781,11 @@ msgstr ""
 "обрізаються, змінюються до 512 × 512, очищуються від метаданих і "
 "зберігаються як WebP."
 
-#: core/ui/help.py:114
+#: core/ui/help.py:126
 msgid "Personal-data gate"
 msgstr "Шлюз персональних даних"
 
-#: core/ui/help.py:116
+#: core/ui/help.py:128
 msgid ""
 "Use fictional people until the real-data security gate is complete. Record "
 "only data needed for the workflow, and never use a real identity document as "
@@ -1788,33 +1795,33 @@ msgstr ""
 "людей. Записуйте тільки потрібні для процесу дані й ніколи не використовуйте "
 "справжній документ, що посвідчує особу, як аватар."
 
-#: core/ui/help.py:122
+#: core/ui/help.py:134
 msgid ""
 "The People list with fictional workers, status filters, and profile links."
 msgstr ""
 "Список Людей із вигаданими працівниками, фільтрами статусів і посиланнями на "
 "профілі."
 
-#: core/ui/help.py:124
+#: core/ui/help.py:136
 msgid "Search and filters narrow the current office-scoped list."
 msgstr "Пошук і фільтри звужують поточний список у межах офісу."
 
-#: core/ui/help.py:126
+#: core/ui/help.py:138
 msgid "Each row opens the worker profile and shows the lifecycle state."
 msgstr ""
 "Кожен рядок відкриває профіль працівника й показує стан життєвого циклу."
 
-#: core/ui/help.py:135
+#: core/ui/help.py:147
 msgid "Projects and assignments"
 msgstr "Проєкти та призначення"
 
-#: core/ui/help.py:137
+#: core/ui/help.py:149
 msgid "Create projects, place workers, review headcount, and record exits."
 msgstr ""
 "Створюйте проєкти, призначайте працівників, перевіряйте чисельність і "
 "фіксуйте вибуття."
 
-#: core/ui/help.py:141
+#: core/ui/help.py:153
 msgid ""
 "Projects connect workers to the site where they are expected to work and "
 "provide the source for active headcount reporting."
@@ -1822,7 +1829,7 @@ msgstr ""
 "Проєкти пов’язують працівників із місцем очікуваної роботи та є джерелом "
 "звітів про активну чисельність."
 
-#: core/ui/help.py:144
+#: core/ui/help.py:156
 msgid ""
 "All roles can read allowed projects. Coordinators and Managers normally "
 "manage placements; project creation and editing require the configured "
@@ -1832,7 +1839,7 @@ msgstr ""
 "Координатори й Менеджери; створення та редагування проєкту потребує "
 "налаштованого дозволу."
 
-#: core/ui/help.py:148
+#: core/ui/help.py:160
 msgid ""
 "Open Projects and choose an existing project, or create one with its office "
 "and responsible coordinators."
@@ -1840,7 +1847,7 @@ msgstr ""
 "Відкрийте Проєкти й виберіть наявний проєкт або створіть новий із "
 "відповідним офісом і відповідальними Координаторами."
 
-#: core/ui/help.py:151
+#: core/ui/help.py:163
 msgid ""
 "Assign an available worker from the project or person workflow. Confirm the "
 "intended project before submitting."
@@ -1848,7 +1855,7 @@ msgstr ""
 "Призначте доступного працівника з процесу проєкту або особи. Перед "
 "надсиланням підтвердьте правильний проєкт."
 
-#: core/ui/help.py:154
+#: core/ui/help.py:166
 msgid ""
 "Review active assignments and readiness before asking for activation. "
 "Reports update from these assignment records."
@@ -1856,7 +1863,7 @@ msgstr ""
 "Перед запитом на активацію перевірте активні призначення та готовність. "
 "Звіти оновлюються з цих записів призначень."
 
-#: core/ui/help.py:157
+#: core/ui/help.py:169
 msgid ""
 "When work ends, use the exit workflow and record the real reason. The exit "
 "reconciles enabled resources and moves the person out of active work."
@@ -1865,11 +1872,11 @@ msgstr ""
 "причину. Вибуття звіряє ввімкнені ресурси та виводить особу з активної "
 "роботи."
 
-#: core/ui/help.py:160
+#: core/ui/help.py:172
 msgid "Assignments drive other modules"
 msgstr "Призначення впливають на інші модулі"
 
-#: core/ui/help.py:162
+#: core/ui/help.py:174
 msgid ""
 "Do not create a second active placement to correct the first. Use the "
 "supported exit and assignment actions so history, resources, status, and "
@@ -1879,31 +1886,31 @@ msgstr ""
 "Використовуйте підтримувані дії вибуття й призначення, щоб історія, ресурси, "
 "статус і звіти залишалися узгодженими."
 
-#: core/ui/help.py:168
+#: core/ui/help.py:180
 msgid ""
 "The Projects workspace with fictional projects and assignment information."
 msgstr "Робоча область Проєктів із вигаданими проєктами й даними призначень."
 
-#: core/ui/help.py:171
+#: core/ui/help.py:183
 msgid "Open a project to review its people and operational details."
 msgstr "Відкрийте проєкт, щоб переглянути його людей та операційні подробиці."
 
-#: core/ui/help.py:173
+#: core/ui/help.py:185
 msgid "Use the project actions for assignment and maintenance."
 msgstr "Для призначення й обслуговування використовуйте дії проєкту."
 
-#: core/ui/help.py:181
+#: core/ui/help.py:193
 msgid "Trials, readiness and activation"
 msgstr "Пробні дні, готовність та активація"
 
-#: core/ui/help.py:183
+#: core/ui/help.py:195
 msgid ""
 "Record trial outcomes, complete readiness, and decide activation requests."
 msgstr ""
 "Записуйте результати пробних днів, завершуйте готовність і вирішуйте запити "
 "на активацію."
 
-#: core/ui/help.py:187
+#: core/ui/help.py:199
 msgid ""
 "This workflow moves a candidate from a trial or preparation stage into "
 "active work only after the required operational checks are complete."
@@ -1911,7 +1918,7 @@ msgstr ""
 "Цей процес переводить кандидата зі стадії проби або підготовки до активної "
 "роботи лише після завершення необхідних операційних перевірок."
 
-#: core/ui/help.py:190
+#: core/ui/help.py:202
 msgid ""
 "Recruiters or Coordinators prepare the worker according to their "
 "permissions. Managers decide queued activation requests; reading this "
@@ -1921,7 +1928,7 @@ msgstr ""
 "Менеджери вирішують запити на активацію в черзі; читання статті не обмежено "
 "роллю."
 
-#: core/ui/help.py:194
+#: core/ui/help.py:206
 msgid ""
 "Schedule a trial for the correct worker and project, then record the actual "
 "outcome instead of changing lifecycle status by hand."
@@ -1929,7 +1936,7 @@ msgstr ""
 "Заплануйте пробний день для правильного працівника й проєкту, а потім "
 "запишіть фактичний результат замість ручної зміни стану життєвого циклу."
 
-#: core/ui/help.py:197
+#: core/ui/help.py:209
 msgid ""
 "Complete each readiness requirement or mark it not applicable with a reason. "
 "Client-specific critical checklist items must also be complete where enabled."
@@ -1938,7 +1945,7 @@ msgstr ""
 "причиною. Там, де ввімкнено, також треба виконати критичні пункти "
 "контрольного списку клієнта."
 
-#: core/ui/help.py:200
+#: core/ui/help.py:212
 msgid ""
 "Submit the activation request only when the page reports readiness. The "
 "request captures the relevant readiness state for review."
@@ -1946,7 +1953,7 @@ msgstr ""
 "Надсилайте запит на активацію лише тоді, коли сторінка повідомляє про "
 "готовність. Запит фіксує відповідний стан готовності для перевірки."
 
-#: core/ui/help.py:203
+#: core/ui/help.py:215
 msgid ""
 "A Manager approves to start the assignment or rejects with a reason so the "
 "preparer knows what must be corrected."
@@ -1954,7 +1961,7 @@ msgstr ""
 "Менеджер схвалює початок призначення або відхиляє його із причиною, щоб "
 "відповідальний за підготовку знав, що виправити."
 
-#: core/ui/help.py:210
+#: core/ui/help.py:222
 msgid ""
 "In checklist-enabled clients, tick every critical activation item on the "
 "worker profile; a critical open item blocks activation even when the "
@@ -1964,11 +1971,11 @@ msgstr ""
 "активації в профілі працівника; відкритий критичний пункт блокує активацію, "
 "навіть якщо звичайні складові виглядають завершеними."
 
-#: core/ui/help.py:214
+#: core/ui/help.py:226
 msgid "Never bypass readiness"
 msgstr "Ніколи не обходьте готовність"
 
-#: core/ui/help.py:216
+#: core/ui/help.py:228
 msgid ""
 "Activation is a controlled state transition. Correct the underlying trial, "
 "readiness, or checklist record instead of forcing a status that contradicts "
@@ -1978,34 +1985,130 @@ msgstr ""
 "готовності або контрольного списку замість примусового встановлення "
 "суперечливого статусу."
 
-#: core/ui/help.py:222
+#: core/ui/help.py:234
 msgid "The activation queue with fictional workers awaiting a decision."
 msgstr "Черга активації з вигаданими працівниками, які очікують рішення."
 
-#: core/ui/help.py:224
+#: core/ui/help.py:236
 msgid "The queue identifies the worker and requested project."
 msgstr "Черга визначає працівника та запитаний проєкт."
 
-#: core/ui/help.py:226
+#: core/ui/help.py:238
 msgid "Decision controls approve or return the request with a reason."
 msgstr "Елементи рішення схвалюють запит або повертають його із причиною."
 
-#: core/ui/help.py:236
+#: core/ui/help.py:245
+msgid ""
+"The entry medical certificate is on file. Required - it cannot be marked not-"
+"applicable, and activation is refused without it."
+msgstr "Вхідний медогляд є у справі. Обов'язково – не можна позначити як нерелевантне, і без нього активацію буде відхилено."
+
+#: core/ui/help.py:246 core/ui/help.py:251 core/ui/help.py:256
+#: core/ui/help.py:261 core/ui/help.py:266 core/ui/help.py:271
+#: core/ui/help.py:688 core/ui/help.py:693 core/ui/help.py:698
+#: core/ui/help.py:703 core/ui/help.py:708 core/ui/help.py:714
+#: core/ui/help.py:720
+msgid "Coordinator or Manager"
+msgstr "Координатор або менеджер"
+
+#: core/ui/help.py:250
+msgid ""
+"The worker has the equipment the job needs. Required, like Medical, and "
+"cannot be marked not-applicable."
+msgstr "Працівник має спорядження, потрібне для роботи. Обов'язково, як і медогляд, і не можна позначити як нерелевантне."
+
+#: core/ui/help.py:255
+msgid ""
+"A bed is arranged, or genuinely not needed. Marking it not-applicable "
+"requires a written reason."
+msgstr "Житло забезпечене або справді не потрібне. Позначення як нерелевантне потребує письмової причини."
+
+#: core/ui/help.py:260
+msgid ""
+"Travel to site is arranged, or not needed with a reason. Hidden entirely "
+"where the transport feature is switched off."
+msgstr "Проїзд на об'єкт організовано або із зазначеною причиною не потрібен. Повністю приховано там, де функцію транспорту вимкнено."
+
+#: core/ui/help.py:265
+msgid ""
+"The date the medical was carried out. It cannot be in the future; a future "
+"date is a typo, not a plan."
+msgstr "Дата проведення медогляду. Не може бути в майбутньому; майбутня дата — це друкарська помилка, а не план."
+
+# --- projects UI ---
+#: core/ui/help.py:269 templates/pages/person_detail.html:182
+msgid "Request activation"
+msgstr "Запитати активацію"
+
+#: core/ui/help.py:270
+msgid ""
+"Asks a manager to decide. It does not activate anyone, and the four pillars "
+"are re-checked at the moment of the decision in case one regressed in "
+"between."
+msgstr "Просить менеджера ухвалити рішення. Нікого не активує, а чотири стовпи повторно перевіряються в момент рішення на випадок, якщо якийсь із них погіршився."
+
+#: core/ui/help.py:274 templates/pages/activation_queue.html:34
+#: templates/pages/blacklist_queue.html:29
+#: templates/panels/blacklist_case.html:20
+msgid "Approve"
+msgstr "Затвердити"
+
+#: core/ui/help.py:275 templates/pages/activation_queue.html:34
+msgid ""
+"Puts this worker to work: they move to Working on this project, the "
+"assignment starts today, and accommodation and equipment are committed."
+msgstr "Ставить цього працівника до роботи: він переходить у стан Працює на цьому проєкті, призначення починається сьогодні, а житло та спорядження закріплюються."
+
+#: core/ui/help.py:276 core/ui/help.py:282 core/ui/help.py:287
+#: core/ui/help.py:774 core/ui/help.py:779 core/ui/help.py:784
+#: core/ui/help.py:789 core/ui/help.py:794 core/ui/help.py:845
+#: core/ui/help.py:850 core/ui/help.py:855 core/ui/help.py:860
+#: templates/pages/person_detail.html:75
+msgid "Manager"
+msgstr "Менеджер"
+
+#: core/ui/help.py:277
+msgid "Deciding your own request is allowed, and recorded as a self-approval."
+msgstr "Ухвалювати рішення щодо власного запиту дозволено, і це записується як самозатвердження."
+
+#: core/ui/help.py:280 templates/pages/activation_queue.html:35
+#: templates/pages/blacklist_queue.html:30
+#: templates/panels/blacklist_case.html:21
+msgid "Reject"
+msgstr "Відхилити"
+
+#: core/ui/help.py:281 templates/pages/activation_queue.html:35
+msgid ""
+"Sends the request back with your reason. The worker stays in readiness and "
+"the coordinator can fix what you name and ask again. A reason is required."
+msgstr "Повертає запит із вашою причиною. Працівник залишається в готовності, а координатор може виправити те, що ви назвете, і подати запит знову. Причина обов'язкова."
+
+#: core/ui/help.py:285 templates/pages/person_detail.html:76
+msgid "Activate without a trial day"
+msgstr "Активувати без пробного дня"
+
+#: core/ui/help.py:286
+msgid ""
+"Opens readiness for a worker the office already knows, with no trial. It "
+"waives the trial only - all four pillars still apply before activation."
+msgstr "Відкриває готовність для працівника, якого офіс уже знає, без пробного дня. Скасовує лише пробний день — усі чотири стовпи перед активацією й далі діють."
+
+#: core/ui/help.py:296
 msgid "Safety and resources"
 msgstr "Безпека та ресурси"
 
-#: core/ui/help.py:240
+#: core/ui/help.py:300
 msgid "Certificates and compliance"
 msgstr "Посвідчення та відповідність"
 
-#: core/ui/help.py:242
+#: core/ui/help.py:302
 msgid ""
 "Store allowed occupational licences and manage expiry, renewal, and archive."
 msgstr ""
 "Зберігайте дозволені професійні посвідчення та керуйте строком дії, "
 "поновленням і архівуванням."
 
-#: core/ui/help.py:247
+#: core/ui/help.py:307
 msgid ""
 "Compliance keeps occupational certificate metadata and the permitted "
 "forklift, crane, and welding files visible before they expire."
@@ -2014,7 +2117,7 @@ msgstr ""
 "навантажувача, крана та зварювання, щоб вони були помітні до завершення "
 "строку дії."
 
-#: core/ui/help.py:250
+#: core/ui/help.py:310
 msgid ""
 "Authorized Recruiters, Coordinators, and Managers can add certificates. "
 "Permanent file removal is Manager-only; private file delivery rechecks "
@@ -2024,7 +2127,7 @@ msgstr ""
 "посвідчення. Остаточне видалення файлів доступне лише Менеджеру; приватна "
 "видача файлу повторно перевіряє офіс і доступ до чутливих даних."
 
-#: core/ui/help.py:254
+#: core/ui/help.py:314
 msgid ""
 "Open a worker and choose Add certificate. Select only Forklift, Crane, or "
 "Welding and enter the issuer, dates, and optional certificate number."
@@ -2033,7 +2136,7 @@ msgstr ""
 "Навантажувач, Кран або Зварювання та введіть видавця, дати й необов’язковий "
 "номер посвідчення."
 
-#: core/ui/help.py:257
+#: core/ui/help.py:317
 msgid ""
 "Upload one PDF, one front image, or front and back images. Review both "
 "private links after saving a two-sided card."
@@ -2042,7 +2145,7 @@ msgstr ""
 "боків. Після збереження двосторонньої картки перевірте обидва приватні "
 "посилання."
 
-#: core/ui/help.py:260
+#: core/ui/help.py:320
 msgid ""
 "Use Edit to correct metadata or add a missing back image. Use Renew for a "
 "replacement certificate so the previous record remains in history."
@@ -2051,7 +2154,7 @@ msgstr ""
 "зворотний бік. Для заміни посвідчення використовуйте Поновити, щоб "
 "попередній запис залишився в історії."
 
-#: core/ui/help.py:263
+#: core/ui/help.py:323
 msgid ""
 "Archive a record that should no longer be active. Use Manager file removal "
 "only for an improper upload and provide the required reason."
@@ -2060,11 +2163,11 @@ msgstr ""
 "файлу використовуйте лише для помилкового завантаження й укажіть обов’язкову "
 "причину."
 
-#: core/ui/help.py:266
+#: core/ui/help.py:326
 msgid "Strict document-storage boundary"
 msgstr "Сувора межа зберігання документів"
 
-#: core/ui/help.py:268
+#: core/ui/help.py:328
 msgid ""
 "Never upload passports, identity cards, birth or residence documents, "
 "financial records, medical reports, or health-certificate scans. Those are "
@@ -2080,36 +2183,36 @@ msgstr ""
 "сховище й зашифровані резервні копії є частиною виробничого шлюзу. До "
 "завершення шлюзу використовуйте вигадані посвідчення."
 
-#: core/ui/help.py:274
+#: core/ui/help.py:334
 msgid ""
 "The compliance workspace showing fictional occupational certificate alerts."
 msgstr ""
 "Робоча область Відповідності з вигаданими попередженнями про професійні "
 "посвідчення."
 
-#: core/ui/help.py:277
+#: core/ui/help.py:337
 msgid "Alerts identify the worker and the occupational requirement."
 msgstr "Попередження визначають працівника й професійну вимогу."
 
-#: core/ui/help.py:279
+#: core/ui/help.py:339
 msgid "Status and due date show which item needs attention first."
 msgstr "Статус і кінцева дата показують, який пункт потребує уваги першим."
 
 # --- logistics: equipment ---
-#: core/ui/help.py:287 features/advances/models.py:37
+#: core/ui/help.py:347 features/advances/models.py:37
 #: features/profitability/models.py:92 templates/pages/equipment_stock.html:7
 #: templates/panels/logistics_equipment.html:4
 msgid "Equipment"
 msgstr "Спорядження"
 
-#: core/ui/help.py:289
+#: core/ui/help.py:349
 msgid ""
 "Maintain the catalogue, issue items, and handle stock, returns, or reviews."
 msgstr ""
 "Ведіть каталог, видавайте предмети та обробляйте склад, повернення або "
 "перевірки."
 
-#: core/ui/help.py:294
+#: core/ui/help.py:354
 msgid ""
 "Equipment records what can be issued, what each worker holds, and how a "
 "missing or returned item is resolved under the client's policy."
@@ -2117,7 +2220,7 @@ msgstr ""
 "Спорядження фіксує, що можна видати, що має кожен працівник і як за "
 "політикою клієнта вирішується питання відсутнього або поверненого предмета."
 
-#: core/ui/help.py:297
+#: core/ui/help.py:357
 msgid ""
 "All roles may read the enabled equipment views. Issuing, receiving, "
 "returning, adjusting stock, and deciding deductions each require their "
@@ -2127,7 +2230,7 @@ msgstr ""
 "повернення, коригування складу й рішення про утримання потребують "
 "відповідного операційного дозволу."
 
-#: core/ui/help.py:301
+#: core/ui/help.py:361
 msgid ""
 "Maintain catalogue names, sizes, and prices so an issue can be identified "
 "and valued consistently."
@@ -2135,7 +2238,7 @@ msgstr ""
 "Підтримуйте назви, розміри й ціни каталогу, щоб виданий предмет можна було "
 "послідовно визначити й оцінити."
 
-#: core/ui/help.py:304
+#: core/ui/help.py:364
 msgid ""
 "Issue the correct item from the worker profile and verify the worker and "
 "office before submitting."
@@ -2143,7 +2246,7 @@ msgstr ""
 "Видайте правильний предмет із профілю працівника й перед надсиланням "
 "перевірте працівника та офіс."
 
-#: core/ui/help.py:307
+#: core/ui/help.py:367
 msgid ""
 "If an item is not returned, flag it for review. A Manager records whether "
 "the cost is charged or waived instead of editing history."
@@ -2151,7 +2254,7 @@ msgstr ""
 "Якщо предмет не повернули, позначте його для перевірки. Менеджер записує, чи "
 "стягується вартість, чи її скасовано, замість редагування історії."
 
-#: core/ui/help.py:314
+#: core/ui/help.py:374
 msgid ""
 "Where stock tracking is enabled, record goods receipts before issuing, use "
 "adjustments only with a reason, and reconcile the office-specific balance "
@@ -2161,7 +2264,7 @@ msgstr ""
 "використовуйте коригування лише з причиною та звіряйте залишок офісу з "
 "журналом надходжень."
 
-#: core/ui/help.py:320
+#: core/ui/help.py:380
 msgid ""
 "Where returns are enabled, use Return on the original issue so the item "
 "state changes through the recorded workflow and the catalogue remains "
@@ -2171,11 +2274,11 @@ msgstr ""
 "щоб стан предмета змінювався через зафіксований процес, а каталог залишався "
 "точним."
 
-#: core/ui/help.py:324
+#: core/ui/help.py:384
 msgid "Follow the enabled issue policy"
 msgstr "Дотримуйтеся ввімкненої політики видачі"
 
-#: core/ui/help.py:326
+#: core/ui/help.py:386
 msgid ""
 "Stock-ledger clients reduce office stock when issuing. Return-enabled "
 "clients record a return on the original issue. The Help page shows only the "
@@ -2185,7 +2288,7 @@ msgstr ""
 "з поверненнями фіксують повернення в первинній видачі. Довідка показує лише "
 "політику, увімкнену для цього клієнта."
 
-#: core/ui/help.py:332
+#: core/ui/help.py:392
 msgid ""
 "The client-specific equipment workspace with fictional catalogue or stock "
 "data."
@@ -2193,20 +2296,20 @@ msgstr ""
 "Робоча область спорядження конкретного клієнта з вигаданими даними каталогу "
 "або складу."
 
-#: core/ui/help.py:335
+#: core/ui/help.py:395
 msgid "Catalogue or stock rows identify the item and current state."
 msgstr "Рядки каталогу або складу визначають предмет і поточний стан."
 
-#: core/ui/help.py:338
+#: core/ui/help.py:398
 msgid "Available actions follow this client's stock and return policy."
 msgstr "Доступні дії відповідають політиці складу й повернення цього клієнта."
 
-#: core/ui/help.py:349
+#: core/ui/help.py:409
 msgid "Manage buildings, rooms, assignments, rates, and monthly costs."
 msgstr ""
 "Керуйте будівлями, кімнатами, поселеннями, тарифами та місячними витратами."
 
-#: core/ui/help.py:354
+#: core/ui/help.py:414
 msgid ""
 "Accommodation connects office-owned buildings and rooms to the workers "
 "living there and to the rates used in operational cost views."
@@ -2214,7 +2317,7 @@ msgstr ""
 "Проживання пов’язує будівлі й кімнати офісу з працівниками, які там "
 "мешкають, і тарифами в операційних поданнях витрат."
 
-#: core/ui/help.py:357
+#: core/ui/help.py:417
 msgid ""
 "Readers see accommodation within their office scope. Coordinators and "
 "Managers normally manage rooms and placements; rate and cost actions require "
@@ -2224,7 +2327,7 @@ msgstr ""
 "зазвичай керують Координатори та Менеджери; дії з тарифами й витратами "
 "потребують окремих дозволів."
 
-#: core/ui/help.py:361
+#: core/ui/help.py:421
 msgid ""
 "Create the building in the correct office, then add rooms with a real "
 "capacity and the applicable rate."
@@ -2232,7 +2335,7 @@ msgstr ""
 "Створіть будівлю в правильному офісі, а потім додайте кімнати з фактичною "
 "місткістю й чинним тарифом."
 
-#: core/ui/help.py:364
+#: core/ui/help.py:424
 msgid ""
 "Assign a worker from the profile and confirm the room still has capacity. "
 "Record the assignment-specific rate only when it genuinely differs."
@@ -2240,7 +2343,7 @@ msgstr ""
 "Поселіть працівника з профілю й підтвердьте, що в кімнаті є місце. Окремий "
 "тариф поселення записуйте лише за фактичної відмінності."
 
-#: core/ui/help.py:367
+#: core/ui/help.py:427
 msgid ""
 "Release the room when the worker leaves or moves; use a transfer workflow "
 "rather than overlapping active placements."
@@ -2248,7 +2351,7 @@ msgstr ""
 "Звільніть кімнату, коли працівник виїжджає або переїжджає; замість "
 "перекриття активних поселень використовуйте процес переведення."
 
-#: core/ui/help.py:370
+#: core/ui/help.py:430
 msgid ""
 "Use Accommodation costs with the period controls to review occupancy, room "
 "rates, worker payments, and the office-scoped result."
@@ -2256,11 +2359,11 @@ msgstr ""
 "У Витратах на проживання за допомогою вибору періоду перегляньте "
 "заповненість, тарифи кімнат, платежі працівників і результат у межах офісу."
 
-#: core/ui/help.py:373
+#: core/ui/help.py:433
 msgid "Capacity and dates matter"
 msgstr "Місткість і дати важливі"
 
-#: core/ui/help.py:375
+#: core/ui/help.py:435
 msgid ""
 "A stale room assignment makes both availability and cost reporting wrong. "
 "Record moves and releases on the date they actually happen."
@@ -2268,7 +2371,7 @@ msgstr ""
 "Застаріле призначення кімнати спотворює доступність і звіт про витрати. "
 "Переїзди й звільнення записуйте в день, коли вони фактично відбулися."
 
-#: core/ui/help.py:381
+#: core/ui/help.py:441
 msgid ""
 "The accommodation workspace with fictional buildings, occupancy, and cost "
 "information."
@@ -2276,21 +2379,21 @@ msgstr ""
 "Робоча область проживання з вигаданими будівлями, заповненістю та даними "
 "витрат."
 
-#: core/ui/help.py:383
+#: core/ui/help.py:443
 msgid "Building and room data define capacity and placement."
 msgstr "Дані будівлі й кімнати визначають місткість і поселення."
 
-#: core/ui/help.py:385
+#: core/ui/help.py:445
 msgid "Period controls and totals explain the accommodation cost view."
 msgstr "Вибір періоду й підсумки пояснюють подання витрат на проживання."
 
-#: core/ui/help.py:396
+#: core/ui/help.py:456
 msgid "Propose, review, match, and restrict serious re-entry cases."
 msgstr ""
 "Пропонуйте, перевіряйте, зіставляйте й обмежуйте серйозні випадки повторного "
 "прийняття."
 
-#: core/ui/help.py:401
+#: core/ui/help.py:461
 msgid ""
 "The blacklist is a controlled last-resort process for preventing a "
 "specifically reviewed person from being re-entered after a serious issue."
@@ -2298,7 +2401,7 @@ msgstr ""
 "Чорний список — контрольований крайній засіб, що після серйозної проблеми "
 "запобігає повторному прийняттю конкретно перевіреної особи."
 
-#: core/ui/help.py:404
+#: core/ui/help.py:464
 msgid ""
 "A Coordinator or Manager may propose a case. Only a Manager decides it; "
 "other authenticated roles may read Help even if they cannot open the review "
@@ -2308,7 +2411,7 @@ msgstr ""
 "Менеджер; інші автентифіковані ролі можуть читати Довідку, навіть якщо не "
 "відкривають чергу перевірки."
 
-#: core/ui/help.py:408
+#: core/ui/help.py:468
 msgid ""
 "Open the person's profile, propose a case, choose the approved category, and "
 "write a factual reason without unnecessary sensitive detail."
@@ -2316,7 +2419,7 @@ msgstr ""
 "Відкрийте профіль особи, запропонуйте випадок, виберіть затверджену "
 "категорію й напишіть фактичну причину без зайвих чутливих подробиць."
 
-#: core/ui/help.py:411
+#: core/ui/help.py:471
 msgid ""
 "A Manager reviews the proposal and its privacy-preserving identifiers, then "
 "approves or rejects with a recorded reason."
@@ -2324,7 +2427,7 @@ msgstr ""
 "Менеджер перевіряє пропозицію та ідентифікатори, що зберігають приватність, "
 "а потім схвалює або відхиляє її із зафіксованою причиною."
 
-#: core/ui/help.py:414
+#: core/ui/help.py:474
 msgid ""
 "Approved cases block activation and flag a matching future intake. The "
 "system does not merge people automatically."
@@ -2332,7 +2435,7 @@ msgstr ""
 "Схвалені випадки блокують активацію та позначають майбутнє прийняття зі "
 "збігом. Система не об’єднує людей автоматично."
 
-#: core/ui/help.py:417
+#: core/ui/help.py:477
 msgid ""
 "If a restriction must be removed, use the controlled removal action so the "
 "reason and actor remain in Audit."
@@ -2340,11 +2443,11 @@ msgstr ""
 "Якщо обмеження треба зняти, використовуйте контрольовану дію видалення, щоб "
 "причина й виконавець залишилися в Аудиті."
 
-#: core/ui/help.py:420
+#: core/ui/help.py:480
 msgid "High-impact restricted data"
 msgstr "Обмежені дані з великим впливом"
 
-#: core/ui/help.py:422
+#: core/ui/help.py:482
 msgid ""
 "Do not use the blacklist for ordinary performance notes or as an automatic "
 "consequence of an exit. Follow the approved legal basis, access, and "
@@ -2354,33 +2457,33 @@ msgstr ""
 "автоматичний наслідок вибуття. До прийняття реальних даних дотримуйтеся "
 "затвердженої правової підстави, доступу й політики зберігання."
 
-#: core/ui/help.py:427
+#: core/ui/help.py:487
 msgid "The blacklist review queue with fictional proposed cases."
 msgstr "Черга перевірки чорного списку з вигаданими запропонованими випадками."
 
-#: core/ui/help.py:428
+#: core/ui/help.py:488
 msgid "The proposal shows the person, category, and review facts."
 msgstr "Пропозиція показує особу, категорію та факти для перевірки."
 
-#: core/ui/help.py:429
+#: core/ui/help.py:489
 msgid "A Manager records the decision through explicit controls."
 msgstr "Менеджер фіксує рішення за допомогою чітких елементів керування."
 
-#: core/ui/help.py:438
+#: core/ui/help.py:498
 msgid "Reporting and pay"
 msgstr "Звіти й оплата"
 
-#: core/ui/help.py:442
+#: core/ui/help.py:502
 msgid "Reports and staff activity"
 msgstr "Звіти та активність працівників"
 
-#: core/ui/help.py:444
+#: core/ui/help.py:504
 msgid "Use period filters, drill-downs, office scope, and activity reporting."
 msgstr ""
 "Використовуйте фільтри періоду, деталізацію, область офісу та звіти про "
 "активність."
 
-#: core/ui/help.py:448
+#: core/ui/help.py:508
 msgid ""
 "Reports summarizes current operational records, while Staff activity counts "
 "selected staff actions over a chosen reporting period."
@@ -2388,7 +2491,7 @@ msgstr ""
 "Звіти підсумовують поточні операційні записи, а Активність працівників "
 "підраховує вибрані дії персоналу за заданий звітний період."
 
-#: core/ui/help.py:451
+#: core/ui/help.py:511
 msgid ""
 "Report visibility follows office scope and each report action. Staff "
 "activity is available only to roles with its reporting permission; Help "
@@ -2398,7 +2501,7 @@ msgstr ""
 "Активність працівників доступна лише ролям із відповідним дозволом; Довідку "
 "можуть читати всі."
 
-#: core/ui/help.py:455
+#: core/ui/help.py:515
 msgid ""
 "Set the reporting period first. Month, quarter, year, and custom controls "
 "change the rows and totals shown on the page."
@@ -2406,7 +2509,7 @@ msgstr ""
 "Спочатку встановіть звітний період. Елементи вибору місяця, кварталу, року й "
 "довільного періоду змінюють рядки та підсумки на сторінці."
 
-#: core/ui/help.py:458
+#: core/ui/help.py:518
 msgid ""
 "Open a metric card or linked row to drill down to the underlying People or "
 "Projects view instead of copying a headline number."
@@ -2414,7 +2517,7 @@ msgstr ""
 "Замість копіювання підсумкового числа відкрийте картку показника або "
 "пов’язаний рядок, щоб перейти до базового подання Людей чи Проєктів."
 
-#: core/ui/help.py:461
+#: core/ui/help.py:521
 msgid ""
 "Use Staff activity to compare recorded operational actions, including zero-"
 "activity colleagues where shown."
@@ -2422,7 +2525,7 @@ msgstr ""
 "Використовуйте Активність працівників для порівняння записаних операційних "
 "дій, зокрема колег із нульовою активністю, якщо їх показано."
 
-#: core/ui/help.py:464
+#: core/ui/help.py:524
 msgid ""
 "Use Audit—not Staff activity—when you need to know who changed a specific "
 "record, what changed, and why."
@@ -2430,11 +2533,11 @@ msgstr ""
 "Якщо треба дізнатися, хто, що й чому змінив у конкретному записі, "
 "використовуйте Аудит, а не Активність працівників."
 
-#: core/ui/help.py:467
+#: core/ui/help.py:527
 msgid "Read totals in scope"
 msgstr "Читайте підсумки в межах області"
 
-#: core/ui/help.py:469
+#: core/ui/help.py:529
 msgid ""
 "Operational totals include only records visible in your office scope. An "
 "Observer may see cross-office figures that another role cannot."
@@ -2442,7 +2545,7 @@ msgstr ""
 "Операційні підсумки містять лише записи, видимі у вашій області офісів. "
 "Спостерігач може бачити міжофісні показники, недоступні іншій ролі."
 
-#: core/ui/help.py:475
+#: core/ui/help.py:535
 msgid ""
 "The Reports workspace with fictional metrics, period controls, and drill-"
 "down links."
@@ -2450,17 +2553,17 @@ msgstr ""
 "Робоча область Звітів із вигаданими показниками, вибором періоду й "
 "посиланнями на деталізацію."
 
-#: core/ui/help.py:477
+#: core/ui/help.py:537
 msgid "Set the period before interpreting a metric."
 msgstr "Встановіть період перед тлумаченням показника."
 
-#: core/ui/help.py:478
+#: core/ui/help.py:538
 msgid "Linked cards and rows open the records behind the total."
 msgstr ""
 "Пов’язані картки й рядки відкривають записи, з яких складається підсумок."
 
 # --- finance ---
-#: core/ui/help.py:486 templates/layouts/base.html:64
+#: core/ui/help.py:546 templates/layouts/base.html:64
 #: templates/pages/finance_executive.html:4
 #: templates/pages/finance_executive.html:9
 #: templates/pages/finance_month_detail.html:8
@@ -2473,7 +2576,7 @@ msgstr ""
 msgid "Finance"
 msgstr "Фінанси"
 
-#: core/ui/help.py:488
+#: core/ui/help.py:548
 msgid ""
 "Record monthly project revenue and cost lines, lock periods, and read "
 "results."
@@ -2481,7 +2584,7 @@ msgstr ""
 "Записуйте місячні доходи й витрати проєкту, блокуйте періоди та переглядайте "
 "результати."
 
-#: core/ui/help.py:493
+#: core/ui/help.py:553
 msgid ""
 "Finance records project profitability from explicit monthly revenue and cost "
 "lines and derives every displayed total from those entries."
@@ -2489,7 +2592,7 @@ msgstr ""
 "Фінанси фіксують прибутковість проєкту з явних місячних рядків доходів і "
 "витрат та обчислюють кожен показаний підсумок із цих записів."
 
-#: core/ui/help.py:496
+#: core/ui/help.py:556
 msgid ""
 "Authorized finance readers may inspect reports. Recording, locking, "
 "reopening, and export actions require their configured permissions, with "
@@ -2499,7 +2602,7 @@ msgstr ""
 "блокування, повторне відкриття та експорт потребують налаштованих дозволів "
 "і, де зазначено, схвалення Менеджера."
 
-#: core/ui/help.py:500
+#: core/ui/help.py:560
 msgid ""
 "Choose the project and calendar month, then record each revenue or cost line "
 "in its correct category."
@@ -2507,7 +2610,7 @@ msgstr ""
 "Виберіть проєкт і календарний місяць, а потім запишіть кожен рядок доходу чи "
 "витрати у правильній категорії."
 
-#: core/ui/help.py:503
+#: core/ui/help.py:563
 msgid ""
 "Enter every amount as a positive decimal. The category determines whether it "
 "contributes revenue or cost; net is calculated automatically."
@@ -2515,7 +2618,7 @@ msgstr ""
 "Вводьте кожну суму як додатне десяткове число. Категорія визначає, чи це "
 "дохід або витрата; чистий результат обчислюється автоматично."
 
-#: core/ui/help.py:506
+#: core/ui/help.py:566
 msgid ""
 "Review the month detail against source records, then lock the month when it "
 "is final. Reopen only for a genuine correction."
@@ -2523,7 +2626,7 @@ msgstr ""
 "Звірте подробиці місяця з вихідними записами, а після завершення заблокуйте "
 "місяць. Відкривайте повторно лише для справжнього виправлення."
 
-#: core/ui/help.py:509
+#: core/ui/help.py:569
 msgid ""
 "Use the summary, yearly trend, and category breakdown to inspect the same "
 "underlying lines from different angles."
@@ -2531,11 +2634,11 @@ msgstr ""
 "Використовуйте підсумок, річний тренд і розподіл за категоріями, щоб "
 "переглядати ті самі базові рядки з різних боків."
 
-#: core/ui/help.py:512
+#: core/ui/help.py:572
 msgid "Locked periods are deliberate"
 msgstr "Періоди блокуються навмисно"
 
-#: core/ui/help.py:514
+#: core/ui/help.py:574
 msgid ""
 "Do not type a negative cost or a pre-calculated net value. Locking prevents "
 "ordinary edits, and every reopen is an audited exception."
@@ -2544,7 +2647,7 @@ msgstr ""
 "Блокування запобігає звичайним змінам, а кожне повторне відкриття є "
 "аудитованим винятком."
 
-#: core/ui/help.py:520
+#: core/ui/help.py:580
 msgid ""
 "The Finance workspace with fictional monthly revenue, costs, and derived "
 "results."
@@ -2552,27 +2655,27 @@ msgstr ""
 "Робоча область Фінансів із вигаданими місячними доходами, витратами й "
 "обчисленими результатами."
 
-#: core/ui/help.py:522
+#: core/ui/help.py:582
 msgid "Period and project controls select the financial slice."
 msgstr "Елементи періоду й проєкту вибирають фінансовий зріз."
 
-#: core/ui/help.py:524
+#: core/ui/help.py:584
 msgid "Totals and charts are derived from the recorded line items."
 msgstr "Підсумки й діаграми обчислюються із записаних рядків."
 
 # --- feedback ---
-#: core/ui/help.py:533 templates/layouts/base.html:73
+#: core/ui/help.py:593 templates/layouts/base.html:73
 #: templates/pages/feedback_form.html:8 templates/pages/feedback_form.html:27
 msgid "Feedback"
 msgstr "Зворотний зв’язок"
 
-#: core/ui/help.py:535
+#: core/ui/help.py:595
 msgid "Create public links and QR flyers, then review anonymous submissions."
 msgstr ""
 "Створюйте публічні посилання та QR-листівки, а потім переглядайте анонімні "
 "звернення."
 
-#: core/ui/help.py:540
+#: core/ui/help.py:600
 msgid ""
 "Feedback gives workers a public, account-free way to submit a message "
 "through a controlled link or printed QR flyer."
@@ -2581,7 +2684,7 @@ msgstr ""
 "надіслати повідомлення через контрольоване посилання або друковану QR-"
 "листівку."
 
-#: core/ui/help.py:543
+#: core/ui/help.py:603
 msgid ""
 "Managers create links and review the inbox. The submission form is public to "
 "anyone holding the token; Help itself remains authenticated."
@@ -2590,7 +2693,7 @@ msgstr ""
 "подання публічна для кожного, хто має токен; сама Довідка залишається "
 "доступною після входу."
 
-#: core/ui/help.py:547
+#: core/ui/help.py:607
 msgid ""
 "Create a clearly labelled feedback link and optionally connect it to the "
 "relevant project."
@@ -2598,7 +2701,7 @@ msgstr ""
 "Створіть зрозуміло назване посилання зворотного зв’язку й за потреби "
 "пов’яжіть його з відповідним проєктом."
 
-#: core/ui/help.py:550
+#: core/ui/help.py:610
 msgid ""
 "Share the generated URL or download the one-page QR flyer for printing. "
 "Retire a distribution point by controlling where its token is published."
@@ -2606,7 +2709,7 @@ msgstr ""
 "Поділіться створеною URL-адресою або завантажте односторінкову QR-листівку "
 "для друку. Щоб закрити точку розповсюдження, припиніть публікацію її токена."
 
-#: core/ui/help.py:553
+#: core/ui/help.py:613
 msgid ""
 "A worker opens the public form, writes a message, and may add a rating "
 "without creating an account."
@@ -2614,7 +2717,7 @@ msgstr ""
 "Працівник відкриває публічну форму, пише повідомлення й може додати оцінку "
 "без створення облікового запису."
 
-#: core/ui/help.py:556
+#: core/ui/help.py:616
 msgid ""
 "Managers review the newest submissions in the inbox and handle them under "
 "the agreed retention and escalation process."
@@ -2622,11 +2725,11 @@ msgstr ""
 "Менеджери переглядають найновіші звернення у вхідних і обробляють їх за "
 "узгодженим процесом зберігання та ескалації."
 
-#: core/ui/help.py:559
+#: core/ui/help.py:619
 msgid "Public token, limited purpose"
 msgstr "Публічний токен, обмежена мета"
 
-#: core/ui/help.py:561
+#: core/ui/help.py:621
 msgid ""
 "Anyone with the link can submit. Do not ask workers to include identity "
 "documents, medical details, credentials, or other unnecessary sensitive "
@@ -2636,27 +2739,27 @@ msgstr ""
 "додавати до вільного тексту документи, що посвідчують особу, медичні "
 "подробиці, облікові дані чи іншу зайву чутливу інформацію."
 
-#: core/ui/help.py:567
+#: core/ui/help.py:627
 msgid ""
 "The Feedback inbox with fictional submissions and link-management controls."
 msgstr ""
 "Вхідні Зворотного зв’язку з вигаданими зверненнями й елементами керування "
 "посиланнями."
 
-#: core/ui/help.py:569
+#: core/ui/help.py:629
 msgid "Link and QR controls create the public entry point."
 msgstr "Елементи посилання та QR-коду створюють публічну точку входу."
 
-#: core/ui/help.py:571
+#: core/ui/help.py:631
 msgid "The authenticated inbox is where Managers review submissions."
 msgstr "Менеджери переглядають звернення у вхідних, захищених входом."
 
-#: core/ui/help.py:582
+#: core/ui/help.py:642
 msgid ""
 "Record advances, additions, deductions, reversals, and settlement cycles."
 msgstr "Записуйте аванси, доплати, утримання, сторнування та цикли розрахунку."
 
-#: core/ui/help.py:587
+#: core/ui/help.py:647
 msgid ""
 "The ledger records explicit pay additions and deductions, groups them into "
 "settlement cycles, and preserves corrections as history."
@@ -2664,7 +2767,7 @@ msgstr ""
 "Реєстр фіксує явні доплати й утримання із заробітку, групує їх у цикли "
 "розрахунку та зберігає виправлення в історії."
 
-#: core/ui/help.py:590
+#: core/ui/help.py:650
 msgid ""
 "Authorized readers can inspect cycles. Entry, cancellation, reversal, "
 "settlement, and export each require the corresponding ledger or export "
@@ -2674,7 +2777,7 @@ msgstr ""
 "сторнування, розрахунок та експорт потребують відповідного дозволу реєстру "
 "або експорту."
 
-#: core/ui/help.py:594
+#: core/ui/help.py:654
 msgid ""
 "Record the person, optional project, entry type, category, positive amount, "
 "and a concise note."
@@ -2682,7 +2785,7 @@ msgstr ""
 "Запишіть особу, необов’язковий проєкт, тип запису, категорію, додатну суму й "
 "стислу примітку."
 
-#: core/ui/help.py:597
+#: core/ui/help.py:657
 msgid ""
 "Review the current Thursday summary and select the intended 20th-to-20th "
 "cycle before including entries."
@@ -2690,7 +2793,7 @@ msgstr ""
 "Перед включенням записів перевірте поточний підсумок за четвер і виберіть "
 "потрібний цикл від 20-го до 20-го числа."
 
-#: core/ui/help.py:600
+#: core/ui/help.py:660
 msgid ""
 "Correct a mistake by cancelling or reversing the original entry with a "
 "reason; never overwrite financial history."
@@ -2698,7 +2801,7 @@ msgstr ""
 "Виправляйте помилку обґрунтованим скасуванням або сторнуванням первинного "
 "запису; ніколи не перезаписуйте фінансову історію."
 
-#: core/ui/help.py:603
+#: core/ui/help.py:663
 msgid ""
 "After the external deduction process is complete, mark the included cycle "
 "settled and use the approved CSV export when needed."
@@ -2706,11 +2809,11 @@ msgstr ""
 "Після завершення зовнішнього процесу утримань позначте включений цикл "
 "розрахованим і за потреби використовуйте схвалений експорт CSV."
 
-#: core/ui/help.py:606
+#: core/ui/help.py:666
 msgid "Positive amounts, explicit pay effect"
 msgstr "Додатні суми, явний вплив на заробіток"
 
-#: core/ui/help.py:608
+#: core/ui/help.py:668
 msgid ""
 "The entry type controls whether an amount adds to or deducts from pay. This "
 "ledger records source adjustments; it does not calculate statutory payroll."
@@ -2719,7 +2822,7 @@ msgstr ""
 "Цей реєстр записує вихідні коригування; він не розраховує встановлену "
 "законом заробітну плату."
 
-#: core/ui/help.py:614
+#: core/ui/help.py:674
 msgid ""
 "The ledger workspace with fictional entries, cycle controls, and settlement "
 "summaries."
@@ -2727,21 +2830,118 @@ msgstr ""
 "Робоча область реєстру з вигаданими записами, елементами циклу й підсумками "
 "розрахунку."
 
-#: core/ui/help.py:617
+#: core/ui/help.py:677
 msgid "Entry controls record an explicit type, category, and amount."
 msgstr "Елементи введення записують явний тип, категорію та суму."
 
-#: core/ui/help.py:620
+#: core/ui/help.py:680
 msgid "Cycle controls include, export, and settle the selected period."
 msgstr "Елементи циклу включають, експортують і розраховують вибраний період."
 
-#: core/ui/help.py:631
+#: core/ui/help.py:686 core/ui/help.py:772 core/ui/help.py:843
+#: features/payslips/forms.py:22 templates/pages/ledger.html:21
+#: templates/pages/payslips.html:38 templates/pages/person_detail.html:38
+#: templates/pages/person_detail.html:289 templates/pages/wages.html:38
+#: templates/partials/ledger_activity.html:8
+#: templates/partials/ledger_activity.html:26
+#: templates/partials/ledger_cycle.html:16
+msgid "Person"
+msgstr "Особа"
+
+#: core/ui/help.py:687 templates/pages/ledger.html:21
+msgid ""
+"The worker this money concerns. The entry appears on their pay overview and "
+"in their open balance."
+msgstr "Працівник, якого стосуються ці гроші. Запис з'явиться в його огляді оплати та у відкритому балансі."
+
+#: core/ui/help.py:691 templates/pages/ledger.html:25
+msgid "Company / project"
+msgstr "Компанія / проєкт"
+
+#: core/ui/help.py:692 templates/pages/ledger.html:25
+msgid ""
+"Optional. Attributes the amount to a partner company for reporting. It does "
+"not change what the worker is paid."
+msgstr "Необов'язково. Відносить суму до партнерської компанії для звітності. Не змінює того, скільки отримає працівник."
+
+#: core/ui/help.py:696 templates/pages/ledger.html:30
+#: templates/panels/advances_ledger.html:24
+msgid "Entry type"
+msgstr "Тип запису"
+
+#: core/ui/help.py:697 templates/pages/ledger.html:30
+msgid ""
+"Decides the direction: an advance or deduction reduces pay, an addition "
+"increases it. The amount stays positive either way."
+msgstr "Визначає напрям: аванс або утримання зменшує оплату, надбавка збільшує її. Сума в обох випадках залишається додатною."
+
+#: core/ui/help.py:701 templates/pages/finance_project_year.html:22
+#: templates/pages/finance_workbook.html:22 templates/pages/ledger.html:34
+#: templates/panels/advances_ledger.html:28
+#: templates/panels/blacklist_case.html:10
+#: templates/panels/blacklist_case.html:33
+#: templates/partials/ledger_activity.html:26
+msgid "Category"
+msgstr "Категорія"
+
+#: core/ui/help.py:702 templates/pages/ledger.html:34
+msgid ""
+"What the money was for - advance, clothing, footwear, equipment, medical, "
+"travel or other. Groups the cycle report; it does not affect the direction "
+"or the amount."
+msgstr "На що були гроші — аванс, одяг, взуття, спорядження, медичне, проїзд або інше. Групує звіт циклу; не впливає на напрям чи суму."
+
+#: core/ui/help.py:706 templates/pages/ledger.html:38
+#: templates/panels/advances_ledger.html:32
+msgid "Amount (EUR)"
+msgstr "Сума (EUR)"
+
+#: core/ui/help.py:707 templates/pages/ledger.html:38
+msgid ""
+"Always a positive number. Never type a minus sign - the entry type decides "
+"whether this is added or subtracted."
+msgstr "Завжди додатне число. Ніколи не вводьте знак мінус — про додавання чи віднімання вирішує тип запису."
+
+#: core/ui/help.py:709
+msgid "Once the cycle is included; correct it with a reversal after that."
+msgstr "Після включення циклу; після цього виправляйте сторнувальним записом."
+
+#: core/ui/help.py:712 templates/pages/ledger.html:39
+msgid "Entry date"
+msgstr "Дата запису"
+
+#: core/ui/help.py:713 templates/pages/ledger.html:39
+msgid ""
+"The day the money changed hands. It decides which 21st-to-20th payroll cycle "
+"the entry settles in, and which calendar month it appears under on the pay "
+"overview. Leave blank for today; a date inside an already-settled cycle is "
+"refused."
+msgstr "День, коли гроші змінили власника. Він визначає, у якому платіжному циклі з 21-го по 20-те запис буде врегульовано і під яким календарним місяцем він з'явиться в огляді оплати. Залиште порожнім для сьогодні; дату всередині вже врегульованого циклу буде відхилено."
+
+#: core/ui/help.py:715
+msgid "Once the cycle containing that date is included."
+msgstr "Після включення циклу, що містить цю дату."
+
+#: core/ui/help.py:718 core/ui/help.py:792 core/ui/help.py:858
+#: features/logistics/forms.py:179 templates/pages/ledger.html:40
+#: templates/pages/transport_trends.html:44 templates/pages/wages.html:41
+#: templates/panels/advances_ledger.html:33
+msgid "Note"
+msgstr "Нотатка"
+
+#: core/ui/help.py:719 templates/pages/ledger.html:40
+msgid ""
+"The reason, in words, for whoever reads this months from now. It is carried "
+"into the exports the accountant receives."
+msgstr "Причина словами для того, хто читатиме це через місяці. Переноситься в експорти, які отримує бухгалтер."
+
+#: core/ui/help.py:730
 msgid "Record net payslip values and deliver encrypted PDFs safely."
 msgstr ""
 "Записуйте чисті суми розрахункових листків і безпечно доставляйте "
 "зашифровані PDF."
 
-#: core/ui/help.py:636
+#: core/ui/help.py:735
 msgid ""
 "Payslips stores the independently supplied net value and can email a freshly "
 "generated encrypted PDF to the worker."
@@ -2749,7 +2949,7 @@ msgstr ""
 "Розрахункові листки зберігають незалежно надану чисту суму й можуть "
 "надіслати працівнику електронною поштою щойно створений зашифрований PDF."
 
-#: core/ui/help.py:639
+#: core/ui/help.py:738
 msgid ""
 "Payslip amounts are restricted pay data. Only roles with payslip access can "
 "read them, and only authorized Managers can record or send them."
@@ -2758,7 +2958,7 @@ msgstr ""
 "лише ролі з доступом до листків, а записувати чи надсилати — тільки "
 "уповноважені Менеджери."
 
-#: core/ui/help.py:643
+#: core/ui/help.py:742
 msgid ""
 "Confirm the worker has the correct email address, then record the calendar "
 "month, positive net amount, optional issue date, and note."
@@ -2766,7 +2966,7 @@ msgstr ""
 "Перевірте правильність електронної адреси працівника, а потім запишіть "
 "календарний місяць, додатну чисту суму, необов’язкову дату видачі й примітку."
 
-#: core/ui/help.py:646
+#: core/ui/help.py:745
 msgid ""
 "Review the recorded row before sending. Send encrypted PDF generates the "
 "attachment and a random one-time password."
@@ -2774,7 +2974,7 @@ msgstr ""
 "Перед надсиланням перевірте записаний рядок. Дія Надіслати зашифрований PDF "
 "створює вкладення й випадковий одноразовий пароль."
 
-#: core/ui/help.py:649
+#: core/ui/help.py:748
 msgid ""
 "Tell the worker the password by phone or Messenger, never in the same email "
 "as the encrypted PDF."
@@ -2782,7 +2982,7 @@ msgstr ""
 "Повідомте працівнику пароль телефоном або через Messenger, ніколи не в тому "
 "самому листі, що й зашифрований PDF."
 
-#: core/ui/help.py:652
+#: core/ui/help.py:751
 msgid ""
 "If you resend, a new password is generated and the earlier one is "
 "invalidated. The password is shown once and is not stored for later "
@@ -2792,11 +2992,11 @@ msgstr ""
 "недійсним. Пароль показується один раз і не зберігається для подальшого "
 "отримання."
 
-#: core/ui/help.py:655
+#: core/ui/help.py:754
 msgid "Never capture or copy the password into records"
 msgstr "Ніколи не фіксуйте й не копіюйте пароль до записів"
 
-#: core/ui/help.py:657
+#: core/ui/help.py:756
 msgid ""
 "Do not screenshot the success message, paste the password into notes, email "
 "it, or send it through the same channel as the PDF. The generated PDF is not "
@@ -2806,7 +3006,7 @@ msgstr ""
 "надсилайте його електронною поштою чи тим самим каналом, що й PDF. Створений "
 "PDF застосунок не зберігає."
 
-#: core/ui/help.py:663
+#: core/ui/help.py:762
 msgid ""
 "The payslip list with fictional net values and delivery states; no passwords "
 "are visible."
@@ -2814,15 +3014,55 @@ msgstr ""
 "Список розрахункових листків із вигаданими чистими сумами й станами "
 "доставки; паролів не видно."
 
-#: core/ui/help.py:666
+#: core/ui/help.py:765
 msgid "The record form stores the independently supplied net value."
 msgstr "Форма запису зберігає незалежно надану чисту суму."
 
-#: core/ui/help.py:668
+#: core/ui/help.py:767
 msgid "Delivery state shows whether an encrypted PDF was sent."
 msgstr "Стан доставки показує, чи було надіслано зашифрований PDF."
 
-#: core/ui/help.py:678
+#: core/ui/help.py:773
+msgid ""
+"Who the payslip belongs to. A worker with no email address is marked in the "
+"list, because the encrypted PDF cannot be delivered to them."
+msgstr "Кому належить розрахунковий листок. Працівник без адреси електронної пошти позначений у списку, бо зашифрований PDF йому неможливо доставити."
+
+#: core/ui/help.py:777 features/payslips/forms.py:34
+msgid "Pay month"
+msgstr "Місяць оплати"
+
+#: core/ui/help.py:778 features/payslips/forms.py:39
+msgid ""
+"The calendar month this payslip pays for, not the month it was issued in. "
+"One payslip per person per month."
+msgstr "Календарний місяць, за який здійснюється ця виплата, а не місяць видачі. Один листок на особу на місяць."
+
+#: core/ui/help.py:782 features/payslips/forms.py:35
+msgid "Net amount (EUR)"
+msgstr "Чиста сума (EUR)"
+
+#: core/ui/help.py:783 features/payslips/forms.py:43
+msgid ""
+"The net figure printed on the payslip, as paid. It is shown beside the gross "
+"wage and the ledger deductions for the same month; the system does not "
+"calculate it."
+msgstr "Чиста сума, надрукована на розрахунковому листку, як її виплачено. Показується поряд із валовою зарплатою та утриманнями книги за той самий місяць; система її не обчислює."
+
+#: core/ui/help.py:787 features/payslips/forms.py:25
+msgid "Payslip date (optional)"
+msgstr "Дата розрахункового листа (необов’язково)"
+
+#: core/ui/help.py:788
+msgid "The date printed on the document. Blank means the day it was recorded."
+msgstr "Дата, надрукована на документі. Порожнє означає день внесення."
+
+#: core/ui/help.py:793
+msgid ""
+"Free text for the office. It is not included in the PDF sent to the worker."
+msgstr "Вільний текст для офісу. Не входить до PDF, надісланого працівникові."
+
+#: core/ui/help.py:804
 msgid ""
 "Record independent monthly gross-wage source values without payroll "
 "calculation."
@@ -2830,7 +3070,7 @@ msgstr ""
 "Записуйте незалежні місячні вихідні суми брутто без розрахунку заробітної "
 "плати."
 
-#: core/ui/help.py:683
+#: core/ui/help.py:809
 msgid ""
 "Gross wages stores the supplied gross amount for a person and month beside, "
 "but independently from, the recorded net payslip."
@@ -2838,7 +3078,7 @@ msgstr ""
 "Заробіток брутто зберігає надану суму брутто для особи й місяця поруч із "
 "записаним чистим розрахунковим листком, але незалежно від нього."
 
-#: core/ui/help.py:686
+#: core/ui/help.py:812
 msgid ""
 "Authorized pay-data readers may inspect the list. Recording a gross wage "
 "requires the wage-management permission."
@@ -2846,7 +3086,7 @@ msgstr ""
 "Уповноважені читачі даних про оплату можуть переглядати список. Запис суми "
 "брутто потребує дозволу на керування оплатою."
 
-#: core/ui/help.py:690
+#: core/ui/help.py:816
 msgid ""
 "Choose the correct person and calendar month, then enter the externally "
 "supplied positive gross amount."
@@ -2854,7 +3094,7 @@ msgstr ""
 "Виберіть правильну особу й календарний місяць, а потім введіть надану ззовні "
 "додатну суму брутто."
 
-#: core/ui/help.py:693
+#: core/ui/help.py:819
 msgid ""
 "Add a short source or reconciliation note when it helps another authorized "
 "reader understand the record."
@@ -2862,7 +3102,7 @@ msgstr ""
 "Додайте коротку примітку про джерело чи звірку, якщо вона допоможе іншому "
 "уповноваженому читачеві зрозуміти запис."
 
-#: core/ui/help.py:696
+#: core/ui/help.py:822
 msgid ""
 "Compare gross and net only as independent source values. Investigate "
 "discrepancies through the payroll owner outside this application."
@@ -2870,11 +3110,11 @@ msgstr ""
 "Порівнюйте брутто й нетто лише як незалежні вихідні значення. Розбіжності "
 "з’ясовуйте з відповідальним за нарахування поза цим застосунком."
 
-#: core/ui/help.py:699
+#: core/ui/help.py:825
 msgid "Not a payroll calculator"
 msgstr "Це не калькулятор заробітної плати"
 
-#: core/ui/help.py:701
+#: core/ui/help.py:827
 msgid ""
 "The application does not derive tax, insurance, statutory deductions, or net "
 "pay from this amount and does not treat a gross-to-net difference as an "
@@ -2884,30 +3124,60 @@ msgstr ""
 "утримання чи чисту оплату й не вважає різницю між брутто й нетто "
 "автоматичною помилкою."
 
-#: core/ui/help.py:707
+#: core/ui/help.py:833
 msgid ""
 "The gross-wage workspace with fictional independent monthly source values."
 msgstr ""
 "Робоча область заробітку брутто з вигаданими незалежними місячними вихідними "
 "сумами."
 
-#: core/ui/help.py:710
+#: core/ui/help.py:836
 msgid "The form records a person, month, and positive gross amount."
 msgstr "Форма записує особу, місяць і додатну суму брутто."
 
-#: core/ui/help.py:712
+#: core/ui/help.py:838
 msgid "The table preserves who recorded each source value."
 msgstr ""
 "Таблиця зберігає відомості про того, хто записав кожне вихідне значення."
 
-#: core/ui/help.py:722
+#: core/ui/help.py:844 features/wage_ledger/forms.py:21
+msgid "The worker who earned this wage. One gross figure per person per month."
+msgstr "Працівник, який заробив цю зарплату. Одна валова сума на особу на місяць."
+
+#: core/ui/help.py:848 features/wage_ledger/forms.py:16
+#: templates/pages/wages.html:39
+msgid "Wage month"
+msgstr "Місяць зарплати"
+
+#: core/ui/help.py:849 features/wage_ledger/forms.py:25
+msgid ""
+"The calendar month the wage was earned in, not the month it was paid out."
+msgstr "Календарний місяць, у якому зарплату зароблено, а не місяць виплати."
+
+#: core/ui/help.py:853 features/wage_ledger/forms.py:17
+msgid "Gross wage (EUR)"
+msgstr "Валова зарплата (EUR)"
+
+#: core/ui/help.py:854 features/wage_ledger/forms.py:29
+msgid ""
+"Gross, before anything is taken off. Ledger deductions are subtracted from "
+"this on the worker's pay overview; tax and levies are not calculated here."
+msgstr "Валова сума до будь-яких відрахувань. В огляді оплати працівника від неї віднімаються утримання книги; податки та внески тут не обчислюються."
+
+#: core/ui/help.py:859 features/wage_ledger/forms.py:34
+msgid ""
+"Where this figure came from - a contract, a timesheet, the accountant. It is "
+"what the next reader checks it against."
+msgstr "Звідки взялося це число — з договору, табеля, від бухгалтера. Саме за цим його перевірить наступний читач."
+
+#: core/ui/help.py:870
 msgid ""
 "Trace sensitive actions, old and new values, actors, reasons, and retention."
 msgstr ""
 "Відстежуйте чутливі дії, старі й нові значення, виконавців, причини та "
 "зберігання."
 
-#: core/ui/help.py:726
+#: core/ui/help.py:874
 msgid ""
 "Audit is the append-only trace for sensitive actions: who acted, what record "
 "changed, when it happened, and the reason or value snapshot available for "
@@ -2916,7 +3186,7 @@ msgstr ""
 "Аудит — це незмінний журнал чутливих дій: хто діяв, який запис змінився, "
 "коли це сталося та яка причина чи знімок значень доступні для події."
 
-#: core/ui/help.py:729
+#: core/ui/help.py:877
 msgid ""
 "Only roles with Audit access can open the log. Help explains it to every "
 "role because their own sensitive actions may create events."
@@ -2924,7 +3194,7 @@ msgstr ""
 "Журнал можуть відкрити лише ролі з доступом до Аудиту. Довідка пояснює його "
 "всім ролям, адже їхні власні чутливі дії можуть створювати події."
 
-#: core/ui/help.py:733
+#: core/ui/help.py:881
 msgid ""
 "Open Audit and narrow the result by actor, worker, action, record type, or "
 "date range."
@@ -2932,7 +3202,7 @@ msgstr ""
 "Відкрийте Аудит і звузьте результат за виконавцем, працівником, дією, типом "
 "запису або діапазоном дат."
 
-#: core/ui/help.py:736
+#: core/ui/help.py:884
 msgid ""
 "Read the newest events first and use the record reference to connect an "
 "event to the operational workflow."
@@ -2940,7 +3210,7 @@ msgstr ""
 "Спочатку читайте найновіші події та використовуйте посилання на запис, щоб "
 "пов’язати подію з операційним процесом."
 
-#: core/ui/help.py:739
+#: core/ui/help.py:887
 msgid ""
 "Use old and new value snapshots where provided to understand the change; "
 "free-text reasons remain in the language originally entered."
@@ -2948,7 +3218,7 @@ msgstr ""
 "Де доступно, використовуйте знімки старих і нових значень, щоб зрозуміти "
 "зміну; довільні текстові причини залишаються мовою первинного введення."
 
-#: core/ui/help.py:742
+#: core/ui/help.py:890
 msgid ""
 "Use Staff activity for volume reporting. Audit is for traceability and "
 "investigation, not performance totals."
@@ -2957,11 +3227,11 @@ msgstr ""
 "призначений для простежуваності й розслідування, а не для підсумків "
 "ефективності."
 
-#: core/ui/help.py:745
+#: core/ui/help.py:893
 msgid "Append-only and restricted"
 msgstr "Незмінний та обмежений"
 
-#: core/ui/help.py:747
+#: core/ui/help.py:895
 msgid ""
 "Ordinary users cannot edit or delete audit events. Retention follows the "
 "approved policy; do not copy restricted event details into a less protected "
@@ -2971,7 +3241,7 @@ msgstr ""
 "Зберігання відповідає затвердженій політиці; не копіюйте обмежені подробиці "
 "подій до менш захищеної системи."
 
-#: core/ui/help.py:753
+#: core/ui/help.py:901
 msgid ""
 "The Audit page heading and filters, captured without event rows or log "
 "contents."
@@ -2979,13 +3249,17 @@ msgstr ""
 "Заголовок і фільтри сторінки Аудиту, зняті без рядків подій або вмісту "
 "журналу."
 
-#: core/ui/help.py:755
+#: core/ui/help.py:903
 msgid "Filters narrow the trace without changing stored events."
 msgstr "Фільтри звужують журнал без зміни збережених подій."
 
-#: core/ui/help.py:757
+#: core/ui/help.py:905
 msgid "Audit access and append-only behavior protect the evidence trail."
 msgstr "Доступ до Аудиту й незмінність захищають доказовий слід."
+
+#: core/ui/registry.py:192
+msgid "After deductions"
+msgstr "Після утримань"
 
 #: core/ui/views.py:121
 #, python-format
@@ -3123,6 +3397,10 @@ msgstr "запис у книзі"
 msgid "ledger entries"
 msgstr "записи в книзі"
 
+#: features/advances/providers.py:47
+msgid "Ledger deductions"
+msgstr "Утримання книги"
+
 #: features/advances/services.py:57
 msgid "Amount must be positive — meaning lives in the entry type."
 msgstr "Сума має бути додатною — зміст визначає тип запису."
@@ -3132,52 +3410,63 @@ msgstr "Сума має бути додатною — зміст визнача�
 msgid "%(t)s entries carry pay effect %(e)s (or none)."
 msgstr "Записи типу %(t)s мають вплив на зарплату %(e)s (або жодного)."
 
-#: features/advances/services.py:89
+#: features/advances/services.py:71
+#, python-format
+msgid ""
+"The %(key)s cycle is already settled. Record this entry in the open cycle, "
+"or reverse an existing entry instead."
+msgstr "Цикл %(key)s уже врегульовано. Внесіть цей запис у відкритий цикл або натомість сторнуйте наявний запис."
+
+#: features/advances/services.py:100
 msgid "Only open entries can be cancelled; settled entries need a reversal."
 msgstr "Скасувати можна лише відкриті записи; погашені потребують сторно."
 
-#: features/advances/services.py:101
+#: features/advances/services.py:112
 msgid "Open entries are cancelled, not reversed."
 msgstr "Відкриті записи скасовуються, а не сторнуються."
 
-#: features/advances/services.py:102
+#: features/advances/services.py:113
 msgid "Entry is already reversed."
 msgstr "Запис уже сторновано."
 
-#: features/advances/services.py:107
+#: features/advances/services.py:118
 msgid "Entries without payroll effect cannot be reversed."
 msgstr "Записи без впливу на зарплату не можна сторнувати."
 
-#: features/advances/services.py:233
+#: features/advances/services.py:272
 msgid "Entry is locked after cycle inclusion; record a reversal instead."
 msgstr "Після включення в цикл запис заблоковано; внесіть сторно."
 
-#: features/advances/views.py:72
+#: features/advances/views.py:69
+msgid "Entry date must be a real date (YYYY-MM-DD)."
+msgstr "Дата запису має бути справжньою датою (РРРР-ММ-ДД)."
+
+#: features/advances/views.py:82
 msgid "Ledger entry recorded."
 msgstr "Запис у книзі збережено."
 
-#: features/advances/views.py:74
+#: features/advances/views.py:84
 msgid "Invalid ledger entry."
 msgstr "Недійсний запис."
 
-#: features/advances/views.py:88
+#: features/advances/views.py:98
 msgid "Entry cancelled."
 msgstr "Запис скасовано."
 
-#: features/advances/views.py:91
+#: features/advances/views.py:101
 msgid "Reversal recorded."
 msgstr "Сторно записано."
 
-#: features/advances/views.py:93
+#: features/advances/views.py:103
 msgid "Unknown action."
 msgstr "Невідома дія."
 
-#: features/advances/views.py:106
+#: features/advances/views.py:116
 #, python-format
 msgid "%(n)s entries included in the cycle."
 msgstr "До циклу включено %(n)s записів."
 
-#: features/advances/views.py:109
+#: features/advances/views.py:119
 #, python-format
 msgid "%(n)s entries marked settled."
 msgstr "%(n)s записів позначено як погашені."
@@ -3418,32 +3707,32 @@ msgstr "Посвідчення кранівника"
 msgid "Welding licence"
 msgstr "Посвідчення зварювальника"
 
-#: features/compliance/forms.py:31
+#: features/compliance/forms.py:32
 msgid "certificate type"
 msgstr "тип сертифіката"
 
-#: features/compliance/forms.py:34
+#: features/compliance/forms.py:35
 msgid "front, paper scan, or PDF"
 msgstr "лицьовий бік, скан паперового документа або PDF"
 
-#: features/compliance/forms.py:41
+#: features/compliance/forms.py:42
 msgid "back (image only)"
 msgstr "зворотний бік (лише зображення)"
 
-#: features/compliance/forms.py:47
+#: features/compliance/forms.py:48
 msgid "remove the current back"
 msgstr "видалити поточний зворотний бік"
 
-#: features/compliance/forms.py:103
+#: features/compliance/forms.py:104
 msgid "A PDF must be the only file for a certificate."
 msgstr "PDF має бути єдиним файлом сертифіката."
 
-#: features/compliance/forms.py:109 features/compliance/services.py:216
+#: features/compliance/forms.py:110 features/compliance/services.py:216
 msgid ""
 "Remove the current back side before replacing the certificate with a PDF."
 msgstr "Видаліть поточний зворотний бік перед заміною сертифіката на PDF."
 
-#: features/compliance/forms.py:117
+#: features/compliance/forms.py:118
 msgid "Enter an expiry date or select does not expire."
 msgstr "Введіть дату закінчення або виберіть не має строку дії."
 
@@ -3686,7 +3975,7 @@ msgstr "Довгий текст"
 msgid "Yes/No"
 msgstr "Так/Ні"
 
-#: features/intake/models.py:19 features/logistics/forms.py:234
+#: features/intake/models.py:19 features/logistics/forms.py:235
 #: templates/pages/equipment_stock.html:49
 #: templates/partials/ledger_activity.html:8
 #: templates/partials/ledger_activity.html:26
@@ -3862,15 +4151,15 @@ msgstr "Світловідбивний жилет"
 msgid "Safety helmet"
 msgstr "Захисна каска"
 
-#: features/logistics/forms.py:58
+#: features/logistics/forms.py:59
 msgid "Capacity (beds)"
 msgstr "Місткість (ліжка)"
 
-#: features/logistics/forms.py:63
+#: features/logistics/forms.py:64
 msgid "Per-head monthly cost (EUR)"
 msgstr "Місячна вартість на одну особу (EUR)"
 
-#: features/logistics/forms.py:90
+#: features/logistics/forms.py:91
 msgid ""
 "Enter both capacity and per-head cost to record a cost period, or leave both "
 "blank."
@@ -3878,83 +4167,77 @@ msgstr ""
 "Введіть і місткість, і вартість на одну особу, щоб записати період витрат, "
 "або залиште обидва поля порожніми."
 
-#: features/logistics/forms.py:105
+#: features/logistics/forms.py:106
 msgid "Release all occupants before deactivating this location."
 msgstr "Перед деактивацією цього місця проживання виселіть усіх мешканців."
 
-#: features/logistics/forms.py:112
+#: features/logistics/forms.py:113
 msgid "Effective month"
 msgstr "Місяць дії"
 
-#: features/logistics/forms.py:145
+#: features/logistics/forms.py:146
 msgid "Capacity cannot be lower than current occupancy."
 msgstr "Місткість не може бути меншою за поточну зайнятість."
 
-#: features/logistics/forms.py:149
+#: features/logistics/forms.py:150
 msgid "Release all occupants before deactivating this room."
 msgstr "Перед деактивацією цієї кімнати виселіть усіх мешканців."
 
-#: features/logistics/forms.py:168
+#: features/logistics/forms.py:169
 msgid "Received on"
 msgstr "Отримано"
 
-#: features/logistics/forms.py:171
+#: features/logistics/forms.py:172
 msgid "Receiving office"
 msgstr "Офіс-отримувач"
 
-#: features/logistics/forms.py:174
+#: features/logistics/forms.py:175
 msgid "The warehouse this stock is received into."
 msgstr "Склад, на який оприбутковуються ці запаси."
 
-#: features/logistics/forms.py:176 templates/pages/goods_receipt_detail.html:15
+#: features/logistics/forms.py:177 templates/pages/goods_receipt_detail.html:15
 msgid "Reference"
 msgstr "Посилання"
 
-#: features/logistics/forms.py:177 templates/pages/goods_receipt_detail.html:14
+#: features/logistics/forms.py:178 templates/pages/goods_receipt_detail.html:14
 msgid "Supplier"
 msgstr "Постачальник"
 
-#: features/logistics/forms.py:178 templates/pages/ledger.html:39
-#: templates/pages/transport_trends.html:44 templates/pages/wages.html:41
-#: templates/panels/advances_ledger.html:33
-msgid "Note"
-msgstr "Нотатка"
-
-#: features/logistics/forms.py:191 features/logistics/forms.py:225
+#: features/logistics/forms.py:192 features/logistics/forms.py:226
 #: templates/pages/equipment_stock.html:47
 #: templates/panels/logistics_equipment.html:55
 msgid "Item"
 msgstr "Позиція"
 
-#: features/logistics/forms.py:193 templates/pages/equipment_stock.html:36
+#: features/logistics/forms.py:194 templates/pages/equipment_stock.html:36
 #: templates/pages/goods_receipt_detail.html:31
 #: templates/panels/logistics_equipment.html:58
 msgid "Quantity"
 msgstr "Кількість"
 
-#: features/logistics/forms.py:195 templates/pages/goods_receipt_detail.html:19
+#: features/logistics/forms.py:196 templates/pages/goods_receipt_detail.html:19
 #: templates/pages/goods_receipt_detail.html:32
 #: templates/pages/goods_receipts.html:19
 msgid "Total value"
 msgstr "Загальна вартість"
 
-#: features/logistics/forms.py:213
+#: features/logistics/forms.py:214
 msgid "Complete the item, quantity, and total value."
 msgstr "Заповніть товар, кількість і загальну вартість."
 
-#: features/logistics/forms.py:231
+#: features/logistics/forms.py:232
 msgid "The warehouse whose stock is being adjusted."
 msgstr "Склад, запаси якого коригуються."
 
-#: features/logistics/forms.py:236 templates/pages/equipment_stock.html:50
+#: features/logistics/forms.py:237 templates/pages/equipment_stock.html:50
 msgid "Quantity adjustment"
 msgstr "Коригування кількості"
 
-#: features/logistics/forms.py:238 templates/pages/equipment_stock.html:51
+#: features/logistics/forms.py:239 templates/pages/equipment_stock.html:51
 msgid "Value for positive adjustment"
 msgstr "Вартість для додатного коригування"
 
-#: features/logistics/forms.py:243 templates/pages/activation_queue.html:33
+#: features/logistics/forms.py:244 templates/pages/activation_queue.html:33
 #: templates/pages/audit_log.html:44 templates/pages/blacklist_queue.html:23
 #: templates/pages/blacklist_queue.html:28
 #: templates/pages/equipment_stock.html:52
@@ -3967,11 +4250,11 @@ msgstr "Вартість для додатного коригування"
 msgid "Reason"
 msgstr "Причина"
 
-#: features/logistics/forms.py:256
+#: features/logistics/forms.py:257
 msgid "The adjustment cannot be zero."
 msgstr "Коригування не може дорівнювати нулю."
 
-#: features/logistics/forms.py:258
+#: features/logistics/forms.py:259
 msgid "A value is required when adding stock."
 msgstr "Під час оприбуткування запасів потрібно вказати вартість."
 
@@ -4690,34 +4973,13 @@ msgstr "Пропозицію надіслано %(count)s особам."
 msgid "Template saved."
 msgstr "Шаблон збережено."
 
-#: features/payslips/forms.py:16
+#: features/payslips/forms.py:17
 msgid "no email!"
 msgstr "немає ел. пошти!"
 
-#: features/payslips/forms.py:21 templates/pages/ledger.html:21
-#: templates/pages/payslips.html:38 templates/pages/person_detail.html:38
-#: templates/pages/person_detail.html:289 templates/pages/wages.html:38
-#: templates/partials/ledger_activity.html:8
-#: templates/partials/ledger_activity.html:26
-#: templates/partials/ledger_cycle.html:16
-msgid "Person"
-msgstr "Особа"
-
-#: features/payslips/forms.py:24
-msgid "Payslip date (optional)"
-msgstr "Дата розрахункового листа (необов’язково)"
-
-#: features/payslips/forms.py:25
+#: features/payslips/forms.py:26
 msgid "If left blank, the creation date is used."
 msgstr "Якщо залишити поле порожнім, буде використано дату створення."
-
-#: features/payslips/forms.py:33
-msgid "Period (YYYY-MM)"
-msgstr "Період (РРРР-ММ)"
-
-#: features/payslips/forms.py:34
-msgid "Net amount (EUR)"
-msgstr "Чиста сума (EUR)"
 
 #: features/payslips/models.py:23 features/wage_ledger/models.py:19
 msgid "period"
@@ -4983,14 +5245,6 @@ msgstr "Місяць знову відкрито."
 msgid "Financial month saved."
 msgstr "Фінансовий місяць збережено."
 
-#: features/wage_ledger/forms.py:15
-msgid "Wage month (YYYY-MM)"
-msgstr "Місяць зарплати (РРРР-ММ)"
-
-#: features/wage_ledger/forms.py:16
-msgid "Gross wage (EUR)"
-msgstr "Валова зарплата (EUR)"
-
 #: features/wage_ledger/models.py:28
 msgid "gross amount"
 msgstr "валова сума"
@@ -5027,25 +5281,37 @@ msgstr "Мета"
 msgid "On this page"
 msgstr "На цій сторінці"
 
-#: templates/help/article.html:14 templates/help/article.html:23
+#: templates/help/article.html:14 templates/help/article.html:24
 msgid "Roles and permissions"
 msgstr "Ролі та дозволи"
 
-#: templates/help/article.html:15 templates/help/article.html:30
+#: templates/help/article.html:15 templates/help/article.html:31
 msgid "Workflow"
 msgstr "Процес"
 
-#: templates/help/article.html:16
+#: templates/help/article.html:16 templates/help/article.html:41
+msgid "Every field on this screen"
+msgstr "Кожне поле на цьому екрані"
+
+#: templates/help/article.html:17
 msgid "Important boundary"
 msgstr "Важлива межа"
 
-#: templates/help/article.html:17 templates/help/article.html:46
+#: templates/help/article.html:18 templates/help/article.html:65
 msgid "Screen example"
 msgstr "Приклад екрана"
 
-#: templates/help/article.html:18 templates/help/article.html:75
+#: templates/help/article.html:19 templates/help/article.html:94
 msgid "Related topics"
 msgstr "Пов’язані теми"
+
+#: templates/help/article.html:48
+msgid "Who may set it"
+msgstr "Хто може це встановити"
+
+#: templates/help/article.html:49
+msgid "Locks"
+msgstr "Блокується"
 
 #: templates/layouts/base.html:36 templates/pages/trials_queue.html:4
 msgid "Field"
@@ -5358,21 +5624,9 @@ msgstr ""
 "Це активує працівника: він переходить у статус Працює на цьому проєкті, і "
 "зобов’язання починається."
 
-#: templates/pages/activation_queue.html:34
-#: templates/pages/blacklist_queue.html:29
-#: templates/panels/blacklist_case.html:20
-msgid "Approve"
-msgstr "Затвердити"
-
 #: templates/pages/activation_queue.html:35
 msgid "This rejects the request and leaves the worker in readiness."
 msgstr "Це відхиляє запит, і працівник залишається в стані готовності."
-
-#: templates/pages/activation_queue.html:35
-#: templates/pages/blacklist_queue.html:30
-#: templates/panels/blacklist_case.html:21
-msgid "Reject"
-msgstr "Відхилити"
 
 #: templates/pages/activation_queue.html:39
 msgid "No activation requests are waiting for a decision."
@@ -5438,7 +5692,7 @@ msgstr "Коли"
 msgid "Actor"
 msgstr "Виконавець"
 
-#: templates/pages/audit_log.html:43 templates/pages/ledger.html:40
+#: templates/pages/audit_log.html:43 templates/pages/ledger.html:41
 #: templates/pages/payslips.html:29
 msgid "Record"
 msgstr "Записати"
@@ -5491,6 +5745,12 @@ msgid "Matched via"
 msgstr "Збіг за"
 
 #: templates/pages/blacklist_queue.html:29
+msgid ""
+"Blacklists this person company-wide, at every office. Any future re-entry "
+"attempt is flagged against them."
+msgstr "Вносить цю особу до чорного списку в межах усієї компанії, у всіх офісах. Будь-яка майбутня спроба повернення позначається щодо неї."
+
+#: templates/pages/blacklist_queue.html:29
 #: templates/panels/blacklist_case.html:20
 msgid ""
 "This approves the blacklist case: the person becomes Blacklisted and future "
@@ -5498,6 +5758,12 @@ msgid ""
 msgstr ""
 "Схвалює справу чорного списку: особа потрапляє до Чорного списку, і майбутні "
 "спроби повернення будуть позначені."
+
+#: templates/pages/blacklist_queue.html:30
+msgid ""
+"Closes the case without blacklisting. The person is unaffected and stays "
+"available."
+msgstr "Закриває справу без внесення до чорного списку. Особи це не стосується, і вона залишається доступною."
 
 #: templates/pages/blacklist_queue.html:30
 #: templates/panels/blacklist_case.html:21
@@ -5751,6 +6017,12 @@ msgstr "Примітка до перевірки"
 
 #: templates/pages/equipment_reviews.html:31
 msgid ""
+"Confirms the worker owes the value of the item. It is recorded against them "
+"for recovery — it does not deduct from payroll by itself."
+msgstr "Підтверджує, що працівник винен вартість предмета. Записується на нього для стягнення — саме по собі це нічого не утримує із зарплати."
+
+#: templates/pages/equipment_reviews.html:31
+msgid ""
 "This approves charging the item value to the worker (recorded for recovery; "
 "no automatic payroll deduction)."
 msgstr ""
@@ -5760,6 +6032,12 @@ msgstr ""
 #: templates/pages/equipment_reviews.html:31
 msgid "Approve charge"
 msgstr "Затвердити стягнення"
+
+#: templates/pages/equipment_reviews.html:32
+msgid ""
+"Writes the loss off. The worker is not charged and nothing is recorded "
+"against their pay."
+msgstr "Списує збиток. Працівникові нічого не нараховується, і щодо його оплати нічого не записується."
 
 #: templates/pages/equipment_reviews.html:32
 msgid "This waives the charge; the worker will not be charged for the item."
@@ -6027,6 +6305,12 @@ msgstr ""
 "Повторно відкриває заблокований місяць для редагування; відкриття фіксується "
 "в аудиті з вашою причиною."
 
+#: templates/pages/finance_month_detail.html:20
+msgid ""
+"Unlocks the month so its figures can be edited again. The reopening is "
+"recorded in the audit log."
+msgstr "Розблоковує місяць, щоб його цифри можна було редагувати знову. Повторне відкриття записується в журнал аудиту."
+
 #: templates/pages/finance_month_detail.html:23
 msgid ""
 "This locks the month; line items become read-only until a manager reopens it."
@@ -6035,12 +6319,30 @@ msgstr ""
 "його знову."
 
 #: templates/pages/finance_month_detail.html:25
+msgid ""
+"Freezes the figures for this month. Totals stay visible but nothing can be "
+"edited until a manager reopens it."
+msgstr "Заморожує цифри за цей місяць. Підсумки залишаються видимими, але нічого не можна редагувати, доки менеджер не відкриє його знову."
+
+#: templates/pages/finance_month_detail.html:25
 msgid "Lock month"
 msgstr "Заблокувати місяць"
 
 #: templates/pages/finance_month_detail.html:40
 msgid "Line items"
 msgstr "Позиції"
+
+#: templates/pages/finance_month_detail.html:47
+msgid ""
+"Costs are entered negative and revenues positive, exactly as the source "
+"workbook writes them. The sign is validated on save."
+msgstr "Витрати вводяться від'ємними, а доходи додатними, точно так, як їх записує вихідна книга. Знак перевіряється під час збереження."
+
+#: templates/pages/finance_month_detail.html:50
+msgid ""
+"Saves every amount above and recomputes the totals from them. Totals are "
+"always derived, never stored, so they cannot drift from the figures."
+msgstr "Зберігає всі суми вище та перераховує з них підсумки. Підсумки завжди обчислюються, ніколи не зберігаються, тож не можуть розійтися з цифрами."
 
 #: templates/pages/finance_month_detail.html:50
 msgid "Save & recalculate"
@@ -6073,15 +6375,6 @@ msgid ""
 msgstr ""
 "Дванадцять місяців для одного проєкту, підсумовані за вже записаними "
 "місяцями. Офіс: %(office)s."
-
-#: templates/pages/finance_project_year.html:22
-#: templates/pages/finance_workbook.html:22 templates/pages/ledger.html:34
-#: templates/panels/advances_ledger.html:28
-#: templates/panels/blacklist_case.html:10
-#: templates/panels/blacklist_case.html:33
-#: templates/partials/ledger_activity.html:26
-msgid "Category"
-msgstr "Категорія"
 
 #: templates/pages/finance_project_year.html:38
 #: templates/pages/finance_workbook.html:40
@@ -6310,17 +6603,11 @@ msgstr "Аванси та утримання"
 msgid "Record entry"
 msgstr "Внести запис"
 
-#: templates/pages/ledger.html:25
-msgid "Company / project"
-msgstr "Компанія / проєкт"
-
-#: templates/pages/ledger.html:30 templates/panels/advances_ledger.html:24
-msgid "Entry type"
-msgstr "Тип запису"
-
-#: templates/pages/ledger.html:38 templates/panels/advances_ledger.html:32
-msgid "Amount (EUR)"
-msgstr "Сума (EUR)"
+#: templates/pages/ledger.html:41
+msgid ""
+"Records the entry immediately. It can be cancelled while the cycle is open; "
+"once the cycle is settled only a reversal can correct it."
+msgstr "Записує запис негайно. Поки цикл відкритий, його можна скасувати; після врегулювання циклу виправити його може лише сторнування."
 
 # --- login ---
 #: templates/pages/login.html:4 templates/pages/login.html:10
@@ -6522,7 +6809,7 @@ msgid "Recorded payslips"
 msgstr "Збережені розрахункові листи"
 
 #: templates/pages/payslips.html:38
-#: templates/partials/person_finance_overview.html:10
+#: templates/partials/person_finance_overview.html:14
 msgid "Calendar month"
 msgstr "Календарний місяць"
 
@@ -6618,14 +6905,6 @@ msgstr "Відправити на пробний день"
 msgid "Schedule trial"
 msgstr "Запланувати пробний день"
 
-#: templates/pages/person_detail.html:75
-msgid "Manager"
-msgstr "Менеджер"
-
-#: templates/pages/person_detail.html:76
-msgid "Activate without a trial day"
-msgstr "Активувати без пробного дня"
-
 #: templates/pages/person_detail.html:77
 msgid ""
 "For a known or returning worker. Readiness still applies — medical and gear "
@@ -6711,11 +6990,6 @@ msgid ""
 msgstr ""
 "Надсилає цього працівника менеджеру для рішення про активацію. Не активує "
 "його."
-
-# --- projects UI ---
-#: templates/pages/person_detail.html:182
-msgid "Request activation"
-msgstr "Запитати активацію"
 
 #: templates/pages/person_detail.html:184
 msgid "Ready to request"
@@ -7192,13 +7466,15 @@ msgstr ""
 msgid "Record gross wage"
 msgstr "Зареєструвати валову зарплату"
 
+#: templates/pages/wages.html:27
+msgid ""
+"Saves the gross figure for this person and month. It appears on their pay "
+"overview and is what ledger deductions are subtracted from."
+msgstr "Зберігає валову суму для цієї особи та місяця. Вона з'явиться в огляді оплати, і саме від неї віднімаються утримання книги."
+
 #: templates/pages/wages.html:33
 msgid "Recorded gross wages"
 msgstr "Зареєстровані валові зарплати"
-
-#: templates/pages/wages.html:39
-msgid "Wage month"
-msgstr "Місяць зарплати"
 
 #: templates/pages/wages.html:55
 msgid "No gross wages recorded."
@@ -7286,6 +7562,12 @@ msgstr[2] "%(n)s критичних пунктів відкрито — акти
 #: templates/panels/checklists_items.html:10
 msgid "All critical items are complete."
 msgstr "Усі критичні пункти виконано."
+
+#: templates/panels/checklists_items.html:26
+msgid ""
+"Records that you completed this item, with your name and the time. Critical "
+"items must all be complete before the worker can be activated."
+msgstr "Записує, що ви виконали цей пункт, із вашим іменем і часом. Усі критичні пункти мають бути виконані, перш ніж працівника можна активувати."
 
 #: templates/panels/compliance_certificates.html:4
 msgid "Occupational certificates"
@@ -7583,6 +7865,19 @@ msgstr "До доплати"
 msgid "Net pay effect"
 msgstr "Чистий вплив на зарплату"
 
+#: templates/partials/ledger_cycle.html:23
+msgid ""
+"Exports the entries in this cycle for the accountant. Reading only — it "
+"changes nothing and does not settle the cycle."
+msgstr "Експортує записи цього циклу для бухгалтера. Лише для читання — нічого не змінює і не врегульовує цикл."
+
+#: templates/partials/ledger_cycle.html:30
+msgid ""
+"Closes the 21st-to-20th window: every open entry in it is locked to this "
+"cycle and can then only be corrected by a reversal. New entries can no "
+"longer be backdated into it."
+msgstr "Закриває вікно з 21-го по 20-те: кожен відкритий запис у ньому фіксується до цього циклу і далі виправляється лише сторнуванням. Нові записи вже не можна датувати заднім числом у нього."
+
 #: templates/partials/ledger_cycle.html:30
 msgid ""
 "This locks every open entry of the window into the cycle; locked entries can "
@@ -7594,6 +7889,12 @@ msgstr ""
 #: templates/partials/ledger_cycle.html:30
 msgid "Include open entries in cycle"
 msgstr "Включити відкриті записи в цикл"
+
+#: templates/partials/ledger_cycle.html:31
+msgid ""
+"Marks this cycle as paid out. Use it once payroll has actually settled the "
+"amounts — it records that the money changed hands."
+msgstr "Позначає цей цикл як виплачений. Використовуйте його лише тоді, коли розрахунок зарплати справді врегулював суми — він фіксує, що гроші змінили власника."
 
 #: templates/partials/ledger_cycle.html:31
 msgid "This marks the whole cycle as settled with pay."
@@ -7621,7 +7922,16 @@ msgstr "Показано: %(selection)s"
 msgid "Wage and payslip overview"
 msgstr "Огляд зарплати та розрахункового листа"
 
-#: templates/partials/person_finance_overview.html:5
+#: templates/partials/person_finance_overview.html:6
+msgid ""
+"One row per calendar month. Gross wage and the recorded net payslip are "
+"source values someone entered; After deductions is gross minus this office's "
+"own ledger entries, and nothing else. It is not net pay — no tax or levy is "
+"calculated here, which is why the payslip stays its own column to compare "
+"against."
+msgstr "Один рядок на календарний місяць. Валова зарплата та записаний чистий розрахунковий листок — це вихідні значення, які хтось вніс; Після утримань — це валова сума мінус власні записи цього офісу в книзі, і нічого більше. Це не чиста зарплата — тут не обчислюються жодні податки чи внески, і саме тому листок залишається окремим стовпцем для порівняння."
+
+#: templates/partials/person_finance_overview.html:8
 msgid ""
 "Both columns are recorded source values for the same calendar month. Gross "
 "wage is not converted into net pay here; taxes, levies, and other statutory "
@@ -7664,6 +7974,12 @@ msgstr "Показано %(rail_limit)s останніх оновлених."
 #: templates/partials/worker_rail_body.html:34
 msgid "Open People"
 msgstr "Відкрити Люди"
+
+#~ msgid "Period (YYYY-MM)"
+#~ msgstr "Період (РРРР-ММ)"
+
+#~ msgid "Wage month (YYYY-MM)"
+#~ msgstr "Місяць зарплати (РРРР-ММ)"
 
 #~ msgid "You cannot decide your own activation request."
 #~ msgstr "Ви не можете вирішувати щодо власного запиту на активацію."

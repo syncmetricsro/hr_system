@@ -18,26 +18,27 @@
   <h2>{% trans "Record entry" %}</h2>
   <form class="ledger-entry-form" method="post" action="{% url 'ledger_record' %}">
     {% csrf_token %}
-    <label><span>{% trans "Person" %}</span>
+    <label data-tooltip-heading="{% trans 'Person' %}" data-tooltip="{% trans 'The worker this money concerns. The entry appears on their pay overview and in their open balance.' %}"><span>{% trans "Person" %}</span>
       <select name="person" required>
         {% for p in people %}<option value="{{ p.pk }}">{{ p }}</option>{% endfor %}
       </select></label>
-    <label><span>{% trans "Company / project" %}</span>
+    <label data-tooltip-heading="{% trans 'Company / project' %}" data-tooltip="{% trans 'Optional. Attributes the amount to a partner company for reporting. It does not change what the worker is paid.' %}"><span>{% trans "Company / project" %}</span>
       <select name="project">
         <option value="">—</option>
         {% for pr in projects %}<option value="{{ pr.pk }}">{{ pr.name }}</option>{% endfor %}
       </select></label>
-    <label><span>{% trans "Entry type" %}</span>
+    <label data-tooltip-heading="{% trans 'Entry type' %}" data-tooltip="{% trans 'Decides the direction: an advance or deduction reduces pay, an addition increases it. The amount stays positive either way.' %}"><span>{% trans "Entry type" %}</span>
       <select name="entry_type">
         {% for value, label in entry_types %}<option value="{{ value }}">{{ label }}</option>{% endfor %}
       </select></label>
-    <label><span>{% trans "Category" %}</span>
+    <label data-tooltip-heading="{% trans 'Category' %}" data-tooltip="{% trans 'What the money was for - advance, clothing, footwear, equipment, medical, travel or other. Groups the cycle report; it does not affect the direction or the amount.' %}"><span>{% trans "Category" %}</span>
       <select name="category">
         {% for value, label in categories %}<option value="{{ value }}">{{ label }}</option>{% endfor %}
       </select></label>
-    <label><span>{% trans "Amount (EUR)" %}</span><input type="number" name="amount" min="0.01" step="0.01" required></label>
-    <label><span>{% trans "Note" %}</span><input type="text" name="note"></label>
-    <button class="button button-primary" type="submit">{% icon "add" %}{% trans "Record" %}</button>
+    <label data-tooltip-heading="{% trans 'Amount (EUR)' %}" data-tooltip="{% trans 'Always a positive number. Never type a minus sign - the entry type decides whether this is added or subtracted.' %}"><span>{% trans "Amount (EUR)" %}</span><input type="number" name="amount" min="0.01" step="0.01" required></label>
+    <label data-tooltip-heading="{% trans 'Entry date' %}" data-tooltip="{% trans 'The day the money changed hands. It decides which 21st-to-20th payroll cycle the entry settles in, and which calendar month it appears under on the pay overview. Leave blank for today; a date inside an already-settled cycle is refused.' %}"><span>{% trans "Entry date" %}</span><input type="date" name="entry_date" min="1900-01-01" max="2099-12-31" value="{{ today_iso }}"></label>
+    <label data-tooltip-heading="{% trans 'Note' %}" data-tooltip="{% trans 'The reason, in words, for whoever reads this months from now. It is carried into the exports the accountant receives.' %}"><span>{% trans "Note" %}</span><input type="text" name="note"></label>
+    <button class="button button-primary" type="submit" data-tooltip="{% trans 'Records the entry immediately. It can be cancelled while the cycle is open; once the cycle is settled only a reversal can correct it.' %}">{% icon "add" %}{% trans "Record" %}</button>
   </form>
 </article>
 {% endif %}

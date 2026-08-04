@@ -19,7 +19,7 @@
     {% csrf_token %}
     {% if form.non_field_errors %}<div class="form-errors">{{ form.non_field_errors }}</div>{% endif %}
     {% for field in form %}
-      <label>
+      <label{% if field.help_text %} data-tooltip-heading="{{ field.label }}" data-tooltip="{{ field.help_text }}"{% endif %}>
         <span>{{ field.label }}</span>
         {{ field }}
         {% if field.help_text %}<small class="muted">{{ field.help_text }}</small>{% endif %}

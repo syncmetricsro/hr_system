@@ -36,8 +36,8 @@
       <option value="">{% trans "All projects" %}</option>
       {% for project in projects %}<option value="{{ project.pk }}"{% if project_filter == project.pk|stringformat:'s' %} selected{% endif %}>{{ project.name }}</option>{% endfor %}
     </select>
-    <input type="date" name="date_from" value="{{ date_from }}" aria-label="{% trans 'From date' %}">
-    <input type="date" name="date_to" value="{{ date_to }}" aria-label="{% trans 'To date' %}">
+    <input type="date" name="date_from" value="{{ date_from }}" aria-label="{% trans 'From date' %}" min="1900-01-01" max="2099-12-31">
+    <input type="date" name="date_to" value="{{ date_to }}" aria-label="{% trans 'To date' %}" min="1900-01-01" max="2099-12-31">
     <button class="button button-secondary" type="submit">{% trans "Filter" %}</button>
   </form>
 </section>

@@ -170,16 +170,20 @@ def test_an_observer_counts_every_office(django_user_model, observer, offices):
 # --- the page ---------------------------------------------------------------
 
 
-def test_the_page_is_separate_from_the_audit_log(client, manager):
-    """The client's distinction: traceability there, reporting here."""
-    client.force_login(manager)
+def test_the_page_is_separate_from_the_audit_log(client, observer):
+    """The client's distinction: traceability there, reporting here.
+
+    Uses the Observer rather than a Manager: CorvinumEU narrowed this page to
+    the Observer on 2026-08-04 while Jober keeps it for managers, and the
+    Observer holds it in both."""
+    client.force_login(observer)
     response = client.get(reverse("staff_activity"))
     assert response.status_code == 200
     assert reverse("staff_activity") != reverse("audit_log")
 
 
 def test_a_recruiter_cannot_open_it(client, django_user_model):
-    """Manager and observer only."""
+    """No client grants this below Manager."""
     recruiter = _recruiter(django_user_model, "naborar@demo.jober.test")
     client.force_login(recruiter)
     assert client.get(reverse("staff_activity")).status_code == 403
@@ -198,8 +202,8 @@ def test_an_observer_can_open_it(client, observer):
     assert client.get(reverse("staff_activity")).status_code == 200
 
 
-def test_the_page_carries_a_period_control(client, manager):
-    client.force_login(manager)
+def test_the_page_carries_a_period_control(client, observer):
+    client.force_login(observer)
     response = client.get(reverse("staff_activity") + "?period=year&year=2026")
     assert response.context["period"].kind == "year"
 
@@ -226,14 +230,14 @@ def test_the_page_carries_a_period_control(client, manager):
 )
 def test_staff_activity_explanations_are_translated(
     client,
-    manager,
+    observer,
     language,
     expected_reporting,
     expected_recruiters,
 ):
     if language not in dict(settings.LANGUAGES):
         pytest.skip(f"{language} is not enabled for this client")
-    client.force_login(manager)
+    client.force_login(observer)
 
     with translation.override(language):
         response = client.get(reverse("staff_activity"))

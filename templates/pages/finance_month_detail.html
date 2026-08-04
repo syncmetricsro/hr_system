@@ -17,12 +17,12 @@
       <form class="people-search" method="post" action="{% url 'finance_month_reopen' month.pk %}" data-confirm="{% trans 'This reopens the locked month for editing; the reopening is audited with your reason.' %}">
         {% csrf_token %}
         <input type="text" name="reason" required aria-label="{% trans 'Reason' %}" placeholder="{% trans 'Reason' %}">
-        <button class="button button-secondary" type="submit">{% icon "recycle" %}{% trans "Reopen month" %}</button>
+        <button class="button button-secondary" type="submit" data-tooltip="{% trans 'Unlocks the month so its figures can be edited again. The reopening is recorded in the audit log.' %}">{% icon "recycle" %}{% trans "Reopen month" %}</button>
       </form>
     {% else %}
       <form method="post" action="{% url 'finance_month_lock' month.pk %}" data-confirm="{% trans 'This locks the month; line items become read-only until a manager reopens it.' %}">
         {% csrf_token %}
-        <button class="button button-secondary" type="submit">{% icon "archive" %}{% trans "Lock month" %}</button>
+        <button class="button button-secondary" type="submit" data-tooltip="{% trans 'Freezes the figures for this month. Totals stay visible but nothing can be edited until a manager reopens it.' %}">{% icon "archive" %}{% trans "Lock month" %}</button>
       </form>
     {% endif %}
   </section>
@@ -44,10 +44,10 @@
         {% for row in rows %}
           <label>
             <span>{{ row.category.label|db_trans }} ({{ row.category.get_kind_display }})</span>
-            <input type="number" step="0.01" name="cat_{{ row.category.pk }}" value="{{ row.amount }}">
+            <input type="number" step="0.01" inputmode="decimal" name="cat_{{ row.category.pk }}" value="{{ row.amount }}" data-tooltip="{% trans 'Costs are entered negative and revenues positive, exactly as the source workbook writes them. The sign is validated on save.' %}">
           </label>
         {% endfor %}
-        <button class="button button-primary" type="submit">{% icon "save" %}{% trans "Save & recalculate" %}</button>
+        <button class="button button-primary" type="submit" data-tooltip="{% trans 'Saves every amount above and recomputes the totals from them. Totals are always derived, never stored, so they cannot drift from the figures.' %}">{% icon "save" %}{% trans "Save & recalculate" %}</button>
       </form>
     {% else %}
       <dl class="detail-grid">

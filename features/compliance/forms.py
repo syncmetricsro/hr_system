@@ -5,6 +5,7 @@ from pathlib import PurePath
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
+from core.ui.forms import date_input
 from features.compliance.models import (
     CANONICAL_CERTIFICATE_NAMES,
     FILE_ALLOWED_CATEGORIES,
@@ -57,8 +58,8 @@ class CertificateForm(forms.ModelForm):
             "never_expires",
         ]
         widgets = {
-            "issue_date": forms.DateInput(attrs={"type": "date"}),
-            "expiry_date": forms.DateInput(attrs={"type": "date"}),
+            "issue_date": date_input(),
+            "expiry_date": date_input(),
         }
 
     def __init__(self, *args, **kwargs):

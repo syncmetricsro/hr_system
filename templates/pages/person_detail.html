@@ -64,7 +64,7 @@
           {% endfor %}
         </select>
         <label>{% trans "Arrival time" %}
-          <input type="datetime-local" name="scheduled_for" required>
+          <input type="datetime-local" name="scheduled_for" required min="1900-01-01T00:00" max="2099-12-31T23:59">
         </label>
         <button class="button button-secondary" type="submit">{% trans "Schedule trial" %}</button>
       </form>
@@ -169,7 +169,7 @@
           <input type="text" name="transport_na_reason" value="{{ readiness.transport_na_reason }}" x-bind:required="transport === 'not_applicable'">
         </label>{% endif %}
         <label{% if readiness_future_medical_date %} class="readiness-field-error"{% endif %}>{% trans "Entry medical date" %}
-          <input type="date" name="entry_medical_date" value="{{ readiness.entry_medical_date|date:'Y-m-d' }}">
+          <input type="date" name="entry_medical_date" value="{{ readiness.entry_medical_date|date:'Y-m-d' }}" min="1900-01-01" max="2099-12-31">
         </label>
         <button class="button button-secondary" type="submit">{% icon "save" %}{% trans "Save readiness" %}</button>
       </form>
