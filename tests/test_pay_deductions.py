@@ -141,9 +141,7 @@ def test_the_derived_column_is_absent_without_a_gross_figure(client, person, man
     assert cells[2] is None, "after-deductions should be empty with no gross wage"
 
 
-def test_deductions_are_grouped_by_calendar_month_not_by_cycle(
-    client, person, manager
-):
+def test_deductions_are_grouped_by_calendar_month_not_by_cycle(client, person, manager):
     """The settlement cycle runs 21st to 20th, but this table's other columns
     are calendar months. Mixing the two would silently misalign the rows."""
     record_wage(person, period="2026-07", gross_amount="1800", actor=manager)

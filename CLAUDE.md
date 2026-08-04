@@ -117,10 +117,22 @@ scripts/compile_messages.sh --check     # read-only PO/MO completeness check
 merged locally and pushed. See the note below before "helpfully" reinstating PRs.
 
 1. One slice per branch: `git checkout -b <slice-name>` off an up-to-date `main`.
-2. Build with tests; run **ruff + full unit suite** in the container, plus
-   **`scripts/test_corvinum.sh`** (the corvinum-flags lane — Stage D requires
-   both flag sets green; mark genuinely Jober-specific tests `@pytest.mark.jober_only`).
+2. Build with tests; run **ruff check *and* `ruff format --check`** plus the
+   full unit suite in the container, and **`scripts/test_corvinum.sh`** (the
+   corvinum-flags lane — Stage D requires both flag sets green; mark genuinely
+   Jober-specific tests `@pytest.mark.jober_only`).
    **Do not run the e2e suite** — it is opt-in; see below.
+
+   **`ruff check` is not the whole lint gate.** `scripts/ci_quality.sh` also runs
+   `ruff format --check` **on the files this branch changed**, so a formatting
+   diff fails CI while `ruff check` says "All checks passed" locally. Format the
+   changed files only — running `ruff format` across the tree reformats ~127
+   files that CI never asked about:
+   ```bash
+   changed=$(git diff --name-only --diff-filter=ACMR $(git merge-base HEAD main) \
+     | grep -E '^(core|features|clients|config|tests|scripts)/.*\.py$')
+   docker run … jober-test:phase4 ruff format --no-cache $changed
+   ```
 3. Update `BUILD_JOURNAL.md` + `test_journal.md` (newest-first entries).
 4. Commit (imperative subject; end body with the `Co-Authored-By: Claude …`
    trailer), then land it:

@@ -165,9 +165,7 @@ class EquipmentItemForm(forms.ModelForm):
 
 class StockReceiptForm(forms.Form):
     operation_key = forms.UUIDField(widget=forms.HiddenInput, initial=uuid4)
-    received_on = forms.DateField(
-        label=_("Received on"), widget=date_input()
-    )
+    received_on = forms.DateField(label=_("Received on"), widget=date_input())
     office = forms.ModelChoiceField(
         label=_("Receiving office"),
         queryset=Office.objects.none(),
@@ -231,9 +229,7 @@ class StockAdjustmentForm(forms.Form):
         required=False,
         help_text=_("The warehouse whose stock is being adjusted."),
     )
-    occurred_on = forms.DateField(
-        label=_("Date"), widget=date_input()
-    )
+    occurred_on = forms.DateField(label=_("Date"), widget=date_input())
     quantity_delta = forms.IntegerField(label=_("Quantity adjustment"))
     value = forms.DecimalField(
         label=_("Value for positive adjustment"),

@@ -94,7 +94,9 @@ def register_report_panel(template: str, context, order: int = 100) -> None:
         _report_panels.append(entry)
 
 
-def register_person_finance_series(provider, order: int = 100, role: str = "source") -> None:
+def register_person_finance_series(
+    provider, order: int = 100, role: str = "source"
+) -> None:
     """Register a per-person, per-calendar-month money column.
 
     ``role`` lets core relate two columns without knowing which feature
