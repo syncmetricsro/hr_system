@@ -1,5 +1,60 @@
 # Deployment Journal
 
+## 2026-08-05 - Carry-forward, the upload guard and the equipment unblock
+
+Deployed the exact `main` merge **`73cdce7`** to `jober-staging` and
+`corvinum-staging` as `jober-platform:demo-73cdce7` (image ID
+`sha256:8b92f2f90ff3caa0c85610db4cfd9ba7f45c8bb4ab98cfac1c43ae4bc4e937c0`),
+streamed with `git:load-image`. Staging had fallen three fixes behind.
+
+The release carries, in the order they were reported:
+
+- **The certificate upload could be submitted twice** and `Certificate` has no
+  uniqueness constraint, so the second press created a second row. Measured:
+  2 create requests before the guard, 1 after.
+- **The settled-cycle refusal blocked equipment issuing.** Equipment charges
+  reach the ledger with no date and default to today, so once the current run
+  was closed nothing could be issued. Withdrawn entirely, not narrowed.
+- **An advance given in July was never recovered from the August salary** - and
+  never recovered at all, because the sweep windows are disjoint. A run now
+  collects everything outstanding at its cutoff (ADR 0032).
+
+**No migrations.** The migration diff since the previously deployed `ca94dc4`
+and `29f5984` is empty; this release is application logic, one stylesheet rule,
+a template and translations.
+
+**Behaviour verified on the live app, not inferred from a green build.** Read
+from `corvinum-staging` after release:
+
+```
+carry-forward code live: True
+next run: 2026-08   closed already? True
+a 25 July advance would be collected by: 2026-09
+still outstanding: 4
+```
+
+That last line is the reported bug answered correctly in production shape: a
+July advance whose August run has gone out is now collected by September rather
+than never.
+
+**The catch-up was forecast before shipping**, because carry-forward sweeps
+historical strays by design. Four outstanding entries on CorvinumEU, all dated
+2026-08-04, all pay additions - the reversals created while testing Sztornó. No
+surprise deduction was waiting for anyone, which is why this was safe to deploy
+without a data migration or a cut-off date.
+
+Pre-deploy suites on `73cdce7`: Jober **1076 passed / 16 skipped**, CorvinumEU
+**665 passed / 23 skipped**, Playwright **70 passed**; ruff check and
+`ruff format --check` clean. Both `deploy_smoke.sh --https` runs passed health,
+login/CSRF, fingerprinted static, X-Frame-Options and HSTS.
+
+Rollback target is the previous shared image:
+
+```bash
+ssh syncmetric-prime-dokku "git:from-image <app> jober-platform:demo-29f5984"
+```
+
+
 ## 2026-08-04 - Card layout and the worker-rail gutter deployed to both clients
 
 Deployed the exact `main` merge **`29f5984`** to `jober-staging` and
