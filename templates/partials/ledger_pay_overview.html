@@ -13,9 +13,12 @@
     <table class="data-table">
       <thead>
         <tr>
-          <th scope="col">{% trans "Person" %}</th>
-          <th scope="col">{% trans "Payroll run" %}</th>
-          {% for series in pay_overview.series %}<th scope="col" class="numeric">{{ series.label }}</th>{% endfor %}
+          {# Sorting is a link, not script: it orders the whole table rather than the rows that happen to be on screen, and the resulting URL can be shared or reloaded. #}
+          {% for header in pay_overview.headers %}
+            <th scope="col"{% if header.numeric %} class="numeric"{% endif %} aria-sort="{{ header.aria_sort }}">
+              <a class="sort-link{% if header.active %} is-sorted{% endif %}" href="{{ header.url }}">{{ header.label }}<span class="sort-marker" aria-hidden="true">{% if header.active %}{% if header.descending %}▾{% else %}▴{% endif %}{% endif %}</span></a>
+            </th>
+          {% endfor %}
         </tr>
       </thead>
       <tbody>

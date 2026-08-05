@@ -1,5 +1,20 @@
 # Test Journal
 
+## 2026-08-06 - sorting, tested where it can lie
+
+- The fixture is three workers whose deductions **do not match** their
+  alphabetical order (Alpha 300, Bravo 100, Cempty none). A fixture where the
+  two orders agree would pass against a sort that does nothing.
+- Empties are asserted **in both directions**, not once. That is the rule most
+  likely to be "simplified" later into a plain reverse, and the plain reverse is
+  wrong for exactly the question the column answers.
+- The bad-key test asserts a 200 *and* that the order equals the default, so a
+  fallback that silently produced some other order would still fail.
+- The header test checks that `year` and `month` survive every link. A sort
+  control that drops the period filter moves the reader to a different run
+  without saying so, which is worse than not sorting at all.
+- Suites: **Jober 1142 / CorvinumEU 735 / browser 70** (browser not re-run).
+
 ## 2026-08-05 - a test that only exists because the code is shared
 
 - The assertion that carries this slice: **the two tables on the ledger page

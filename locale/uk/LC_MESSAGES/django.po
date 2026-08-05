@@ -2968,13 +2968,12 @@ msgid "Cycle controls include, export, and settle the selected period."
 msgstr "Елементи циклу включають, експортують і розраховують вибраний період."
 
 #: core/ui/help.py:706 core/ui/help.py:808 core/ui/help.py:889
-#: features/payslips/forms.py:22 templates/pages/ledger.html:21
-#: templates/pages/payslips.html:39 templates/pages/person_detail.html:38
-#: templates/pages/person_detail.html:315 templates/pages/wages.html:38
-#: templates/partials/ledger_activity.html:8
+#: features/advances/views.py:80 features/payslips/forms.py:22
+#: templates/pages/ledger.html:21 templates/pages/payslips.html:39
+#: templates/pages/person_detail.html:38 templates/pages/person_detail.html:315
+#: templates/pages/wages.html:38 templates/partials/ledger_activity.html:8
 #: templates/partials/ledger_activity.html:26
 #: templates/partials/ledger_cycle.html:16
-#: templates/partials/ledger_pay_overview.html:16
 msgid "Person"
 msgstr "Особа"
 
@@ -3415,7 +3414,7 @@ msgstr "Фільтри звужують журнал без зміни збер�
 msgid "Audit access and append-only behavior protect the evidence trail."
 msgstr "Доступ до Аудиту й незмінність захищають доказовий слід."
 
-#: core/ui/registry.py:198
+#: core/ui/registry.py:211
 msgid "After deductions"
 msgstr "Після утримань"
 
@@ -3555,7 +3554,7 @@ msgstr "запис у книзі"
 msgid "ledger entries"
 msgstr "записи в книзі"
 
-#: features/advances/providers.py:54
+#: features/advances/providers.py:52
 msgid "Ledger deductions"
 msgstr "Утримання книги"
 
@@ -3616,45 +3615,49 @@ msgstr "Записи без впливу на зарплату не можна �
 msgid "Entry is locked after cycle inclusion; record a reversal instead."
 msgstr "Після включення в цикл запис заблоковано; внесіть сторно."
 
-#: features/advances/views.py:104
+#: features/advances/views.py:81
+msgid "Payroll run"
+msgstr "Розрахунок зарплати"
+
+#: features/advances/views.py:160
 msgid "Entry date must be a real date (YYYY-MM-DD)."
 msgstr "Дата запису має бути справжньою датою (РРРР-ММ-ДД)."
 
-#: features/advances/views.py:117
+#: features/advances/views.py:173
 msgid "Ledger entry recorded."
 msgstr "Запис у книзі збережено."
 
-#: features/advances/views.py:119
+#: features/advances/views.py:175
 msgid "Invalid ledger entry."
 msgstr "Недійсний запис."
 
-#: features/advances/views.py:133
+#: features/advances/views.py:189
 msgid "Entry cancelled."
 msgstr "Запис скасовано."
 
-#: features/advances/views.py:136
+#: features/advances/views.py:192
 msgid "Reversal recorded."
 msgstr "Сторно записано."
 
-#: features/advances/views.py:139
+#: features/advances/views.py:195
 msgid "Entry deleted."
 msgstr "Запис видалено."
 
-#: features/advances/views.py:141
+#: features/advances/views.py:197
 msgid "Unknown action."
 msgstr "Невідома дія."
 
-#: features/advances/views.py:154
+#: features/advances/views.py:210
 #, python-format
 msgid "%(n)s entries included in the cycle."
 msgstr "До циклу включено %(n)s записів."
 
-#: features/advances/views.py:157
+#: features/advances/views.py:213
 #, python-format
 msgid "%(n)s entries marked settled."
 msgstr "%(n)s записів позначено як погашені."
 
-#: features/advances/views.py:161
+#: features/advances/views.py:217
 #, python-format
 msgid "%(n)s entries reopened."
 msgstr "Повторно відкрито записів: %(n)s."
@@ -8544,24 +8547,32 @@ msgid ""
 "is gross minus this office's own ledger entries, and nothing else. It is not "
 "net pay — no tax or levy is calculated here, which is why the payslip stays "
 "its own column to compare against."
-msgstr "Один рядок на працівника і на розрахунок зарплати. Облікові утримання — це те, що збирає цей розрахунок, а це не завжди той місяць, коли гроші перейшли з рук у руки: аванс, виданий після 20-го, утримує вже наступний розрахунок. Брутто і записана чиста зарплатна відомість — це вихідні значення, які хтось вніс; «Після утримань» — це брутто мінус власні облікові записи цього офісу, і нічого більше. Це не чиста зарплата — жодних податків чи внесків тут не рахують, і саме тому відомість лишається окремою колонкою для порівняння."
+msgstr ""
+"Один рядок на працівника і на розрахунок зарплати. Облікові утримання — це "
+"те, що збирає цей розрахунок, а це не завжди той місяць, коли гроші перейшли "
+"з рук у руки: аванс, виданий після 20-го, утримує вже наступний розрахунок. "
+"Брутто і записана чиста зарплатна відомість — це вихідні значення, які хтось "
+"вніс; «Після утримань» — це брутто мінус власні облікові записи цього офісу, "
+"і нічого більше. Це не чиста зарплата — жодних податків чи внесків тут не "
+"рахують, і саме тому відомість лишається окремою колонкою для порівняння."
 
 #: templates/partials/ledger_pay_overview.html:10
 msgid ""
 "One row per worker per payroll run, from the values recorded for them. Gross "
 "wage is not converted into net pay here; taxes, levies, and other statutory "
 "payroll calculations remain outside this feature."
-msgstr "Один рядок на працівника і на розрахунок зарплати, зі записаних значень. Брутто тут не перераховується в чисту зарплату; податки, внески та інші законодавчі розрахунки лишаються поза цією функцією."
+msgstr ""
+"Один рядок на працівника і на розрахунок зарплати, зі записаних значень. "
+"Брутто тут не перераховується в чисту зарплату; податки, внески та інші "
+"законодавчі розрахунки лишаються поза цією функцією."
 
-#: templates/partials/ledger_pay_overview.html:17
-msgid "Payroll run"
-msgstr "Розрахунок зарплати"
-
-#: templates/partials/ledger_pay_overview.html:34
+#: templates/partials/ledger_pay_overview.html:37
 msgid ""
 "A dash means nothing was recorded for that worker in that run — which is a "
 "different fact from a recorded zero, and worth looking at."
-msgstr "Тире означає, що для цього працівника в цьому циклі нічого не записано — це інший факт, ніж записаний нуль, і на нього варто подивитися."
+msgstr ""
+"Тире означає, що для цього працівника в цьому циклі нічого не записано — це "
+"інший факт, ніж записаний нуль, і на нього варто подивитися."
 
 #: templates/partials/period_filter.html:15
 msgid "Period"

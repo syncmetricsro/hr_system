@@ -12,4 +12,6 @@ class WageLedgerConfig(AppConfig):
 
         # role="gross": the figure core subtracts ledger deductions from when
         # both columns are present.
-        register_person_finance_series(gross_wage_series, order=10, role="gross")
+        register_person_finance_series(
+            gross_wage_series, order=10, role="gross", key="gross_wage"
+        )
