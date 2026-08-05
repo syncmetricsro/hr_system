@@ -1,5 +1,61 @@
 # Deployment Journal
 
+## 2026-08-06 - Sortable pay overview
+
+Deployed the exact `main` merge **`6b55835`** to `jober-staging` and
+`corvinum-staging` as `jober-platform:demo-6b55835` (image ID
+`sha256:f6f80c63820bc8595f31324eb2978b95f8d50b532b739923830a553269a24f34`),
+streamed with `git:load-image`.
+
+The release: the CorvinumEU ledger page's pay overview can be ordered by person,
+payroll run, or any of its money columns. Server-side, as links, so the order
+covers the whole table and survives a reload or a shared URL. Columns carry
+stable keys rather than positions, empty cells sort last in both directions, and
+an unknown key falls back to the default order instead of failing.
+
+**No migrations.** Nothing in this release touches the schema; both apps report
+*No migrations to apply*.
+
+Verified on the live apps:
+
+```
+corvinum-staging  finance_overview_table params: descending, people, periods,
+                  request, sort
+corvinum-staging  GET /sk/ledger/?sort=deductions&dir=desc -> 200,
+                  6 sortable headers, exactly 1 aria-sort="descending"
+both hosts        serve app.47567224cb17.css, which carries .sort-link
+```
+
+Structural checks only, deliberately. `jober-staging` was emptied at the
+customer's request so they can run their own tests in it, and they have been
+asked not to enter real personal data. Until that is confirmed rather than
+assumed, treat its contents as potentially real: verify routes, flags and counts,
+and do not read or print row values from that database.
+
+**The e2e suite failed twice before passing, and it was the machine.** Run one
+failed `test_z_certificate_uploads`, run two failed
+`test_reports_inactive_by_reason` - two unrelated pages, both on
+`wait_for_load_state("networkidle")`. A regression fails the same test every
+time. Both dev stacks (two apps, two Postgres) were running alongside the e2e
+stack on a 4-core, 9 GB box; with them stopped the suite passed **70/70 in 173s**
+against 359s under load. Worth remembering: on this machine the browser suite
+wants the dev stacks down, and a `networkidle` timeout there is a resource
+symptom, not a product one.
+
+Pre-deploy on `6b55835`: Jober **1142 passed / 16 skipped**, CorvinumEU
+**735 passed / 23 skipped**, Playwright **70 passed**; `ruff check` and
+`ruff format --check` clean over the 6 changed Python files;
+`check_no_node_artifacts`, `verify_vendor_assets`,
+`check_dependency_direction` and `compile_messages.sh --check` all clean. Both
+`deploy_smoke.sh --https` runs passed health, login/CSRF, fingerprinted static,
+X-Frame-Options and HSTS.
+
+Rollback target:
+
+```bash
+ssh syncmetric-prime-dokku "git:from-image <app> jober-platform:demo-7902642"
+```
+
 ## 2026-08-05 - Four merges: entry where the tables are, and a checklist for Jober
 
 Deployed the exact `main` merge **`7902642`** to `jober-staging` and
