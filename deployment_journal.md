@@ -1,5 +1,66 @@
 # Deployment Journal
 
+## 2026-08-05 - Four merges: entry where the tables are, and a checklist for Jober
+
+Deployed the exact `main` merge **`7902642`** to `jober-staging` and
+`corvinum-staging` as `jober-platform:demo-7902642` (image ID
+`sha256:c2656d2cabe78eb3ed6cf76e7a6c73c58c0d085b14036a32cd2ecd82b742955a`),
+streamed with `git:load-image`.
+
+The release:
+
+- **The project–year finance grid is where a year gets typed** (Jober). It was
+  a read-only projection with no way in — a month with no row had no URL, and
+  nothing linked to the grid at all. It now writes through to the same twelve
+  monthly records: only changed cells, a month created only when a cell is
+  filled, a locked month skipped and named.
+- **"Empty-bed loss" renamed to "Unrecovered standing cost"**, and **"Net cost
+  to the company"** added beside it. The old label read as empty beds × price
+  and computed something else; the new figure is the plain out-of-pocket total.
+- **Jober got the activation checklist** it was listed as having asked for
+  (ADR 0035). Flag, its own seed list, and the seed now ticks critical items
+  before it activates anybody — otherwise it refuses its own activation.
+- **The pay overview is on the CorvinumEU ledger page** for the whole office,
+  one row per worker per run. The provider contract went bulk-first so the
+  office-wide table and a profile share one definition rather than two.
+
+**No migrations.** `checklists.0002` was already applied in the previous
+release; both apps report *No migrations to apply*.
+
+Verified on the live apps, not inferred from a green build:
+
+```
+jober-staging     checklists flag: True   template items: 0
+jober-staging     finance_project_year_save route mounted: True
+jober-staging     accommodation report keys now include net_cost and
+                  unrecovered_standing_cost (empty_bed_loss gone)
+corvinum-staging  finance_overview_table: 4 columns x 5 rows for 2026-08
+corvinum-staging  GET /sk/ledger/ as a manager -> 200, panel present: True
+both hosts        serve app.5ceca5bfece6.css
+```
+
+**One thing to know: the Jober checklist is deployed and empty.** The flag is on
+and the route is mounted, but `jober-staging` has **0 checklist item
+templates** — the feature was off when that database was last seeded, and the
+operational reset earlier today cleared the operational tables. Nothing is
+broken and nothing is blocked: with no template the activation gate is a no-op,
+exactly as it is in every test that does not create one. The nine items arrive
+when a Jober seed next runs, which is deliberately **not** part of this deploy
+(the reset runbook forbids seeding as a release action).
+
+Pre-deploy on `7902642`: Jober **1142 passed / 16 skipped**, CorvinumEU
+**729 passed / 23 skipped**, Playwright **70 passed**; `ruff check` clean and
+`ruff format --check` clean across all 18 changed Python files;
+`check_no_node_artifacts`, `verify_vendor_assets` and
+`check_dependency_direction` clean. Both `deploy_smoke.sh --https` runs passed
+health, login/CSRF, fingerprinted static, X-Frame-Options and HSTS.
+
+Rollback target:
+
+```bash
+ssh syncmetric-prime-dokku "git:from-image <app> jober-platform:demo-a91844d"
+```
+
 ## 2026-08-05 - Jober staging operational history cleared for client testing
 
 At the owner's request, the fictional `jober-staging` database was cleared so
