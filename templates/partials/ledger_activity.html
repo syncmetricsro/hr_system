@@ -32,13 +32,17 @@
             <td>{{ e.get_entry_type_display }}</td>
             <td>{{ e.get_category_display }}</td>
             <td>{{ e.amount }} €</td>
-            <td>{{ e.get_settlement_status_display }}</td>
+            <td>
+              {{ e.get_settlement_status_display }}
+              {% if e.is_reversed %}<br><span class="eyebrow">{% trans "Reversed" %}</span>{% endif %}
+              {% if e.reversal_of_id %}<br><span class="eyebrow">{% trans "This is a reversal" %}</span>{% endif %}
+            </td>
             <td>
               {% if may_enter %}
                 <form method="post" action="{% url 'ledger_entry_action' e.pk %}" class="people-search">
                   {% csrf_token %}
                   <input type="hidden" name="next" value="{% url 'ledger_overview' %}?year={{ cycle_year }}&month={{ cycle_month }}">
-                  {% if e.is_locked %}
+                  {% if e.is_locked and not e.is_reversed %}
                     <button class="button button-secondary" type="submit" name="action" value="reverse" data-confirm="{% trans 'This records a reversal entry with the opposite pay effect; the original stays in the ledger.' %}">{% trans "Reverse" %}</button>
                   {% elif e.settlement_status == "open" %}
                     <button class="button button-secondary" type="submit" name="action" value="cancel" data-confirm="{% trans 'This cancels the open ledger entry; it will no longer count against pay.' %}">{% trans "Cancel" %}</button>

@@ -1,5 +1,26 @@
 # Build Journal
 
+## 2026-08-05 - The ledger offered a reversal it would then refuse
+
+Reported: pressing Sztornó on an already-reversed entry answered "this entry is
+already reversed", and the original was still sitting in the list looking
+untouched.
+
+Both halves were the interface, not the rule. `reverse_entry` has always allowed
+one reversal per entry (C-Q5), but `ledger_activity.html` showed the button
+whenever an entry was locked, without asking whether a reversal already existed
+- so the page offered an action it would then refuse. And nothing marked either
+side of the pair, so the correction the operator was looking for was already two
+rows away with no sign of it.
+
+`LedgerEntry.is_reversed` answers it, `cycle_report` select_relates
+`reversed_by` so the list does not cost a query per row to ask, and the rows now
+carry **Reversed** and **This is a reversal**. The original stays listed, which
+is the point: reversal never deletes.
+
+Jober 1083, CorvinumEU 673, browser 70.
+
+
 ## 2026-08-05 - A medical you could never record, and flashes nobody could read
 
 **The compliance alert that could not be cleared.** A worker showed "Medical —

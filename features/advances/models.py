@@ -58,36 +58,67 @@ class LedgerEntry(models.Model):
     """
 
     person = models.ForeignKey(
-        "people.Person", on_delete=models.PROTECT, related_name="ledger_entries", verbose_name=_("person")
+        "people.Person",
+        on_delete=models.PROTECT,
+        related_name="ledger_entries",
+        verbose_name=_("person"),
     )
     project = models.ForeignKey(
-        "projects.Project", null=True, blank=True, on_delete=models.PROTECT,
-        related_name="ledger_entries", verbose_name=_("company / project"),
+        "projects.Project",
+        null=True,
+        blank=True,
+        on_delete=models.PROTECT,
+        related_name="ledger_entries",
+        verbose_name=_("company / project"),
     )
-    entry_type = models.CharField(_("entry type"), max_length=20, choices=EntryType.choices)
-    category = models.CharField(_("category"), max_length=20, choices=LedgerCategory.choices)
+    entry_type = models.CharField(
+        _("entry type"), max_length=20, choices=EntryType.choices
+    )
+    category = models.CharField(
+        _("category"), max_length=20, choices=LedgerCategory.choices
+    )
     amount = models.DecimalField(
-        _("amount"), max_digits=9, decimal_places=2,
+        _("amount"),
+        max_digits=9,
+        decimal_places=2,
         validators=[MinValueValidator(Decimal("0.01"))],
     )
     currency = models.CharField(_("currency"), max_length=3, default="EUR")
-    pay_effect = models.CharField(_("pay effect"), max_length=10, choices=PayEffect.choices)
+    pay_effect = models.CharField(
+        _("pay effect"), max_length=10, choices=PayEffect.choices
+    )
     settlement_status = models.CharField(
-        _("settlement"), max_length=10, choices=SettlementStatus.choices, default=SettlementStatus.OPEN
+        _("settlement"),
+        max_length=10,
+        choices=SettlementStatus.choices,
+        default=SettlementStatus.OPEN,
     )
     entry_date = models.DateField(_("entry date"))
     cycle_key = models.CharField(
-        _("cycle"), max_length=7, blank=True, default="",
-        help_text=_("20th-to-20th cycle the entry settles in, keyed by the end month (e.g. 2026-07)."),
+        _("cycle"),
+        max_length=7,
+        blank=True,
+        default="",
+        help_text=_(
+            "20th-to-20th cycle the entry settles in, keyed by the end month (e.g. 2026-07)."
+        ),
     )
     note = models.CharField(_("note"), max_length=200, blank=True)
     reversal_of = models.OneToOneField(
-        "self", null=True, blank=True, on_delete=models.PROTECT,
-        related_name="reversed_by", verbose_name=_("reversal of"),
+        "self",
+        null=True,
+        blank=True,
+        on_delete=models.PROTECT,
+        related_name="reversed_by",
+        verbose_name=_("reversal of"),
     )
     created_by = models.ForeignKey(
-        settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL,
-        related_name="+", verbose_name=_("entered by"),
+        settings.AUTH_USER_MODEL,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+        verbose_name=_("entered by"),
     )
     created_at = models.DateTimeField(_("created"), auto_now_add=True)
 
@@ -102,6 +133,17 @@ class LedgerEntry(models.Model):
 
     def __str__(self) -> str:
         return f"{self.get_entry_type_display()} {self.amount} {self.currency} — {self.person}"
+
+    @property
+    def is_reversed(self) -> bool:
+        """Has a reversal already been recorded against this entry?
+
+        An entry can be reversed once. Offering the action on one that has
+        already been reversed produces a refusal the operator cannot act on,
+        and gives no clue that the correction they are looking for is already
+        two rows further down.
+        """
+        return hasattr(self, "reversed_by")
 
     @property
     def is_locked(self) -> bool:
