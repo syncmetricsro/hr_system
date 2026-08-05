@@ -1,5 +1,56 @@
 # Build Journal
 
+## 2026-08-05 - Jober gets the checklist it was promised
+
+Asked to port the checklist and the medical work from CorvinumEU into Jober.
+**The medical work was already there** - it lives in `core/projects` and
+`features/compliance`, both of which Jober mounts, and the running app confirmed
+it before a line was written: expiry computed, badges drawn, alerts reporting
+expired, expiring and missing. Nothing to port; saying so was the useful half of
+the answer.
+
+So this was the checklist alone, and it turned out to be a flag rather than a
+feature. `features.checklists` is in the base INSTALLED_APPS for every client,
+`clients/jober/policies.py` already granted `CHECKLIST_TICK` to coordinators and
+managers, and the toggle route was already mounted behind the flag. All of it
+sat unused because ADR 0022 called checklists a CorvinumEU feature - while
+`jober-requirements-supplement.md` §11 lists **"Trial day, checklist, and
+activation gate"** under *confirmed Jober requirements retained*. Jober asked for
+it; it was built for whoever asked second. ADR 0035 records the correction and
+ADR 0022's table entry is marked superseded so the two do not disagree.
+
+**The interesting part was the seed.** `seed_people` calls `activate_on_project`
+for every seeded working person, and that runs every registered activation check
+- so the moment a template with critical items exists, the seed refuses its own
+activation. No partial form: seeding stops and the demo database is empty the
+next morning. CorvinumEU never met this because its seed activates nobody.
+
+Fixed the way an office would: tick the critical items first, through
+`set_item_state` with the seed coordinator as actor, so the demo carries a real
+name and timestamp against each one rather than rows flipped in the database.
+Verified on a **clean** reseed, which is the only place the trap appears:
+
+```
+items: 9 | critical: 8 | with help text: 9
+Olha Kovalenko    working    done 8/9  open-critical 0  by koordinator@demo.jober.test
+Farrukh, Tran, …  trial_day  done 0/9  open-critical 8
+```
+
+and the gate refusing where it should: *"Activation blocked by open checklist
+items: Personal data complete, Identity document verified, …"*.
+
+**The nine strings are byte-identical to CorvinumEU's on purpose**, in Jober's
+own catalog. `db_trans` is a verbatim lookup, so identical text shares one
+translation - extraction reported **0 added msgids** and this slice needed no
+translation work at all. A test compares the two lists as a tripwire: divergence
+is allowed and expected, it just has a bill of sk/hu/uk attached.
+
+Caught on the way through: the first clean reseed showed an empty template
+because `dev_app.sh up` reuses the existing image. The flag was in the source
+and not in the container. Rebuild, not restart.
+
+Jober 1142, CorvinumEU 722, browser 70 (not re-run).
+
 ## 2026-08-05 - "empty-bed loss" was never empty beds times price
 
 Asked how the figure was calculated, because the arithmetic did not look right

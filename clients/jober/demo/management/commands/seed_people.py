@@ -10,6 +10,7 @@ from core.offices.models import Office
 from core.people.models import LifecycleStatus, Person
 from core.projects.models import Project
 from core.projects.services import activate_on_project, schedule_trial
+from clients.jober.demo.checklist import complete_for, ensure_checklist_template
 from clients.jober.demo.management.commands.seed_demo import DEMO_USERS
 
 # Fictional data only — no real worker PII before the legal gate.
@@ -71,6 +72,10 @@ class Command(BaseCommand):
     )
 
     def handle(self, *args, **options):
+        # Before anything is activated below: the gate needs the template to
+        # exist so the items can be ticked, and whichever seed command runs
+        # first has to be the one that creates it.
+        ensure_checklist_template()
         for spec in OFFICES:
             Office.objects.get_or_create(code=spec["code"], defaults=spec)
         self.stdout.write(
@@ -160,6 +165,11 @@ class Command(BaseCommand):
                 person.owning_recruiter = owner
                 person.save(update_fields=["owning_recruiter", "updated_at"])
             if created and status == LifecycleStatus.WORKING:
+                # The activation gate runs every registered check, and the
+                # checklist blocks on open critical items - so the office's
+                # own work has to be done first, exactly as it would be in
+                # real life. Without this the seed refuses its own activation.
+                complete_for(person, actor=coordinator)
                 activate_on_project(
                     person, projects["DHLBA"], actor=coordinator, reason="demo seed"
                 )

@@ -410,7 +410,7 @@ project-specific spreadsheet ranges.
 - Returning-person detection includes inactive and archived people.
 - Archive instead of delete; retention is pending the client retention list.
 - Sized equipment catalog and person issuance.
-- Trial day, checklist, and activation gate.
+- Trial day, checklist, and activation gate. **Checklist delivered 2026-08-05** (ADR 0035); trial day and the activation gate were already built.
 - Confirmation dialogs for irreversible actions.
 - Project management, with parity to the shared project capability.
 - Jober-only per-project profitability and CSV export; no live accounting link.

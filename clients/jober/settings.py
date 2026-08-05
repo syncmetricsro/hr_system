@@ -23,7 +23,7 @@ FEATURE_FLAGS = {
     "feedback": True,
     "duplicate_blacklist": True,
     "profitability": True,
-    "checklists": False,  # CorvinumEU feature (ADR 0022) — not in the Jober product
+    "checklists": True,  # confirmed Jober requirement, delivered 2026-08-05 (ADR 0035)
     "advances": False,  # CorvinumEU feature (ADR 0022) — not in the Jober product
     "payslips": False,  # CorvinumEU feature (ADR 0023) — not in the Jober product
     "wage_ledger": False,  # CorvinumEU gross-wage source ledger

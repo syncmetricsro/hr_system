@@ -11,43 +11,43 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n>=2 && n<=4 ? 1 : 2);\n"
 
-#: clients/corvinum_eu/catalog_i18n.py:12
+#: clients/corvinum_eu/catalog_i18n.py:12 clients/jober/catalog_i18n.py:19
 msgid "Personal data complete"
 msgstr "Osobné údaje kompletné"
 
-#: clients/corvinum_eu/catalog_i18n.py:13
+#: clients/corvinum_eu/catalog_i18n.py:13 clients/jober/catalog_i18n.py:20
 msgid "Identity document verified"
 msgstr "Doklad totožnosti overený"
 
-#: clients/corvinum_eu/catalog_i18n.py:14
+#: clients/corvinum_eu/catalog_i18n.py:14 clients/jober/catalog_i18n.py:21
 msgid "Work/residence permit valid (if applicable)"
 msgstr "Pracovné/pobytové povolenie platné (ak je potrebné)"
 
-#: clients/corvinum_eu/catalog_i18n.py:15
+#: clients/corvinum_eu/catalog_i18n.py:15 clients/jober/catalog_i18n.py:22
 msgid "Medical certificate valid"
 msgstr "Lekárske potvrdenie platné"
 
-#: clients/corvinum_eu/catalog_i18n.py:16
+#: clients/corvinum_eu/catalog_i18n.py:16 clients/jober/catalog_i18n.py:23
 msgid "Safety training completed"
 msgstr "Školenie BOZP absolvované"
 
-#: clients/corvinum_eu/catalog_i18n.py:17
+#: clients/corvinum_eu/catalog_i18n.py:17 clients/jober/catalog_i18n.py:24
 msgid "Contract signed"
 msgstr "Zmluva podpísaná"
 
-#: clients/corvinum_eu/catalog_i18n.py:18
+#: clients/corvinum_eu/catalog_i18n.py:18 clients/jober/catalog_i18n.py:25
 msgid "Duplicate check resolved"
 msgstr "Kontrola duplicity vyriešená"
 
-#: clients/corvinum_eu/catalog_i18n.py:19
+#: clients/corvinum_eu/catalog_i18n.py:19 clients/jober/catalog_i18n.py:26
 msgid "Blacklist check resolved"
 msgstr "Kontrola čiernej listiny vyriešená"
 
-#: clients/corvinum_eu/catalog_i18n.py:20
+#: clients/corvinum_eu/catalog_i18n.py:20 clients/jober/catalog_i18n.py:27
 msgid "Welcome call made"
 msgstr "Uvítací telefonát uskutočnený"
 
-#: clients/corvinum_eu/catalog_i18n.py:28
+#: clients/corvinum_eu/catalog_i18n.py:28 clients/jober/catalog_i18n.py:35
 msgid ""
 "Name, date of birth, address and phone are all filled in, and they match the "
 "document you were shown rather than what was said on the phone."
@@ -55,7 +55,7 @@ msgstr ""
 "Meno, dátum narodenia, adresa aj telefón sú vyplnené a zhodujú sa s "
 "dokladom, ktorý vám ukázali — nie s tým, čo odznelo po telefóne."
 
-#: clients/corvinum_eu/catalog_i18n.py:33
+#: clients/corvinum_eu/catalog_i18n.py:33 clients/jober/catalog_i18n.py:40
 msgid ""
 "You have seen the ID card or passport yourself, it is valid today, and the "
 "name matches this record. No scan is kept here — this tick is the record "
@@ -65,7 +65,7 @@ msgstr ""
 "sa zhoduje s týmto záznamom. Sken sa tu neuchováva — týmto zaškrtnutím "
 "potvrdzujete, že ste doklad overili."
 
-#: clients/corvinum_eu/catalog_i18n.py:38
+#: clients/corvinum_eu/catalog_i18n.py:38 clients/jober/catalog_i18n.py:45
 msgid ""
 "For a non-EU worker: the permit covers the whole planned assignment, not "
 "just the start date. An EU national needs none — tick it and move on."
@@ -73,7 +73,7 @@ msgstr ""
 "Pri pracovníkovi mimo EÚ: povolenie pokrýva celé plánované zaradenie, nielen "
 "deň nástupu. Občan EÚ ho nepotrebuje — zaškrtnite a pokračujte."
 
-#: clients/corvinum_eu/catalog_i18n.py:43
+#: clients/corvinum_eu/catalog_i18n.py:43 clients/jober/catalog_i18n.py:50
 msgid ""
 "A fitness certificate exists, is less than a year old, and its date is "
 "recorded on this worker. Until the date is entered, Compliance keeps "
@@ -83,7 +83,7 @@ msgstr ""
 "dátum je zapísaný pri tomto pracovníkovi. Kým dátum chýba, Súlad hlási "
 "lekársku prehliadku ako chýbajúcu."
 
-#: clients/corvinum_eu/catalog_i18n.py:48
+#: clients/corvinum_eu/catalog_i18n.py:48 clients/jober/catalog_i18n.py:55
 msgid ""
 "The worker has attended the safety training for the site they are going to, "
 "and whoever gave it has confirmed they were there."
@@ -91,7 +91,7 @@ msgstr ""
 "Pracovník absolvoval školenie BOZP pre pracovisko, na ktoré nastupuje, a "
 "ten, kto ho viedol, potvrdil jeho účasť."
 
-#: clients/corvinum_eu/catalog_i18n.py:53
+#: clients/corvinum_eu/catalog_i18n.py:53 clients/jober/catalog_i18n.py:60
 msgid ""
 "Both sides have signed and the office holds its copy. A contract sent but "
 "not signed back is not this item."
@@ -99,7 +99,7 @@ msgstr ""
 "Obe strany zmluvu podpísali a kancelária má svoj rovnopis. Odoslaná, ale "
 "nepodpísaná zmluva sem nepatrí."
 
-#: clients/corvinum_eu/catalog_i18n.py:57
+#: clients/corvinum_eu/catalog_i18n.py:57 clients/jober/catalog_i18n.py:64
 msgid ""
 "You have searched for this person under other spellings of the name and "
 "under their phone number, and confirmed there is no second record for them."
@@ -107,7 +107,7 @@ msgstr ""
 "Hľadali ste túto osobu aj pod inými zápismi mena a podľa telefónneho čísla a "
 "overili ste, že druhý záznam o nej neexistuje."
 
-#: clients/corvinum_eu/catalog_i18n.py:62
+#: clients/corvinum_eu/catalog_i18n.py:62 clients/jober/catalog_i18n.py:69
 msgid ""
 "The blacklist check has been run and either found nothing, or a manager has "
 "decided the case. An open match is not resolved."
@@ -115,7 +115,7 @@ msgstr ""
 "Kontrola čiernej listiny prebehla a buď nič nenašla, alebo o prípade "
 "rozhodol manažér. Otvorená zhoda nie je vyriešená."
 
-#: clients/corvinum_eu/catalog_i18n.py:67
+#: clients/corvinum_eu/catalog_i18n.py:67 clients/jober/catalog_i18n.py:74
 msgid ""
 "Somebody has called the worker to confirm the start date, how they get there "
 "and what to bring. Not critical — but it prevents most no-shows."
@@ -5666,7 +5666,10 @@ msgstr "Čisté náklady spoločnosti"
 msgid ""
 "Standing cost minus what the workers paid, whether the beds were used or "
 "not. This is the plain out-of-pocket figure for the month."
-msgstr "Fixné náklady mínus to, čo zaplatili pracovníci — bez ohľadu na to, či sa postele využili. Je to jednoduchá suma, ktorú firma za mesiac skutočne zaplatila zo svojho."
+msgstr ""
+"Fixné náklady mínus to, čo zaplatili pracovníci — bez ohľadu na to, či sa "
+"postele využili. Je to jednoduchá suma, ktorú firma za mesiac skutočne "
+"zaplatila zo svojho."
 
 #: templates/pages/accommodation_costs.html:15
 #: templates/pages/accommodation_costs.html:22
@@ -5679,7 +5682,12 @@ msgid ""
 "they actually used. It is not empty beds x price per bed: the workers' "
 "payments are credited against it, so a well-paying house shows a smaller "
 "figure than its empty beds alone would suggest."
-msgstr "Fixné náklady mínus to, čo zaplatili pracovníci, a mínus náklady na postele, ktoré sa naozaj využili. Nie je to počet prázdnych postelí krát cena za posteľ: platby pracovníkov sa od tejto sumy odpočítavajú, takže ubytovňa s dobre platiacimi pracovníkmi vykáže menej, než by zodpovedalo samotným prázdnym posteliam."
+msgstr ""
+"Fixné náklady mínus to, čo zaplatili pracovníci, a mínus náklady na postele, "
+"ktoré sa naozaj využili. Nie je to počet prázdnych postelí krát cena za "
+"posteľ: platby pracovníkov sa od tejto sumy odpočítavajú, takže ubytovňa s "
+"dobre platiacimi pracovníkmi vykáže menej, než by zodpovedalo samotným "
+"prázdnym posteliam."
 
 #: templates/pages/accommodation_costs.html:18
 msgid "Missing cost period"

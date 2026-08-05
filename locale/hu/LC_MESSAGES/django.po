@@ -11,43 +11,43 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: clients/corvinum_eu/catalog_i18n.py:12
+#: clients/corvinum_eu/catalog_i18n.py:12 clients/jober/catalog_i18n.py:19
 msgid "Personal data complete"
 msgstr "Személyes adatok hiánytalanok"
 
-#: clients/corvinum_eu/catalog_i18n.py:13
+#: clients/corvinum_eu/catalog_i18n.py:13 clients/jober/catalog_i18n.py:20
 msgid "Identity document verified"
 msgstr "Személyazonosító okmány ellenőrizve"
 
-#: clients/corvinum_eu/catalog_i18n.py:14
+#: clients/corvinum_eu/catalog_i18n.py:14 clients/jober/catalog_i18n.py:21
 msgid "Work/residence permit valid (if applicable)"
 msgstr "Munkavállalási/tartózkodási engedély érvényes (ha szükséges)"
 
-#: clients/corvinum_eu/catalog_i18n.py:15
+#: clients/corvinum_eu/catalog_i18n.py:15 clients/jober/catalog_i18n.py:22
 msgid "Medical certificate valid"
 msgstr "Orvosi igazolás érvényes"
 
-#: clients/corvinum_eu/catalog_i18n.py:16
+#: clients/corvinum_eu/catalog_i18n.py:16 clients/jober/catalog_i18n.py:23
 msgid "Safety training completed"
 msgstr "Munkavédelmi oktatás elvégezve"
 
-#: clients/corvinum_eu/catalog_i18n.py:17
+#: clients/corvinum_eu/catalog_i18n.py:17 clients/jober/catalog_i18n.py:24
 msgid "Contract signed"
 msgstr "Szerződés aláírva"
 
-#: clients/corvinum_eu/catalog_i18n.py:18
+#: clients/corvinum_eu/catalog_i18n.py:18 clients/jober/catalog_i18n.py:25
 msgid "Duplicate check resolved"
 msgstr "Duplikátum-ellenőrzés lezárva"
 
-#: clients/corvinum_eu/catalog_i18n.py:19
+#: clients/corvinum_eu/catalog_i18n.py:19 clients/jober/catalog_i18n.py:26
 msgid "Blacklist check resolved"
 msgstr "Tiltólista-ellenőrzés lezárva"
 
-#: clients/corvinum_eu/catalog_i18n.py:20
+#: clients/corvinum_eu/catalog_i18n.py:20 clients/jober/catalog_i18n.py:27
 msgid "Welcome call made"
 msgstr "Üdvözlő hívás megtörtént"
 
-#: clients/corvinum_eu/catalog_i18n.py:28
+#: clients/corvinum_eu/catalog_i18n.py:28 clients/jober/catalog_i18n.py:35
 msgid ""
 "Name, date of birth, address and phone are all filled in, and they match the "
 "document you were shown rather than what was said on the phone."
@@ -55,7 +55,7 @@ msgstr ""
 "A név, a születési dátum, a cím és a telefonszám ki van töltve, és egyezik a "
 "bemutatott okmánnyal, nem azzal, ami telefonon elhangzott."
 
-#: clients/corvinum_eu/catalog_i18n.py:33
+#: clients/corvinum_eu/catalog_i18n.py:33 clients/jober/catalog_i18n.py:40
 msgid ""
 "You have seen the ID card or passport yourself, it is valid today, and the "
 "name matches this record. No scan is kept here — this tick is the record "
@@ -65,7 +65,7 @@ msgstr ""
 "és a név egyezik ezzel az adatlappal. Szkennelt másolat nem kerül ide — ez a "
 "pipa maga a bizonyíték, hogy ellenőrizte."
 
-#: clients/corvinum_eu/catalog_i18n.py:38
+#: clients/corvinum_eu/catalog_i18n.py:38 clients/jober/catalog_i18n.py:45
 msgid ""
 "For a non-EU worker: the permit covers the whole planned assignment, not "
 "just the start date. An EU national needs none — tick it and move on."
@@ -74,7 +74,7 @@ msgstr ""
 "érvényes, nemcsak a kezdés napjára. Uniós állampolgárnak nem kell — pipálja "
 "ki és lépjen tovább."
 
-#: clients/corvinum_eu/catalog_i18n.py:43
+#: clients/corvinum_eu/catalog_i18n.py:43 clients/jober/catalog_i18n.py:50
 msgid ""
 "A fitness certificate exists, is less than a year old, and its date is "
 "recorded on this worker. Until the date is entered, Compliance keeps "
@@ -84,7 +84,7 @@ msgstr ""
 "rögzítve van ennél a munkavállalónál. Amíg a dátum hiányzik, a Megfelelés "
 "hiányzóként jelzi az orvosit."
 
-#: clients/corvinum_eu/catalog_i18n.py:48
+#: clients/corvinum_eu/catalog_i18n.py:48 clients/jober/catalog_i18n.py:55
 msgid ""
 "The worker has attended the safety training for the site they are going to, "
 "and whoever gave it has confirmed they were there."
@@ -92,7 +92,7 @@ msgstr ""
 "A munkavállaló elvégezte a munkavédelmi oktatást arra a telephelyre, ahová "
 "megy, és az oktatást tartó személy igazolta a részvételét."
 
-#: clients/corvinum_eu/catalog_i18n.py:53
+#: clients/corvinum_eu/catalog_i18n.py:53 clients/jober/catalog_i18n.py:60
 msgid ""
 "Both sides have signed and the office holds its copy. A contract sent but "
 "not signed back is not this item."
@@ -100,7 +100,7 @@ msgstr ""
 "Mindkét fél aláírta, és az iroda birtokolja a saját példányát. Az elküldött, "
 "de vissza nem írt szerződés nem ez a tétel."
 
-#: clients/corvinum_eu/catalog_i18n.py:57
+#: clients/corvinum_eu/catalog_i18n.py:57 clients/jober/catalog_i18n.py:64
 msgid ""
 "You have searched for this person under other spellings of the name and "
 "under their phone number, and confirmed there is no second record for them."
@@ -108,7 +108,7 @@ msgstr ""
 "Rákeresett erre a személyre a név más írásmódjaival és a telefonszáma "
 "alapján is, és meggyőződött róla, hogy nincs róla második adatlap."
 
-#: clients/corvinum_eu/catalog_i18n.py:62
+#: clients/corvinum_eu/catalog_i18n.py:62 clients/jober/catalog_i18n.py:69
 msgid ""
 "The blacklist check has been run and either found nothing, or a manager has "
 "decided the case. An open match is not resolved."
@@ -116,7 +116,7 @@ msgstr ""
 "A tiltólista-ellenőrzés lefutott, és vagy nem talált semmit, vagy a vezető "
 "döntött az ügyben. A nyitott találat nem lezárt eset."
 
-#: clients/corvinum_eu/catalog_i18n.py:67
+#: clients/corvinum_eu/catalog_i18n.py:67 clients/jober/catalog_i18n.py:74
 msgid ""
 "Somebody has called the worker to confirm the start date, how they get there "
 "and what to bring. Not critical — but it prevents most no-shows."
@@ -5716,7 +5716,10 @@ msgstr "A cég nettó költsége"
 msgid ""
 "Standing cost minus what the workers paid, whether the beds were used or "
 "not. This is the plain out-of-pocket figure for the month."
-msgstr "Az állandó költség mínusz az, amit a munkavállalók fizettek — függetlenül attól, hogy az ágyakat használták-e. Ez az az összeg, amelyet a cég a hónapban ténylegesen a saját zsebéből állt."
+msgstr ""
+"Az állandó költség mínusz az, amit a munkavállalók fizettek — függetlenül "
+"attól, hogy az ágyakat használták-e. Ez az az összeg, amelyet a cég a "
+"hónapban ténylegesen a saját zsebéből állt."
 
 #: templates/pages/accommodation_costs.html:15
 #: templates/pages/accommodation_costs.html:22
@@ -5729,7 +5732,12 @@ msgid ""
 "they actually used. It is not empty beds x price per bed: the workers' "
 "payments are credited against it, so a well-paying house shows a smaller "
 "figure than its empty beds alone would suggest."
-msgstr "Az állandó költség mínusz az, amit a munkavállalók fizettek, és mínusz a ténylegesen használt ágyak költsége. Ez nem az üres ágyak száma szorozva az ágyankénti árral: a munkavállalók befizetéseit levonjuk belőle, így egy jól fizető szállás kisebb összeget mutat, mint amennyit az üres ágyak önmagukban indokolnának."
+msgstr ""
+"Az állandó költség mínusz az, amit a munkavállalók fizettek, és mínusz a "
+"ténylegesen használt ágyak költsége. Ez nem az üres ágyak száma szorozva az "
+"ágyankénti árral: a munkavállalók befizetéseit levonjuk belőle, így egy jól "
+"fizető szállás kisebb összeget mutat, mint amennyit az üres ágyak önmagukban "
+"indokolnának."
 
 #: templates/pages/accommodation_costs.html:18
 msgid "Missing cost period"
