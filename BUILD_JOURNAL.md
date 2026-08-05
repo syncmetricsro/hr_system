@@ -1,5 +1,41 @@
 # Build Journal
 
+## 2026-08-06 - the pay overview sorts, by link
+
+Asked for ordering on the pay overview by name, run and the money columns. It is
+the product's **first sortable table**, so the shape it takes is the shape the
+next one copies.
+
+**Server-side, as links.** The rows are worker x run and the table is built from
+three registered series; sorting only what the browser already has would answer
+a different question, and the order would not survive a reload or a paste into a
+message. A `?sort=deductions&dir=desc` URL does, and it needs no JavaScript.
+
+Three decisions worth the words:
+
+- **Columns are named, not numbered.** Which columns exist depends on the
+  client's flags and the reader's permissions, so `sort=col3` would sort a
+  different figure for the next person who opened the link. Each series now
+  registers a stable `key` - `gross_wage`, `deductions`, `after_deductions`,
+  `net_payslip` - and the derived column gets one too.
+- **Empty cells sort last in both directions.** A dash means nothing was
+  recorded, which is not a zero. Sorting descending to find the largest
+  deduction and being handed a screenful of blanks first would make the control
+  useless for the single question it answers.
+- **An unknown sort key falls back rather than failing.** A stale bookmark or a
+  hand-edited URL shows the table in its default order; nothing about ordering a
+  view is worth a 500.
+
+Header links carry the year/month selector through, so sorting cannot silently
+move the reader to a different run - which is the mistake this kind of control
+usually makes. `aria-sort` marks the active column, and the marker is a caret
+rather than a colour alone.
+
+**No new strings**: the headers reuse the labels they already had, so extraction
+reported zero added msgids.
+
+Jober 1142, CorvinumEU 735, browser 70 (not re-run).
+
 ## 2026-08-05 - the pay result, for the whole office, on the ledger page
 
 The ledger page said what a run collects. What the office is actually asked is

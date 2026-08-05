@@ -2944,13 +2944,12 @@ msgid "Cycle controls include, export, and settle the selected period."
 msgstr "Ovládanie cyklu zahrnie, exportuje a zúčtuje vybrané obdobie."
 
 #: core/ui/help.py:706 core/ui/help.py:808 core/ui/help.py:889
-#: features/payslips/forms.py:22 templates/pages/ledger.html:21
-#: templates/pages/payslips.html:39 templates/pages/person_detail.html:38
-#: templates/pages/person_detail.html:315 templates/pages/wages.html:38
-#: templates/partials/ledger_activity.html:8
+#: features/advances/views.py:80 features/payslips/forms.py:22
+#: templates/pages/ledger.html:21 templates/pages/payslips.html:39
+#: templates/pages/person_detail.html:38 templates/pages/person_detail.html:315
+#: templates/pages/wages.html:38 templates/partials/ledger_activity.html:8
 #: templates/partials/ledger_activity.html:26
 #: templates/partials/ledger_cycle.html:16
-#: templates/partials/ledger_pay_overview.html:16
 msgid "Person"
 msgstr "Osoba"
 
@@ -3387,7 +3386,7 @@ msgstr "Filtre zúžia stopu bez zmeny uložených udalostí."
 msgid "Audit access and append-only behavior protect the evidence trail."
 msgstr "Prístup k Auditu a nemenné správanie chránia dôkaznú stopu."
 
-#: core/ui/registry.py:198
+#: core/ui/registry.py:211
 msgid "After deductions"
 msgstr "Po zrážkach"
 
@@ -3526,7 +3525,7 @@ msgstr "záznam v knihe"
 msgid "ledger entries"
 msgstr "záznamy v knihe"
 
-#: features/advances/providers.py:54
+#: features/advances/providers.py:52
 msgid "Ledger deductions"
 msgstr "Zrážky z knihy"
 
@@ -3586,45 +3585,49 @@ msgstr "Záznamy bez vplyvu na mzdu nemožno stornovať."
 msgid "Entry is locked after cycle inclusion; record a reversal instead."
 msgstr "Po zahrnutí do cyklu je záznam uzamknutý; zaznamenajte storno."
 
-#: features/advances/views.py:104
+#: features/advances/views.py:81
+msgid "Payroll run"
+msgstr "Mzdový cyklus"
+
+#: features/advances/views.py:160
 msgid "Entry date must be a real date (YYYY-MM-DD)."
 msgstr "Dátum záznamu musí byť skutočný dátum (RRRR-MM-DD)."
 
-#: features/advances/views.py:117
+#: features/advances/views.py:173
 msgid "Ledger entry recorded."
 msgstr "Záznam v knihe uložený."
 
-#: features/advances/views.py:119
+#: features/advances/views.py:175
 msgid "Invalid ledger entry."
 msgstr "Neplatný záznam."
 
-#: features/advances/views.py:133
+#: features/advances/views.py:189
 msgid "Entry cancelled."
 msgstr "Záznam zrušený."
 
-#: features/advances/views.py:136
+#: features/advances/views.py:192
 msgid "Reversal recorded."
 msgstr "Storno zaznamenané."
 
-#: features/advances/views.py:139
+#: features/advances/views.py:195
 msgid "Entry deleted."
 msgstr "Záznam bol zmazaný."
 
-#: features/advances/views.py:141
+#: features/advances/views.py:197
 msgid "Unknown action."
 msgstr "Neznáma akcia."
 
-#: features/advances/views.py:154
+#: features/advances/views.py:210
 #, python-format
 msgid "%(n)s entries included in the cycle."
 msgstr "Do cyklu bolo zahrnutých %(n)s záznamov."
 
-#: features/advances/views.py:157
+#: features/advances/views.py:213
 #, python-format
 msgid "%(n)s entries marked settled."
 msgstr "%(n)s záznamov označených ako vysporiadané."
 
-#: features/advances/views.py:161
+#: features/advances/views.py:217
 #, python-format
 msgid "%(n)s entries reopened."
 msgstr "Znovu otvorené záznamy: %(n)s."
@@ -8503,24 +8506,32 @@ msgid ""
 "is gross minus this office's own ledger entries, and nothing else. It is not "
 "net pay — no tax or levy is calculated here, which is why the payslip stays "
 "its own column to compare against."
-msgstr "Jeden riadok na pracovníka a mzdový cyklus. Účtovné zrážky sú to, čo daný cyklus vyberie — čo nie je vždy mesiac, kedy peniaze zmenili majiteľa: záloha vydaná po 20. sa strhne až v nasledujúcom cykle. Hrubá mzda a zapísaná čistá výplatná páska sú zdrojové hodnoty, ktoré niekto zadal; Po zrážkach je hrubá mzda mínus vlastné účtovné položky tejto kancelárie, a nič iné. Nie je to čistá mzda — nepočíta sa tu žiadna daň ani odvod, a práve preto zostáva výplatná páska v samostatnom stĺpci na porovnanie."
+msgstr ""
+"Jeden riadok na pracovníka a mzdový cyklus. Účtovné zrážky sú to, čo daný "
+"cyklus vyberie — čo nie je vždy mesiac, kedy peniaze zmenili majiteľa: "
+"záloha vydaná po 20. sa strhne až v nasledujúcom cykle. Hrubá mzda a "
+"zapísaná čistá výplatná páska sú zdrojové hodnoty, ktoré niekto zadal; Po "
+"zrážkach je hrubá mzda mínus vlastné účtovné položky tejto kancelárie, a nič "
+"iné. Nie je to čistá mzda — nepočíta sa tu žiadna daň ani odvod, a práve "
+"preto zostáva výplatná páska v samostatnom stĺpci na porovnanie."
 
 #: templates/partials/ledger_pay_overview.html:10
 msgid ""
 "One row per worker per payroll run, from the values recorded for them. Gross "
 "wage is not converted into net pay here; taxes, levies, and other statutory "
 "payroll calculations remain outside this feature."
-msgstr "Jeden riadok na pracovníka a mzdový cyklus, zo zapísaných hodnôt. Hrubá mzda sa tu neprepočítava na čistú; dane, odvody a ďalšie zákonné mzdové výpočty zostávajú mimo tejto funkcie."
+msgstr ""
+"Jeden riadok na pracovníka a mzdový cyklus, zo zapísaných hodnôt. Hrubá mzda "
+"sa tu neprepočítava na čistú; dane, odvody a ďalšie zákonné mzdové výpočty "
+"zostávajú mimo tejto funkcie."
 
-#: templates/partials/ledger_pay_overview.html:17
-msgid "Payroll run"
-msgstr "Mzdový cyklus"
-
-#: templates/partials/ledger_pay_overview.html:34
+#: templates/partials/ledger_pay_overview.html:37
 msgid ""
 "A dash means nothing was recorded for that worker in that run — which is a "
 "different fact from a recorded zero, and worth looking at."
-msgstr "Pomlčka znamená, že pre daného pracovníka v tomto cykle nebolo zapísané nič — čo je iný údaj než zapísaná nula a stojí za pozretie."
+msgstr ""
+"Pomlčka znamená, že pre daného pracovníka v tomto cykle nebolo zapísané nič "
+"— čo je iný údaj než zapísaná nula a stojí za pozretie."
 
 #: templates/partials/period_filter.html:15
 msgid "Period"

@@ -781,3 +781,125 @@ def test_the_overview_and_the_entry_dropdown_are_office_scoped(
     assert ours.pk in listed and other.pk not in listed
     shown = {row["person"].pk for row in response.context["pay_overview"]["rows"]}
     assert ours.pk in shown and other.pk not in shown
+
+
+# --- ordering the overview (2026-08-06) -------------------------------------
+#
+# Server-side and by link, because the table is worker x run: sorting only the
+# rows already rendered would answer a different question, and the resulting
+# URL would not survive a reload or a paste into a message.
+
+
+@pytest.fixture
+def three_workers(manager):
+    """Three workers whose deductions do not match their alphabetical order."""
+    people = {}
+    for name, amount in (("Alpha", "300"), ("Bravo", "100"), ("Cempty", None)):
+        person = Person.objects.create(first_name=name, last_name="Worker")
+        people[name] = person
+        record_wage(person, period="2026-08", gross_amount="1000", actor=manager)
+        if amount is not None:
+            record_entry(
+                person,
+                entry_type=EntryType.PAY_DEDUCTION,
+                category=LedgerCategory.EQUIPMENT,
+                amount=amount,
+                actor=manager,
+                entry_date=dt.date(2026, 8, 5),
+            )
+    return people
+
+
+def _order(client, **params):
+    response = client.get(
+        reverse("ledger_overview"), {"year": 2026, "month": 8, **params}
+    )
+    return [
+        (str(row["person"]), row["period"])
+        for row in response.context["pay_overview"]["rows"]
+    ]
+
+
+def test_the_default_order_is_by_person_then_newest_run(client, three_workers, manager):
+    client.force_login(manager)
+
+    order = _order(client)
+
+    assert order[:3] == [
+        ("Alpha Worker", "2026-08"),
+        ("Alpha Worker", "2026-07"),
+        ("Alpha Worker", "2026-06"),
+    ]
+
+
+def test_sorting_by_a_money_column_reorders_the_whole_table(
+    client, three_workers, manager
+):
+    client.force_login(manager)
+
+    ascending = [name for name, _period in _order(client, sort="deductions")]
+    descending = [
+        name for name, _period in _order(client, sort="deductions", dir="desc")
+    ]
+
+    assert ascending[0] == "Bravo Worker"  # 100 before 300
+    assert descending[0] == "Alpha Worker"  # 300 first
+
+
+def test_empty_cells_sort_last_in_both_directions(client, three_workers, manager):
+    """A dash is not a zero.
+
+    Sorting descending to find the largest deduction and being handed a screen
+    of blanks would make the control useless for the question it answers, so
+    empties go to the bottom whichever way the arrow points.
+    """
+    client.force_login(manager)
+
+    for params in ({"sort": "deductions"}, {"sort": "deductions", "dir": "desc"}):
+        names = [name for name, _period in _order(client, **params)]
+        assert names[-1] == "Cempty Worker", params
+
+
+def test_sorting_by_the_payroll_run(client, three_workers, manager):
+    client.force_login(manager)
+
+    periods = [period for _name, period in _order(client, sort="period", dir="desc")]
+
+    assert periods == sorted(periods, reverse=True)
+
+
+def test_an_unknown_sort_key_falls_back_instead_of_failing(
+    client, three_workers, manager
+):
+    """A stale link or a hand-edited URL should show the table, not a 500."""
+    client.force_login(manager)
+
+    response = client.get(
+        reverse("ledger_overview"),
+        {"year": 2026, "month": 8, "sort": "nonsense", "dir": "desc"},
+    )
+
+    assert response.status_code == 200
+    assert _order(client, sort="nonsense") == _order(client)
+
+
+def test_the_headers_keep_the_selected_cycle_and_toggle_direction(
+    client, three_workers, manager
+):
+    client.force_login(manager)
+
+    response = client.get(
+        reverse("ledger_overview"), {"year": 2026, "month": 8, "sort": "deductions"}
+    )
+    headers = {h["key"]: h for h in response.context["pay_overview"]["headers"]}
+
+    # The cycle selector survives every header link, or sorting would silently
+    # move the reader to a different run.
+    assert all(
+        "year=2026" in h["url"] and "month=8" in h["url"] for h in headers.values()
+    )
+    # The sorted column offers the reverse; the others start ascending.
+    assert "dir=desc" in headers["deductions"]["url"]
+    assert headers["deductions"]["aria_sort"] == "ascending"
+    assert "dir=desc" not in headers["person"]["url"]
+    assert headers["person"]["aria_sort"] == "none"

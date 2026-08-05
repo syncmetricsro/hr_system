@@ -14,7 +14,11 @@ from core.accounts.permissions import Action, require_action
 from core.offices.scoping import scope_people
 from core.people.models import Person
 from core.projects.models import Project
-from core.ui.registry import finance_overview_table
+from core.ui.registry import (
+    FINANCE_SORT_PERIOD,
+    FINANCE_SORT_PERSON,
+    finance_overview_table,
+)
 from features.advances.models import EntryType, LedgerCategory, LedgerEntry
 from features.advances.services import (
     LedgerError,
@@ -59,6 +63,51 @@ def _recent_periods(year: int, month: int, count: int = OVERVIEW_MONTHS):
     return periods
 
 
+def _overview_headers(request, table):
+    """Header links for the pay overview: preserve the cycle selector, toggle
+    direction on the column already sorted, and mark it for screen readers.
+
+    Built here rather than in the template because it is URL work, and here
+    rather than in the registry because the registry composes numbers and knows
+    nothing about requests.
+    """
+    if not table:
+        return []
+    base = request.GET.copy()
+    base.pop("sort", None)
+    base.pop("dir", None)
+    columns = [
+        (FINANCE_SORT_PERSON, _("Person"), False),
+        (FINANCE_SORT_PERIOD, _("Payroll run"), False),
+    ] + [(item["key"], item["label"], True) for item in table["series"]]
+
+    headers = []
+    for key, label, numeric in columns:
+        active = table["sort"] == key
+        params = base.copy()
+        params["sort"] = key
+        # Clicking the sorted column reverses it; clicking a new one starts
+        # ascending, which is what every table in every spreadsheet does.
+        if active and not table["descending"]:
+            params["dir"] = "desc"
+        headers.append(
+            {
+                "label": label,
+                "key": key,
+                "numeric": numeric,
+                "active": active,
+                "descending": active and table["descending"],
+                "url": f"?{params.urlencode()}",
+                "aria_sort": (
+                    ("descending" if table["descending"] else "ascending")
+                    if active
+                    else "none"
+                ),
+            }
+        )
+    return headers
+
+
 @require_action(Action.LEDGER_VIEW)
 def ledger_overview(request):
     year, month = _report_args(request)
@@ -68,6 +117,15 @@ def ledger_overview(request):
     people = scope_people(
         Person.objects.order_by("last_name", "first_name"), request.user
     )
+    pay_overview = finance_overview_table(
+        request,
+        people,
+        _recent_periods(year, month),
+        sort=request.GET.get("sort", ""),
+        descending=request.GET.get("dir") == "desc",
+    )
+    if pay_overview:
+        pay_overview["headers"] = _overview_headers(request, pay_overview)
     return render(
         request,
         "pages/ledger.html",
@@ -79,9 +137,7 @@ def ledger_overview(request):
             "entry_types": EntryType.choices,
             "categories": LedgerCategory.choices,
             "people": people,
-            "pay_overview": finance_overview_table(
-                request, people, _recent_periods(year, month)
-            ),
+            "pay_overview": pay_overview,
             "projects": Project.objects.order_by("name"),
             # Pre-fills the entry date, which is what it is nine times in ten.
             "today_iso": timezone.localdate().isoformat(),

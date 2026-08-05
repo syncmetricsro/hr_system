@@ -95,7 +95,7 @@ def register_report_panel(template: str, context, order: int = 100) -> None:
 
 
 def register_person_finance_series(
-    provider, order: int = 100, role: str = "source"
+    provider, order: int = 100, role: str = "source", key: str = ""
 ) -> None:
     """Register a per-person, per-period money column.
 
@@ -103,6 +103,11 @@ def register_person_finance_series(
     supplies either. ``"gross"`` and ``"deduction"`` together produce the
     derived *after deductions* column; the default ``"source"`` is a column
     that stands alone and is never arithmetic input.
+
+    ``key`` names the column in a sort URL. It is stable and independent of
+    position, because which columns exist depends on the client's flags and the
+    reader's permissions — a shared link that sorts "the third column" would
+    sort a different figure for the next person who opens it.
 
     **The provider is bulk**::
 
@@ -116,7 +121,12 @@ def register_person_finance_series(
     the alternative - a second bulk implementation - is how two screens start
     disagreeing about one number.
     """
-    entry = {"provider": provider, "order": order, "role": role}
+    entry = {
+        "provider": provider,
+        "order": order,
+        "role": role,
+        "key": key or role,
+    }
     if entry not in _person_finance_series:
         _person_finance_series.append(entry)
 
@@ -188,14 +198,19 @@ def _finance_series(request, people):
     for entry in sorted(_person_finance_series, key=lambda item: item["order"]):
         rendered = entry["provider"](request, people)
         if rendered is not None:
-            series.append({**rendered, "role": entry["role"]})
+            series.append({**rendered, "role": entry["role"], "key": entry["key"]})
 
     gross = next((s for s in series if s["role"] == "gross"), None)
     deduction = next((s for s in series if s["role"] == "deduction"), None)
     if gross is None or deduction is None:
         return series
 
-    derived = {"label": _("After deductions"), "role": "derived", "by_person": {}}
+    derived = {
+        "label": _("After deductions"),
+        "role": "derived",
+        "key": "after_deductions",
+        "by_person": {},
+    }
     for person_id, periods in gross["by_person"].items():
         taken = deduction["by_person"].get(person_id, {})
         for period, (base, currency) in periods.items():
@@ -255,7 +270,61 @@ def person_finance_overview(request, person) -> dict | None:
     return {"series": series, "rows": rows, "has_derived": has_derived}
 
 
-def finance_overview_table(request, people, periods) -> dict | None:
+#: Columns that are not one of the registered money series.
+FINANCE_SORT_PERSON = "person"
+FINANCE_SORT_PERIOD = "period"
+
+
+def _sort_rows(rows, series, sort: str, descending: bool):
+    """Order the table by one column, with empties always last.
+
+    A dash is not a zero — it means nothing was recorded — so an empty cell
+    sorts to the bottom in **both** directions. Sorting descending by
+    deductions to find the largest, and being handed a screenful of blanks
+    first, would make the control useless for the one question it answers.
+    """
+    if sort == FINANCE_SORT_PERIOD:
+        rows.sort(
+            key=lambda row: (row["period"], str(row["person"])), reverse=descending
+        )
+        return rows
+
+    index = next(
+        (i for i, item in enumerate(series) if item["key"] == sort),
+        None,
+    )
+    if index is None:
+        # Default, and the fallback for a stale or hand-edited sort key: by
+        # person, newest run first. Never an error - a bad URL should show the
+        # table, not a 500.
+        rows.sort(key=lambda row: (str(row["person"]), _descending(row["period"])))
+        return rows
+
+    def money(row):
+        cell = row["cells"][index]
+        return None if cell is None else cell["amount"]
+
+    rows.sort(key=lambda row: (str(row["person"]), row["period"]))
+    rows.sort(
+        key=lambda row: (money(row) is None, _flip(money(row), descending)),
+    )
+    return rows
+
+
+def _flip(amount, descending):
+    if amount is None:
+        return 0
+    return -amount if descending else amount
+
+
+def _descending(period: str) -> str:
+    """Sort a YYYY-MM string newest-first inside an ascending sort."""
+    return "".join(chr(255 - ord(character)) for character in period)
+
+
+def finance_overview_table(
+    request, people, periods, sort: str = "", descending: bool = False
+) -> dict | None:
     """The same columns, for a whole office: one row per worker per period.
 
     ``periods`` is given rather than discovered, because this table answers
@@ -263,6 +332,9 @@ def finance_overview_table(request, people, periods) -> dict | None:
     which runs those are. Every person passed in gets a row per period, empty
     cells included: a worker with no gross wage recorded is exactly what an
     office needs to see.
+
+    ``sort`` is a column ``key`` (or ``person``/``period``); an unknown one
+    falls back to the default order rather than failing.
     """
     people = list(people)
     if not people:
@@ -275,9 +347,12 @@ def finance_overview_table(request, people, periods) -> dict | None:
         for person in people
         for period in periods
     ]
+    _sort_rows(rows, series, sort, descending)
     return {
         "series": series,
         "rows": rows,
+        "sort": sort or FINANCE_SORT_PERSON,
+        "descending": descending,
         "has_derived": any(item["role"] == "derived" for item in series),
     }
 

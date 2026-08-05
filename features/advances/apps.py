@@ -23,7 +23,7 @@ class AdvancesConfig(AppConfig):
         # overview reads left to right as gross, taken off, what is left,
         # and what payroll actually paid.
         register_person_finance_series(
-            ledger_deduction_series, order=15, role="deduction"
+            ledger_deduction_series, order=15, role="deduction", key="deductions"
         )
 
         # Feature -> feature (flag-guarded): approved equipment charges land
