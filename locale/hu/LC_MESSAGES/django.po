@@ -47,7 +47,63 @@ msgstr "Tiltólista-ellenőrzés lezárva"
 msgid "Welcome call made"
 msgstr "Üdvözlő hívás megtörtént"
 
-#: clients/corvinum_eu/catalog_i18n.py:24
+#: clients/corvinum_eu/catalog_i18n.py:28
+msgid ""
+"Name, date of birth, address and phone are all filled in, and they match the "
+"document you were shown rather than what was said on the phone."
+msgstr "A név, a születési dátum, a cím és a telefonszám ki van töltve, és egyezik a bemutatott okmánnyal, nem azzal, ami telefonon elhangzott."
+
+#: clients/corvinum_eu/catalog_i18n.py:33
+msgid ""
+"You have seen the ID card or passport yourself, it is valid today, and the "
+"name matches this record. No scan is kept here — this tick is the record "
+"that you checked."
+msgstr "A személyi igazolványt vagy útlevelet saját szemével látta, ma is érvényes, és a név egyezik ezzel az adatlappal. Szkennelt másolat nem kerül ide — ez a pipa maga a bizonyíték, hogy ellenőrizte."
+
+#: clients/corvinum_eu/catalog_i18n.py:38
+msgid ""
+"For a non-EU worker: the permit covers the whole planned assignment, not "
+"just the start date. An EU national needs none — tick it and move on."
+msgstr "EU-n kívüli munkavállalónál: az engedély a teljes tervezett kirendelésre érvényes, nemcsak a kezdés napjára. Uniós állampolgárnak nem kell — pipálja ki és lépjen tovább."
+
+#: clients/corvinum_eu/catalog_i18n.py:43
+msgid ""
+"A fitness certificate exists, is less than a year old, and its date is "
+"recorded on this worker. Until the date is entered, Compliance keeps "
+"reporting the medical as missing."
+msgstr "Van orvosi alkalmassági igazolás, egy évnél nem régebbi, és a dátuma rögzítve van ennél a munkavállalónál. Amíg a dátum hiányzik, a Megfelelés hiányzóként jelzi az orvosit."
+
+#: clients/corvinum_eu/catalog_i18n.py:48
+msgid ""
+"The worker has attended the safety training for the site they are going to, "
+"and whoever gave it has confirmed they were there."
+msgstr "A munkavállaló elvégezte a munkavédelmi oktatást arra a telephelyre, ahová megy, és az oktatást tartó személy igazolta a részvételét."
+
+#: clients/corvinum_eu/catalog_i18n.py:53
+msgid ""
+"Both sides have signed and the office holds its copy. A contract sent but "
+"not signed back is not this item."
+msgstr "Mindkét fél aláírta, és az iroda birtokolja a saját példányát. Az elküldött, de vissza nem írt szerződés nem ez a tétel."
+
+#: clients/corvinum_eu/catalog_i18n.py:57
+msgid ""
+"You have searched for this person under other spellings of the name and "
+"under their phone number, and confirmed there is no second record for them."
+msgstr "Rákeresett erre a személyre a név más írásmódjaival és a telefonszáma alapján is, és meggyőződött róla, hogy nincs róla második adatlap."
+
+#: clients/corvinum_eu/catalog_i18n.py:62
+msgid ""
+"The blacklist check has been run and either found nothing, or a manager has "
+"decided the case. An open match is not resolved."
+msgstr "A tiltólista-ellenőrzés lefutott, és vagy nem talált semmit, vagy a vezető döntött az ügyben. A nyitott találat nem lezárt eset."
+
+#: clients/corvinum_eu/catalog_i18n.py:67
+msgid ""
+"Somebody has called the worker to confirm the start date, how they get there "
+"and what to bring. Not critical — but it prevents most no-shows."
+msgstr "Valaki felhívta a munkavállalót, és egyeztette a kezdés napját, hogy hogyan jut oda és mit hozzon magával. Nem kritikus — de a legtöbb meg nem jelenést megelőzi."
+
+#: clients/corvinum_eu/catalog_i18n.py:74
 msgid "Safety boots"
 msgstr "Munkavédelmi bakancs"
 
@@ -293,31 +349,31 @@ msgstr "TOTP eszköz"
 msgid "TOTP devices"
 msgstr "TOTP eszközök"
 
-#: core/accounts/views.py:59
+#: core/accounts/views.py:67
 msgid "Your role requires two-factor authentication — set it up now."
 msgstr "A szerepköröd kétlépcsős azonosítást igényel — állítsd be most."
 
-#: core/accounts/views.py:63
+#: core/accounts/views.py:71
 msgid "Invalid email or password."
 msgstr "Hibás e-mail vagy jelszó."
 
-#: core/accounts/views.py:98 core/accounts/views.py:121
+#: core/accounts/views.py:110 core/accounts/views.py:136
 msgid "Invalid code."
 msgstr "Érvénytelen kód."
 
-#: core/accounts/views.py:119
+#: core/accounts/views.py:134
 msgid "Two-factor authentication enabled."
 msgstr "Kétlépcsős azonosítás bekapcsolva."
 
-#: core/accounts/views.py:161 core/people/views.py:365
+#: core/accounts/views.py:176 core/people/views.py:365
 msgid "No file was selected."
 msgstr "Nem választott ki fájlt."
 
-#: core/accounts/views.py:176 core/people/views.py:380
+#: core/accounts/views.py:191 core/people/views.py:380
 msgid "Avatar updated."
 msgstr "A profilkép frissítve."
 
-#: core/accounts/views.py:186 core/people/views.py:392
+#: core/accounts/views.py:201 core/people/views.py:392
 msgid "Avatar removed."
 msgstr "A profilkép eltávolítva."
 
@@ -342,7 +398,7 @@ msgstr "cél azonosítója"
 #: core/projects/models.py:137 core/projects/models.py:209
 #: core/projects/models.py:328 features/advances/models.py:64
 #: features/blacklist/models.py:45 features/blacklist/models.py:105
-#: features/checklists/models.py:57 features/compliance/models.py:51
+#: features/checklists/models.py:68 features/compliance/models.py:51
 #: features/intake/models.py:106 features/logistics/models.py:144
 #: features/logistics/models.py:263 features/messaging/models.py:55
 #: features/messaging/models.py:295 features/payslips/models.py:20
@@ -947,7 +1003,7 @@ msgid "active"
 msgstr "aktív"
 
 #: core/people/models.py:49 features/blacklist/models.py:18
-#: features/checklists/models.py:41 features/intake/models.py:52
+#: features/checklists/models.py:52 features/intake/models.py:52
 #: features/intake/models.py:69 features/profitability/models.py:122
 msgid "order"
 msgstr "sorrend"
@@ -1303,7 +1359,7 @@ msgid "outcome"
 msgstr "eredmény"
 
 #: core/projects/models.py:161 features/advances/models.py:106
-#: features/checklists/models.py:68 features/logistics/models.py:345
+#: features/checklists/models.py:79 features/logistics/models.py:345
 #: features/logistics/models.py:582 features/payslips/models.py:31
 #: features/profitability/models.py:48 features/wage_ledger/models.py:34
 msgid "note"
@@ -3752,47 +3808,56 @@ msgstr "ellenőrzőlista-sablonok"
 msgid "template"
 msgstr "sablon"
 
-#: features/checklists/models.py:39 templates/panels/checklists_items.html:30
-#: templates/panels/checklists_items.html:35
+#: features/checklists/models.py:43
+msgid "help text"
+msgstr "súgószöveg"
+
+#: features/checklists/models.py:46
+msgid ""
+"What must be true before this item is ticked. Shown as the item's tooltip."
+msgstr "Aminek teljesülnie kell, mielőtt ezt a tételt kipipálják. A tétel súgóbuborékjaként jelenik meg."
+
+#: features/checklists/models.py:50 templates/panels/checklists_items.html:31
+#: templates/panels/checklists_items.html:36
 msgid "critical"
 msgstr "kritikus"
 
-#: features/checklists/models.py:39
+#: features/checklists/models.py:50
 msgid "Critical items block activation; others only warn."
 msgstr ""
 "A kritikus tételek blokkolják az aktiválást; a többi csak figyelmeztet."
 
-#: features/checklists/models.py:44
+#: features/checklists/models.py:55
 msgid "checklist item template"
 msgstr "ellenőrzőlista-tétel sablon"
 
-#: features/checklists/models.py:45
+#: features/checklists/models.py:56
 msgid "checklist item templates"
 msgstr "ellenőrzőlista-tétel sablonok"
 
-#: features/checklists/models.py:60 features/logistics/models.py:269
+#: features/checklists/models.py:71 features/logistics/models.py:269
 #: features/logistics/models.py:385 features/logistics/models.py:417
 #: features/logistics/models.py:507
 msgid "item"
 msgstr "tétel"
 
-#: features/checklists/models.py:62
+#: features/checklists/models.py:73
 msgid "done"
 msgstr "kész"
 
-#: features/checklists/models.py:65
+#: features/checklists/models.py:76
 msgid "done by"
 msgstr "elvégezte"
 
-#: features/checklists/models.py:67
+#: features/checklists/models.py:78
 msgid "done at"
 msgstr "elvégzés ideje"
 
-#: features/checklists/models.py:71
+#: features/checklists/models.py:82
 msgid "person checklist item"
 msgstr "személy ellenőrzőlista-tétele"
 
-#: features/checklists/models.py:72
+#: features/checklists/models.py:83
 msgid "person checklist items"
 msgstr "személy ellenőrzőlista-tételei"
 
@@ -5999,7 +6064,9 @@ msgstr "Valós következménnyel jár"
 msgid ""
 "Record only what you have actually seen. Compliance, readiness, and the "
 "expiry reminder all count from what is entered here."
-msgstr "Csak azt rögzítse, amit ténylegesen látott. A megfelelés, a felkészültség és a lejárati emlékeztető is az itt megadott adatból számol."
+msgstr ""
+"Csak azt rögzítse, amit ténylegesen látott. A megfelelés, a felkészültség és "
+"a lejárati emlékeztető is az itt megadott adatból számol."
 
 #: templates/pages/certificate_form.html:26
 msgid "Save renewal"
@@ -6013,7 +6080,9 @@ msgstr "Tanúsítvány mentése"
 msgid ""
 "Record only a certificate you have in front of you — expiry and compliance "
 "count from it."
-msgstr "Csak olyan igazolást rögzítsen, amely ott van Ön előtt — a lejárat és a megfelelés ettől számít."
+msgstr ""
+"Csak olyan igazolást rögzítsen, amely ott van Ön előtt — a lejárat és a "
+"megfelelés ettől számít."
 
 #: templates/pages/compliance_list.html:8
 msgid "Alerts"
@@ -6223,7 +6292,9 @@ msgstr "Elenged"
 msgid ""
 "Approving puts real money against a real person, to be recovered from their "
 "pay."
-msgstr "A jóváhagyás valódi pénzt ír egy konkrét ember terhére, amit a béréből vonnak le."
+msgstr ""
+"A jóváhagyás valódi pénzt ír egy konkrét ember terhére, amit a béréből "
+"vonnak le."
 
 #: templates/pages/equipment_stock.html:9
 #: templates/pages/equipment_stock_receive.html:4
@@ -7003,7 +7074,9 @@ msgstr "Rögzített bérlapok"
 msgid ""
 "Sending is a real-world action: an email leaves the building, addressed to "
 "the worker."
-msgstr "A küldés valós következménnyel jár: a munkavállalónak címzett e-mail elhagyja a rendszert."
+msgstr ""
+"A küldés valós következménnyel jár: a munkavállalónak címzett e-mail "
+"elhagyja a rendszert."
 
 #: templates/pages/payslips.html:39
 #: templates/partials/person_finance_overview.html:14
@@ -7102,7 +7175,9 @@ msgstr "Küldés próbanapra"
 msgid ""
 "Commits the worker to being at the site at the time you set. Somebody "
 "travels on the strength of this, so agree it with them first."
-msgstr "Arra kötelezi a munkavállalót, hogy a megadott időpontban a helyszínen legyen. Valaki emiatt útnak indul, ezért előbb egyeztessen vele."
+msgstr ""
+"Arra kötelezi a munkavállalót, hogy a megadott időpontban a helyszínen "
+"legyen. Valaki emiatt útnak indul, ezért előbb egyeztessen vele."
 
 #: templates/pages/person_detail.html:69 templates/pages/trials_queue.html:10
 #: templates/pages/trials_queue.html:24
@@ -7126,7 +7201,9 @@ msgstr ""
 msgid ""
 "Puts a worker on the way to a real shift without seeing them work first. "
 "Only for someone the office already knows."
-msgstr "Valódi műszakra indítja a munkavállalót anélkül, hogy előbb látta volna dolgozni. Csak olyasvalakinél, akit az iroda már ismer."
+msgstr ""
+"Valódi műszakra indítja a munkavállalót anélkül, hogy előbb látta volna "
+"dolgozni. Csak olyasvalakinél, akit az iroda már ismer."
 
 #: templates/pages/person_detail.html:86
 msgid "Skip the trial and start readiness"
@@ -7259,7 +7336,9 @@ msgstr "Orvosi dátum rögzítése"
 msgid ""
 "Only record a date you have seen on a real certificate — the annual expiry "
 "counts from it."
-msgstr "Csak olyan dátumot rögzítsen, amelyet valódi igazoláson látott — az éves lejárat ettől számít."
+msgstr ""
+"Csak olyan dátumot rögzítsen, amelyet valódi igazoláson látott — az éves "
+"lejárat ettől számít."
 
 #: templates/pages/person_detail.html:224
 #: templates/pages/project_detail.html:30
@@ -7322,7 +7401,9 @@ msgstr ""
 msgid ""
 "Ends the assignment for real: the bed is freed for someone else and issued "
 "gear is expected back."
-msgstr "Ténylegesen lezárja a kirendelést: az ágy felszabadul másnak, a kiadott felszerelést pedig vissza kell adni."
+msgstr ""
+"Ténylegesen lezárja a kirendelést: az ágy felszabadul másnak, a kiadott "
+"felszerelést pedig vissza kell adni."
 
 #: templates/pages/person_detail.html:268
 msgid "Exit to Available"
@@ -7346,7 +7427,9 @@ msgstr "Kilépés Inaktív állapotba"
 
 #: templates/pages/person_detail.html:279
 msgid "The worker leaves: their bed is freed and their gear is expected back."
-msgstr "A munkavállaló távozik: az ágya felszabadul, a felszerelését pedig vissza kell adnia."
+msgstr ""
+"A munkavállaló távozik: az ágya felszabadul, a felszerelését pedig vissza "
+"kell adnia."
 
 #: templates/pages/person_detail.html:285
 msgid "Lifecycle"
@@ -7833,7 +7916,7 @@ msgstr[1] "%(n)s kritikus tétel nyitott — az aktiválás blokkolva van."
 msgid "All critical items are complete."
 msgstr "Minden kritikus tétel teljesítve."
 
-#: templates/panels/checklists_items.html:26
+#: templates/panels/checklists_items.html:27
 msgid ""
 "Records that you completed this item, with your name and the time. Critical "
 "items must all be complete before the worker can be activated."
@@ -7904,13 +7987,18 @@ msgstr "Sérült vagy selejtezett"
 msgid ""
 "Record this once the item is physically back. It updates warehouse stock, so "
 "the count only stays true if the gear is actually in your hands."
-msgstr "Akkor rögzítse, ha a tétel fizikailag visszaérkezett. Frissíti a raktárkészletet, így a készlet csak akkor pontos, ha a felszerelés valóban a kezében van."
+msgstr ""
+"Akkor rögzítse, ha a tétel fizikailag visszaérkezett. Frissíti a "
+"raktárkészletet, így a készlet csak akkor pontos, ha a felszerelés valóban a "
+"kezében van."
 
 #: templates/panels/logistics_equipment.html:42
 msgid ""
 "Opens a manager charge review at the issued stock value. If the manager "
 "approves it, the amount comes off this worker's pay."
-msgstr "Vezetői terhelési felülvizsgálatot indít a kiadáskori raktárérték alapján. Ha a vezető jóváhagyja, az összeget levonják a munkavállaló béréből."
+msgstr ""
+"Vezetői terhelési felülvizsgálatot indít a kiadáskori raktárérték alapján. "
+"Ha a vezető jóváhagyja, az összeget levonják a munkavállaló béréből."
 
 #: templates/panels/logistics_equipment.html:42
 msgid ""
@@ -7928,13 +8016,17 @@ msgstr "Vissza nem adottnak jelöl"
 msgid ""
 "Returning means the item is back in your hands; flagging it unreturned can "
 "put the money on this worker's pay."
-msgstr "A visszavétel azt jelenti, hogy a tétel visszakerült Önhöz; a vissza nem hozott jelölés a munkavállaló bérére terhelheti az összeget."
+msgstr ""
+"A visszavétel azt jelenti, hogy a tétel visszakerült Önhöz; a vissza nem "
+"hozott jelölés a munkavállaló bérére terhelheti az összeget."
 
 #: templates/panels/logistics_equipment.html:60
 msgid ""
 "Hand the item over as you record it. It leaves the warehouse count and "
 "becomes this worker's responsibility to return."
-msgstr "A tételt akkor adja át, amikor rögzíti. Lekerül a raktárkészletről, és a visszaadásáért a munkavállaló felel."
+msgstr ""
+"A tételt akkor adja át, amikor rögzíti. Lekerül a raktárkészletről, és a "
+"visszaadásáért a munkavállaló felel."
 
 #: templates/panels/logistics_equipment.html:60
 msgid "Issue equipment"
@@ -7954,7 +8046,9 @@ msgstr "Dolgozó havi befizetése"
 msgid ""
 "Frees the bed for someone else. Do this when the worker has actually moved "
 "out and the keys are back."
-msgstr "Felszabadítja az ágyat másnak. Akkor használja, ha a munkavállaló ténylegesen kiköltözött és a kulcsok visszakerültek."
+msgstr ""
+"Felszabadítja az ágyat másnak. Akkor használja, ha a munkavállaló "
+"ténylegesen kiköltözött és a kulcsok visszakerültek."
 
 #: templates/panels/logistics_room.html:13
 msgid "Release room"
@@ -7962,7 +8056,8 @@ msgstr "Szoba felszabadítása"
 
 #: templates/panels/logistics_room.html:15
 msgid "Someone gives up a bed: release it only once they have moved out."
-msgstr "Valaki lemond egy ágyról: csak azután szabadítsa fel, hogy kiköltözött."
+msgstr ""
+"Valaki lemond egy ágyról: csak azután szabadítsa fel, hogy kiköltözött."
 
 #: templates/panels/logistics_room.html:21
 msgid "Save payment"
@@ -7989,7 +8084,9 @@ msgstr "Szoba"
 msgid ""
 "Gives this worker a real bed in a real room, and starts the monthly payment "
 "recorded here."
-msgstr "Valódi ágyat ad a munkavállalónak egy valódi szobában, és elindítja az itt rögzített havi fizetést."
+msgstr ""
+"Valódi ágyat ad a munkavállalónak egy valódi szobában, és elindítja az itt "
+"rögzített havi fizetést."
 
 #: templates/panels/logistics_room.html:41
 msgid "Assign room"
@@ -8051,7 +8148,9 @@ msgstr "Állásajánlat"
 msgid ""
 "Sends the offer email now, in the worker's preferred language. It cannot be "
 "recalled."
-msgstr "Most elküldi az ajánlatot tartalmazó e-mailt, a munkavállaló által preferált nyelven. Nem vonható vissza."
+msgstr ""
+"Most elküldi az ajánlatot tartalmazó e-mailt, a munkavállaló által preferált "
+"nyelven. Nem vonható vissza."
 
 #: templates/panels/messaging_offer_email.html:31
 msgid "A real email leaves the building. It cannot be taken back."
@@ -8088,7 +8187,9 @@ msgstr "Vagy írjon üzenetet"
 msgid ""
 "Sends the message through the SMS provider to the phone number on this "
 "worker's record. It cannot be recalled, and the message is charged."
-msgstr "Elküldi az üzenetet az SMS-szolgáltatón keresztül a munkavállaló adatlapján szereplő telefonszámra. Nem vonható vissza, és díjköteles."
+msgstr ""
+"Elküldi az üzenetet az SMS-szolgáltatón keresztül a munkavállaló adatlapján "
+"szereplő telefonszámra. Nem vonható vissza, és díjköteles."
 
 #: templates/panels/messaging_sms.html:20
 msgid "A real phone buzzes. The message cannot be taken back."
@@ -8109,7 +8210,9 @@ msgstr "Kérjük, erősítse meg"
 msgid ""
 "This reaches outside the application. Something happens in the real world "
 "that clicking again will not undo."
-msgstr "Ez az alkalmazáson kívülre hat. A valóságban történik valami, amit újabb kattintással nem lehet visszacsinálni."
+msgstr ""
+"Ez az alkalmazáson kívülre hat. A valóságban történik valami, amit újabb "
+"kattintással nem lehet visszacsinálni."
 
 #: templates/partials/confirm_dialog.html:11
 msgid "Do you really want to do this?"
@@ -8248,7 +8351,10 @@ msgstr ""
 msgid ""
 "Collects every outstanding entry up to the end of this window and locks it "
 "to this cycle. Entries stay deletable until the cycle is settled with pay."
-msgstr "Összegyűjti az időszak végéig fennálló összes tételt, és ehhez a ciklushoz rögzíti. A tételek addig törölhetők, amíg a ciklust el nem számolják a bérrel."
+msgstr ""
+"Összegyűjti az időszak végéig fennálló összes tételt, és ehhez a ciklushoz "
+"rögzíti. A tételek addig törölhetők, amíg a ciklust el nem számolják a "
+"bérrel."
 
 #: templates/partials/ledger_cycle.html:30
 msgid "This locks every outstanding entry into the cycle."
@@ -8284,7 +8390,10 @@ msgid ""
 "Marks this cycle as paid out. Use it only once payroll has actually settled "
 "the amounts — it records that the money changed hands, and the entries can "
 "no longer be deleted."
-msgstr "Kifizetettként jelöli ezt a ciklust. Csak akkor használja, ha a bérszámfejtés az összegeket ténylegesen elszámolta — azt rögzíti, hogy a pénz gazdát cserélt, és a tételek többé nem törölhetők."
+msgstr ""
+"Kifizetettként jelöli ezt a ciklust. Csak akkor használja, ha a "
+"bérszámfejtés az összegeket ténylegesen elszámolta — azt rögzíti, hogy a "
+"pénz gazdát cserélt, és a tételek többé nem törölhetők."
 
 #: templates/partials/ledger_cycle.html:32
 msgid "This marks the whole cycle as settled with pay."
@@ -8298,7 +8407,9 @@ msgstr "Ciklus rendezettként jelölése"
 msgid ""
 "Money is actually paid out: use this only after payroll has settled these "
 "amounts."
-msgstr "A pénz ténylegesen kifizetésre kerül: csak azután használja, hogy a bérszámfejtés elszámolta ezeket az összegeket."
+msgstr ""
+"A pénz ténylegesen kifizetésre kerül: csak azután használja, hogy a "
+"bérszámfejtés elszámolta ezeket az összegeket."
 
 #: templates/partials/ledger_cycle.html:37
 msgid "No entries in this cycle window."

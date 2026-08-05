@@ -1,5 +1,26 @@
 # Test Journal
 
+## 2026-08-05 - a render test that belonged in the other lane
+
+- Two tests render the checklist panel, and they passed alone and failed in the
+  full Jober lane. Cause: `{% url 'checklist_item_toggle' %}` only resolves for
+  a client whose checklists flag was on when the URLConf loaded, so whether
+  they passed depended on which test had last reloaded it. Moved into the
+  corvinum-only module and skipped by flag — the feature's own lane is where a
+  render test belongs.
+- Rendering through the view failed differently first: the context processors
+  want a session the `RequestFactory` does not build. `render_to_string` on the
+  partial with the panel provider's own output is both simpler and closer to
+  what is under test.
+- The seed/registry sync test reads both files with `ast` instead of importing
+  them. The seed module imports the whole CorvinumEU pay stack, and this check
+  is worth running in Jober too — one edited comma in either file makes
+  `db_trans` fall through to English with nothing failing.
+- The seed-repair test builds a row the old way and reseeds: it fails against
+  `get_or_create(defaults=…)` and passes against the repair. That is the
+  staging case, not a hypothetical.
+- Suites: **Jober 1110 / CorvinumEU 711 / browser 70** (browser not re-run).
+
 ## 2026-08-05 - local 2FA bypass with a production tripwire
 
 - Two authentication regressions prove the local switch bypasses both halves

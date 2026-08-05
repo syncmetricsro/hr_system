@@ -17,7 +17,10 @@ class ChecklistTemplate(models.Model):
 
     name = models.CharField(_("name"), max_length=120)
     kind = models.CharField(
-        _("kind"), max_length=20, choices=ChecklistKind.choices, default=ChecklistKind.ACTIVATION
+        _("kind"),
+        max_length=20,
+        choices=ChecklistKind.choices,
+        default=ChecklistKind.ACTIVATION,
     )
     is_active = models.BooleanField(_("active"), default=True)
     created_at = models.DateTimeField(_("created"), auto_now_add=True)
@@ -32,11 +35,27 @@ class ChecklistTemplate(models.Model):
 
 class ChecklistItemTemplate(models.Model):
     template = models.ForeignKey(
-        ChecklistTemplate, on_delete=models.CASCADE, related_name="items", verbose_name=_("template")
+        ChecklistTemplate,
+        on_delete=models.CASCADE,
+        related_name="items",
+        verbose_name=_("template"),
     )
     label = models.CharField(_("label"), max_length=200)
+    # What the tick actually claims. Seeded in canonical English beside the
+    # label and rendered through db_trans, like every other seeded catalog
+    # string (docs/i18n-seeded-data.md). Blank is allowed: an operator-added
+    # item falls back to the generic explanation in the template.
+    help_text = models.TextField(
+        _("help text"),
+        blank=True,
+        help_text=_(
+            "What must be true before this item is ticked. Shown as the item's tooltip."
+        ),
+    )
     critical = models.BooleanField(
-        _("critical"), default=True, help_text=_("Critical items block activation; others only warn.")
+        _("critical"),
+        default=True,
+        help_text=_("Critical items block activation; others only warn."),
     )
     order = models.PositiveSmallIntegerField(_("order"), default=0)
 
@@ -54,15 +73,25 @@ class PersonChecklistItem(models.Model):
     (§5.5: record who approved each item)."""
 
     person = models.ForeignKey(
-        "people.Person", on_delete=models.CASCADE, related_name="checklist_items", verbose_name=_("person")
+        "people.Person",
+        on_delete=models.CASCADE,
+        related_name="checklist_items",
+        verbose_name=_("person"),
     )
     item_template = models.ForeignKey(
-        ChecklistItemTemplate, on_delete=models.CASCADE, related_name="person_items", verbose_name=_("item")
+        ChecklistItemTemplate,
+        on_delete=models.CASCADE,
+        related_name="person_items",
+        verbose_name=_("item"),
     )
     done = models.BooleanField(_("done"), default=False)
     done_by = models.ForeignKey(
-        settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL,
-        related_name="+", verbose_name=_("done by"),
+        settings.AUTH_USER_MODEL,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+        verbose_name=_("done by"),
     )
     done_at = models.DateTimeField(_("done at"), null=True, blank=True)
     note = models.CharField(_("note"), max_length=200, blank=True)
@@ -72,7 +101,9 @@ class PersonChecklistItem(models.Model):
         verbose_name_plural = _("person checklist items")
         ordering = ("item_template__order", "item_template_id")
         constraints = [
-            models.UniqueConstraint(fields=["person", "item_template"], name="uniq_person_checklist_item"),
+            models.UniqueConstraint(
+                fields=["person", "item_template"], name="uniq_person_checklist_item"
+            ),
         ]
 
     def __str__(self) -> str:

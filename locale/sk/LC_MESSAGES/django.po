@@ -47,7 +47,63 @@ msgstr "Kontrola čiernej listiny vyriešená"
 msgid "Welcome call made"
 msgstr "Uvítací telefonát uskutočnený"
 
-#: clients/corvinum_eu/catalog_i18n.py:24
+#: clients/corvinum_eu/catalog_i18n.py:28
+msgid ""
+"Name, date of birth, address and phone are all filled in, and they match the "
+"document you were shown rather than what was said on the phone."
+msgstr "Meno, dátum narodenia, adresa aj telefón sú vyplnené a zhodujú sa s dokladom, ktorý vám ukázali — nie s tým, čo odznelo po telefóne."
+
+#: clients/corvinum_eu/catalog_i18n.py:33
+msgid ""
+"You have seen the ID card or passport yourself, it is valid today, and the "
+"name matches this record. No scan is kept here — this tick is the record "
+"that you checked."
+msgstr "Občiansky preukaz alebo pas ste videli na vlastné oči, dnes je platný a meno sa zhoduje s týmto záznamom. Sken sa tu neuchováva — týmto zaškrtnutím potvrdzujete, že ste doklad overili."
+
+#: clients/corvinum_eu/catalog_i18n.py:38
+msgid ""
+"For a non-EU worker: the permit covers the whole planned assignment, not "
+"just the start date. An EU national needs none — tick it and move on."
+msgstr "Pri pracovníkovi mimo EÚ: povolenie pokrýva celé plánované zaradenie, nielen deň nástupu. Občan EÚ ho nepotrebuje — zaškrtnite a pokračujte."
+
+#: clients/corvinum_eu/catalog_i18n.py:43
+msgid ""
+"A fitness certificate exists, is less than a year old, and its date is "
+"recorded on this worker. Until the date is entered, Compliance keeps "
+"reporting the medical as missing."
+msgstr "Existuje potvrdenie o zdravotnej spôsobilosti, nie je staršie ako rok a jeho dátum je zapísaný pri tomto pracovníkovi. Kým dátum chýba, Súlad hlási lekársku prehliadku ako chýbajúcu."
+
+#: clients/corvinum_eu/catalog_i18n.py:48
+msgid ""
+"The worker has attended the safety training for the site they are going to, "
+"and whoever gave it has confirmed they were there."
+msgstr "Pracovník absolvoval školenie BOZP pre pracovisko, na ktoré nastupuje, a ten, kto ho viedol, potvrdil jeho účasť."
+
+#: clients/corvinum_eu/catalog_i18n.py:53
+msgid ""
+"Both sides have signed and the office holds its copy. A contract sent but "
+"not signed back is not this item."
+msgstr "Obe strany zmluvu podpísali a kancelária má svoj rovnopis. Odoslaná, ale nepodpísaná zmluva sem nepatrí."
+
+#: clients/corvinum_eu/catalog_i18n.py:57
+msgid ""
+"You have searched for this person under other spellings of the name and "
+"under their phone number, and confirmed there is no second record for them."
+msgstr "Hľadali ste túto osobu aj pod inými zápismi mena a podľa telefónneho čísla a overili ste, že druhý záznam o nej neexistuje."
+
+#: clients/corvinum_eu/catalog_i18n.py:62
+msgid ""
+"The blacklist check has been run and either found nothing, or a manager has "
+"decided the case. An open match is not resolved."
+msgstr "Kontrola čiernej listiny prebehla a buď nič nenašla, alebo o prípade rozhodol manažér. Otvorená zhoda nie je vyriešená."
+
+#: clients/corvinum_eu/catalog_i18n.py:67
+msgid ""
+"Somebody has called the worker to confirm the start date, how they get there "
+"and what to bring. Not critical — but it prevents most no-shows."
+msgstr "Niekto pracovníkovi zavolal a potvrdil dátum nástupu, ako sa tam dostane a čo si má priniesť. Nie je to kritické — ale predchádza to väčšine neúčastí."
+
+#: clients/corvinum_eu/catalog_i18n.py:74
 msgid "Safety boots"
 msgstr "Bezpečnostná obuv"
 
@@ -293,31 +349,31 @@ msgstr "TOTP zariadenie"
 msgid "TOTP devices"
 msgstr "TOTP zariadenia"
 
-#: core/accounts/views.py:59
+#: core/accounts/views.py:67
 msgid "Your role requires two-factor authentication — set it up now."
 msgstr "Vaša rola vyžaduje dvojfaktorové overenie — nastavte si ho teraz."
 
-#: core/accounts/views.py:63
+#: core/accounts/views.py:71
 msgid "Invalid email or password."
 msgstr "Nesprávny e-mail alebo heslo."
 
-#: core/accounts/views.py:98 core/accounts/views.py:121
+#: core/accounts/views.py:110 core/accounts/views.py:136
 msgid "Invalid code."
 msgstr "Neplatný kód."
 
-#: core/accounts/views.py:119
+#: core/accounts/views.py:134
 msgid "Two-factor authentication enabled."
 msgstr "Dvojfaktorové overenie zapnuté."
 
-#: core/accounts/views.py:161 core/people/views.py:365
+#: core/accounts/views.py:176 core/people/views.py:365
 msgid "No file was selected."
 msgstr "Nebol vybraný žiadny súbor."
 
-#: core/accounts/views.py:176 core/people/views.py:380
+#: core/accounts/views.py:191 core/people/views.py:380
 msgid "Avatar updated."
 msgstr "Avatar bol aktualizovaný."
 
-#: core/accounts/views.py:186 core/people/views.py:392
+#: core/accounts/views.py:201 core/people/views.py:392
 msgid "Avatar removed."
 msgstr "Avatar bol odstránený."
 
@@ -342,7 +398,7 @@ msgstr "ID cieľa"
 #: core/projects/models.py:137 core/projects/models.py:209
 #: core/projects/models.py:328 features/advances/models.py:64
 #: features/blacklist/models.py:45 features/blacklist/models.py:105
-#: features/checklists/models.py:57 features/compliance/models.py:51
+#: features/checklists/models.py:68 features/compliance/models.py:51
 #: features/intake/models.py:106 features/logistics/models.py:144
 #: features/logistics/models.py:263 features/messaging/models.py:55
 #: features/messaging/models.py:295 features/payslips/models.py:20
@@ -949,7 +1005,7 @@ msgid "active"
 msgstr "aktívne"
 
 #: core/people/models.py:49 features/blacklist/models.py:18
-#: features/checklists/models.py:41 features/intake/models.py:52
+#: features/checklists/models.py:52 features/intake/models.py:52
 #: features/intake/models.py:69 features/profitability/models.py:122
 msgid "order"
 msgstr "poradie"
@@ -1304,7 +1360,7 @@ msgid "outcome"
 msgstr "výsledok"
 
 #: core/projects/models.py:161 features/advances/models.py:106
-#: features/checklists/models.py:68 features/logistics/models.py:345
+#: features/checklists/models.py:79 features/logistics/models.py:345
 #: features/logistics/models.py:582 features/payslips/models.py:31
 #: features/profitability/models.py:48 features/wage_ledger/models.py:34
 msgid "note"
@@ -3705,46 +3761,55 @@ msgstr "šablóny kontrolných zoznamov"
 msgid "template"
 msgstr "šablóna"
 
-#: features/checklists/models.py:39 templates/panels/checklists_items.html:30
-#: templates/panels/checklists_items.html:35
+#: features/checklists/models.py:43
+msgid "help text"
+msgstr "text nápovedy"
+
+#: features/checklists/models.py:46
+msgid ""
+"What must be true before this item is ticked. Shown as the item's tooltip."
+msgstr "Čo musí platiť predtým, než sa táto položka zaškrtne. Zobrazuje sa ako bublinová nápoveda položky."
+
+#: features/checklists/models.py:50 templates/panels/checklists_items.html:31
+#: templates/panels/checklists_items.html:36
 msgid "critical"
 msgstr "kritické"
 
-#: features/checklists/models.py:39
+#: features/checklists/models.py:50
 msgid "Critical items block activation; others only warn."
 msgstr "Kritické položky blokujú aktiváciu; ostatné len upozorňujú."
 
-#: features/checklists/models.py:44
+#: features/checklists/models.py:55
 msgid "checklist item template"
 msgstr "šablóna položky kontrolného zoznamu"
 
-#: features/checklists/models.py:45
+#: features/checklists/models.py:56
 msgid "checklist item templates"
 msgstr "šablóny položiek kontrolného zoznamu"
 
-#: features/checklists/models.py:60 features/logistics/models.py:269
+#: features/checklists/models.py:71 features/logistics/models.py:269
 #: features/logistics/models.py:385 features/logistics/models.py:417
 #: features/logistics/models.py:507
 msgid "item"
 msgstr "položka"
 
-#: features/checklists/models.py:62
+#: features/checklists/models.py:73
 msgid "done"
 msgstr "hotovo"
 
-#: features/checklists/models.py:65
+#: features/checklists/models.py:76
 msgid "done by"
 msgstr "vykonal"
 
-#: features/checklists/models.py:67
+#: features/checklists/models.py:78
 msgid "done at"
 msgstr "vykonané o"
 
-#: features/checklists/models.py:71
+#: features/checklists/models.py:82
 msgid "person checklist item"
 msgstr "položka kontrolného zoznamu osoby"
 
-#: features/checklists/models.py:72
+#: features/checklists/models.py:83
 msgid "person checklist items"
 msgstr "položky kontrolného zoznamu osoby"
 
@@ -5948,7 +6013,9 @@ msgstr "Zásah do reálneho sveta"
 msgid ""
 "Record only what you have actually seen. Compliance, readiness, and the "
 "expiry reminder all count from what is entered here."
-msgstr "Zapisujte len to, čo ste naozaj videli. Súlad, pripravenosť aj pripomienka platnosti sa počítajú z toho, čo je tu zadané."
+msgstr ""
+"Zapisujte len to, čo ste naozaj videli. Súlad, pripravenosť aj pripomienka "
+"platnosti sa počítajú z toho, čo je tu zadané."
 
 #: templates/pages/certificate_form.html:26
 msgid "Save renewal"
@@ -5962,7 +6029,9 @@ msgstr "Uložiť certifikát"
 msgid ""
 "Record only a certificate you have in front of you — expiry and compliance "
 "count from it."
-msgstr "Zapisujte len potvrdenie, ktoré máte pred sebou — platnosť aj súlad sa počítajú z neho."
+msgstr ""
+"Zapisujte len potvrdenie, ktoré máte pred sebou — platnosť aj súlad sa "
+"počítajú z neho."
 
 #: templates/pages/compliance_list.html:8
 msgid "Alerts"
@@ -6170,7 +6239,9 @@ msgstr "Odpustiť"
 msgid ""
 "Approving puts real money against a real person, to be recovered from their "
 "pay."
-msgstr "Schválením zapíšete skutočné peniaze na konkrétneho človeka; strhnú sa mu zo mzdy."
+msgstr ""
+"Schválením zapíšete skutočné peniaze na konkrétneho človeka; strhnú sa mu zo "
+"mzdy."
 
 #: templates/pages/equipment_stock.html:9
 #: templates/pages/equipment_stock_receive.html:4
@@ -6948,7 +7019,9 @@ msgstr "Uložené výplatné pásky"
 msgid ""
 "Sending is a real-world action: an email leaves the building, addressed to "
 "the worker."
-msgstr "Odoslanie je zásah do reálneho sveta: von odchádza e-mail adresovaný pracovníkovi."
+msgstr ""
+"Odoslanie je zásah do reálneho sveta: von odchádza e-mail adresovaný "
+"pracovníkovi."
 
 #: templates/pages/payslips.html:39
 #: templates/partials/person_finance_overview.html:14
@@ -7047,7 +7120,9 @@ msgstr "Poslať na skúšobný deň"
 msgid ""
 "Commits the worker to being at the site at the time you set. Somebody "
 "travels on the strength of this, so agree it with them first."
-msgstr "Zaväzuje pracovníka byť na mieste v čase, ktorý zadáte. Niekto kvôli tomu vycestuje, preto sa s ním najprv dohodnite."
+msgstr ""
+"Zaväzuje pracovníka byť na mieste v čase, ktorý zadáte. Niekto kvôli tomu "
+"vycestuje, preto sa s ním najprv dohodnite."
 
 #: templates/pages/person_detail.html:69 templates/pages/trials_queue.html:10
 #: templates/pages/trials_queue.html:24
@@ -7070,7 +7145,9 @@ msgstr ""
 msgid ""
 "Puts a worker on the way to a real shift without seeing them work first. "
 "Only for someone the office already knows."
-msgstr "Pošle pracovníka na skutočnú zmenu bez toho, aby ste ho najprv videli pracovať. Len pre niekoho, koho kancelária už pozná."
+msgstr ""
+"Pošle pracovníka na skutočnú zmenu bez toho, aby ste ho najprv videli "
+"pracovať. Len pre niekoho, koho kancelária už pozná."
 
 #: templates/pages/person_detail.html:86
 msgid "Skip the trial and start readiness"
@@ -7200,7 +7277,9 @@ msgstr "Zaznamenať dátum prehliadky"
 msgid ""
 "Only record a date you have seen on a real certificate — the annual expiry "
 "counts from it."
-msgstr "Zapíšte len dátum, ktorý ste videli na skutočnom potvrdení — od neho sa počíta ročná platnosť."
+msgstr ""
+"Zapíšte len dátum, ktorý ste videli na skutočnom potvrdení — od neho sa "
+"počíta ročná platnosť."
 
 #: templates/pages/person_detail.html:224
 #: templates/pages/project_detail.html:30
@@ -7261,7 +7340,9 @@ msgstr ""
 msgid ""
 "Ends the assignment for real: the bed is freed for someone else and issued "
 "gear is expected back."
-msgstr "Skutočne ukončí zaradenie: posteľ sa uvoľní pre niekoho iného a vydané vybavenie sa očakáva späť."
+msgstr ""
+"Skutočne ukončí zaradenie: posteľ sa uvoľní pre niekoho iného a vydané "
+"vybavenie sa očakáva späť."
 
 #: templates/pages/person_detail.html:268
 msgid "Exit to Available"
@@ -7770,7 +7851,7 @@ msgstr[2] "%(n)s kritických položiek je otvorených — aktivácia je zablokov
 msgid "All critical items are complete."
 msgstr "Všetky kritické položky sú splnené."
 
-#: templates/panels/checklists_items.html:26
+#: templates/panels/checklists_items.html:27
 msgid ""
 "Records that you completed this item, with your name and the time. Critical "
 "items must all be complete before the worker can be activated."
@@ -7841,13 +7922,17 @@ msgstr "Poškodené alebo vyradené"
 msgid ""
 "Record this once the item is physically back. It updates warehouse stock, so "
 "the count only stays true if the gear is actually in your hands."
-msgstr "Zapíšte, až keď je vec fyzicky späť. Aktualizuje skladovú evidenciu, takže stav sedí len vtedy, ak vybavenie naozaj máte."
+msgstr ""
+"Zapíšte, až keď je vec fyzicky späť. Aktualizuje skladovú evidenciu, takže "
+"stav sedí len vtedy, ak vybavenie naozaj máte."
 
 #: templates/panels/logistics_equipment.html:42
 msgid ""
 "Opens a manager charge review at the issued stock value. If the manager "
 "approves it, the amount comes off this worker's pay."
-msgstr "Otvorí manažérske posúdenie úhrady v hodnote vydanej položky. Ak ho manažér schváli, suma sa pracovníkovi strhne zo mzdy."
+msgstr ""
+"Otvorí manažérske posúdenie úhrady v hodnote vydanej položky. Ak ho manažér "
+"schváli, suma sa pracovníkovi strhne zo mzdy."
 
 #: templates/panels/logistics_equipment.html:42
 msgid ""
@@ -7865,13 +7950,17 @@ msgstr "Označiť ako nevrátené"
 msgid ""
 "Returning means the item is back in your hands; flagging it unreturned can "
 "put the money on this worker's pay."
-msgstr "Vrátenie znamená, že vec máte späť v rukách; označenie ako nevrátené môže sumu preniesť na mzdu pracovníka."
+msgstr ""
+"Vrátenie znamená, že vec máte späť v rukách; označenie ako nevrátené môže "
+"sumu preniesť na mzdu pracovníka."
 
 #: templates/panels/logistics_equipment.html:60
 msgid ""
 "Hand the item over as you record it. It leaves the warehouse count and "
 "becomes this worker's responsibility to return."
-msgstr "Vec odovzdajte v momente, keď ju zapisujete. Odchádza zo skladovej evidencie a pracovník zodpovedá za jej vrátenie."
+msgstr ""
+"Vec odovzdajte v momente, keď ju zapisujete. Odchádza zo skladovej evidencie "
+"a pracovník zodpovedá za jej vrátenie."
 
 #: templates/panels/logistics_equipment.html:60
 msgid "Issue equipment"
@@ -7891,7 +7980,9 @@ msgstr "Mesačná platba pracovníka"
 msgid ""
 "Frees the bed for someone else. Do this when the worker has actually moved "
 "out and the keys are back."
-msgstr "Uvoľní posteľ pre niekoho iného. Použite, až keď sa pracovník naozaj vysťahoval a kľúče sú späť."
+msgstr ""
+"Uvoľní posteľ pre niekoho iného. Použite, až keď sa pracovník naozaj "
+"vysťahoval a kľúče sú späť."
 
 #: templates/panels/logistics_room.html:13
 msgid "Release room"
@@ -7926,7 +8017,9 @@ msgstr "Izba"
 msgid ""
 "Gives this worker a real bed in a real room, and starts the monthly payment "
 "recorded here."
-msgstr "Pridelí pracovníkovi skutočnú posteľ v skutočnej izbe a začne mesačnú platbu zapísanú tu."
+msgstr ""
+"Pridelí pracovníkovi skutočnú posteľ v skutočnej izbe a začne mesačnú platbu "
+"zapísanú tu."
 
 #: templates/panels/logistics_room.html:41
 msgid "Assign room"
@@ -7988,7 +8081,9 @@ msgstr "Pracovná ponuka"
 msgid ""
 "Sends the offer email now, in the worker's preferred language. It cannot be "
 "recalled."
-msgstr "Odošle e-mail s ponukou hneď, v jazyku, ktorý pracovník uprednostňuje. Nedá sa stiahnuť späť."
+msgstr ""
+"Odošle e-mail s ponukou hneď, v jazyku, ktorý pracovník uprednostňuje. Nedá "
+"sa stiahnuť späť."
 
 #: templates/panels/messaging_offer_email.html:31
 msgid "A real email leaves the building. It cannot be taken back."
@@ -8025,7 +8120,9 @@ msgstr "Alebo napíšte správu"
 msgid ""
 "Sends the message through the SMS provider to the phone number on this "
 "worker's record. It cannot be recalled, and the message is charged."
-msgstr "Odošle správu cez poskytovateľa SMS na telefónne číslo v zázname pracovníka. Nedá sa stiahnuť späť a je spoplatnená."
+msgstr ""
+"Odošle správu cez poskytovateľa SMS na telefónne číslo v zázname pracovníka. "
+"Nedá sa stiahnuť späť a je spoplatnená."
 
 #: templates/panels/messaging_sms.html:20
 msgid "A real phone buzzes. The message cannot be taken back."
@@ -8047,7 +8144,9 @@ msgstr "Prosím, potvrďte"
 msgid ""
 "This reaches outside the application. Something happens in the real world "
 "that clicking again will not undo."
-msgstr "Toto zasahuje mimo aplikácie. V skutočnom svete sa stane niečo, čo ďalším kliknutím nevrátite späť."
+msgstr ""
+"Toto zasahuje mimo aplikácie. V skutočnom svete sa stane niečo, čo ďalším "
+"kliknutím nevrátite späť."
 
 #: templates/partials/confirm_dialog.html:11
 msgid "Do you really want to do this?"
@@ -8185,7 +8284,9 @@ msgstr ""
 msgid ""
 "Collects every outstanding entry up to the end of this window and locks it "
 "to this cycle. Entries stay deletable until the cycle is settled with pay."
-msgstr "Zozbiera všetky nevyrovnané záznamy do konca tohto obdobia a uzamkne ich k tomuto cyklu. Záznamy sa dajú mazať, kým sa cyklus nevyrovná so mzdou."
+msgstr ""
+"Zozbiera všetky nevyrovnané záznamy do konca tohto obdobia a uzamkne ich k "
+"tomuto cyklu. Záznamy sa dajú mazať, kým sa cyklus nevyrovná so mzdou."
 
 #: templates/partials/ledger_cycle.html:30
 msgid "This locks every outstanding entry into the cycle."
@@ -8221,7 +8322,10 @@ msgid ""
 "Marks this cycle as paid out. Use it only once payroll has actually settled "
 "the amounts — it records that the money changed hands, and the entries can "
 "no longer be deleted."
-msgstr "Označí tento cyklus ako vyplatený. Použite ho, až keď mzdy sumy naozaj vyrovnali — zaznamenáva, že peniaze zmenili majiteľa, a záznamy sa už nedajú mazať."
+msgstr ""
+"Označí tento cyklus ako vyplatený. Použite ho, až keď mzdy sumy naozaj "
+"vyrovnali — zaznamenáva, že peniaze zmenili majiteľa, a záznamy sa už nedajú "
+"mazať."
 
 #: templates/partials/ledger_cycle.html:32
 msgid "This marks the whole cycle as settled with pay."
@@ -8235,7 +8339,8 @@ msgstr "Označiť cyklus ako vysporiadaný"
 msgid ""
 "Money is actually paid out: use this only after payroll has settled these "
 "amounts."
-msgstr "Peniaze sa naozaj vyplácajú: použite až potom, čo mzdy tieto sumy vyrovnali."
+msgstr ""
+"Peniaze sa naozaj vyplácajú: použite až potom, čo mzdy tieto sumy vyrovnali."
 
 #: templates/partials/ledger_cycle.html:37
 msgid "No entries in this cycle window."

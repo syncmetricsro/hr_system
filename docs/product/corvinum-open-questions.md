@@ -75,6 +75,25 @@ document claiming to derive net pay.
 
 Get the answer in writing, like C-Q6. This is a document about someone's pay.
 
+**C-Q22 — are these the right definitions of the nine activation checks?**
+Each activation checklist item now carries help text saying what the tick
+claims: that you saw the ID yourself, that the permit covers the whole
+assignment, that the duplicate search was actually run under other spellings.
+The office reads it on hover, and it is the closest thing the product has to
+training material for the people doing the checks.
+
+The wording is ours, not theirs. A checklist item means whatever the office says
+it means, and two of them are worth asking about specifically:
+
+- **Work/residence permit valid** currently says an EU national needs none, so
+  tick it and move on. If they would rather see the item disappear for EU
+  nationals than be ticked meaninglessly, that is a different build.
+- **Duplicate check resolved** describes a manual search. If they expect the
+  system to have done it, that is C-Q7 territory and a feature, not a sentence.
+
+Read the nine out at the demo and correct them on the spot; they are seed data
+and a wording change is one line each (plus translations).
+
 ## Answered by observation
 
 **How many administrators does an office actually have? — at least sometimes,

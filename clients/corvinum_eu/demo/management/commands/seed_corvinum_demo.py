@@ -13,7 +13,11 @@ from features.advances.models import EntryType, LedgerCategory, LedgerEntry
 from features.advances.services import record_entry, week_cutoff
 from features.checklists.models import ChecklistItemTemplate, ChecklistTemplate
 from features.logistics.models import EquipmentItem
-from features.logistics.services import flag_unreturned, issue_equipment, review_deduction
+from features.logistics.services import (
+    flag_unreturned,
+    issue_equipment,
+    review_deduction,
+)
 from features.payslips.models import Payslip
 from features.payslips.services import record_payslip
 from features.wage_ledger.models import WageEntry
@@ -31,18 +35,76 @@ DEMO_USERS = [
     ("observer", Role.OBSERVER, "Observer", "Demo"),
 ]
 
-# Labels are canonical English; msgids registered in clients/corvinum_eu/
-# catalog_i18n.py (makemessages ignores demo paths). Rendered via db_trans.
+# Labels and help text are canonical English; msgids registered in
+# clients/corvinum_eu/catalog_i18n.py (makemessages ignores demo paths).
+# Rendered via db_trans.
+#
+# The help text says what the tick *claims* — an office user ticking
+# "Identity document verified" is asserting they saw the document. The list is
+# the closest thing this product has to training material, so each item defines
+# its own check rather than repeating how ticking works. Wording pends client
+# confirmation (C-Q22).
 ACTIVATION_ITEMS = [
-    (("Personal data complete"), True),
-    (("Identity document verified"), True),
-    (("Work/residence permit valid (if applicable)"), True),
-    (("Medical certificate valid"), True),
-    (("Safety training completed"), True),
-    (("Contract signed"), True),
-    (("Duplicate check resolved"), True),
-    (("Blacklist check resolved"), True),
-    (("Welcome call made"), False),
+    (
+        "Personal data complete",
+        True,
+        "Name, date of birth, address and phone are all filled in, and they "
+        "match the document you were shown rather than what was said on the "
+        "phone.",
+    ),
+    (
+        "Identity document verified",
+        True,
+        "You have seen the ID card or passport yourself, it is valid today, "
+        "and the name matches this record. No scan is kept here — this tick "
+        "is the record that you checked.",
+    ),
+    (
+        "Work/residence permit valid (if applicable)",
+        True,
+        "For a non-EU worker: the permit covers the whole planned assignment, "
+        "not just the start date. An EU national needs none — tick it and "
+        "move on.",
+    ),
+    (
+        "Medical certificate valid",
+        True,
+        "A fitness certificate exists, is less than a year old, and its date "
+        "is recorded on this worker. Until the date is entered, Compliance "
+        "keeps reporting the medical as missing.",
+    ),
+    (
+        "Safety training completed",
+        True,
+        "The worker has attended the safety training for the site they are "
+        "going to, and whoever gave it has confirmed they were there.",
+    ),
+    (
+        "Contract signed",
+        True,
+        "Both sides have signed and the office holds its copy. A contract "
+        "sent but not signed back is not this item.",
+    ),
+    (
+        "Duplicate check resolved",
+        True,
+        "You have searched for this person under other spellings of the name "
+        "and under their phone number, and confirmed there is no second "
+        "record for them.",
+    ),
+    (
+        "Blacklist check resolved",
+        True,
+        "The blacklist check has been run and either found nothing, or a "
+        "manager has decided the case. An open match is not resolved.",
+    ),
+    (
+        "Welcome call made",
+        False,
+        "Somebody has called the worker to confirm the start date, how they "
+        "get there and what to bring. Not critical — but it prevents most "
+        "no-shows.",
+    ),
 ]
 
 
@@ -55,7 +117,8 @@ class Command(BaseCommand):
             email = f"{local_part}@{DEMO_DOMAIN}"
             assert email.endswith(f"@{DEMO_DOMAIN}")
             user, _ = User.objects.get_or_create(
-                email=email, defaults={"first_name": first, "last_name": last, "role": role}
+                email=email,
+                defaults={"first_name": first, "last_name": last, "role": role},
             )
             user.role, user.is_active = role, True
             user.set_password(DEMO_PASSWORD)
@@ -64,15 +127,27 @@ class Command(BaseCommand):
 
         # Partner companies are the projects (§5.7: a worker belongs to one
         # company/project).
-        alfa, _ = Project.objects.get_or_create(code="CV-ALFA", defaults={"name": "Alfa Metallwerk"})
-        beta, _ = Project.objects.get_or_create(code="CV-BETA", defaults={"name": "Beta Logistik"})
+        alfa, _ = Project.objects.get_or_create(
+            code="CV-ALFA", defaults={"name": "Alfa Metallwerk"}
+        )
+        beta, _ = Project.objects.get_or_create(
+            code="CV-BETA", defaults={"name": "Beta Logistik"}
+        )
 
         # Global activation checklist (§5.5).
         template, _ = ChecklistTemplate.objects.get_or_create(name="Global activation")
-        for order, (label, critical) in enumerate(ACTIVATION_ITEMS, start=1):
-            ChecklistItemTemplate.objects.get_or_create(
-                template=template, label=label, defaults={"critical": critical, "order": order}
+        for order, (label, critical, help_text) in enumerate(ACTIVATION_ITEMS, start=1):
+            item, _ = ChecklistItemTemplate.objects.get_or_create(
+                template=template,
+                label=label,
+                defaults={"critical": critical, "order": order, "help_text": help_text},
             )
+            # Repair, not just create: every existing demo and staging database
+            # already has all nine rows, so `defaults` would never reach them
+            # and the new help text would silently go nowhere.
+            if item.help_text != help_text:
+                item.help_text = help_text
+                item.save(update_fields=["help_text"])
 
         # People. A fresh seed uses a fictional address. Do not overwrite an
         # address deliberately changed to a controlled demo inbox: the runner
@@ -82,7 +157,9 @@ class Command(BaseCommand):
             last_name="Skladník",
             defaults={"email": "marek.skladnik@demo.corvinum.test"},
         )
-        candidate, _ = Person.objects.get_or_create(first_name="Eszter", last_name="Varga")
+        candidate, _ = Person.objects.get_or_create(
+            first_name="Eszter", last_name="Varga"
+        )
 
         # Equipment with values (§5.8) + one approved charge that lands in the
         # ledger via the deduction-approved hook.
@@ -92,14 +169,23 @@ class Command(BaseCommand):
         if not worker.equipment_issues.filter(item=boots).exists():
             issue = issue_equipment(worker, boots, 1, actor=hradmin)
             flag_unreturned(issue, actor=hradmin)
-            review_deduction(issue, "approve", actor=hradmin, note="left after two days")
+            review_deduction(
+                issue, "approve", actor=hradmin, note="left after two days"
+            )
 
         # Ledger rhythm (§5.10): an open advance for the Thursday summary,
         # travel money, and the equipment deduction from the hook above.
-        if not LedgerEntry.objects.filter(person=worker, entry_type=EntryType.CASH_ADVANCE).exists():
+        if not LedgerEntry.objects.filter(
+            person=worker, entry_type=EntryType.CASH_ADVANCE
+        ).exists():
             advance = record_entry(
-                worker, entry_type=EntryType.CASH_ADVANCE, category=LedgerCategory.CASH_ADVANCE,
-                amount=Decimal("100.00"), actor=hradmin, project=alfa, note="cash Friday",
+                worker,
+                entry_type=EntryType.CASH_ADVANCE,
+                category=LedgerCategory.CASH_ADVANCE,
+                amount=Decimal("100.00"),
+                actor=hradmin,
+                project=alfa,
+                note="cash Friday",
             )
             # Cash advances after this week's Thursday 14:00 roll to next
             # week and never retro-insert (C-Q2) — so seeding this demo on a
@@ -112,11 +198,18 @@ class Command(BaseCommand):
                 LedgerEntry.objects.filter(pk=advance.pk).update(
                     created_at=cutoff - dt.timedelta(hours=1)
                 )
-        if not LedgerEntry.objects.filter(person=worker, category=LedgerCategory.TRAVEL_FUEL).exists():
+        if not LedgerEntry.objects.filter(
+            person=worker, category=LedgerCategory.TRAVEL_FUEL
+        ).exists():
             record_entry(
-                worker, entry_type=EntryType.PAY_ADDITION, category=LedgerCategory.TRAVEL_FUEL,
-                amount=Decimal("30.00"), actor=hradmin, project=alfa,
-                entry_date=dt.date.today(), note="private-car commute (C-Q10 default)",
+                worker,
+                entry_type=EntryType.PAY_ADDITION,
+                category=LedgerCategory.TRAVEL_FUEL,
+                amount=Decimal("30.00"),
+                actor=hradmin,
+                project=alfa,
+                entry_date=dt.date.today(),
+                note="private-car commute (C-Q10 default)",
             )
 
         # Two independently recorded source series aligned by calendar month.
@@ -148,8 +241,10 @@ class Command(BaseCommand):
                     issue_date=issue_date
                 )
 
-        self.stdout.write(self.style.SUCCESS(
-            f"CorvinumEU demo ready: 4 users @{DEMO_DOMAIN}, companies {alfa.code}/{beta.code}, "
-            f"checklist '{template.name}', worker ledger and pay sources seeded "
-            f"(candidate: {candidate})."
-        ))
+        self.stdout.write(
+            self.style.SUCCESS(
+                f"CorvinumEU demo ready: 4 users @{DEMO_DOMAIN}, companies {alfa.code}/{beta.code}, "
+                f"checklist '{template.name}', worker ledger and pay sources seeded "
+                f"(candidate: {candidate})."
+            )
+        )

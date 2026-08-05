@@ -284,13 +284,20 @@ the person into the documented readiness/approval workflow.
 
 1. On Olena’s record, show the activation checklist and the message listing
    eight open critical items. Explain that critical approvals block activation.
-2. Tick one item. Point out the immediate confirmation and the recorded staff
+2. **Hover two or three items before ticking anything.** Each one explains
+   what its tick actually claims — that you saw the ID card yourself, that the
+   permit covers the whole assignment, that the duplicate search was really run
+   under other spellings of the name. Nine items, nine different explanations,
+   in the reader's own language. Say plainly that this is the office's process
+   written down, and ask them to correct any of the nine on the spot (C-Q22) —
+   it is seed text, not a rule.
+3. Tick one item. Point out the immediate confirmation and the recorded staff
    identity beside the completed item.
-3. Leave the remaining items open so the blocking state remains easy to see.
-4. In Readiness set Medical and Gear to complete, and Accommodation to **Not
+4. Leave the remaining items open so the blocking state remains easy to see.
+5. In Readiness set Medical and Gear to complete, and Accommodation to **Not
    applicable** with a short reason. Transport is absent because Corvinum has
    that feature disabled.
-5. Select **Activate (Working)** while critical checklist items remain open.
+6. Select **Activate (Working)** while critical checklist items remain open.
    Expected result: activation is rejected safely and the record remains in
    Trial day. Do not complete every item during the main route.
 
