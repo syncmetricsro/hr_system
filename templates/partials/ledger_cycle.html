@@ -27,10 +27,11 @@
         {% csrf_token %}
         <input type="hidden" name="year" value="{{ cycle_year }}">
         <input type="hidden" name="month" value="{{ cycle_month }}">
-        <button class="button button-secondary" type="submit" name="action" value="include" data-tooltip="{% trans 'Closes the 21st-to-20th window: every open entry in it is locked to this cycle and can then only be corrected by a reversal. New entries can no longer be backdated into it.' %}" data-confirm="{% trans 'This locks every open entry of the window into the cycle; locked entries can only be corrected by reversal.' %}">{% trans "Include open entries in cycle" %}</button>
+        <button class="button button-secondary" type="submit" name="action" value="include" data-tooltip="{% trans 'Collects every outstanding entry up to the end of this window and locks it to this cycle. Entries stay deletable until the cycle is settled with pay.' %}" data-confirm="{% trans 'This locks every outstanding entry into the cycle.' %}">{% trans "Include open entries in cycle" %}</button>
         <button class="button button-secondary" type="submit" name="action" value="reopen" data-tooltip="{% trans 'Puts an included cycle back to open while its own window is still running, for a run closed by mistake. Once the window has ended, or anything in it has been paid, it cannot be reopened.' %}" data-confirm="{% trans 'This reopens the cycle: its entries return to open and can be edited again.' %}">{% trans "Reopen cycle" %}</button>
-        <button class="button button-secondary" type="submit" name="action" value="deducted" data-tooltip="{% trans 'Marks this cycle as paid out. Use it once payroll has actually settled the amounts — it records that the money changed hands.' %}" data-confirm="{% trans 'This marks the whole cycle as settled with pay.' %}">{% trans "Mark cycle settled" %}</button>
+        <button class="button button-physical" type="submit" name="action" value="deducted" data-tooltip-heading="{% trans 'Real-world action' %}" data-tooltip="{% trans 'Marks this cycle as paid out. Use it only once payroll has actually settled the amounts — it records that the money changed hands, and the entries can no longer be deleted.' %}" data-confirm="{% trans 'This marks the whole cycle as settled with pay.' %}">{% trans "Mark cycle settled" %}</button>
       </form>
+      <p class="action-consequence">{% trans "Money is actually paid out: use this only after payroll has settled these amounts." %}</p>
     {% endif %}
   {% else %}
     <p class="muted">{% trans "No entries in this cycle window." %}</p>

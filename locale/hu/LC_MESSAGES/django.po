@@ -128,7 +128,7 @@ msgid "Reviews"
 msgstr "Ellenőrzések"
 
 #: clients/corvinum_eu/templates/layouts/base.html:64
-#: templates/panels/logistics_equipment.html:63
+#: templates/panels/logistics_equipment.html:65
 msgid "Manage equipment catalogue"
 msgstr "Felszerelés-katalóg kezelése"
 
@@ -662,7 +662,7 @@ msgid "Added to blacklist"
 msgstr "Feketelistára helyezve"
 
 # --- exit / recycling ---
-#: core/audit/presentation.py:107 templates/pages/person_detail.html:259
+#: core/audit/presentation.py:107 templates/pages/person_detail.html:262
 msgid "Exit"
 msgstr "Kilépés"
 
@@ -852,17 +852,17 @@ msgid "Do not send job offers by email"
 msgstr "Ne küldjön állásajánlatokat e-mailben"
 
 #: core/people/forms.py:43 features/intake/catalog_i18n.py:17
-#: templates/pages/person_detail.html:224
+#: templates/pages/person_detail.html:227
 msgid "Phone"
 msgstr "Telefon"
 
 #: core/people/forms.py:44 features/intake/catalog_i18n.py:19
-#: templates/pages/person_detail.html:225
+#: templates/pages/person_detail.html:228
 msgid "Address"
 msgstr "Cím"
 
 #: core/people/forms.py:45 features/intake/catalog_i18n.py:20
-#: templates/pages/person_detail.html:226
+#: templates/pages/person_detail.html:229
 msgid "Nationality"
 msgstr "Állampolgárság"
 
@@ -871,12 +871,12 @@ msgid "Preferred language"
 msgstr "Preferált nyelv"
 
 #: core/people/forms.py:47 features/intake/catalog_i18n.py:15
-#: templates/pages/person_detail.html:238
+#: templates/pages/person_detail.html:241
 msgid "Date of birth"
 msgstr "Születési dátum"
 
 #: core/people/forms.py:48 features/intake/catalog_i18n.py:16
-#: templates/pages/person_detail.html:239
+#: templates/pages/person_detail.html:242
 msgid "Place of birth"
 msgstr "Születési hely"
 
@@ -903,11 +903,11 @@ msgstr "A születési dátum nem lehet jövőbeli."
 
 # --- lifecycle status labels ---
 #: core/people/models.py:16 templates/pages/dashboard.html:21
-#: templates/panels/logistics_equipment.html:56
+#: templates/panels/logistics_equipment.html:57
 msgid "Available"
 msgstr "Elérhető"
 
-#: core/people/models.py:17 templates/pages/person_detail.html:91
+#: core/people/models.py:17 templates/pages/person_detail.html:93
 msgid "Trial day"
 msgstr "Próbanap"
 
@@ -920,7 +920,7 @@ msgstr "Dolgozik"
 #: templates/pages/accommodation_list.html:33
 #: templates/pages/equipment_catalog.html:19
 #: templates/pages/equipment_catalog.html:33
-#: templates/pages/person_detail.html:282 templates/pages/project_detail.html:8
+#: templates/pages/person_detail.html:286 templates/pages/project_detail.html:8
 #: templates/pages/project_list.html:23 templates/pages/project_list.html:39
 msgid "Inactive"
 msgstr "Inaktív"
@@ -1098,8 +1098,8 @@ msgstr "Személy szerkesztése"
 
 #: core/people/views.py:243 core/ui/help.py:272
 #: templates/pages/activation_queue.html:29
-#: templates/pages/person_detail.html:171
-#: templates/pages/person_detail.html:210
+#: templates/pages/person_detail.html:173
+#: templates/pages/person_detail.html:212
 msgid "Entry medical date"
 msgstr "Belépő orvosi dátuma"
 
@@ -1126,7 +1126,7 @@ msgstr "Csak elérhető jelöltek ütemezhetők."
 #: core/projects/forms.py:31 core/projects/forms.py:55
 #: templates/pages/feedback_inbox.html:32
 #: templates/pages/finance_summary.html:22
-#: templates/pages/person_detail.html:61 templates/pages/person_detail.html:80
+#: templates/pages/person_detail.html:61 templates/pages/person_detail.html:81
 #: templates/pages/project_detail.html:8
 #: templates/pages/transport_trends.html:31
 #: templates/pages/transport_trends.html:44
@@ -1136,7 +1136,7 @@ msgid "Project"
 msgstr "Projekt"
 
 #: core/projects/forms.py:34 core/projects/forms.py:58
-#: templates/pages/person_detail.html:66 templates/pages/person_detail.html:95
+#: templates/pages/person_detail.html:66 templates/pages/person_detail.html:97
 msgid "Arrival time"
 msgstr "Érkezés ideje"
 
@@ -1274,15 +1274,15 @@ msgstr "Befejezve"
 msgid "Pending"
 msgstr "Függőben"
 
-#: core/projects/models.py:124 templates/pages/person_detail.html:102
+#: core/projects/models.py:124 templates/pages/person_detail.html:104
 msgid "Pass"
 msgstr "Megfelelt"
 
-#: core/projects/models.py:125 templates/pages/person_detail.html:106
+#: core/projects/models.py:125 templates/pages/person_detail.html:108
 msgid "Fail"
 msgstr "Nem felelt meg"
 
-#: core/projects/models.py:126 templates/pages/person_detail.html:110
+#: core/projects/models.py:126 templates/pages/person_detail.html:112
 msgid "No-show"
 msgstr "Nem jelent meg"
 
@@ -1325,22 +1325,22 @@ msgstr "próbanap"
 msgid "trial assignments"
 msgstr "próbanapok"
 
-#: core/projects/models.py:193 templates/pages/person_detail.html:141
-#: templates/pages/person_detail.html:147
-#: templates/pages/person_detail.html:153
-#: templates/pages/person_detail.html:163
+#: core/projects/models.py:193 templates/pages/person_detail.html:143
+#: templates/pages/person_detail.html:149
+#: templates/pages/person_detail.html:155
+#: templates/pages/person_detail.html:165
 msgid "Incomplete"
 msgstr "Hiányos"
 
-#: core/projects/models.py:194 templates/pages/person_detail.html:142
-#: templates/pages/person_detail.html:148
-#: templates/pages/person_detail.html:154
-#: templates/pages/person_detail.html:164
+#: core/projects/models.py:194 templates/pages/person_detail.html:144
+#: templates/pages/person_detail.html:150
+#: templates/pages/person_detail.html:156
+#: templates/pages/person_detail.html:166
 msgid "Complete"
 msgstr "Kész"
 
-#: core/projects/models.py:195 templates/pages/person_detail.html:155
-#: templates/pages/person_detail.html:165
+#: core/projects/models.py:195 templates/pages/person_detail.html:157
+#: templates/pages/person_detail.html:167
 msgid "Not applicable"
 msgstr "Nem alkalmazható"
 
@@ -1459,8 +1459,8 @@ msgstr "Belépő orvosi dátuma nem lehet jövőbeli."
 #: core/projects/services.py:271 core/ui/help.py:244
 #: features/advances/models.py:38 features/profitability/catalog_i18n.py:20
 #: templates/pages/activation_queue.html:26
-#: templates/pages/person_detail.html:139
-#: templates/pages/person_detail.html:201
+#: templates/pages/person_detail.html:141
+#: templates/pages/person_detail.html:203
 msgid "Medical"
 msgstr "Orvosi"
 
@@ -1470,7 +1470,7 @@ msgstr "Az orvosi alkalmasság hiányos."
 
 #: core/projects/services.py:272 core/ui/help.py:251
 #: templates/pages/activation_queue.html:27
-#: templates/pages/person_detail.html:145
+#: templates/pages/person_detail.html:147
 msgid "Gear"
 msgstr "Felszerelés"
 
@@ -1487,7 +1487,7 @@ msgstr "A szükséges felszerelés hiányos."
 #: templates/pages/accommodation_list.html:9
 #: templates/pages/accommodation_list.html:27
 #: templates/pages/activation_queue.html:28
-#: templates/pages/person_detail.html:151 templates/pages/room_form.html:7
+#: templates/pages/person_detail.html:153 templates/pages/room_form.html:7
 #: templates/panels/logistics_room.html:4
 msgid "Accommodation"
 msgstr "Szállás"
@@ -1498,7 +1498,7 @@ msgstr "A szállás nincs rendezve."
 
 #: core/projects/services.py:274 core/ui/help.py:265
 #: features/profitability/models.py:88 templates/layouts/base.html:45
-#: templates/pages/person_detail.html:161
+#: templates/pages/person_detail.html:163
 msgid "Transport"
 msgstr "Szállítás"
 
@@ -2070,7 +2070,7 @@ msgstr ""
 "dátum elgépelés, nem terv."
 
 # --- projects UI ---
-#: core/ui/help.py:279 templates/pages/person_detail.html:182
+#: core/ui/help.py:279 templates/pages/person_detail.html:184
 msgid "Request activation"
 msgstr "Aktiválás kérelmezése"
 
@@ -2103,7 +2103,7 @@ msgstr ""
 #: core/ui/help.py:812 core/ui/help.py:819 core/ui/help.py:826
 #: core/ui/help.py:833 core/ui/help.py:840 core/ui/help.py:893
 #: core/ui/help.py:900 core/ui/help.py:907 core/ui/help.py:914
-#: templates/pages/person_detail.html:75
+#: templates/pages/person_detail.html:76
 msgid "Manager"
 msgstr "Menedzser"
 
@@ -2125,7 +2125,7 @@ msgstr ""
 "Visszaküldi a kérelmet az indoklásával. A munkavállaló készenlétben marad, a "
 "koordinátor javíthatja, amit megnevez, és újra kérheti. Az indoklás kötelező."
 
-#: core/ui/help.py:303 templates/pages/person_detail.html:76
+#: core/ui/help.py:303 templates/pages/person_detail.html:77
 msgid "Activate without a trial day"
 msgstr "Aktiválás próbanap nélkül"
 
@@ -2901,8 +2901,8 @@ msgstr ""
 
 #: core/ui/help.py:706 core/ui/help.py:808 core/ui/help.py:889
 #: features/payslips/forms.py:22 templates/pages/ledger.html:21
-#: templates/pages/payslips.html:38 templates/pages/person_detail.html:38
-#: templates/pages/person_detail.html:311 templates/pages/wages.html:38
+#: templates/pages/payslips.html:39 templates/pages/person_detail.html:38
+#: templates/pages/person_detail.html:315 templates/pages/wages.html:38
 #: templates/partials/ledger_activity.html:8
 #: templates/partials/ledger_activity.html:26
 #: templates/partials/ledger_cycle.html:16
@@ -3506,7 +3506,9 @@ msgstr "Csak nyitott tétel törölhető; a rendezett tételhez sztornó kell."
 msgid ""
 "This entry has already been settled with pay and cannot be deleted. Record a "
 "reversal instead."
-msgstr "Ez a tétel már el lett számolva a bérrel, ezért nem törölhető. Rögzítsen helyette sztornót."
+msgstr ""
+"Ez a tétel már el lett számolva a bérrel, ezért nem törölhető. Rögzítsen "
+"helyette sztornót."
 
 #: features/advances/services.py:141
 msgid "Delete the reversal of this entry first, then delete the entry."
@@ -3522,7 +3524,10 @@ msgid ""
 "The %(key)s cycle closed on %(end)s and can no longer be reopened. Its "
 "entries are collected by the next run, %(next_key)s, which covers "
 "%(next_start)s to %(next_end)s."
-msgstr "A(z) %(key)s ciklus %(end)s napon lezárult, és már nem nyitható újra. Tételeit a következő futtatás, a(z) %(next_key)s szedi össze, amely a %(next_start)s – %(next_end)s időszakot fedi le."
+msgstr ""
+"A(z) %(key)s ciklus %(end)s napon lezárult, és már nem nyitható újra. "
+"Tételeit a következő futtatás, a(z) %(next_key)s szedi össze, amely a "
+"%(next_start)s – %(next_end)s időszakot fedi le."
 
 #: features/advances/services.py:213
 msgid "Open entries are cancelled, not reversed."
@@ -4317,13 +4322,13 @@ msgstr "Beszállító"
 
 #: features/logistics/forms.py:190 features/logistics/forms.py:224
 #: templates/pages/equipment_stock.html:47
-#: templates/panels/logistics_equipment.html:55
+#: templates/panels/logistics_equipment.html:56
 msgid "Item"
 msgstr "Tétel"
 
 #: features/logistics/forms.py:192 templates/pages/equipment_stock.html:36
 #: templates/pages/goods_receipt_detail.html:31
-#: templates/panels/logistics_equipment.html:58
+#: templates/panels/logistics_equipment.html:59
 msgid "Quantity"
 msgstr "Mennyiség"
 
@@ -4354,7 +4359,7 @@ msgstr "Pozitív korrekció értéke"
 #: templates/pages/blacklist_queue.html:28
 #: templates/pages/equipment_stock.html:52
 #: templates/pages/finance_month_detail.html:19
-#: templates/pages/person_detail.html:284
+#: templates/pages/person_detail.html:288
 #: templates/panels/blacklist_case.html:11
 #: templates/panels/blacklist_case.html:19
 #: templates/panels/blacklist_case.html:26
@@ -4883,7 +4888,7 @@ msgid "Queued"
 msgstr "Sorban áll"
 
 #: features/messaging/models.py:42 features/messaging/models.py:282
-#: templates/pages/payslips.html:38
+#: templates/pages/payslips.html:39
 msgid "Sent"
 msgstr "Elküldve"
 
@@ -5131,7 +5136,7 @@ msgstr "bérlap"
 msgid "payslips"
 msgstr "bérlapok"
 
-#: features/payslips/providers.py:15 templates/pages/payslips.html:38
+#: features/payslips/providers.py:15 templates/pages/payslips.html:39
 msgid "Recorded net payslip"
 msgstr "Rögzített nettó bérlap"
 
@@ -5665,7 +5670,7 @@ msgstr "Szálláskezelés"
 #: templates/pages/project_form.html:9 templates/pages/room_form.html:9
 #: templates/pages/transport_trends.html:22
 #: templates/pages/trials_queue.html:25
-#: templates/partials/confirm_dialog.html:12
+#: templates/partials/confirm_dialog.html:13
 #: templates/partials/ledger_activity.html:48
 msgid "Cancel"
 msgstr "Elvet"
@@ -5696,7 +5701,7 @@ msgstr "Összes"
 
 #: templates/pages/accommodation_list.html:29
 #: templates/pages/compliance_list.html:14 templates/pages/people_list.html:41
-#: templates/pages/person_detail.html:222
+#: templates/pages/person_detail.html:225
 #: templates/pages/project_detail.html:31 templates/pages/project_list.html:31
 msgid "Details"
 msgstr "Részletek"
@@ -5771,7 +5776,7 @@ msgstr "Dolgozó (név tartalmazza)"
 
 # --- projects UI ---
 #: templates/pages/audit_log.html:18 templates/pages/audit_log.html:42
-#: templates/pages/payslips.html:38 templates/pages/transport_trends.html:44
+#: templates/pages/payslips.html:39 templates/pages/transport_trends.html:44
 msgid "Action"
 msgstr "Művelet"
 
@@ -5888,7 +5893,7 @@ msgid "This rejects the proposed blacklist case and closes it."
 msgstr "Elutasítja a javasolt tiltólista-ügyet és lezárja azt."
 
 #: templates/pages/blacklist_queue.html:34
-#: templates/pages/equipment_reviews.html:36
+#: templates/pages/equipment_reviews.html:37
 msgid "Nothing awaiting review."
 msgstr "Semmi nem vár ellenőrzésre."
 
@@ -5972,12 +5977,43 @@ msgid "Uploading…"
 msgstr "Feltöltés…"
 
 #: templates/pages/certificate_form.html:26
+#: templates/pages/equipment_reviews.html:31 templates/pages/payslips.html:51
+#: templates/pages/person_detail.html:69 templates/pages/person_detail.html:86
+#: templates/pages/person_detail.html:215
+#: templates/pages/person_detail.html:268
+#: templates/pages/person_detail.html:276
+#: templates/panels/logistics_equipment.html:37
+#: templates/panels/logistics_equipment.html:42
+#: templates/panels/logistics_equipment.html:60
+#: templates/panels/logistics_room.html:13
+#: templates/panels/logistics_room.html:41
+#: templates/panels/messaging_offer_email.html:25
+#: templates/panels/messaging_offer_email.html:30
+#: templates/panels/messaging_sms.html:19
+#: templates/panels/messaging_sms.html:22
+#: templates/partials/ledger_cycle.html:32
+msgid "Real-world action"
+msgstr "Valós következménnyel jár"
+
+#: templates/pages/certificate_form.html:26
+msgid ""
+"Record only what you have actually seen. Compliance, readiness, and the "
+"expiry reminder all count from what is entered here."
+msgstr "Csak azt rögzítse, amit ténylegesen látott. A megfelelés, a felkészültség és a lejárati emlékeztető is az itt megadott adatból számol."
+
+#: templates/pages/certificate_form.html:26
 msgid "Save renewal"
 msgstr "Megújítás mentése"
 
 #: templates/pages/certificate_form.html:26
 msgid "Save certificate"
 msgstr "Tanúsítvány mentése"
+
+#: templates/pages/certificate_form.html:27
+msgid ""
+"Record only a certificate you have in front of you — expiry and compliance "
+"count from it."
+msgstr "Csak olyan igazolást rögzítsen, amely ott van Ön előtt — a lejárat és a megfelelés ettől számít."
 
 #: templates/pages/compliance_list.html:8
 msgid "Alerts"
@@ -6182,6 +6218,12 @@ msgstr "Elengedi a terhelést; a munkavállalónak nem kell fizetnie a tételér
 #: templates/pages/equipment_reviews.html:32
 msgid "Waive"
 msgstr "Elenged"
+
+#: templates/pages/equipment_reviews.html:34
+msgid ""
+"Approving puts real money against a real person, to be recovered from their "
+"pay."
+msgstr "A jóváhagyás valódi pénzt ír egy konkrét ember terhére, amit a béréből vonnak le."
 
 #: templates/pages/equipment_stock.html:9
 #: templates/pages/equipment_stock_receive.html:4
@@ -6722,14 +6764,14 @@ msgstr "Felvétel"
 msgid "Step"
 msgstr "Lépés"
 
-#: templates/pages/intake_panel.html:24 templates/pages/person_detail.html:229
-#: templates/pages/person_detail.html:242
+#: templates/pages/intake_panel.html:24 templates/pages/person_detail.html:232
+#: templates/pages/person_detail.html:245
 #: templates/pages/project_detail.html:47
 msgid "Yes"
 msgstr "Igen"
 
-#: templates/pages/intake_panel.html:25 templates/pages/person_detail.html:229
-#: templates/pages/person_detail.html:242
+#: templates/pages/intake_panel.html:25 templates/pages/person_detail.html:232
+#: templates/pages/person_detail.html:245
 #: templates/pages/project_detail.html:47
 msgid "No"
 msgstr "Nem"
@@ -6957,16 +6999,23 @@ msgstr "Bérlap rögzítése"
 msgid "Recorded payslips"
 msgstr "Rögzített bérlapok"
 
-#: templates/pages/payslips.html:38
+#: templates/pages/payslips.html:36
+msgid ""
+"Sending is a real-world action: an email leaves the building, addressed to "
+"the worker."
+msgstr "A küldés valós következménnyel jár: a munkavállalónak címzett e-mail elhagyja a rendszert."
+
+#: templates/pages/payslips.html:39
 #: templates/partials/person_finance_overview.html:14
 msgid "Calendar month"
 msgstr "Naptári hónap"
 
-#: templates/pages/payslips.html:38
+#: templates/pages/payslips.html:39
 msgid "Issue date"
 msgstr "Kiállítás dátuma"
 
-#: templates/pages/payslips.html:50
+#: templates/pages/payslips.html:51
+#: templates/panels/messaging_offer_email.html:25
 #: templates/panels/messaging_offer_email.html:27
 msgid ""
 "Email is not configured in this environment, so nothing can be sent from "
@@ -6975,7 +7024,7 @@ msgstr ""
 "Az e-mail nincs beállítva ebben a környezetben, így innen semmi nem küldhető "
 "el."
 
-#: templates/pages/payslips.html:50
+#: templates/pages/payslips.html:51
 msgid ""
 "Resends the encrypted PDF payslip and generates a new one-time password, "
 "invalidating the previous one."
@@ -6983,7 +7032,7 @@ msgstr ""
 "Újraküldi a titkosított PDF bérlapot, és új egyszeri jelszót generál, "
 "érvénytelenítve az előzőt."
 
-#: templates/pages/payslips.html:50
+#: templates/pages/payslips.html:51
 msgid ""
 "Emails the encrypted PDF payslip to the worker. Share the one-time password "
 "shown afterward by phone or Messenger, never by email."
@@ -6992,15 +7041,15 @@ msgstr ""
 "követően megjelenő egyszeri jelszót telefonon vagy Messengeren közölje — "
 "soha e-mailben."
 
-#: templates/pages/payslips.html:51
+#: templates/pages/payslips.html:52
 msgid "Resend (new password)"
 msgstr "Újraküldés (új jelszó)"
 
-#: templates/pages/payslips.html:51
+#: templates/pages/payslips.html:52
 msgid "Send encrypted PDF"
 msgstr "Titkosított PDF küldése"
 
-#: templates/pages/payslips.html:57
+#: templates/pages/payslips.html:58
 msgid "No payslips recorded."
 msgstr "Nincs rögzített bérlap."
 
@@ -7012,7 +7061,7 @@ msgstr "Keresés név szerint"
 msgid "All statuses"
 msgstr "Minden állapot"
 
-#: templates/pages/people_list.html:27 templates/pages/person_detail.html:269
+#: templates/pages/people_list.html:27 templates/pages/person_detail.html:272
 msgid "Inactive reason"
 msgstr "Inaktivitás oka"
 
@@ -7049,12 +7098,22 @@ msgstr "Következő lépés"
 msgid "Send to a project trial"
 msgstr "Küldés próbanapra"
 
+#: templates/pages/person_detail.html:69
+msgid ""
+"Commits the worker to being at the site at the time you set. Somebody "
+"travels on the strength of this, so agree it with them first."
+msgstr "Arra kötelezi a munkavállalót, hogy a megadott időpontban a helyszínen legyen. Valaki emiatt útnak indul, ezért előbb egyeztessen vele."
+
 #: templates/pages/person_detail.html:69 templates/pages/trials_queue.html:10
 #: templates/pages/trials_queue.html:24
 msgid "Schedule trial"
 msgstr "Próbanap ütemezése"
 
-#: templates/pages/person_detail.html:77
+#: templates/pages/person_detail.html:71
+msgid "A person travels to a site at this time. Agree it with them first."
+msgstr "Egy ember ekkor útnak indul a helyszínre. Előbb egyeztessen vele."
+
+#: templates/pages/person_detail.html:78
 msgid ""
 "For a known or returning worker. Readiness still applies — medical and gear "
 "must be complete before activation."
@@ -7063,19 +7122,29 @@ msgstr ""
 "az orvosi vizsgálatnak és a felszerelésnek az aktiválás előtt teljesnek kell "
 "lennie."
 
-#: templates/pages/person_detail.html:85
+#: templates/pages/person_detail.html:86
+msgid ""
+"Puts a worker on the way to a real shift without seeing them work first. "
+"Only for someone the office already knows."
+msgstr "Valódi műszakra indítja a munkavállalót anélkül, hogy előbb látta volna dolgozni. Csak olyasvalakinél, akit az iroda már ismer."
+
+#: templates/pages/person_detail.html:86
 msgid "Skip the trial and start readiness"
 msgstr "Próbanap kihagyása és készenlét indítása"
 
-#: templates/pages/person_detail.html:92
+#: templates/pages/person_detail.html:88
+msgid "This worker starts without being seen on site first."
+msgstr "Ez a munkavállaló úgy kezd, hogy előtte senki nem látta a helyszínen."
+
+#: templates/pages/person_detail.html:94
 msgid "Record trial outcome"
 msgstr "Próba eredményének rögzítése"
 
-#: templates/pages/person_detail.html:94
+#: templates/pages/person_detail.html:96
 msgid "Trial destination"
 msgstr "Próbanap helyszíne"
 
-#: templates/pages/person_detail.html:102
+#: templates/pages/person_detail.html:104
 msgid ""
 "Marks the trial as passed and moves the person toward readiness for "
 "activation."
@@ -7083,7 +7152,7 @@ msgstr ""
 "Sikeresnek jelöli a próbanapot, és a személyt az aktiválásra való "
 "felkészültség felé lépteti."
 
-#: templates/pages/person_detail.html:106
+#: templates/pages/person_detail.html:108
 msgid ""
 "Marks the trial as failed. The person will need a new trial before "
 "activation."
@@ -7091,50 +7160,50 @@ msgstr ""
 "Sikertelennek jelöli a próbanapot. A személynek új próbanapra lesz szüksége "
 "az aktiválás előtt."
 
-#: templates/pages/person_detail.html:110
+#: templates/pages/person_detail.html:112
 msgid "Records that the person did not show up for the trial."
 msgstr "Rögzíti, hogy a személy nem jelent meg a próbanapon."
 
-#: templates/pages/person_detail.html:114
+#: templates/pages/person_detail.html:116
 msgid "Awaiting the coordinator's outcome."
 msgstr "Várakozás a koordinátor eredményére."
 
-#: templates/pages/person_detail.html:121
-#: templates/pages/person_detail.html:122
+#: templates/pages/person_detail.html:123
+#: templates/pages/person_detail.html:124
 msgid "Readiness"
 msgstr "Készenlét"
 
-#: templates/pages/person_detail.html:122
+#: templates/pages/person_detail.html:124
 msgid "Four-pillar readiness"
 msgstr "Négypilléres készenlét"
 
-#: templates/pages/person_detail.html:124
+#: templates/pages/person_detail.html:126
 msgid "Trial day waived by a manager — readiness still applies."
 msgstr ""
 "A próbanapot egy menedzser elengedte — a készenlét továbbra is érvényes."
 
-#: templates/pages/person_detail.html:130
+#: templates/pages/person_detail.html:132
 msgid "Needs attention before activation"
 msgstr "Aktiválás előtt figyelmet igényel"
 
-#: templates/pages/person_detail.html:158
-#: templates/pages/person_detail.html:168
+#: templates/pages/person_detail.html:160
+#: templates/pages/person_detail.html:170
 msgid "Reason if not applicable"
 msgstr "Indok, ha nem alkalmazható"
 
-#: templates/pages/person_detail.html:174
+#: templates/pages/person_detail.html:176
 msgid "Save readiness"
 msgstr "Készenlét mentése"
 
-#: templates/pages/person_detail.html:177
+#: templates/pages/person_detail.html:179
 msgid "Awaiting a manager's decision"
 msgstr "A menedzser döntésére vár"
 
-#: templates/pages/person_detail.html:177
+#: templates/pages/person_detail.html:179
 msgid "requested"
 msgstr "kérelmezve"
 
-#: templates/pages/person_detail.html:182
+#: templates/pages/person_detail.html:184
 msgid ""
 "Sends this worker to a manager for the activation decision. It does not "
 "activate them."
@@ -7142,31 +7211,31 @@ msgstr ""
 "Elküldi ezt a munkavállalót a menedzsernek az aktiválási döntéshez. Nem "
 "aktiválja őt."
 
-#: templates/pages/person_detail.html:184
+#: templates/pages/person_detail.html:186
 msgid "Ready to request"
 msgstr "Kérelmezésre kész"
 
-#: templates/pages/person_detail.html:186
+#: templates/pages/person_detail.html:188
 msgid "Medical and gear required"
 msgstr "Orvosi és felszerelés szükséges"
 
-#: templates/pages/person_detail.html:191
+#: templates/pages/person_detail.html:193
 msgid "Previous request rejected"
 msgstr "Az előző kérelmet elutasították"
 
-#: templates/pages/person_detail.html:202
+#: templates/pages/person_detail.html:204
 msgid "Entry medical certificate"
 msgstr "Belépő orvosi igazolás"
 
-#: templates/pages/person_detail.html:204
+#: templates/pages/person_detail.html:206
 msgid "Recorded"
 msgstr "Rögzítve"
 
-#: templates/pages/person_detail.html:204
+#: templates/pages/person_detail.html:206
 msgid "record a new date when the certificate is renewed."
 msgstr "az igazolás megújításakor rögzítsen új dátumot."
 
-#: templates/pages/person_detail.html:206
+#: templates/pages/person_detail.html:208
 msgid ""
 "No date on file. Compliance reports this worker as missing a medical until "
 "one is recorded."
@@ -7174,7 +7243,7 @@ msgstr ""
 "Nincs rögzített dátum. Amíg nem rögzítik, a Megfelelőség hiányzó orvosiként "
 "jelzi ezt a munkavállalót."
 
-#: templates/pages/person_detail.html:213
+#: templates/pages/person_detail.html:215
 msgid ""
 "Records the date on the certificate. It is what the annual expiry counts "
 "from, and what clears the compliance alert."
@@ -7182,40 +7251,46 @@ msgstr ""
 "Rögzíti az igazoláson szereplő dátumot. Ettől számít az éves lejárat, és ez "
 "szünteti meg a megfelelőségi figyelmeztetést."
 
-#: templates/pages/person_detail.html:213
+#: templates/pages/person_detail.html:215
 msgid "Record medical date"
 msgstr "Orvosi dátum rögzítése"
 
-#: templates/pages/person_detail.html:221
+#: templates/pages/person_detail.html:217
+msgid ""
+"Only record a date you have seen on a real certificate — the annual expiry "
+"counts from it."
+msgstr "Csak olyan dátumot rögzítsen, amelyet valódi igazoláson látott — az éves lejárat ettől számít."
+
+#: templates/pages/person_detail.html:224
 #: templates/pages/project_detail.html:30
 msgid "Operational"
 msgstr "Üzemeltetési"
 
-#: templates/pages/person_detail.html:227
+#: templates/pages/person_detail.html:230
 msgid "Current project"
 msgstr "Jelenlegi projekt"
 
-#: templates/pages/person_detail.html:228
+#: templates/pages/person_detail.html:231
 msgid "Owning recruiter"
 msgstr "Felelős toborzó"
 
-#: templates/pages/person_detail.html:229
+#: templates/pages/person_detail.html:232
 msgid "Rehire eligible"
 msgstr "Újrafoglalkoztatható"
 
-#: templates/pages/person_detail.html:234
+#: templates/pages/person_detail.html:237
 msgid "Restricted"
 msgstr "Korlátozott"
 
-#: templates/pages/person_detail.html:235
+#: templates/pages/person_detail.html:238
 msgid "Personal data"
 msgstr "Személyes adatok"
 
-#: templates/pages/person_detail.html:241
+#: templates/pages/person_detail.html:244
 msgid "Disability"
 msgstr "Fogyatékosság"
 
-#: templates/pages/person_detail.html:246
+#: templates/pages/person_detail.html:249
 msgid ""
 "Restricted — visible only to managers, observers, the owning recruiter, and "
 "the responsible coordinator."
@@ -7223,18 +7298,18 @@ msgstr ""
 "Korlátozott — csak a menedzserek, megfigyelők, a felelős toborzó és a "
 "felelős koordinátor számára látható."
 
-#: templates/pages/person_detail.html:260
+#: templates/pages/person_detail.html:263
 msgid "Exit & reconcile"
 msgstr "Kilépés és elszámolás"
 
-#: templates/pages/person_detail.html:261
+#: templates/pages/person_detail.html:264
 msgid ""
 "Ends the project assignment, releases the room, and returns issued equipment."
 msgstr ""
 "Lezárja a projekt-hozzárendelést, felszabadítja a szobát és visszaveszi a "
 "kiadott felszerelést."
 
-#: templates/pages/person_detail.html:263
+#: templates/pages/person_detail.html:266
 msgid ""
 "This ends the active assignment, releases the room, returns issued "
 "equipment, and sets the person to Available."
@@ -7242,11 +7317,18 @@ msgstr ""
 "Lezárja az aktív kihelyezést, felszabadítja a szobát, visszaveszi a kiadott "
 "felszerelést, és a személyt Elérhető állapotba teszi."
 
-#: templates/pages/person_detail.html:265
+#: templates/pages/person_detail.html:268
+#: templates/pages/person_detail.html:276
+msgid ""
+"Ends the assignment for real: the bed is freed for someone else and issued "
+"gear is expected back."
+msgstr "Ténylegesen lezárja a kirendelést: az ágy felszabadul másnak, a kiadott felszerelést pedig vissza kell adni."
+
+#: templates/pages/person_detail.html:268
 msgid "Exit to Available"
 msgstr "Kilépés Elérhető állapotba"
 
-#: templates/pages/person_detail.html:267
+#: templates/pages/person_detail.html:270
 msgid ""
 "This ends the active assignment, releases the room, returns issued "
 "equipment, and sets the person to Inactive with the chosen reason."
@@ -7254,43 +7336,47 @@ msgstr ""
 "Lezárja az aktív kihelyezést, felszabadítja a szobát, visszaveszi a kiadott "
 "felszerelést, és a személyt Inaktív állapotba teszi a kiválasztott indokkal."
 
-#: templates/pages/person_detail.html:270
+#: templates/pages/person_detail.html:273
 msgid "Reason…"
 msgstr "Ok…"
 
-#: templates/pages/person_detail.html:273
+#: templates/pages/person_detail.html:276
 msgid "Exit to Inactive"
 msgstr "Kilépés Inaktív állapotba"
 
-#: templates/pages/person_detail.html:281
+#: templates/pages/person_detail.html:279
+msgid "The worker leaves: their bed is freed and their gear is expected back."
+msgstr "A munkavállaló távozik: az ágya felszabadul, a felszerelését pedig vissza kell adnia."
+
+#: templates/pages/person_detail.html:285
 msgid "Lifecycle"
 msgstr "Életciklus"
 
-#: templates/pages/person_detail.html:285
+#: templates/pages/person_detail.html:289
 msgid "Since"
 msgstr "Mióta"
 
-#: templates/pages/person_detail.html:288
+#: templates/pages/person_detail.html:292
 msgid ""
 "This reactivates the person from Inactive, setting their status to Available."
 msgstr ""
 "Újraaktiválja a személyt Inaktív állapotból, és Elérhető állapotba állítja."
 
-#: templates/pages/person_detail.html:290
+#: templates/pages/person_detail.html:294
 msgid "Recycle to Available"
 msgstr "Visszaküldés Elérhetőre"
 
-#: templates/pages/person_detail.html:298
+#: templates/pages/person_detail.html:302
 #: templates/pages/transport_trends.html:42
 msgid "Records"
 msgstr "Bejegyzések"
 
-#: templates/pages/person_detail.html:299
-#: templates/pages/person_detail.html:304
+#: templates/pages/person_detail.html:303
+#: templates/pages/person_detail.html:308
 msgid "Archive person"
 msgstr "Személy archiválása"
 
-#: templates/pages/person_detail.html:300
+#: templates/pages/person_detail.html:304
 msgid ""
 "Hides this operational record from the People list. It is not a deletion and "
 "does not remove blacklist protection or audit history."
@@ -7298,7 +7384,7 @@ msgstr ""
 "Elrejti ezt a működési rekordot az Emberek listájáról. Nem törlés, és nem "
 "távolítja el a feketelista-védelmet vagy az auditnaplót."
 
-#: templates/pages/person_detail.html:301
+#: templates/pages/person_detail.html:305
 msgid ""
 "This archives the person from the operational list. It does not delete their "
 "record, audit history, or blacklist protection."
@@ -7306,16 +7392,16 @@ msgstr ""
 "Ezzel archiválja a személyt a működési listáról. Nem törli a rekordját, az "
 "auditnaplót vagy a feketelista-védelmet."
 
-#: templates/pages/person_detail.html:303
+#: templates/pages/person_detail.html:307
 msgid "Archive reason"
 msgstr "Archiválás oka"
 
 # --- person card: history + filter ---
-#: templates/pages/person_detail.html:312
+#: templates/pages/person_detail.html:316
 msgid "History"
 msgstr "Előzmények"
 
-#: templates/pages/person_detail.html:317
+#: templates/pages/person_detail.html:321
 msgid "No history yet."
 msgstr "Még nincs előzmény."
 
@@ -7815,10 +7901,16 @@ msgid "Damaged or retired"
 msgstr "Sérült vagy selejtezett"
 
 #: templates/panels/logistics_equipment.html:37
-msgid "Marks this item as returned and updates warehouse stock accordingly."
-msgstr ""
-"Visszavettként jelöli ezt a tételt, és ennek megfelelően frissíti a "
-"raktárkészletet."
+msgid ""
+"Record this once the item is physically back. It updates warehouse stock, so "
+"the count only stays true if the gear is actually in your hands."
+msgstr "Akkor rögzítse, ha a tétel fizikailag visszaérkezett. Frissíti a raktárkészletet, így a készlet csak akkor pontos, ha a felszerelés valóban a kezében van."
+
+#: templates/panels/logistics_equipment.html:42
+msgid ""
+"Opens a manager charge review at the issued stock value. If the manager "
+"approves it, the amount comes off this worker's pay."
+msgstr "Vezetői terhelési felülvizsgálatot indít a kiadáskori raktárérték alapján. Ha a vezető jóváhagyja, az összeget levonják a munkavállaló béréből."
 
 #: templates/panels/logistics_equipment.html:42
 msgid ""
@@ -7832,52 +7924,82 @@ msgstr ""
 msgid "Flag unreturned"
 msgstr "Vissza nem adottnak jelöl"
 
-#: templates/panels/logistics_equipment.html:59
-msgid "Issues this item to the worker and reduces available warehouse stock."
-msgstr ""
-"Kiadja ezt a tételt a munkavállalónak, és csökkenti az elérhető "
-"raktárkészletet."
+#: templates/panels/logistics_equipment.html:48
+msgid ""
+"Returning means the item is back in your hands; flagging it unreturned can "
+"put the money on this worker's pay."
+msgstr "A visszavétel azt jelenti, hogy a tétel visszakerült Önhöz; a vissza nem hozott jelölés a munkavállaló bérére terhelheti az összeget."
 
-#: templates/panels/logistics_equipment.html:59
+#: templates/panels/logistics_equipment.html:60
+msgid ""
+"Hand the item over as you record it. It leaves the warehouse count and "
+"becomes this worker's responsibility to return."
+msgstr "A tételt akkor adja át, amikor rögzíti. Lekerül a raktárkészletről, és a visszaadásáért a munkavállaló felel."
+
+#: templates/panels/logistics_equipment.html:60
 msgid "Issue equipment"
 msgstr "Felszerelés kiadása"
 
+#: templates/panels/logistics_equipment.html:62
+msgid "Gear physically changes hands and leaves the warehouse count."
+msgstr "A felszerelés fizikailag gazdát cserél, és lekerül a raktárkészletről."
+
 #: templates/panels/logistics_room.html:9
-#: templates/panels/logistics_room.html:19
-#: templates/panels/logistics_room.html:39
+#: templates/panels/logistics_room.html:20
+#: templates/panels/logistics_room.html:40
 msgid "Worker monthly payment"
 msgstr "Dolgozó havi befizetése"
+
+#: templates/panels/logistics_room.html:13
+msgid ""
+"Frees the bed for someone else. Do this when the worker has actually moved "
+"out and the keys are back."
+msgstr "Felszabadítja az ágyat másnak. Akkor használja, ha a munkavállaló ténylegesen kiköltözött és a kulcsok visszakerültek."
 
 #: templates/panels/logistics_room.html:13
 msgid "Release room"
 msgstr "Szoba felszabadítása"
 
-#: templates/panels/logistics_room.html:20
+#: templates/panels/logistics_room.html:15
+msgid "Someone gives up a bed: release it only once they have moved out."
+msgstr "Valaki lemond egy ágyról: csak azután szabadítsa fel, hogy kiköltözött."
+
+#: templates/panels/logistics_room.html:21
 msgid "Save payment"
 msgstr "Befizetés mentése"
 
 # --- dashboard ---
-#: templates/panels/logistics_room.html:22
+#: templates/panels/logistics_room.html:23
 msgid "Legacy rate override"
 msgstr "Korábbi egyedi díj"
 
-#: templates/panels/logistics_room.html:25
+#: templates/panels/logistics_room.html:26
 msgid "Rate override"
 msgstr "Egyedi díj"
 
-#: templates/panels/logistics_room.html:26
+#: templates/panels/logistics_room.html:27
 msgid "Save override"
 msgstr "Felülírás mentése"
 
-#: templates/panels/logistics_room.html:34
+#: templates/panels/logistics_room.html:35
 msgid "Room"
 msgstr "Szoba"
 
-#: templates/panels/logistics_room.html:40
+#: templates/panels/logistics_room.html:41
+msgid ""
+"Gives this worker a real bed in a real room, and starts the monthly payment "
+"recorded here."
+msgstr "Valódi ágyat ad a munkavállalónak egy valódi szobában, és elindítja az itt rögzített havi fizetést."
+
+#: templates/panels/logistics_room.html:41
 msgid "Assign room"
 msgstr "Szoba hozzárendelése"
 
-#: templates/panels/logistics_room.html:42
+#: templates/panels/logistics_room.html:43
+msgid "A real bed is taken and the worker starts paying for it."
+msgstr "Egy valódi ágy foglalttá válik, és a munkavállaló fizetni kezd érte."
+
+#: templates/panels/logistics_room.html:44
 msgid "No active room with free capacity is available."
 msgstr "Nincs szabad férőhellyel rendelkező aktív szoba."
 
@@ -7925,7 +8047,17 @@ msgstr "Ehhez az irodához még nincs nyitott állásajánlat."
 msgid "Job offer"
 msgstr "Állásajánlat"
 
-#: templates/panels/messaging_offer_email.html:32
+#: templates/panels/messaging_offer_email.html:30
+msgid ""
+"Sends the offer email now, in the worker's preferred language. It cannot be "
+"recalled."
+msgstr "Most elküldi az ajánlatot tartalmazó e-mailt, a munkavállaló által preferált nyelven. Nem vonható vissza."
+
+#: templates/panels/messaging_offer_email.html:31
+msgid "A real email leaves the building. It cannot be taken back."
+msgstr "Valódi e-mail hagyja el a rendszert. Nem lehet visszavonni."
+
+#: templates/panels/messaging_offer_email.html:33
 #, python-format
 msgid "Sends to %(address)s in this worker's preferred language."
 msgstr "Elküldi a(z) %(address)s címre a munkavállaló preferált nyelvén."
@@ -7936,7 +8068,7 @@ msgid "Messaging"
 msgstr "Üzenetküldés"
 
 #: templates/panels/messaging_sms.html:4 templates/panels/messaging_sms.html:19
-#: templates/panels/messaging_sms.html:21
+#: templates/panels/messaging_sms.html:22
 msgid "Send SMS"
 msgstr "SMS küldése"
 
@@ -7952,7 +8084,18 @@ msgstr "Üzenet"
 msgid "Or type a message"
 msgstr "Vagy írjon üzenetet"
 
+#: templates/panels/messaging_sms.html:19
+msgid ""
+"Sends the message through the SMS provider to the phone number on this "
+"worker's record. It cannot be recalled, and the message is charged."
+msgstr "Elküldi az üzenetet az SMS-szolgáltatón keresztül a munkavállaló adatlapján szereplő telefonszámra. Nem vonható vissza, és díjköteles."
+
+#: templates/panels/messaging_sms.html:20
+msgid "A real phone buzzes. The message cannot be taken back."
+msgstr "Egy valódi telefon rezeg meg. Az üzenetet nem lehet visszavonni."
+
 #: templates/panels/messaging_sms.html:22
+#: templates/panels/messaging_sms.html:23
 msgid ""
 "SMS is not configured in this environment, so nothing can be sent from here."
 msgstr ""
@@ -7962,11 +8105,17 @@ msgstr ""
 msgid "Please confirm"
 msgstr "Kérjük, erősítse meg"
 
-#: templates/partials/confirm_dialog.html:10
+#: templates/partials/confirm_dialog.html:9
+msgid ""
+"This reaches outside the application. Something happens in the real world "
+"that clicking again will not undo."
+msgstr "Ez az alkalmazáson kívülre hat. A valóságban történik valami, amit újabb kattintással nem lehet visszacsinálni."
+
+#: templates/partials/confirm_dialog.html:11
 msgid "Do you really want to do this?"
 msgstr "Biztosan meg akarja tenni?"
 
-#: templates/partials/confirm_dialog.html:13
+#: templates/partials/confirm_dialog.html:14
 msgid "Yes, proceed"
 msgstr "Igen, folytatás"
 
@@ -8049,13 +8198,18 @@ msgid ""
 "Removes the entry entirely, for something that should never have been "
 "recorded. An entry already settled with pay cannot be deleted — reverse it "
 "instead."
-msgstr "Teljesen eltávolítja a tételt — olyasmihez, aminek soha nem lett volna szabad bekerülnie. A bérrel már elszámolt tétel nem törölhető, azt sztornózni kell."
+msgstr ""
+"Teljesen eltávolítja a tételt — olyasmihez, aminek soha nem lett volna "
+"szabad bekerülnie. A bérrel már elszámolt tétel nem törölhető, azt "
+"sztornózni kell."
 
 #: templates/partials/ledger_activity.html:51
 msgid ""
 "This deletes the entry. It disappears from the ledger; the deletion itself "
 "is recorded in the audit log."
-msgstr "Ez törli a tételt. Eltűnik a nyilvántartásból; magát a törlést az auditnapló rögzíti."
+msgstr ""
+"Ez törli a tételt. Eltűnik a nyilvántartásból; magát a törlést az auditnapló "
+"rögzíti."
 
 #: templates/partials/ledger_activity.html:51
 msgid "Delete"
@@ -8092,21 +8246,13 @@ msgstr ""
 
 #: templates/partials/ledger_cycle.html:30
 msgid ""
-"Closes the 21st-to-20th window: every open entry in it is locked to this "
-"cycle and can then only be corrected by a reversal. New entries can no "
-"longer be backdated into it."
-msgstr ""
-"Lezárja a 21-től 20-ig tartó ablakot: minden benne lévő nyitott tétel ehhez "
-"a ciklushoz rögzül, és utána csak sztornóval javítható. Új tételek már nem "
-"dátumozhatók vissza bele."
+"Collects every outstanding entry up to the end of this window and locks it "
+"to this cycle. Entries stay deletable until the cycle is settled with pay."
+msgstr "Összegyűjti az időszak végéig fennálló összes tételt, és ehhez a ciklushoz rögzíti. A tételek addig törölhetők, amíg a ciklust el nem számolják a bérrel."
 
 #: templates/partials/ledger_cycle.html:30
-msgid ""
-"This locks every open entry of the window into the cycle; locked entries can "
-"only be corrected by reversal."
-msgstr ""
-"A ciklusba zárja az ablak összes nyitott tételét; a zárolt tételek csak "
-"sztornóval javíthatók."
+msgid "This locks every outstanding entry into the cycle."
+msgstr "Minden fennálló tételt a ciklushoz rögzít."
 
 #: templates/partials/ledger_cycle.html:30
 msgid "Include open entries in cycle"
@@ -8117,12 +8263,17 @@ msgid ""
 "Puts an included cycle back to open while its own window is still running, "
 "for a run closed by mistake. Once the window has ended, or anything in it "
 "has been paid, it cannot be reopened."
-msgstr "A ciklusba sorolt tételeket visszaállítja nyitottra, amíg a ciklus saját időszaka még tart — tévedésből lezárt futtatáshoz. Az időszak lejárta után, vagy ha már bármit kifizettek belőle, nem nyitható újra."
+msgstr ""
+"A ciklusba sorolt tételeket visszaállítja nyitottra, amíg a ciklus saját "
+"időszaka még tart — tévedésből lezárt futtatáshoz. Az időszak lejárta után, "
+"vagy ha már bármit kifizettek belőle, nem nyitható újra."
 
 #: templates/partials/ledger_cycle.html:31
 msgid ""
 "This reopens the cycle: its entries return to open and can be edited again."
-msgstr "Ez újranyitja a ciklust: tételei visszakerülnek nyitott állapotba, és ismét szerkeszthetők."
+msgstr ""
+"Ez újranyitja a ciklust: tételei visszakerülnek nyitott állapotba, és ismét "
+"szerkeszthetők."
 
 #: templates/partials/ledger_cycle.html:31
 msgid "Reopen cycle"
@@ -8130,12 +8281,10 @@ msgstr "Ciklus újranyitása"
 
 #: templates/partials/ledger_cycle.html:32
 msgid ""
-"Marks this cycle as paid out. Use it once payroll has actually settled the "
-"amounts — it records that the money changed hands."
-msgstr ""
-"Kifizetettként jelöli ezt a ciklust. Csak akkor használja, ha a "
-"bérszámfejtés ténylegesen rendezte az összegeket – azt rögzíti, hogy a pénz "
-"gazdát cserélt."
+"Marks this cycle as paid out. Use it only once payroll has actually settled "
+"the amounts — it records that the money changed hands, and the entries can "
+"no longer be deleted."
+msgstr "Kifizetettként jelöli ezt a ciklust. Csak akkor használja, ha a bérszámfejtés az összegeket ténylegesen elszámolta — azt rögzíti, hogy a pénz gazdát cserélt, és a tételek többé nem törölhetők."
 
 #: templates/partials/ledger_cycle.html:32
 msgid "This marks the whole cycle as settled with pay."
@@ -8145,7 +8294,13 @@ msgstr "Az egész ciklust bérrel rendezettként jelöli."
 msgid "Mark cycle settled"
 msgstr "Ciklus rendezettként jelölése"
 
-#: templates/partials/ledger_cycle.html:36
+#: templates/partials/ledger_cycle.html:34
+msgid ""
+"Money is actually paid out: use this only after payroll has settled these "
+"amounts."
+msgstr "A pénz ténylegesen kifizetésre kerül: csak azután használja, hogy a bérszámfejtés elszámolta ezeket az összegeket."
+
+#: templates/partials/ledger_cycle.html:37
 msgid "No entries in this cycle window."
 msgstr "Ebben a ciklusablakban nincs tétel."
 
@@ -8225,6 +8380,41 @@ msgstr "A legutóbb frissített %(rail_limit)s látható."
 #: templates/partials/worker_rail_body.html:34
 msgid "Open People"
 msgstr "Emberek megnyitása"
+
+#~ msgid "Marks this item as returned and updates warehouse stock accordingly."
+#~ msgstr ""
+#~ "Visszavettként jelöli ezt a tételt, és ennek megfelelően frissíti a "
+#~ "raktárkészletet."
+
+#~ msgid ""
+#~ "Issues this item to the worker and reduces available warehouse stock."
+#~ msgstr ""
+#~ "Kiadja ezt a tételt a munkavállalónak, és csökkenti az elérhető "
+#~ "raktárkészletet."
+
+#~ msgid ""
+#~ "Closes the 21st-to-20th window: every open entry in it is locked to this "
+#~ "cycle and can then only be corrected by a reversal. New entries can no "
+#~ "longer be backdated into it."
+#~ msgstr ""
+#~ "Lezárja a 21-től 20-ig tartó ablakot: minden benne lévő nyitott tétel "
+#~ "ehhez a ciklushoz rögzül, és utána csak sztornóval javítható. Új tételek "
+#~ "már nem dátumozhatók vissza bele."
+
+#~ msgid ""
+#~ "This locks every open entry of the window into the cycle; locked entries "
+#~ "can only be corrected by reversal."
+#~ msgstr ""
+#~ "A ciklusba zárja az ablak összes nyitott tételét; a zárolt tételek csak "
+#~ "sztornóval javíthatók."
+
+#~ msgid ""
+#~ "Marks this cycle as paid out. Use it once payroll has actually settled "
+#~ "the amounts — it records that the money changed hands."
+#~ msgstr ""
+#~ "Kifizetettként jelöli ezt a ciklust. Csak akkor használja, ha a "
+#~ "bérszámfejtés ténylegesen rendezte az összegeket – azt rögzíti, hogy a "
+#~ "pénz gazdát cserélt."
 
 #, python-format
 #~ msgid ""

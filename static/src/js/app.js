@@ -16,6 +16,16 @@ window.JoberShell = {
     pending = null;
     var message = document.getElementById("confirm-dialog-message");
     if (message) message.textContent = "";
+    // Hidden again on close, so an ordinary confirmation cannot inherit the
+    // real-world band from whatever was confirmed before it.
+    setPhysical(false);
+  }
+
+  /* A .button-physical submitter reaches outside the application (ADR 0034);
+     the dialog says so above the specific message. */
+  function setPhysical(on) {
+    var band = document.getElementById("confirm-dialog-physical");
+    if (band) band.hidden = !on;
   }
 
   document.addEventListener("submit", function (event) {
@@ -41,6 +51,9 @@ window.JoberShell = {
     event.preventDefault();
     pending = { form: form, submitter: submitter };
     document.getElementById("confirm-dialog-message").textContent = message;
+    setPhysical(
+      !!(submitter && submitter.classList && submitter.classList.contains("button-physical"))
+    );
     if (!dialog.open) dialog.showModal();
   }, true);
 

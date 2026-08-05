@@ -1,5 +1,34 @@
 # Test Journal
 
+## 2026-08-05 - testing a marker, not a colour
+
+- `tests/test_physical_actions.py` (22 tests). The interesting decision is what
+  it asserts: not that a button is amber, but that the **three parts travel
+  together** - class, fixed heading, visible caption. Any one alone rots
+  quietly, so the trio is the invariant, and each of the sixteen buttons is
+  named individually. A future edit demoting *Mark cycle settled* back to grey
+  fails by name.
+- One test asserts the **stripe** specifically. A later "simplification" to a
+  plain amber fill would pass every other test here and silently break the
+  marker for greyscale and colour-blind users, which is the population the
+  warning matters most for.
+- The heading-drift test needed narrowing after it failed on its first run:
+  `data-tooltip-heading` is used freely by ordinary form fields, so scanning
+  every template found fourteen legitimate headings. It now scans only inside
+  physical button tags.
+- `test_shell.py` had the dialog's `aria-describedby` value pinned as a literal
+  string, so adding the band there failed it - the right kind of failure. The
+  band is described *first*: when shown it is the strongest sentence in the
+  dialog.
+- e2e (`test_confirm_dialog.py`) now checks the computed `::before` gradient on
+  a real button and that an ordinary confirmation does not inherit the band
+  from a physical one confirmed earlier in the session.
+- Self-inflicted: two suites ran against the same `test_corvinum` database at
+  once after a timeout killed one in the foreground but not in Docker. Six
+  failures and sixteen errors, all `django_session does not exist`, none real.
+  Terminate and drop before re-running; a clean rerun was green.
+- Suites: **Jober 1105 / CorvinumEU 703 / browser 70** (browser not re-run).
+
 ## 2026-08-05 - nine tests for a rule with two ends
 
 - The delete rule has two boundaries and both are tested from the refusing side:

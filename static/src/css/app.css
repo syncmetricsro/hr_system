@@ -1660,6 +1660,97 @@ select {
   color: var(--accent);
 }
 
+/* ------------------------------------------- real-world action (ADR 0034)
+
+   A button that reaches outside the application: money is handed over, a real
+   message leaves the building, gear or keys change hands, someone travels.
+   The striped edge is not decoration - colour alone fails greyscale and colour
+   vision deficiency, the same reasoning the chart tokens above are built on,
+   so the marker has to be a shape as well as a hue.
+
+   .button-physical is also read by app.js, which shows the matching line in
+   the confirmation dialog. Renaming it is an interface change, not a restyle. */
+
+.button-physical {
+  background: var(--warning-soft);
+  border-color: var(--warning);
+  color: var(--warning);
+  position: relative;
+  padding-left: calc(var(--space-4) + 12px);
+  overflow: hidden;
+}
+
+.button-physical::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 12px;
+  background: repeating-linear-gradient(
+    135deg,
+    var(--warning) 0 4px,
+    transparent 4px 9px
+  );
+  opacity: 0.85;
+}
+
+.button-physical:hover {
+  background: color-mix(in srgb, var(--warning-soft) 55%, var(--warning) 16%);
+  border-color: var(--warning);
+  color: var(--warning);
+}
+
+/* The busy spinner (certificate upload) inherits currentColor from the label,
+   which is transparent while busy - name the colour so it stays visible. */
+.button.button-physical.is-busy::after {
+  color: var(--warning);
+}
+
+/* The consequence line: always on screen, no hover needed. It is the sentence
+   an office user reads before they commit to something they cannot un-click. */
+.action-consequence {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin: var(--space-2) 0 0;
+  font-size: 0.82rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--warning);
+}
+
+/* Drawn, not a glyph: the CorvinumEU icon font is a fixed subset, and a
+   pseudo-element with an empty content string says nothing to a screen reader
+   - the sentence beside it already carries the meaning. */
+.action-consequence::before {
+  content: "";
+  flex: none;
+  width: 0;
+  height: 0;
+  margin-top: 0.25em;
+  border-left: 0.4em solid transparent;
+  border-right: 0.4em solid transparent;
+  border-bottom: 0.7em solid var(--warning);
+}
+
+/* Shown by app.js only when the pending action is a real-world one. */
+.confirm-physical {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-3);
+  padding: var(--space-3);
+  border: 1px solid var(--warning);
+  border-left-width: 6px;
+  border-radius: var(--radius-sm);
+  background: var(--warning-soft);
+  color: var(--warning);
+  font-weight: 600;
+}
+
+.confirm-physical[hidden] {
+  display: none;
+}
+
 /* ------------------------------------------------------- trends (charts) */
 
 .trend-row {

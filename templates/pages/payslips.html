@@ -33,6 +33,7 @@
 
 <section class="panel">
   <h2>{% trans "Recorded payslips" %}</h2>
+  {% if may_manage %}<p class="action-consequence">{% trans "Sending is a real-world action: an email leaves the building, addressed to the worker." %}</p>{% endif %}
   <div class="data-table-scroll">
   <table class="data-table">
     <thead><tr><th scope="col">{% trans "Person" %}</th><th scope="col">{% trans "Calendar month" %}</th><th scope="col">{% trans "Issue date" %}</th><th scope="col">{% trans "Recorded net payslip" %}</th><th scope="col">{% trans "Sent" %}</th>{% if may_manage %}<th scope="col">{% trans "Action" %}</th>{% endif %}</tr></thead>
@@ -47,7 +48,7 @@
           {% if may_manage %}<td>
             <form method="post" action="{% url 'payslip_send' slip.pk %}">
               {% csrf_token %}
-              <button class="button button-secondary" type="submit" {% if not email_configured %}disabled{% endif %} data-tooltip="{% if not email_configured %}{% trans 'Email is not configured in this environment, so nothing can be sent from here.' %}{% elif slip.sent_at %}{% trans 'Resends the encrypted PDF payslip and generates a new one-time password, invalidating the previous one.' %}{% else %}{% trans 'Emails the encrypted PDF payslip to the worker. Share the one-time password shown afterward by phone or Messenger, never by email.' %}{% endif %}">
+              <button class="button button-physical" type="submit" {% if not email_configured %}disabled{% endif %} data-tooltip-heading="{% trans 'Real-world action' %}" data-tooltip="{% if not email_configured %}{% trans 'Email is not configured in this environment, so nothing can be sent from here.' %}{% elif slip.sent_at %}{% trans 'Resends the encrypted PDF payslip and generates a new one-time password, invalidating the previous one.' %}{% else %}{% trans 'Emails the encrypted PDF payslip to the worker. Share the one-time password shown afterward by phone or Messenger, never by email.' %}{% endif %}">
                 {% icon "invite" %}{% if slip.sent_at %}{% trans "Resend (new password)" %}{% else %}{% trans "Send encrypted PDF" %}{% endif %}
               </button>
             </form>

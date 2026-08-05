@@ -391,14 +391,23 @@ the per-person custody/value view, not Jober's warehouse-stock report.
 6. Select **Include open entries in cycle**, show the consequence tooltip and
    confirmation dialog, then choose **Cancel**. This demonstrates the safety
    control without locking the rehearsal data.
-7. Walk the correction paths, which is C-Q5 answered (ADR 0033). An entry can
+7. **Point at the amber striped buttons before you press anything.** *Mark
+   cycle settled*, *Issue equipment*, *Send encrypted PDF*, *Assign room* and
+   the rest of that family look different from every other control, carry a
+   **Real-world action** tooltip, and state their consequence in a line under
+   the button — money is actually paid out, gear physically changes hands, a
+   real email leaves the building (ADR 0034). The striping is not decoration:
+   it survives greyscale and colour-blindness, so the warning still lands for
+   the people most likely to miss a colour cue. Worth 20 seconds — it is the
+   product saying which clicks it cannot take back.
+8. Walk the correction paths, which is C-Q5 answered (ADR 0033). An entry can
    be **deleted** right up until the money is paid — including after it has
    been swept into a cycle — and the deletion is audited with everything the
    row held. Once the cycle is marked settled the entry is fixed, and
    **Reverse** is how it is corrected: it leaves both sides visible and linked,
    which is a different statement from *this should never have existed*. Both
    buttons stay in the product on purpose.
-8. Mention that a cycle closed by mistake can be **reopened** while its own
+9. Mention that a cycle closed by mistake can be **reopened** while its own
    21st-to-20th window is still running, and not after — the refusal then names
    the next run and the dates it covers, so an office is never left guessing
    when the entries will be collected.
