@@ -133,7 +133,8 @@ def accommodation_month_report(year, month, user):
         "standing_cost": Decimal("0"),
         "occupied_cost": Decimal("0"),
         "payments": Decimal("0"),
-        "empty_bed_loss": Decimal("0"),
+        "net_cost": Decimal("0"),
+        "unrecovered_standing_cost": Decimal("0"),
     }
     accommodations = Accommodation.objects.prefetch_related(
         "rooms__assignments", "cost_periods"
@@ -171,9 +172,22 @@ def accommodation_month_report(year, month, user):
                     )
         standing = Decimal(period.capacity) * period.per_head_cost
         occupied_cost = period.per_head_cost * Decimal(occupied_days) / days
+        # Standing cost that bought nothing: what is owed for the whole place,
+        # less what the workers put in, less the cost of the beds they used.
+        #
+        # Called "empty-bed loss" until 2026-08-05, which read as empty beds x
+        # price per bed and is not what it computes - the workers' payments are
+        # credited against it, so 15 empty beds at 180 report 2370 rather than
+        # 2700 once 330 has come in. Renamed after that arithmetic was queried.
+        #
         # Floored at zero deliberately: a full house has no empty beds, so the
         # raw difference (which then equals -payments) is not a loss.
-        empty_loss = max(Decimal("0"), standing - payments - occupied_cost)
+        unrecovered = max(Decimal("0"), standing - payments - occupied_cost)
+        # The plain one: what the month cost the company after what came back
+        # in. Deliberately *not* floored - if the workers paid more than the
+        # place costs, that is a real fact and the report should say so rather
+        # than flatten it to zero.
+        net_cost = standing - payments
         row = {
             "accommodation": accommodation,
             "missing_period": False,
@@ -184,7 +198,8 @@ def accommodation_month_report(year, month, user):
             "standing_cost": _money(standing),
             "occupied_cost": _money(occupied_cost),
             "payments": _money(payments),
-            "empty_bed_loss": _money(empty_loss),
+            "net_cost": _money(net_cost),
+            "unrecovered_standing_cost": _money(unrecovered),
         }
         rows.append(row)
         for key in company:
@@ -194,7 +209,8 @@ def accommodation_month_report(year, month, user):
         "standing_cost",
         "occupied_cost",
         "payments",
-        "empty_bed_loss",
+        "net_cost",
+        "unrecovered_standing_cost",
     ):
         company[key] = _money(company[key])
     return {"year": year, "month": month, "rows": rows, "company": company}

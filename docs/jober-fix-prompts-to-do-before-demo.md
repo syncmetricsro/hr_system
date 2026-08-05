@@ -135,7 +135,8 @@ accommodations. Nothing else on the card:
 2. Occupied beds
 3. Standing cost  = capacity × per-head monthly rate
 4. Worker payments = sum of what the placed workers actually pay
-5. Empty-bed loss  = standing cost − worker payments − occupied cost
+5. Unrecovered standing cost = standing cost − worker payments − occupied cost
+   (renamed from "Empty-bed loss" 2026-08-05; net cost = standing − payments)
 
 Where occupied cost = occupied beds × per-head monthly rate. Occupied cost is an internal term
 in the formula only — the client explicitly said it should not be displayed, though he is
@@ -156,7 +157,8 @@ Acceptance fixture — build this as a test:
     Standing cost   = 3240   (18 × 180) — already correct today
     Occupied cost   = 540    (3 × 180) — internal
     Worker payments = 330    (50 + 50 + 230)
-    Empty-bed loss  = 2370   (3240 − 330 − 540)
+    Unrecovered     = 2370   (3240 − 330 − 540)
+    Net cost        = 2910   (3240 − 330)
 
 Fix the occupancy counter (verify the inversion hypothesis before assuming it) and align the
 loss formula to the above. Keep the existing daily proration for mid-month arrivals; the client

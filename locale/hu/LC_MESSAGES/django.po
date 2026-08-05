@@ -4794,55 +4794,55 @@ msgid "Amounts use a positive convention; negative values are not allowed."
 msgstr ""
 "Az összegek pozitív előjelet használnak; negatív érték nem engedélyezett."
 
-#: features/logistics/services.py:276
+#: features/logistics/services.py:292
 msgid "Only active rooms in active locations can be assigned."
 msgstr "Csak aktív szállás aktív szobája rendelhető hozzá."
 
-#: features/logistics/services.py:281
+#: features/logistics/services.py:297
 msgid "Room is at full capacity."
 msgstr "A szoba megtelt."
 
-#: features/logistics/services.py:529
+#: features/logistics/services.py:545
 #, python-format
 msgid "Only %(available)s units are available in %(office)s's stock."
 msgstr "Csak %(available)s egység érhető el a(z) %(office)s készletén."
 
-#: features/logistics/services.py:533
+#: features/logistics/services.py:549
 #, python-format
 msgid "Only %(available)s units are available in stock."
 msgstr "Csak %(available)s egység érhető el a készleten."
 
-#: features/logistics/services.py:601
+#: features/logistics/services.py:617
 msgid "Receipt quantities must be at least one."
 msgstr "A bevételezett mennyiség legalább egy legyen."
 
-#: features/logistics/services.py:604
+#: features/logistics/services.py:620
 msgid "Add at least one receipt line."
 msgstr "Adjon hozzá legalább egy bevételezési sort."
 
-#: features/logistics/services.py:642
+#: features/logistics/services.py:658
 msgid "A non-zero adjustment and reason are required."
 msgstr "Nem nulla korrekció és indoklás szükséges."
 
-#: features/logistics/services.py:771
+#: features/logistics/services.py:787
 msgid "This equipment item is inactive and cannot be issued."
 msgstr "Ez a felszerelési tétel inaktív, ezért nem adható ki."
 
-#: features/logistics/services.py:775
+#: features/logistics/services.py:791
 msgid "An operation key is required for stock-tracked issuance."
 msgstr "A készletkövetett kiadáshoz műveleti kulcs szükséges."
 
-#: features/logistics/services.py:786
+#: features/logistics/services.py:802
 msgid "Set this person's office before issuing stock-tracked equipment."
 msgstr ""
 "A készleten nyilvántartott felszerelés kiadása előtt állítsa be a személy "
 "irodáját."
 
-#: features/logistics/services.py:841 features/logistics/services.py:873
+#: features/logistics/services.py:857 features/logistics/services.py:889
 msgid "A transport record already exists for this project and week."
 msgstr "Ehhez a projekthez és héthez már létezik szállítási bejegyzés."
 
-#: features/logistics/services.py:945
+#: features/logistics/services.py:961
 msgid "Choose whether the returned equipment is reusable or retired."
 msgstr ""
 "Válassza ki, hogy a visszaadott felszerelés újrahasználható vagy selejtezett."
@@ -5459,7 +5459,9 @@ msgstr "%(category)s (%(month)s. hónap)"
 msgid ""
 "Costs are entered as negative amounts and revenues as positive. Check: "
 "%(cells)s."
-msgstr "A költségeket negatív, a bevételeket pozitív összegként kell megadni. Ellenőrizze: %(cells)s."
+msgstr ""
+"A költségeket negatív, a bevételeket pozitív összegként kell megadni. "
+"Ellenőrizze: %(cells)s."
 
 #: features/profitability/views.py:225
 msgid "Saved and recalculated."
@@ -5686,35 +5688,54 @@ msgid "Filter"
 msgstr "Szűrés"
 
 #: templates/pages/accommodation_costs.html:10
-#: templates/pages/accommodation_costs.html:19
+#: templates/pages/accommodation_costs.html:20
 msgid "Capacity"
 msgstr "Kapacitás"
 
 #: templates/pages/accommodation_costs.html:11
-#: templates/pages/accommodation_costs.html:19
+#: templates/pages/accommodation_costs.html:20
 msgid "Occupied beds"
 msgstr "Foglalt ágyak"
 
 #: templates/pages/accommodation_costs.html:12
-#: templates/pages/accommodation_costs.html:20
+#: templates/pages/accommodation_costs.html:21
 msgid "Standing cost"
 msgstr "Állandó költség"
 
 #: templates/pages/accommodation_costs.html:13
-#: templates/pages/accommodation_costs.html:21
+#: templates/pages/accommodation_costs.html:22
 msgid "Worker payments"
 msgstr "Dolgozói befizetések"
 
 #: templates/pages/accommodation_costs.html:14
-#: templates/pages/accommodation_costs.html:21
-msgid "Empty-bed loss"
-msgstr "Üres ágyak vesztesége"
+#: templates/pages/accommodation_costs.html:22
+msgid "Net cost to the company"
+msgstr "A cég nettó költsége"
 
-#: templates/pages/accommodation_costs.html:17
+#: templates/pages/accommodation_costs.html:14
+msgid ""
+"Standing cost minus what the workers paid, whether the beds were used or "
+"not. This is the plain out-of-pocket figure for the month."
+msgstr "Az állandó költség mínusz az, amit a munkavállalók fizettek — függetlenül attól, hogy az ágyakat használták-e. Ez az az összeg, amelyet a cég a hónapban ténylegesen a saját zsebéből állt."
+
+#: templates/pages/accommodation_costs.html:15
+#: templates/pages/accommodation_costs.html:22
+msgid "Unrecovered standing cost"
+msgstr "Meg nem térült állandó költség"
+
+#: templates/pages/accommodation_costs.html:15
+msgid ""
+"Standing cost minus what the workers paid and minus the cost of the beds "
+"they actually used. It is not empty beds x price per bed: the workers' "
+"payments are credited against it, so a well-paying house shows a smaller "
+"figure than its empty beds alone would suggest."
+msgstr "Az állandó költség mínusz az, amit a munkavállalók fizettek, és mínusz a ténylegesen használt ágyak költsége. Ez nem az üres ágyak száma szorozva az ágyankénti árral: a munkavállalók befizetéseit levonjuk belőle, így egy jól fizető szállás kisebb összeget mutat, mint amennyit az üres ágyak önmagukban indokolnának."
+
+#: templates/pages/accommodation_costs.html:18
 msgid "Missing cost period"
 msgstr "Hiányzó költségidőszak"
 
-#: templates/pages/accommodation_costs.html:22
+#: templates/pages/accommodation_costs.html:23
 #: templates/pages/accommodation_list.html:40
 msgid "No accommodations found."
 msgstr "Nincs találat."
@@ -8604,6 +8625,9 @@ msgstr "A legutóbb frissített %(rail_limit)s látható."
 #: templates/partials/worker_rail_body.html:34
 msgid "Open People"
 msgstr "Emberek megnyitása"
+
+#~ msgid "Empty-bed loss"
+#~ msgstr "Üres ágyak vesztesége"
 
 #~ msgid "Marks this item as returned and updates warehouse stock accordingly."
 #~ msgstr ""

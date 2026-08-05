@@ -37,7 +37,8 @@ DISPLAYED = {
     "occupied_beds",
     "standing_cost",
     "payments",
-    "empty_bed_loss",
+    "net_cost",
+    "unrecovered_standing_cost",
 }
 
 
@@ -95,7 +96,11 @@ def test_client_acceptance_fixture(viewer):
     assert row["occupied_beds"] == 3
     assert row["standing_cost"] == Decimal("3240.00")  # 18 x 180
     assert row["payments"] == Decimal("330.00")  # 50 + 50 + 230
-    assert row["empty_bed_loss"] == Decimal("2370.00")  # 3240 - 330 - 540
+    assert row["unrecovered_standing_cost"] == Decimal("2370.00")  # 3240 - 330 - 540
+    # The plain one the owner asked for on 2026-08-05: out of pocket for the
+    # month, occupancy notwithstanding. It is larger than the unrecovered
+    # figure because housing the three workers is a real cost, not a loss.
+    assert row["net_cost"] == Decimal("2910.00")  # 3240 - 330
     # Internal term, checked here but deliberately not rendered.
     assert row["occupied_cost"] == Decimal("540.00")  # 3 x 180
 
@@ -146,7 +151,7 @@ def test_summary_sums_the_same_five_across_accommodations(viewer):
 
     assert company["capacity"] == 18
     assert company["occupied_beds"] == 2
-    for key in ("standing_cost", "payments", "empty_bed_loss"):
+    for key in ("standing_cost", "payments", "unrecovered_standing_cost"):
         assert company[key] == rows["Residence A"][key] + rows["Residence B"][key], key
 
 
@@ -217,11 +222,13 @@ def test_month_report_prorates_person_days_and_does_not_create_recovery(viewer):
     assert row["standing_cost"] == Decimal("360.00")
     assert row["occupied_cost"] == Decimal("93.10")  # 180 x 15/29
     assert row["payments"] == Decimal("51.72")  # 100 x 15/29
-    assert row["empty_bed_loss"] == Decimal("215.17")  # 360 - 51.72 - 93.10
+    assert row["unrecovered_standing_cost"] == Decimal("215.17")  # 360 - 51.72 - 93.10
     assert assignment.person.room_assignments.count() == 1
 
 
-def test_a_full_house_reports_no_empty_bed_loss_rather_than_a_negative_one(viewer):
+def test_a_full_house_reports_no_unrecovered_standing_cost_rather_than_a_negative_one(
+    viewer,
+):
     """With every bed filled, standing cost equals occupied cost, so the raw
     formula yields -payments. That is not a loss, and a figure labelled one
     must not go negative."""
@@ -233,7 +240,7 @@ def test_a_full_house_reports_no_empty_bed_loss_rather_than_a_negative_one(viewe
 
     row = accommodation_month_report(2026, 7, viewer)["rows"][0]
     assert row["occupied_beds"] == 2
-    assert row["empty_bed_loss"] == Decimal("0.00")
+    assert row["unrecovered_standing_cost"] == Decimal("0.00")
 
 
 def test_a_worker_who_changes_room_mid_month_still_occupies_one_bed(viewer):
@@ -256,3 +263,24 @@ def test_a_worker_who_changes_room_mid_month_still_occupies_one_bed(viewer):
 
     row = accommodation_month_report(2026, 7, viewer)["rows"][0]
     assert row["occupied_beds"] == 1
+
+
+def test_the_net_cost_is_not_floored_at_zero(viewer):
+    """Unlike the unrecovered figure, a negative here means something.
+
+    The unrecovered number is floored because a full house has no empty beds
+    and the raw difference would just be -payments. Net cost is the plain
+    out-of-pocket total: if the workers paid more than the place costs, the
+    company is ahead, and flattening that to zero would hide a real fact.
+    """
+    accommodation = _residence("Generous payers", capacity=1, per_head="100")
+    room = Room.objects.create(accommodation=accommodation, label="Single", capacity=1)
+    _place(room, "250", date(2026, 7, 1), name="Payer")
+
+    row = accommodation_month_report(2026, 7, viewer)["rows"][0]
+
+    assert row["standing_cost"] == Decimal("100.00")
+    assert row["payments"] == Decimal("250.00")
+    assert row["net_cost"] == Decimal("-150.00")
+    # And the other one still floors, because that is a different question.
+    assert row["unrecovered_standing_cost"] == Decimal("0.00")

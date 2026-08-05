@@ -1,5 +1,37 @@
 # Build Journal
 
+## 2026-08-05 - "empty-bed loss" was never empty beds times price
+
+Asked how the figure was calculated, because the arithmetic did not look right
+by eye. It did not: 15 empty beds at 180 is 2700, and the card read 2370. The
+formula is `standing - payments - occupied_cost`, so the workers' payments are
+credited against the *empty* beds even though the beds those workers occupy
+have already been taken out of the number. Defensible as a definition, and
+badly named: the label invited exactly the mental arithmetic that disagrees
+with it.
+
+Renamed to **Unrecovered standing cost**, in the code as well as on the page.
+A stale internal name is how a misleading caption survives a rename, so
+`empty_bed_loss` went with it. The tooltip now states the formula and says out
+loud that it is not empty beds times price.
+
+**And a second figure, asked for straight after: Net cost to the company** -
+`standing - payments`, the plain out-of-pocket total for the month whether the
+beds were used or not. For the seeded residence: 3240 - 330 = 2910. The two
+answer different questions and the runbook now says which is which, because the
+gap between them (the cost of the beds actually used) is a legitimate cost of
+housing people rather than a loss.
+
+Net cost is deliberately **not** floored at zero, unlike the unrecovered
+figure. Flooring the latter is right - a full house has no empty beds, so the
+raw difference is just `-payments`. Flooring the former would hide a real fact:
+workers can pay more than the place costs, and the company is then ahead.
+
+No calculation changed. Labels, one new derived figure, and the docs that
+explain both.
+
+Jober 1131, CorvinumEU 722, browser 70 (not re-run).
+
 ## 2026-08-05 - the year grid becomes the place you type
 
 Reported after the deploy: the financial tables look right and nothing can be

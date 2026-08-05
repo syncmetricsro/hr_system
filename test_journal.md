@@ -1,5 +1,20 @@
 # Test Journal
 
+## 2026-08-05 - two figures, two floors
+
+- The Ricardo fixture already pinned `2370.00  # 3240 - 330 - 540`, which is
+  how the rename could be made with confidence: the arithmetic was locked down
+  before the label was wrong. It now also pins `2910.00  # 3240 - 330` for the
+  new net-cost figure, so the two definitions cannot drift into each other.
+- One test exists purely for the asymmetry: net cost is **not** floored at
+  zero. A single residence whose worker pays 250 for a 100 bed reports
+  `-150.00` net and `0.00` unrecovered. Without it, someone tidying the code
+  would floor both and lose a real fact.
+- `DISPLAYED` in that module is a set of the keys the page renders; adding
+  `net_cost` there keeps the report and the template honest about what is shown
+  versus what is internal (`occupied_cost` stays deliberately unrendered).
+- Suites: **Jober 1131 / CorvinumEU 722 / browser 70** (browser not re-run).
+
 ## 2026-08-05 - the suite was green and the page was empty
 
 - The lesson of this slice: **a passing test said nothing about whether the
