@@ -1,5 +1,25 @@
 # Test Journal
 
+## 2026-08-05 - nine tests for a rule with two ends
+
+- The delete rule has two boundaries and both are tested from the refusing side:
+  an included entry deletes, a `DEDUCTED` one is refused with the reversal
+  instruction, and an entry that already carries a reversal is refused rather
+  than cascading into it.
+- The deletion audit event is asserted on its **payload**, not its existence.
+  A `ledger.entry_deleted` row that does not carry the amount is worth nothing
+  the day someone asks what was removed.
+- The reopen tests cover the three answers separately: inside the window it
+  reopens, after the window it refuses, and once anything is paid it refuses
+  whatever the date. The interesting one asserts the refusal **names the next
+  cycle key and its dates** - that sentence is the feature, not decoration, so
+  a test that only checked for "an error" would have let it rot.
+- Import slip worth remembering: the new tests used `LedgerEntry` and
+  `LedgerError` without importing them, and `ruff` caught it as F821 before the
+  suite did. `ruff check` on `tests/` is cheap and runs in seconds.
+- Suites: **Jober 1083 / CorvinumEU 681 / browser 70** (browser not re-run;
+  opt-in since 2026-08-04).
+
 ## 2026-08-05 - a test that passed only because the catalogs were stale
 
 - Two tests for the reversal marker, and the first one **passed alone and failed

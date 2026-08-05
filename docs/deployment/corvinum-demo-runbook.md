@@ -391,8 +391,17 @@ the per-person custody/value view, not Jober's warehouse-stock report.
 6. Select **Include open entries in cycle**, show the consequence tooltip and
    confirmation dialog, then choose **Cancel**. This demonstrates the safety
    control without locking the rehearsal data.
-7. Mention the cancellation path for open entries and reversal-only correction
-   path after an entry is locked.
+7. Walk the correction paths, which is C-Q5 answered (ADR 0033). An entry can
+   be **deleted** right up until the money is paid — including after it has
+   been swept into a cycle — and the deletion is audited with everything the
+   row held. Once the cycle is marked settled the entry is fixed, and
+   **Reverse** is how it is corrected: it leaves both sides visible and linked,
+   which is a different statement from *this should never have existed*. Both
+   buttons stay in the product on purpose.
+8. Mention that a cycle closed by mistake can be **reopened** while its own
+   21st-to-20th window is still running, and not after — the refusal then names
+   the next run and the dates it covers, so an office is never left guessing
+   when the entries will be collected.
 
 Do not claim the proposed Thursday cut-off or 20th-to-20th cycle is final. Ask
 the client to confirm C-Q2 and C-Q3.
@@ -459,10 +468,10 @@ arithmetic to land in one row.
    **Equipment**, amount `50`, entry date `2026-06-15`.
 
    **Keep both dates on the 1st–20th.** A date of 21–30 June is still the June
-   *calendar month* on this table, but it settles in the **July** cycle — which
-   is closed, so the entry would be refused. That split trips people up; it is
-   worth understanding before you are in front of the client, and it is a fair
-   thing to show deliberately in step 8.
+   *calendar month* on this table, but it settles in the **July** cycle — so the
+   money would show up a row lower than the one you are building. Nothing is
+   refused; it simply lands in a different run. That split trips people up, and
+   it is a fair thing to show deliberately in step 8.
 4. Return to Eszter's profile. The June row now reads:
 
    | Month | Gross | Ledger deductions | After deductions | Net payslip |
@@ -732,8 +741,9 @@ confirmed client scope.
 
 1. Confirm the lifecycle/status model and HR Admin-to-Manager role mapping
    (C-Q1, C-Q9).
-2. Confirm the Thursday cut-off, cycle boundary, and correction rules
-   (C-Q2–C-Q5).
+2. Confirm the Thursday cut-off and cycle boundary (C-Q2, C-Q3). Correction
+   rules are **answered** — deletable until paid, reversal after (C-Q5,
+   ADR 0033); show them rather than asking.
 3. Confirm the financial boundary and the payslip password delivery channel
    (C-Q6, C-Q15).
 4. Supply the mandatory document list and legally approved retention periods

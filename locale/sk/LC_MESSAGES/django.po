@@ -266,7 +266,7 @@ msgstr "potvrdené"
 #: core/accounts/models.py:99 core/audit/models.py:46 core/people/models.py:152
 #: core/projects/models.py:36 core/projects/models.py:96
 #: core/projects/models.py:181 core/projects/models.py:265
-#: features/advances/models.py:92 features/blacklist/models.py:66
+#: features/advances/models.py:123 features/blacklist/models.py:66
 #: features/blacklist/models.py:114 features/checklists/models.py:23
 #: features/compliance/models.py:87 features/feedback/models.py:26
 #: features/feedback/models.py:48 features/intake/models.py:32
@@ -340,7 +340,7 @@ msgstr "ID cieľa"
 
 #: core/audit/models.py:41 core/people/models.py:156 core/projects/models.py:64
 #: core/projects/models.py:137 core/projects/models.py:209
-#: core/projects/models.py:328 features/advances/models.py:61
+#: core/projects/models.py:328 features/advances/models.py:64
 #: features/blacklist/models.py:45 features/blacklist/models.py:105
 #: features/checklists/models.py:57 features/compliance/models.py:51
 #: features/intake/models.py:106 features/logistics/models.py:144
@@ -1303,7 +1303,7 @@ msgstr "stav"
 msgid "outcome"
 msgstr "výsledok"
 
-#: core/projects/models.py:161 features/advances/models.py:83
+#: core/projects/models.py:161 features/advances/models.py:106
 #: features/checklists/models.py:68 features/logistics/models.py:345
 #: features/logistics/models.py:582 features/payslips/models.py:31
 #: features/profitability/models.py:48 features/wage_ledger/models.py:34
@@ -3376,45 +3376,45 @@ msgstr "Obuv"
 msgid "Travel / fuel"
 msgstr "Cestovné / palivo"
 
-#: features/advances/models.py:65
+#: features/advances/models.py:72
 msgid "company / project"
 msgstr "firma / projekt"
 
-#: features/advances/models.py:67
+#: features/advances/models.py:75
 msgid "entry type"
 msgstr "typ záznamu"
 
-#: features/advances/models.py:68 features/blacklist/models.py:53
+#: features/advances/models.py:78 features/blacklist/models.py:53
 #: features/compliance/models.py:54 features/profitability/models.py:151
 msgid "category"
 msgstr "kategória"
 
-#: features/advances/models.py:70 features/profitability/models.py:154
+#: features/advances/models.py:81 features/profitability/models.py:154
 msgid "amount"
 msgstr "suma"
 
-#: features/advances/models.py:73 features/messaging/models.py:165
+#: features/advances/models.py:86 features/messaging/models.py:165
 #: features/payslips/models.py:30 features/wage_ledger/models.py:33
 msgid "currency"
 msgstr "mena"
 
-#: features/advances/models.py:74
+#: features/advances/models.py:88
 msgid "pay effect"
 msgstr "vplyv na mzdu"
 
-#: features/advances/models.py:76
+#: features/advances/models.py:91
 msgid "settlement"
 msgstr "vysporiadanie"
 
-#: features/advances/models.py:78
+#: features/advances/models.py:96
 msgid "entry date"
 msgstr "dátum záznamu"
 
-#: features/advances/models.py:80
+#: features/advances/models.py:98
 msgid "cycle"
 msgstr "cyklus"
 
-#: features/advances/models.py:81
+#: features/advances/models.py:103
 msgid ""
 "20th-to-20th cycle the entry settles in, keyed by the end month (e.g. "
 "2026-07)."
@@ -3422,19 +3422,19 @@ msgstr ""
 "Cyklus od 20. do 20., v ktorom sa záznam vysporiada; kľúčom je koncový "
 "mesiac (napr. 2026-07)."
 
-#: features/advances/models.py:86
+#: features/advances/models.py:113
 msgid "reversal of"
 msgstr "storno záznamu"
 
-#: features/advances/models.py:90
+#: features/advances/models.py:121
 msgid "entered by"
 msgstr "zadal"
 
-#: features/advances/models.py:95
+#: features/advances/models.py:126
 msgid "ledger entry"
 msgstr "záznam v knihe"
 
-#: features/advances/models.py:96
+#: features/advances/models.py:127
 msgid "ledger entries"
 msgstr "záznamy v knihe"
 
@@ -3442,68 +3442,99 @@ msgstr "záznamy v knihe"
 msgid "Ledger deductions"
 msgstr "Zrážky z knihy"
 
-#: features/advances/services.py:58
+#: features/advances/services.py:61
 msgid "Amount must be positive — meaning lives in the entry type."
 msgstr "Suma musí byť kladná — význam určuje typ záznamu."
 
-#: features/advances/services.py:64
+#: features/advances/services.py:67
 #, python-format
 msgid "%(t)s entries carry pay effect %(e)s (or none)."
 msgstr "Záznamy typu %(t)s majú vplyv na mzdu %(e)s (alebo žiadny)."
 
-#: features/advances/services.py:95
+#: features/advances/services.py:98
 msgid "Only open entries can be cancelled; settled entries need a reversal."
 msgstr "Zrušiť možno len otvorené záznamy; vysporiadané vyžadujú storno."
 
-#: features/advances/services.py:113
+#: features/advances/services.py:132
+msgid ""
+"This entry has already been settled with pay and cannot be deleted. Record a "
+"reversal instead."
+msgstr "Tento záznam už bol vyrovnaný s mzdou a nedá sa zmazať. Zaznamenajte namiesto toho storno."
+
+#: features/advances/services.py:141
+msgid "Delete the reversal of this entry first, then delete the entry."
+msgstr "Najprv zmažte storno tohto záznamu, až potom samotný záznam."
+
+#: features/advances/services.py:180
+msgid "This cycle has been settled with pay and cannot be reopened."
+msgstr "Tento cyklus už bol vyrovnaný s mzdou a nedá sa znovu otvoriť."
+
+#: features/advances/services.py:185
+#, python-format
+msgid ""
+"The %(key)s cycle closed on %(end)s and can no longer be reopened. Its "
+"entries are collected by the next run, %(next_key)s, which covers "
+"%(next_start)s to %(next_end)s."
+msgstr "Cyklus %(key)s sa uzavrel %(end)s a už sa nedá znovu otvoriť. Jeho záznamy vyberie nasledujúci cyklus %(next_key)s, ktorý pokrýva obdobie %(next_start)s až %(next_end)s."
+
+#: features/advances/services.py:213
 msgid "Open entries are cancelled, not reversed."
 msgstr "Otvorené záznamy sa rušia, nie stornujú."
 
-#: features/advances/services.py:114
+#: features/advances/services.py:214
 msgid "Entry is already reversed."
 msgstr "Záznam už bol stornovaný."
 
-#: features/advances/services.py:121
+#: features/advances/services.py:221
 msgid "Entries without payroll effect cannot be reversed."
 msgstr "Záznamy bez vplyvu na mzdu nemožno stornovať."
 
-#: features/advances/services.py:352
+#: features/advances/services.py:452
 msgid "Entry is locked after cycle inclusion; record a reversal instead."
 msgstr "Po zahrnutí do cyklu je záznam uzamknutý; zaznamenajte storno."
 
-#: features/advances/views.py:73
+#: features/advances/views.py:75
 msgid "Entry date must be a real date (YYYY-MM-DD)."
 msgstr "Dátum záznamu musí byť skutočný dátum (RRRR-MM-DD)."
 
-#: features/advances/views.py:86
+#: features/advances/views.py:88
 msgid "Ledger entry recorded."
 msgstr "Záznam v knihe uložený."
 
-#: features/advances/views.py:88
+#: features/advances/views.py:90
 msgid "Invalid ledger entry."
 msgstr "Neplatný záznam."
 
-#: features/advances/views.py:102
+#: features/advances/views.py:104
 msgid "Entry cancelled."
 msgstr "Záznam zrušený."
 
-#: features/advances/views.py:105
+#: features/advances/views.py:107
 msgid "Reversal recorded."
 msgstr "Storno zaznamenané."
 
-#: features/advances/views.py:107
+#: features/advances/views.py:110
+msgid "Entry deleted."
+msgstr "Záznam bol zmazaný."
+
+#: features/advances/views.py:112
 msgid "Unknown action."
 msgstr "Neznáma akcia."
 
-#: features/advances/views.py:120
+#: features/advances/views.py:125
 #, python-format
 msgid "%(n)s entries included in the cycle."
 msgstr "Do cyklu bolo zahrnutých %(n)s záznamov."
 
-#: features/advances/views.py:123
+#: features/advances/views.py:128
 #, python-format
 msgid "%(n)s entries marked settled."
 msgstr "%(n)s záznamov označených ako vysporiadané."
+
+#: features/advances/views.py:132
+#, python-format
+msgid "%(n)s entries reopened."
+msgstr "Znovu otvorené záznamy: %(n)s."
 
 #: features/blacklist/catalog_i18n.py:11
 msgid "Fraud / dishonesty"
@@ -7948,6 +7979,23 @@ msgid ""
 "This cancels the open ledger entry; it will no longer count against pay."
 msgstr "Zruší otvorený záznam v knihe; už sa nebude započítavať voči mzde."
 
+#: templates/partials/ledger_activity.html:51
+msgid ""
+"Removes the entry entirely, for something that should never have been "
+"recorded. An entry already settled with pay cannot be deleted — reverse it "
+"instead."
+msgstr "Úplne odstráni záznam — pre niečo, čo nikdy nemalo byť zaznamenané. Záznam už vyrovnaný s mzdou zmazať nemožno, treba ho stornovať."
+
+#: templates/partials/ledger_activity.html:51
+msgid ""
+"This deletes the entry. It disappears from the ledger; the deletion itself "
+"is recorded in the audit log."
+msgstr "Toto záznam zmaže. Zmizne z knihy; samotné zmazanie sa zaznamená do auditného denníka."
+
+#: templates/partials/ledger_activity.html:51
+msgid "Delete"
+msgstr "Zmazať"
+
 #: templates/partials/ledger_cycle.html:3
 #, python-format
 msgid "Cycle %(start)s → %(end)s"
@@ -8001,21 +8049,37 @@ msgstr "Zahrnúť otvorené záznamy do cyklu"
 
 #: templates/partials/ledger_cycle.html:31
 msgid ""
+"Puts an included cycle back to open while its own window is still running, "
+"for a run closed by mistake. Once the window has ended, or anything in it "
+"has been paid, it cannot be reopened."
+msgstr "Vráti zahrnutý cyklus späť na otvorený, kým jeho vlastné obdobie ešte beží — pre cyklus uzavretý omylom. Po skončení obdobia, alebo keď už bolo z cyklu vyplatené, sa znovu otvoriť nedá."
+
+#: templates/partials/ledger_cycle.html:31
+msgid ""
+"This reopens the cycle: its entries return to open and can be edited again."
+msgstr "Toto cyklus znovu otvorí: jeho záznamy sa vrátia na otvorené a dajú sa opäť upravovať."
+
+#: templates/partials/ledger_cycle.html:31
+msgid "Reopen cycle"
+msgstr "Znovu otvoriť cyklus"
+
+#: templates/partials/ledger_cycle.html:32
+msgid ""
 "Marks this cycle as paid out. Use it once payroll has actually settled the "
 "amounts — it records that the money changed hands."
 msgstr ""
 "Označí tento cyklus ako vyplatený. Použite ho až vtedy, keď mzdová agenda "
 "sumy skutočne vyrovnala – zaznamenáva, že peniaze zmenili majiteľa."
 
-#: templates/partials/ledger_cycle.html:31
+#: templates/partials/ledger_cycle.html:32
 msgid "This marks the whole cycle as settled with pay."
 msgstr "Označí celý cyklus ako vysporiadaný so mzdou."
 
-#: templates/partials/ledger_cycle.html:31
+#: templates/partials/ledger_cycle.html:32
 msgid "Mark cycle settled"
 msgstr "Označiť cyklus ako vysporiadaný"
 
-#: templates/partials/ledger_cycle.html:35
+#: templates/partials/ledger_cycle.html:36
 msgid "No entries in this cycle window."
 msgstr "V tomto cykle nie sú žiadne záznamy."
 
