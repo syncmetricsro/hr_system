@@ -49,7 +49,7 @@ add and listing them as features would imply otherwise:
 | Secrets from a runtime manager, never Git or build layers | Doppler; `AGENTS.md` §3 |
 | Hash-locked dependencies, digest-pinned images, no CDN assets | `AGENTS.md` §3.1 |
 | Encrypted off-site backups with a restore drill that compares per-table row counts | `scripts/backup_restore_drill.sh`, `scripts/offsite_backup.sh` |
-| 2FA required for manager roles | `TWO_FACTOR_REQUIRED_ROLES` (CorvinumEU today) |
+| 2FA required for manager roles | `TWO_FACTOR_AUTH_ENABLED` + `TWO_FACTOR_REQUIRED_ROLES` (CorvinumEU staging/production; localhost demo exempt) |
 | A closed real-data gate | `AGENTS.md` |
 
 ## The three gaps the vault actually closes

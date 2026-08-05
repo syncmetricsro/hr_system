@@ -12,7 +12,10 @@ feedback).
 
 Roles: the core four; CorvinumEU's "HR Admin" maps to **Manager/Admin**
 (C-Q9, ADR 0022). Reads are broad per ADR 0008; superusers pass every check. ADR 0026 adds office scoping platform-wide, but it is a **no-op here**: CorvinumEU is single-site and never creates `Office` rows, so `user_office_scope` returns its unrestricted sentinel and no queryset is narrowed.
-2FA (TOTP) is **required for managers** (`TWO_FACTOR_REQUIRED_ROLES`).
+2FA (TOTP) is **required for managers in staging and production**
+(`TWO_FACTOR_AUTH_ENABLED` plus `TWO_FACTOR_REQUIRED_ROLES`). The fictional-data
+runner on `localhost:8001` is the deliberate development exception and uses
+password-only login through `clients.corvinum_eu.local`.
 
 Legend: ✅ permitted · — denied
 

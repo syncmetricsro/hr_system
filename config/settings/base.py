@@ -266,8 +266,13 @@ OFFER_EMAIL_BATCH_LIMIT = int(os.getenv("OFFER_EMAIL_BATCH_LIMIT", "100"))
 # destroy evidence. Set it once the period is agreed.
 OFFER_EMAIL_RETENTION_DAYS = int(os.getenv("OFFER_EMAIL_RETENTION_DAYS", "0"))
 
+# Master switch for TOTP authentication. Production-like settings leave this
+# enabled; a deliberately separate local/demo settings module may turn it off.
+TWO_FACTOR_AUTH_ENABLED = True
+
 # Roles that must enroll a TOTP device (Stage B4b). Empty for Jober => zero
-# behavior change; CorvinumEU will require it for HR/admin/manager (§5.12).
+# behavior change; CorvinumEU requires it for HR/admin/manager (§5.12) whenever
+# the master switch above is enabled.
 TWO_FACTOR_REQUIRED_ROLES: list[str] = []
 
 # Error visibility (production-readiness, 2026-07-12): request failures and

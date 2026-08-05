@@ -19,7 +19,7 @@ APP=corvinum-dev-app
 POSTGRES_IMAGE="postgres@sha256:2203e6282d9e7de7c24d7da234e2a744fb325df366a3fd8ed940e8abbee39527"
 
 SETTINGS_ENV=(
-  -e DJANGO_SETTINGS_MODULE=clients.corvinum_eu.production
+  -e DJANGO_SETTINGS_MODULE=clients.corvinum_eu.local
   -e DJANGO_SECRET_KEY=dev-secret
 )
 CONSOLE_EMAIL_ENV=(-e DJANGO_EMAIL_BACKEND=django.core.mail.backends.console.EmailBackend)
@@ -115,7 +115,7 @@ print_access() {
   CorvinumEU PeopleOps is running:  http://localhost:${PORT}
 
   Demo logins (password for all: demo-corvinum-2026):
-    HR Admin (manager)  hradmin@demo.corvinum.test   <- forced TOTP setup on first login
+    HR Admin (manager)  hradmin@demo.corvinum.test   <- password only on localhost
     Recruiter           recruiter@demo.corvinum.test
     Coordinator         coordinator@demo.corvinum.test
     Observer            observer@demo.corvinum.test

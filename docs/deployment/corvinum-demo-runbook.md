@@ -31,7 +31,7 @@ The two demo environments have different reset and authentication behavior:
 
 | Environment | Data behavior | TOTP behavior | Use |
 |---|---|---|---|
-| Local `localhost:8001` | Disposable; `down` then `up` rebuilds the seeded database | Fresh reset shows setup and a new QR code | Full rehearsal, destructive-path practice, screenshots |
+| Local `localhost:8001` | Disposable; `down` then `up` rebuilds the seeded database | Disabled; every demo role uses password-only login | Client testing, destructive-path practice, screenshots |
 | Public staging | Persistent PostgreSQL data shared by rehearsals | Enrolled HR Admin normally shows verification, not setup | Client presentation and final acceptance |
 
 Do not assume public staging is clean. Before presenting it, inspect the
@@ -86,8 +86,9 @@ doppler run --project hr_system --config dev -- scripts/dev_app.sh up
 ## Rehearse, reset, and start clean
 
 The demo database is disposable. `down` removes the Corvinum app, database,
-and network; the next `up` creates and seeds a clean scenario. This also removes
-the HR Admin's TOTP enrollment, so a fresh QR code appears at the live demo.
+and network; the next `up` creates and seeds a clean scenario. Local TOTP is
+disabled by its settings module, so a reset does not create an authenticator
+setup step.
 
 ### Once after the final code changes
 
@@ -106,9 +107,10 @@ seven `DJANGO_EMAIL_*` variables only to the web container. Migrations and demo
 seeds remain on the console backend. Running the script without Doppler remains
 a safe, secret-free fallback that prints messages to the application log.
 
-Do the complete rehearsal, including TOTP and one payslip email. Keep the
-authenticator entry clearly named **Corvinum rehearsal** so it is not confused
-with the fresh entry used in front of the client.
+Do the complete local rehearsal with password-only login and one controlled
+payslip email. Rehearse the production TOTP path separately against a
+production-settings environment; the local runner intentionally cannot prove
+that path.
 
 ### Immediately after rehearsal
 
@@ -121,9 +123,8 @@ scripts/corvinum_app.sh status
 curl -fsS http://localhost:8001/healthz/
 ```
 
-Delete the rehearsal authenticator entry. Do not log in as HR Admin again
-before the live walkthrough, because the forced first-login TOTP setup is the
-opening act.
+Do not log in as HR Admin again before the live walkthrough if preserving a
+completely untouched fictional scenario matters to the presentation.
 
 ### Presenter setup before the call
 
@@ -131,10 +132,11 @@ opening act.
   desktop width. A private window avoids an old browser-local theme choice.
 - Before sharing the screen, confirm the login card shows the Corvinum logo,
   **CorvinumEU PeopleOps** heading, and no Jober name or artwork.
-- Have a phone with Aegis, Google Authenticator, FreeOTP, or another TOTP app.
-- Decide whether step 1 will demonstrate first-time enrollment on a clean local
-  stack or ordinary verification on persistent staging. Both are valid; do not
-  promise a QR code when staging already has an enrolled device.
+- If public staging is being presented, have the deliberately enrolled TOTP
+  device available. Localhost never asks for it.
+- Decide whether the audience is testing the frictionless local demo or viewing
+  production-like staging. Do not describe the local password-only path as the
+  production authentication policy.
 - Open the controlled, non-personal test mailbox that will receive the payslip.
   Do not use a real worker's address while the real-data gate is closed.
 - Confirm `EMAIL_ALLOWED_RECIPIENTS` names that mailbox: `doppler secrets get
@@ -170,7 +172,7 @@ All four accounts use the password `demo-corvinum-2026`.
 
 | Role | Email | Best use in the demo |
 |---|---|---|
-| HR Admin / Manager | `hradmin@demo.corvinum.test` | Main walkthrough; required TOTP, all operational actions |
+| HR Admin / Manager | `hradmin@demo.corvinum.test` | Main walkthrough; password-only locally, required TOTP on staging/production, all operational actions |
 | Recruiter | `recruiter@demo.corvinum.test` | Person intake and editing |
 | Coordinator | `coordinator@demo.corvinum.test` | Checklists and equipment operations |
 | Observer | `observer@demo.corvinum.test` | Read-only ledger, exports, and audit |
@@ -190,17 +192,19 @@ All four accounts use the password `demo-corvinum-2026`.
 ### 1. Secure entry and client isolation - 3 minutes
 
 1. Sign in as `hradmin@demo.corvinum.test`.
-2. On a clean local stack, scan the QR code on the required two-factor setup
-   screen and enter the current six-digit code. On persistent staging, enter
-   the current code on the verification screen using the already enrolled
-   **Corvinum staging** authenticator entry.
-3. Explain that Corvinum requires TOTP for the Manager/HR Admin role; this is a
-   client policy on the shared platform, not merely a visual prompt.
+2. On local `localhost:8001`, the password opens Reports directly. On public
+   staging, enter the current code on the verification screen using the already
+   enrolled **Corvinum staging** authenticator entry.
+3. Explain that the local fictional-data demo intentionally suspends TOTP to
+   reduce testing friction. Corvinum production requires TOTP for the
+   Manager/HR Admin role; the production settings and acceptance lane retain
+   that policy.
 4. Point out the Corvinum logo, dark shell, Slovak URL, and Corvinum-specific
    session. Jober is deployed separately and cannot leak navigation or data
    into this client.
 
-Expected result: the Reports workspace opens after verification.
+Expected result: the Reports workspace opens directly on localhost, or after
+verification on staging.
 
 ### 2. Reports as the interactive overview - 3 minutes
 
@@ -675,8 +679,8 @@ the maiden name — deliberately does not create a blacklist match.
 
 Use this route when the audience wants breadth but not every mutation:
 
-1. Sign in with required TOTP, identify the isolated Corvinum shell, and open
-   Reports.
+1. Sign in (password-only locally; required TOTP on staging), identify the
+   isolated Corvinum shell, and open Reports.
 2. Show one report drill-down, the SK/HU switch, Projects, and project-scoped
    worker links.
 3. Create Olena through intake v4, schedule and pass the trial, tick one
@@ -697,8 +701,8 @@ Use this route when the audience wants breadth but not every mutation:
 
 When time is tight, use only:
 
-1. HR Admin login and required TOTP setup or verification, depending on the
-   selected environment.
+1. HR Admin login: password-only locally, or required TOTP verification on
+   staging.
 2. Interactive Reports, one tooltip, and the SK/HU switch.
 3. Add Olena Demo through intake, schedule and pass one trial, then tick one
    checklist item and show its notification.
@@ -732,7 +736,7 @@ confirmed client scope.
 |---|---|
 | Nothing at port 8001 | Run `scripts/corvinum_app.sh status`, then `scripts/corvinum_app.sh up` |
 | UI does not contain the latest changes | Run `scripts/corvinum_app.sh rebuild` before the call, then repeat the health check |
-| Local TOTP code is rejected after a reset | Delete the old local authenticator entry, return to login, and scan the newly generated QR code |
+| Localhost unexpectedly asks for TOTP | Rebuild/restart with `scripts/corvinum_app.sh`; verify the container uses `clients.corvinum_eu.local`, never weaken staging settings |
 | Staging opens verification but no enrolled authenticator is available | Stop and coordinate a deliberate staging TOTP reset; do not improvise deletion during the call |
 | Local rehearsal data is already changed | Run `down`, then `up`; this recreates the disposable database and seed |
 | Staging already contains Olena/catalogue/payslip records | Use a visibly unique fictional suffix, show the existing row, or use Resend; never assume staging is disposable |
