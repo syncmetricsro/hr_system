@@ -267,7 +267,7 @@ msgstr "підтверджено"
 #: core/accounts/models.py:99 core/audit/models.py:46 core/people/models.py:152
 #: core/projects/models.py:36 core/projects/models.py:96
 #: core/projects/models.py:181 core/projects/models.py:265
-#: features/advances/models.py:92 features/blacklist/models.py:66
+#: features/advances/models.py:123 features/blacklist/models.py:66
 #: features/blacklist/models.py:114 features/checklists/models.py:23
 #: features/compliance/models.py:87 features/feedback/models.py:26
 #: features/feedback/models.py:48 features/intake/models.py:32
@@ -341,7 +341,7 @@ msgstr "ідентифікатор цілі"
 
 #: core/audit/models.py:41 core/people/models.py:156 core/projects/models.py:64
 #: core/projects/models.py:137 core/projects/models.py:209
-#: core/projects/models.py:328 features/advances/models.py:61
+#: core/projects/models.py:328 features/advances/models.py:64
 #: features/blacklist/models.py:45 features/blacklist/models.py:105
 #: features/checklists/models.py:57 features/compliance/models.py:51
 #: features/intake/models.py:106 features/logistics/models.py:144
@@ -1301,7 +1301,7 @@ msgstr "стан"
 msgid "outcome"
 msgstr "результат"
 
-#: core/projects/models.py:161 features/advances/models.py:83
+#: core/projects/models.py:161 features/advances/models.py:106
 #: features/checklists/models.py:68 features/logistics/models.py:345
 #: features/logistics/models.py:582 features/payslips/models.py:31
 #: features/profitability/models.py:48 features/wage_ledger/models.py:34
@@ -3403,45 +3403,45 @@ msgstr "Взуття"
 msgid "Travel / fuel"
 msgstr "Проїзд / пальне"
 
-#: features/advances/models.py:65
+#: features/advances/models.py:72
 msgid "company / project"
 msgstr "компанія / проєкт"
 
-#: features/advances/models.py:67
+#: features/advances/models.py:75
 msgid "entry type"
 msgstr "тип запису"
 
-#: features/advances/models.py:68 features/blacklist/models.py:53
+#: features/advances/models.py:78 features/blacklist/models.py:53
 #: features/compliance/models.py:54 features/profitability/models.py:151
 msgid "category"
 msgstr "категорія"
 
-#: features/advances/models.py:70 features/profitability/models.py:154
+#: features/advances/models.py:81 features/profitability/models.py:154
 msgid "amount"
 msgstr "сума"
 
-#: features/advances/models.py:73 features/messaging/models.py:165
+#: features/advances/models.py:86 features/messaging/models.py:165
 #: features/payslips/models.py:30 features/wage_ledger/models.py:33
 msgid "currency"
 msgstr "валюта"
 
-#: features/advances/models.py:74
+#: features/advances/models.py:88
 msgid "pay effect"
 msgstr "вплив на зарплату"
 
-#: features/advances/models.py:76
+#: features/advances/models.py:91
 msgid "settlement"
 msgstr "розрахунок"
 
-#: features/advances/models.py:78
+#: features/advances/models.py:96
 msgid "entry date"
 msgstr "дата запису"
 
-#: features/advances/models.py:80
+#: features/advances/models.py:98
 msgid "cycle"
 msgstr "цикл"
 
-#: features/advances/models.py:81
+#: features/advances/models.py:103
 msgid ""
 "20th-to-20th cycle the entry settles in, keyed by the end month (e.g. "
 "2026-07)."
@@ -3449,19 +3449,19 @@ msgstr ""
 "Цикл з 20-го по 20-те, у якому запис погашається; ключ — кінцевий місяць "
 "(напр. 2026-07)."
 
-#: features/advances/models.py:86
+#: features/advances/models.py:113
 msgid "reversal of"
 msgstr "сторно запису"
 
-#: features/advances/models.py:90
+#: features/advances/models.py:121
 msgid "entered by"
 msgstr "вніс"
 
-#: features/advances/models.py:95
+#: features/advances/models.py:126
 msgid "ledger entry"
 msgstr "запис у книзі"
 
-#: features/advances/models.py:96
+#: features/advances/models.py:127
 msgid "ledger entries"
 msgstr "записи в книзі"
 
@@ -3469,68 +3469,99 @@ msgstr "записи в книзі"
 msgid "Ledger deductions"
 msgstr "Утримання книги"
 
-#: features/advances/services.py:58
+#: features/advances/services.py:61
 msgid "Amount must be positive — meaning lives in the entry type."
 msgstr "Сума має бути додатною — зміст визначає тип запису."
 
-#: features/advances/services.py:64
+#: features/advances/services.py:67
 #, python-format
 msgid "%(t)s entries carry pay effect %(e)s (or none)."
 msgstr "Записи типу %(t)s мають вплив на зарплату %(e)s (або жодного)."
 
-#: features/advances/services.py:95
+#: features/advances/services.py:98
 msgid "Only open entries can be cancelled; settled entries need a reversal."
 msgstr "Скасувати можна лише відкриті записи; погашені потребують сторно."
 
-#: features/advances/services.py:113
+#: features/advances/services.py:132
+msgid ""
+"This entry has already been settled with pay and cannot be deleted. Record a "
+"reversal instead."
+msgstr "Цей запис уже розраховано із зарплатою, тому його не можна видалити. Замість цього запишіть сторно."
+
+#: features/advances/services.py:141
+msgid "Delete the reversal of this entry first, then delete the entry."
+msgstr "Спершу видаліть сторно цього запису, а потім сам запис."
+
+#: features/advances/services.py:180
+msgid "This cycle has been settled with pay and cannot be reopened."
+msgstr "Цей цикл уже розраховано із зарплатою, тому його не можна відкрити знову."
+
+#: features/advances/services.py:185
+#, python-format
+msgid ""
+"The %(key)s cycle closed on %(end)s and can no longer be reopened. Its "
+"entries are collected by the next run, %(next_key)s, which covers "
+"%(next_start)s to %(next_end)s."
+msgstr "Цикл %(key)s закрито %(end)s, і його вже не можна відкрити знову. Його записи збере наступний цикл %(next_key)s, який охоплює період з %(next_start)s до %(next_end)s."
+
+#: features/advances/services.py:213
 msgid "Open entries are cancelled, not reversed."
 msgstr "Відкриті записи скасовуються, а не сторнуються."
 
-#: features/advances/services.py:114
+#: features/advances/services.py:214
 msgid "Entry is already reversed."
 msgstr "Запис уже сторновано."
 
-#: features/advances/services.py:121
+#: features/advances/services.py:221
 msgid "Entries without payroll effect cannot be reversed."
 msgstr "Записи без впливу на зарплату не можна сторнувати."
 
-#: features/advances/services.py:352
+#: features/advances/services.py:452
 msgid "Entry is locked after cycle inclusion; record a reversal instead."
 msgstr "Після включення в цикл запис заблоковано; внесіть сторно."
 
-#: features/advances/views.py:73
+#: features/advances/views.py:75
 msgid "Entry date must be a real date (YYYY-MM-DD)."
 msgstr "Дата запису має бути справжньою датою (РРРР-ММ-ДД)."
 
-#: features/advances/views.py:86
+#: features/advances/views.py:88
 msgid "Ledger entry recorded."
 msgstr "Запис у книзі збережено."
 
-#: features/advances/views.py:88
+#: features/advances/views.py:90
 msgid "Invalid ledger entry."
 msgstr "Недійсний запис."
 
-#: features/advances/views.py:102
+#: features/advances/views.py:104
 msgid "Entry cancelled."
 msgstr "Запис скасовано."
 
-#: features/advances/views.py:105
+#: features/advances/views.py:107
 msgid "Reversal recorded."
 msgstr "Сторно записано."
 
-#: features/advances/views.py:107
+#: features/advances/views.py:110
+msgid "Entry deleted."
+msgstr "Запис видалено."
+
+#: features/advances/views.py:112
 msgid "Unknown action."
 msgstr "Невідома дія."
 
-#: features/advances/views.py:120
+#: features/advances/views.py:125
 #, python-format
 msgid "%(n)s entries included in the cycle."
 msgstr "До циклу включено %(n)s записів."
 
-#: features/advances/views.py:123
+#: features/advances/views.py:128
 #, python-format
 msgid "%(n)s entries marked settled."
 msgstr "%(n)s записів позначено як погашені."
+
+#: features/advances/views.py:132
+#, python-format
+msgid "%(n)s entries reopened."
+msgstr "Повторно відкрито записів: %(n)s."
 
 #: features/blacklist/catalog_i18n.py:11
 msgid "Fraud / dishonesty"
@@ -7984,6 +8015,23 @@ msgstr ""
 "Скасовує відкритий запис у книзі; він більше не враховуватиметься щодо "
 "зарплати."
 
+#: templates/partials/ledger_activity.html:51
+msgid ""
+"Removes the entry entirely, for something that should never have been "
+"recorded. An entry already settled with pay cannot be deleted — reverse it "
+"instead."
+msgstr "Повністю вилучає запис — для того, чого взагалі не мало бути внесено. Запис, уже розрахований із зарплатою, видалити не можна — його сторнують."
+
+#: templates/partials/ledger_activity.html:51
+msgid ""
+"This deletes the entry. It disappears from the ledger; the deletion itself "
+"is recorded in the audit log."
+msgstr "Це видалить запис. Він зникне з реєстру; саме видалення буде записано в журнал аудиту."
+
+#: templates/partials/ledger_activity.html:51
+msgid "Delete"
+msgstr "Видалити"
+
 #: templates/partials/ledger_cycle.html:3
 #, python-format
 msgid "Cycle %(start)s → %(end)s"
@@ -8037,6 +8085,22 @@ msgstr "Включити відкриті записи в цикл"
 
 #: templates/partials/ledger_cycle.html:31
 msgid ""
+"Puts an included cycle back to open while its own window is still running, "
+"for a run closed by mistake. Once the window has ended, or anything in it "
+"has been paid, it cannot be reopened."
+msgstr "Повертає включений цикл у стан «відкритий», поки триває його власне вікно — для циклу, закритого помилково. Після завершення вікна або після виплати з нього цикл відкрити не можна."
+
+#: templates/partials/ledger_cycle.html:31
+msgid ""
+"This reopens the cycle: its entries return to open and can be edited again."
+msgstr "Це знову відкриє цикл: його записи повернуться у стан «відкритий» і їх можна буде редагувати."
+
+#: templates/partials/ledger_cycle.html:31
+msgid "Reopen cycle"
+msgstr "Знову відкрити цикл"
+
+#: templates/partials/ledger_cycle.html:32
+msgid ""
 "Marks this cycle as paid out. Use it once payroll has actually settled the "
 "amounts — it records that the money changed hands."
 msgstr ""
@@ -8044,15 +8108,15 @@ msgstr ""
 "розрахунок зарплати справді врегулював суми — він фіксує, що гроші змінили "
 "власника."
 
-#: templates/partials/ledger_cycle.html:31
+#: templates/partials/ledger_cycle.html:32
 msgid "This marks the whole cycle as settled with pay."
 msgstr "Позначає весь цикл як погашений із зарплатою."
 
-#: templates/partials/ledger_cycle.html:31
+#: templates/partials/ledger_cycle.html:32
 msgid "Mark cycle settled"
 msgstr "Позначити цикл погашеним"
 
-#: templates/partials/ledger_cycle.html:35
+#: templates/partials/ledger_cycle.html:36
 msgid "No entries in this cycle window."
 msgstr "У цьому вікні циклу немає записів."
 

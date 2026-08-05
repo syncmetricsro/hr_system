@@ -47,6 +47,9 @@
                   {% elif e.settlement_status == "open" %}
                     <button class="button button-secondary" type="submit" name="action" value="cancel" data-confirm="{% trans 'This cancels the open ledger entry; it will no longer count against pay.' %}">{% trans "Cancel" %}</button>
                   {% endif %}
+                  {% if e.settlement_status != "deducted" and not e.is_reversed %}
+                    <button class="button button-secondary" type="submit" name="action" value="delete" data-tooltip="{% trans 'Removes the entry entirely, for something that should never have been recorded. An entry already settled with pay cannot be deleted — reverse it instead.' %}" data-confirm="{% trans 'This deletes the entry. It disappears from the ledger; the deletion itself is recorded in the audit log.' %}">{% trans "Delete" %}</button>
+                  {% endif %}
                 </form>
               {% endif %}
             </td>

@@ -18,9 +18,11 @@ from features.advances.services import (
     LedgerError,
     cancel_entry,
     cycle_report,
+    delete_entry,
     include_cycle,
     mark_cycle_deducted,
     record_entry,
+    reopen_cycle,
     reverse_entry,
     thursday_summary,
 )
@@ -103,6 +105,9 @@ def ledger_entry_action(request, pk: int):
         elif action == "reverse":
             reverse_entry(entry, actor=request.user, reason=reason)
             messages.success(request, _("Reversal recorded."))
+        elif action == "delete":
+            delete_entry(entry, actor=request.user, reason=reason)
+            messages.success(request, _("Entry deleted."))
         else:
             messages.error(request, _("Unknown action."))
     except LedgerError as exc:
@@ -121,6 +126,14 @@ def ledger_cycle_action(request):
     elif request.POST.get("action") == "deducted":
         n = mark_cycle_deducted(year, month, actor=request.user)
         messages.success(request, _("%(n)s entries marked settled.") % {"n": n})
+    elif request.POST.get("action") == "reopen":
+        try:
+            n = reopen_cycle(year, month, actor=request.user)
+            messages.success(request, _("%(n)s entries reopened.") % {"n": n})
+        except LedgerError as exc:
+            # Carries when the next run starts, so a refusal still tells the
+            # office what to do next rather than only what it cannot do.
+            messages.error(request, str(exc))
     return redirect(
         f"{request.POST.get('next') or '/ledger/'}?year={year}&month={month}"
     )

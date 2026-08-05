@@ -1,5 +1,39 @@
 # Build Journal
 
+## 2026-08-05 - C-Q5 answered: an entry is deletable until the money is paid
+
+The open question said "no hard deletes; reversal-only after inclusion". The
+owner rejected it outright - **these should be deletable and cannot be made
+immutable** - and then drew a better line than the one I offered: deletable
+right up until the money is paid, immutable after. Included is not paid; it
+means queued for a run. So everything before payday is a record of an intention
+and may be corrected freely, and `DEDUCTED` is where the ledger becomes the
+thing an accountant argues from.
+
+`delete_entry` removes the row and writes `ledger.entry_deleted` carrying
+person, amount, currency, category, type, date, the status it held and its cycle
+key. The ledger gets clean; the record does not disappear. An entry that already
+carries a reversal is refused rather than cascaded - removing a row the operator
+did not select is the worse surprise.
+
+Delete and reverse both stay, because they say different things. Delete: this
+should never have existed. Reverse: this happened and is being given back, with
+both sides visible and linked. The owner was asked directly and kept both.
+
+**Reopening a cycle** was the second half. A run closed by mistake was
+unrecoverable, which cost a reversal per entry. `reopen_cycle` returns the
+entries to open while the cycle's own 21st-to-20th window is still running, and
+refuses once anything in it has been paid. After the window ends it refuses too
+- and the refusal **names the next run and the dates it covers**, which was the
+owner's actual requirement: do not just say no, say when the money gets
+collected instead. Under carry-forward (ADR 0032) that sentence is always true.
+
+ADR 0033; C-Q5 closed; the demo runbook now walks the correction paths instead
+of asking the client to invent them, and its stale "would be refused" note is
+gone with the guard it described.
+
+Jober 1083, CorvinumEU 681, browser 70 (not re-run).
+
 ## 2026-08-05 - The ledger offered a reversal it would then refuse
 
 Reported: pressing Sztornó on an already-reversed entry answered "this entry is

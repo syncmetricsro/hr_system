@@ -3,8 +3,11 @@
 Money rules built to the recorded C-Q2..C-Q5 defaults (corvinum-open-questions):
 Europe/Bratislava, Thursday **14:00** cut-off with late entries rolling to the
 next week, the 20th-to-20th cycle keyed by its end month (21st → 20th
-inclusive), no hard deletes, reversal-only corrections after cycle inclusion,
-full advance recovery in a single cycle (no partial recovery in MVP).
+inclusive), and full advance recovery in a single cycle (no partial recovery in
+MVP). **C-Q5 answered 2026-08-05:** entries are deletable up to the point the
+money is paid, and immutable after it - the client rejected blanket
+immutability, and the line now sits where the money leaves rather than where a
+cycle is assembled (ADR 0033).
 """
 
 from __future__ import annotations
@@ -104,6 +107,103 @@ def cancel_entry(entry: LedgerEntry, *, actor=None, reason: str = "") -> LedgerE
         entry_id=entry.pk,
     )
     return entry
+
+
+@transaction.atomic
+def delete_entry(entry: LedgerEntry, *, actor=None, reason: str = "") -> None:
+    """Remove an entry that should never have existed (C-Q5, answered 2026-08-05).
+
+    The line is where the money leaves: an entry that has been **settled with
+    pay** is not deletable, because the ledger is what the accountant export and
+    any later pay dispute are built from. Everything before that is a record of
+    an intention, and an office needs to be able to correct a typo without
+    carrying a matched pair of rows for ever.
+
+    Deleting is not reversing. Delete says "this never happened"; reverse says
+    "this happened and is being given back", and only reverse leaves both sides
+    visible. Both actions exist because both situations do.
+
+    The row goes; the fact that it existed does not. Every deletion writes an
+    audit event carrying the values, so a figure can never simply evaporate.
+    """
+    _require(
+        entry.settlement_status != SettlementStatus.DEDUCTED,
+        _(
+            "This entry has already been settled with pay and cannot be deleted. "
+            "Record a reversal instead."
+        ),
+    )
+    # `reversal_of` is PROTECT, so the pair has to be unwound in order. Refusing
+    # is deliberate over cascading: deleting a row the operator did not select
+    # is a worse surprise than being asked to do it in two steps.
+    _require(
+        not entry.is_reversed,
+        _("Delete the reversal of this entry first, then delete the entry."),
+    )
+    record_event(
+        actor,
+        "ledger.entry_deleted",
+        target=entry.person,
+        reason=reason,
+        entry_id=entry.pk,
+        amount=str(entry.amount),
+        currency=entry.currency,
+        category=entry.category,
+        entry_type=entry.entry_type,
+        entry_date=entry.entry_date.isoformat(),
+        status_was=entry.settlement_status,
+        cycle_key=entry.cycle_key,
+    )
+    entry.delete()
+
+
+@transaction.atomic
+def reopen_cycle(year: int, month: int, *, actor=None) -> int:
+    """Put an included cycle back to open, while its window is still running.
+
+    A run closed by mistake used to be unrecoverable: entries locked, and the
+    only way back was a reversal each. Reopening is allowed **while the cycle's
+    own window has not ended** - there is still time to collect them properly -
+    and refused afterwards, when the run has served its purpose.
+
+    Refused outright once anything in it has been paid: reopening then would
+    reopen money that has left.
+    """
+    _start, end = cycle_bounds(year, month)
+    key = cycle_key(year, month)
+    today = timezone.localdate()
+
+    _require(
+        not LedgerEntry.objects.filter(
+            cycle_key=key, settlement_status=SettlementStatus.DEDUCTED
+        ).exists(),
+        _("This cycle has been settled with pay and cannot be reopened."),
+    )
+    _require(
+        today <= end,
+        _(
+            "The %(key)s cycle closed on %(end)s and can no longer be reopened. "
+            "Its entries are collected by the next run, %(next_key)s, which "
+            "covers %(next_start)s to %(next_end)s."
+        )
+        % {
+            "key": key,
+            "end": end.isoformat(),
+            "next_key": cycle_key(*_next_cycle(year, month)),
+            "next_start": (end + dt.timedelta(days=1)).isoformat(),
+            "next_end": cycle_bounds(*_next_cycle(year, month))[1].isoformat(),
+        },
+    )
+
+    count = LedgerEntry.objects.filter(
+        cycle_key=key, settlement_status=SettlementStatus.INCLUDED_IN_CYCLE
+    ).update(settlement_status=SettlementStatus.OPEN, cycle_key="")
+    record_event(actor, "ledger.cycle_reopened", reason=key, count=count)
+    return count
+
+
+def _next_cycle(year: int, month: int) -> tuple[int, int]:
+    return (year + 1, 1) if month == 12 else (year, month + 1)
 
 
 @transaction.atomic

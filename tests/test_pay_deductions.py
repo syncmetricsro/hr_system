@@ -35,8 +35,9 @@ from django.utils import translation  # noqa: E402
 
 from core.people.models import Person  # noqa: E402
 from features.advances.models import EntryType, LedgerCategory  # noqa: E402
-from features.advances.models import SettlementStatus  # noqa: E402
+from features.advances.models import LedgerEntry, SettlementStatus  # noqa: E402
 from features.advances.services import (  # noqa: E402
+    LedgerError,
     cycle_for,
     cycle_is_settled,
     cycle_report,
@@ -462,3 +463,135 @@ def test_an_entry_not_yet_reversed_still_offers_it(client, person, manager):
     ).content.decode()
 
     assert 'value="reverse"' in body
+
+
+# --- C-Q5 answered: deletable until paid, immutable after (ADR 0033) --------
+
+
+def test_an_open_entry_can_be_deleted(person, manager):
+    """A typo should not have to be carried for ever as a matched pair."""
+    from features.advances.services import delete_entry
+
+    entry = _advance(person, manager, "80", dt.date(2026, 8, 3))
+    pk = entry.pk
+
+    delete_entry(entry, actor=manager, reason="wrong person")
+
+    assert not LedgerEntry.objects.filter(pk=pk).exists()
+
+
+def test_an_included_entry_can_still_be_deleted(person, manager):
+    """Included means queued for a run, not paid. The line is the money."""
+    from features.advances.services import delete_entry
+
+    entry = _advance(person, manager, "80", dt.date(2026, 8, 3))
+    include_cycle(2026, 8, actor=manager)
+    entry.refresh_from_db()
+    assert entry.settlement_status == SettlementStatus.INCLUDED_IN_CYCLE
+
+    delete_entry(entry, actor=manager)
+
+    assert not LedgerEntry.objects.filter(pk=entry.pk).exists()
+
+
+def test_a_settled_entry_cannot_be_deleted(person, manager):
+    """Once the money has left, the ledger is what a pay dispute is argued
+    from. That is the one thing C-Q5 keeps immutable."""
+    from features.advances.services import delete_entry
+
+    entry = _advance(person, manager, "80", dt.date(2026, 8, 3))
+    include_cycle(2026, 8, actor=manager)
+    mark_cycle_deducted(2026, 8, actor=manager)
+    entry.refresh_from_db()
+
+    with pytest.raises(LedgerError):
+        delete_entry(entry, actor=manager)
+
+    assert LedgerEntry.objects.filter(pk=entry.pk).exists()
+
+
+def test_deleting_records_what_was_deleted(person, manager):
+    """The row goes; the fact that it existed does not."""
+    from core.audit.models import AuditEvent
+    from features.advances.services import delete_entry
+
+    entry = _advance(person, manager, "123.45", dt.date(2026, 8, 3))
+    delete_entry(entry, actor=manager, reason="duplicate")
+
+    event = AuditEvent.objects.filter(action="ledger.entry_deleted").latest("id")
+    assert event.metadata["amount"] == "123.45"
+    assert event.metadata["entry_date"] == "2026-08-03"
+    assert event.metadata["status_was"] == SettlementStatus.OPEN
+
+
+def test_a_reversed_entry_asks_for_the_reversal_to_go_first(person, manager):
+    """`reversal_of` is PROTECT. Being asked to do it in two steps beats
+    silently deleting a row the operator did not select."""
+    from features.advances.services import delete_entry, reverse_entry
+
+    original = _advance(person, manager, "90", dt.date(2026, 8, 3))
+    include_cycle(2026, 8, actor=manager)
+    original.refresh_from_db()
+    reverse_entry(original, actor=manager, reason="given back")
+    original.refresh_from_db()
+
+    with pytest.raises(LedgerError):
+        delete_entry(original, actor=manager)
+
+
+# --- reopening a run closed by mistake --------------------------------------
+
+
+def test_a_cycle_can_be_reopened_while_its_window_is_running(person, manager):
+    """The misclick case: closed a run early, its window has not ended."""
+    from django.utils import timezone
+
+    from features.advances.services import reopen_cycle
+
+    today = timezone.localdate()
+    year, month = cycle_for(today)
+    entry = _advance(person, manager, "70", today)
+    include_cycle(year, month, actor=manager)
+    entry.refresh_from_db()
+    assert entry.settlement_status == SettlementStatus.INCLUDED_IN_CYCLE
+
+    assert reopen_cycle(year, month, actor=manager) == 1
+
+    entry.refresh_from_db()
+    assert entry.settlement_status == SettlementStatus.OPEN
+    assert entry.cycle_key == ""
+
+
+def test_reopening_a_finished_window_is_refused_and_says_what_happens_next(
+    person, manager
+):
+    """A refusal that only says no leaves the office stuck. This one names the
+    run that will collect the entries instead."""
+    from features.advances.services import reopen_cycle
+
+    _advance(person, manager, "70", dt.date(2026, 6, 10))
+    include_cycle(2026, 6, actor=manager)
+
+    with translation.override("en"), pytest.raises(LedgerError) as excinfo:
+        reopen_cycle(2026, 6, actor=manager)
+
+    message = str(excinfo.value)
+    assert "2026-06" in message and "2026-06-20" in message
+    assert "2026-07" in message, f"the refusal does not name the next run: {message}"
+    assert "2026-06-21" in message and "2026-07-20" in message
+
+
+def test_a_settled_cycle_cannot_be_reopened(person, manager):
+    """Reopening paid money is not a misclick recovery."""
+    from django.utils import timezone
+
+    from features.advances.services import reopen_cycle
+
+    today = timezone.localdate()
+    year, month = cycle_for(today)
+    _advance(person, manager, "70", today)
+    include_cycle(year, month, actor=manager)
+    mark_cycle_deducted(year, month, actor=manager)
+
+    with pytest.raises(LedgerError):
+        reopen_cycle(year, month, actor=manager)
