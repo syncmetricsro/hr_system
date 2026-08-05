@@ -1,5 +1,29 @@
 # Test Journal
 
+## 2026-08-05 - testing a feature flag from the seed inward
+
+- `tests/test_jober_checklist.py` leads with the failure that has no partial
+  form: **the demo seed against its own activation gate.** It runs `seed_demo`
+  and `seed_people` for real and asserts every working person came out with no
+  open critical items. A unit test of the gate would have passed while the seed
+  died, and the symptom of that is an empty database on a demo morning.
+- A second seed test asserts the ticks carry `done_by` and `done_at`. Flipping
+  the rows in a bulk update would satisfy the first test and produce a demo with
+  anonymous approvals; the two together pin the intent.
+- Three tests on the gate itself, chosen so the rule cannot drift: a critical
+  item blocks **and the message names it**, a non-critical one does not block,
+  and ticking everything clears it.
+- The seed/catalog sync test reads both files with `ast` rather than importing
+  them, matching the CorvinumEU one - one edited comma makes `db_trans` fall
+  through to English with nothing failing.
+- `test_jober_and_corvinum_still_share_their_wording` is deliberately a
+  tripwire, not a rule, and its docstring says so: when the lists diverge the
+  fix is to translate the new strings and relax the test, not to revert.
+- Existing Jober activation tests needed no change: with no template in the
+  database the gate is a no-op. Confirmed by running the lane rather than by
+  reasoning about it.
+- Suites: **Jober 1142 / CorvinumEU 722 / browser 70** (browser not re-run).
+
 ## 2026-08-05 - two figures, two floors
 
 - The Ricardo fixture already pinned `2370.00  # 3240 - 330 - 540`, which is

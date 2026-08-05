@@ -530,6 +530,27 @@ certificate written in any language, but it does not read or detect that
 language and does not infer whether the pixels really show a forklift, crane,
 or welding certificate.
 
+**The activation checklist — new for Jober on 2026-08-05 (ADR 0035).** Open a
+worker and scroll to *Activation checklist*: nine items, eight of them critical,
+each explaining on hover what its tick actually claims — that you saw the ID
+card yourself, that the permit covers the whole assignment, that the duplicate
+search was really run under other spellings. It is the office's own process
+written down, and it is the closest thing the product has to training material
+for the people doing the checks.
+
+Show it as a **third gate**, beside the four readiness pillars and the manager
+decision. They answer different questions: readiness is logistics — medical,
+gear, a bed, a ride — while the checklist is paperwork and identity, verified by
+a person whose name goes against each tick. Leave a candidate's items open and
+try to activate: the refusal names the items still outstanding.
+
+The seeded working people already have theirs complete, with the coordinator's
+name and a timestamp against every item, because the office would have done that
+work before putting anyone on a project.
+
+CorvinumEU has had the same nine since Stage C. Same wording, separate lists —
+either office can reword its own without touching the other.
+
 **Activation is a decision, and it is recorded.** A coordinator completes the
 four readiness pillars and clicks **Request activation** — which does *not*
 activate. A manager of that office decides from the **Activations** tab. The

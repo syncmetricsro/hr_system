@@ -23,7 +23,7 @@ reusable; Jober's tests pass with assertions unchanged**.
 | Equipment & issued items (§5.8) | **Reuse `features/logistics`** behind its existing `equipment` sub-flag (`accommodation`/`transport` off) — issue/return/flag/deduction-review is already built |
 | Duplicate/blacklist (§5.6) | **Reuse `features/blacklist`** (HMAC matching, propose/decide queue) |
 | Documents w/ expiry (§5.4) | **Reuse `features/compliance`** (metadata + expiry alerts); file upload/verification workflow is a later slice extension, flag-gated |
-| Approval checklists (§5.5) | **New `features/checklists`** — hooks into `core/projects` activation checks |
+| Approval checklists (§5.5) | **New `features/checklists`** — hooks into `core/projects` activation checks. *Superseded 2026-08-05 (ADR 0035): CorvinumEU-originated, not CorvinumEU-only — Jober turned it on to fulfil a confirmed requirement of its own.* |
 | Advance & deduction ledger (§5.10) | **New `features/advances`** — explicit-field model (positive amounts, `entry_type`/`pay_effect`/`settlement_status`), Thursday summary, 20th-to-20th cycle |
 | 2FA (§5.12) | Already core (Stage B4b); CorvinumEU production/staging turns it on via `TWO_FACTOR_AUTH_ENABLED` + `TWO_FACTOR_REQUIRED_ROLES` |
 | Retention/GDPR (§5.12) | Already core (`core/retention`) |

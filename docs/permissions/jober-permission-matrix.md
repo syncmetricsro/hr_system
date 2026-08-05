@@ -62,7 +62,7 @@ Legend: ✅ permitted · — denied
 | `offer.manage` (author/edit/close job offers — ADR 0029) | — | — | ✅ | — |
 | `offer_template.manage` (per-language offer email bodies — ADR 0029) | — | — | ✅ | — |
 | `offer_email.bulk_send` (email an offer to a filtered list; capped + confirmed) | — | — | ✅ | — |
-| `checklist.tick` (Jober: feature off — ADR 0022) | — | ✅ | ✅ | — |
+| `checklist.tick` (on since 2026-08-05 — ADR 0035) | — | ✅ | ✅ | — |
 | `ledger.enter` (Jober: feature off — ADR 0022) | — | — | ✅ | — |
 | `ledger.view` (Jober: feature off — ADR 0022) | — | — | ✅ | ✅ |
 | `wage.manage` (Jober: feature off) | — | — | ✅ | — |

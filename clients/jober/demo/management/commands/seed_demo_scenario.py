@@ -22,6 +22,7 @@ from features.profitability.models import (
 )
 from features.profitability.services import recompute_month, set_line_item
 from features.logistics.models import EquipmentItem
+from clients.jober.demo.checklist import ensure_checklist_template
 from core.ui.registry import flag_enabled
 from features.logistics.services import (
     flag_unreturned,
@@ -57,6 +58,7 @@ class Command(BaseCommand):
     )
 
     def handle(self, *args, **options):
+        ensure_checklist_template()
         manager = User.objects.filter(email=f"manazer@{DEMO_DOMAIN}").first()
         coordinator = User.objects.filter(email=f"koordinator@{DEMO_DOMAIN}").first()
         recruiter = User.objects.filter(email=f"naborar@{DEMO_DOMAIN}").first()

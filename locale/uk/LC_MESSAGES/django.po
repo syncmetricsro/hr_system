@@ -12,43 +12,43 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: clients/corvinum_eu/catalog_i18n.py:12
+#: clients/corvinum_eu/catalog_i18n.py:12 clients/jober/catalog_i18n.py:19
 msgid "Personal data complete"
 msgstr "Особисті дані повні"
 
-#: clients/corvinum_eu/catalog_i18n.py:13
+#: clients/corvinum_eu/catalog_i18n.py:13 clients/jober/catalog_i18n.py:20
 msgid "Identity document verified"
 msgstr "Документ, що посвідчує особу, перевірено"
 
-#: clients/corvinum_eu/catalog_i18n.py:14
+#: clients/corvinum_eu/catalog_i18n.py:14 clients/jober/catalog_i18n.py:21
 msgid "Work/residence permit valid (if applicable)"
 msgstr "Дозвіл на роботу/проживання дійсний (якщо потрібно)"
 
-#: clients/corvinum_eu/catalog_i18n.py:15
+#: clients/corvinum_eu/catalog_i18n.py:15 clients/jober/catalog_i18n.py:22
 msgid "Medical certificate valid"
 msgstr "Медична довідка дійсна"
 
-#: clients/corvinum_eu/catalog_i18n.py:16
+#: clients/corvinum_eu/catalog_i18n.py:16 clients/jober/catalog_i18n.py:23
 msgid "Safety training completed"
 msgstr "Інструктаж з безпеки пройдено"
 
-#: clients/corvinum_eu/catalog_i18n.py:17
+#: clients/corvinum_eu/catalog_i18n.py:17 clients/jober/catalog_i18n.py:24
 msgid "Contract signed"
 msgstr "Договір підписано"
 
-#: clients/corvinum_eu/catalog_i18n.py:18
+#: clients/corvinum_eu/catalog_i18n.py:18 clients/jober/catalog_i18n.py:25
 msgid "Duplicate check resolved"
 msgstr "Перевірку дублікатів завершено"
 
-#: clients/corvinum_eu/catalog_i18n.py:19
+#: clients/corvinum_eu/catalog_i18n.py:19 clients/jober/catalog_i18n.py:26
 msgid "Blacklist check resolved"
 msgstr "Перевірку чорного списку завершено"
 
-#: clients/corvinum_eu/catalog_i18n.py:20
+#: clients/corvinum_eu/catalog_i18n.py:20 clients/jober/catalog_i18n.py:27
 msgid "Welcome call made"
 msgstr "Вітальний дзвінок здійснено"
 
-#: clients/corvinum_eu/catalog_i18n.py:28
+#: clients/corvinum_eu/catalog_i18n.py:28 clients/jober/catalog_i18n.py:35
 msgid ""
 "Name, date of birth, address and phone are all filled in, and they match the "
 "document you were shown rather than what was said on the phone."
@@ -56,7 +56,7 @@ msgstr ""
 "Ім'я, дата народження, адреса й телефон заповнені та збігаються з "
 "документом, який вам показали, а не з тим, що сказали телефоном."
 
-#: clients/corvinum_eu/catalog_i18n.py:33
+#: clients/corvinum_eu/catalog_i18n.py:33 clients/jober/catalog_i18n.py:40
 msgid ""
 "You have seen the ID card or passport yourself, it is valid today, and the "
 "name matches this record. No scan is kept here — this tick is the record "
@@ -66,7 +66,7 @@ msgstr ""
 "ім'я збігається із цим записом. Скан тут не зберігається — ця позначка і є "
 "підтвердженням перевірки."
 
-#: clients/corvinum_eu/catalog_i18n.py:38
+#: clients/corvinum_eu/catalog_i18n.py:38 clients/jober/catalog_i18n.py:45
 msgid ""
 "For a non-EU worker: the permit covers the whole planned assignment, not "
 "just the start date. An EU national needs none — tick it and move on."
@@ -75,7 +75,7 @@ msgstr ""
 "лише день початку. Громадянинові ЄС він не потрібен — позначте й рухайтеся "
 "далі."
 
-#: clients/corvinum_eu/catalog_i18n.py:43
+#: clients/corvinum_eu/catalog_i18n.py:43 clients/jober/catalog_i18n.py:50
 msgid ""
 "A fitness certificate exists, is less than a year old, and its date is "
 "recorded on this worker. Until the date is entered, Compliance keeps "
@@ -85,7 +85,7 @@ msgstr ""
 "працівника. Доки дати немає, Відповідність і далі показує медогляд як "
 "відсутній."
 
-#: clients/corvinum_eu/catalog_i18n.py:48
+#: clients/corvinum_eu/catalog_i18n.py:48 clients/jober/catalog_i18n.py:55
 msgid ""
 "The worker has attended the safety training for the site they are going to, "
 "and whoever gave it has confirmed they were there."
@@ -93,7 +93,7 @@ msgstr ""
 "Працівник пройшов інструктаж з охорони праці для того майданчика, куди він "
 "їде, і той, хто проводив інструктаж, підтвердив його присутність."
 
-#: clients/corvinum_eu/catalog_i18n.py:53
+#: clients/corvinum_eu/catalog_i18n.py:53 clients/jober/catalog_i18n.py:60
 msgid ""
 "Both sides have signed and the office holds its copy. A contract sent but "
 "not signed back is not this item."
@@ -101,7 +101,7 @@ msgstr ""
 "Обидві сторони підписали, і офіс має свій примірник. Надісланий, але не "
 "підписаний назад договір — це ще не цей пункт."
 
-#: clients/corvinum_eu/catalog_i18n.py:57
+#: clients/corvinum_eu/catalog_i18n.py:57 clients/jober/catalog_i18n.py:64
 msgid ""
 "You have searched for this person under other spellings of the name and "
 "under their phone number, and confirmed there is no second record for them."
@@ -109,7 +109,7 @@ msgstr ""
 "Ви шукали цю особу за іншими написаннями імені та за номером телефону й "
 "переконалися, що другого запису про неї немає."
 
-#: clients/corvinum_eu/catalog_i18n.py:62
+#: clients/corvinum_eu/catalog_i18n.py:62 clients/jober/catalog_i18n.py:69
 msgid ""
 "The blacklist check has been run and either found nothing, or a manager has "
 "decided the case. An open match is not resolved."
@@ -117,7 +117,7 @@ msgstr ""
 "Перевірку за чорним списком виконано, і вона або нічого не знайшла, або "
 "керівник ухвалив рішення у справі. Відкритий збіг не вважається вирішеним."
 
-#: clients/corvinum_eu/catalog_i18n.py:67
+#: clients/corvinum_eu/catalog_i18n.py:67 clients/jober/catalog_i18n.py:74
 msgid ""
 "Somebody has called the worker to confirm the start date, how they get there "
 "and what to bring. Not critical — but it prevents most no-shows."
@@ -5698,7 +5698,10 @@ msgstr "Чисті витрати компанії"
 msgid ""
 "Standing cost minus what the workers paid, whether the beds were used or "
 "not. This is the plain out-of-pocket figure for the month."
-msgstr "Постійні витрати мінус те, що сплатили працівники, незалежно від того, чи використовували ліжка. Це проста сума, яку компанія за місяць заплатила зі своєї кишені."
+msgstr ""
+"Постійні витрати мінус те, що сплатили працівники, незалежно від того, чи "
+"використовували ліжка. Це проста сума, яку компанія за місяць заплатила зі "
+"своєї кишені."
 
 #: templates/pages/accommodation_costs.html:15
 #: templates/pages/accommodation_costs.html:22
@@ -5711,7 +5714,12 @@ msgid ""
 "they actually used. It is not empty beds x price per bed: the workers' "
 "payments are credited against it, so a well-paying house shows a smaller "
 "figure than its empty beds alone would suggest."
-msgstr "Постійні витрати мінус те, що сплатили працівники, і мінус вартість ліжок, які справді використовували. Це не кількість порожніх ліжок помножена на ціну ліжка: платежі працівників зараховуються сюди, тож гуртожиток із добре платними працівниками покаже меншу суму, ніж випливало б із самих лише порожніх ліжок."
+msgstr ""
+"Постійні витрати мінус те, що сплатили працівники, і мінус вартість ліжок, "
+"які справді використовували. Це не кількість порожніх ліжок помножена на "
+"ціну ліжка: платежі працівників зараховуються сюди, тож гуртожиток із добре "
+"платними працівниками покаже меншу суму, ніж випливало б із самих лише "
+"порожніх ліжок."
 
 #: templates/pages/accommodation_costs.html:18
 msgid "Missing cost period"
