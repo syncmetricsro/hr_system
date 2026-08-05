@@ -23,7 +23,8 @@
     {% endif %}
     {# Revealed by the double-submit guard while the POST is in flight. Files can take a while and a silent wait reads as a page that ignored the click. #}
     <p data-busy-region role="status">{% trans "Uploading the certificate — this can take a moment. Do not close or reload this page." %}</p>
-    <button class="button button-primary" type="submit" data-busy-label="{% trans 'Uploading…' %}">{% if renewing %}{% trans "Save renewal" %}{% else %}{% trans "Save certificate" %}{% endif %}</button>
+    <button class="button button-physical" type="submit" data-busy-label="{% trans 'Uploading…' %}" data-tooltip-heading="{% trans 'Real-world action' %}" data-tooltip="{% trans 'Record only what you have actually seen. Compliance, readiness, and the expiry reminder all count from what is entered here.' %}">{% if renewing %}{% trans "Save renewal" %}{% else %}{% trans "Save certificate" %}{% endif %}</button>
+    <p class="action-consequence">{% trans "Record only a certificate you have in front of you — expiry and compliance count from it." %}</p>
   </form>
 </section>
 {% endblock %}

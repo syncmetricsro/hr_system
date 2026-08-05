@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import re
+
 from playwright.sync_api import expect
 
 from test_feature_pages import COORDINATOR, _login, base_url
@@ -18,9 +20,19 @@ def test_destructive_action_requires_confirmation(page):
     dialog = page.locator("#confirm-dialog")
     expect(exit_button).to_have_count(1)
 
+    # Exiting a worker frees their bed and calls their gear back in, so the
+    # button is marked as reaching outside the app (ADR 0034).
+    expect(exit_button).to_have_class(re.compile(r"\bbutton-physical\b"))
+    stripe = exit_button.evaluate(
+        "element => getComputedStyle(element, '::before').backgroundImage"
+    )
+    assert "repeating-linear-gradient" in stripe, stripe
+    expect(page.locator(".action-consequence").first).to_be_visible()
+
     # Escape and Cancel both dismiss the modal without performing the action.
     exit_button.click()
     expect(dialog).to_be_visible()
+    expect(page.locator("#confirm-dialog-physical")).to_be_visible()
     assert page.locator("#confirm-dialog-message").inner_text().strip()
     expect(page.locator("[data-confirm-cancel]")).to_be_focused()
     page.keyboard.press("Escape")
@@ -74,13 +86,21 @@ def test_confirmation_preserves_validation_and_clicked_submitter(page):
     page.get_by_role("button", name="First", exact=True).click()
     expect(dialog).to_be_visible()
     expect(page.locator("#confirm-dialog-message")).to_have_text("First action message")
-    assert page.locator(".confirm-dialog-actions").evaluate(
-        "element => getComputedStyle(element).flexDirection"
-    ) == "column-reverse"
+    # An ordinary confirmation must not inherit the real-world band, including
+    # after a physical action was confirmed earlier in the session.
+    expect(page.locator("#confirm-dialog-physical")).to_be_hidden()
+    assert (
+        page.locator(".confirm-dialog-actions").evaluate(
+            "element => getComputedStyle(element).flexDirection"
+        )
+        == "column-reverse"
+    )
     page.keyboard.press("Escape")
 
     page.get_by_role("button", name="Second", exact=True).click()
-    expect(page.locator("#confirm-dialog-message")).to_have_text("Second action message")
+    expect(page.locator("#confirm-dialog-message")).to_have_text(
+        "Second action message"
+    )
     page.locator("[data-confirm-agree]").click()
     expect(dialog).to_be_hidden()
     assert page.evaluate("window.confirmedSubmitter") == "second"

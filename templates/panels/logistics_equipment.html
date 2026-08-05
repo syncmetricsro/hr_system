@@ -33,17 +33,18 @@
                 <option value="restock">{% trans "Reusable — return to stock" %}</option>
                 <option value="retire">{% trans "Damaged or retired" %}</option>
               </select>{% endif %}
-              <button class="button button-secondary" type="submit" data-tooltip="{% trans 'Marks this item as returned and updates warehouse stock accordingly.' %}">{% icon "receive" %}{% trans "Return" %}</button>
+              <button class="button button-physical" type="submit" data-tooltip-heading="{% trans 'Real-world action' %}" data-tooltip="{% trans 'Record this once the item is physically back. It updates warehouse stock, so the count only stays true if the gear is actually in your hands.' %}">{% icon "receive" %}{% trans "Return" %}</button>
             </form>
             {% endif %}
             <form class="inline-form" method="post" action="{% url 'flag_unreturned' issue.pk %}">
               {% csrf_token %}
-              <button class="button button-secondary" type="submit" data-confirm="{% trans 'This flags the item as unreturned and opens a manager charge review at its issued stock value.' %}">{% trans "Flag unreturned" %}</button>
+              <button class="button button-physical" type="submit" data-tooltip-heading="{% trans 'Real-world action' %}" data-tooltip="{% trans "Opens a manager charge review at the issued stock value. If the manager approves it, the amount comes off this worker's pay." %}" data-confirm="{% trans 'This flags the item as unreturned and opens a manager charge review at its issued stock value.' %}">{% trans "Flag unreturned" %}</button>
             </form>
           {% endif %}
         </li>
       {% endfor %}
     </ul>
+    {% if may_equip %}<p class="action-consequence">{% trans "Returning means the item is back in your hands; flagging it unreturned can put the money on this worker's pay." %}</p>{% endif %}
   {% else %}
     <p>—</p>
   {% endif %}
@@ -55,8 +56,9 @@
         {% for item in panel.equipment_items %}<option value="{{ item.pk }}"{% if panel.stock_enabled and item.available_quantity < 1 %} disabled{% endif %}>{{ item.name|db_trans }} {{ item.size }}{% if panel.stock_enabled %} — {% trans "Available" %}: {{ item.available_quantity }}{% else %} — {{ item.unit_price }} EUR{% endif %}</option>{% endfor %}
       </select>
       <input type="number" name="quantity" value="1" min="1" aria-label="{% trans 'Quantity' %}">
-      <button class="button button-primary" type="submit" data-tooltip="{% trans 'Issues this item to the worker and reduces available warehouse stock.' %}">{% icon "issue" %}{% trans "Issue equipment" %}</button>
+      <button class="button button-physical" type="submit" data-tooltip-heading="{% trans 'Real-world action' %}" data-tooltip="{% trans "Hand the item over as you record it. It leaves the warehouse count and becomes this worker's responsibility to return." %}">{% icon "issue" %}{% trans "Issue equipment" %}</button>
     </form>
+    <p class="action-consequence">{% trans "Gear physically changes hands and leaves the warehouse count." %}</p>
   {% endif %}
   {% can 'catalog.manage' as may_manage_catalog %}
   {% if may_manage_catalog %}<a class="button button-secondary" href="{% url 'equipment_catalog' %}">{% trans "Manage equipment catalogue" %}</a>{% endif %}

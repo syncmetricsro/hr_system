@@ -1,5 +1,41 @@
 # Build Journal
 
+## 2026-08-05 - the buttons that reach outside the application
+
+Owner request: some clicks pay a person, send a real message, hand over gear, or
+put someone on a bus, and the product gave them the same quiet grey button as
+"recalculate this table". The only thing separating *Mark cycle settled* from a
+filter was the label text.
+
+Sixteen buttons across four families now carry a marker of three parts: an amber
+**striped** button, the fixed tooltip heading **Real-world action**, and a
+visible caption saying the physical fact - *Money is actually paid out*, *A real
+phone buzzes*, *Gear physically changes hands*. Where the action already
+confirmed, the dialog leads with a band saying it reaches outside the
+application. Verified in both themes, at 1280 and 390, and by opening a physical
+confirmation and then an ordinary one to see the band clear.
+
+The stripe is the part worth defending. Colour alone fails greyscale and colour
+vision deficiency - this stylesheet already reasons that way about its chart
+tokens - so the marker had to be a shape too. It is drawn in CSS rather than set
+as an icon because the CorvinumEU Material subset is fixed and a missing
+ligature renders as the literal word.
+
+Deliberately **not** marked: the generic ledger *Record* button. It records
+something that already happened, and the same control also takes fuel additions
+and equipment charges; the loudest styling in the product on its most routine
+button is how a warning becomes wallpaper. Blacklist decisions stay unmarked too
+- serious, but not physical.
+
+`.button-physical` is read by `app.js`, so the class is an interface, not a
+style. ADR 0034, and a test that holds the three parts together and names each
+of the sixteen buttons.
+
+Two stale ledger tooltips went with it: *Include open entries* still promised
+reversal-only corrections and no backdating, both untrue since ADR 0032/0033.
+
+Jober 1105, CorvinumEU 703, browser 70 (not re-run; e2e is opt-in).
+
 ## 2026-08-05 - C-Q5 answered: an entry is deletable until the money is paid
 
 The open question said "no hard deletes; reversal-only after inclusion". The

@@ -129,7 +129,12 @@ def test_dashboard_shell_for_authenticated_user(client, django_user_model):
     assert "Reporty" in body
     assert body.count('id="confirm-dialog"') == 1
     assert 'aria-labelledby="confirm-dialog-title"' in body
-    assert 'aria-describedby="confirm-dialog-message confirm-dialog-prompt"' in body
+    # The real-world band (ADR 0034) is described first: when it is shown it is
+    # the strongest sentence in the dialog, so it must be announced too.
+    assert (
+        'aria-describedby="confirm-dialog-physical confirm-dialog-message'
+        ' confirm-dialog-prompt"' in body
+    )
     assert "data-confirm-cancel" in body
     assert "data-confirm-agree" in body
     assert "Confirmation dialog for destructive actions" not in body

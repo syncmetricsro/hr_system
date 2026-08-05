@@ -66,8 +66,9 @@
         <label>{% trans "Arrival time" %}
           <input type="datetime-local" name="scheduled_for" required min="1900-01-01T00:00" max="2099-12-31T23:59">
         </label>
-        <button class="button button-secondary" type="submit">{% trans "Schedule trial" %}</button>
+        <button class="button button-physical" type="submit" data-tooltip-heading="{% trans 'Real-world action' %}" data-tooltip="{% trans 'Commits the worker to being at the site at the time you set. Somebody travels on the strength of this, so agree it with them first.' %}">{% trans "Schedule trial" %}</button>
       </form>
+      <p class="action-consequence">{% trans "A person travels to a site at this time. Agree it with them first." %}</p>
     </section>
   {% endif %}
   {% if may_waive_trial %}
@@ -82,8 +83,9 @@
             <option value="{{ project.pk }}">{{ project.name }}</option>
           {% endfor %}
         </select>
-        <button class="button button-secondary" type="submit">{% trans "Skip the trial and start readiness" %}</button>
+        <button class="button button-physical" type="submit" data-tooltip-heading="{% trans 'Real-world action' %}" data-tooltip="{% trans 'Puts a worker on the way to a real shift without seeing them work first. Only for someone the office already knows.' %}">{% trans "Skip the trial and start readiness" %}</button>
       </form>
+      <p class="action-consequence">{% trans "This worker starts without being seen on site first." %}</p>
     </section>
   {% endif %}
 {% elif pending_trial %}
@@ -210,8 +212,9 @@
         <label>{% trans "Entry medical date" %}
           <input type="date" name="entry_medical_date" min="1900-01-01" max="2099-12-31" value="{{ working_medical_date|date:'Y-m-d' }}" required>
         </label>
-        <button class="button button-secondary" type="submit" data-tooltip="{% trans 'Records the date on the certificate. It is what the annual expiry counts from, and what clears the compliance alert.' %}">{% icon "save" %}{% trans "Record medical date" %}</button>
+        <button class="button button-physical" type="submit" data-tooltip-heading="{% trans 'Real-world action' %}" data-tooltip="{% trans 'Records the date on the certificate. It is what the annual expiry counts from, and what clears the compliance alert.' %}">{% icon "save" %}{% trans "Record medical date" %}</button>
       </form>
+      <p class="action-consequence">{% trans "Only record a date you have seen on a real certificate — the annual expiry counts from it." %}</p>
     </section>
   {% endif %}
 {% endif %}
@@ -262,7 +265,7 @@
   <div class="action-row">
     <form method="post" action="{% url 'exit_person' person.pk %}" data-confirm="{% trans 'This ends the active assignment, releases the room, returns issued equipment, and sets the person to Available.' %}">
       {% csrf_token %}<input type="hidden" name="outcome" value="available">
-      <button class="button button-secondary" type="submit">{% trans "Exit to Available" %}</button>
+      <button class="button button-physical" type="submit" data-tooltip-heading="{% trans 'Real-world action' %}" data-tooltip="{% trans 'Ends the assignment for real: the bed is freed for someone else and issued gear is expected back.' %}">{% trans "Exit to Available" %}</button>
     </form>
     <form method="post" action="{% url 'exit_person' person.pk %}" data-confirm="{% trans 'This ends the active assignment, releases the room, returns issued equipment, and sets the person to Inactive with the chosen reason.' %}">
       {% csrf_token %}<input type="hidden" name="outcome" value="inactive">
@@ -270,9 +273,10 @@
         <option value="">{% trans "Reason…" %}</option>
         {% for r in inactive_reasons %}<option value="{{ r.pk }}">{{ r.label|db_trans }}</option>{% endfor %}
       </select>
-      <button class="button button-secondary" type="submit">{% trans "Exit to Inactive" %}</button>
+      <button class="button button-physical" type="submit" data-tooltip-heading="{% trans 'Real-world action' %}" data-tooltip="{% trans 'Ends the assignment for real: the bed is freed for someone else and issued gear is expected back.' %}">{% trans "Exit to Inactive" %}</button>
     </form>
   </div>
+  <p class="action-consequence">{% trans "The worker leaves: their bed is freed and their gear is expected back." %}</p>
 </section>
 {% endif %}
 

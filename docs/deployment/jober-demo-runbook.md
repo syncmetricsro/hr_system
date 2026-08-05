@@ -479,6 +479,16 @@ off per office; fraud protection deliberately is not.
 
 ## Supporting flow
 
+**The buttons that reach outside the app.** Some controls are amber with a
+striped edge, carry a **Real-world action** tooltip, and state their consequence
+in a line underneath: *Gear physically changes hands*, *A real email leaves the
+building*, *A person travels to a site at this time*. That is deliberate — issue
+equipment, send an offer, schedule a trial and record a certificate all commit
+someone to something the application cannot undo, so they do not look like the
+buttons that only redraw a table (ADR 0034). The stripe carries the signal
+without relying on colour, so it still reads in greyscale and for a colour-blind
+user.
+
 **Occupational certificate upload.** Open a fictional worker in the signed-in
 office and add the fictional forklift card from
 `tests/fixtures/manual_uploads/certificates/`: select Forklift, enter

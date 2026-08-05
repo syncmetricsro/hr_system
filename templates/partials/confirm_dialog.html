@@ -4,8 +4,9 @@ Confirmation dialog for destructive actions (owner requirement 2026-07-11).
 Forms/buttons carrying data-confirm="…" are intercepted by app.js; the
 message lands in #confirm-dialog-message. Native dialog, no dependencies.
 {% endcomment %}
-<dialog id="confirm-dialog" class="confirm-dialog" aria-labelledby="confirm-dialog-title" aria-describedby="confirm-dialog-message confirm-dialog-prompt">
+<dialog id="confirm-dialog" class="confirm-dialog" aria-labelledby="confirm-dialog-title" aria-describedby="confirm-dialog-physical confirm-dialog-message confirm-dialog-prompt">
   <h2 id="confirm-dialog-title">{% trans "Please confirm" %}</h2>
+  <p id="confirm-dialog-physical" class="confirm-physical" hidden>{% trans "This reaches outside the application. Something happens in the real world that clicking again will not undo." %}</p>
   <p id="confirm-dialog-message" class="muted"></p>
   <p id="confirm-dialog-prompt"><strong>{% trans "Do you really want to do this?" %}</strong></p>
   <div class="confirm-dialog-actions">
