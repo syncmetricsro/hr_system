@@ -1,5 +1,56 @@
 # Deployment Journal
 
+## 2026-08-05 - The medical renewal path and readable flash messages
+
+Deployed the exact `main` merge **`0cadfa3`** to `jober-staging` and
+`corvinum-staging` as `jober-platform:demo-0cadfa3` (image ID
+`sha256:3c71c814f35d67f2928a22f877a4b54bbb1ac6f9c2b6ef79733ac25b717700c3`),
+streamed with `git:load-image`.
+
+Two reported problems:
+
+- **A compliance alert that could not be cleared.** Activation checked the
+  Medical pillar *state* while the alert reads the *date*, and nothing required
+  them to agree. Marking Medical complete now requires the date, and a working
+  person's profile carries a panel that records or renews it - the screen that
+  never existed, and the reason `MEDICAL_VALIDITY_MONTHS = 12` was previously
+  unservable for anyone already activated.
+- **Flash messages ran for three seconds**, which is not long enough to read two
+  lines. Now ten, with a dismiss button, and the timer holds while the pointer
+  or keyboard focus is on the message. The markup moved out of both client
+  shells into one partial.
+
+**No migrations.** The migration diff since `73cdce7` is empty.
+
+Verified on the live app rather than inferred:
+
+```
+person: Olena StagingDemo-1784572547 | lifecycle: working
+medical panel URL: /sk/people/6/medical/
+entry_medical_date now: None
+open Medical alerts: 1
+```
+
+The route now exists for the worker whose alert prompted the change, and the
+alert is still open - deliberately. It will be cleared **through the UI**, which
+is the proof the fix works; setting the date directly in the database would only
+have proved the database accepts dates. Both hosts serve
+`app.3bbf7c7f0f3c.css`.
+
+Pre-deploy suites on `0cadfa3`: Jober **1083 passed / 16 skipped**, CorvinumEU
+**671 passed / 23 skipped**, Playwright **70 passed**; ruff check and
+`ruff format --check` clean. `test_themes` cross-tab sync failed once on the
+first browser run and passed 3/3 in isolation plus a clean full rerun - the same
+storage-event race seen on 2026-08-04, not a regression. Both
+`deploy_smoke.sh --https` runs passed, and `migrate --check` exits 0 on both.
+
+Rollback target:
+
+```bash
+ssh syncmetric-prime-dokku "git:from-image <app> jober-platform:demo-73cdce7"
+```
+
+
 ## 2026-08-05 - Carry-forward, the upload guard and the equipment unblock
 
 Deployed the exact `main` merge **`73cdce7`** to `jober-staging` and
