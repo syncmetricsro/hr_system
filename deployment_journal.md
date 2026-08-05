@@ -1,5 +1,87 @@
 # Deployment Journal
 
+## 2026-08-05 - Five slices: correction, consequence, and the medical
+
+Deployed the exact `main` merge **`a91844d`** to `jober-staging` and
+`corvinum-staging` as `jober-platform:demo-a91844d` (image ID
+`sha256:aeb0e1528eec9e475209f394d7b6aa9ce19f6b9cd6f1a2f4538f863f0880a5e0`),
+streamed with `git:load-image`. Staging had fallen five merges behind.
+
+The release, in the order the work was asked for:
+
+- **The ledger offered a reversal it would then refuse** (`108b70f`). The
+  button showed on any locked entry without asking whether a reversal already
+  existed, and neither side of a reversed pair was marked.
+- **C-Q5 answered: an entry is deletable until the money is paid** (ADR 0033).
+  Blanket immutability was rejected by the owner; the line is payment, not
+  cycle inclusion. Deletion is audited with everything the row held, reversal
+  stays for corrections after settlement, and a cycle closed by mistake can be
+  reopened while its own window still runs — after that the refusal names the
+  next run and its dates.
+- **Buttons that reach outside the application look like it** (ADR 0034).
+  Sixteen buttons across four families — money and sending, physical handover,
+  a person has to be somewhere, paper in hand — carry an amber striped button,
+  a fixed *Real-world action* tooltip heading, and a visible consequence line.
+  The stripe is a shape, not only a colour, so it survives greyscale and colour
+  vision deficiency.
+- **The medical is a date, so the product now chases it.** A health badge
+  synthesised from `entry_medical_date`, activation refused for a medical that
+  has already expired (naming the date), and lapsed dates reported for anyone
+  still on the books rather than only `WORKING` people.
+- **Nine checkboxes, nine explanations.** Each activation checklist item says
+  what its tick claims, headed by its own name, instead of one repeated
+  sentence about how ticking works.
+
+**One migration**, `checklists.0002_checklistitemtemplate_help_text` — an
+additive blank `TextField`. Applied cleanly on both apps.
+
+**The help text needed a separate step, and that is the interesting part of
+this release.** The column ships empty; the words live in the seed. Both
+staging databases already held all nine rows, so `get_or_create(defaults=…)`
+would never have reached them — the same trap the code fix addresses. The
+runbook forbids `seed_corvinum_demo` as a routine release action, so the repair
+was applied surgically, importing `ACTIVATION_ITEMS` from the seed module so
+the text is the source of truth rather than a retyped copy:
+
+```
+before: 9 items, 0 with help text
+after:  9 items, 9 with help text
+        Personal data complete | Name, date of birth, address and phone are all filled in, an…
+```
+
+Verified on the live apps rather than inferred from a green build:
+
+```
+corvinum-staging  delete_entry / reopen_cycle present:   True True
+corvinum-staging  medical expiries computed:             5 ['2027-07-13', '2027-08-04', …]
+corvinum-staging  compliance alerts:                     1 ['missing'] ['working']
+jober-staging     compliance alerts:                     3 ['expired', 'expiring', 'missing']
+both hosts        stylesheet app.5ecd259c7e2f.css serves
+                  action-consequence, button-physical, confirm-physical
+```
+
+No lapsed medical exists on CorvinumEU staging today — every recorded date
+expires in 2027 — so the widened alert scope changes nothing there yet, which
+is the correct outcome rather than a missing one. Jober staging shows all three
+severities, so the path is exercised.
+
+Pre-deploy on `a91844d`: Jober **1120 passed / 19 skipped**, CorvinumEU
+**721 passed / 23 skipped**, Playwright **70 passed**; `ruff check` clean and
+`ruff format --check` clean across all 26 changed Python files since the last
+release; `check_no_node_artifacts`, `verify_vendor_assets` and
+`check_dependency_direction` all clean — the last one matters this time,
+because `add_months` moved into `core/dates.py` so the activation gate and
+compliance could share one definition of expiry.
+
+Both `deploy_smoke.sh --https` runs passed health, login/CSRF, fingerprinted
+static, X-Frame-Options and HSTS.
+
+Rollback target:
+
+```bash
+ssh syncmetric-prime-dokku "git:from-image <app> jober-platform:demo-0cadfa3"
+```
+
 ## 2026-08-05 - The medical renewal path and readable flash messages
 
 Deployed the exact `main` merge **`0cadfa3`** to `jober-staging` and
