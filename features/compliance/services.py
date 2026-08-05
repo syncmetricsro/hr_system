@@ -10,6 +10,7 @@ from django.utils.translation import gettext as _
 from core.accounts.models import Role
 from core.accounts.permissions import Action, can
 from core.audit.services import record_event
+from core.dates import add_months
 from core.media import (
     CertificateUploadError,
     process_certificate_document,
@@ -28,15 +29,15 @@ from features.compliance.models import (
 # Severity ranking for sorting (worst first).
 _RANK = {"expired": 0, "missing": 1, "expiring": 2}
 
-
-def add_months(d: dt.date, months: int) -> dt.date:
-    """Add whole months to a date without external deps (clamps day-of-month)."""
-    month_index = d.month - 1 + months
-    year = d.year + month_index // 12
-    month = month_index % 12 + 1
-    next_month_first = dt.date(year + (month // 12), (month % 12) + 1, 1)
-    last_day = (next_month_first - dt.timedelta(days=1)).day
-    return dt.date(year, month, min(d.day, last_day))
+# Whose lapsed medical is worth reporting. Not inactive or blacklisted: they
+# are not on site, and their expiry would only crowd out the live ones.
+_MEDICAL_EXPIRY_STATUSES = frozenset(
+    {
+        LifecycleStatus.AVAILABLE,
+        LifecycleStatus.TRIAL_DAY,
+        LifecycleStatus.WORKING,
+    }
+)
 
 
 def _severity(expiry: dt.date, today: dt.date, alert_days: int) -> str | None:
@@ -90,13 +91,16 @@ def compliance_alerts(viewer=None) -> list[dict]:
 
     alerts: list[dict] = []
     for person in people:
-        if person.lifecycle_status == LifecycleStatus.WORKING:
-            med_dates = [
-                record.entry_medical_date
-                for record in person.readiness_records.all()
-                if record.entry_medical_date
-            ]
-            if not med_dates:
+        med_dates = [
+            record.entry_medical_date
+            for record in person.readiness_records.all()
+            if record.entry_medical_date
+        ]
+        if not med_dates:
+            # Only a working person is *missing* a medical. A candidate who has
+            # not had one yet is not a compliance failure, and alerting on them
+            # would bury the ones that are.
+            if person.lifecycle_status == LifecycleStatus.WORKING:
                 alerts.append(
                     {
                         "person": person,
@@ -105,18 +109,21 @@ def compliance_alerts(viewer=None) -> list[dict]:
                         "due": None,
                     }
                 )
-            else:
-                expiry = add_months(max(med_dates), validity_months)
-                severity = _severity(expiry, today, alert_days)
-                if severity:
-                    alerts.append(
-                        {
-                            "person": person,
-                            "item": "Medical",
-                            "severity": severity,
-                            "due": expiry,
-                        }
-                    )
+        elif person.lifecycle_status in _MEDICAL_EXPIRY_STATUSES:
+            # A date that has lapsed is worth reporting for anyone still on the
+            # books - a trial day happens on site too. Inactive and blacklisted
+            # people are not going anywhere, so their expiry is noise.
+            expiry = add_months(max(med_dates), validity_months)
+            severity = _severity(expiry, today, alert_days)
+            if severity:
+                alerts.append(
+                    {
+                        "person": person,
+                        "item": "Medical",
+                        "severity": severity,
+                        "due": expiry,
+                    }
+                )
 
         for certificate in person.certificates.all():
             if (

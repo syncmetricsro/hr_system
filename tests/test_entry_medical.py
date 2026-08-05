@@ -31,6 +31,8 @@ from core.projects.services import (
     WorkflowError,
     activate_on_project,
     get_or_create_readiness,
+    medical_expiry,
+    readiness_blockers,
     record_entry_medical,
     update_readiness,
 )
@@ -211,3 +213,70 @@ def test_a_recruiter_cannot_record_a_medical(client, world, django_user_model):
         {"entry_medical_date": "2026-08-01"},
     )
     assert response.status_code == 403
+
+
+# --- and the date has to still be valid (2026-08-05) -----------------------
+#
+# The pillar says "we checked"; the date says when. A medical from three years
+# ago used to tick, activate cleanly, and show as expired in Compliance one
+# second later, with nothing having stopped it. Recording a date closed half
+# the hole; this closes the other half.
+
+
+def test_activation_is_refused_when_the_recorded_medical_has_expired(settings, world):
+    settings.MEDICAL_VALIDITY_MONTHS = 12
+    readiness = get_or_create_readiness(world["person"], world["project"])
+    lapsed = dt.date.today() - dt.timedelta(days=400)
+    _complete(readiness, world["manager"], medical_date=lapsed)
+
+    blockers = readiness_blockers(readiness)
+
+    assert [b for b in blockers if b["field"] == "entry_medical_date"], blockers
+    with translation.override("en"):
+        message = readiness_blockers(readiness)[0]["message"]
+    # The date is the actionable part: an office told only "medical expired"
+    # has to go looking for what it expired against.
+    assert str(medical_expiry(readiness)) in message
+
+
+def test_a_current_medical_activates_normally(settings, world):
+    """The regression guard: this whole thread started with an alert nobody
+    could clear, and over-correcting into a gate nobody can pass is worse."""
+    settings.MEDICAL_VALIDITY_MONTHS = 12
+    readiness = get_or_create_readiness(world["person"], world["project"])
+    _complete(readiness, world["manager"], medical_date=dt.date.today())
+
+    assert readiness_blockers(readiness) == []
+
+    activate_on_project(world["person"], world["project"], actor=world["manager"])
+    world["person"].refresh_from_db()
+    assert world["person"].lifecycle_status == LifecycleStatus.WORKING
+
+
+def test_an_expiring_medical_does_not_block_activation(settings, world):
+    """Inside the window is inside the window. Compliance warns at 30 days;
+    activation only refuses what has actually run out."""
+    settings.MEDICAL_VALIDITY_MONTHS = 12
+    readiness = get_or_create_readiness(world["person"], world["project"])
+    nearly = dt.date.today() - dt.timedelta(days=350)
+    _complete(readiness, world["manager"], medical_date=nearly)
+
+    assert readiness_blockers(readiness) == []
+
+
+def test_renewing_the_date_clears_the_activation_blocker(settings, world):
+    settings.MEDICAL_VALIDITY_MONTHS = 12
+    readiness = get_or_create_readiness(world["person"], world["project"])
+    _complete(
+        readiness,
+        world["manager"],
+        medical_date=dt.date.today() - dt.timedelta(days=400),
+    )
+    assert readiness_blockers(readiness)
+
+    record_entry_medical(
+        world["person"], world["project"], dt.date.today(), actor=world["manager"]
+    )
+
+    readiness.refresh_from_db()
+    assert readiness_blockers(readiness) == []

@@ -71,6 +71,7 @@ staff-invitation subsystem deferred) ·
 | `certificate-upload-design.md` | Platform | Shared forklift/crane/welding upload, renewal/history, RBAC, validation, and emergency purge — implemented 2026-07-31 |
 | `document-storage-boundary.md` | Platform | Metadata-only/prohibited high-risk document boundary and optional separately scoped Secure Document Vault |
 | `secure-document-vault-design.md` | Platform | Engineering design for the deferred, separately priced vault — architecture, data model, integration seam, phasing. **Designed, not built** |
+| `paper-archive-register-design.md` | Platform | Track that a physical paper exists and when it expires, with a QR label for the archive sleeve and no scan ever stored. **Designed, not built** (C-Q23) |
 | `secure-document-vault-proposal.md` | Platform | Client-facing offer for the same module: what it adds, what the client must supply, why it is priced apart (C-Q18) |
 | `accountant-data-handoff.md` | Platform | Separate Slovak/Hungarian accountant handoffs: country-specific payroll facts and tax declarations, medical/ID exclusions, secure routing, and refusal of mixed/unresolved jurisdictions |
 | `feedback-flyer-design.md` | Platform | Downloadable PDF+QR flyer for feedback links, Cyrillic-capable via a vendored font (ADR 0028) — implemented 2026-07-24 |

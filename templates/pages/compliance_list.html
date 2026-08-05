@@ -1,5 +1,5 @@
 {% extends "layouts/base.html" %}
-{% load i18n %}
+{% load i18n nav %}
 
 {% block title %}{% trans "Compliance" %} · {{ BRAND_NAME }}{% endblock %}
 
@@ -14,7 +14,7 @@
     <a class="field-card person-row" href="{% url 'person_detail' a.person.pk %}" data-tooltip="{% trans 'Details' %}">
       <div>
         <h3>{{ a.person }}</h3>
-        <p>{{ a.item }}</p>
+        <p>{{ a.item|db_trans }}</p>
       </div>
       <dl>
         <div>

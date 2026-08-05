@@ -1,5 +1,29 @@
 # Test Journal
 
+## 2026-08-05 - testing an expiry gate without building a wall
+
+- Four tests on the activation blocker, and the one that matters most is the
+  **negative**: a current medical still activates. This thread began with an
+  alert nobody could clear; over-correcting into a gate nobody can pass would
+  be the worse bug, and it would look like success in a suite that only tests
+  refusals.
+- The boundary is tested from both sides at once: 400 days lapsed refuses, 350
+  days does not. Compliance warns at 30 days; activation refuses only what has
+  actually run out, and a test that pinned one number would not have caught the
+  two rules being conflated.
+- The blocker assertion checks that the **date appears in the message**, not
+  just that a blocker exists. "Medical expired" with no date sends the office
+  hunting.
+- Alert scope is three tests because the rule is deliberately asymmetric:
+  lapsed-on-a-trial-day is reported, no-medical-yet is not, and inactive is
+  left alone. A single test would have let the asymmetry drift.
+- The badge tests call the panel provider with a stub request rather than
+  rendering a page — the icon row is built in Python and asserting on the dict
+  says exactly what broke.
+- `add_months` moved to `core/dates.py`; `tests/test_compliance.py` imports it
+  from its new home so the test does not quietly certify a re-export.
+- Suites: **Jober 1118 / CorvinumEU 716 / browser 70** (browser not re-run).
+
 ## 2026-08-05 - local 2FA bypass with a production tripwire
 
 - Two authentication regressions prove the local switch bypasses both halves

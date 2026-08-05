@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import datetime as dt
+
 from django.conf import settings
 from django.db import transaction
 from django.utils import timezone
@@ -7,6 +9,7 @@ from django.utils.dateparse import parse_date
 from django.utils.translation import gettext as _
 
 from core.audit.services import record_event
+from core.dates import add_months
 from core.people.models import LifecycleStatus
 from core.projects.models import (
     ActivationApproval,
@@ -293,7 +296,41 @@ def readiness_blockers(readiness: ReadinessRecord) -> list[dict[str, str]]:
                     "message": _("A reason is required when this is not applicable."),
                 }
             )
+
+    expiry = medical_expiry(readiness)
+    if (
+        readiness.medical_state == PillarState.COMPLETE
+        and expiry
+        and expiry < timezone.localdate()
+    ):
+        # A ticked pillar says "we checked"; the date says when. Without this,
+        # a medical from three years ago activates cleanly and then shows as
+        # expired in Compliance a second later, with nothing having stopped it.
+        blockers.append(
+            {
+                "field": "entry_medical_date",
+                "label": _("Medical"),
+                "message": _(
+                    "The entry medical expired on %(date)s. Record the current "
+                    "certificate date before activating."
+                )
+                % {"date": expiry},
+            }
+        )
     return blockers
+
+
+def medical_expiry(readiness) -> dt.date | None:
+    """When the recorded entry medical runs out, or None if none is recorded.
+
+    One definition, used by the activation gate, the readiness screen and the
+    compliance alerts — three places that disagreed about the same date is how
+    an unclearable alert got shipped once already.
+    """
+    if not readiness or not readiness.entry_medical_date:
+        return None
+    months = getattr(settings, "MEDICAL_VALIDITY_MONTHS", 12)
+    return add_months(readiness.entry_medical_date, months)
 
 
 @transaction.atomic

@@ -298,6 +298,17 @@ Talking point: passing a trial, completing readiness, and approving a checklist
 are separate auditable decisions. No browser-only state can bypass the
 server-side activation gates.
 
+**The medical is a date, and the product chases it.** The office records the
+date on the certificate; the app carries no health document, by design. From
+that date it draws a health badge beside the worker's name, warns 30 days
+before the annual expiry, lists them in Compliance once it lapses — and
+**refuses activation** for a medical that has already run out, naming the date
+it expired on. Worth showing deliberately: set the entry medical date to last
+year and try to activate.
+
+Ask what their real interval is (C-Q7). Twelve months is one global setting;
+SK and HU differ, and night work and driving are often shorter.
+
 **If asked about small offices** (ADR 0031, and worth raising unprompted since
 CorvinumEU runs with a single HR Manager): the trial day can be skipped. On an
 Available person, a manager gets **Activate without a trial day** — pick a

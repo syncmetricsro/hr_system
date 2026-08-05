@@ -13,7 +13,7 @@ Sources: design doc §5.10/§12.6/§13, Addendum A1.
 | C-Q4 | Partial advance recovery across cycles (§13.3, model-affecting) | **Not in MVP** — an advance settles in one cycle; reversal entries are the correction path. If confirmed needed, add linked recovery entries (`recovers_advance_id`) | Client |
 | C-Q5 | Correction/immutability | **Answered 2026-08-05 (ADR 0033).** Blanket immutability rejected. An entry is **deletable until the money is paid** — open or included — and immutable once settled with pay, where a reversal remains the correction path. Every deletion writes an audit event carrying the values, so a figure leaves the ledger but not the record. A cycle closed by mistake can be **reopened while its own 21st-to-20th window is still running**; afterwards the refusal names the next run and its dates | **Answered** |
 | C-Q6 | Financial boundary sign-off (§13.1) — **scope changed 2026-07-11**: client asked to store pay amounts + email encrypted payslips (ADR 0023); payroll *calculation* still out of scope | Payslips feature built; written confirmation still wanted | Client (written) |
-| C-Q7 | Mandatory metadata/certificate types + which expire (§13.2) | Nothing enforced as mandatory yet; high-risk identity/medical/civil-status scans are proposed metadata-only or prohibited | Client |
+| C-Q7 | Mandatory metadata/certificate types + which expire (§13.2) | Nothing enforced as mandatory yet; high-risk identity/medical/civil-status scans are proposed metadata-only or prohibited. **Note added 2026-08-05:** the medical is tracked as a *date* with a single global validity of **12 months** (`MEDICAL_VALIDITY_MONTHS`), and since that date now blocks activation once it lapses, the number matters. SK and HU intervals differ, and night work and driving typically carry shorter ones — ask for their actual intervals and whether they vary by job | Client |
 | C-Q8 | Default UI language (SK or HU) + default theme (light/dark) | **SK default**, HU switchable; **Dark default**, with Light and System selectable per browser | Client |
 | C-Q9 | "HR Admin" as a distinct role vs. core `manager` | Mapped to `manager` for MVP | Client |
 | C-Q10 | Private-car fuel money basis/cadence/eligibility (A1.1) | Flat manual `PAY_ADDITION`, category `travel_fuel`, entered per worker | Client |
@@ -74,6 +74,28 @@ calculated by this system. That answers "what was taken off me" without the
 document claiming to derive net pay.
 
 Get the answer in writing, like C-Q6. This is a document about someone's pay.
+
+**C-Q23 — would the office run a paper archive register?** Proposed by the
+owner on 2026-08-05 and written up in
+[`paper-archive-register-design.md`](paper-archive-register-design.md):
+track that a paper exists and when it expires, never store a scan, and print a
+QR label for the archive sleeve so a specific sheet can be found again.
+
+**Designed, not built.** Four things to settle before any code:
+
+1. Which papers do they keep, and which expire? This is the same answer C-Q7
+   needs, so ask them together.
+2. **Would they actually label every paper, every time?** If the honest answer
+   is "mostly", build the catalogue and the expiry chasing and drop the labels
+   — a half-labelled archive looks complete and is not.
+3. Where do the papers live, and who may read the register?
+4. How long is each type kept after a worker leaves? This makes C-Q13 and
+   C-Q16 blocking rather than open.
+
+Worth saying out loud at the demo: the QR token exists so nobody has to type an
+identity-document number into the system. It is a compliance improvement, not
+just a filing convenience — and it is **not** the Secure Document Vault, which
+remains separately scoped and unbuilt (C-Q18).
 
 ## Answered by observation
 
