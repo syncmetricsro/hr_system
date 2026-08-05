@@ -4,10 +4,12 @@ from __future__ import annotations
 
 import datetime as dt
 
+from django.conf import settings
 from django.urls import reverse
 from django.utils.translation import gettext as _
 
 from core.accounts.permissions import Action, can
+from core.dates import add_months
 from core.people.permissions import can_view_sensitive
 from features.compliance.models import CertificateCategory, CertificateRecordStatus
 from features.compliance.services import (
@@ -52,6 +54,24 @@ def compliance_badge(request):
     return {"count": len(alerts), "severe": severe}
 
 
+def medical_badge(person, today):
+    """The entry medical as a badge, or None when no date has been recorded."""
+    dates = [
+        record.entry_medical_date
+        for record in person.readiness_records.all()
+        if record.entry_medical_date
+    ]
+    if not dates:
+        return None
+    expiry = add_months(max(dates), getattr(settings, "MEDICAL_VALIDITY_MONTHS", 12))
+    return {
+        "icon": CATEGORY_ICONS[CertificateCategory.HEALTH],
+        "tooltip": _("%(name)s (expires %(date)s)")
+        % {"name": _("Entry medical"), "date": expiry},
+        "severity": _severity(expiry, today, 30),
+    }
+
+
 def certificate_badges(request, person):
     """Small icon row beside a worker's avatar, one per certificate category
     they hold - worker list and person-detail header (docs/product/
@@ -64,10 +84,19 @@ def certificate_badges(request, person):
         if cert.record_status != CertificateRecordStatus.ACTIVE:
             continue
         by_category.setdefault(cert.category, []).append(cert)
-    if not by_category:
-        return None
 
     badges = []
+    # The entry medical is a date on readiness, not a Certificate row - the
+    # product deliberately holds no health document (document-storage
+    # boundary). It still belongs in the row of things the office reads at a
+    # glance, so it is drawn from the date with the same icon and colouring.
+    medical = medical_badge(person, today)
+    if medical:
+        badges.append(medical)
+
+    if not by_category and not badges:
+        return None
+
     for category, certs in by_category.items():
         best = most_relevant_certificate(certs, today)
         severity = _severity(best.expiry_date, today, 30) if best.expiry_date else None

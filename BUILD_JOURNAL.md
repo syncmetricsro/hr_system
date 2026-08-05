@@ -1,5 +1,61 @@
 # Build Journal
 
+## 2026-08-05 - the medical is a date, so the product now chases it
+
+Asked how health certificates are checked, the honest answer was: they are not
+certificates. New HEALTH certificate rows are refused by both the form and
+`save_certificate` — deliberately, under the document-storage boundary — and
+the whole mechanism is `ReadinessRecord.entry_medical_date` plus twelve months.
+The owner's conclusion was that a date is enough **provided the product chases
+the renewal**. It was not chasing it properly.
+
+**The badge.** `certificate_badges` builds its icon row from `Certificate`
+rows, so the one requirement every worker has was the only one with no icon —
+while `cert-health` had been sitting in the registry unused and
+`medical_services` was already in the CorvinumEU font subset. The medical is
+now synthesised into that row from the date, with the same expiry colouring:
+neutral, amber at 30 days, red once lapsed.
+
+**Activation refuses a lapsed medical.** `readiness_blockers` read only the
+pillar *state*, so a medical dated three years ago could be ticked, activate
+cleanly, and show as expired in Compliance one second later with nothing having
+stopped it. The blocker names the expiry date, because an office told only
+"medical expired" has to go hunting for what it expired against.
+
+**Expiry is reported past WORKING.** *Missing* stays a working-person rule — a
+candidate who has not had a medical yet is not a compliance failure, and
+alerting on them buries the ones that are. But a lapsed date now surfaces for
+anyone still on the books, including someone on a trial day, which happens on
+site. Verified on the local stack: an Available worker with a year-old medical
+appears in Súlad, which the old code would never have shown.
+
+`add_months` moved to `core/dates.py`: core may not import from a feature, and
+the activation gate and compliance now ask the same question. One definition,
+`medical_expiry`, shared by both — three places disagreeing about one date is
+how the unclearable alert shipped in the first place.
+
+Also fixed in passing: the Compliance list printed the requirement name raw, so
+"Medical" stayed English on a Slovak page. It renders through `db_trans` now.
+
+C-Q7 gains a note: twelve months is one global constant, SK and HU differ, and
+night work and driving are usually shorter. Now that the number blocks
+activation, it needs a real answer.
+
+**Paper archive register — designed, not built.** The owner proposed tracking
+physical papers with printed QR labels instead of storing scans.
+`docs/product/paper-archive-register-design.md` writes it up as the
+metadata-requirement catalogue the boundary document already named as future
+work. The strongest argument for it is not filing: the opaque token gives an
+office a way to name one sheet of paper **without typing a document number into
+the system**, which is precisely what the boundary forbids and what people do
+anyway when there is no alternative. Scope is work papers only; identity and
+civil-status papers stay out until there is a written legal position. One
+change to the proposal — the label goes on the sleeve, never on the document,
+because an altered identity document is invalid in several jurisdictions.
+C-Q23 asks the four questions that decide whether it is built.
+
+Jober 1118, CorvinumEU 716, browser 70 (not re-run).
+
 ## 2026-08-05 - Corvinum localhost uses password-only demo login
 
 The fictional-data Corvinum client at `localhost:8001` no longer asks testers

@@ -98,7 +98,7 @@ msgstr "Операції"
 
 # --- compliance ---
 #: clients/corvinum_eu/templates/layouts/base.html:50
-#: features/compliance/panels.py:33 features/intake/catalog_i18n.py:12
+#: features/compliance/panels.py:35 features/intake/catalog_i18n.py:12
 #: features/profitability/models.py:90 templates/layouts/base.html:41
 #: templates/pages/compliance_list.html:4
 #: templates/pages/compliance_list.html:9
@@ -294,31 +294,31 @@ msgstr "TOTP-пристрій"
 msgid "TOTP devices"
 msgstr "TOTP-пристрої"
 
-#: core/accounts/views.py:59
+#: core/accounts/views.py:67
 msgid "Your role requires two-factor authentication — set it up now."
 msgstr "Ваша роль вимагає двофакторної автентифікації — налаштуйте її зараз."
 
-#: core/accounts/views.py:63
+#: core/accounts/views.py:71
 msgid "Invalid email or password."
 msgstr "Невірна електронна пошта або пароль."
 
-#: core/accounts/views.py:98 core/accounts/views.py:121
+#: core/accounts/views.py:110 core/accounts/views.py:136
 msgid "Invalid code."
 msgstr "Недійсний код."
 
-#: core/accounts/views.py:119
+#: core/accounts/views.py:134
 msgid "Two-factor authentication enabled."
 msgstr "Двофакторну автентифікацію ввімкнено."
 
-#: core/accounts/views.py:161 core/people/views.py:365
+#: core/accounts/views.py:176 core/people/views.py:365
 msgid "No file was selected."
 msgstr "Файл не вибрано."
 
-#: core/accounts/views.py:176 core/people/views.py:380
+#: core/accounts/views.py:191 core/people/views.py:380
 msgid "Avatar updated."
 msgstr "Аватар оновлено."
 
-#: core/accounts/views.py:186 core/people/views.py:392
+#: core/accounts/views.py:201 core/people/views.py:392
 msgid "Avatar removed."
 msgstr "Аватар видалено."
 
@@ -1435,49 +1435,50 @@ msgstr "затвердження активації"
 msgid "activation approvals"
 msgstr "затвердження активацій"
 
-#: core/projects/services.py:132
+#: core/projects/services.py:135
 msgid "Only pending trials can be edited."
 msgstr "Редагувати можна лише очікувані пробні дні."
 
-#: core/projects/services.py:134
+#: core/projects/services.py:137
 msgid "Trials can only be scheduled for active projects."
 msgstr "Пробні дні можна планувати лише для активних проєктів."
 
-#: core/projects/services.py:212
+#: core/projects/services.py:215
 msgid "Only an available person can be activated without a trial day."
 msgstr "Без пробного дня можна активувати лише доступну особу."
 
-#: core/projects/services.py:233
+#: core/projects/services.py:236
 msgid "Entry medical date is invalid."
 msgstr "Дата вступного медогляду недійсна."
 
-#: core/projects/services.py:235
+#: core/projects/services.py:238
 msgid "Entry medical date cannot be in the future."
 msgstr "Дата вступного медогляду не може бути в майбутньому."
 
-#: core/projects/services.py:271 core/ui/help.py:244
-#: features/advances/models.py:38 features/profitability/catalog_i18n.py:20
+#: core/projects/services.py:274 core/projects/services.py:312
+#: core/ui/help.py:244 features/advances/models.py:38
+#: features/profitability/catalog_i18n.py:20
 #: templates/pages/activation_queue.html:26
 #: templates/pages/person_detail.html:141
 #: templates/pages/person_detail.html:203
 msgid "Medical"
 msgstr "Медичне"
 
-#: core/projects/services.py:271
+#: core/projects/services.py:274
 msgid "Medical clearance is incomplete."
 msgstr "Медичний допуск не завершено."
 
-#: core/projects/services.py:272 core/ui/help.py:251
+#: core/projects/services.py:275 core/ui/help.py:251
 #: templates/pages/activation_queue.html:27
 #: templates/pages/person_detail.html:147
 msgid "Gear"
 msgstr "Спорядження"
 
-#: core/projects/services.py:272
+#: core/projects/services.py:275
 msgid "Required equipment is incomplete."
 msgstr "Необхідне спорядження не укомплектовано."
 
-#: core/projects/services.py:273 core/ui/help.py:258 core/ui/help.py:427
+#: core/projects/services.py:276 core/ui/help.py:258 core/ui/help.py:427
 #: features/profitability/catalog_i18n.py:18
 #: features/profitability/models.py:89 templates/layouts/base.html:43
 #: templates/pages/accommodation_costs.html:6
@@ -1491,53 +1492,60 @@ msgstr "Необхідне спорядження не укомплектова�
 msgid "Accommodation"
 msgstr "Проживання"
 
-#: core/projects/services.py:273
+#: core/projects/services.py:276
 msgid "Accommodation is incomplete."
 msgstr "Проживання не забезпечено."
 
-#: core/projects/services.py:274 core/ui/help.py:265
+#: core/projects/services.py:277 core/ui/help.py:265
 #: features/profitability/models.py:88 templates/layouts/base.html:45
 #: templates/pages/person_detail.html:163
 msgid "Transport"
 msgstr "Транспорт"
 
-#: core/projects/services.py:274
+#: core/projects/services.py:277
 msgid "Transport is incomplete."
 msgstr "Транспорт не забезпечено."
 
-#: core/projects/services.py:293
+#: core/projects/services.py:296
 msgid "A reason is required when this is not applicable."
 msgstr "Якщо це не застосовується, потрібно вказати причину."
 
-#: core/projects/services.py:349
+#: core/projects/services.py:314
+#, python-format
+msgid ""
+"The entry medical expired on %(date)s. Record the current certificate date "
+"before activating."
+msgstr "Вхідний медогляд втратив чинність %(date)s. Перед активацією запишіть дату чинної довідки."
+
+#: core/projects/services.py:386
 msgid "Record the entry medical date before marking Medical complete."
 msgstr ""
 "Запишіть дату вхідного медогляду, перш ніж позначати Медичне як завершене."
 
-#: core/projects/services.py:371
+#: core/projects/services.py:408
 msgid ""
 "Cannot activate this worker because no readiness record has been completed."
 msgstr ""
 "Працівника неможливо активувати, оскільки запис готовності не заповнено."
 
-#: core/projects/services.py:377
+#: core/projects/services.py:414
 #, python-format
 msgid "Cannot activate this worker until: %(items)s"
 msgstr "Працівника неможливо активувати, доки не буде виконано: %(items)s"
 
-#: core/projects/services.py:397
+#: core/projects/services.py:434
 msgid "An activation request is already awaiting a decision."
 msgstr "Запит на активацію вже очікує рішення."
 
-#: core/projects/services.py:439
+#: core/projects/services.py:476
 msgid "Only a pending activation request can be decided."
 msgstr "Рішення можна ухвалити лише щодо запиту, який очікує на розгляд."
 
-#: core/projects/services.py:457
+#: core/projects/services.py:494
 msgid "A rejection must state a reason."
 msgstr "Відхилення має містити причину."
 
-#: core/projects/services.py:460
+#: core/projects/services.py:497
 msgid "Decision must be 'approve' or 'reject'."
 msgstr "Рішення має бути «затвердити» або «відхилити»."
 
@@ -3825,7 +3833,7 @@ msgstr "видалити поточний зворотний бік"
 msgid "A PDF must be the only file for a certificate."
 msgstr "PDF має бути єдиним файлом сертифіката."
 
-#: features/compliance/forms.py:110 features/compliance/services.py:216
+#: features/compliance/forms.py:110 features/compliance/services.py:223
 msgid ""
 "Remove the current back side before replacing the certificate with a PDF."
 msgstr "Видаліть поточний зворотний бік перед заміною сертифіката на PDF."
@@ -3910,7 +3918,7 @@ msgstr ""
 msgid "Enter an expiry date or mark the certificate as not expiring."
 msgstr "Введіть дату закінчення або позначте сертифікат як безстроковий."
 
-#: features/compliance/models.py:129 features/compliance/services.py:192
+#: features/compliance/models.py:129 features/compliance/services.py:199
 msgid "Files are allowed only for forklift, crane, and welding certificates."
 msgstr ""
 "Файли дозволено лише для посвідчень на навантажувач, кран і зварювання."
@@ -3944,22 +3952,26 @@ msgstr "Проблеми відповідності потребують ува�
 msgid "%(count)s open document or medical alerts"
 msgstr "%(count)s відкритих сповіщень щодо документів або медогляду"
 
-#: features/compliance/panels.py:36
+#: features/compliance/panels.py:38
 msgid "Review compliance issues"
 msgstr "Переглянути проблеми відповідності"
 
-#: features/compliance/panels.py:38
+#: features/compliance/panels.py:40
 msgid "Open workers with document or medical requirements that need attention."
 msgstr ""
 "Відкрийте працівників із документами або медичними вимогами, що потребують "
 "уваги."
 
-#: features/compliance/panels.py:76
+#: features/compliance/panels.py:69 features/compliance/panels.py:105
 #, python-format
 msgid "%(name)s (expires %(date)s)"
 msgstr "%(name)s (діє до %(date)s)"
 
-#: features/compliance/services.py:212
+#: features/compliance/panels.py:70
+msgid "Entry medical"
+msgstr "Вхідний медогляд"
+
+#: features/compliance/services.py:219
 msgid "A PDF must be the only certificate file."
 msgstr "PDF має бути єдиним файлом сертифіката."
 
@@ -5979,7 +5991,9 @@ msgstr "Дія в реальному світі"
 msgid ""
 "Record only what you have actually seen. Compliance, readiness, and the "
 "expiry reminder all count from what is entered here."
-msgstr "Записуйте лише те, що справді бачили. Відповідність, готовність і нагадування про закінчення строку рахуються з того, що введено тут."
+msgstr ""
+"Записуйте лише те, що справді бачили. Відповідність, готовність і "
+"нагадування про закінчення строку рахуються з того, що введено тут."
 
 #: templates/pages/certificate_form.html:26
 msgid "Save renewal"
@@ -5993,7 +6007,9 @@ msgstr "Зберегти сертифікат"
 msgid ""
 "Record only a certificate you have in front of you — expiry and compliance "
 "count from it."
-msgstr "Записуйте лише ту довідку, яку тримаєте перед собою — від неї відлічуються термін дії та відповідність."
+msgstr ""
+"Записуйте лише ту довідку, яку тримаєте перед собою — від неї відлічуються "
+"термін дії та відповідність."
 
 #: templates/pages/compliance_list.html:8
 msgid "Alerts"
@@ -6200,7 +6216,9 @@ msgstr "Скасувати"
 msgid ""
 "Approving puts real money against a real person, to be recovered from their "
 "pay."
-msgstr "Схвалення записує реальні гроші на конкретну людину — їх утримають із її зарплати."
+msgstr ""
+"Схвалення записує реальні гроші на конкретну людину — їх утримають із її "
+"зарплати."
 
 #: templates/pages/equipment_stock.html:9
 #: templates/pages/equipment_stock_receive.html:4
@@ -6977,7 +6995,9 @@ msgstr "Збережені розрахункові листи"
 msgid ""
 "Sending is a real-world action: an email leaves the building, addressed to "
 "the worker."
-msgstr "Надсилання — це дія в реальному світі: назовні йде лист, адресований працівникові."
+msgstr ""
+"Надсилання — це дія в реальному світі: назовні йде лист, адресований "
+"працівникові."
 
 #: templates/pages/payslips.html:39
 #: templates/partials/person_finance_overview.html:14
@@ -7076,7 +7096,9 @@ msgstr "Відправити на пробний день"
 msgid ""
 "Commits the worker to being at the site at the time you set. Somebody "
 "travels on the strength of this, so agree it with them first."
-msgstr "Зобов'язує працівника бути на місці в указаний час. Через це людина вирушає в дорогу, тож спершу узгодьте це з нею."
+msgstr ""
+"Зобов'язує працівника бути на місці в указаний час. Через це людина вирушає "
+"в дорогу, тож спершу узгодьте це з нею."
 
 #: templates/pages/person_detail.html:69 templates/pages/trials_queue.html:10
 #: templates/pages/trials_queue.html:24
@@ -7099,7 +7121,9 @@ msgstr ""
 msgid ""
 "Puts a worker on the way to a real shift without seeing them work first. "
 "Only for someone the office already knows."
-msgstr "Відправляє працівника на справжню зміну, не побачивши його в роботі. Лише для того, кого офіс уже знає."
+msgstr ""
+"Відправляє працівника на справжню зміну, не побачивши його в роботі. Лише "
+"для того, кого офіс уже знає."
 
 #: templates/pages/person_detail.html:86
 msgid "Skip the trial and start readiness"
@@ -7231,7 +7255,9 @@ msgstr "Записати дату медогляду"
 msgid ""
 "Only record a date you have seen on a real certificate — the annual expiry "
 "counts from it."
-msgstr "Записуйте лише дату, яку ви бачили на справжній довідці — від неї відлічується річний термін дії."
+msgstr ""
+"Записуйте лише дату, яку ви бачили на справжній довідці — від неї "
+"відлічується річний термін дії."
 
 #: templates/pages/person_detail.html:224
 #: templates/pages/project_detail.html:30
@@ -7294,7 +7320,9 @@ msgstr ""
 msgid ""
 "Ends the assignment for real: the bed is freed for someone else and issued "
 "gear is expected back."
-msgstr "Справді завершує призначення: ліжко звільняється для іншого, а видане спорядження очікують назад."
+msgstr ""
+"Справді завершує призначення: ліжко звільняється для іншого, а видане "
+"спорядження очікують назад."
 
 #: templates/pages/person_detail.html:268
 msgid "Exit to Available"
@@ -7877,13 +7905,17 @@ msgstr "Пошкоджено або списано"
 msgid ""
 "Record this once the item is physically back. It updates warehouse stock, so "
 "the count only stays true if the gear is actually in your hands."
-msgstr "Записуйте це, коли річ фізично повернулася. Це оновлює складський облік, тож залишок буде правдивим лише якщо спорядження справді у вас."
+msgstr ""
+"Записуйте це, коли річ фізично повернулася. Це оновлює складський облік, тож "
+"залишок буде правдивим лише якщо спорядження справді у вас."
 
 #: templates/panels/logistics_equipment.html:42
 msgid ""
 "Opens a manager charge review at the issued stock value. If the manager "
 "approves it, the amount comes off this worker's pay."
-msgstr "Відкриває керівницьку перевірку нарахування на суму виданої позиції. Якщо керівник її схвалить, суму утримають із зарплати працівника."
+msgstr ""
+"Відкриває керівницьку перевірку нарахування на суму виданої позиції. Якщо "
+"керівник її схвалить, суму утримають із зарплати працівника."
 
 #: templates/panels/logistics_equipment.html:42
 msgid ""
@@ -7901,13 +7933,17 @@ msgstr "Позначити як неповернене"
 msgid ""
 "Returning means the item is back in your hands; flagging it unreturned can "
 "put the money on this worker's pay."
-msgstr "Повернення означає, що річ знову у вас; позначка «не повернуто» може перекласти суму на зарплату працівника."
+msgstr ""
+"Повернення означає, що річ знову у вас; позначка «не повернуто» може "
+"перекласти суму на зарплату працівника."
 
 #: templates/panels/logistics_equipment.html:60
 msgid ""
 "Hand the item over as you record it. It leaves the warehouse count and "
 "becomes this worker's responsibility to return."
-msgstr "Передайте річ тоді, коли її записуєте. Вона зникає зі складського обліку, і працівник відповідає за її повернення."
+msgstr ""
+"Передайте річ тоді, коли її записуєте. Вона зникає зі складського обліку, і "
+"працівник відповідає за її повернення."
 
 #: templates/panels/logistics_equipment.html:60
 msgid "Issue equipment"
@@ -7915,7 +7951,8 @@ msgstr "Видати спорядження"
 
 #: templates/panels/logistics_equipment.html:62
 msgid "Gear physically changes hands and leaves the warehouse count."
-msgstr "Спорядження фізично переходить із рук у руки і зникає зі складського обліку."
+msgstr ""
+"Спорядження фізично переходить із рук у руки і зникає зі складського обліку."
 
 #: templates/panels/logistics_room.html:9
 #: templates/panels/logistics_room.html:20
@@ -7927,7 +7964,9 @@ msgstr "Місячний платіж працівника"
 msgid ""
 "Frees the bed for someone else. Do this when the worker has actually moved "
 "out and the keys are back."
-msgstr "Звільняє ліжко для іншого. Робіть це, коли працівник справді виїхав і ключі повернуто."
+msgstr ""
+"Звільняє ліжко для іншого. Робіть це, коли працівник справді виїхав і ключі "
+"повернуто."
 
 #: templates/panels/logistics_room.html:13
 msgid "Release room"
@@ -7962,7 +8001,9 @@ msgstr "Кімната"
 msgid ""
 "Gives this worker a real bed in a real room, and starts the monthly payment "
 "recorded here."
-msgstr "Надає працівникові справжнє ліжко в справжній кімнаті та розпочинає щомісячну оплату, указану тут."
+msgstr ""
+"Надає працівникові справжнє ліжко в справжній кімнаті та розпочинає "
+"щомісячну оплату, указану тут."
 
 #: templates/panels/logistics_room.html:41
 msgid "Assign room"
@@ -8024,7 +8065,9 @@ msgstr "Пропозиція роботи"
 msgid ""
 "Sends the offer email now, in the worker's preferred language. It cannot be "
 "recalled."
-msgstr "Надсилає лист із пропозицією зараз, мовою, яку обрав працівник. Його не можна відкликати."
+msgstr ""
+"Надсилає лист із пропозицією зараз, мовою, яку обрав працівник. Його не "
+"можна відкликати."
 
 #: templates/panels/messaging_offer_email.html:31
 msgid "A real email leaves the building. It cannot be taken back."
@@ -8061,7 +8104,9 @@ msgstr "Або введіть повідомлення"
 msgid ""
 "Sends the message through the SMS provider to the phone number on this "
 "worker's record. It cannot be recalled, and the message is charged."
-msgstr "Надсилає повідомлення через SMS-провайдера на номер телефону із запису працівника. Його не можна відкликати, і воно платне."
+msgstr ""
+"Надсилає повідомлення через SMS-провайдера на номер телефону із запису "
+"працівника. Його не можна відкликати, і воно платне."
 
 #: templates/panels/messaging_sms.html:20
 msgid "A real phone buzzes. The message cannot be taken back."
@@ -8082,7 +8127,9 @@ msgstr "Будь ласка, підтвердьте"
 msgid ""
 "This reaches outside the application. Something happens in the real world "
 "that clicking again will not undo."
-msgstr "Це виходить за межі застосунку. У реальному світі станеться те, чого повторним натисканням не скасувати."
+msgstr ""
+"Це виходить за межі застосунку. У реальному світі станеться те, чого "
+"повторним натисканням не скасувати."
 
 #: templates/partials/confirm_dialog.html:11
 msgid "Do you really want to do this?"
@@ -8222,7 +8269,9 @@ msgstr ""
 msgid ""
 "Collects every outstanding entry up to the end of this window and locks it "
 "to this cycle. Entries stay deletable until the cycle is settled with pay."
-msgstr "Збирає всі непогашені записи до кінця цього вікна й закріплює їх за цим циклом. Записи можна видаляти, доки цикл не розрахують із зарплатою."
+msgstr ""
+"Збирає всі непогашені записи до кінця цього вікна й закріплює їх за цим "
+"циклом. Записи можна видаляти, доки цикл не розрахують із зарплатою."
 
 #: templates/partials/ledger_cycle.html:30
 msgid "This locks every outstanding entry into the cycle."
@@ -8258,7 +8307,10 @@ msgid ""
 "Marks this cycle as paid out. Use it only once payroll has actually settled "
 "the amounts — it records that the money changed hands, and the entries can "
 "no longer be deleted."
-msgstr "Позначає цикл як виплачений. Використовуйте лише після того, як зарплату справді розраховано — це фіксує, що гроші перейшли з рук у руки, і записи вже не можна видалити."
+msgstr ""
+"Позначає цикл як виплачений. Використовуйте лише після того, як зарплату "
+"справді розраховано — це фіксує, що гроші перейшли з рук у руки, і записи "
+"вже не можна видалити."
 
 #: templates/partials/ledger_cycle.html:32
 msgid "This marks the whole cycle as settled with pay."
@@ -8272,7 +8324,9 @@ msgstr "Позначити цикл погашеним"
 msgid ""
 "Money is actually paid out: use this only after payroll has settled these "
 "amounts."
-msgstr "Гроші справді виплачуються: використовуйте лише після того, як зарплату за цими сумами розраховано."
+msgstr ""
+"Гроші справді виплачуються: використовуйте лише після того, як зарплату за "
+"цими сумами розраховано."
 
 #: templates/partials/ledger_cycle.html:37
 msgid "No entries in this cycle window."
