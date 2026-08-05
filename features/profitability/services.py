@@ -4,6 +4,7 @@ from decimal import Decimal
 
 from django.db import transaction
 from django.db.models import Count, Q, Sum
+from django.utils.translation import gettext, gettext_lazy as _
 
 from core.audit.services import record_event
 from features.profitability.models import (
@@ -250,6 +251,121 @@ def record_financial_month(
     return obj
 
 
+def ensure_financial_month(project, year, month, *, actor=None):
+    """The month a grid cell belongs to, created empty if it does not exist.
+
+    Distinct from ``record_financial_month``, which sets revenue and cost
+    outright: here the totals are about to be recomputed from line items, so
+    creating at zero is correct and overwriting an existing month's totals
+    would not be. The audit event fires only on creation — a save that touches
+    an existing month should not look like the month was re-recorded.
+    """
+    obj, created = FinancialMonth.objects.get_or_create(
+        project=project,
+        year=year,
+        month=month,
+        defaults={
+            "revenue": Decimal("0"),
+            "cost": Decimal("0"),
+            "recorded_by": actor if getattr(actor, "is_authenticated", False) else None,
+        },
+    )
+    if created:
+        record_event(actor, "finance.month_recorded", target=obj, project=project.code)
+    return obj
+
+
+@transaction.atomic
+def save_project_year(project, year, submitted, *, actor=None):
+    """Write a year of the project grid back through its twelve months.
+
+    ``submitted`` maps ``(month, category_pk)`` to the raw workbook-signed
+    string the operator typed. Returns what happened, because the caller has to
+    tell them: months written, months skipped for being locked, and cells that
+    were already correct.
+
+    Three rules earn their place here:
+
+    * **Only changed cells are written.** A full grid is 24 categories x 12
+      months; saving it unchanged would otherwise write 288 rows and 288 audit
+      events recording that nothing happened.
+    * **A month is created only if one of its cells is actually filled.** The
+      grid promises that an unrecorded month shows a dash rather than a zero,
+      and a save must not quietly turn eleven empty columns into recorded
+      months.
+    * **A locked month is skipped, not fatal.** Closing January must not stop
+      February being entered, and silently dropping it would read as data loss
+      — so the skipped months are reported back.
+    """
+    categories = {c.pk: c for c in _ordered_categories()}
+    existing_months = {
+        m.month: m for m in FinancialMonth.objects.filter(project=project, year=year)
+    }
+    current = {}
+    for item in FinanceLineItem.objects.filter(
+        month__project=project, month__year=year
+    ).select_related("month"):
+        current[(item.month.month, item.category_id)] = item.amount
+
+    skipped_locked = sorted(
+        {
+            month
+            for (month, _category_pk), raw in submitted.items()
+            if raw not in (None, "")
+            and month in existing_months
+            and existing_months[month].is_locked
+        }
+    )
+
+    # Validate every cell before writing any of them. One bad sign in a grid of
+    # 300 boxes must not half-save a year, and reporting the offenders one per
+    # attempt would make pasting a column an afternoon's work.
+    changed_by_month: dict[int, list] = {}
+    rejected: list[str] = []
+    for (month_number, category_pk), raw in sorted(submitted.items()):
+        if raw in (None, ""):
+            continue
+        category = categories.get(category_pk)
+        if category is None:
+            continue
+        if month_number in skipped_locked:
+            continue
+        try:
+            amount = normalize_source_amount(category.kind, raw)
+        except (FinanceError, ArithmeticError, ValueError):
+            rejected.append(
+                _("%(category)s (month %(month)s)")
+                % {"category": gettext(category.label), "month": month_number}
+            )
+            continue
+        if current.get((month_number, category_pk)) == amount:
+            continue
+        changed_by_month.setdefault(month_number, []).append((category, amount))
+
+    if rejected:
+        raise FinanceError(
+            _(
+                "Costs are entered as negative amounts and revenues as positive. "
+                "Check: %(cells)s."
+            )
+            % {"cells": ", ".join(rejected)}
+        )
+
+    for month_number, changes in sorted(changed_by_month.items()):
+        month = existing_months.get(month_number) or ensure_financial_month(
+            project, year, month_number, actor=actor
+        )
+        for category, amount in changes:
+            set_line_item(month, category, amount, actor=actor)
+        recompute_month(month, actor=actor)
+
+    return {
+        "months_written": sorted(changed_by_month),
+        "months_locked": skipped_locked,
+        "cells_written": sum(len(v) for v in changed_by_month.values()),
+    }
+
+
 def company_totals(year=None, offices=None):
     """Dynamic grand totals over every project/month (never hardcoded). Pass
     ``year`` to scope to a single year for the yearly rollup.
@@ -472,6 +588,11 @@ def workbook_grid(year, month, *, offices=None):
     }
 
 
+def cell_field_name(month: int, category_pk: int) -> str:
+    """The grid's input name. Shared so the writer parses what the reader drew."""
+    return f"cell_{month}_{category_pk}"
+
+
 def project_year_grid(project, year):
     """One project across a whole year: categories down, 12 months across.
 
@@ -492,6 +613,8 @@ def project_year_grid(project, year):
             item.category.kind, item.amount
         )
 
+    locked = {m: month.is_locked for m, month in months.items()}
+
     rows = []
     for category in categories:
         by_month = [cells.get((m, category.pk)) for m in range(1, 13)]
@@ -499,6 +622,19 @@ def project_year_grid(project, year):
             {
                 "category": category,
                 "months": by_month,
+                # The same twelve values with what the template needs to draw an
+                # input: a stable field name and whether this month accepts one.
+                # An unrecorded month is editable — that is how a year gets
+                # filled in — but a locked one is shown, not typed into.
+                "cells": [
+                    {
+                        "value": by_month[m - 1],
+                        "month": m,
+                        "name": cell_field_name(m, category.pk),
+                        "editable": not locked.get(m, False),
+                    }
+                    for m in range(1, 13)
+                ],
                 "total": sum((v for v in by_month if v is not None), Decimal("0")),
             }
         )
@@ -517,6 +653,8 @@ def project_year_grid(project, year):
         {
             "month": m,
             "recorded": m in months,
+            "locked": locked.get(m, False),
+            "pk": months[m].pk if m in months else None,
             "cost": column_total(m, FinanceCategoryKind.COST),
             "revenue": column_total(m, FinanceCategoryKind.REVENUE),
             "net": column_total(m),

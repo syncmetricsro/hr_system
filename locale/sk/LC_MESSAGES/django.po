@@ -1710,7 +1710,7 @@ msgstr "Mesiac"
 msgid "Several months"
 msgstr "Viac mesiacov"
 
-#: core/reporting/periods.py:49 templates/pages/finance_project_year.html:26
+#: core/reporting/periods.py:49 templates/pages/finance_project_year.html:33
 #: templates/pages/finance_summary.html:27
 #: templates/partials/ledger_cycle.html:5
 #: templates/partials/period_filter.html:43
@@ -2680,6 +2680,7 @@ msgstr "Prepojené karty a riadky otvoria záznamy za súčtom."
 #: templates/pages/finance_project_year.html:8
 #: templates/pages/finance_summary.html:4
 #: templates/pages/finance_summary.html:9
+#: templates/pages/finance_summary.html:131
 #: templates/pages/finance_workbook.html:8 templates/pages/finance_year.html:4
 #: templates/pages/finance_year.html:8
 msgid "Finance"
@@ -2985,7 +2986,7 @@ msgstr ""
 "Určuje smer: záloha alebo zrážka mzdu znižuje, prídavok ju zvyšuje. Suma "
 "zostáva v oboch prípadoch kladná."
 
-#: core/ui/help.py:727 templates/pages/finance_project_year.html:22
+#: core/ui/help.py:727 templates/pages/finance_project_year.html:26
 #: templates/pages/finance_workbook.html:22 templates/pages/ledger.html:34
 #: templates/panels/advances_ledger.html:28
 #: templates/panels/blacklist_case.html:10
@@ -5323,6 +5324,7 @@ msgid "cost"
 msgstr "náklady"
 
 #: features/profitability/models.py:49
+#: templates/pages/finance_project_year.html:30
 msgid "locked"
 msgstr "uzamknuté"
 
@@ -5394,25 +5396,54 @@ msgstr "finančná položka"
 msgid "finance line items"
 msgstr "finančné položky"
 
-#: features/profitability/views.py:223
+#: features/profitability/services.py:337
+#, python-format
+msgid "%(category)s (month %(month)s)"
+msgstr "%(category)s (mesiac %(month)s)"
+
+#: features/profitability/services.py:348
+#, python-format
+msgid ""
+"Costs are entered as negative amounts and revenues as positive. Check: "
+"%(cells)s."
+msgstr "Náklady sa zadávajú ako záporné sumy a výnosy ako kladné. Skontrolujte: %(cells)s."
+
+#: features/profitability/views.py:225
 msgid "Saved and recalculated."
 msgstr "Uložené a prepočítané."
 
-#: features/profitability/views.py:225 features/profitability/views.py:276
+#: features/profitability/views.py:227 features/profitability/views.py:278
+#: features/profitability/views.py:355
 msgid "Invalid input."
 msgstr "Neplatný vstup."
 
-#: features/profitability/views.py:235
+#: features/profitability/views.py:237
 msgid "Month locked."
 msgstr "Mesiac uzamknutý."
 
-#: features/profitability/views.py:246
+#: features/profitability/views.py:248
 msgid "Month reopened."
 msgstr "Mesiac znovu otvorený."
 
-#: features/profitability/views.py:274
+#: features/profitability/views.py:276
 msgid "Financial month saved."
 msgstr "Finančný mesiac uložený."
+
+#: features/profitability/views.py:361
+#, python-format
+msgid "%(cells)s amounts saved across %(months)s month(s)."
+msgstr "Uložených súm: %(cells)s v %(months)s mesiaci/mesiacoch."
+
+#: features/profitability/views.py:368
+msgid "Nothing changed."
+msgstr "Nič sa nezmenilo."
+
+#: features/profitability/views.py:373
+#, python-format
+msgid "Locked and left untouched: month(s) %(months)s. Reopen them to edit."
+msgstr ""
+"Uzamknuté a nezmenené: mesiac(e) %(months)s. Ak ich chcete upraviť, znovu "
+"ich otvorte."
 
 #: features/wage_ledger/models.py:28
 msgid "gross amount"
@@ -6217,7 +6248,7 @@ msgstr ""
 #: templates/pages/finance_summary.html:85
 #: templates/pages/finance_summary.html:97
 #: templates/pages/finance_summary.html:118
-#: templates/pages/finance_summary.html:130
+#: templates/pages/finance_summary.html:143
 #: templates/pages/finance_year.html:25
 #: templates/pages/transport_trends.html:51
 msgid "Company total"
@@ -6455,7 +6486,7 @@ msgstr "Export"
 #: templates/pages/finance_summary.html:47
 #: templates/pages/finance_summary.html:60
 #: templates/pages/finance_summary.html:89
-#: templates/pages/finance_summary.html:134
+#: templates/pages/finance_summary.html:147
 #: templates/pages/finance_year.html:28 templates/pages/finance_year.html:41
 #: templates/pages/finance_year.html:86
 msgid "Net"
@@ -6494,13 +6525,13 @@ msgid "margin"
 msgstr "marža"
 
 #: templates/pages/finance_executive.html:52
-#: templates/pages/finance_summary.html:144
+#: templates/pages/finance_summary.html:157
 #: templates/pages/finance_year.html:15
 msgid "Profit/loss by office"
 msgstr "Zisk/strata podľa pobočiek"
 
 #: templates/pages/finance_executive.html:57
-#: templates/pages/finance_summary.html:149
+#: templates/pages/finance_summary.html:162
 msgid "Net result by office chart"
 msgstr "Graf čistého výsledku podľa pobočiek"
 
@@ -6508,15 +6539,15 @@ msgstr "Graf čistého výsledku podľa pobočiek"
 #: templates/pages/finance_executive.html:76
 #: templates/pages/finance_summary.html:91
 #: templates/pages/finance_summary.html:124
-#: templates/pages/finance_summary.html:136
-#: templates/pages/finance_summary.html:156
+#: templates/pages/finance_summary.html:149
+#: templates/pages/finance_summary.html:169
 #: templates/pages/finance_year.html:20 templates/pages/finance_year.html:63
 #: templates/pages/finance_year.html:88
 msgid "No financial months."
 msgstr "Žiadne finančné mesiace."
 
 #: templates/pages/finance_executive.html:71
-#: templates/pages/finance_summary.html:131 templates/pages/finance_year.html:8
+#: templates/pages/finance_summary.html:144 templates/pages/finance_year.html:8
 msgid "Yearly results"
 msgstr "Ročné výsledky"
 
@@ -6616,23 +6647,43 @@ msgstr ""
 "Dvanásť mesiacov jedného projektu, sčítaných z už zaznamenaných mesiacov. "
 "Pobočka: %(office)s."
 
-#: templates/pages/finance_project_year.html:38
+#: templates/pages/finance_project_year.html:15
+msgid ""
+"Type into a month to record it. Costs are entered as negative amounts and "
+"revenues as positive — the same signs as the workbook."
+msgstr ""
+"Zapíšte mesiac tým, že doň napíšete sumy. Náklady sa zadávajú záporne a "
+"výnosy kladne — rovnaké znamienka ako v zošite."
+
+#: templates/pages/finance_project_year.html:55
 #: templates/pages/finance_workbook.html:40
 msgid "Total costs"
 msgstr "Náklady spolu"
 
-#: templates/pages/finance_project_year.html:43
+#: templates/pages/finance_project_year.html:60
 #: templates/pages/finance_workbook.html:52
 msgid "Total revenues"
 msgstr "Príjmy spolu"
 
-#: templates/pages/finance_project_year.html:48
+#: templates/pages/finance_project_year.html:65
 #: templates/pages/finance_workbook.html:57
 #: templates/pages/finance_workbook.html:73
 msgid "Profit/loss"
 msgstr "Zisk/strata"
 
-#: templates/pages/finance_project_year.html:56
+#: templates/pages/finance_project_year.html:74
+msgid "Save year"
+msgstr "Uložiť rok"
+
+#: templates/pages/finance_project_year.html:74
+msgid ""
+"Writes every changed amount into the month it belongs to and recalculates "
+"that month. A locked month is left untouched."
+msgstr ""
+"Zapíše každú zmenenú sumu do mesiaca, do ktorého patrí, a ten mesiac "
+"prepočíta. Uzamknutý mesiac zostane nedotknutý."
+
+#: templates/pages/finance_project_year.html:79
 msgid ""
 "A month with no recorded figures shows as a dash rather than zero — an "
 "unrecorded month and a month that genuinely netted nothing are different "
@@ -6641,6 +6692,14 @@ msgstr ""
 "Mesiac bez zaznamenaných údajov sa zobrazuje ako pomlčka namiesto nuly — "
 "nezaznamenaný mesiac a mesiac, ktorý skutočne skončil na nule, sú dve "
 "odlišné skutočnosti."
+
+#: templates/pages/finance_project_year.html:80
+msgid ""
+"The totals rows are computed from the categories above, so they are never "
+"typed in."
+msgstr ""
+"Súčtové riadky sa počítajú z kategórií vyššie, preto sa nikdy nezadávajú "
+"ručne."
 
 #: templates/pages/finance_summary.html:10
 msgid "Workbook view"
@@ -6699,7 +6758,23 @@ msgstr "Zatiaľ žiadne položky."
 msgid "Per-project results"
 msgstr "Výsledky podľa projektu"
 
-#: templates/pages/finance_summary.html:143
+#: templates/pages/finance_summary.html:132
+msgid "Enter a project year"
+msgstr "Zadať rok projektu"
+
+#: templates/pages/finance_summary.html:135
+msgid ""
+"Open the twelve-month grid for this project: categories down, months across, "
+"and the amounts are typed straight into it."
+msgstr ""
+"Otvorí dvanásťmesačnú tabuľku tohto projektu: kategórie zvislo, mesiace "
+"vodorovne, a sumy sa zapisujú priamo do nej."
+
+#: templates/pages/finance_summary.html:137
+msgid "No project is eligible for financial reporting yet."
+msgstr "Zatiaľ nie je žiadny projekt určený na finančné vykazovanie."
+
+#: templates/pages/finance_summary.html:156
 #: templates/pages/finance_year.html:14
 msgid "Office roll-up"
 msgstr "Súhrn podľa pobočiek"

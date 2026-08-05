@@ -21,6 +21,7 @@ from features.profitability.models import (
 )
 from features.profitability.services import (
     FinanceError,
+    cell_field_name,
     company_totals,
     group_breakdown,
     lock_month,
@@ -31,6 +32,7 @@ from features.profitability.services import (
     office_totals,
     project_totals,
     project_year_grid,
+    save_project_year,
     recompute_month,
     record_financial_month,
     reopen_month,
@@ -298,12 +300,11 @@ def finance_workbook(request: HttpRequest, year: int, month: int) -> HttpRespons
     )
 
 
-@require_action(Action.FINANCE_VIEW_SUMMARY)
-def finance_project_year(request: HttpRequest, pk: int, year: int) -> HttpResponse:
-    """One project across a whole year: categories down, twelve months across.
+def _project_in_scope(request: HttpRequest, pk: int):
+    """The project behind a grid URL, or 403.
 
-    A view over the `FinancialMonth` rows that already exist — no new storage,
-    and no annual figure that could disagree with the months it summarises.
+    Same reasoning as `_assert_month_in_scope`: these views take a pk, so
+    filtering some other list is not the boundary.
     """
     project = get_object_or_404(
         Project.objects.select_related("office"),
@@ -311,12 +312,65 @@ def finance_project_year(request: HttpRequest, pk: int, year: int) -> HttpRespon
         financial_reporting_eligible=True,
     )
     scope = user_office_scope(request.user)
-    # Same reasoning as `_assert_month_in_scope`: this view takes a pk, so
-    # filtering some other list is not the boundary.
     if scope is not None and not scope.filter(pk=project.office_id).exists():
         raise PermissionDenied("This project belongs to another office.")
+    return project
+
+
+@require_action(Action.FINANCE_VIEW_SUMMARY)
+def finance_project_year(request: HttpRequest, pk: int, year: int) -> HttpResponse:
+    """One project across a whole year: categories down, twelve months across.
+
+    A view over the `FinancialMonth` rows that already exist — no annual
+    storage, and no annual figure that could disagree with the months it
+    summarises. Since 2026-08-05 it is also where those months get typed in:
+    the cells write back through the same twelve records, so the year still
+    cannot disagree with itself.
+    """
+    project = _project_in_scope(request, pk)
     return TemplateResponse(
         request,
         "pages/finance_project_year.html",
-        {"grid": project_year_grid(project, year)},
+        {
+            "grid": project_year_grid(project, year),
+            "can_manage": user_can(request.user, Action.FINANCE_MANAGE),
+        },
     )
+
+
+@require_POST
+@require_action(Action.FINANCE_MANAGE)
+def finance_project_year_save(request: HttpRequest, pk: int, year: int) -> HttpResponse:
+    """Save the whole year grid in one go."""
+    project = _project_in_scope(request, pk)
+    submitted = {}
+    for category in FinanceCategory.objects.filter(is_active=True):
+        for month in range(1, 13):
+            raw = request.POST.get(cell_field_name(month, category.pk))
+            if raw not in (None, ""):
+                submitted[(month, category.pk)] = raw
+    try:
+        result = save_project_year(project, year, submitted, actor=request.user)
+    except (FinanceError, ValueError) as exc:
+        messages.error(request, str(exc) or _("Invalid input."))
+        return redirect("finance_project_year", pk=project.pk, year=year)
+
+    if result["cells_written"]:
+        messages.success(
+            request,
+            _("%(cells)s amounts saved across %(months)s month(s).")
+            % {
+                "cells": result["cells_written"],
+                "months": len(result["months_written"]),
+            },
+        )
+    else:
+        messages.success(request, _("Nothing changed."))
+    if result["months_locked"]:
+        # Never silent: a skipped month that nobody mentions reads as data loss.
+        messages.error(
+            request,
+            _("Locked and left untouched: month(s) %(months)s. Reopen them to edit.")
+            % {"months": ", ".join(str(m) for m in result["months_locked"])},
+        )
+    return redirect("finance_project_year", pk=project.pk, year=year)

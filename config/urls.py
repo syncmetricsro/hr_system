@@ -358,6 +358,11 @@ if _feature_on("profitability", "profitability"):
             finance_views.finance_project_year,
             name="finance_project_year",
         ),
+        path(
+            "finance/project/<int:pk>/year/<int:year>/save/",
+            finance_views.finance_project_year_save,
+            name="finance_project_year_save",
+        ),
         path("finance/record/", finance_views.record_month, name="finance_record"),
         path(
             "finance/year/<int:year>/", finance_views.finance_year, name="finance_year"

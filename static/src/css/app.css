@@ -1508,6 +1508,44 @@ select {
   white-space: nowrap;
 }
 
+/* Grid cells you can type into (project-year entry). Narrow and quiet: 24
+   categories x 12 months is a lot of boxes, and a full-weight input border on
+   each would read as noise rather than as a spreadsheet. The number spinners
+   go for the same reason — they are useless at this size and steal width. */
+.workbook-grid .cell-input {
+  width: 6.5rem;
+  min-height: 2rem;
+  padding: 0.3rem 0.4rem;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  background: var(--panel);
+  /* Visible at rest, not only on hover: a grid of invisible boxes reads as a
+     report, and the whole point of this page is that it can be typed into. */
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  color: inherit;
+}
+
+.workbook-grid .cell-input:hover {
+  border-color: var(--n300);
+}
+
+.workbook-grid .cell-input:focus {
+  background: var(--panel);
+  border-color: var(--accent);
+}
+
+.workbook-grid .cell-input::-webkit-outer-spin-button,
+.workbook-grid .cell-input::-webkit-inner-spin-button {
+  appearance: none;
+  margin: 0;
+}
+
+.workbook-grid .cell-input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
 .workbook-grid tr.row-heading th {
   background: var(--n100);
   font-size: 0.78rem;

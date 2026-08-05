@@ -1,5 +1,50 @@
 # Build Journal
 
+## 2026-08-05 - the year grid becomes the place you type
+
+Reported after the deploy: the financial tables look right and nothing can be
+entered for a project for a given year. That is exactly what the code did.
+
+`finance_project_year` was built as a read-only projection - *"no new storage,
+and no annual figure that could disagree with the months it summarises"* - and
+the reasoning still stands. What was never finished is the consequence. The
+only write paths were the Record month form and a month detail page reached by
+primary key, so **a month with no row had no URL at all**, and nothing on the
+finance pages even linked to the year grid. A manager who found it was looking
+at a report with no way in.
+
+So the grid now writes. Type into any cell, press **Save year** once, and it
+writes through to the same twelve monthly records: the year is still only the
+sum of its months, and no annual total exists to disagree with them. Three
+rules earn their place in `save_project_year`:
+
+- **Only changed cells are written.** 24 categories x 12 months is 288 boxes;
+  re-saving an untouched grid would otherwise write 288 rows and 288 audit
+  events recording that nothing happened.
+- **A month is created only when one of its cells is filled.** The page
+  promises a dash for an unrecorded month rather than a zero, and a save must
+  not turn eleven empty columns into months that netted nothing.
+- **A locked month is skipped, not fatal**, and the save says which - closing
+  January cannot stop February, and a month dropped in silence reads as data
+  loss.
+
+**Two defects found by using it, not by running the suite.** Both were invisible
+to a green test run and obvious within ten seconds of opening the page:
+
+1. **Every input was empty over a project with a full year of figures.** Django
+   localizes a Decimal to `-2244,00` and `<input type="number">` will not accept
+   a comma, so the browser discarded all 300 values. The service was right, the
+   POST round-tripped, the tests passed. Fixed with `|unlocalize` on the value
+   only - display cells keep the localized form, which is correct for reading.
+   There is now a test that fails without it.
+2. **A wrong sign said "costs must be entered as negative amounts" and nothing
+   else.** True, and useless when the page has 300 boxes. Every offending cell
+   is now validated before anything is written and named in the message, so a
+   pasted column reports all of its problems at once instead of one per attempt.
+
+Jober 1130, CorvinumEU 721 (profitability is off there and must stay green),
+browser 70 (not re-run).
+
 ## 2026-08-05 - the medical is a date, so the product now chases it
 
 Asked how health certificates are checked, the honest answer was: they are not

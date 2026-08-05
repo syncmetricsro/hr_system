@@ -58,7 +58,7 @@
     {% endif %}
     <dl class="detail-grid">
       {% for p in project_results %}
-        <div><dt>{{ p.name }}</dt><dd class="amount{% if p.net < 0 %} amount-neg{% endif %}">{{ p.net }} EUR</dd></div>
+        <div><dt><a href="{% url 'finance_project_year' p.project_id year %}">{{ p.name }}</a></dt><dd class="amount{% if p.net < 0 %} amount-neg{% endif %}">{{ p.net }} EUR</dd></div>
       {% empty %}
         <div><dd>{% trans "No financial months." %}</dd></div>
       {% endfor %}
