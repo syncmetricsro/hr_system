@@ -544,6 +544,13 @@ arithmetic to land in one row.
    forgotten (ADR 0032). Money is never lost, and nothing has to be refused or
    backdated by hand.
 
+**The same table is now on the ledger page for the whole office**, one row per
+worker per run, three runs back. Show it after the cycle panel: the panel says
+what the run collects, this says what it means for each person's pay, and the
+entries below are the individual movements. A dash is not a zero — it means
+nothing was recorded for that worker in that run, which is usually the thing
+worth chasing.
+
 Note on periods, which reliably comes up: gross wage and payslip are keyed by
 **calendar month**, and the deductions column is keyed by **the run that
 collects the money** — the 21st-to-20th window. An advance handed over on the

@@ -11,7 +11,7 @@ from features.advances.models import LedgerEntry, PayEffect, SettlementStatus
 from features.advances.services import settling_cycle_key
 
 
-def ledger_deduction_series(request, person) -> dict | None:
+def ledger_deduction_series(request, people) -> dict | None:
     """What this office took off the worker's pay, per calendar month.
 
     Keyed by **the payroll run that collects it**, not by the entry date's
@@ -29,28 +29,33 @@ def ledger_deduction_series(request, person) -> dict | None:
         return None
 
     rows = (
-        LedgerEntry.objects.filter(person=person)
+        LedgerEntry.objects.filter(person__in=people)
         .exclude(settlement_status=SettlementStatus.CANCELLED)
         .exclude(pay_effect=PayEffect.NONE)
-        .only("entry_date", "amount", "currency", "pay_effect", "cycle_key")
+        .only(
+            "person_id", "entry_date", "amount", "currency", "pay_effect", "cycle_key"
+        )
     )
-    totals: dict[str, Decimal] = defaultdict(Decimal)
-    currencies: dict[str, str] = {}
+    totals: dict[int, dict[str, Decimal]] = defaultdict(lambda: defaultdict(Decimal))
+    currencies: dict[int, dict[str, str]] = defaultdict(dict)
     for row in rows:
         period = settling_cycle_key(row)
         # Stored positive; pay_effect carries the direction. An addition
         # reduces the amount deducted, so the column stays a single number.
         if row.pay_effect == PayEffect.DEDUCT:
-            totals[period] += row.amount
+            totals[row.person_id][period] += row.amount
         else:
-            totals[period] -= row.amount
-        currencies.setdefault(period, row.currency)
+            totals[row.person_id][period] -= row.amount
+        currencies[row.person_id].setdefault(period, row.currency)
 
     return {
         "label": _("Ledger deductions"),
-        "periods": {
-            period: (amount, currencies[period])
-            for period, amount in totals.items()
-            if amount
+        "by_person": {
+            person_id: {
+                period: (amount, currencies[person_id][period])
+                for period, amount in periods.items()
+                if amount
+            }
+            for person_id, periods in totals.items()
         },
     }

@@ -2995,6 +2995,7 @@ msgstr ""
 #: templates/partials/ledger_activity.html:8
 #: templates/partials/ledger_activity.html:26
 #: templates/partials/ledger_cycle.html:16
+#: templates/partials/ledger_pay_overview.html:16
 msgid "Person"
 msgstr "Személy"
 
@@ -3434,7 +3435,7 @@ msgid "Audit access and append-only behavior protect the evidence trail."
 msgstr ""
 "Az Audit-hozzáférés és a csak hozzáfűzhető működés védi a bizonyítékláncot."
 
-#: core/ui/registry.py:194
+#: core/ui/registry.py:198
 msgid "After deductions"
 msgstr "Levonások után"
 
@@ -3573,7 +3574,7 @@ msgstr "főkönyvi tétel"
 msgid "ledger entries"
 msgstr "főkönyvi tételek"
 
-#: features/advances/providers.py:50
+#: features/advances/providers.py:54
 msgid "Ledger deductions"
 msgstr "Könyvelési levonások"
 
@@ -3634,45 +3635,45 @@ msgstr "Bérhatás nélküli tétel nem sztornózható."
 msgid "Entry is locked after cycle inclusion; record a reversal instead."
 msgstr "Ciklusba sorolás után a tétel zárolt; rögzítsen sztornót."
 
-#: features/advances/views.py:75
+#: features/advances/views.py:104
 msgid "Entry date must be a real date (YYYY-MM-DD)."
 msgstr "A tétel dátumának valós dátumnak kell lennie (ÉÉÉÉ-HH-NN)."
 
-#: features/advances/views.py:88
+#: features/advances/views.py:117
 msgid "Ledger entry recorded."
 msgstr "Főkönyvi tétel rögzítve."
 
-#: features/advances/views.py:90
+#: features/advances/views.py:119
 msgid "Invalid ledger entry."
 msgstr "Érvénytelen tétel."
 
-#: features/advances/views.py:104
+#: features/advances/views.py:133
 msgid "Entry cancelled."
 msgstr "Tétel törölve."
 
-#: features/advances/views.py:107
+#: features/advances/views.py:136
 msgid "Reversal recorded."
 msgstr "Sztornó rögzítve."
 
-#: features/advances/views.py:110
+#: features/advances/views.py:139
 msgid "Entry deleted."
 msgstr "A tétel véglegesen törölve."
 
-#: features/advances/views.py:112
+#: features/advances/views.py:141
 msgid "Unknown action."
 msgstr "Ismeretlen művelet."
 
-#: features/advances/views.py:125
+#: features/advances/views.py:154
 #, python-format
 msgid "%(n)s entries included in the cycle."
 msgstr "%(n)s tétel ciklusba sorolva."
 
-#: features/advances/views.py:128
+#: features/advances/views.py:157
 #, python-format
 msgid "%(n)s entries marked settled."
 msgstr "%(n)s tétel rendezettként megjelölve."
 
-#: features/advances/views.py:132
+#: features/advances/views.py:161
 #, python-format
 msgid "%(n)s entries reopened."
 msgstr "%(n)s tétel újranyitva."
@@ -5240,7 +5241,7 @@ msgstr "bérlap"
 msgid "payslips"
 msgstr "bérlapok"
 
-#: features/payslips/providers.py:15 templates/pages/payslips.html:39
+#: features/payslips/providers.py:22 templates/pages/payslips.html:39
 msgid "Recorded net payslip"
 msgstr "Rögzített nettó bérlap"
 
@@ -5515,7 +5516,7 @@ msgstr "bérbejegyzések"
 msgid "A wage is already recorded for this person and period."
 msgstr "Ehhez a személyhez és időszakhoz már rögzítettek bért."
 
-#: features/wage_ledger/providers.py:17
+#: features/wage_ledger/providers.py:22
 msgid "Recorded gross wage"
 msgstr "Rögzített bruttó bér"
 
@@ -7183,6 +7184,7 @@ msgid "Placeholders"
 msgstr "Helyőrzők"
 
 #: templates/pages/payslips.html:8 templates/pages/wages.html:8
+#: templates/partials/ledger_pay_overview.html:5
 #: templates/partials/person_finance_overview.html:3
 msgid "Pay"
 msgstr "Bér"
@@ -8557,6 +8559,40 @@ msgstr ""
 msgid "No entries in this cycle window."
 msgstr "Ebben a ciklusablakban nincs tétel."
 
+# --- dashboard ---
+#: templates/partials/ledger_pay_overview.html:6
+#: templates/partials/person_finance_overview.html:4
+msgid "Wage and payslip overview"
+msgstr "Bér és bérlap áttekintése"
+
+#: templates/partials/ledger_pay_overview.html:8
+msgid ""
+"One row per worker per payroll run. Ledger deductions are what that run "
+"recovers, which is not always the month the money changed hands: an advance "
+"handed over after the 20th is recovered from the next run. Gross wage and "
+"the recorded net payslip are source values someone entered; After deductions "
+"is gross minus this office's own ledger entries, and nothing else. It is not "
+"net pay — no tax or levy is calculated here, which is why the payslip stays "
+"its own column to compare against."
+msgstr "Munkavállalónként és bérszámfejtésenként egy sor. A könyvelési levonások azt mutatják, mit hajt be az adott bérszámfejtés, ami nem mindig az a hónap, amikor a pénz gazdát cserélt: a 20-a után kiadott előleget a következő bérszámfejtés vonja le. A bruttó bér és a rögzített nettó bérpapír olyan forrásértékek, amelyeket valaki bevitt; a Levonások után a bruttó mínusz ennek az irodának a saját könyvelési tételei, és semmi más. Ez nem nettó bér — itt semmilyen adót vagy járulékot nem számol a rendszer, és éppen ezért marad a bérpapír külön oszlopban az összevetéshez."
+
+#: templates/partials/ledger_pay_overview.html:10
+msgid ""
+"One row per worker per payroll run, from the values recorded for them. Gross "
+"wage is not converted into net pay here; taxes, levies, and other statutory "
+"payroll calculations remain outside this feature."
+msgstr "Munkavállalónként és bérszámfejtésenként egy sor, a hozzájuk rögzített értékekből. A bruttó bér itt nem lesz nettóvá alakítva; az adók, járulékok és egyéb jogszabályi bérszámítások ezen a funkción kívül maradnak."
+
+#: templates/partials/ledger_pay_overview.html:17
+msgid "Payroll run"
+msgstr "Bérszámfejtés"
+
+#: templates/partials/ledger_pay_overview.html:34
+msgid ""
+"A dash means nothing was recorded for that worker in that run — which is a "
+"different fact from a recorded zero, and worth looking at."
+msgstr "A gondolatjel azt jelenti, hogy az adott munkavállalóhoz ebben a futtatásban semmit nem rögzítettek — ez más tény, mint egy rögzített nulla, és érdemes ránézni."
+
 #: templates/partials/period_filter.html:15
 msgid "Period"
 msgstr "Időszak"
@@ -8565,11 +8601,6 @@ msgstr "Időszak"
 #, python-format
 msgid "Showing: %(selection)s"
 msgstr "Megjelenítve: %(selection)s"
-
-# --- dashboard ---
-#: templates/partials/person_finance_overview.html:4
-msgid "Wage and payslip overview"
-msgstr "Bér és bérlap áttekintése"
 
 #: templates/partials/person_finance_overview.html:6
 msgid ""

@@ -595,3 +595,189 @@ def test_a_settled_cycle_cannot_be_reopened(person, manager):
 
     with pytest.raises(LedgerError):
         reopen_cycle(year, month, actor=manager)
+
+
+# --- the same table, for the whole office (2026-08-05) ----------------------
+#
+# The ledger page shows what a run collects. What the office is actually asked
+# is what that means for each worker's pay - which existed only one profile at
+# a time. The table now sits on the ledger page too, built from the same
+# registered columns, so the two can never disagree.
+
+
+def _overview_rows(client, year=2026, month=8):
+    response = client.get(reverse("ledger_overview"), {"year": year, "month": month})
+    return response.context["pay_overview"]
+
+
+def test_the_ledger_page_shows_the_pay_result_for_every_worker(client, person, manager):
+    record_wage(person, period="2026-08", gross_amount="700", actor=manager)
+    record_entry(
+        person,
+        entry_type=EntryType.PAY_DEDUCTION,
+        category=LedgerCategory.CASH_ADVANCE,
+        amount="150",
+        actor=manager,
+        entry_date=dt.date(2026, 8, 5),
+    )
+    record_payslip(person, period="2026-08", net_amount="700", actor=manager)
+    client.force_login(manager)
+
+    overview = _overview_rows(client)
+
+    row = next(r for r in overview["rows"] if r["period"] == "2026-08")
+    amounts = [c["amount"] if c else None for c in row["cells"]]
+    assert amounts == [
+        Decimal("700.00"),  # gross
+        Decimal("150.00"),  # ledger deductions
+        Decimal("550.00"),  # after deductions
+        Decimal("700.00"),  # recorded net payslip
+    ]
+
+
+def test_the_two_tables_on_the_page_agree(client, person, manager):
+    """The reason the columns are built once and used twice.
+
+    The cycle panel says what the run collects; the overview says what it takes
+    off pay. They are the same money seen from two sides, and a worker checking
+    by hand will put them side by side.
+    """
+    record_wage(person, period="2026-08", gross_amount="700", actor=manager)
+    for entry_type, amount in (
+        (EntryType.PAY_DEDUCTION, "150"),
+        (EntryType.CASH_ADVANCE, "140"),
+        (EntryType.PAY_ADDITION, "140"),
+    ):
+        record_entry(
+            person,
+            entry_type=entry_type,
+            category=LedgerCategory.CASH_ADVANCE,
+            amount=amount,
+            actor=manager,
+            entry_date=dt.date(2026, 8, 4),
+        )
+    client.force_login(manager)
+
+    response = client.get(reverse("ledger_overview"), {"year": 2026, "month": 8})
+    cycle_row = next(
+        r for r in response.context["cycle"]["rows"] if r["person"].pk == person.pk
+    )
+    overview_row = next(
+        r
+        for r in response.context["pay_overview"]["rows"]
+        if r["person"].pk == person.pk and r["period"] == "2026-08"
+    )
+    deductions = overview_row["cells"][1]["amount"]
+
+    # 150 + 140 deducted, 140 added back.
+    assert deductions == Decimal("150.00")
+    assert cycle_row["net"] == -deductions
+
+
+def test_the_office_wide_table_matches_the_person_page(client, person, manager):
+    """Bulk and single are one code path; this is the guard that keeps it so."""
+    record_wage(person, period="2026-08", gross_amount="700", actor=manager)
+    record_entry(
+        person,
+        entry_type=EntryType.PAY_DEDUCTION,
+        category=LedgerCategory.EQUIPMENT,
+        amount="50",
+        actor=manager,
+        entry_date=dt.date(2026, 8, 5),
+    )
+    client.force_login(manager)
+
+    profile = _cells(client, person)
+    office = next(
+        r
+        for r in _overview_rows(client)["rows"]
+        if r["person"].pk == person.pk and r["period"] == "2026-08"
+    )["cells"]
+
+    assert [c["amount"] if c else None for c in profile] == [
+        c["amount"] if c else None for c in office
+    ]
+
+
+def test_a_worker_with_nothing_recorded_still_gets_a_row(client, person, manager):
+    """The owner asked for every worker: an omission has to be visible."""
+    client.force_login(manager)
+
+    rows = _overview_rows(client)["rows"]
+
+    mine = [r for r in rows if r["person"].pk == person.pk]
+    assert len(mine) == 3, "three runs, one row each"
+    assert all(cell is None for row in mine for cell in row["cells"])
+
+
+def test_the_table_covers_the_selected_run_and_the_two_before_it(
+    client, person, manager
+):
+    client.force_login(manager)
+
+    periods = {r["period"] for r in _overview_rows(client, 2026, 1)["rows"]}
+
+    # January's selection reaches back across the year boundary.
+    assert periods == {"2026-01", "2025-12", "2025-11"}
+
+
+def test_the_derived_column_disappears_with_its_input(
+    settings, client, person, manager
+):
+    """A client can mount the ledger without the wage book.
+
+    Every role that may see this page holds all three view actions on
+    CorvinumEU, so the interesting case is not a role - it is a client whose
+    flags leave a column unsupplied. After deductions must then be absent
+    rather than rendered against a missing gross.
+    """
+    record_entry(
+        person,
+        entry_type=EntryType.PAY_DEDUCTION,
+        category=LedgerCategory.EQUIPMENT,
+        amount="50",
+        actor=manager,
+        entry_date=dt.date(2026, 8, 5),
+    )
+    settings.FEATURE_FLAGS = {**settings.FEATURE_FLAGS, "wage_ledger": False}
+    client.force_login(manager)
+
+    response = client.get(reverse("ledger_overview"), {"year": 2026, "month": 8})
+
+    assert response.status_code == 200
+    overview = response.context["pay_overview"]
+    with translation.override(response.headers["Content-Language"]):
+        labels = [s["label"] for s in overview["series"]]
+        assert gettext("Recorded gross wage") not in labels
+        assert gettext("After deductions") not in labels
+        assert gettext("Ledger deductions") in labels
+    assert overview["has_derived"] is False
+
+
+def test_the_overview_and_the_entry_dropdown_are_office_scoped(
+    client, django_user_model
+):
+    """The dropdown was unscoped before this table existed.
+
+    CorvinumEU seeds no Office rows, so nothing leaked in practice - and a
+    queryset that only behaves because the data is empty is one office away
+    from being a bug (ADR 0026).
+    """
+    from core.offices.models import Office
+
+    mine = Office.objects.create(name="Velký Meder", code="VM", country="SK")
+    theirs = Office.objects.create(name="Győr", code="GYR", country="HU")
+    manager = django_user_model.objects.create_user(
+        email="scoped-mgr@demo.corvinum.test", password="x", role="manager"
+    )
+    manager.offices.set([mine])
+    ours = Person.objects.create(first_name="Ours", last_name="Worker", office=mine)
+    other = Person.objects.create(first_name="Other", last_name="Worker", office=theirs)
+    client.force_login(manager)
+
+    response = client.get(reverse("ledger_overview"), {"year": 2026, "month": 8})
+
+    listed = {p.pk for p in response.context["people"]}
+    assert ours.pk in listed and other.pk not in listed
+    shown = {row["person"].pk for row in response.context["pay_overview"]["rows"]}
+    assert ours.pk in shown and other.pk not in shown

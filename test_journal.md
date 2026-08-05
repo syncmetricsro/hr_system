@@ -1,5 +1,28 @@
 # Test Journal
 
+## 2026-08-05 - a test that only exists because the code is shared
+
+- The assertion that carries this slice: **the two tables on the ledger page
+  agree.** A worker's *ledger deductions* in the new overview equals the cycle
+  panel's net effect for that worker, sign-flipped - 150 against -150, from
+  entries of 150 + 140 deducted and 140 added back. It is only writable because
+  both come from one composer; with a second bulk implementation the test would
+  have been asserting that two copies of the arithmetic happened to match today.
+- **Bulk equals single** guards the refactor directly: the same person's row in
+  the office-wide table matches their profile table cell for cell.
+- The dashes have their own test. "Every worker appears" was the owner's choice
+  precisely so an omission is visible, and a table that quietly drops empty
+  workers would look tidier and answer a different question.
+- The period test reaches across a year boundary (January selecting 2026-01,
+  2025-12, 2025-11), because month arithmetic that wraps is where this kind of
+  helper breaks.
+- One test premise was wrong and had to change: there is no role on CorvinumEU
+  that can see the ledger but not wages - all three view actions are
+  Manager+Observer, so a coordinator gets 403 on the page itself. The real case
+  is a **client whose flags** mount the ledger without the wage book, which is
+  what it now tests.
+- Suites: **Jober 1142 / CorvinumEU 729 / browser 70** (browser not re-run).
+
 ## 2026-08-05 - testing a feature flag from the seed inward
 
 - `tests/test_jober_checklist.py` leads with the failure that has no partial

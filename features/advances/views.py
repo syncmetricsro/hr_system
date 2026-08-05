@@ -11,12 +11,15 @@ from django.utils.dateparse import parse_date
 from django.utils.translation import gettext as _
 
 from core.accounts.permissions import Action, require_action
+from core.offices.scoping import scope_people
 from core.people.models import Person
 from core.projects.models import Project
+from core.ui.registry import finance_overview_table
 from features.advances.models import EntryType, LedgerCategory, LedgerEntry
 from features.advances.services import (
     LedgerError,
     cancel_entry,
+    cycle_key,
     cycle_report,
     delete_entry,
     include_cycle,
@@ -39,9 +42,32 @@ def _report_args(request) -> tuple[int, int]:
     return year, month
 
 
+# How many runs the pay overview shows, ending at the selected one. Three is
+# enough to see a correction land in the run after the one it belongs to
+# without turning an office of sixty into a wall of rows.
+OVERVIEW_MONTHS = 3
+
+
+def _recent_periods(year: int, month: int, count: int = OVERVIEW_MONTHS):
+    """The selected run and the ones before it, newest first."""
+    periods = []
+    for step in range(count):
+        y, m = year, month - step
+        while m < 1:
+            y, m = y - 1, m + 12
+        periods.append(cycle_key(y, m))
+    return periods
+
+
 @require_action(Action.LEDGER_VIEW)
 def ledger_overview(request):
     year, month = _report_args(request)
+    # Office scope, on both the entry dropdown and the overview. The dropdown
+    # was unscoped: harmless on a tenant with no Office rows, and still every
+    # queryset owes the same boundary (ADR 0026).
+    people = scope_people(
+        Person.objects.order_by("last_name", "first_name"), request.user
+    )
     return render(
         request,
         "pages/ledger.html",
@@ -52,7 +78,10 @@ def ledger_overview(request):
             "cycle_month": month,
             "entry_types": EntryType.choices,
             "categories": LedgerCategory.choices,
-            "people": Person.objects.order_by("last_name", "first_name"),
+            "people": people,
+            "pay_overview": finance_overview_table(
+                request, people, _recent_periods(year, month)
+            ),
             "projects": Project.objects.order_by("name"),
             # Pre-fills the entry date, which is what it is nine times in ten.
             "today_iso": timezone.localdate().isoformat(),

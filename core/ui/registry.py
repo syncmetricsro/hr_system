@@ -97,12 +97,24 @@ def register_report_panel(template: str, context, order: int = 100) -> None:
 def register_person_finance_series(
     provider, order: int = 100, role: str = "source"
 ) -> None:
-    """Register a per-person, per-calendar-month money column.
+    """Register a per-person, per-period money column.
 
     ``role`` lets core relate two columns without knowing which feature
     supplies either. ``"gross"`` and ``"deduction"`` together produce the
-    derived *after deductions* column in `person_finance_overview`; the default
-    ``"source"`` is a column that stands alone and is never arithmetic input.
+    derived *after deductions* column; the default ``"source"`` is a column
+    that stands alone and is never arithmetic input.
+
+    **The provider is bulk**::
+
+        provider(request, people) -> {"label": str, "by_person": {
+            person_id: {period_key: (amount, currency)}
+        }} | None
+
+    It takes an iterable of people because the same columns are drawn one
+    person at a time on a profile and for a whole office on the ledger page.
+    A per-person signature would have meant three queries per worker there, and
+    the alternative - a second bulk implementation - is how two screens start
+    disagreeing about one number.
     """
     entry = {"provider": provider, "order": order, "role": role}
     if entry not in _person_finance_series:
@@ -165,8 +177,59 @@ def person_panels(request, person) -> list[dict]:
     return _render_slot(_person_panels, request, person)
 
 
+def _finance_series(request, people):
+    """Every registered column, in order, for these people.
+
+    Returns ``[{label, role, by_person}]`` with the derived *after deductions*
+    column already inserted where both its inputs exist. One definition, so the
+    profile table and the office-wide table cannot disagree.
+    """
+    series = []
+    for entry in sorted(_person_finance_series, key=lambda item: item["order"]):
+        rendered = entry["provider"](request, people)
+        if rendered is not None:
+            series.append({**rendered, "role": entry["role"]})
+
+    gross = next((s for s in series if s["role"] == "gross"), None)
+    deduction = next((s for s in series if s["role"] == "deduction"), None)
+    if gross is None or deduction is None:
+        return series
+
+    derived = {"label": _("After deductions"), "role": "derived", "by_person": {}}
+    for person_id, periods in gross["by_person"].items():
+        taken = deduction["by_person"].get(person_id, {})
+        for period, (base, currency) in periods.items():
+            owed = taken.get(period)
+            derived["by_person"].setdefault(person_id, {})[period] = (
+                base - (owed[0] if owed else 0),
+                currency,
+            )
+    # Immediately after the deductions it is computed from, so the table reads
+    # left to right as: gross, taken off, what is left, what payroll actually
+    # paid. Appending it last would put the arithmetic after its own comparison
+    # figure.
+    series.insert(series.index(deduction) + 1, derived)
+    return series
+
+
+def _cells(series, person_id, period):
+    cells = []
+    for item in series:
+        value = item["by_person"].get(person_id, {}).get(period)
+        cells.append(
+            None
+            if value is None
+            else {
+                "amount": value[0],
+                "currency": value[1],
+                "derived": item["role"] == "derived",
+            }
+        )
+    return cells
+
+
 def person_finance_overview(request, person) -> dict | None:
-    """Align feature-owned source values by calendar month.
+    """Align feature-owned source values for one person.
 
     Where a ``gross`` column and a ``deduction`` column are both present, a
     derived **after deductions** column is appended. That subtraction is the
@@ -174,56 +237,49 @@ def person_finance_overview(request, person) -> dict | None:
     gross figure it entered. It is deliberately **not** net pay: no tax or levy
     is involved, and the separately recorded net payslip stays its own column so
     the two can be compared rather than conflated (C-Q17).
+
+    The one-person case of `finance_overview_table`.
     """
-    series = []
-    for entry in sorted(_person_finance_series, key=lambda item: item["order"]):
-        rendered = entry["provider"](request, person)
-        if rendered is not None:
-            series.append({**rendered, "role": entry["role"]})
+    series = _finance_series(request, [person])
     periods = sorted(
-        {period for item in series for period in item["periods"]}, reverse=True
+        {period for item in series for period in item["by_person"].get(person.pk, {})},
+        reverse=True,
     )
     if not periods:
         return None
+    rows = [
+        {"period": period, "cells": _cells(series, person.pk, period)}
+        for period in periods
+    ]
+    has_derived = any(item["role"] == "derived" for item in series)
+    return {"series": series, "rows": rows, "has_derived": has_derived}
 
-    gross = next((s for s in series if s["role"] == "gross"), None)
-    deduction = next((s for s in series if s["role"] == "deduction"), None)
-    derived = None
-    if gross is not None and deduction is not None:
-        derived = {
-            "label": _("After deductions"),
-            "role": "derived",
-            "periods": {},
-        }
-        for period in periods:
-            base = gross["periods"].get(period)
-            if base is None:
-                continue  # nothing to subtract from; leave the cell empty
-            taken = deduction["periods"].get(period)
-            amount = base[0] - (taken[0] if taken else 0)
-            derived["periods"][period] = (amount, base[1])
-        # Immediately after the deductions it is computed from, so the table
-        # reads left to right as: gross, taken off, what is left, what payroll
-        # actually paid. Appending it last would put the arithmetic after its
-        # own comparison figure.
-        series.insert(series.index(deduction) + 1, derived)
 
-    rows = []
-    for period in periods:
-        cells = []
-        for item in series:
-            value = item["periods"].get(period)
-            cells.append(
-                None
-                if value is None
-                else {
-                    "amount": value[0],
-                    "currency": value[1],
-                    "derived": item["role"] == "derived",
-                }
-            )
-        rows.append({"period": period, "cells": cells})
-    return {"series": series, "rows": rows, "has_derived": derived is not None}
+def finance_overview_table(request, people, periods) -> dict | None:
+    """The same columns, for a whole office: one row per worker per period.
+
+    ``periods`` is given rather than discovered, because this table answers
+    "what does the run I am looking at mean for each worker" — the caller owns
+    which runs those are. Every person passed in gets a row per period, empty
+    cells included: a worker with no gross wage recorded is exactly what an
+    office needs to see.
+    """
+    people = list(people)
+    if not people:
+        return None
+    series = _finance_series(request, people)
+    if not series:
+        return None
+    rows = [
+        {"person": person, "period": period, "cells": _cells(series, person.pk, period)}
+        for person in people
+        for period in periods
+    ]
+    return {
+        "series": series,
+        "rows": rows,
+        "has_derived": any(item["role"] == "derived" for item in series),
+    }
 
 
 def exit_relevant(person) -> bool:

@@ -1,0 +1,36 @@
+{% load i18n %}
+{# The person page's Wage and payslip overview, for the whole office: one row per worker per run. Same registered columns and the same derived arithmetic, so this table and a profile can never disagree. #}
+{% if pay_overview %}
+<section class="panel" data-testid="ledger-pay-overview">
+  <p class="eyebrow">{% trans "Pay" %}</p>
+  <h2>{% trans "Wage and payslip overview" %}</h2>
+  {% if pay_overview.has_derived %}
+    <p class="muted">{% trans "One row per worker per payroll run. Ledger deductions are what that run recovers, which is not always the month the money changed hands: an advance handed over after the 20th is recovered from the next run. Gross wage and the recorded net payslip are source values someone entered; After deductions is gross minus this office's own ledger entries, and nothing else. It is not net pay — no tax or levy is calculated here, which is why the payslip stays its own column to compare against." %}</p>
+  {% else %}
+    <p class="muted">{% trans "One row per worker per payroll run, from the values recorded for them. Gross wage is not converted into net pay here; taxes, levies, and other statutory payroll calculations remain outside this feature." %}</p>
+  {% endif %}
+  <div class="data-table-scroll">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th scope="col">{% trans "Person" %}</th>
+          <th scope="col">{% trans "Payroll run" %}</th>
+          {% for series in pay_overview.series %}<th scope="col" class="numeric">{{ series.label }}</th>{% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in pay_overview.rows %}
+          <tr>
+            <th scope="row" class="row-name"><a href="{% url 'person_detail' row.person.pk %}">{{ row.person }}</a></th>
+            <td>{{ row.period }}</td>
+            {% for cell in row.cells %}
+              <td class="numeric{% if cell.derived %} cell-derived{% endif %}">{% if cell %}{{ cell.amount }} {{ cell.currency }}{% else %}—{% endif %}</td>
+            {% endfor %}
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <p class="muted">{% trans "A dash means nothing was recorded for that worker in that run — which is a different fact from a recorded zero, and worth looking at." %}</p>
+</section>
+{% endif %}

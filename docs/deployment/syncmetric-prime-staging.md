@@ -248,6 +248,14 @@ Creating this second public app, its database, its DNS/TLS hostname, and its
 provider configuration remains a deliberate next deployment step; none has
 been created by this documentation update.
 
+During the fictional-data client-testing phase, use
+[`jober-staging-operational-reset.md`](jober-staging-operational-reset.md) when
+Jober needs a clean workspace without losing login accounts, office scoping or
+essential reference configuration. That procedure deliberately clears Audit,
+sessions and referenced operational media as well as ordinary business rows.
+Never substitute `flush`, a database recreation, or a stale purge payload from
+an earlier schema.
+
 ---
 
 ## Phase 0 — Assess + DNS
