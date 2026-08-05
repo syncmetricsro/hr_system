@@ -1,5 +1,22 @@
 # Test Journal
 
+## 2026-08-05 - a test that passed only because the catalogs were stale
+
+- Two tests for the reversal marker, and the first one **passed alone and failed
+  in the full lane**. The cause is worth keeping: it asserted the English word
+  "Reversed" against a page that renders in Slovak, and it passed the first time
+  only because I had not compiled the catalogs yet. Once `Stornované` existed,
+  the assertion was false.
+- Fixed with the pattern already used in `test_wage_ledger`: compare against
+  `gettext(...)` under `override(response.headers["Content-Language"])`, so the
+  test reads the same language the page rendered in. `translation.override`
+  around an assertion does nothing - the response was rendered before it.
+- The stronger assertion is locale-independent and closer to the bug anyway:
+  after a reversal the page must **not** still offer `value="reverse"` for that
+  entry. Verified failing without the template fix.
+- Suites: **Jober 1083 / CorvinumEU 673 / browser 70**.
+
+
 ## 2026-08-05 - the guard on a browser test earned its keep
 
 - **`tests/test_entry_medical.py` is new (7 tests).** The pair that matter are

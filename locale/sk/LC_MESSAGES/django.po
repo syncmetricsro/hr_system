@@ -1513,7 +1513,9 @@ msgstr "Ak sa to neuplatňuje, je potrebný dôvod."
 
 #: core/projects/services.py:349
 msgid "Record the entry medical date before marking Medical complete."
-msgstr "Pred označením lekárskej prehliadky ako dokončenej zaznamenajte dátum vstupnej prehliadky."
+msgstr ""
+"Pred označením lekárskej prehliadky ako dokončenej zaznamenajte dátum "
+"vstupnej prehliadky."
 
 #: core/projects/services.py:371
 msgid ""
@@ -1568,7 +1570,9 @@ msgstr "Skúšobný deň bol odpustený — na aktiváciu dokončite pripravenos
 
 #: core/projects/views.py:369
 msgid "This worker has no active assignment to record a medical for."
-msgstr "Tento pracovník nemá aktívne priradenie, ku ktorému by sa dala lekárska prehliadka zaznamenať."
+msgstr ""
+"Tento pracovník nemá aktívne priradenie, ku ktorému by sa dala lekárska "
+"prehliadka zaznamenať."
 
 #: core/projects/views.py:380
 msgid "Entry medical date recorded."
@@ -3463,7 +3467,7 @@ msgstr "Záznam už bol stornovaný."
 msgid "Entries without payroll effect cannot be reversed."
 msgstr "Záznamy bez vplyvu na mzdu nemožno stornovať."
 
-#: features/advances/services.py:349
+#: features/advances/services.py:352
 msgid "Entry is locked after cycle inclusion; record a reversal instead."
 msgstr "Po zahrnutí do cyklu je záznam uzamknutý; zaznamenajte storno."
 
@@ -5582,7 +5586,7 @@ msgstr "Správa ubytovania"
 #: templates/pages/transport_trends.html:22
 #: templates/pages/trials_queue.html:25
 #: templates/partials/confirm_dialog.html:12
-#: templates/partials/ledger_activity.html:44
+#: templates/partials/ledger_activity.html:48
 msgid "Cancel"
 msgstr "Zrušiť"
 
@@ -7076,13 +7080,17 @@ msgstr "pri obnovení potvrdenia zaznamenajte nový dátum."
 msgid ""
 "No date on file. Compliance reports this worker as missing a medical until "
 "one is recorded."
-msgstr "Nie je založený žiadny dátum. Kým sa nezaznamená, modul Súlad hlási tohto pracovníka ako bez lekárskej prehliadky."
+msgstr ""
+"Nie je založený žiadny dátum. Kým sa nezaznamená, modul Súlad hlási tohto "
+"pracovníka ako bez lekárskej prehliadky."
 
 #: templates/pages/person_detail.html:213
 msgid ""
 "Records the date on the certificate. It is what the annual expiry counts "
 "from, and what clears the compliance alert."
-msgstr "Zaznamená dátum uvedený na potvrdení. Od neho sa počíta ročná platnosť a práve on zruší upozornenie o súlade."
+msgstr ""
+"Zaznamená dátum uvedený na potvrdení. Od neho sa počíta ročná platnosť a "
+"práve on zruší upozornenie o súlade."
 
 #: templates/pages/person_detail.html:213
 msgid "Record medical date"
@@ -7915,7 +7923,15 @@ msgstr "Typ"
 msgid "Settlement"
 msgstr "Vysporiadanie"
 
-#: templates/partials/ledger_activity.html:42
+#: templates/partials/ledger_activity.html:37
+msgid "Reversed"
+msgstr "Stornované"
+
+#: templates/partials/ledger_activity.html:38
+msgid "This is a reversal"
+msgstr "Toto je storno"
+
+#: templates/partials/ledger_activity.html:46
 msgid ""
 "This records a reversal entry with the opposite pay effect; the original "
 "stays in the ledger."
@@ -7923,11 +7939,11 @@ msgstr ""
 "Zaznamená storno záznam s opačným vplyvom na mzdu; pôvodný záznam ostáva v "
 "knihe."
 
-#: templates/partials/ledger_activity.html:42
+#: templates/partials/ledger_activity.html:46
 msgid "Reverse"
 msgstr "Stornovať"
 
-#: templates/partials/ledger_activity.html:44
+#: templates/partials/ledger_activity.html:48
 msgid ""
 "This cancels the open ledger entry; it will no longer count against pay."
 msgstr "Zruší otvorený záznam v knihe; už sa nebude započítavať voči mzde."

@@ -260,7 +260,10 @@ def cycle_report(year: int, month: int):
     entries = (
         LedgerEntry.objects.filter(collected)
         .exclude(settlement_status=SettlementStatus.CANCELLED)
-        .select_related("person", "project")
+        # `reversed_by` is a reverse one-to-one, so it select_relates like any
+        # other - without it the list costs one query per row to ask whether a
+        # reversal exists.
+        .select_related("person", "project", "reversed_by")
         .order_by("person__last_name", "entry_date")
     )
     per_person: dict = {}

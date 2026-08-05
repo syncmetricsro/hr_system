@@ -1512,7 +1512,9 @@ msgstr "Ha nem alkalmazható, indoklás szükséges."
 
 #: core/projects/services.py:349
 msgid "Record the entry medical date before marking Medical complete."
-msgstr "A belépő orvosi vizsgálat dátumát rögzítse, mielőtt az Orvosit késznek jelöli."
+msgstr ""
+"A belépő orvosi vizsgálat dátumát rögzítse, mielőtt az Orvosit késznek "
+"jelöli."
 
 #: core/projects/services.py:371
 msgid ""
@@ -1567,7 +1569,9 @@ msgstr "A próbanap elengedve — az aktiváláshoz töltse ki a készenlétet."
 
 #: core/projects/views.py:369
 msgid "This worker has no active assignment to record a medical for."
-msgstr "Ennek a munkavállalónak nincs aktív beosztása, amelyhez orvosit lehetne rögzíteni."
+msgstr ""
+"Ennek a munkavállalónak nincs aktív beosztása, amelyhez orvosit lehetne "
+"rögzíteni."
 
 #: core/projects/views.py:380
 msgid "Entry medical date recorded."
@@ -3510,7 +3514,7 @@ msgstr "A tétel már sztornózva van."
 msgid "Entries without payroll effect cannot be reversed."
 msgstr "Bérhatás nélküli tétel nem sztornózható."
 
-#: features/advances/services.py:349
+#: features/advances/services.py:352
 msgid "Entry is locked after cycle inclusion; record a reversal instead."
 msgstr "Ciklusba sorolás után a tétel zárolt; rögzítsen sztornót."
 
@@ -5631,7 +5635,7 @@ msgstr "Szálláskezelés"
 #: templates/pages/transport_trends.html:22
 #: templates/pages/trials_queue.html:25
 #: templates/partials/confirm_dialog.html:12
-#: templates/partials/ledger_activity.html:44
+#: templates/partials/ledger_activity.html:48
 msgid "Cancel"
 msgstr "Elvet"
 
@@ -7135,13 +7139,17 @@ msgstr "az igazolás megújításakor rögzítsen új dátumot."
 msgid ""
 "No date on file. Compliance reports this worker as missing a medical until "
 "one is recorded."
-msgstr "Nincs rögzített dátum. Amíg nem rögzítik, a Megfelelőség hiányzó orvosiként jelzi ezt a munkavállalót."
+msgstr ""
+"Nincs rögzített dátum. Amíg nem rögzítik, a Megfelelőség hiányzó orvosiként "
+"jelzi ezt a munkavállalót."
 
 #: templates/pages/person_detail.html:213
 msgid ""
 "Records the date on the certificate. It is what the annual expiry counts "
 "from, and what clears the compliance alert."
-msgstr "Rögzíti az igazoláson szereplő dátumot. Ettől számít az éves lejárat, és ez szünteti meg a megfelelőségi figyelmeztetést."
+msgstr ""
+"Rögzíti az igazoláson szereplő dátumot. Ettől számít az éves lejárat, és ez "
+"szünteti meg a megfelelőségi figyelmeztetést."
 
 #: templates/pages/person_detail.html:213
 msgid "Record medical date"
@@ -7980,7 +7988,15 @@ msgstr "Típus"
 msgid "Settlement"
 msgstr "Elszámolás"
 
-#: templates/partials/ledger_activity.html:42
+#: templates/partials/ledger_activity.html:37
+msgid "Reversed"
+msgstr "Sztornózva"
+
+#: templates/partials/ledger_activity.html:38
+msgid "This is a reversal"
+msgstr "Ez egy sztornó"
+
+#: templates/partials/ledger_activity.html:46
 msgid ""
 "This records a reversal entry with the opposite pay effect; the original "
 "stays in the ledger."
@@ -7988,11 +8004,11 @@ msgstr ""
 "Sztornótételt rögzít ellentétes bérhatással; az eredeti tétel a főkönyvben "
 "marad."
 
-#: templates/partials/ledger_activity.html:42
+#: templates/partials/ledger_activity.html:46
 msgid "Reverse"
 msgstr "Sztornó"
 
-#: templates/partials/ledger_activity.html:44
+#: templates/partials/ledger_activity.html:48
 msgid ""
 "This cancels the open ledger entry; it will no longer count against pay."
 msgstr "Törli a nyitott főkönyvi tételt; többé nem számít bele a bérbe."

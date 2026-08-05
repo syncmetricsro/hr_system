@@ -30,6 +30,8 @@ if any(app not in settings.INSTALLED_APPS for app in _REQUIRED):
     )
 
 from django.urls import reverse  # noqa: E402
+from django.utils.translation import gettext  # noqa: E402
+from django.utils import translation  # noqa: E402
 
 from core.people.models import Person  # noqa: E402
 from features.advances.models import EntryType, LedgerCategory  # noqa: E402
@@ -415,3 +417,48 @@ def test_the_overview_shows_a_deduction_against_the_run_that_collects_it(
     assert gross["amount"] == Decimal("1800.00")
     assert deducted["amount"] == Decimal("200.00")
     assert after["amount"] == Decimal("1600.00")
+
+
+# --- an entry can only be reversed once, and the list should say so ---------
+
+
+def test_a_reversed_entry_offers_no_second_reversal(client, person, manager):
+    """Reported: pressing Sztornó on an already-reversed entry answered "already
+    reversed" - a refusal for an action the page was still offering, with no
+    sign that the correction was already two rows below."""
+    from features.advances.services import reverse_entry
+
+    original = _advance(person, manager, "150", dt.date(2026, 8, 3))
+    include_cycle(2026, 8, actor=manager)
+    original.refresh_from_db()
+    reverse_entry(original, actor=manager, reason="entered twice")
+
+    original.refresh_from_db()
+    assert original.is_reversed
+    client.force_login(manager)
+
+    response = client.get(reverse("ledger_overview") + "?year=2026&month=8")
+    body = response.content.decode()
+    # The original stays listed - reversal never deletes (C-Q5) - but its row
+    # must say so, and must not offer the action a second time.
+    assert "150" in body
+    assert 'value="reverse"' not in body, (
+        "the page still offers a reversal on an entry that already has one"
+    )
+    # The page renders in this client's own language, so compare against the
+    # translation of the marker rather than the English source string.
+    with translation.override(response.headers["Content-Language"]):
+        assert gettext("Reversed") in body
+
+
+def test_an_entry_not_yet_reversed_still_offers_it(client, person, manager):
+    """The marker must not swallow the action for everyone else."""
+    _advance(person, manager, "60", dt.date(2026, 8, 3))
+    include_cycle(2026, 8, actor=manager)
+    client.force_login(manager)
+
+    body = client.get(
+        reverse("ledger_overview") + "?year=2026&month=8"
+    ).content.decode()
+
+    assert 'value="reverse"' in body
