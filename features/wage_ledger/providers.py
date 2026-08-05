@@ -7,13 +7,16 @@ from core.ui.registry import flag_enabled
 from features.wage_ledger.models import WageEntry
 
 
-def gross_wage_series(request, person) -> dict | None:
+def gross_wage_series(request, people) -> dict | None:
     if not flag_enabled("wage_ledger") or not can(request.user, Action.WAGE_VIEW):
         return None
-    rows = WageEntry.objects.filter(person=person).only(
-        "period", "gross_amount", "currency"
+    rows = WageEntry.objects.filter(person__in=people).only(
+        "person_id", "period", "gross_amount", "currency"
     )
-    return {
-        "label": _("Recorded gross wage"),
-        "periods": {row.period: (row.gross_amount, row.currency) for row in rows},
-    }
+    by_person: dict[int, dict] = {}
+    for row in rows:
+        by_person.setdefault(row.person_id, {})[row.period] = (
+            row.gross_amount,
+            row.currency,
+        )
+    return {"label": _("Recorded gross wage"), "by_person": by_person}

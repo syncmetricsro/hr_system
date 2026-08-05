@@ -1584,6 +1584,17 @@ select {
   text-transform: uppercase;
 }
 
+/* A row header that is a person's name, not a column label. The uppercase
+   small-caps treatment above is right for headings and shouts when applied to
+   somebody's name, so this opts back out. */
+.data-table th.row-name {
+  color: inherit;
+  font-size: inherit;
+  font-weight: 600;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
 /* Audit timestamps and record references stay intact; the reason column uses
    the remaining width and the wrapper scrolls on narrow screens. */
 .audit-table {

@@ -1,5 +1,38 @@
 # Deployment Journal
 
+## 2026-08-05 - Jober staging operational history cleared for client testing
+
+At the owner's request, the fictional `jober-staging` database was cleared so
+Jober staff can enter their own test scenario. Login accounts were retained;
+old people, projects and every other operational domain were removed together
+with 950 Audit events, 91 sessions and ten referenced person/certificate media
+files. The reset retained 11 users (one superuser), three offices, nine
+user-office memberships, Django authorization metadata, the intake definition
+and required category catalogues.
+
+Before mutation, the host exported a 283 KiB PostgreSQL dump and a 9.9 MiB
+media archive under `/var/backups/jober-staging-reset/`; their exact filenames
+and SHA-256 values are recorded in
+[`docs/deployment/jober-staging-operational-reset.md`](docs/deployment/jober-staging-operational-reset.md).
+The app was stopped with `dokku ps:stop` because this Dokku installation does
+not provide the attempted `maintenance:*` commands. A guarded Django shell
+payload asserted the exact database host and before-counts, transactionally
+truncated 43 operational tables, checked that the retained account boundary
+was unchanged, then removed only referenced operational media.
+
+Observed terminal result:
+
+```text
+PURGE COMPLETE: 43 operational tables cleared; 10 referenced operational
+media files removed; 11 users, 3 offices and 9 office memberships preserved.
+```
+
+Status when recorded: purge successful; app deliberately still stopped while
+post-reset inventory, orphaned-media count, restart/health and browser
+acceptance remain pending. Do not report the reset as fully accepted until a
+follow-up entry records those results. No Jober demo seed command is to be run,
+because that would restore the scenario this operation removed.
+
 ## 2026-08-05 - Five slices: correction, consequence, and the medical
 
 Deployed the exact `main` merge **`a91844d`** to `jober-staging` and

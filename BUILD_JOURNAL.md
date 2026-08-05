@@ -1,5 +1,44 @@
 # Build Journal
 
+## 2026-08-05 - the pay result, for the whole office, on the ledger page
+
+The ledger page said what a run collects. What the office is actually asked is
+what that means for each worker's pay - and that table existed only one profile
+at a time. It is now on the ledger page too: one row per worker per run, three
+runs back, every worker in scope with dashes where nothing was recorded.
+
+**The interesting decision was not to build a second table.** The person page's
+columns come from three registered providers composed in `core/ui/registry.py`,
+and each took a single person. Calling them per worker would have been three
+queries each - sixty workers, one hundred and eighty queries - and the usual
+escape, a bulk implementation beside the original, is precisely how two screens
+start disagreeing about one number. This product has already paid for that once
+with a medical date that three places computed differently.
+
+So the **provider contract became bulk-first**: `provider(request, people)`
+returning `{person_id: {period: (amount, currency)}}`, with
+`person_finance_overview` reduced to the one-person case of the same call. The
+derived *after deductions* column has one definition serving both tables, which
+is what lets a test assert that the two tables on the ledger page agree - the
+cycle panel's net effect for a worker and the overview's deduction figure are
+the same money seen from two sides.
+
+Fixed on the way in: `ledger_overview` built its person dropdown from an
+**unscoped** `Person.objects`. CorvinumEU seeds no offices so nothing leaked,
+and a queryset that behaves only because the data is empty is one office away
+from a bug (ADR 0026). Both the dropdown and the new table go through
+`scope_people` now, with a test.
+
+Verified live rather than inferred - Marek's cycle row reads -105,00 EUR net
+effect and his overview row reads 105,00 EUR of ledger deductions, in Hungarian
+and Slovak, with the page not scrolling sideways at 375px.
+
+One small thing worth the line it costs: the row header shouted MAREK SKLADNÍK
+in the table's uppercase heading style. Right for a column label, wrong for a
+person's name; `.row-name` opts back out.
+
+Jober 1142, CorvinumEU 729, browser 70 (not re-run).
+
 ## 2026-08-05 - Jober gets the checklist it was promised
 
 Asked to port the checklist and the medical work from CorvinumEU into Jober.
