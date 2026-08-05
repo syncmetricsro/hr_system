@@ -19,7 +19,7 @@ WebSocket, SSE, broker, or additional runtime dependency is used.
   the source language when a stale or missing cookie disagrees with it; no new
   environment setting is required.
 
-Last updated: 2026-08-04
+Last updated: 2026-08-05
 
 ## Secrets during human and automated testing
 
@@ -39,6 +39,11 @@ Last updated: 2026-08-04
   The runner forwards only the required `DJANGO_EMAIL_*` variables to the web
   runtime; migrations and fictional-data seeds never receive provider secrets.
   Without that injected SMTP backend it safely uses console email.
+- The `localhost:8001` runner selects `clients.corvinum_eu.local`, which disables
+  TOTP entirely for fictional-data client testing, including for accounts with
+  an existing confirmed device. Corvinum staging and production select
+  `clients.corvinum_eu.production`; that module keeps TOTP enabled and requires
+  it for managers. Never point a public deployment at the local settings module.
 - The standard pytest and Playwright suites do **not** require Doppler. They
   remain deterministic and secret-free, use mocks/fakes where applicable, and
   cover fail-closed behavior when provider credentials are absent.

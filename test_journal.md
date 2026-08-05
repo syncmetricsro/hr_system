@@ -1,5 +1,25 @@
 # Test Journal
 
+## 2026-08-05 - local 2FA bypass with a production tripwire
+
+- Two authentication regressions prove the local switch bypasses both halves
+  of TOTP enforcement: a confirmed device no longer creates a verification
+  detour, and a required manager role no longer creates an enrollment detour.
+  A direct setup request redirects without creating a device.
+- The Corvinum settings test executes both modules, not just source-text
+  checks: `clients.corvinum_eu.local` must report the switch off, while
+  `clients.corvinum_eu.production` must report it on with `manager` still in
+  the required-role list. The runner is also pinned to the local module.
+- Focused Corvinum regression: **23 passed**.
+- Full local gate: production image/integrity checks, Ruff lint and formatting,
+  both Django checks, and migration consistency passed; **Jober 1108 passed / 16
+  skipped**, **CorvinumEU 706 passed / 23 skipped / 262 deselected**.
+- Browser lane not run: it deliberately uses production settings and retains
+  its existing TOTP coverage; the changed localhost runner is verified against
+  the live local container instead. That database already held a confirmed
+  manager device; the container reported the local switch off and the password
+  POST redirected straight to `/sk/`.
+
 ## 2026-08-05 - testing a marker, not a colour
 
 - `tests/test_physical_actions.py` (22 tests). The interesting decision is what

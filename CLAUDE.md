@@ -30,7 +30,8 @@ overrides it. Product truth lives in `Jober_Product_Design.md` (+ `Jober_Finance
   discipline stands: deps **feature → core only** (`scripts/
   check_dependency_direction.py`); no client branching in core. CorvinumEU:
   `features/{checklists,advances}` (off for Jober), equipment/blacklist/
-  compliance/intake reused, 2FA on for managers, seeds in
+  compliance/intake reused, 2FA on for managers in production/staging (the
+  `localhost:8001` demo runner deliberately uses password-only login), seeds in
   `clients/corvinum_eu/demo` (`seed_corvinum_demo`); open client decisions in
   `docs/product/corvinum-open-questions.md`.
 - Test baseline: **~654 Jober unit + ~425 CorvinumEU + 50 e2e** (2026-07-25).

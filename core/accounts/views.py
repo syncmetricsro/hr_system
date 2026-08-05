@@ -24,12 +24,20 @@ from core.notifications.services import start_notification_session
 from core.ui.qr import qr_svg
 
 
+def _two_factor_auth_enabled() -> bool:
+    return getattr(settings, "TWO_FACTOR_AUTH_ENABLED", True)
+
+
 def _requires_second_factor(user) -> bool:
+    if not _two_factor_auth_enabled():
+        return False
     device = getattr(user, "totp_device", None)
     return device is not None and device.confirmed
 
 
 def _role_requires_totp(user) -> bool:
+    if not _two_factor_auth_enabled():
+        return False
     required = getattr(settings, "TWO_FACTOR_REQUIRED_ROLES", [])
     return getattr(user, "role", None) in required
 
@@ -76,6 +84,10 @@ def logout_view(request: HttpRequest) -> HttpResponse:
 @require_http_methods(["GET", "POST"])
 def two_factor_verify(request: HttpRequest) -> HttpResponse:
     """Second login step for users with a confirmed TOTP device."""
+    if not _two_factor_auth_enabled():
+        request.session.pop("pending_2fa_user", None)
+        return HttpResponseRedirect(reverse("login"))
+
     from django.contrib.auth import get_user_model
 
     user_pk = request.session.get("pending_2fa_user")
@@ -105,6 +117,9 @@ def two_factor_verify(request: HttpRequest) -> HttpResponse:
 @require_http_methods(["GET", "POST"])
 def two_factor_setup(request: HttpRequest) -> HttpResponse:
     """Create (or replace an unconfirmed) TOTP device; confirm with a code."""
+    if not _two_factor_auth_enabled():
+        return HttpResponseRedirect(reverse("dashboard"))
+
     from core.accounts.models import TotpDevice
 
     device = getattr(request.user, "totp_device", None)

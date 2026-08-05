@@ -1,8 +1,11 @@
-"""CorvinumEU production/demo settings: the same gunicorn+whitenoise
-hardening layer Jober's ``config.settings.production`` applies, over the
-CorvinumEU client settings. Used by ``scripts/corvinum_app.sh`` (local demo
-over plain HTTP with the secure flags relaxed via env) and later by the real
-deployment (flags left at their secure defaults)."""
+"""CorvinumEU production settings.
+
+The same gunicorn and WhiteNoise hardening layer Jober's
+``config.settings.production`` applies, over the CorvinumEU client settings.
+TOTP remains enabled here. The localhost demo runner imports the separate
+``clients.corvinum_eu.local`` module, which is the only settings layer that
+turns TOTP off.
+"""
 
 import os
 
@@ -31,5 +34,7 @@ MIDDLEWARE = [  # noqa: F405
 
 STORAGES = {
     "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
-    "staticfiles": {"BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage"},
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage"
+    },
 }

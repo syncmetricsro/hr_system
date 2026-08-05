@@ -2,9 +2,10 @@
 
 The second thin client on the Stage B core: an explicit INSTALLED_APPS set
 (feature migrations run only where the feature is installed — design doc
-§12.4), CorvinumEU's flag set, SK/HU languages, branding, and 2FA required
-for managers (§5.12). Defaults for unconfirmed client decisions are tracked
-in docs/product/corvinum-open-questions.md.
+§12.4), CorvinumEU's flag set, SK/HU languages, branding, and production 2FA
+required for managers (§5.12). The localhost-only exception lives in
+``clients.corvinum_eu.local``. Defaults for unconfirmed client decisions are
+tracked in docs/product/corvinum-open-questions.md.
 """
 
 from config.settings.base import *  # noqa: F403

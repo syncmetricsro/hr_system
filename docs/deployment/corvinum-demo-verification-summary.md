@@ -1,5 +1,10 @@
 # CorvinumEU Demo Walkthrough Verification Summary
 
+> Historical authentication note (2026-08-05): the local runner now uses
+> password-only login for fictional-data client testing. The July results below
+> accurately record the former local TOTP behavior and the still-current
+> staging/production path; they are not a claim about today's localhost flow.
+
 ## Provider-backed payslip run, 2026-08-03 (local, real SMTP)
 
 First real-SMTP run after the recipient allowlist became a platform control

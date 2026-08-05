@@ -25,7 +25,7 @@ reusable; Jober's tests pass with assertions unchanged**.
 | Documents w/ expiry (§5.4) | **Reuse `features/compliance`** (metadata + expiry alerts); file upload/verification workflow is a later slice extension, flag-gated |
 | Approval checklists (§5.5) | **New `features/checklists`** — hooks into `core/projects` activation checks |
 | Advance & deduction ledger (§5.10) | **New `features/advances`** — explicit-field model (positive amounts, `entry_type`/`pay_effect`/`settlement_status`), Thursday summary, 20th-to-20th cycle |
-| 2FA (§5.12) | Already core (Stage B4b); CorvinumEU turns it on via `TWO_FACTOR_REQUIRED_ROLES` |
+| 2FA (§5.12) | Already core (Stage B4b); CorvinumEU production/staging turns it on via `TWO_FACTOR_AUTH_ENABLED` + `TWO_FACTOR_REQUIRED_ROLES` |
 | Retention/GDPR (§5.12) | Already core (`core/retention`) |
 
 ### Deviations / deferrals recorded at activation
@@ -48,6 +48,22 @@ reusable; Jober's tests pass with assertions unchanged**.
 - The physical logistics split (accommodation/equipment/transport as separate
   apps) remains deferred: sub-flags already give CorvinumEU equipment-only
   mounting, so the label surgery stays unjustified.
+
+### Local-demo authentication amendment (2026-08-05)
+
+The owner approved password-only authentication for the fictional-data
+Corvinum client demo on `localhost:8001`, so client testers are not required to
+enroll an authenticator during development. The committed runner selects the
+dedicated `clients.corvinum_eu.local` settings module, where
+`TWO_FACTOR_AUTH_ENABLED = False`. The switch bypasses both required enrollment
+and any already-confirmed device, and the setup/verification views cannot be
+used while it is off.
+
+This is not a change to the production security decision. Corvinum staging,
+browser acceptance tests, and production continue to select
+`clients.corvinum_eu.production`, where the switch remains enabled and managers
+remain listed in `TWO_FACTOR_REQUIRED_ROLES`. The local module must never be
+selected by a public deployment.
 
 ## Consequences
 

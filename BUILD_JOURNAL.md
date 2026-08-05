@@ -1,5 +1,25 @@
 # Build Journal
 
+## 2026-08-05 - Corvinum localhost uses password-only demo login
+
+The fictional-data Corvinum client at `localhost:8001` no longer asks testers
+to enroll or enter TOTP. A dedicated `clients.corvinum_eu.local` settings layer
+turns off the shared authentication switch, and the committed local runner is
+the only entry point that selects it. The bypass covers both forced manager
+enrollment and users who already have a confirmed device in the disposable
+demo database; setup and verification routes also stop operating while the
+switch is off.
+
+This does not relax a public environment. Corvinum staging, the browser
+acceptance lane, and production continue to select
+`clients.corvinum_eu.production`, where TOTP is enabled and managers are still
+required to use it. The ADR, permission/security notes, environment guidance,
+presenter runbook, and historical verification record now state that boundary.
+
+No dependency or migration. Jober 1108 passed / 16 skipped; CorvinumEU 706
+passed / 23 skipped / 262 deselected. Browser lane not run because it remains
+production-settings coverage and this slice changes only the local runner.
+
 ## 2026-08-05 - the buttons that reach outside the application
 
 Owner request: some clicks pay a person, send a real message, hand over gear, or

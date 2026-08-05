@@ -8,6 +8,7 @@ from pathlib import Path
 
 import pytest
 from django.utils.translation import gettext, override
+
 REPO = Path(__file__).resolve().parent.parent
 
 URL_SCRIPT = """
@@ -103,11 +104,18 @@ print("ok")
 
 
 def _run(*argv: str) -> subprocess.CompletedProcess:
+    return _run_with_settings("clients.corvinum_eu.settings", *argv)
+
+
+def _run_with_settings(settings_module: str, *argv: str) -> subprocess.CompletedProcess:
     env = dict(os.environ)
-    env.update({
-        "DJANGO_SETTINGS_MODULE": "clients.corvinum_eu.settings",
-        "DJANGO_DEBUG": "1",
-    })
+    env.update(
+        {
+            "DJANGO_SETTINGS_MODULE": settings_module,
+            "DJANGO_DEBUG": "1",
+            "DJANGO_SECRET_KEY": "test-only-corvinum-settings-key",
+        }
+    )
     return subprocess.run(list(argv), capture_output=True, text=True, env=env, cwd=REPO)
 
 
@@ -120,7 +128,9 @@ def test_corvinum_client_boots():
 def test_corvinum_demo_seed_command_is_registered():
     """The client demo app + its idempotent seed load under corvinum settings
     (no DB here — `--help` exercises import, registration, and argparse)."""
-    result = _run(sys.executable, str(REPO / "manage.py"), "seed_corvinum_demo", "--help")
+    result = _run(
+        sys.executable, str(REPO / "manage.py"), "seed_corvinum_demo", "--help"
+    )
     assert result.returncode == 0, result.stdout + result.stderr
 
 
@@ -133,13 +143,37 @@ def test_corvinum_demo_bootstrap_seeds_intake_before_people_scenario():
     assert source.index(questionnaire) < source.index(scenario)
 
 
+def test_corvinum_local_runner_alone_disables_two_factor():
+    source = (REPO / "scripts" / "corvinum_app.sh").read_text(encoding="utf-8")
+    assert "DJANGO_SETTINGS_MODULE=clients.corvinum_eu.local" in source
+
+    local = _run_with_settings(
+        "clients.corvinum_eu.local",
+        sys.executable,
+        "-c",
+        "import django; django.setup(); from django.conf import settings; "
+        "assert settings.TWO_FACTOR_AUTH_ENABLED is False",
+    )
+    assert local.returncode == 0, local.stdout + local.stderr
+
+    production = _run_with_settings(
+        "clients.corvinum_eu.production",
+        sys.executable,
+        "-c",
+        "import django; django.setup(); from django.conf import settings; "
+        "assert settings.TWO_FACTOR_AUTH_ENABLED is True; "
+        "assert settings.TWO_FACTOR_REQUIRED_ROLES == ['manager']",
+    )
+    assert production.returncode == 0, production.stdout + production.stderr
+
+
 def test_corvinum_demo_runner_keeps_smtp_secrets_in_web_runtime_only():
     """Provider credentials are opt-in and never enter migrations or seeds."""
     source = (REPO / "scripts" / "corvinum_app.sh").read_text(encoding="utf-8")
     manage_body = source.split("manage() {", 1)[1].split("print_access() {", 1)[0]
     app_run = source.split('docker run -d --name "$APP"', 1)[1]
 
-    assert 'CONSOLE_EMAIL_ENV=(-e DJANGO_EMAIL_BACKEND=' in source
+    assert "CONSOLE_EMAIL_ENV=(-e DJANGO_EMAIL_BACKEND=" in source
     assert '"${CONSOLE_EMAIL_ENV[@]}"' in manage_body
     assert '"${APP_EMAIL_ENV[@]}"' in app_run
     assert "-e DJANGO_EMAIL_HOST_PASSWORD" in source
@@ -163,15 +197,17 @@ def test_corvinum_shell_includes_shared_confirmation_dialog():
 
 def test_corvinum_sidebar_uses_only_self_hosted_icon_glyphs():
     """A missing subset glyph renders its raw ligature name in the sidebar."""
-    source = (
-        REPO / "clients/corvinum_eu/templates/layouts/base.html"
-    ).read_text(encoding="utf-8")
+    source = (REPO / "clients/corvinum_eu/templates/layouts/base.html").read_text(
+        encoding="utf-8"
+    )
     available = set(
         (REPO / "clients/corvinum_eu/static/corvinum/fonts/icon-names.txt")
         .read_text(encoding="utf-8")
         .splitlines()
     )
-    used = set(re.findall(r'material-symbols-outlined" aria-hidden="true">([^<]+)<', source))
+    used = set(
+        re.findall(r'material-symbols-outlined" aria-hidden="true">([^<]+)<', source)
+    )
     assert used <= available
 
 
@@ -191,7 +227,9 @@ def test_icons_dict_material_names_are_all_in_the_corvinum_subset():
     )
     used = {entry["material"] for entry in ICONS.values() if entry.get("material")}
     missing = used - available
-    assert not missing, f"ICONS entries missing from the CorvinumEU font subset: {missing}"
+    assert not missing, (
+        f"ICONS entries missing from the CorvinumEU font subset: {missing}"
+    )
 
 
 @pytest.mark.parametrize("language", ("sk", "hu", "uk"))
