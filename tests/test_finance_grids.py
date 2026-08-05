@@ -324,3 +324,224 @@ def test_cells_land_in_the_right_column_when_ids_diverge(catalog):
 
     assert by_name["Alpha"] == Decimal("-100")
     assert by_name["Beta"] == Decimal("-900")
+
+
+# --- entering a year in the grid (2026-08-05) ------------------------------
+#
+# Reported after the a91844d deploy: the tables looked right and nothing could
+# be entered for a project for a given year. The year view was read-only by
+# design — one write path, no annual figure that could disagree with its
+# months — but the consequence was never finished: a month with no row had no
+# URL, so a year was twelve trips through a form that reset each time.
+#
+# The grid now writes back through the same twelve monthly records. What these
+# defend is that it stayed honest while doing so.
+
+
+@pytest.fixture
+def vm_manager(client, django_user_model):
+    office = Office.objects.create(name="Velký Meder", code="VM", country="SK")
+    user = django_user_model.objects.create_user(
+        email="fin-year-mgr@demo.jober.test", password="x", role="manager"
+    )
+    user.offices.set([office])
+    client.force_login(user)
+    return {"user": user, "office": office, "client": client}
+
+
+def _save_url(project, year=YEAR):
+    from django.urls import reverse
+
+    return reverse("finance_project_year_save", args=[project.pk, year])
+
+
+def _cell(month, category):
+    from features.profitability.services import cell_field_name
+
+    return cell_field_name(month, category.pk)
+
+
+def test_typing_into_an_unrecorded_month_records_it(vm_manager, catalog):
+    """The reported gap: a month with no row previously had nowhere to type."""
+    project = _project("Minit", vm_manager["office"])
+
+    response = vm_manager["client"].post(
+        _save_url(project),
+        {_cell(3, catalog["wage"]): "-100", _cell(3, catalog["invoices"]): "400"},
+    )
+
+    assert response.status_code == 302
+    month = FinancialMonth.objects.get(project=project, year=YEAR, month=3)
+    assert month.cost == Decimal("100")
+    assert month.revenue == Decimal("400")
+    assert month.net == Decimal("300")
+
+
+def test_an_untouched_month_is_not_quietly_recorded(vm_manager, catalog):
+    """The grid promises a dash for an unrecorded month, not a zero. Saving one
+    column must not turn the other eleven into recorded months that netted
+    nothing — those are different facts and the page says so."""
+    project = _project("Minit", vm_manager["office"])
+
+    vm_manager["client"].post(
+        _save_url(project),
+        {_cell(3, catalog["wage"]): "-100", _cell(7, catalog["wage"]): ""},
+    )
+
+    assert list(
+        FinancialMonth.objects.filter(project=project).values_list("month", flat=True)
+    ) == [3]
+
+
+def test_saving_unchanged_amounts_writes_nothing(vm_manager, catalog):
+    """A full grid is 24 categories x 12 months. Re-saving it must not write
+    288 rows and 288 audit events recording that nothing happened."""
+    from core.audit.models import AuditEvent
+
+    project = _project("Minit", vm_manager["office"])
+    payload = {_cell(3, catalog["wage"]): "-100"}
+    vm_manager["client"].post(_save_url(project), payload)
+    before = AuditEvent.objects.filter(action="finance.line_item_set").count()
+
+    vm_manager["client"].post(_save_url(project), payload)
+
+    assert AuditEvent.objects.filter(action="finance.line_item_set").count() == before
+
+
+def test_a_locked_month_is_skipped_and_the_rest_of_the_year_saves(vm_manager, catalog):
+    """Closing January must not stop February being entered — and a month
+    dropped in silence would read as data loss."""
+    from django.utils import translation
+
+    project = _project("Minit", vm_manager["office"])
+    january = FinancialMonth.objects.create(
+        project=project, year=YEAR, month=1, is_locked=True
+    )
+
+    response = vm_manager["client"].post(
+        _save_url(project),
+        {_cell(1, catalog["wage"]): "-999", _cell(2, catalog["wage"]): "-100"},
+        follow=True,
+    )
+
+    january.refresh_from_db()
+    assert january.cost == Decimal("0")
+    assert FinancialMonth.objects.get(project=project, month=2).cost == Decimal("100")
+    messages = [str(m) for m in response.context["messages"]]
+    with translation.override(response.headers["Content-Language"]):
+        from django.utils.translation import gettext
+
+        expected = gettext(
+            "Locked and left untouched: month(s) %(months)s. Reopen them to edit."
+        ) % {"months": "1"}
+    assert expected in messages
+
+
+def test_a_cost_typed_positive_is_refused(vm_manager, catalog):
+    """The workbook sign convention, enforced on the way in as it always was."""
+    project = _project("Minit", vm_manager["office"])
+
+    vm_manager["client"].post(_save_url(project), {_cell(3, catalog["wage"]): "100"})
+
+    assert not FinancialMonth.objects.filter(project=project).exists()
+
+
+def test_a_rejected_cell_is_named_and_takes_the_whole_save_with_it(vm_manager, catalog):
+    """Found by using it: "costs must be negative" says nothing useful when the
+    page has 300 boxes. The message names every offending cell, and the valid
+    amounts in the same submission are not half-written."""
+    from django.utils import translation
+
+    project = _project("Minit", vm_manager["office"])
+
+    response = vm_manager["client"].post(
+        _save_url(project),
+        {
+            _cell(11, catalog["wage"]): "-500",  # correct
+            _cell(11, catalog["extra"]): "1500",  # a cost typed positive
+        },
+        follow=True,
+    )
+
+    assert not FinancialMonth.objects.filter(project=project).exists()
+    messages = " ".join(str(m) for m in response.context["messages"])
+    with translation.override(response.headers["Content-Language"]):
+        from django.utils.translation import gettext
+
+        assert gettext("Other extraordinary costs") in messages
+    assert "11" in messages
+
+
+def test_the_save_refuses_another_offices_project(vm_manager, catalog):
+    """Same boundary as the read view: this takes a pk, so hiding a link is not
+    the control."""
+    ds = Office.objects.create(name="Dunajská Streda", code="DS", country="SK")
+    theirs = _project("Europack", ds)
+
+    response = vm_manager["client"].post(
+        _save_url(theirs), {_cell(3, catalog["wage"]): "-100"}
+    )
+
+    assert response.status_code == 403
+    assert not FinancialMonth.objects.filter(project=theirs).exists()
+
+
+def test_a_coordinator_cannot_save_a_year(client, django_user_model, catalog):
+    """finance.manage is Manager-only in the Jober policy."""
+    office = Office.objects.create(name="Velký Meder", code="VM", country="SK")
+    coordinator = django_user_model.objects.create_user(
+        email="fin-year-coord@demo.jober.test", password="x", role="coordinator"
+    )
+    coordinator.offices.set([office])
+    project = _project("Minit", office)
+    client.force_login(coordinator)
+
+    response = client.post(_save_url(project), {_cell(3, catalog["wage"]): "-100"})
+
+    assert response.status_code == 403
+    assert not FinancialMonth.objects.filter(project=project).exists()
+
+
+def test_the_grid_offers_inputs_to_a_manager_and_not_to_a_locked_month(
+    vm_manager, catalog
+):
+    from django.urls import reverse
+
+    project = _project("Minit", vm_manager["office"])
+    FinancialMonth.objects.create(project=project, year=YEAR, month=1, is_locked=True)
+
+    grid = (
+        vm_manager["client"]
+        .get(reverse("finance_project_year", args=[project.pk, YEAR]))
+        .context["grid"]
+    )
+    wage_row = next(r for r in grid["rows"] if r["category"].label == "Gross wage")
+
+    assert wage_row["cells"][0]["editable"] is False  # January, locked
+    assert wage_row["cells"][1]["editable"] is True
+    assert grid["month_totals"][0]["locked"] is True
+
+
+def test_the_cell_values_survive_a_localized_page(vm_manager, catalog):
+    """The bug the green suite did not see.
+
+    The suite ran under the Slovak default and passed: the service was right
+    and the POST round-tripped. What broke was the *rendering* — Django
+    localizes a Decimal to `-2244,00`, `<input type="number">` will not accept
+    a comma, and the browser silently discards it. A project with a full year
+    of figures drew 300 empty boxes.
+    """
+    from django.urls import reverse
+
+    project = _project("Minit", vm_manager["office"])
+    month = FinancialMonth.objects.create(project=project, year=YEAR, month=1)
+    set_line_item(month, catalog["wage"], Decimal("2244"))
+
+    body = (
+        vm_manager["client"]
+        .get(reverse("finance_project_year", args=[project.pk, YEAR]))
+        .content.decode()
+    )
+
+    assert 'value="-2244.00"' in body
+    assert 'value="-2244,00"' not in body

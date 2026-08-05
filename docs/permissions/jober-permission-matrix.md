@@ -70,6 +70,7 @@ Legend: ✅ permitted · — denied
 | `payslip.manage` (Jober: feature off — ADR 0023) | — | — | ✅ | — |
 | `payslip.view` (Jober: feature off — ADR 0023) | — | — | ✅ | ✅ |
 | `finance.manage` | — | — | ✅ | — |
+| ↳ covers the project–year grid save (`finance_project_year_save`, 2026-08-05) — same action, one more route | — | — | ✅ | — |
 | `export.approved` | — | — | ✅ | ✅ |
 
 ## Sensitive fields / reads (carved out of broad-read default)

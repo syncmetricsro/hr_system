@@ -1,5 +1,27 @@
 # Test Journal
 
+## 2026-08-05 - the suite was green and the page was empty
+
+- The lesson of this slice: **a passing test said nothing about whether the
+  page worked.** The service returned the right Decimals, the POST round-tripped,
+  24 tests were green - and every input on the rendered page was blank, because
+  Django localized `-2244.00` to `-2244,00` and the browser threw it away.
+  Nothing in the suite looked at the rendered `value` attribute.
+- The regression test now asserts the attribute itself, both ways: `value="-2244.00"`
+  present and `value="-2244,00"` absent. Verified failing without `|unlocalize`
+  before keeping it - a test written after a fix is worth nothing until it has
+  been seen to fail.
+- The other tests defend behaviour that is easy to regress into something
+  plausible: an untouched column creating nothing (asserted as a `FinancialMonth`
+  count), a re-save writing no audit events, a locked month skipped while the
+  rest of the year saves *and named in the message*.
+- The sign-rejection test asserts the **category name and month number** appear
+  in the refusal, not merely that a refusal happened. The message was the defect;
+  a test that only checked for an error would have passed over it.
+- Office scope and role are tested on the **save** view separately from the read
+  view. Same pk-taking boundary, different verb.
+- Suites: **Jober 1130 / CorvinumEU 721 / browser 70** (browser not re-run).
+
 ## 2026-08-05 - testing an expiry gate without building a wall
 
 - Four tests on the activation blocker, and the one that matters most is the

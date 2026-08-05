@@ -282,6 +282,15 @@ month (2026-05):
 Try opening another office's financial month by URL, or POSTing to it: **403**.
 The boundary covers finance mutations, not just the page.
 
+**Then enter a whole year in one screen.** From *Enter a project year* (or any
+project name in the results panels) open the twelve-month grid: categories down,
+months across, exactly the workbook's shape. Type into any month — including one
+that was never recorded — and press **Save year** once. It writes through to the
+twelve monthly records, so the year is still only the sum of its months and no
+annual figure exists that could disagree with them. A locked month stays visible
+but not typeable, and the save says which months it left alone. Point that out
+deliberately: it is the difference between a report and a working sheet.
+
 Now switch to **Observer** and reopen Finance. This is the moment to show the
 **executive dashboard** — a different page, Observer-only, with all three
 offices rolled up side by side and a multi-series trend chart comparing them.

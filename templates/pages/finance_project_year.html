@@ -1,5 +1,5 @@
 {% extends "layouts/base.html" %}
-{% load i18n nav %}
+{% load i18n l10n nav icons %}
 
 {% block title %}{{ grid.project.name }} {{ grid.year }} · {{ BRAND_NAME }}{% endblock %}
 
@@ -12,48 +12,72 @@
 
 <p class="muted">
   {% blocktrans with office=grid.project.office.name|default:"—" %}Twelve months for one project, summed from the months already recorded. Office: {{ office }}.{% endblocktrans %}
+  {% if can_manage %}{% trans "Type into a month to record it. Costs are entered as negative amounts and revenues as positive — the same signs as the workbook." %}{% endif %}
 </p>
 
 <section class="panel">
-  <div class="data-table-scroll">
-    <table class="data-table workbook-grid">
-      <thead>
-        <tr>
-          <th scope="col">{% trans "Category" %}</th>
-          {% for total in grid.month_totals %}
-            <th scope="col" class="numeric">{{ total.month }}</th>
-          {% endfor %}
-          <th scope="col" class="numeric">{% trans "Year" %}</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for row in grid.rows %}
+  {# One form over the whole grid: a year is entered the way it is read, and it still writes through to the twelve monthly records rather than storing an annual figure. #}
+  <form method="post" action="{% url 'finance_project_year_save' grid.project.pk grid.year %}">
+    {% csrf_token %}
+    <div class="data-table-scroll">
+      <table class="data-table workbook-grid">
+        <thead>
           <tr>
-            <th scope="row">{{ row.category.label|db_trans }}</th>
-            {% for value in row.months %}<td class="numeric">{{ value|default_if_none:"—" }}</td>{% endfor %}
-            <td class="numeric">{{ row.total }}</td>
+            <th scope="col">{% trans "Category" %}</th>
+            {% for total in grid.month_totals %}
+              <th scope="col" class="numeric">
+                {% if total.pk %}<a href="{% url 'finance_month_detail' total.pk %}">{{ total.month }}</a>{% else %}{{ total.month }}{% endif %}
+                {% if total.locked %}<span class="eyebrow">{% trans "locked" %}</span>{% endif %}
+              </th>
+            {% endfor %}
+            <th scope="col" class="numeric">{% trans "Year" %}</th>
           </tr>
-        {% endfor %}
-        <tr class="row-total">
-          <th scope="row">{% trans "Total costs" %}</th>
-          {% for total in grid.month_totals %}<td class="numeric">{{ total.cost }}</td>{% endfor %}
-          <td class="numeric">{{ grid.year_total.cost }}</td>
-        </tr>
-        <tr class="row-total">
-          <th scope="row">{% trans "Total revenues" %}</th>
-          {% for total in grid.month_totals %}<td class="numeric">{{ total.revenue }}</td>{% endfor %}
-          <td class="numeric">{{ grid.year_total.revenue }}</td>
-        </tr>
-        <tr class="row-result">
-          <th scope="row">{% trans "Profit/loss" %}</th>
-          {% for total in grid.month_totals %}<td class="numeric">{{ total.net }}</td>{% endfor %}
-          <td class="numeric">{{ grid.year_total.net }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+        </thead>
+        <tbody>
+          {% for row in grid.rows %}
+            <tr>
+              <th scope="row">{{ row.category.label|db_trans }}</th>
+              {% for cell in row.cells %}
+                <td class="numeric">
+                  {# The value is deliberately unlocalized: <input type="number"> only accepts a dot decimal separator, and a localized "-2244,00" is discarded by the browser, leaving an empty box over real data. Display cells keep the localized form. #}
+                  {% if can_manage and cell.editable %}
+                    <input class="cell-input" type="number" step="0.01" name="{{ cell.name }}" value="{{ cell.value|default_if_none:''|unlocalize }}"
+                           aria-label="{{ row.category.label|db_trans }} {{ cell.month }}">
+                  {% else %}
+                    {{ cell.value|default_if_none:"—" }}
+                  {% endif %}
+                </td>
+              {% endfor %}
+              <td class="numeric">{{ row.total }}</td>
+            </tr>
+          {% endfor %}
+          <tr class="row-total">
+            <th scope="row">{% trans "Total costs" %}</th>
+            {% for total in grid.month_totals %}<td class="numeric">{{ total.cost }}</td>{% endfor %}
+            <td class="numeric">{{ grid.year_total.cost }}</td>
+          </tr>
+          <tr class="row-total">
+            <th scope="row">{% trans "Total revenues" %}</th>
+            {% for total in grid.month_totals %}<td class="numeric">{{ total.revenue }}</td>{% endfor %}
+            <td class="numeric">{{ grid.year_total.revenue }}</td>
+          </tr>
+          <tr class="row-result">
+            <th scope="row">{% trans "Profit/loss" %}</th>
+            {% for total in grid.month_totals %}<td class="numeric">{{ total.net }}</td>{% endfor %}
+            <td class="numeric">{{ grid.year_total.net }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    {% if can_manage %}
+      <div class="action-row">
+        <button class="button button-primary" type="submit" data-tooltip-heading="{% trans 'Save year' %}" data-tooltip="{% trans 'Writes every changed amount into the month it belongs to and recalculates that month. A locked month is left untouched.' %}">{% icon "save" %}{% trans "Save year" %}</button>
+      </div>
+    {% endif %}
+  </form>
   <p class="muted">
     {% trans "A month with no recorded figures shows as a dash rather than zero — an unrecorded month and a month that genuinely netted nothing are different facts." %}
+    {% trans "The totals rows are computed from the categories above, so they are never typed in." %}
   </p>
 </section>
 {% endblock %}
