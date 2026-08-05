@@ -242,7 +242,8 @@ and nothing else, reworked to the client's own specification (J3):
 | **Occupied beds** | how many workers are actually placed — a head count |
 | **Standing cost** | capacity x per-head monthly cost; owed whether beds fill or not |
 | **Worker payments** | what the placed workers themselves pay |
-| **Empty-bed loss** | standing cost - worker payments - occupied cost |
+| **Net cost to the company** | standing cost - worker payments; the plain out-of-pocket figure |
+| **Unrecovered standing cost** | standing cost - worker payments - occupied cost |
 
 Two points worth making out loud, because both have surprised people:
 
@@ -255,8 +256,25 @@ Two points worth making out loud, because both have surprised people:
   off the card. If someone asks where it went, it is occupied beds x per-head
   cost, prorated by day.
 
-Empty-bed loss never goes below zero: a full house has no empty beds, so it
-reads 0 rather than a negative number.
+**The two money figures answer different questions, and the difference is the
+one people trip on.** *Net cost* is what the month cost after what came back
+in - 3240 minus 330 is 2910, occupancy notwithstanding. *Unrecovered standing
+cost* also removes the cost of the beds that were actually used, because
+housing a worker is a legitimate cost rather than a loss - 2910 minus 540 is
+2370.
+
+Say plainly that the unrecovered figure is **not** empty beds x price per bed.
+Fifteen empty beds at 180 is 2700; the reported 2370 is lower because the
+workers' payments are credited against it. That arithmetic has been queried by
+eye before, so get in front of it.
+
+Unrecovered standing cost never goes below zero: a full house has no empty
+beds, so it reads 0 rather than a negative number. Net cost is deliberately
+*not* floored - if the workers paid more than the place costs, the company is
+ahead and the report says so.
+
+Renamed from **Empty-bed loss** on 2026-08-05: the old label read as empty beds
+x price and invited exactly the wrong mental arithmetic.
 
 Olha is seeded from mid-month with a separate worker payment, making the daily
 proration visible — mid-month arrivals cost and pay a fraction of the month.

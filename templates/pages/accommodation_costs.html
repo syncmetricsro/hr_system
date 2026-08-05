@@ -11,14 +11,15 @@
   <article class="metric-card"><span>{% trans "Occupied beds" %}</span><strong>{{ company.occupied_beds }}</strong></article>
   <article class="metric-card"><span>{% trans "Standing cost" %}</span><strong>{{ company.standing_cost }} EUR</strong></article>
   <article class="metric-card"><span>{% trans "Worker payments" %}</span><strong>{{ company.payments }} EUR</strong></article>
-  <article class="metric-card"><span>{% trans "Empty-bed loss" %}</span><strong>{{ company.empty_bed_loss }} EUR</strong></article>
+  <article class="metric-card" data-tooltip-heading="{% trans "Net cost to the company" %}" data-tooltip="{% trans "Standing cost minus what the workers paid, whether the beds were used or not. This is the plain out-of-pocket figure for the month." %}"><span>{% trans "Net cost to the company" %}</span><strong>{{ company.net_cost }} EUR</strong></article>
+  <article class="metric-card" data-tooltip-heading="{% trans "Unrecovered standing cost" %}" data-tooltip="{% trans "Standing cost minus what the workers paid and minus the cost of the beds they actually used. It is not empty beds x price per bed: the workers' payments are credited against it, so a well-paying house shows a smaller figure than its empty beds alone would suggest." %}"><span>{% trans "Unrecovered standing cost" %}</span><strong>{{ company.unrecovered_standing_cost }} EUR</strong></article>
 </section>
 <section class="field-list">
 {% for row in rows %}<article class="field-card"><div><h3>{{ row.accommodation.name }}</h3>{% if row.missing_period %}<span class="badge">{% trans "Missing cost period" %}</span>{% endif %}</div>
 {% if not row.missing_period %}<dl>
   <div><dt>{% trans "Capacity" %}</dt><dd>{{ row.capacity }}</dd></div><div><dt>{% trans "Occupied beds" %}</dt><dd>{{ row.occupied_beds }}</dd></div>
   <div><dt>{% trans "Standing cost" %}</dt><dd>{{ row.standing_cost }} EUR</dd></div>
-  <div><dt>{% trans "Worker payments" %}</dt><dd>{{ row.payments }} EUR</dd></div><div><dt>{% trans "Empty-bed loss" %}</dt><dd>{{ row.empty_bed_loss }} EUR</dd></div>
+  <div><dt>{% trans "Worker payments" %}</dt><dd>{{ row.payments }} EUR</dd></div><div><dt>{% trans "Net cost to the company" %}</dt><dd>{{ row.net_cost }} EUR</dd></div><div><dt>{% trans "Unrecovered standing cost" %}</dt><dd>{{ row.unrecovered_standing_cost }} EUR</dd></div>
 </dl>{% endif %}</article>{% empty %}<p>{% trans "No accommodations found." %}</p>{% endfor %}
 </section>
 {% endblock %}

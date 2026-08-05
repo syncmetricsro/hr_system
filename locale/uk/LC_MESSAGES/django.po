@@ -4772,54 +4772,54 @@ msgstr ""
 msgid "Amounts use a positive convention; negative values are not allowed."
 msgstr "Суми мають бути додатними; від’ємні значення не дозволені."
 
-#: features/logistics/services.py:276
+#: features/logistics/services.py:292
 msgid "Only active rooms in active locations can be assigned."
 msgstr "Можна призначати лише активні кімнати в активних місцях проживання."
 
-#: features/logistics/services.py:281
+#: features/logistics/services.py:297
 msgid "Room is at full capacity."
 msgstr "Кімната повністю зайнята."
 
-#: features/logistics/services.py:529
+#: features/logistics/services.py:545
 #, python-format
 msgid "Only %(available)s units are available in %(office)s's stock."
 msgstr "На складі офісу %(office)s доступно лише %(available)s одиниць."
 
-#: features/logistics/services.py:533
+#: features/logistics/services.py:549
 #, python-format
 msgid "Only %(available)s units are available in stock."
 msgstr "На складі доступно лише %(available)s од."
 
-#: features/logistics/services.py:601
+#: features/logistics/services.py:617
 msgid "Receipt quantities must be at least one."
 msgstr "Кількість надходження має бути щонайменше один."
 
-#: features/logistics/services.py:604
+#: features/logistics/services.py:620
 msgid "Add at least one receipt line."
 msgstr "Додайте щонайменше один рядок надходження."
 
-#: features/logistics/services.py:642
+#: features/logistics/services.py:658
 msgid "A non-zero adjustment and reason are required."
 msgstr "Потрібні ненульове коригування та причина."
 
-#: features/logistics/services.py:771
+#: features/logistics/services.py:787
 msgid "This equipment item is inactive and cannot be issued."
 msgstr "Ця одиниця спорядження неактивна, її не можна видати."
 
-#: features/logistics/services.py:775
+#: features/logistics/services.py:791
 msgid "An operation key is required for stock-tracked issuance."
 msgstr "Для видачі з обліком запасів потрібен ключ операції."
 
-#: features/logistics/services.py:786
+#: features/logistics/services.py:802
 msgid "Set this person's office before issuing stock-tracked equipment."
 msgstr ""
 "Перш ніж видавати спорядження зі складського обліку, вкажіть офіс цієї особи."
 
-#: features/logistics/services.py:841 features/logistics/services.py:873
+#: features/logistics/services.py:857 features/logistics/services.py:889
 msgid "A transport record already exists for this project and week."
 msgstr "Для цього проєкту й тижня вже існує запис транспорту."
 
-#: features/logistics/services.py:945
+#: features/logistics/services.py:961
 msgid "Choose whether the returned equipment is reusable or retired."
 msgstr ""
 "Виберіть, чи повернене спорядження придатне до повторного використання або "
@@ -5438,7 +5438,9 @@ msgstr "%(category)s (місяць %(month)s)"
 msgid ""
 "Costs are entered as negative amounts and revenues as positive. Check: "
 "%(cells)s."
-msgstr "Витрати вносяться від'ємними сумами, а доходи — додатними. Перевірте: %(cells)s."
+msgstr ""
+"Витрати вносяться від'ємними сумами, а доходи — додатними. Перевірте: "
+"%(cells)s."
 
 #: features/profitability/views.py:225
 msgid "Saved and recalculated."
@@ -5668,35 +5670,54 @@ msgid "Filter"
 msgstr "Фільтрувати"
 
 #: templates/pages/accommodation_costs.html:10
-#: templates/pages/accommodation_costs.html:19
+#: templates/pages/accommodation_costs.html:20
 msgid "Capacity"
 msgstr "Місткість"
 
 #: templates/pages/accommodation_costs.html:11
-#: templates/pages/accommodation_costs.html:19
+#: templates/pages/accommodation_costs.html:20
 msgid "Occupied beds"
 msgstr "Зайняті ліжка"
 
 #: templates/pages/accommodation_costs.html:12
-#: templates/pages/accommodation_costs.html:20
+#: templates/pages/accommodation_costs.html:21
 msgid "Standing cost"
 msgstr "Постійні витрати"
 
 #: templates/pages/accommodation_costs.html:13
-#: templates/pages/accommodation_costs.html:21
+#: templates/pages/accommodation_costs.html:22
 msgid "Worker payments"
 msgstr "Платежі працівників"
 
 #: templates/pages/accommodation_costs.html:14
-#: templates/pages/accommodation_costs.html:21
-msgid "Empty-bed loss"
-msgstr "Втрати від вільних місць"
+#: templates/pages/accommodation_costs.html:22
+msgid "Net cost to the company"
+msgstr "Чисті витрати компанії"
 
-#: templates/pages/accommodation_costs.html:17
+#: templates/pages/accommodation_costs.html:14
+msgid ""
+"Standing cost minus what the workers paid, whether the beds were used or "
+"not. This is the plain out-of-pocket figure for the month."
+msgstr "Постійні витрати мінус те, що сплатили працівники, незалежно від того, чи використовували ліжка. Це проста сума, яку компанія за місяць заплатила зі своєї кишені."
+
+#: templates/pages/accommodation_costs.html:15
+#: templates/pages/accommodation_costs.html:22
+msgid "Unrecovered standing cost"
+msgstr "Непокриті постійні витрати"
+
+#: templates/pages/accommodation_costs.html:15
+msgid ""
+"Standing cost minus what the workers paid and minus the cost of the beds "
+"they actually used. It is not empty beds x price per bed: the workers' "
+"payments are credited against it, so a well-paying house shows a smaller "
+"figure than its empty beds alone would suggest."
+msgstr "Постійні витрати мінус те, що сплатили працівники, і мінус вартість ліжок, які справді використовували. Це не кількість порожніх ліжок помножена на ціну ліжка: платежі працівників зараховуються сюди, тож гуртожиток із добре платними працівниками покаже меншу суму, ніж випливало б із самих лише порожніх ліжок."
+
+#: templates/pages/accommodation_costs.html:18
 msgid "Missing cost period"
 msgstr "Відсутній період витрат"
 
-#: templates/pages/accommodation_costs.html:22
+#: templates/pages/accommodation_costs.html:23
 #: templates/pages/accommodation_list.html:40
 msgid "No accommodations found."
 msgstr "Житло не знайдено."
@@ -8574,6 +8595,9 @@ msgstr "Показано %(rail_limit)s останніх оновлених."
 #: templates/partials/worker_rail_body.html:34
 msgid "Open People"
 msgstr "Відкрити Люди"
+
+#~ msgid "Empty-bed loss"
+#~ msgstr "Втрати від вільних місць"
 
 #~ msgid "Marks this item as returned and updates warehouse stock accordingly."
 #~ msgstr ""
