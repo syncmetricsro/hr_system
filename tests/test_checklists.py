@@ -42,8 +42,12 @@ def person():
 @pytest.fixture
 def template():
     tpl = ChecklistTemplate.objects.create(name="Global activation")
-    ChecklistItemTemplate.objects.create(template=tpl, label="Identity document verified", critical=True, order=1)
-    ChecklistItemTemplate.objects.create(template=tpl, label="Welcome call made", critical=False, order=2)
+    ChecklistItemTemplate.objects.create(
+        template=tpl, label="Identity document verified", critical=True, order=1
+    )
+    ChecklistItemTemplate.objects.create(
+        template=tpl, label="Welcome call made", critical=False, order=2
+    )
     return tpl
 
 
@@ -91,7 +95,10 @@ def test_activation_blocked_then_allowed(settings, person, template, manager):
     # page's panel does this); the blocked activation must not roll them away.
     ensure_person_checklist(person)
 
-    with translation.override("en"), pytest.raises(WorkflowError, match="Identity document verified"):
+    with (
+        translation.override("en"),
+        pytest.raises(WorkflowError, match="Identity document verified"),
+    ):
         activate_on_project(person, project, actor=manager)
 
     item = PersonChecklistItem.objects.get(person=person, item_template__critical=True)
@@ -110,7 +117,9 @@ def test_toggle_view_flips_item(settings, person, template, manager):
     assert item.done
 
 
-def test_toggle_view_returns_updated_panel_for_htmx(settings, person, template, manager):
+def test_toggle_view_returns_updated_panel_for_htmx(
+    settings, person, template, manager
+):
     settings.FEATURE_FLAGS = {**settings.FEATURE_FLAGS, **FLAGS_ON}
     item = ensure_person_checklist(person)[0]
 

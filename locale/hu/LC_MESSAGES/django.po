@@ -47,7 +47,85 @@ msgstr "Tiltólista-ellenőrzés lezárva"
 msgid "Welcome call made"
 msgstr "Üdvözlő hívás megtörtént"
 
-#: clients/corvinum_eu/catalog_i18n.py:24
+#: clients/corvinum_eu/catalog_i18n.py:28
+msgid ""
+"Name, date of birth, address and phone are all filled in, and they match the "
+"document you were shown rather than what was said on the phone."
+msgstr ""
+"A név, a születési dátum, a cím és a telefonszám ki van töltve, és egyezik a "
+"bemutatott okmánnyal, nem azzal, ami telefonon elhangzott."
+
+#: clients/corvinum_eu/catalog_i18n.py:33
+msgid ""
+"You have seen the ID card or passport yourself, it is valid today, and the "
+"name matches this record. No scan is kept here — this tick is the record "
+"that you checked."
+msgstr ""
+"A személyi igazolványt vagy útlevelet saját szemével látta, ma is érvényes, "
+"és a név egyezik ezzel az adatlappal. Szkennelt másolat nem kerül ide — ez a "
+"pipa maga a bizonyíték, hogy ellenőrizte."
+
+#: clients/corvinum_eu/catalog_i18n.py:38
+msgid ""
+"For a non-EU worker: the permit covers the whole planned assignment, not "
+"just the start date. An EU national needs none — tick it and move on."
+msgstr ""
+"EU-n kívüli munkavállalónál: az engedély a teljes tervezett kirendelésre "
+"érvényes, nemcsak a kezdés napjára. Uniós állampolgárnak nem kell — pipálja "
+"ki és lépjen tovább."
+
+#: clients/corvinum_eu/catalog_i18n.py:43
+msgid ""
+"A fitness certificate exists, is less than a year old, and its date is "
+"recorded on this worker. Until the date is entered, Compliance keeps "
+"reporting the medical as missing."
+msgstr ""
+"Van orvosi alkalmassági igazolás, egy évnél nem régebbi, és a dátuma "
+"rögzítve van ennél a munkavállalónál. Amíg a dátum hiányzik, a Megfelelés "
+"hiányzóként jelzi az orvosit."
+
+#: clients/corvinum_eu/catalog_i18n.py:48
+msgid ""
+"The worker has attended the safety training for the site they are going to, "
+"and whoever gave it has confirmed they were there."
+msgstr ""
+"A munkavállaló elvégezte a munkavédelmi oktatást arra a telephelyre, ahová "
+"megy, és az oktatást tartó személy igazolta a részvételét."
+
+#: clients/corvinum_eu/catalog_i18n.py:53
+msgid ""
+"Both sides have signed and the office holds its copy. A contract sent but "
+"not signed back is not this item."
+msgstr ""
+"Mindkét fél aláírta, és az iroda birtokolja a saját példányát. Az elküldött, "
+"de vissza nem írt szerződés nem ez a tétel."
+
+#: clients/corvinum_eu/catalog_i18n.py:57
+msgid ""
+"You have searched for this person under other spellings of the name and "
+"under their phone number, and confirmed there is no second record for them."
+msgstr ""
+"Rákeresett erre a személyre a név más írásmódjaival és a telefonszáma "
+"alapján is, és meggyőződött róla, hogy nincs róla második adatlap."
+
+#: clients/corvinum_eu/catalog_i18n.py:62
+msgid ""
+"The blacklist check has been run and either found nothing, or a manager has "
+"decided the case. An open match is not resolved."
+msgstr ""
+"A tiltólista-ellenőrzés lefutott, és vagy nem talált semmit, vagy a vezető "
+"döntött az ügyben. A nyitott találat nem lezárt eset."
+
+#: clients/corvinum_eu/catalog_i18n.py:67
+msgid ""
+"Somebody has called the worker to confirm the start date, how they get there "
+"and what to bring. Not critical — but it prevents most no-shows."
+msgstr ""
+"Valaki felhívta a munkavállalót, és egyeztette a kezdés napját, hogy hogyan "
+"jut oda és mit hozzon magával. Nem kritikus — de a legtöbb meg nem jelenést "
+"megelőzi."
+
+#: clients/corvinum_eu/catalog_i18n.py:74
 msgid "Safety boots"
 msgstr "Munkavédelmi bakancs"
 
@@ -267,7 +345,7 @@ msgstr "megerősítve"
 #: core/projects/models.py:36 core/projects/models.py:96
 #: core/projects/models.py:181 core/projects/models.py:265
 #: features/advances/models.py:123 features/blacklist/models.py:66
-#: features/blacklist/models.py:114 features/checklists/models.py:23
+#: features/blacklist/models.py:114 features/checklists/models.py:26
 #: features/compliance/models.py:87 features/feedback/models.py:26
 #: features/feedback/models.py:48 features/intake/models.py:32
 #: features/logistics/models.py:43 features/logistics/models.py:79
@@ -342,7 +420,7 @@ msgstr "cél azonosítója"
 #: core/projects/models.py:137 core/projects/models.py:209
 #: core/projects/models.py:328 features/advances/models.py:64
 #: features/blacklist/models.py:45 features/blacklist/models.py:105
-#: features/checklists/models.py:57 features/compliance/models.py:51
+#: features/checklists/models.py:79 features/compliance/models.py:51
 #: features/intake/models.py:106 features/logistics/models.py:144
 #: features/logistics/models.py:263 features/messaging/models.py:55
 #: features/messaging/models.py:295 features/payslips/models.py:20
@@ -930,7 +1008,7 @@ msgid "Blacklisted"
 msgstr "Feketelistán"
 
 #: core/people/models.py:47 features/blacklist/models.py:16
-#: features/checklists/models.py:37 features/feedback/models.py:20
+#: features/checklists/models.py:43 features/feedback/models.py:20
 #: features/intake/models.py:66 features/logistics/models.py:101
 #: features/profitability/models.py:111
 msgid "label"
@@ -938,7 +1016,7 @@ msgstr "címke"
 
 #: core/people/models.py:48 core/projects/models.py:23
 #: features/blacklist/models.py:17 features/blacklist/models.py:113
-#: features/checklists/models.py:22 features/feedback/models.py:25
+#: features/checklists/models.py:25 features/feedback/models.py:25
 #: features/logistics/models.py:31 features/logistics/models.py:103
 #: features/logistics/models.py:227 features/messaging/models.py:20
 #: features/messaging/models.py:168 features/messaging/models.py:213
@@ -947,7 +1025,7 @@ msgid "active"
 msgstr "aktív"
 
 #: core/people/models.py:49 features/blacklist/models.py:18
-#: features/checklists/models.py:41 features/intake/models.py:52
+#: features/checklists/models.py:60 features/intake/models.py:52
 #: features/intake/models.py:69 features/profitability/models.py:122
 msgid "order"
 msgstr "sorrend"
@@ -1303,7 +1381,7 @@ msgid "outcome"
 msgstr "eredmény"
 
 #: core/projects/models.py:161 features/advances/models.py:106
-#: features/checklists/models.py:68 features/logistics/models.py:345
+#: features/checklists/models.py:97 features/logistics/models.py:345
 #: features/logistics/models.py:582 features/payslips/models.py:31
 #: features/profitability/models.py:48 features/wage_ledger/models.py:34
 msgid "note"
@@ -1516,7 +1594,9 @@ msgstr "Ha nem alkalmazható, indoklás szükséges."
 msgid ""
 "The entry medical expired on %(date)s. Record the current certificate date "
 "before activating."
-msgstr "A belépő orvosi vizsgálat %(date)s napon lejárt. Aktiválás előtt rögzítse az érvényes igazolás dátumát."
+msgstr ""
+"A belépő orvosi vizsgálat %(date)s napon lejárt. Aktiválás előtt rögzítse az "
+"érvényes igazolás dátumát."
 
 #: core/projects/services.py:386
 msgid "Record the entry medical date before marking Medical complete."
@@ -3748,59 +3828,70 @@ msgstr "Újraaktiválás"
 msgid "kind"
 msgstr "fajta"
 
-#: features/checklists/models.py:26
+#: features/checklists/models.py:29
 msgid "checklist template"
 msgstr "ellenőrzőlista-sablon"
 
-#: features/checklists/models.py:27
+#: features/checklists/models.py:30
 msgid "checklist templates"
 msgstr "ellenőrzőlista-sablonok"
 
-#: features/checklists/models.py:35
+#: features/checklists/models.py:41
 msgid "template"
 msgstr "sablon"
 
-#: features/checklists/models.py:39 templates/panels/checklists_items.html:30
-#: templates/panels/checklists_items.html:35
+#: features/checklists/models.py:49
+msgid "help text"
+msgstr "súgószöveg"
+
+#: features/checklists/models.py:52
+msgid ""
+"What must be true before this item is ticked. Shown as the item's tooltip."
+msgstr ""
+"Aminek teljesülnie kell, mielőtt ezt a tételt kipipálják. A tétel "
+"súgóbuborékjaként jelenik meg."
+
+#: features/checklists/models.py:56 templates/panels/checklists_items.html:31
+#: templates/panels/checklists_items.html:36
 msgid "critical"
 msgstr "kritikus"
 
-#: features/checklists/models.py:39
+#: features/checklists/models.py:58
 msgid "Critical items block activation; others only warn."
 msgstr ""
 "A kritikus tételek blokkolják az aktiválást; a többi csak figyelmeztet."
 
-#: features/checklists/models.py:44
+#: features/checklists/models.py:63
 msgid "checklist item template"
 msgstr "ellenőrzőlista-tétel sablon"
 
-#: features/checklists/models.py:45
+#: features/checklists/models.py:64
 msgid "checklist item templates"
 msgstr "ellenőrzőlista-tétel sablonok"
 
-#: features/checklists/models.py:60 features/logistics/models.py:269
+#: features/checklists/models.py:85 features/logistics/models.py:269
 #: features/logistics/models.py:385 features/logistics/models.py:417
 #: features/logistics/models.py:507
 msgid "item"
 msgstr "tétel"
 
-#: features/checklists/models.py:62
+#: features/checklists/models.py:87
 msgid "done"
 msgstr "kész"
 
-#: features/checklists/models.py:65
+#: features/checklists/models.py:94
 msgid "done by"
 msgstr "elvégezte"
 
-#: features/checklists/models.py:67
+#: features/checklists/models.py:96
 msgid "done at"
 msgstr "elvégzés ideje"
 
-#: features/checklists/models.py:71
+#: features/checklists/models.py:100
 msgid "person checklist item"
 msgstr "személy ellenőrzőlista-tétele"
 
-#: features/checklists/models.py:72
+#: features/checklists/models.py:101
 msgid "person checklist items"
 msgstr "személy ellenőrzőlista-tételei"
 
@@ -7863,7 +7954,7 @@ msgstr[1] "%(n)s kritikus tétel nyitott — az aktiválás blokkolva van."
 msgid "All critical items are complete."
 msgstr "Minden kritikus tétel teljesítve."
 
-#: templates/panels/checklists_items.html:26
+#: templates/panels/checklists_items.html:27
 msgid ""
 "Records that you completed this item, with your name and the time. Critical "
 "items must all be complete before the worker can be activated."

@@ -56,6 +56,39 @@ C-Q23 asks the four questions that decide whether it is built.
 
 Jober 1118, CorvinumEU 716, browser 70 (not re-run).
 
+## 2026-08-05 - nine checkboxes, nine explanations
+
+The activation checklist hung one tooltip on all nine boxes: "records that you
+completed this item, with your name and the time". True, and useless — it
+explains ticking, not the check. Noticed in Hungarian, where nine identical
+bubbles down a list are unmistakable.
+
+That list is the one place in the product where the office asserts that
+real-world verification happened: a document was seen, a training attended, a
+duplicate search actually run. So each item now says what its tick claims, with
+the item's own name as the tooltip heading.
+
+Help text is **data, not code**: a `help_text` field on `ChecklistItemTemplate`,
+seeded in canonical English beside the label, registered in the client's
+`catalog_i18n.py`, rendered through `db_trans` — the pattern every other seeded
+catalog string already uses. A lookup map would have avoided the migration and
+put one client's nine strings inside a shared feature, where an operator-added
+item could never have help of its own.
+
+The trap worth remembering: `get_or_create(defaults=…)` **creates**. Every demo
+and staging database already holds all nine rows, so the help text would have
+reached none of them. The seed now repairs existing rows, and the local stack
+proved it by showing Hungarian help on a database seeded weeks ago.
+
+Not marked as real-world action buttons (ADR 0034): a tick asserts that
+something happened rather than causing it, and nine amber rows would flatten a
+marker that is one day old.
+
+Wording is ours, not the client's — C-Q22 asks them to correct any of the nine
+at the demo, and the runbook now says to hover a few before ticking.
+
+Jober 1110, CorvinumEU 711, browser 70 (not re-run).
+
 ## 2026-08-05 - Corvinum localhost uses password-only demo login
 
 The fictional-data Corvinum client at `localhost:8001` no longer asks testers
