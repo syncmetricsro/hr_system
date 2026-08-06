@@ -1,0 +1,14 @@
+{% load i18n rbac icons %}
+<div class="empty-state">
+  <p><strong>{% trans "Create a finance-enabled project first" %}</strong></p>
+  <p class="muted">
+    {% trans "Finance is organised by project. Until an active project is included in Finance, there are no project columns or year grids for entering figures." %}
+  </p>
+  {% can 'project.manage' as may_manage_projects %}
+  {% if may_manage_projects %}
+    <a class="button button-primary" href="{% url 'project_create' %}">{% icon "add" %}{% trans "New project" %}</a>
+    <p class="muted">{% trans "Leave “Include this project in Finance” enabled when creating it." %}</p>
+  {% else %}
+    <p class="muted">{% trans "Ask a manager to create an active project and include it in Finance." %}</p>
+  {% endif %}
+</div>

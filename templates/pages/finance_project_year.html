@@ -10,12 +10,21 @@
   <a class="button" href="{% url 'finance_summary' %}">{% trans "Back to finance" %}</a>
 </section>
 
-<p class="muted">
-  {% blocktrans with office=grid.project.office.name|default:"—" %}Twelve months for one project, summed from the months already recorded. Office: {{ office }}.{% endblocktrans %}
-  {% if can_manage %}{% trans "Type into a month to record it. Costs are entered as negative amounts and revenues as positive — the same signs as the workbook." %}{% endif %}
-</p>
+<section class="panel">
+  <p class="eyebrow">{% if can_manage %}{% trans "Data entry" %}{% else %}{% trans "Read-only report" %}{% endif %}</p>
+  <p>
+    {% blocktrans with office=grid.project.office.name|default:"—" %}This table covers all twelve months for one project. Office: {{ office }}.{% endblocktrans %}
+    {% if can_manage %}{% trans "Type costs as negative amounts and revenues as positive amounts, then use Save year once." %}{% else %}{% trans "Your role may read these figures but cannot change them." %}{% endif %}
+  </p>
+  {% if not grid.has_recorded_months %}
+    <p class="muted">
+      {% if can_manage %}{% trans "No months have been recorded yet. Blank cells are expected: entering a value and saving the year creates the corresponding monthly record." %}{% else %}{% trans "No months have been recorded for this project and year." %}{% endif %}
+    </p>
+  {% endif %}
+</section>
 
 <section class="panel">
+  {% if grid.rows %}
   {# One form over the whole grid: a year is entered the way it is read, and it still writes through to the twelve monthly records rather than storing an annual figure. #}
   <form method="post" action="{% url 'finance_project_year_save' grid.project.pk grid.year %}">
     {% csrf_token %}
@@ -79,5 +88,9 @@
     {% trans "A month with no recorded figures shows as a dash rather than zero — an unrecorded month and a month that genuinely netted nothing are different facts." %}
     {% trans "The totals rows are computed from the categories above, so they are never typed in." %}
   </p>
+  {% else %}
+    <h2>{% trans "Finance categories are missing" %}</h2>
+    <p class="muted">{% trans "The finance category catalogue must be configured before figures can be entered. Ask an administrator to restore the catalogue." %}</p>
+  {% endif %}
 </section>
 {% endblock %}

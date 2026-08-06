@@ -577,21 +577,21 @@ HELP_GROUPS = [
                 ),
                 "steps": (
                     _(
-                        "Choose the project and calendar month, then record each revenue or cost line in its correct category."
+                        "Create an active project, or edit an existing one, and keep Include this project in Finance enabled."
                     ),
                     _(
-                        "Enter every amount as a positive decimal. The category determines whether it contributes revenue or cost; net is calculated automatically."
+                        "Open Finance and choose the project under Enter a project year. The workbook reports are read-only."
                     ),
                     _(
-                        "Review the month detail against source records, then lock the month when it is final. Reopen only for a genuine correction."
+                        "Type costs as negative amounts and revenues as positive amounts in the twelve-month grid. Never type a pre-calculated net value."
                     ),
                     _(
-                        "Use the summary, yearly trend, and category breakdown to inspect the same underlying lines from different angles."
+                        "Select Save year once. Review the monthly and yearly reports, then lock a month when its figures are final."
                     ),
                 ),
                 "warning_title": _("Locked periods are deliberate"),
                 "warning": _(
-                    "Do not type a negative cost or a pre-calculated net value. Locking prevents ordinary edits, and every reopen is an audited exception."
+                    "The project-year grid uses the workbook signs: costs are negative and revenues are positive. Locking prevents ordinary edits, and every reopen is an audited exception."
                 ),
                 "screenshots": (
                     _screen(

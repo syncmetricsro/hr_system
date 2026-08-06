@@ -1,5 +1,18 @@
 # Build Journal
 
+## 2026-08-06 - empty Finance explains its prerequisite
+
+Jober's cleared staging database retained the finance catalogue but no projects.
+Because projects are the workbook columns, Finance could only draw an empty
+table and never explained why. The summary, monthly workbook and year report now
+state that an active finance-enabled project must exist first; managers get the
+existing New project action and read-only roles get an instruction to ask one.
+
+The project-year grid now identifies itself as the entry surface, explains that
+blank cells create monthly records when the year is saved, and reports a missing
+category catalogue explicitly. The cross-project workbook remains read-only.
+The Finance Help article and demo runbook carry the same four-step workflow.
+
 ## 2026-08-06 - the pay overview sorts, by link
 
 Asked for ordering on the pay overview by name, run and the money columns. It is

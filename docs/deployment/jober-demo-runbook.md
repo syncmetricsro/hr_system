@@ -309,6 +309,13 @@ annual figure exists that could disagree with them. A locked month stays visible
 but not typeable, and the save says which months it left alone. Point that out
 deliberately: it is the difference between a report and a working sheet.
 
+On a newly cleared trial database, **a project must exist before this grid can
+exist**: projects are the columns in Finance. The empty Finance page now says so
+and offers *New project* to a manager. Keep *Include this project in Finance*
+enabled when creating it. The cross-project *Workbook view* is always a
+read-only report; select a project heading or use *Enter a project year* to type
+figures.
+
 Now switch to **Observer** and reopen Finance. This is the moment to show the
 **executive dashboard** — a different page, Observer-only, with all three
 offices rolled up side by side and a multi-series trend chart comparing them.
@@ -397,8 +404,8 @@ already reads:
 - **Workbook view** — `Finance → Workbook view`, or
   `/finance/workbook/<year>/<month>/`. One period with projects across the top
   and categories down the side, a subtotal per office and a grand total: the
-  shape of `HV 202510.xlsx`. Costs display negative, as the source does. Project
-  headings link into that project's year.
+  shape of `HV 202510.xlsx`. It is read-only. Costs display negative, as the
+  source does, and project headings link to the editable project-year grid.
 - **Project year** — twelve months across for one project, with a year total.
   A month nobody has recorded shows as a dash rather than a zero, because an
   unrecorded month and a month that netted nothing are different facts.
