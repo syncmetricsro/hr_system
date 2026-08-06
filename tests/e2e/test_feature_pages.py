@@ -57,6 +57,16 @@ def test_finance_year_page(page):
     page.get_by_text("Financial months").first.wait_for()
 
 
+def test_finance_excel_export_downloads_from_the_year_page(page):
+    _login(page)
+    page.goto(f"{base_url()}/en/finance/year/2026/")
+
+    with page.expect_download() as download_info:
+        page.get_by_role("link", name="Export Excel").click()
+
+    assert download_info.value.suggested_filename == "finance-2026.xlsx"
+
+
 def test_monthly_and_annual_workbooks_contain_wide_tables_on_mobile(page):
     _login(page)
     page.set_viewport_size({"width": 375, "height": 667})

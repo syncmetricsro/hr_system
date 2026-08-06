@@ -588,6 +588,9 @@ HELP_GROUPS = [
                     _(
                         "Select Save year once. Review the monthly and yearly reports, then lock a month when its figures are final."
                     ),
+                    _(
+                        "Use Export Excel for a formula-free snapshot with the yearly project grid, twelve-month summary, office totals, and live charts."
+                    ),
                 ),
                 "warning_title": _("Locked periods are deliberate"),
                 "warning": _(

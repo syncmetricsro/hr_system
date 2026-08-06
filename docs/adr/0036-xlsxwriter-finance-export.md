@@ -1,8 +1,7 @@
 # ADR 0036: XlsxWriter for chart-bearing finance exports
 
-Status: **Proposed — awaiting human approval.** Do not change dependency
-manifests, lockfiles, runtime images, or application code until this ADR is
-explicitly approved.
+Status: **Accepted — 2026-08-06.** Explicitly approved by the project owner;
+implementation may proceed within the dependency and security boundary below.
 
 Date drafted: 2026-08-06
 
@@ -45,8 +44,7 @@ The package will be used only in `features/profitability/exports.py` to write
 new `.xlsx` files. It will not read or modify uploaded workbooks, replace the
 existing standard-library workbook importer, or enter `core/`.
 
-Implementation remains blocked until a human changes this ADR's status to
-Accepted.
+The project owner explicitly approved this decision on 2026-08-06.
 
 ## AGENTS.md §3.1 approval-gate review
 
@@ -130,10 +128,13 @@ represent two worksheets, formatting, frozen panes or live charts.
 Rejected. A PDF is not the editable, spreadsheet-native deliverable Jober
 requested and cannot provide live Excel charts.
 
-## Consequences if approved
+## Consequences
 
-- Runtime and test dependency manifests gain exactly `xlsxwriter==3.2.9`, and
-  both hash-pinned lockfiles are regenerated and reviewed.
+- Runtime and test dependency manifests gained exactly `xlsxwriter==3.2.9`.
+  Both hash-pinned lockfiles were regenerated in the digest-pinned Python
+  image; their package diff adds only XlsxWriter. Already-vetted `cffi==2.1.0`
+  and `packaging==26.2` were made explicit input pins after the first resolver
+  pass attempted unrelated upgrades.
 - The profitability feature gains one office-scoped, permission-gated XLSX
   response and focused unit/browser coverage. CorvinumEU remains unchanged
   because profitability routes are feature-gated off there.
@@ -147,5 +148,5 @@ requested and cannot provide live Excel charts.
 
 ## Approval record
 
-Pending. Record the approver and date here before changing requirements or
-implementing the export.
+Approved by the project owner on 2026-08-06 before any dependency manifest,
+lockfile or application-code change was made.

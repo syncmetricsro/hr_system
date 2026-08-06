@@ -80,6 +80,8 @@ Production stack target:
 - Django templates with local htmx and Alpine assets.
 - Tailwind standalone CLI v4.3.0, fetched from the pinned official Tailwind Labs release and checksum-verified before execution in Docker/CI.
 - Playwright through PyPI + pytest in test environments only.
+- XlsxWriter 3.2.9 for the Jober finance XLSX export, accepted in ADR 0036;
+  pure Python, zero runtime transitives, exact-version and SHA-256 locked.
 - Dokku staging/production deployment.
 
 Current Phase 0 state:

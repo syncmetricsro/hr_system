@@ -23,7 +23,7 @@ they are never renamed or renumbered per client.
 | `i18n-seeded-data.md` | Platform | How seeded catalog data stays localized (db_trans + catalog_i18n) |
 | `session-summary-2026-07-16.md` | Platform | Consolidated product, demo, staging, testing, and remaining-gates handoff for the implementation session |
 
-## docs/adr/ — Platform (shared decision log, 0001–0030)
+## docs/adr/ — Platform (shared decision log, 0001–0036)
 Highlights: 0008 RBAC model · 0016 whitenoise · 0019 Twilio-via-stdlib ·
 0020 white-label sequencing · 0021 Stage B extraction (EXECUTED) ·
 0022 Stage C CorvinumEU thin client (EXECUTED) · 0023 payslips/encrypted PDF ·
@@ -31,7 +31,7 @@ Highlights: 0008 RBAC model · 0016 whitenoise · 0019 Twilio-via-stdlib ·
 (ACCEPTED, Phases A+B executed, amends 0008 — Jober multi-office;
 staff-invitation subsystem deferred) ·
 0027 Pillow for avatar images (ACCEPTED) · 0028 fpdf2 for the feedback flyer
-(ACCEPTED).
+(ACCEPTED) · 0036 XlsxWriter for chart-bearing finance exports (ACCEPTED).
 
 ## docs/platform/ — Platform
 | Doc | Purpose |
