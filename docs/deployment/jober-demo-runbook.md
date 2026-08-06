@@ -422,6 +422,15 @@ label, kind, group and signed amount, followed by per-office and grand
 summaries — scoped like everything else, so a manager's file contains their own
 office only.
 
+**Excel export** is selected for a specific year from Finance or its yearly
+report. The downloaded `finance-<year>.xlsx` contains a **Year** sheet matching
+the read-only category-by-project workbook and its office roll-up, plus a
+**Months** sheet with all twelve revenue/cost/net buckets. It also carries live
+Excel charts for the monthly trend and net by project. The cells contain the
+figures already computed by the app, not formulas, so editing the file cannot
+become a second source of truth. The manager receives only their office scope;
+the Observer receives all offices. Use fictional demo figures only.
+
 **Importing their workbook.** `manage.py import_hv_workbook` reads an `.xlsx`
 directly. It is a deliberate command, not an upload — the file is never stored.
 Two things to explain if it comes up:

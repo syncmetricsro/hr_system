@@ -1,5 +1,24 @@
 # Test Journal
 
+## 2026-08-06 - the Excel export is a scoped snapshot, not a calculator
+
+- A Manager's generated workbook is opened as OOXML and asserted to contain
+  exactly two translated sheets and two native chart parts, with no worksheet
+  formula cells, external-link parts or VBA payload.
+- Formula-like category text and URL-like project text remain shared strings;
+  another office's project and office names do not enter the archive.
+- Exact year-grid and January revenue/cost/net values are checked from worksheet
+  XML, while an unrecorded February is an explicit zero in the twelve-month
+  chart source.
+- Authorization covers Manager success and Recruiter 403. The settings-aware
+  route test proves the download exists for Jober and is absent for CorvinumEU.
+  A browser test follows the visible year-page action and receives the expected
+  `finance-2026.xlsx` filename.
+- Suites: **Jober 1158 passed / 16 skipped; CorvinumEU 737 passed / 25 skipped
+  / 270 deselected; browser 72 passed.** Ruff, formatting, dependency
+  direction, migration, idempotent extraction, PO/MO synchronization,
+  production-runtime and collected-static checks passed.
+
 ## 2026-08-06 - the annual workbook is the monthly workbook twelve times
 
 - Two months and an adjacent-year decoy prove the annual cells sum exactly the

@@ -185,18 +185,18 @@ msgstr "Операції"
 msgid "Compliance"
 msgstr "Відповідність"
 
-#: clients/corvinum_eu/templates/layouts/base.html:53 core/ui/help.py:660
+#: clients/corvinum_eu/templates/layouts/base.html:53 core/ui/help.py:663
 #: templates/layouts/base.html:67 templates/pages/ledger.html:8
 msgid "Ledger"
 msgstr "Книга"
 
-#: clients/corvinum_eu/templates/layouts/base.html:56 core/ui/help.py:764
+#: clients/corvinum_eu/templates/layouts/base.html:56 core/ui/help.py:767
 #: templates/layouts/base.html:70 templates/pages/payslips.html:4
 #: templates/pages/payslips.html:9
 msgid "Payslips"
 msgstr "Розрахункові листи"
 
-#: clients/corvinum_eu/templates/layouts/base.html:59 core/ui/help.py:848
+#: clients/corvinum_eu/templates/layouts/base.html:59 core/ui/help.py:851
 #: templates/pages/wages.html:4 templates/pages/wages.html:9
 msgid "Gross wages"
 msgstr "Валові зарплати"
@@ -254,7 +254,7 @@ msgstr "Довідка"
 msgid "Staff activity"
 msgstr "Активність персоналу"
 
-#: clients/corvinum_eu/templates/layouts/base.html:77 core/ui/help.py:922
+#: clients/corvinum_eu/templates/layouts/base.html:77 core/ui/help.py:925
 #: templates/layouts/base.html:51
 msgid "Audit"
 msgstr "Аудит"
@@ -853,8 +853,8 @@ msgid "Notification is not available."
 msgstr "Сповіщення недоступне."
 
 #: core/offices/context_processors.py:57
-#: templates/pages/finance_executive.html:21
-#: templates/pages/finance_executive.html:51
+#: templates/pages/finance_executive.html:22
+#: templates/pages/finance_executive.html:52
 msgid "All offices"
 msgstr "Усі офіси"
 
@@ -969,6 +969,7 @@ msgstr "Тип інвалідності"
 
 #: core/people/forms.py:51 features/logistics/forms.py:75
 #: features/logistics/forms.py:227 features/profitability/catalog_i18n.py:26
+#: features/profitability/exports.py:274
 #: templates/pages/_finance_workbook_grid.html:57
 #: templates/pages/equipment_stock.html:48
 #: templates/pages/goods_receipt_detail.html:16
@@ -1201,8 +1202,8 @@ msgid "Only available candidates can be scheduled."
 msgstr "Можна планувати лише доступних кандидатів."
 
 #: core/projects/forms.py:31 core/projects/forms.py:55
-#: templates/pages/feedback_inbox.html:32
-#: templates/pages/finance_summary.html:22
+#: features/profitability/exports.py:309 templates/pages/feedback_inbox.html:32
+#: templates/pages/finance_summary.html:23
 #: templates/pages/person_detail.html:61 templates/pages/person_detail.html:81
 #: templates/pages/project_detail.html:8
 #: templates/pages/transport_trends.html:31
@@ -1699,7 +1700,8 @@ msgstr "День"
 msgid "Week"
 msgstr "Тиждень"
 
-#: core/reporting/periods.py:47 templates/pages/finance_summary.html:30
+#: core/reporting/periods.py:47 features/profitability/exports.py:292
+#: templates/pages/finance_summary.html:31
 #: templates/partials/ledger_cycle.html:8
 #: templates/partials/period_filter.html:32
 msgid "Month"
@@ -1709,8 +1711,9 @@ msgstr "Місяць"
 msgid "Several months"
 msgstr "Кілька місяців"
 
-#: core/reporting/periods.py:49 templates/pages/finance_project_year.html:42
-#: templates/pages/finance_summary.html:27
+#: core/reporting/periods.py:49 features/profitability/exports.py:187
+#: templates/pages/finance_project_year.html:42
+#: templates/pages/finance_summary.html:28
 #: templates/partials/ledger_cycle.html:5
 #: templates/partials/period_filter.html:43
 #: templates/partials/period_filter.html:57
@@ -2112,9 +2115,9 @@ msgstr ""
 
 #: core/ui/help.py:248 core/ui/help.py:255 core/ui/help.py:262
 #: core/ui/help.py:269 core/ui/help.py:276 core/ui/help.py:283
-#: core/ui/help.py:710 core/ui/help.py:717 core/ui/help.py:724
-#: core/ui/help.py:731 core/ui/help.py:738 core/ui/help.py:748
-#: core/ui/help.py:756
+#: core/ui/help.py:713 core/ui/help.py:720 core/ui/help.py:727
+#: core/ui/help.py:734 core/ui/help.py:741 core/ui/help.py:751
+#: core/ui/help.py:759
 msgid "Coordinator or Manager"
 msgstr "Координатор або менеджер"
 
@@ -2181,9 +2184,9 @@ msgstr ""
 "закріплюються."
 
 #: core/ui/help.py:290 core/ui/help.py:300 core/ui/help.py:307
-#: core/ui/help.py:812 core/ui/help.py:819 core/ui/help.py:826
-#: core/ui/help.py:833 core/ui/help.py:840 core/ui/help.py:893
-#: core/ui/help.py:900 core/ui/help.py:907 core/ui/help.py:914
+#: core/ui/help.py:815 core/ui/help.py:822 core/ui/help.py:829
+#: core/ui/help.py:836 core/ui/help.py:843 core/ui/help.py:896
+#: core/ui/help.py:903 core/ui/help.py:910 core/ui/help.py:917
 #: templates/pages/person_detail.html:76
 msgid "Manager"
 msgstr "Менеджер"
@@ -2699,11 +2702,11 @@ msgstr ""
 #: templates/pages/finance_project_year.html:8
 #: templates/pages/finance_summary.html:4
 #: templates/pages/finance_summary.html:9
-#: templates/pages/finance_summary.html:131
+#: templates/pages/finance_summary.html:132
 #: templates/pages/finance_workbook.html:8
 #: templates/pages/finance_workbook_year.html:8
 #: templates/pages/finance_year.html:4 templates/pages/finance_year.html:8
-#: templates/pages/finance_year.html:95
+#: templates/pages/finance_year.html:96
 msgid "Finance"
 msgstr "Фінанси"
 
@@ -2766,10 +2769,19 @@ msgstr ""
 "дані місяця остаточні, заблокуйте його."
 
 #: core/ui/help.py:592
+msgid ""
+"Use Export Excel for a formula-free snapshot with the yearly project grid, "
+"twelve-month summary, office totals, and live charts."
+msgstr ""
+"Скористайтеся «Експортувати Excel», щоб отримати знімок без формул із "
+"річною таблицею проєктів, підсумком за дванадцять місяців, підсумками за "
+"офісами та інтерактивними діаграмами."
+
+#: core/ui/help.py:595
 msgid "Locked periods are deliberate"
 msgstr "Періоди блокуються навмисно"
 
-#: core/ui/help.py:594
+#: core/ui/help.py:597
 msgid ""
 "The project-year grid uses the workbook signs: costs are negative and "
 "revenues are positive. Locking prevents ordinary edits, and every reopen is "
@@ -2779,7 +2791,7 @@ msgstr ""
 "доходи додатні. Блокування запобігає звичайним змінам, а кожне повторне "
 "відкриття є аудитованим винятком."
 
-#: core/ui/help.py:600
+#: core/ui/help.py:603
 msgid ""
 "The Finance workspace with fictional monthly revenue, costs, and derived "
 "results."
@@ -2787,27 +2799,27 @@ msgstr ""
 "Робоча область Фінансів із вигаданими місячними доходами, витратами й "
 "обчисленими результатами."
 
-#: core/ui/help.py:602
+#: core/ui/help.py:605
 msgid "Period and project controls select the financial slice."
 msgstr "Елементи періоду й проєкту вибирають фінансовий зріз."
 
-#: core/ui/help.py:604
+#: core/ui/help.py:607
 msgid "Totals and charts are derived from the recorded line items."
 msgstr "Підсумки й діаграми обчислюються із записаних рядків."
 
 # --- feedback ---
-#: core/ui/help.py:613 templates/layouts/base.html:73
+#: core/ui/help.py:616 templates/layouts/base.html:73
 #: templates/pages/feedback_form.html:8 templates/pages/feedback_form.html:27
 msgid "Feedback"
 msgstr "Зворотний зв’язок"
 
-#: core/ui/help.py:615
+#: core/ui/help.py:618
 msgid "Create public links and QR flyers, then review anonymous submissions."
 msgstr ""
 "Створюйте публічні посилання та QR-листівки, а потім переглядайте анонімні "
 "звернення."
 
-#: core/ui/help.py:620
+#: core/ui/help.py:623
 msgid ""
 "Feedback gives workers a public, account-free way to submit a message "
 "through a controlled link or printed QR flyer."
@@ -2816,7 +2828,7 @@ msgstr ""
 "надіслати повідомлення через контрольоване посилання або друковану QR-"
 "листівку."
 
-#: core/ui/help.py:623
+#: core/ui/help.py:626
 msgid ""
 "Managers create links and review the inbox. The submission form is public to "
 "anyone holding the token; Help itself remains authenticated."
@@ -2825,7 +2837,7 @@ msgstr ""
 "подання публічна для кожного, хто має токен; сама Довідка залишається "
 "доступною після входу."
 
-#: core/ui/help.py:627
+#: core/ui/help.py:630
 msgid ""
 "Create a clearly labelled feedback link and optionally connect it to the "
 "relevant project."
@@ -2833,7 +2845,7 @@ msgstr ""
 "Створіть зрозуміло назване посилання зворотного зв’язку й за потреби "
 "пов’яжіть його з відповідним проєктом."
 
-#: core/ui/help.py:630
+#: core/ui/help.py:633
 msgid ""
 "Share the generated URL or download the one-page QR flyer for printing. "
 "Retire a distribution point by controlling where its token is published."
@@ -2841,7 +2853,7 @@ msgstr ""
 "Поділіться створеною URL-адресою або завантажте односторінкову QR-листівку "
 "для друку. Щоб закрити точку розповсюдження, припиніть публікацію її токена."
 
-#: core/ui/help.py:633
+#: core/ui/help.py:636
 msgid ""
 "A worker opens the public form, writes a message, and may add a rating "
 "without creating an account."
@@ -2849,7 +2861,7 @@ msgstr ""
 "Працівник відкриває публічну форму, пише повідомлення й може додати оцінку "
 "без створення облікового запису."
 
-#: core/ui/help.py:636
+#: core/ui/help.py:639
 msgid ""
 "Managers review the newest submissions in the inbox and handle them under "
 "the agreed retention and escalation process."
@@ -2857,11 +2869,11 @@ msgstr ""
 "Менеджери переглядають найновіші звернення у вхідних і обробляють їх за "
 "узгодженим процесом зберігання та ескалації."
 
-#: core/ui/help.py:639
+#: core/ui/help.py:642
 msgid "Public token, limited purpose"
 msgstr "Публічний токен, обмежена мета"
 
-#: core/ui/help.py:641
+#: core/ui/help.py:644
 msgid ""
 "Anyone with the link can submit. Do not ask workers to include identity "
 "documents, medical details, credentials, or other unnecessary sensitive "
@@ -2871,27 +2883,27 @@ msgstr ""
 "додавати до вільного тексту документи, що посвідчують особу, медичні "
 "подробиці, облікові дані чи іншу зайву чутливу інформацію."
 
-#: core/ui/help.py:647
+#: core/ui/help.py:650
 msgid ""
 "The Feedback inbox with fictional submissions and link-management controls."
 msgstr ""
 "Вхідні Зворотного зв’язку з вигаданими зверненнями й елементами керування "
 "посиланнями."
 
-#: core/ui/help.py:649
+#: core/ui/help.py:652
 msgid "Link and QR controls create the public entry point."
 msgstr "Елементи посилання та QR-коду створюють публічну точку входу."
 
-#: core/ui/help.py:651
+#: core/ui/help.py:654
 msgid "The authenticated inbox is where Managers review submissions."
 msgstr "Менеджери переглядають звернення у вхідних, захищених входом."
 
-#: core/ui/help.py:662
+#: core/ui/help.py:665
 msgid ""
 "Record advances, additions, deductions, reversals, and settlement cycles."
 msgstr "Записуйте аванси, доплати, утримання, сторнування та цикли розрахунку."
 
-#: core/ui/help.py:667
+#: core/ui/help.py:670
 msgid ""
 "The ledger records explicit pay additions and deductions, groups them into "
 "settlement cycles, and preserves corrections as history."
@@ -2899,7 +2911,7 @@ msgstr ""
 "Реєстр фіксує явні доплати й утримання із заробітку, групує їх у цикли "
 "розрахунку та зберігає виправлення в історії."
 
-#: core/ui/help.py:670
+#: core/ui/help.py:673
 msgid ""
 "Authorized readers can inspect cycles. Entry, cancellation, reversal, "
 "settlement, and export each require the corresponding ledger or export "
@@ -2909,7 +2921,7 @@ msgstr ""
 "сторнування, розрахунок та експорт потребують відповідного дозволу реєстру "
 "або експорту."
 
-#: core/ui/help.py:674
+#: core/ui/help.py:677
 msgid ""
 "Record the person, optional project, entry type, category, positive amount, "
 "and a concise note."
@@ -2917,7 +2929,7 @@ msgstr ""
 "Запишіть особу, необов’язковий проєкт, тип запису, категорію, додатну суму й "
 "стислу примітку."
 
-#: core/ui/help.py:677
+#: core/ui/help.py:680
 msgid ""
 "Review the current Thursday summary and select the intended 20th-to-20th "
 "cycle before including entries."
@@ -2925,7 +2937,7 @@ msgstr ""
 "Перед включенням записів перевірте поточний підсумок за четвер і виберіть "
 "потрібний цикл від 20-го до 20-го числа."
 
-#: core/ui/help.py:680
+#: core/ui/help.py:683
 msgid ""
 "Correct a mistake by cancelling or reversing the original entry with a "
 "reason; never overwrite financial history."
@@ -2933,7 +2945,7 @@ msgstr ""
 "Виправляйте помилку обґрунтованим скасуванням або сторнуванням первинного "
 "запису; ніколи не перезаписуйте фінансову історію."
 
-#: core/ui/help.py:683
+#: core/ui/help.py:686
 msgid ""
 "After the external deduction process is complete, mark the included cycle "
 "settled and use the approved CSV export when needed."
@@ -2941,11 +2953,11 @@ msgstr ""
 "Після завершення зовнішнього процесу утримань позначте включений цикл "
 "розрахованим і за потреби використовуйте схвалений експорт CSV."
 
-#: core/ui/help.py:686
+#: core/ui/help.py:689
 msgid "Positive amounts, explicit pay effect"
 msgstr "Додатні суми, явний вплив на заробіток"
 
-#: core/ui/help.py:688
+#: core/ui/help.py:691
 msgid ""
 "The entry type controls whether an amount adds to or deducts from pay. This "
 "ledger records source adjustments; it does not calculate statutory payroll."
@@ -2954,7 +2966,7 @@ msgstr ""
 "Цей реєстр записує вихідні коригування; він не розраховує встановлену "
 "законом заробітну плату."
 
-#: core/ui/help.py:694
+#: core/ui/help.py:697
 msgid ""
 "The ledger workspace with fictional entries, cycle controls, and settlement "
 "summaries."
@@ -2962,15 +2974,15 @@ msgstr ""
 "Робоча область реєстру з вигаданими записами, елементами циклу й підсумками "
 "розрахунку."
 
-#: core/ui/help.py:697
+#: core/ui/help.py:700
 msgid "Entry controls record an explicit type, category, and amount."
 msgstr "Елементи введення записують явний тип, категорію та суму."
 
-#: core/ui/help.py:700
+#: core/ui/help.py:703
 msgid "Cycle controls include, export, and settle the selected period."
 msgstr "Елементи циклу включають, експортують і розраховують вибраний період."
 
-#: core/ui/help.py:706 core/ui/help.py:808 core/ui/help.py:889
+#: core/ui/help.py:709 core/ui/help.py:811 core/ui/help.py:892
 #: features/advances/views.py:80 features/payslips/forms.py:22
 #: templates/pages/ledger.html:21 templates/pages/payslips.html:39
 #: templates/pages/person_detail.html:38 templates/pages/person_detail.html:315
@@ -2980,7 +2992,7 @@ msgstr "Елементи циклу включають, експортують �
 msgid "Person"
 msgstr "Особа"
 
-#: core/ui/help.py:708 templates/pages/ledger.html:21
+#: core/ui/help.py:711 templates/pages/ledger.html:21
 msgid ""
 "The worker this money concerns. The entry appears on their pay overview and "
 "in their open balance."
@@ -2988,11 +3000,11 @@ msgstr ""
 "Працівник, якого стосуються ці гроші. Запис з'явиться в його огляді оплати "
 "та у відкритому балансі."
 
-#: core/ui/help.py:713 templates/pages/ledger.html:25
+#: core/ui/help.py:716 templates/pages/ledger.html:25
 msgid "Company / project"
 msgstr "Компанія / проєкт"
 
-#: core/ui/help.py:715 templates/pages/ledger.html:25
+#: core/ui/help.py:718 templates/pages/ledger.html:25
 msgid ""
 "Optional. Attributes the amount to a partner company for reporting. It does "
 "not change what the worker is paid."
@@ -3000,12 +3012,12 @@ msgstr ""
 "Необов'язково. Відносить суму до партнерської компанії для звітності. Не "
 "змінює того, скільки отримає працівник."
 
-#: core/ui/help.py:720 templates/pages/ledger.html:30
+#: core/ui/help.py:723 templates/pages/ledger.html:30
 #: templates/panels/advances_ledger.html:24
 msgid "Entry type"
 msgstr "Тип запису"
 
-#: core/ui/help.py:722 templates/pages/ledger.html:30
+#: core/ui/help.py:725 templates/pages/ledger.html:30
 msgid ""
 "Decides the direction: an advance or deduction reduces pay, an addition "
 "increases it. The amount stays positive either way."
@@ -3013,7 +3025,8 @@ msgstr ""
 "Визначає напрям: аванс або утримання зменшує оплату, надбавка збільшує її. "
 "Сума в обох випадках залишається додатною."
 
-#: core/ui/help.py:727 templates/pages/_finance_workbook_grid.html:8
+#: core/ui/help.py:730 features/profitability/exports.py:201
+#: templates/pages/_finance_workbook_grid.html:8
 #: templates/pages/finance_project_year.html:35 templates/pages/ledger.html:34
 #: templates/panels/advances_ledger.html:28
 #: templates/panels/blacklist_case.html:10
@@ -3022,7 +3035,7 @@ msgstr ""
 msgid "Category"
 msgstr "Категорія"
 
-#: core/ui/help.py:729 templates/pages/ledger.html:34
+#: core/ui/help.py:732 templates/pages/ledger.html:34
 msgid ""
 "What the money was for - advance, clothing, footwear, equipment, medical, "
 "travel or other. Groups the cycle report; it does not affect the direction "
@@ -3031,12 +3044,12 @@ msgstr ""
 "На що були гроші — аванс, одяг, взуття, спорядження, медичне, проїзд або "
 "інше. Групує звіт циклу; не впливає на напрям чи суму."
 
-#: core/ui/help.py:734 templates/pages/ledger.html:38
+#: core/ui/help.py:737 templates/pages/ledger.html:38
 #: templates/panels/advances_ledger.html:32
 msgid "Amount (EUR)"
 msgstr "Сума (EUR)"
 
-#: core/ui/help.py:736 templates/pages/ledger.html:38
+#: core/ui/help.py:739 templates/pages/ledger.html:38
 msgid ""
 "Always a positive number. Never type a minus sign - the entry type decides "
 "whether this is added or subtracted."
@@ -3044,15 +3057,15 @@ msgstr ""
 "Завжди додатне число. Ніколи не вводьте знак мінус — про додавання чи "
 "віднімання вирішує тип запису."
 
-#: core/ui/help.py:740
+#: core/ui/help.py:743
 msgid "Once the cycle is included; correct it with a reversal after that."
 msgstr "Після включення циклу; після цього виправляйте сторнувальним записом."
 
-#: core/ui/help.py:744 templates/pages/ledger.html:39
+#: core/ui/help.py:747 templates/pages/ledger.html:39
 msgid "Entry date"
 msgstr "Дата запису"
 
-#: core/ui/help.py:746 templates/pages/ledger.html:39
+#: core/ui/help.py:749 templates/pages/ledger.html:39
 msgid ""
 "The day the money changed hands. It decides which 21st-to-20th payroll cycle "
 "the entry settles in, and which calendar month it appears under on the pay "
@@ -3064,18 +3077,18 @@ msgstr ""
 "з'явиться в огляді оплати. Залиште порожнім для сьогодні; дату всередині вже "
 "врегульованого циклу буде відхилено."
 
-#: core/ui/help.py:749
+#: core/ui/help.py:752
 msgid "Once the cycle containing that date is included."
 msgstr "Після включення циклу, що містить цю дату."
 
-#: core/ui/help.py:752 core/ui/help.py:836 core/ui/help.py:910
+#: core/ui/help.py:755 core/ui/help.py:839 core/ui/help.py:913
 #: features/logistics/forms.py:177 templates/pages/ledger.html:40
 #: templates/pages/transport_trends.html:44 templates/pages/wages.html:41
 #: templates/panels/advances_ledger.html:33
 msgid "Note"
 msgstr "Нотатка"
 
-#: core/ui/help.py:754 templates/pages/ledger.html:40
+#: core/ui/help.py:757 templates/pages/ledger.html:40
 msgid ""
 "The reason, in words, for whoever reads this months from now. It is carried "
 "into the exports the accountant receives."
@@ -3083,13 +3096,13 @@ msgstr ""
 "Причина словами для того, хто читатиме це через місяці. Переноситься в "
 "експорти, які отримує бухгалтер."
 
-#: core/ui/help.py:766
+#: core/ui/help.py:769
 msgid "Record net payslip values and deliver encrypted PDFs safely."
 msgstr ""
 "Записуйте чисті суми розрахункових листків і безпечно доставляйте "
 "зашифровані PDF."
 
-#: core/ui/help.py:771
+#: core/ui/help.py:774
 msgid ""
 "Payslips stores the independently supplied net value and can email a freshly "
 "generated encrypted PDF to the worker."
@@ -3097,7 +3110,7 @@ msgstr ""
 "Розрахункові листки зберігають незалежно надану чисту суму й можуть "
 "надіслати працівнику електронною поштою щойно створений зашифрований PDF."
 
-#: core/ui/help.py:774
+#: core/ui/help.py:777
 msgid ""
 "Payslip amounts are restricted pay data. Only roles with payslip access can "
 "read them, and only authorized Managers can record or send them."
@@ -3106,7 +3119,7 @@ msgstr ""
 "лише ролі з доступом до листків, а записувати чи надсилати — тільки "
 "уповноважені Менеджери."
 
-#: core/ui/help.py:778
+#: core/ui/help.py:781
 msgid ""
 "Confirm the worker has the correct email address, then record the calendar "
 "month, positive net amount, optional issue date, and note."
@@ -3114,7 +3127,7 @@ msgstr ""
 "Перевірте правильність електронної адреси працівника, а потім запишіть "
 "календарний місяць, додатну чисту суму, необов’язкову дату видачі й примітку."
 
-#: core/ui/help.py:781
+#: core/ui/help.py:784
 msgid ""
 "Review the recorded row before sending. Send encrypted PDF generates the "
 "attachment and a random one-time password."
@@ -3122,7 +3135,7 @@ msgstr ""
 "Перед надсиланням перевірте записаний рядок. Дія Надіслати зашифрований PDF "
 "створює вкладення й випадковий одноразовий пароль."
 
-#: core/ui/help.py:784
+#: core/ui/help.py:787
 msgid ""
 "Tell the worker the password by phone or Messenger, never in the same email "
 "as the encrypted PDF."
@@ -3130,7 +3143,7 @@ msgstr ""
 "Повідомте працівнику пароль телефоном або через Messenger, ніколи не в тому "
 "самому листі, що й зашифрований PDF."
 
-#: core/ui/help.py:787
+#: core/ui/help.py:790
 msgid ""
 "If you resend, a new password is generated and the earlier one is "
 "invalidated. The password is shown once and is not stored for later "
@@ -3140,11 +3153,11 @@ msgstr ""
 "недійсним. Пароль показується один раз і не зберігається для подальшого "
 "отримання."
 
-#: core/ui/help.py:790
+#: core/ui/help.py:793
 msgid "Never capture or copy the password into records"
 msgstr "Ніколи не фіксуйте й не копіюйте пароль до записів"
 
-#: core/ui/help.py:792
+#: core/ui/help.py:795
 msgid ""
 "Do not screenshot the success message, paste the password into notes, email "
 "it, or send it through the same channel as the PDF. The generated PDF is not "
@@ -3154,7 +3167,7 @@ msgstr ""
 "надсилайте його електронною поштою чи тим самим каналом, що й PDF. Створений "
 "PDF застосунок не зберігає."
 
-#: core/ui/help.py:798
+#: core/ui/help.py:801
 msgid ""
 "The payslip list with fictional net values and delivery states; no passwords "
 "are visible."
@@ -3162,15 +3175,15 @@ msgstr ""
 "Список розрахункових листків із вигаданими чистими сумами й станами "
 "доставки; паролів не видно."
 
-#: core/ui/help.py:801
+#: core/ui/help.py:804
 msgid "The record form stores the independently supplied net value."
 msgstr "Форма запису зберігає незалежно надану чисту суму."
 
-#: core/ui/help.py:803
+#: core/ui/help.py:806
 msgid "Delivery state shows whether an encrypted PDF was sent."
 msgstr "Стан доставки показує, чи було надіслано зашифрований PDF."
 
-#: core/ui/help.py:810
+#: core/ui/help.py:813
 msgid ""
 "Who the payslip belongs to. A worker with no email address is marked in the "
 "list, because the encrypted PDF cannot be delivered to them."
@@ -3178,11 +3191,11 @@ msgstr ""
 "Кому належить розрахунковий листок. Працівник без адреси електронної пошти "
 "позначений у списку, бо зашифрований PDF йому неможливо доставити."
 
-#: core/ui/help.py:815 features/payslips/forms.py:34
+#: core/ui/help.py:818 features/payslips/forms.py:34
 msgid "Pay month"
 msgstr "Місяць оплати"
 
-#: core/ui/help.py:817 features/payslips/forms.py:39
+#: core/ui/help.py:820 features/payslips/forms.py:39
 msgid ""
 "The calendar month this payslip pays for, not the month it was issued in. "
 "One payslip per person per month."
@@ -3190,11 +3203,11 @@ msgstr ""
 "Календарний місяць, за який здійснюється ця виплата, а не місяць видачі. "
 "Один листок на особу на місяць."
 
-#: core/ui/help.py:822 features/payslips/forms.py:35
+#: core/ui/help.py:825 features/payslips/forms.py:35
 msgid "Net amount (EUR)"
 msgstr "Чиста сума (EUR)"
 
-#: core/ui/help.py:824 features/payslips/forms.py:43
+#: core/ui/help.py:827 features/payslips/forms.py:43
 msgid ""
 "The net figure printed on the payslip, as paid. It is shown beside the gross "
 "wage and the ledger deductions for the same month; the system does not "
@@ -3204,20 +3217,20 @@ msgstr ""
 "Показується поряд із валовою зарплатою та утриманнями книги за той самий "
 "місяць; система її не обчислює."
 
-#: core/ui/help.py:829 features/payslips/forms.py:25
+#: core/ui/help.py:832 features/payslips/forms.py:25
 msgid "Payslip date (optional)"
 msgstr "Дата розрахункового листа (необов’язково)"
 
-#: core/ui/help.py:831
+#: core/ui/help.py:834
 msgid "The date printed on the document. Blank means the day it was recorded."
 msgstr "Дата, надрукована на документі. Порожнє означає день внесення."
 
-#: core/ui/help.py:838
+#: core/ui/help.py:841
 msgid ""
 "Free text for the office. It is not included in the PDF sent to the worker."
 msgstr "Вільний текст для офісу. Не входить до PDF, надісланого працівникові."
 
-#: core/ui/help.py:850
+#: core/ui/help.py:853
 msgid ""
 "Record independent monthly gross-wage source values without payroll "
 "calculation."
@@ -3225,7 +3238,7 @@ msgstr ""
 "Записуйте незалежні місячні вихідні суми брутто без розрахунку заробітної "
 "плати."
 
-#: core/ui/help.py:855
+#: core/ui/help.py:858
 msgid ""
 "Gross wages stores the supplied gross amount for a person and month beside, "
 "but independently from, the recorded net payslip."
@@ -3233,7 +3246,7 @@ msgstr ""
 "Заробіток брутто зберігає надану суму брутто для особи й місяця поруч із "
 "записаним чистим розрахунковим листком, але незалежно від нього."
 
-#: core/ui/help.py:858
+#: core/ui/help.py:861
 msgid ""
 "Authorized pay-data readers may inspect the list. Recording a gross wage "
 "requires the wage-management permission."
@@ -3241,7 +3254,7 @@ msgstr ""
 "Уповноважені читачі даних про оплату можуть переглядати список. Запис суми "
 "брутто потребує дозволу на керування оплатою."
 
-#: core/ui/help.py:862
+#: core/ui/help.py:865
 msgid ""
 "Choose the correct person and calendar month, then enter the externally "
 "supplied positive gross amount."
@@ -3249,7 +3262,7 @@ msgstr ""
 "Виберіть правильну особу й календарний місяць, а потім введіть надану ззовні "
 "додатну суму брутто."
 
-#: core/ui/help.py:865
+#: core/ui/help.py:868
 msgid ""
 "Add a short source or reconciliation note when it helps another authorized "
 "reader understand the record."
@@ -3257,7 +3270,7 @@ msgstr ""
 "Додайте коротку примітку про джерело чи звірку, якщо вона допоможе іншому "
 "уповноваженому читачеві зрозуміти запис."
 
-#: core/ui/help.py:868
+#: core/ui/help.py:871
 msgid ""
 "Compare gross and net only as independent source values. Investigate "
 "discrepancies through the payroll owner outside this application."
@@ -3265,11 +3278,11 @@ msgstr ""
 "Порівнюйте брутто й нетто лише як незалежні вихідні значення. Розбіжності "
 "з’ясовуйте з відповідальним за нарахування поза цим застосунком."
 
-#: core/ui/help.py:871
+#: core/ui/help.py:874
 msgid "Not a payroll calculator"
 msgstr "Це не калькулятор заробітної плати"
 
-#: core/ui/help.py:873
+#: core/ui/help.py:876
 msgid ""
 "The application does not derive tax, insurance, statutory deductions, or net "
 "pay from this amount and does not treat a gross-to-net difference as an "
@@ -3279,42 +3292,42 @@ msgstr ""
 "утримання чи чисту оплату й не вважає різницю між брутто й нетто "
 "автоматичною помилкою."
 
-#: core/ui/help.py:879
+#: core/ui/help.py:882
 msgid ""
 "The gross-wage workspace with fictional independent monthly source values."
 msgstr ""
 "Робоча область заробітку брутто з вигаданими незалежними місячними вихідними "
 "сумами."
 
-#: core/ui/help.py:882
+#: core/ui/help.py:885
 msgid "The form records a person, month, and positive gross amount."
 msgstr "Форма записує особу, місяць і додатну суму брутто."
 
-#: core/ui/help.py:884
+#: core/ui/help.py:887
 msgid "The table preserves who recorded each source value."
 msgstr ""
 "Таблиця зберігає відомості про того, хто записав кожне вихідне значення."
 
-#: core/ui/help.py:891 features/wage_ledger/forms.py:21
+#: core/ui/help.py:894 features/wage_ledger/forms.py:21
 msgid "The worker who earned this wage. One gross figure per person per month."
 msgstr ""
 "Працівник, який заробив цю зарплату. Одна валова сума на особу на місяць."
 
-#: core/ui/help.py:896 features/wage_ledger/forms.py:16
+#: core/ui/help.py:899 features/wage_ledger/forms.py:16
 #: templates/pages/wages.html:39
 msgid "Wage month"
 msgstr "Місяць зарплати"
 
-#: core/ui/help.py:898 features/wage_ledger/forms.py:25
+#: core/ui/help.py:901 features/wage_ledger/forms.py:25
 msgid ""
 "The calendar month the wage was earned in, not the month it was paid out."
 msgstr "Календарний місяць, у якому зарплату зароблено, а не місяць виплати."
 
-#: core/ui/help.py:903 features/wage_ledger/forms.py:17
+#: core/ui/help.py:906 features/wage_ledger/forms.py:17
 msgid "Gross wage (EUR)"
 msgstr "Валова зарплата (EUR)"
 
-#: core/ui/help.py:905 features/wage_ledger/forms.py:29
+#: core/ui/help.py:908 features/wage_ledger/forms.py:29
 msgid ""
 "Gross, before anything is taken off. Ledger deductions are subtracted from "
 "this on the worker's pay overview; tax and levies are not calculated here."
@@ -3322,7 +3335,7 @@ msgstr ""
 "Валова сума до будь-яких відрахувань. В огляді оплати працівника від неї "
 "віднімаються утримання книги; податки та внески тут не обчислюються."
 
-#: core/ui/help.py:912 features/wage_ledger/forms.py:34
+#: core/ui/help.py:915 features/wage_ledger/forms.py:34
 msgid ""
 "Where this figure came from - a contract, a timesheet, the accountant. It is "
 "what the next reader checks it against."
@@ -3330,14 +3343,14 @@ msgstr ""
 "Звідки взялося це число — з договору, табеля, від бухгалтера. Саме за цим "
 "його перевірить наступний читач."
 
-#: core/ui/help.py:924
+#: core/ui/help.py:927
 msgid ""
 "Trace sensitive actions, old and new values, actors, reasons, and retention."
 msgstr ""
 "Відстежуйте чутливі дії, старі й нові значення, виконавців, причини та "
 "зберігання."
 
-#: core/ui/help.py:928
+#: core/ui/help.py:931
 msgid ""
 "Audit is the append-only trace for sensitive actions: who acted, what record "
 "changed, when it happened, and the reason or value snapshot available for "
@@ -3346,7 +3359,7 @@ msgstr ""
 "Аудит — це незмінний журнал чутливих дій: хто діяв, який запис змінився, "
 "коли це сталося та яка причина чи знімок значень доступні для події."
 
-#: core/ui/help.py:931
+#: core/ui/help.py:934
 msgid ""
 "Only roles with Audit access can open the log. Help explains it to every "
 "role because their own sensitive actions may create events."
@@ -3354,7 +3367,7 @@ msgstr ""
 "Журнал можуть відкрити лише ролі з доступом до Аудиту. Довідка пояснює його "
 "всім ролям, адже їхні власні чутливі дії можуть створювати події."
 
-#: core/ui/help.py:935
+#: core/ui/help.py:938
 msgid ""
 "Open Audit and narrow the result by actor, worker, action, record type, or "
 "date range."
@@ -3362,7 +3375,7 @@ msgstr ""
 "Відкрийте Аудит і звузьте результат за виконавцем, працівником, дією, типом "
 "запису або діапазоном дат."
 
-#: core/ui/help.py:938
+#: core/ui/help.py:941
 msgid ""
 "Read the newest events first and use the record reference to connect an "
 "event to the operational workflow."
@@ -3370,7 +3383,7 @@ msgstr ""
 "Спочатку читайте найновіші події та використовуйте посилання на запис, щоб "
 "пов’язати подію з операційним процесом."
 
-#: core/ui/help.py:941
+#: core/ui/help.py:944
 msgid ""
 "Use old and new value snapshots where provided to understand the change; "
 "free-text reasons remain in the language originally entered."
@@ -3378,7 +3391,7 @@ msgstr ""
 "Де доступно, використовуйте знімки старих і нових значень, щоб зрозуміти "
 "зміну; довільні текстові причини залишаються мовою первинного введення."
 
-#: core/ui/help.py:944
+#: core/ui/help.py:947
 msgid ""
 "Use Staff activity for volume reporting. Audit is for traceability and "
 "investigation, not performance totals."
@@ -3387,11 +3400,11 @@ msgstr ""
 "призначений для простежуваності й розслідування, а не для підсумків "
 "ефективності."
 
-#: core/ui/help.py:947
+#: core/ui/help.py:950
 msgid "Append-only and restricted"
 msgstr "Незмінний та обмежений"
 
-#: core/ui/help.py:949
+#: core/ui/help.py:952
 msgid ""
 "Ordinary users cannot edit or delete audit events. Retention follows the "
 "approved policy; do not copy restricted event details into a less protected "
@@ -3401,7 +3414,7 @@ msgstr ""
 "Зберігання відповідає затвердженій політиці; не копіюйте обмежені подробиці "
 "подій до менш захищеної системи."
 
-#: core/ui/help.py:955
+#: core/ui/help.py:958
 msgid ""
 "The Audit page heading and filters, captured without event rows or log "
 "contents."
@@ -3409,11 +3422,11 @@ msgstr ""
 "Заголовок і фільтри сторінки Аудиту, зняті без рядків подій або вмісту "
 "журналу."
 
-#: core/ui/help.py:957
+#: core/ui/help.py:960
 msgid "Filters narrow the trace without changing stored events."
 msgstr "Фільтри звужують журнал без зміни збережених подій."
 
-#: core/ui/help.py:959
+#: core/ui/help.py:962
 msgid "Audit access and append-only behavior protect the evidence trail."
 msgstr "Доступ до Аудиту й незмінність захищають доказовий слід."
 
@@ -5346,6 +5359,102 @@ msgstr "Житло, виставлене до оплати"
 msgid "Damage recovered"
 msgstr "Відшкодовані збитки"
 
+#: features/profitability/exports.py:188
+msgid "Months"
+msgstr "Місяці"
+
+#: features/profitability/exports.py:198
+#, python-format
+msgid "Finance — %(year)s"
+msgstr "Фінанси — %(year)s"
+
+#: features/profitability/exports.py:219 features/profitability/exports.py:274
+#: templates/pages/_finance_workbook_grid.html:18
+#: templates/pages/_finance_workbook_grid.html:58
+msgid "Costs"
+msgstr "Витрати"
+
+#: features/profitability/exports.py:229
+#: templates/pages/_finance_workbook_grid.html:26
+#: templates/pages/finance_project_year.html:64
+msgid "Total costs"
+msgstr "Загальні витрати"
+
+#: features/profitability/exports.py:242 features/profitability/exports.py:274
+#: templates/pages/_finance_workbook_grid.html:30
+#: templates/pages/_finance_workbook_grid.html:59
+msgid "Revenues"
+msgstr "Доходи"
+
+#: features/profitability/exports.py:252
+#: templates/pages/_finance_workbook_grid.html:38
+#: templates/pages/finance_project_year.html:69
+msgid "Total revenues"
+msgstr "Загальні доходи"
+
+#: features/profitability/exports.py:260 features/profitability/exports.py:274
+#: templates/pages/_finance_workbook_grid.html:43
+#: templates/pages/_finance_workbook_grid.html:60
+#: templates/pages/finance_project_year.html:74
+msgid "Profit/loss"
+msgstr "Прибуток/збиток"
+
+#: features/profitability/exports.py:271
+#: templates/pages/_finance_workbook_grid.html:52
+msgid "By office"
+msgstr "За офісами"
+
+#: features/profitability/exports.py:283
+#: templates/pages/_finance_workbook_grid.html:75
+#: templates/partials/ledger_activity.html:14
+msgid "Total"
+msgstr "Разом"
+
+#: features/profitability/exports.py:292 features/profitability/exports.py:326
+#: features/profitability/models.py:83 features/profitability/models.py:95
+#: templates/pages/finance_executive.html:15
+#: templates/pages/finance_month_detail.html:32
+#: templates/pages/finance_summary.html:34
+#: templates/pages/finance_summary.html:46
+#: templates/pages/finance_summary.html:60 templates/pages/finance_year.html:28
+#: templates/pages/finance_year.html:42
+msgid "Revenue"
+msgstr "Дохід"
+
+#: features/profitability/exports.py:292 features/profitability/exports.py:326
+#: features/profitability/models.py:82
+#: templates/pages/finance_executive.html:16
+#: templates/pages/finance_month_detail.html:33
+#: templates/pages/finance_summary.html:37
+#: templates/pages/finance_summary.html:47
+#: templates/pages/finance_summary.html:60 templates/pages/finance_year.html:29
+#: templates/pages/finance_year.html:42
+msgid "Cost"
+msgstr "Витрати"
+
+#: features/profitability/exports.py:292 features/profitability/exports.py:310
+#: features/profitability/exports.py:326 features/profitability/exports.py:343
+#: templates/pages/finance_executive.html:17
+#: templates/pages/finance_executive.html:75
+#: templates/pages/finance_month_detail.html:34
+#: templates/pages/finance_summary.html:48
+#: templates/pages/finance_summary.html:61
+#: templates/pages/finance_summary.html:90
+#: templates/pages/finance_summary.html:151
+#: templates/pages/finance_year.html:30 templates/pages/finance_year.html:43
+#: templates/pages/finance_year.html:88
+msgid "Net"
+msgstr "Чистий"
+
+#: features/profitability/exports.py:334
+#: templates/pages/finance_summary.html:57
+msgid "Revenue, cost, and net by month"
+msgstr "Дохід, витрати та чистий результат за місяцями"
+
+#: features/profitability/exports.py:360
+msgid "Net by project"
+msgstr "Чистий результат за проєктами"
+
 #: features/profitability/models.py:32
 msgid "year"
 msgstr "рік"
@@ -5374,26 +5483,6 @@ msgstr "фінансовий місяць"
 #: features/profitability/models.py:63
 msgid "financial months"
 msgstr "фінансові місяці"
-
-#: features/profitability/models.py:82
-#: templates/pages/finance_executive.html:15
-#: templates/pages/finance_month_detail.html:33
-#: templates/pages/finance_summary.html:36
-#: templates/pages/finance_summary.html:46
-#: templates/pages/finance_summary.html:59 templates/pages/finance_year.html:28
-#: templates/pages/finance_year.html:41
-msgid "Cost"
-msgstr "Витрати"
-
-#: features/profitability/models.py:83 features/profitability/models.py:95
-#: templates/pages/finance_executive.html:14
-#: templates/pages/finance_month_detail.html:32
-#: templates/pages/finance_summary.html:33
-#: templates/pages/finance_summary.html:45
-#: templates/pages/finance_summary.html:59 templates/pages/finance_year.html:27
-#: templates/pages/finance_year.html:41
-msgid "Revenue"
-msgstr "Дохід"
 
 #: features/profitability/models.py:87
 msgid "Labour"
@@ -5449,37 +5538,37 @@ msgstr ""
 "Витрати вносяться від'ємними сумами, а доходи — додатними. Перевірте: "
 "%(cells)s."
 
-#: features/profitability/views.py:233
+#: features/profitability/views.py:235
 msgid "Saved and recalculated."
 msgstr "Збережено та перераховано."
 
-#: features/profitability/views.py:235 features/profitability/views.py:286
-#: features/profitability/views.py:374
+#: features/profitability/views.py:237 features/profitability/views.py:288
+#: features/profitability/views.py:376
 msgid "Invalid input."
 msgstr "Невірні дані."
 
-#: features/profitability/views.py:245
+#: features/profitability/views.py:247
 msgid "Month locked."
 msgstr "Місяць заблоковано."
 
-#: features/profitability/views.py:256
+#: features/profitability/views.py:258
 msgid "Month reopened."
 msgstr "Місяць знову відкрито."
 
-#: features/profitability/views.py:284
+#: features/profitability/views.py:286
 msgid "Financial month saved."
 msgstr "Фінансовий місяць збережено."
 
-#: features/profitability/views.py:380
+#: features/profitability/views.py:382
 #, python-format
 msgid "%(cells)s amounts saved across %(months)s month(s)."
 msgstr "Збережено сум: %(cells)s у %(months)s місяці(-ях)."
 
-#: features/profitability/views.py:387
+#: features/profitability/views.py:389
 msgid "Nothing changed."
 msgstr "Нічого не змінилося."
 
-#: features/profitability/views.py:392
+#: features/profitability/views.py:394
 #, python-format
 msgid "Locked and left untouched: month(s) %(months)s. Reopen them to edit."
 msgstr ""
@@ -5670,41 +5759,6 @@ msgstr ""
 msgid "Ask a manager to create an active project and include it in Finance."
 msgstr ""
 "Попросіть менеджера створити активний проєкт і включити його до Фінансів."
-
-#: templates/pages/_finance_workbook_grid.html:18
-#: templates/pages/_finance_workbook_grid.html:58
-msgid "Costs"
-msgstr "Витрати"
-
-#: templates/pages/_finance_workbook_grid.html:26
-#: templates/pages/finance_project_year.html:64
-msgid "Total costs"
-msgstr "Загальні витрати"
-
-#: templates/pages/_finance_workbook_grid.html:30
-#: templates/pages/_finance_workbook_grid.html:59
-msgid "Revenues"
-msgstr "Доходи"
-
-#: templates/pages/_finance_workbook_grid.html:38
-#: templates/pages/finance_project_year.html:69
-msgid "Total revenues"
-msgstr "Загальні доходи"
-
-#: templates/pages/_finance_workbook_grid.html:43
-#: templates/pages/_finance_workbook_grid.html:60
-#: templates/pages/finance_project_year.html:74
-msgid "Profit/loss"
-msgstr "Прибуток/збиток"
-
-#: templates/pages/_finance_workbook_grid.html:52
-msgid "By office"
-msgstr "За офісами"
-
-#: templates/pages/_finance_workbook_grid.html:75
-#: templates/partials/ledger_activity.html:14
-msgid "Total"
-msgstr "Разом"
 
 #: templates/pages/_finance_workbook_grid.html:85
 msgid "Finance project prerequisite"
@@ -6371,17 +6425,17 @@ msgstr ""
 "стягнення до відшкодування — жодна сума не утримується автоматично."
 
 #: templates/pages/equipment_reviews.html:14
-#: templates/pages/finance_executive.html:13
-#: templates/pages/finance_executive.html:34
-#: templates/pages/finance_executive.html:70
-#: templates/pages/finance_summary.html:44
-#: templates/pages/finance_summary.html:52
-#: templates/pages/finance_summary.html:67
-#: templates/pages/finance_summary.html:85
-#: templates/pages/finance_summary.html:97
-#: templates/pages/finance_summary.html:118
-#: templates/pages/finance_summary.html:146
-#: templates/pages/finance_year.html:26
+#: templates/pages/finance_executive.html:14
+#: templates/pages/finance_executive.html:35
+#: templates/pages/finance_executive.html:71
+#: templates/pages/finance_summary.html:45
+#: templates/pages/finance_summary.html:53
+#: templates/pages/finance_summary.html:68
+#: templates/pages/finance_summary.html:86
+#: templates/pages/finance_summary.html:98
+#: templates/pages/finance_summary.html:119
+#: templates/pages/finance_summary.html:147
+#: templates/pages/finance_year.html:27
 #: templates/pages/transport_trends.html:51
 msgid "Company total"
 msgstr "Загалом по компанії"
@@ -6606,84 +6660,76 @@ msgid "Executive overview"
 msgstr "Огляд для керівництва"
 
 #: templates/pages/finance_executive.html:10
-#: templates/pages/finance_summary.html:11 templates/pages/people_list.html:16
-#: templates/pages/project_list.html:16
-msgid "Export"
-msgstr "Експорт"
+#: templates/pages/finance_summary.html:11
+msgid "Export CSV"
+msgstr "Експортувати CSV"
 
-#: templates/pages/finance_executive.html:16
-#: templates/pages/finance_executive.html:74
-#: templates/pages/finance_month_detail.html:34
-#: templates/pages/finance_summary.html:47
-#: templates/pages/finance_summary.html:60
-#: templates/pages/finance_summary.html:89
-#: templates/pages/finance_summary.html:150
-#: templates/pages/finance_year.html:29 templates/pages/finance_year.html:42
-#: templates/pages/finance_year.html:87
-msgid "Net"
-msgstr "Чистий"
+#: templates/pages/finance_executive.html:11
+#: templates/pages/finance_summary.html:12 templates/pages/finance_year.html:12
+msgid "Export Excel"
+msgstr "Експортувати Excel"
 
-#: templates/pages/finance_executive.html:22
+#: templates/pages/finance_executive.html:23
 msgid "Monthly trend by office"
 msgstr "Місячна динаміка за офісами"
 
-#: templates/pages/finance_executive.html:25
-#: templates/pages/finance_executive.html:28
+#: templates/pages/finance_executive.html:26
+#: templates/pages/finance_executive.html:29
 msgid "Net result by month, one line per office"
 msgstr "Чистий результат за місяцями, по одній лінії на офіс"
 
-#: templates/pages/finance_executive.html:35
-#: templates/pages/finance_executive.html:42
-#: templates/pages/finance_summary.html:68
-#: templates/pages/finance_summary.html:75
+#: templates/pages/finance_executive.html:36
+#: templates/pages/finance_executive.html:43
+#: templates/pages/finance_summary.html:69
+#: templates/pages/finance_summary.html:76
 msgid "Margin"
 msgstr "Маржа"
 
-#: templates/pages/finance_executive.html:37
-#: templates/pages/finance_summary.html:70
+#: templates/pages/finance_executive.html:38
+#: templates/pages/finance_summary.html:71
 #, python-format
 msgid "Margin gauge: %(margin_pct)s%% of revenue"
 msgstr "Індикатор маржі: %(margin_pct)s %% від доходу"
 
-#: templates/pages/finance_executive.html:39
-#: templates/pages/finance_summary.html:72
+#: templates/pages/finance_executive.html:40
+#: templates/pages/finance_summary.html:73
 msgid "Net as a share of revenue"
 msgstr "Чистий результат як частка доходу"
 
-#: templates/pages/finance_executive.html:44
-#: templates/pages/finance_summary.html:77
+#: templates/pages/finance_executive.html:45
+#: templates/pages/finance_summary.html:78
 msgid "margin"
 msgstr "маржа"
 
-#: templates/pages/finance_executive.html:52
-#: templates/pages/finance_summary.html:160
-#: templates/pages/finance_year.html:16
+#: templates/pages/finance_executive.html:53
+#: templates/pages/finance_summary.html:161
+#: templates/pages/finance_year.html:17
 msgid "Profit/loss by office"
 msgstr "Прибуток/збиток за офісами"
 
-#: templates/pages/finance_executive.html:57
-#: templates/pages/finance_summary.html:165
+#: templates/pages/finance_executive.html:58
+#: templates/pages/finance_summary.html:166
 msgid "Net result by office chart"
 msgstr "Діаграма чистого результату за офісами"
 
-#: templates/pages/finance_executive.html:64
-#: templates/pages/finance_executive.html:76
-#: templates/pages/finance_summary.html:91
-#: templates/pages/finance_summary.html:124
-#: templates/pages/finance_summary.html:152
-#: templates/pages/finance_summary.html:172
-#: templates/pages/finance_year.html:21 templates/pages/finance_year.html:64
-#: templates/pages/finance_year.html:89
+#: templates/pages/finance_executive.html:65
+#: templates/pages/finance_executive.html:77
+#: templates/pages/finance_summary.html:92
+#: templates/pages/finance_summary.html:125
+#: templates/pages/finance_summary.html:153
+#: templates/pages/finance_summary.html:173
+#: templates/pages/finance_year.html:22 templates/pages/finance_year.html:65
+#: templates/pages/finance_year.html:90
 msgid "No financial months."
 msgstr "Немає фінансових місяців."
 
-#: templates/pages/finance_executive.html:71
-#: templates/pages/finance_summary.html:147 templates/pages/finance_year.html:8
+#: templates/pages/finance_executive.html:72
+#: templates/pages/finance_summary.html:148 templates/pages/finance_year.html:8
 msgid "Yearly results"
 msgstr "Річні результати"
 
 #: templates/pages/finance_month_detail.html:8
-#: templates/pages/finance_summary.html:89 templates/pages/finance_year.html:87
+#: templates/pages/finance_summary.html:90 templates/pages/finance_year.html:88
 msgid "Locked"
 msgstr "Заблоковано"
 
@@ -6752,7 +6798,7 @@ msgid "Save & recalculate"
 msgstr "Зберегти та перерахувати"
 
 #: templates/pages/finance_month_detail.html:60
-#: templates/pages/finance_summary.html:98 templates/pages/finance_year.html:70
+#: templates/pages/finance_summary.html:99 templates/pages/finance_year.html:71
 msgid "Group breakdown"
 msgstr "Розподіл за групами"
 
@@ -6761,7 +6807,7 @@ msgid "By group"
 msgstr "За групою"
 
 #: templates/pages/finance_month_detail.html:66
-#: templates/pages/finance_summary.html:103
+#: templates/pages/finance_summary.html:104
 msgid "Net result by finance group chart"
 msgstr "Графік чистого результату за фінансовою групою"
 
@@ -6857,19 +6903,19 @@ msgstr ""
 msgid "Workbook view"
 msgstr "Подання робочої книги"
 
-#: templates/pages/finance_summary.html:16
+#: templates/pages/finance_summary.html:17
 msgid "Record a financial month"
 msgstr "Записати фінансовий місяць"
 
-#: templates/pages/finance_summary.html:17
+#: templates/pages/finance_summary.html:18
 msgid "Manual entry"
 msgstr "Ручне введення"
 
-#: templates/pages/finance_summary.html:18
+#: templates/pages/finance_summary.html:19
 msgid "Record a month"
 msgstr "Записати місяць"
 
-#: templates/pages/finance_summary.html:19
+#: templates/pages/finance_summary.html:20
 msgid ""
 "Every figure here is typed by hand — nothing is pulled from elsewhere in the "
 "system. Create the month, then open it to enter each category; the totals "
@@ -6879,43 +6925,39 @@ msgstr ""
 "системи. Створіть місяць, потім відкрийте його та введіть кожну категорію; "
 "єдине, що обчислюється за вас, — це підсумки."
 
-#: templates/pages/finance_summary.html:39
+#: templates/pages/finance_summary.html:40
 msgid "Record month"
 msgstr "Записати місяць"
 
-#: templates/pages/finance_summary.html:53 templates/pages/finance_year.html:35
+#: templates/pages/finance_summary.html:54 templates/pages/finance_year.html:36
 msgid "Monthly trend"
 msgstr "Місячна тенденція"
 
-#: templates/pages/finance_summary.html:56
-msgid "Revenue, cost, and net by month"
-msgstr "Дохід, витрати та чистий результат за місяцями"
-
-#: templates/pages/finance_summary.html:61 templates/pages/finance_year.html:43
+#: templates/pages/finance_summary.html:62 templates/pages/finance_year.html:44
 msgid "Monthly revenue, cost, and net trend chart"
 msgstr "Графік місячної тенденції доходу, витрат і чистого результату"
 
-#: templates/pages/finance_summary.html:86 templates/pages/finance_year.html:34
-#: templates/pages/finance_year.html:83
+#: templates/pages/finance_summary.html:87 templates/pages/finance_year.html:35
+#: templates/pages/finance_year.html:84
 msgid "Financial months"
 msgstr "Фінансові місяці"
 
-#: templates/pages/finance_summary.html:110
-#: templates/pages/finance_year.html:76
+#: templates/pages/finance_summary.html:111
+#: templates/pages/finance_year.html:77
 msgid "No line items yet."
 msgstr "Позицій поки немає."
 
-#: templates/pages/finance_summary.html:119
-#: templates/pages/finance_year.html:51
+#: templates/pages/finance_summary.html:120
+#: templates/pages/finance_year.html:52
 msgid "Per-project results"
 msgstr "Результати за проєктами"
 
-#: templates/pages/finance_summary.html:132
-#: templates/pages/finance_year.html:96
+#: templates/pages/finance_summary.html:133
+#: templates/pages/finance_year.html:97
 msgid "Enter a project year"
 msgstr "Внести рік проєкту"
 
-#: templates/pages/finance_summary.html:134
+#: templates/pages/finance_summary.html:135
 msgid ""
 "This is the table used for entering figures: choose a project, type across "
 "its twelve-month grid, then save the year."
@@ -6923,7 +6965,7 @@ msgstr ""
 "Ця таблиця призначена для введення даних: виберіть проєкт, заповніть його "
 "дванадцятимісячну таблицю, а потім збережіть рік."
 
-#: templates/pages/finance_summary.html:137
+#: templates/pages/finance_summary.html:138
 msgid ""
 "Open the twelve-month grid for this project: categories down, months across, "
 "and the amounts are typed straight into it."
@@ -6931,8 +6973,8 @@ msgstr ""
 "Відкриває дванадцятимісячну таблицю цього проєкту: категорії вниз, місяці "
 "впоперек, і суми вводяться просто в неї."
 
-#: templates/pages/finance_summary.html:159
-#: templates/pages/finance_year.html:15
+#: templates/pages/finance_summary.html:160
+#: templates/pages/finance_year.html:16
 msgid "Office roll-up"
 msgstr "Зведення за офісами"
 
@@ -6974,16 +7016,16 @@ msgstr ""
 "Це подання підсумовує всі дванадцять місяців для кожного проєкту. Виберіть "
 "назву проєкту, щоб відкрити його редаговану річну таблицю."
 
-#: templates/pages/finance_year.html:38
+#: templates/pages/finance_year.html:39
 #, python-format
 msgid "Revenue, cost, and net by month in %(year)s"
 msgstr "Дохід, витрати та чистий результат за місяцями %(year)s року"
 
-#: templates/pages/finance_year.html:57
+#: templates/pages/finance_year.html:58
 msgid "Net result by project chart"
 msgstr "Графік чистого результату за проєктами"
 
-#: templates/pages/finance_year.html:98
+#: templates/pages/finance_year.html:99
 msgid "Choose a project to enter or correct its figures for this year."
 msgstr "Виберіть проєкт, щоб внести або виправити його дані за цей рік."
 
@@ -7343,6 +7385,10 @@ msgstr "Надіслати зашифрований PDF"
 #: templates/pages/payslips.html:58
 msgid "No payslips recorded."
 msgstr "Немає збережених розрахункових листів."
+
+#: templates/pages/people_list.html:16 templates/pages/project_list.html:16
+msgid "Export"
+msgstr "Експорт"
 
 #: templates/pages/people_list.html:19
 msgid "Search by name"

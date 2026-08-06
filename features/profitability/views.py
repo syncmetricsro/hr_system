@@ -109,6 +109,7 @@ def finance_summary(request: HttpRequest) -> HttpResponse:
         totals = company_totals()
         margin = margin_pct(totals)
         offices = office_totals()
+        years = yearly_totals()
         return TemplateResponse(
             request,
             "pages/finance_executive.html",
@@ -116,7 +117,8 @@ def finance_summary(request: HttpRequest) -> HttpResponse:
                 "totals": totals,
                 "margin_pct": margin,
                 "office_results": offices,
-                "years": yearly_totals(),
+                "years": years,
+                "export_year": years[0]["year"] if years else timezone.localdate().year,
                 "gauge_chart_data": {**totals, "margin_pct": margin},
                 "office_chart_data": net_bar_payload(offices, label_key="office"),
                 "office_trend_chart_data": _office_trend_chart_data(

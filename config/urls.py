@@ -345,6 +345,11 @@ if _feature_on("profitability", "profitability"):
 
     urlpatterns += [
         path("export/finance.csv", finance_exports.finance_csv, name="export_finance"),
+        path(
+            "export/finance/<int:year>.xlsx",
+            finance_exports.finance_xlsx,
+            name="export_finance_xlsx",
+        ),
     ]
     app_routes += [
         path("finance/", finance_views.finance_summary, name="finance_summary"),

@@ -12,3 +12,12 @@ def test_annual_profitability_workbook_is_mounted_only_with_the_feature():
     else:
         with pytest.raises(Resolver404):
             resolve(path)
+
+
+def test_profitability_xlsx_export_is_mounted_only_with_the_feature():
+    path = "/export/finance/2026.xlsx"
+    if apps.is_installed("features.profitability"):
+        assert resolve(path).url_name == "export_finance_xlsx"
+    else:
+        with pytest.raises(Resolver404):
+            resolve(path)

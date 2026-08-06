@@ -1,5 +1,26 @@
 # Build Journal
 
+## 2026-08-06 - formula-free Excel snapshot with live charts
+
+The selected Finance year can now be downloaded as an office-scoped `.xlsx`.
+Its **Year** sheet is built from the exact same annual workbook grid as the HTML
+page: categories down, eligible projects across, costs negative, office
+subtotals and a grand total. **Months** always lists all twelve periods and
+contains native Excel charts for revenue/cost/net by month and net by project.
+The spreadsheet carries no worksheet formulas; the Django/Decimal results are
+the source of truth.
+
+ADR 0036 was explicitly approved before dependency changes. XlsxWriter 3.2.9
+adds one pure-Python, BSD-licensed package and no runtime transitives. The first
+resolver pass proposed unrelated `cffi` and `packaging` upgrades, so their
+already-vetted versions were made explicit input pins; the final lock diff adds
+only XlsxWriter. Formula and URL recognition are disabled so project, office
+and category labels remain text even when they resemble spreadsheet syntax.
+
+The route requires `export.approved`, remains mounted only with Jober's
+profitability feature, and uses the established office scope. Help, the demo
+runbook and SK/HU/UK catalogs describe the snapshot and its boundary.
+
 ## 2026-08-06 - one year, every finance project
 
 Finance now has a read-only annual workbook at
