@@ -968,8 +968,8 @@ msgstr "Typ postihnutia"
 
 #: core/people/forms.py:51 features/logistics/forms.py:75
 #: features/logistics/forms.py:227 features/profitability/catalog_i18n.py:26
+#: templates/pages/_finance_workbook_grid.html:57
 #: templates/pages/equipment_stock.html:48
-#: templates/pages/finance_workbook.html:77
 #: templates/pages/goods_receipt_detail.html:16
 #: templates/pages/project_detail.html:35
 msgid "Office"
@@ -2681,8 +2681,10 @@ msgstr "Prepojené karty a riadky otvoria záznamy za súčtom."
 #: templates/pages/finance_summary.html:4
 #: templates/pages/finance_summary.html:9
 #: templates/pages/finance_summary.html:131
-#: templates/pages/finance_workbook.html:8 templates/pages/finance_year.html:4
-#: templates/pages/finance_year.html:8 templates/pages/finance_year.html:94
+#: templates/pages/finance_workbook.html:8
+#: templates/pages/finance_workbook_year.html:8
+#: templates/pages/finance_year.html:4 templates/pages/finance_year.html:8
+#: templates/pages/finance_year.html:95
 msgid "Finance"
 msgstr "Financie"
 
@@ -2988,8 +2990,8 @@ msgstr ""
 "Určuje smer: záloha alebo zrážka mzdu znižuje, prídavok ju zvyšuje. Suma "
 "zostáva v oboch prípadoch kladná."
 
-#: core/ui/help.py:727 templates/pages/finance_project_year.html:35
-#: templates/pages/finance_workbook.html:29 templates/pages/ledger.html:34
+#: core/ui/help.py:727 templates/pages/_finance_workbook_grid.html:8
+#: templates/pages/finance_project_year.html:35 templates/pages/ledger.html:34
 #: templates/panels/advances_ledger.html:28
 #: templates/panels/blacklist_case.html:10
 #: templates/panels/blacklist_case.html:33
@@ -5347,8 +5349,8 @@ msgstr "finančné mesiace"
 #: templates/pages/finance_month_detail.html:33
 #: templates/pages/finance_summary.html:36
 #: templates/pages/finance_summary.html:46
-#: templates/pages/finance_summary.html:59 templates/pages/finance_year.html:27
-#: templates/pages/finance_year.html:40
+#: templates/pages/finance_summary.html:59 templates/pages/finance_year.html:28
+#: templates/pages/finance_year.html:41
 msgid "Cost"
 msgstr "Náklady"
 
@@ -5357,8 +5359,8 @@ msgstr "Náklady"
 #: templates/pages/finance_month_detail.html:32
 #: templates/pages/finance_summary.html:33
 #: templates/pages/finance_summary.html:45
-#: templates/pages/finance_summary.html:59 templates/pages/finance_year.html:26
-#: templates/pages/finance_year.html:40
+#: templates/pages/finance_summary.html:59 templates/pages/finance_year.html:27
+#: templates/pages/finance_year.html:41
 msgid "Revenue"
 msgstr "Príjmy"
 
@@ -5416,37 +5418,37 @@ msgstr ""
 "Náklady sa zadávajú ako záporné sumy a výnosy ako kladné. Skontrolujte: "
 "%(cells)s."
 
-#: features/profitability/views.py:232
+#: features/profitability/views.py:233
 msgid "Saved and recalculated."
 msgstr "Uložené a prepočítané."
 
-#: features/profitability/views.py:234 features/profitability/views.py:285
-#: features/profitability/views.py:362
+#: features/profitability/views.py:235 features/profitability/views.py:286
+#: features/profitability/views.py:374
 msgid "Invalid input."
 msgstr "Neplatný vstup."
 
-#: features/profitability/views.py:244
+#: features/profitability/views.py:245
 msgid "Month locked."
 msgstr "Mesiac uzamknutý."
 
-#: features/profitability/views.py:255
+#: features/profitability/views.py:256
 msgid "Month reopened."
 msgstr "Mesiac znovu otvorený."
 
-#: features/profitability/views.py:283
+#: features/profitability/views.py:284
 msgid "Financial month saved."
 msgstr "Finančný mesiac uložený."
 
-#: features/profitability/views.py:368
+#: features/profitability/views.py:380
 #, python-format
 msgid "%(cells)s amounts saved across %(months)s month(s)."
 msgstr "Uložených súm: %(cells)s v %(months)s mesiaci/mesiacoch."
 
-#: features/profitability/views.py:375
+#: features/profitability/views.py:387
 msgid "Nothing changed."
 msgstr "Nič sa nezmenilo."
 
-#: features/profitability/views.py:380
+#: features/profitability/views.py:392
 #, python-format
 msgid "Locked and left untouched: month(s) %(months)s. Reopen them to edit."
 msgstr ""
@@ -5618,9 +5620,9 @@ msgid ""
 "Finance is organised by project. Until an active project is included in "
 "Finance, there are no project columns or year grids for entering figures."
 msgstr ""
-"Financie sú usporiadané podľa projektov. Kým aktívny projekt nie je "
-"zahrnutý do Financií, nie sú k dispozícii stĺpce projektov ani ročné "
-"tabuľky na zadávanie údajov."
+"Financie sú usporiadané podľa projektov. Kým aktívny projekt nie je zahrnutý "
+"do Financií, nie sú k dispozícii stĺpce projektov ani ročné tabuľky na "
+"zadávanie údajov."
 
 #: templates/pages/_finance_project_prerequisite.html:9
 #: templates/pages/dashboard.html:12 templates/pages/project_list.html:12
@@ -5630,11 +5632,52 @@ msgstr "Nový projekt"
 
 #: templates/pages/_finance_project_prerequisite.html:10
 msgid "Leave “Include this project in Finance” enabled when creating it."
-msgstr "Pri vytváraní ponechajte zapnutú možnosť „Zahrnúť tento projekt do Financií“."
+msgstr ""
+"Pri vytváraní ponechajte zapnutú možnosť „Zahrnúť tento projekt do Financií“."
 
 #: templates/pages/_finance_project_prerequisite.html:12
 msgid "Ask a manager to create an active project and include it in Finance."
-msgstr "Požiadajte manažéra, aby vytvoril aktívny projekt a zahrnul ho do Financií."
+msgstr ""
+"Požiadajte manažéra, aby vytvoril aktívny projekt a zahrnul ho do Financií."
+
+#: templates/pages/_finance_workbook_grid.html:18
+#: templates/pages/_finance_workbook_grid.html:58
+msgid "Costs"
+msgstr "Náklady"
+
+#: templates/pages/_finance_workbook_grid.html:26
+#: templates/pages/finance_project_year.html:64
+msgid "Total costs"
+msgstr "Náklady spolu"
+
+#: templates/pages/_finance_workbook_grid.html:30
+#: templates/pages/_finance_workbook_grid.html:59
+msgid "Revenues"
+msgstr "Príjmy"
+
+#: templates/pages/_finance_workbook_grid.html:38
+#: templates/pages/finance_project_year.html:69
+msgid "Total revenues"
+msgstr "Príjmy spolu"
+
+#: templates/pages/_finance_workbook_grid.html:43
+#: templates/pages/_finance_workbook_grid.html:60
+#: templates/pages/finance_project_year.html:74
+msgid "Profit/loss"
+msgstr "Zisk/strata"
+
+#: templates/pages/_finance_workbook_grid.html:52
+msgid "By office"
+msgstr "Podľa pobočky"
+
+#: templates/pages/_finance_workbook_grid.html:75
+#: templates/partials/ledger_activity.html:14
+msgid "Total"
+msgstr "Spolu"
+
+#: templates/pages/_finance_workbook_grid.html:85
+msgid "Finance project prerequisite"
+msgstr "Predpoklad projektu pre Financie"
 
 #: templates/pages/accommodation_costs.html:4
 msgid "Accommodation costs"
@@ -5648,6 +5691,7 @@ msgstr "Mesačné náklady na ubytovanie"
 #: templates/pages/accommodation_detail.html:10
 #: templates/pages/equipment_stock_receive.html:6
 #: templates/pages/finance_month_detail.html:10
+#: templates/pages/finance_workbook_year.html:10
 #: templates/pages/finance_year.html:10
 msgid "Back"
 msgstr "Späť"
@@ -6306,7 +6350,7 @@ msgstr ""
 #: templates/pages/finance_summary.html:97
 #: templates/pages/finance_summary.html:118
 #: templates/pages/finance_summary.html:146
-#: templates/pages/finance_year.html:25
+#: templates/pages/finance_year.html:26
 #: templates/pages/transport_trends.html:51
 msgid "Company total"
 msgstr "Celkový súčet firmy"
@@ -6544,8 +6588,8 @@ msgstr "Export"
 #: templates/pages/finance_summary.html:60
 #: templates/pages/finance_summary.html:89
 #: templates/pages/finance_summary.html:150
-#: templates/pages/finance_year.html:28 templates/pages/finance_year.html:41
-#: templates/pages/finance_year.html:86
+#: templates/pages/finance_year.html:29 templates/pages/finance_year.html:42
+#: templates/pages/finance_year.html:87
 msgid "Net"
 msgstr "Čisté"
 
@@ -6583,7 +6627,7 @@ msgstr "marža"
 
 #: templates/pages/finance_executive.html:52
 #: templates/pages/finance_summary.html:160
-#: templates/pages/finance_year.html:15
+#: templates/pages/finance_year.html:16
 msgid "Profit/loss by office"
 msgstr "Zisk/strata podľa pobočiek"
 
@@ -6598,8 +6642,8 @@ msgstr "Graf čistého výsledku podľa pobočiek"
 #: templates/pages/finance_summary.html:124
 #: templates/pages/finance_summary.html:152
 #: templates/pages/finance_summary.html:172
-#: templates/pages/finance_year.html:20 templates/pages/finance_year.html:63
-#: templates/pages/finance_year.html:88
+#: templates/pages/finance_year.html:21 templates/pages/finance_year.html:64
+#: templates/pages/finance_year.html:89
 msgid "No financial months."
 msgstr "Žiadne finančné mesiace."
 
@@ -6609,7 +6653,7 @@ msgid "Yearly results"
 msgstr "Ročné výsledky"
 
 #: templates/pages/finance_month_detail.html:8
-#: templates/pages/finance_summary.html:89 templates/pages/finance_year.html:86
+#: templates/pages/finance_summary.html:89 templates/pages/finance_year.html:87
 msgid "Locked"
 msgstr "Uzamknuté"
 
@@ -6677,7 +6721,7 @@ msgid "Save & recalculate"
 msgstr "Uložiť a prepočítať"
 
 #: templates/pages/finance_month_detail.html:60
-#: templates/pages/finance_summary.html:98 templates/pages/finance_year.html:69
+#: templates/pages/finance_summary.html:98 templates/pages/finance_year.html:70
 msgid "Group breakdown"
 msgstr "Rozpis podľa skupín"
 
@@ -6692,6 +6736,7 @@ msgstr "Graf čistého výsledku podľa finančnej skupiny"
 
 #: templates/pages/finance_project_year.html:10
 #: templates/pages/finance_workbook.html:10
+#: templates/pages/finance_workbook_year.html:11
 msgid "Back to finance"
 msgstr "Späť na financie"
 
@@ -6700,7 +6745,8 @@ msgid "Data entry"
 msgstr "Zadávanie údajov"
 
 #: templates/pages/finance_project_year.html:14
-#: templates/pages/finance_workbook.html:14
+#: templates/pages/finance_workbook.html:15
+#: templates/pages/finance_workbook_year.html:15
 msgid "Read-only report"
 msgstr "Výkaz iba na čítanie"
 
@@ -6735,22 +6781,6 @@ msgstr ""
 #: templates/pages/finance_project_year.html:21
 msgid "No months have been recorded for this project and year."
 msgstr "Pre tento projekt a rok nebol zaznamenaný žiadny mesiac."
-
-#: templates/pages/finance_project_year.html:64
-#: templates/pages/finance_workbook.html:47
-msgid "Total costs"
-msgstr "Náklady spolu"
-
-#: templates/pages/finance_project_year.html:69
-#: templates/pages/finance_workbook.html:59
-msgid "Total revenues"
-msgstr "Príjmy spolu"
-
-#: templates/pages/finance_project_year.html:74
-#: templates/pages/finance_workbook.html:64
-#: templates/pages/finance_workbook.html:80
-msgid "Profit/loss"
-msgstr "Zisk/strata"
 
 #: templates/pages/finance_project_year.html:83
 msgid "Save year"
@@ -6794,7 +6824,7 @@ msgstr ""
 "Pred zadávaním údajov musí byť nastavený katalóg finančných kategórií. "
 "Požiadajte administrátora o obnovenie katalógu."
 
-#: templates/pages/finance_summary.html:10
+#: templates/pages/finance_summary.html:10 templates/pages/finance_year.html:11
 msgid "Workbook view"
 msgstr "Zobrazenie pracovného zošita"
 
@@ -6824,7 +6854,7 @@ msgstr ""
 msgid "Record month"
 msgstr "Zaznamenať mesiac"
 
-#: templates/pages/finance_summary.html:53 templates/pages/finance_year.html:34
+#: templates/pages/finance_summary.html:53 templates/pages/finance_year.html:35
 msgid "Monthly trend"
 msgstr "Mesačný trend"
 
@@ -6832,27 +6862,27 @@ msgstr "Mesačný trend"
 msgid "Revenue, cost, and net by month"
 msgstr "Príjmy, náklady a čisté podľa mesiacov"
 
-#: templates/pages/finance_summary.html:61 templates/pages/finance_year.html:42
+#: templates/pages/finance_summary.html:61 templates/pages/finance_year.html:43
 msgid "Monthly revenue, cost, and net trend chart"
 msgstr "Graf mesačného trendu príjmov, nákladov a čistého výsledku"
 
-#: templates/pages/finance_summary.html:86 templates/pages/finance_year.html:33
-#: templates/pages/finance_year.html:82
+#: templates/pages/finance_summary.html:86 templates/pages/finance_year.html:34
+#: templates/pages/finance_year.html:83
 msgid "Financial months"
 msgstr "Finančné mesiace"
 
 #: templates/pages/finance_summary.html:110
-#: templates/pages/finance_year.html:75
+#: templates/pages/finance_year.html:76
 msgid "No line items yet."
 msgstr "Zatiaľ žiadne položky."
 
 #: templates/pages/finance_summary.html:119
-#: templates/pages/finance_year.html:50
+#: templates/pages/finance_year.html:51
 msgid "Per-project results"
 msgstr "Výsledky podľa projektu"
 
 #: templates/pages/finance_summary.html:132
-#: templates/pages/finance_year.html:95
+#: templates/pages/finance_year.html:96
 msgid "Enter a project year"
 msgstr "Zadať rok projektu"
 
@@ -6873,16 +6903,22 @@ msgstr ""
 "vodorovne, a sumy sa zapisujú priamo do nej."
 
 #: templates/pages/finance_summary.html:159
-#: templates/pages/finance_year.html:14
+#: templates/pages/finance_year.html:15
 msgid "Office roll-up"
 msgstr "Súhrn podľa pobočiek"
 
 #: templates/pages/finance_workbook.html:4
 #: templates/pages/finance_workbook.html:9
+#: templates/pages/finance_workbook_year.html:4
+#: templates/pages/finance_workbook_year.html:9
 msgid "Workbook"
 msgstr "Pracovný zošit"
 
-#: templates/pages/finance_workbook.html:16
+#: templates/pages/finance_workbook.html:11
+msgid "View whole year"
+msgstr "Zobraziť celý rok"
+
+#: templates/pages/finance_workbook.html:17
 msgid ""
 "This workbook cannot be edited. Enter figures in a project’s year grid; "
 "select a project name below to open it."
@@ -6890,7 +6926,8 @@ msgstr ""
 "Tento pracovný zošit nemožno upravovať. Údaje zadávajte v ročnej tabuľke "
 "projektu; otvoríte ju výberom názvu projektu nižšie."
 
-#: templates/pages/finance_workbook.html:19
+#: templates/pages/finance_workbook.html:20
+#: templates/pages/finance_workbook_year.html:18
 msgid ""
 "Projects run across and categories down, matching the source workbook. Costs "
 "are shown negative and every total is recomputed from the recorded line "
@@ -6900,45 +6937,27 @@ msgstr ""
 "Náklady sa zobrazujú záporne a každý súčet sa prepočítava zo zaznamenaných "
 "riadkových položiek."
 
-#: templates/pages/finance_workbook.html:39
-#: templates/pages/finance_workbook.html:78
-msgid "Costs"
-msgstr "Náklady"
+#: templates/pages/finance_workbook_year.html:16
+msgid ""
+"This view sums all twelve months for each project. Select a project name to "
+"open its editable year grid."
+msgstr ""
+"Toto zobrazenie sčítava všetkých dvanásť mesiacov každého projektu. Výberom "
+"názvu projektu otvoríte jeho upraviteľnú ročnú tabuľku."
 
-#: templates/pages/finance_workbook.html:51
-#: templates/pages/finance_workbook.html:79
-msgid "Revenues"
-msgstr "Príjmy"
-
-#: templates/pages/finance_workbook.html:73
-msgid "By office"
-msgstr "Podľa pobočky"
-
-#: templates/pages/finance_workbook.html:92
-msgid "No projects in scope for this period."
-msgstr "Pre toto obdobie nie sú v rozsahu žiadne projekty."
-
-#: templates/pages/finance_workbook.html:97
-#: templates/partials/ledger_activity.html:14
-msgid "Total"
-msgstr "Spolu"
-
-#: templates/pages/finance_workbook.html:106
-msgid "Finance project prerequisite"
-msgstr "Predpoklad projektu pre Financie"
-
-#: templates/pages/finance_year.html:37
+#: templates/pages/finance_year.html:38
 #, python-format
 msgid "Revenue, cost, and net by month in %(year)s"
 msgstr "Príjmy, náklady a čisté podľa mesiacov v roku %(year)s"
 
-#: templates/pages/finance_year.html:56
+#: templates/pages/finance_year.html:57
 msgid "Net result by project chart"
 msgstr "Graf čistého výsledku podľa projektu"
 
-#: templates/pages/finance_year.html:97
+#: templates/pages/finance_year.html:98
 msgid "Choose a project to enter or correct its figures for this year."
-msgstr "Vyberte projekt, ktorého údaje za tento rok chcete zadať alebo opraviť."
+msgstr ""
+"Vyberte projekt, ktorého údaje za tento rok chcete zadať alebo opraviť."
 
 #: templates/pages/goods_receipt_detail.html:4
 msgid "Goods receipt"
@@ -8685,6 +8704,9 @@ msgstr "Zobrazuje sa %(rail_limit)s naposledy aktualizovaných."
 #: templates/partials/worker_rail_body.html:34
 msgid "Open People"
 msgstr "Otvoriť Ľudia"
+
+#~ msgid "No projects in scope for this period."
+#~ msgstr "Pre toto obdobie nie sú v rozsahu žiadne projekty."
 
 #~ msgid ""
 #~ "Choose the project and calendar month, then record each revenue or cost "

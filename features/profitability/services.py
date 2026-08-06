@@ -457,7 +457,7 @@ def office_monthly_totals(year=None, offices=None) -> list[dict]:
 #
 # The client's `HV 202510.xlsx` presents one period as projects across the top
 # and categories down the side, with a subtotal per office and a grand total.
-# These two builders produce that shape from stored line items. Neither reads a
+# These builders produce that shape from stored line items. None reads a
 # cached total: spec §7 records a real formula defect in the source workbook
 # (`C24=SUM(C3:C22)` drops one row), and the whole point of computing here is
 # that the same category set is applied to every column.
@@ -475,17 +475,7 @@ def _ordered_categories():
     )
 
 
-def workbook_grid(year, month, *, offices=None):
-    """One period as the workbook draws it.
-
-    Returns projects (columns), categories (rows), a cell lookup keyed
-    ``(project_id, category_id)``, per-project cost/revenue/net, per-office
-    subtotals and a grand total. ``offices=None`` means unrestricted — the
-    established sentinel, never "every office".
-
-    Amounts are signed for display (costs negative), matching the source; the
-    database keeps magnitudes with ``kind`` carrying the sign.
-    """
+def _workbook_projects(*, offices=None):
     from core.projects.models import Project
 
     projects = Project.objects.filter(
@@ -493,52 +483,41 @@ def workbook_grid(year, month, *, offices=None):
     ).select_related("office")
     if offices is not None:
         projects = projects.filter(office__in=offices)
-    projects = list(projects.order_by("office__name", "name"))
+    return list(projects.order_by("office__name", "name"))
 
-    categories = _ordered_categories()
-    months = FinancialMonth.objects.filter(
-        year=year, month=month, project__in=projects
-    ).select_related("project")
-    month_by_project = {m.project_id: m for m in months}
-    # Keyed by month id, not project id. These are different sequences, and they
-    # only coincide on a database where both happen to have been created in
-    # lockstep - which is true of a fresh test database and false of every real
-    # one, so mixing them up fails nowhere until it fails everywhere.
-    project_by_month = {m.pk: m.project_id for m in months}
 
-    cells = {}
-    for item in FinanceLineItem.objects.filter(month__in=months).select_related(
-        "category"
-    ):
-        project_id = project_by_month[item.month_id]
-        cells[(project_id, item.category_id)] = signed_amount(
-            item.category.kind, item.amount
-        )
+def _assemble_workbook_grid(
+    year, *, projects, categories, cells, month=None, records_by_project=None
+):
+    """Build the shared category × project shape from signed cell values."""
+    records_by_project = records_by_project or {}
 
     columns, by_office = [], {}
     for project in projects:
         cost = sum(
             (
-                cells.get((project.pk, c.pk), Decimal("0"))
-                for c in categories
-                if c.kind == FinanceCategoryKind.COST
+                cells.get((project.pk, category.pk), Decimal("0"))
+                for category in categories
+                if category.kind == FinanceCategoryKind.COST
             ),
             Decimal("0"),
         )
         revenue = sum(
             (
-                cells.get((project.pk, c.pk), Decimal("0"))
-                for c in categories
-                if c.kind == FinanceCategoryKind.REVENUE
+                cells.get((project.pk, category.pk), Decimal("0"))
+                for category in categories
+                if category.kind == FinanceCategoryKind.REVENUE
             ),
             Decimal("0"),
         )
         column = {
             "project": project,
-            "month": month_by_project.get(project.pk),
-            "cost": cost,  # negative or zero
-            "revenue": revenue,  # positive or zero
-            "net": cost + revenue,  # spec §6: P/L is their sum
+            # Retained for the monthly grid's public shape. Annual columns have
+            # no one FinancialMonth record and deliberately carry None.
+            "month": records_by_project.get(project.pk),
+            "cost": cost,
+            "revenue": revenue,
+            "net": cost + revenue,
         }
         columns.append(column)
         office = project.office.name if project.office else "Unassigned"
@@ -548,9 +527,9 @@ def workbook_grid(year, month, *, offices=None):
         {
             "office": name,
             "columns": cols,
-            "cost": sum((c["cost"] for c in cols), Decimal("0")),
-            "revenue": sum((c["revenue"] for c in cols), Decimal("0")),
-            "net": sum((c["net"] for c in cols), Decimal("0")),
+            "cost": sum((column["cost"] for column in cols), Decimal("0")),
+            "revenue": sum((column["revenue"] for column in cols), Decimal("0")),
+            "net": sum((column["net"] for column in cols), Decimal("0")),
         }
         for name, cols in sorted(by_office.items())
     ]
@@ -581,11 +560,82 @@ def workbook_grid(year, month, *, offices=None):
         "revenue_rows": rows_for(FinanceCategoryKind.REVENUE),
         "offices": offices_rows,
         "grand": {
-            "cost": sum((c["cost"] for c in columns), Decimal("0")),
-            "revenue": sum((c["revenue"] for c in columns), Decimal("0")),
-            "net": sum((c["net"] for c in columns), Decimal("0")),
+            "cost": sum((column["cost"] for column in columns), Decimal("0")),
+            "revenue": sum((column["revenue"] for column in columns), Decimal("0")),
+            "net": sum((column["net"] for column in columns), Decimal("0")),
         },
     }
+
+
+def workbook_grid(year, month, *, offices=None):
+    """One month as the workbook draws it.
+
+    Returns projects (columns), categories (rows), a cell lookup keyed
+    ``(project_id, category_id)``, per-project cost/revenue/net, per-office
+    subtotals and a grand total. ``offices=None`` means unrestricted — the
+    established sentinel, never "every office".
+
+    Amounts are signed for display (costs negative), matching the source; the
+    database keeps magnitudes with ``kind`` carrying the sign.
+    """
+    projects = _workbook_projects(offices=offices)
+
+    categories = _ordered_categories()
+    months = FinancialMonth.objects.filter(
+        year=year, month=month, project__in=projects
+    ).select_related("project")
+    month_by_project = {record.project_id: record for record in months}
+    # Keyed by month id, not project id. These are different sequences, and they
+    # only coincide on a database where both happen to have been created in
+    # lockstep - which is true of a fresh test database and false of every real
+    # one, so mixing them up fails nowhere until it fails everywhere.
+    project_by_month = {record.pk: record.project_id for record in months}
+
+    cells = {}
+    for item in FinanceLineItem.objects.filter(month__in=months).select_related(
+        "category"
+    ):
+        project_id = project_by_month[item.month_id]
+        cells[(project_id, item.category_id)] = signed_amount(
+            item.category.kind, item.amount
+        )
+
+    return _assemble_workbook_grid(
+        year,
+        month=month,
+        projects=projects,
+        categories=categories,
+        cells=cells,
+        records_by_project=month_by_project,
+    )
+
+
+def workbook_year_grid(year, *, offices=None):
+    """All twelve months summed into the workbook's project-column shape."""
+    projects = _workbook_projects(offices=offices)
+    categories = _ordered_categories()
+    category_kind = {category.pk: category.kind for category in categories}
+
+    cells = {}
+    for row in (
+        FinanceLineItem.objects.filter(
+            month__year=year,
+            month__project__in=projects,
+            category__in=categories,
+        )
+        .values("month__project_id", "category_id")
+        .annotate(amount=Sum("amount"))
+    ):
+        cells[(row["month__project_id"], row["category_id"])] = signed_amount(
+            category_kind[row["category_id"]], row["amount"]
+        )
+
+    return _assemble_workbook_grid(
+        year,
+        projects=projects,
+        categories=categories,
+        cells=cells,
+    )
 
 
 def cell_field_name(month: int, category_pk: int) -> str:

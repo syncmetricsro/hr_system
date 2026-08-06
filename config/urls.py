@@ -354,6 +354,11 @@ if _feature_on("profitability", "profitability"):
             name="finance_workbook",
         ),
         path(
+            "finance/workbook/<int:year>/",
+            finance_views.finance_workbook_year,
+            name="finance_workbook_year",
+        ),
+        path(
             "finance/project/<int:pk>/year/<int:year>/",
             finance_views.finance_project_year,
             name="finance_project_year",

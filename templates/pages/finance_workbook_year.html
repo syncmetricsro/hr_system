@@ -1,0 +1,23 @@
+{% extends "layouts/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Workbook" %} · {{ grid.year }} · {{ BRAND_NAME }}{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <p class="eyebrow">{% trans "Finance" %}</p>
+  <h1>{% trans "Workbook" %} — {{ grid.year }}</h1>
+  <a class="button" href="{% url 'finance_year' grid.year %}">{% trans "Back" %}</a>
+  <a class="button button-secondary" href="{% url 'finance_summary' %}">{% trans "Back to finance" %}</a>
+</section>
+
+<section class="panel">
+  <p class="eyebrow">{% trans "Read-only report" %}</p>
+  <p>{% trans "This view sums all twelve months for each project. Select a project name to open its editable year grid." %}</p>
+  <p class="muted">
+    {% trans "Projects run across and categories down, matching the source workbook. Costs are shown negative and every total is recomputed from the recorded line items." %}
+  </p>
+</section>
+
+{% include "pages/_finance_workbook_grid.html" %}
+{% endblock %}

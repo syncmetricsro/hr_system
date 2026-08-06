@@ -41,6 +41,7 @@ from features.profitability.services import (  # noqa: E402
     project_year_grid,
     set_line_item,
     workbook_grid,
+    workbook_year_grid,
 )
 
 pytestmark = [pytest.mark.django_db, pytest.mark.jober_only]
@@ -185,7 +186,66 @@ def test_a_project_opted_out_of_reporting_is_not_a_column(catalog):
     ]
 
 
-# --- the year grid ---------------------------------------------------------
+# --- all-project year workbook --------------------------------------------
+
+
+def test_year_workbook_sums_all_months_and_ignores_another_year(catalog):
+    office = Office.objects.create(name="Megyer", code="VM", country="SK")
+    project = _project("Minit", office)
+    for month_number, wage, invoices in (
+        (1, "100", "300"),
+        (12, "150", "400"),
+    ):
+        month = FinancialMonth.objects.create(
+            project=project, year=YEAR, month=month_number
+        )
+        _fill(month, catalog, wage=wage, invoices=invoices)
+    other_year = FinancialMonth.objects.create(project=project, year=YEAR + 1, month=1)
+    _fill(other_year, catalog, wage="900", invoices="900")
+
+    column = workbook_year_grid(YEAR)["columns"][0]
+
+    assert column["cost"] == Decimal("-250")
+    assert column["revenue"] == Decimal("700")
+    assert column["net"] == Decimal("450")
+
+
+def test_year_workbook_keeps_a_blank_project_column(catalog):
+    office = Office.objects.create(name="Megyer", code="VM", country="SK")
+    alpha = _project("Alpha", office, code="ALPHA")
+    _project("Beta", office, code="BETA")
+    _fill(_month(alpha), catalog, wage="100")
+
+    grid = workbook_year_grid(YEAR)
+    wage_row = next(
+        row for row in grid["cost_rows"] if row["category"].label == "Gross wage"
+    )
+
+    assert [column["project"].name for column in grid["columns"]] == [
+        "Alpha",
+        "Beta",
+    ]
+    assert wage_row["values"] == [Decimal("-100"), None]
+
+
+def test_year_workbook_is_office_scoped_with_scoped_totals(catalog):
+    vm = Office.objects.create(name="Velký Meder", code="VM", country="SK")
+    ds = Office.objects.create(name="Dunajská Streda", code="DS", country="SK")
+    _fill(_month(_project("Minit", vm)), catalog, wage="100", invoices="250")
+    _fill(_month(_project("Europack", ds)), catalog, wage="900", invoices="950")
+
+    grid = workbook_year_grid(YEAR, offices=Office.objects.filter(pk=vm.pk))
+
+    assert [column["project"].name for column in grid["columns"]] == ["Minit"]
+    assert [office["office"] for office in grid["offices"]] == ["Velký Meder"]
+    assert grid["grand"] == {
+        "cost": Decimal("-100"),
+        "revenue": Decimal("250"),
+        "net": Decimal("150"),
+    }
+
+
+# --- the project-year entry grid ------------------------------------------
 
 
 def test_the_year_grid_spreads_months_across(catalog):
@@ -290,6 +350,47 @@ def test_the_workbook_view_shows_only_my_offices_columns(client, manager, catalo
     assert response.status_code == 200
     grid = response.context["grid"]
     assert [c["project"].name for c in grid["columns"]] == ["Minit"]
+    assert reverse("finance_workbook_year", args=[YEAR]) in response.content.decode()
+
+
+def test_the_year_workbook_view_is_scoped_and_links_to_entry(client, manager, catalog):
+    from django.urls import reverse
+    from django.utils import translation
+
+    vm = Office.objects.create(name="Velký Meder", code="VM", country="SK")
+    ds = Office.objects.create(name="Dunajská Streda", code="DS", country="SK")
+    manager.offices.set([vm])
+    mine = _project("Minit", vm)
+    _project("Europack", ds)
+    client.force_login(manager)
+
+    with translation.override("en"):
+        entry_url = reverse("finance_project_year", args=[mine.pk, YEAR])
+        response = client.get(reverse("finance_workbook_year", args=[YEAR]))
+
+    body = response.content.decode()
+    assert response.status_code == 200
+    assert [
+        column["project"].name for column in response.context["grid"]["columns"]
+    ] == ["Minit"]
+    assert entry_url in body
+    assert "Europack" not in body
+
+    year_page = client.get(reverse("finance_year", args=[YEAR])).content.decode()
+    assert reverse("finance_workbook_year", args=[YEAR]) in year_page
+
+
+def test_a_recruiter_cannot_open_the_year_workbook(client, django_user_model):
+    from django.urls import reverse
+
+    recruiter = django_user_model.objects.create_user(
+        email="finance-year-recruiter@demo.jober.test",
+        password="x",
+        role="recruiter",
+    )
+    client.force_login(recruiter)
+
+    assert client.get(reverse("finance_workbook_year", args=[YEAR])).status_code == 403
 
 
 def test_an_impossible_month_is_404_not_a_broken_grid(client, manager):

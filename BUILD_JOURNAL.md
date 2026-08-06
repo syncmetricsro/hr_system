@@ -1,5 +1,18 @@
 # Build Journal
 
+## 2026-08-06 - one year, every finance project
+
+Finance now has a read-only annual workbook at
+`/finance/workbook/<year>/`: categories down, scoped projects across, with
+office subtotals and a grand total summed from all twelve monthly records. It
+uses the same private assembler as the monthly workbook, so the two reports
+cannot drift in row order, sign handling or subtotal arithmetic.
+
+Eligible projects with no recorded month still appear as blank columns. That
+is important on a newly cleared trial database: creating the project makes the
+workbook structure visible before the first figure exists. Project headings
+link to the editable project-year grid; no new write route was added.
+
 ## 2026-08-06 - empty Finance explains its prerequisite
 
 Jober's cleared staging database retained the finance catalogue but no projects.

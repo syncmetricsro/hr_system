@@ -406,12 +406,15 @@ already reads:
   and categories down the side, a subtotal per office and a grand total: the
   shape of `HV 202510.xlsx`. It is read-only. Costs display negative, as the
   source does, and project headings link to the editable project-year grid.
+  Choose **View whole year**, or open `/finance/workbook/<year>/`, for the same
+  project-column report summed across all twelve months. It is linked from the
+  yearly Finance report too.
 - **Project year** — twelve months across for one project, with a year total.
   A month nobody has recorded shows as a dash rather than a zero, because an
   unrecorded month and a month that netted nothing are different facts.
 
-Say this accurately: **every total on both screens is recomputed from the line
-items.** Nothing is carried over from the spreadsheet. That is worth stating
+Say this accurately: **every total on all three screens is recomputed from the
+line items.** Nothing is carried over from the spreadsheet. That is worth stating
 plainly, because their own file gets it wrong — see the caveat below.
 
 CSV export carries period, office, project code and name, category key and

@@ -40,6 +40,7 @@ from features.profitability.services import (
     set_line_item,
     signed_amount,
     workbook_grid,
+    workbook_year_grid,
     yearly_totals,
 )
 
@@ -303,6 +304,17 @@ def finance_workbook(request: HttpRequest, year: int, month: int) -> HttpRespons
     return TemplateResponse(
         request,
         "pages/finance_workbook.html",
+        {"grid": grid},
+    )
+
+
+@require_action(Action.FINANCE_VIEW_SUMMARY)
+def finance_workbook_year(request: HttpRequest, year: int) -> HttpResponse:
+    """All months in one read-only category × project workbook."""
+    grid = workbook_year_grid(year, offices=user_office_scope(request.user))
+    return TemplateResponse(
+        request,
+        "pages/finance_workbook_year.html",
         {"grid": grid},
     )
 

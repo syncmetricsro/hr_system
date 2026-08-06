@@ -8,6 +8,7 @@
   <p class="eyebrow">{% trans "Finance" %} · {% trans "Yearly results" %}</p>
   <h1>{{ year }}</h1>
   <a class="button button-secondary" href="{% url 'finance_summary' %}">{% trans "Back" %}</a>
+  <a class="button" href="{% url 'finance_workbook_year' year %}">{% trans "Workbook view" %}</a>
 </section>
 
 <section class="panel">
