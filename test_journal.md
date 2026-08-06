@@ -1,5 +1,19 @@
 # Test Journal
 
+## 2026-08-06 - the annual workbook is the monthly workbook twelve times
+
+- Two months and an adjacent-year decoy prove the annual cells sum exactly the
+  requested year rather than every record for the project.
+- A project with no months keeps its column and a `None` cell; blank and zero
+  remain distinct.
+- Office-scoping assertions cover columns, office subtotals and grand totals,
+  and the view links only to in-scope project-year entry grids.
+- A recruiter receives 403, while a settings-aware route test proves the URL is
+  mounted for Jober and absent when Corvinum runs with profitability disabled.
+- Suites: **Jober 1154 passed / 16 skipped; CorvinumEU 736 passed / 24 skipped
+  / 270 deselected; browser 71 passed.** Ruff, formatting, dependency
+  direction, migration and PO/MO synchronization checks passed.
+
 ## 2026-08-06 - Finance starts with no projects
 
 - Empty-state tests reproduce the client's cleared database rather than relying

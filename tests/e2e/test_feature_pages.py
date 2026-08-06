@@ -57,6 +57,27 @@ def test_finance_year_page(page):
     page.get_by_text("Financial months").first.wait_for()
 
 
+def test_monthly_and_annual_workbooks_contain_wide_tables_on_mobile(page):
+    _login(page)
+    page.set_viewport_size({"width": 375, "height": 667})
+    page.goto(f"{base_url()}/en/finance/workbook/2026/5/")
+    page.get_by_role("heading", name="Workbook — 2026-05").wait_for()
+
+    monthly_scroll = page.locator(".data-table-scroll").first.evaluate(
+        "element => ({client: element.clientWidth, scroll: element.scrollWidth})"
+    )
+    assert monthly_scroll["scroll"] > monthly_scroll["client"]
+    assert page.evaluate("document.documentElement.scrollWidth") == 375
+
+    page.get_by_role("link", name="View whole year").click()
+    page.get_by_role("heading", name="Workbook — 2026").wait_for()
+    annual_scroll = page.locator(".data-table-scroll").first.evaluate(
+        "element => ({client: element.clientWidth, scroll: element.scrollWidth})"
+    )
+    assert annual_scroll["scroll"] > annual_scroll["client"]
+    assert page.evaluate("document.documentElement.scrollWidth") == 375
+
+
 def test_accommodation_cost_report(page):
     _login(page)
     page.goto(f"{base_url()}/en/accommodation/costs/")
