@@ -1,5 +1,50 @@
 # Deployment Journal
 
+## 2026-08-06 - Empty Finance guidance, annual workbook and Excel export deployed to Jober only
+
+Deployed exact `main` merge **`30869c1`** to **`jober-staging` only** as
+`jober-platform:demo-30869c1` (local image ID
+`sha256:c4d5ce6027a0762f192142249adeceb366ecfeb0c360baba79031b0d432f4e77`),
+streamed with `git:load-image`. CorvinumEU was not redeployed because its
+profitability feature is off and this release was requested specifically for
+Jober's testing workspace.
+
+The release explains Finance's project prerequisite on a cleared database,
+adds the read-only annual cross-project workbook, and adds the permission- and
+office-scoped `finance-<year>.xlsx` download. The Excel file contains Year and
+Months sheets, live charts, app-computed values and no worksheet formulas.
+
+**No seed or account command ran.** Dokku reported no predeploy, release,
+postdeploy or app.json task; the only database command was
+`manage.py migrate --noinput`, which reported *No migrations to apply*.
+`ensure_superuser` and every `seed_*` command were deliberately omitted.
+Structural counts taken before and after the release were identical:
+
+```
+users: 11  people: 0  projects: 0  financial_months: 0  audit_events: 11
+```
+
+This preserves the empty workspace Jober requested while retaining the login
+accounts. No row values were read or printed.
+
+Live verification: `check --deploy` found no issues; `migrate --check` exited
+cleanly; XlsxWriter reports 3.2.9; `/export/finance/2026.xlsx` resolves to
+`export_finance_xlsx`; and `deploy_smoke.sh --https` passed health, login/CSRF,
+fingerprinted static (`app.47567224cb17.css`), X-Frame-Options and HSTS.
+
+Pre-deploy gates on `30869c1`: Jober **1158 passed / 16 skipped**,
+CorvinumEU **737 passed / 25 skipped / 270 deselected**, Playwright **72
+passed**; Ruff, formatting, dependency direction, migrations, idempotent i18n
+extraction, PO/MO synchronization, lockfile scope, production-runtime and
+collected-static checks passed.
+
+Rollback target:
+
+```bash
+ssh syncmetric-prime-dokku \
+  "git:from-image jober-staging jober-platform:demo-6b55835"
+```
+
 ## 2026-08-06 - Sortable pay overview
 
 Deployed the exact `main` merge **`6b55835`** to `jober-staging` and
