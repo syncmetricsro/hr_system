@@ -130,13 +130,16 @@
   <section class="panel">
     <p class="eyebrow">{% trans "Finance" %}</p>
     <h2>{% trans "Enter a project year" %}</h2>
-    <ul class="plain-list">
-      {% for project in projects %}
-        <li><a href="{% url 'finance_project_year' project.pk workbook_year %}" data-tooltip-heading="{{ project.name }}" data-tooltip="{% trans 'Open the twelve-month grid for this project: categories down, months across, and the amounts are typed straight into it.' %}">{{ project.name }} · {{ workbook_year }}</a></li>
-      {% empty %}
-        <li class="muted">{% trans "No project is eligible for financial reporting yet." %}</li>
-      {% endfor %}
-    </ul>
+    {% if projects %}
+      <p class="muted">{% trans "This is the table used for entering figures: choose a project, type across its twelve-month grid, then save the year." %}</p>
+      <ul class="plain-list">
+        {% for project in projects %}
+          <li><a href="{% url 'finance_project_year' project.pk workbook_year %}" data-tooltip-heading="{{ project.name }}" data-tooltip="{% trans 'Open the twelve-month grid for this project: categories down, months across, and the amounts are typed straight into it.' %}">{{ project.name }} · {{ workbook_year }}</a></li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      {% include "pages/_finance_project_prerequisite.html" %}
+    {% endif %}
   </section>
 
   <section class="panel">

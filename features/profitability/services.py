@@ -667,6 +667,7 @@ def project_year_grid(project, year):
         "year": year,
         "categories": categories,
         "rows": rows,
+        "has_recorded_months": bool(months),
         "month_totals": month_totals,
         "year_total": {
             "cost": sum((t["cost"] for t in month_totals), Decimal("0")),

@@ -89,6 +89,21 @@
     {% endfor %}
   </ul>
 </section>
+
+<section class="panel">
+  <p class="eyebrow">{% trans "Finance" %}</p>
+  <h2>{% trans "Enter a project year" %}</h2>
+  {% if projects %}
+    <p class="muted">{% trans "Choose a project to enter or correct its figures for this year." %}</p>
+    <ul class="plain-list">
+      {% for project in projects %}
+        <li><a href="{% url 'finance_project_year' project.pk year %}">{{ project.name }} · {{ year }}</a></li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    {% include "pages/_finance_project_prerequisite.html" %}
+  {% endif %}
+</section>
 {% endblock %}
 
 {% block scripts %}

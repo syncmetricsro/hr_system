@@ -13,6 +13,7 @@ from django.views.decorators.http import require_POST
 from core.accounts.models import Role
 from core.accounts.permissions import Action, require_action, user_office_scope
 from core.accounts.permissions import can as user_can
+from core.projects.models import Project
 from core.ui.chart_data import net_bar_payload
 from features.profitability.models import (
     FinanceCategory,
@@ -32,8 +33,8 @@ from features.profitability.services import (
     office_totals,
     project_totals,
     project_year_grid,
-    save_project_year,
     recompute_month,
+    save_project_year,
     record_financial_month,
     reopen_month,
     set_line_item,
@@ -41,7 +42,6 @@ from features.profitability.services import (
     workbook_grid,
     yearly_totals,
 )
-from core.projects.models import Project
 
 
 def _trend_chart_data(rows: list[dict]) -> dict:
@@ -92,6 +92,16 @@ def _assert_month_in_scope(request: HttpRequest, month: FinancialMonth) -> None:
         raise PermissionDenied("This financial month belongs to another office.")
 
 
+def _scoped_finance_projects(scope):
+    """Active finance columns visible inside an already-resolved office scope."""
+    projects = Project.objects.filter(
+        is_active=True, financial_reporting_eligible=True
+    ).select_related("office")
+    if scope is not None:
+        projects = projects.filter(office__in=scope)
+    return projects.order_by("office__name", "name")
+
+
 @require_action(Action.FINANCE_VIEW_SUMMARY)
 def finance_summary(request: HttpRequest) -> HttpResponse:
     if request.user.role == Role.OBSERVER:
@@ -125,11 +135,7 @@ def finance_summary(request: HttpRequest) -> HttpResponse:
     groups = group_breakdown(offices=scope)
     margin = margin_pct(totals)
     offices = office_totals(offices=scope)
-    scoped_projects = Project.objects.filter(
-        is_active=True, financial_reporting_eligible=True
-    )
-    if scope is not None:
-        scoped_projects = scoped_projects.filter(office__in=scope)
+    scoped_projects = _scoped_finance_projects(scope)
     return TemplateResponse(
         request,
         "pages/finance_summary.html",
@@ -175,6 +181,7 @@ def finance_year(request: HttpRequest, year: int) -> HttpResponse:
             "regional_results": office_totals(year, offices=scope),
             "trend_chart_data": _trend_chart_data(monthly_totals(year, offices=scope)),
             "project_chart_data": net_bar_payload(project_results, label_key="name"),
+            "projects": _scoped_finance_projects(scope),
         },
     )
 

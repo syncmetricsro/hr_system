@@ -1,5 +1,19 @@
 # Test Journal
 
+## 2026-08-06 - Finance starts with no projects
+
+- Empty-state tests reproduce the client's cleared database rather than relying
+  on seeded projects.
+- The manager sees the project prerequisite and creation link; an Observer sees
+  the explanation without an unauthorized action.
+- The year report lists eligible projects even before a financial month exists,
+  while office, active-state and finance-eligibility filters remain enforced.
+- The project-year grid distinguishes an expected blank year from a missing
+  finance category catalogue.
+- Suites: **Jober 1148 passed / 16 skipped; CorvinumEU 735 passed / 24 skipped
+  / 270 deselected.** Ruff, formatting, dependency direction, migration and
+  PO/MO synchronization checks passed.
+
 ## 2026-08-06 - sorting, tested where it can lie
 
 - The fixture is three workers whose deductions **do not match** their

@@ -3,6 +3,11 @@
 Status: **Accepted — 2026-08-04.**
 Date drafted: 2026-08-04
 
+> **Status note — 2026-08-06:** the project-year grid described below as
+> read-only became the existing bulk-entry surface on 2026-08-05. It still
+> writes through to the same monthly records and stores no annual total. The
+> cross-project monthly and annual workbooks remain read-only reports.
+
 ## Context
 
 `Jober_Finance_Specs.md` has carried three structural questions since

@@ -10,10 +10,17 @@
   <a class="button" href="{% url 'finance_summary' %}">{% trans "Back to finance" %}</a>
 </section>
 
-<p class="muted">
-  {% trans "Projects across, categories down — the layout of the source workbook. Costs are shown negative; every total is recomputed from the line items rather than carried over." %}
-</p>
+<section class="panel">
+  <p class="eyebrow">{% trans "Read-only report" %}</p>
+  <p>
+    {% trans "This workbook cannot be edited. Enter figures in a project’s year grid; select a project name below to open it." %}
+  </p>
+  <p class="muted">
+    {% trans "Projects run across and categories down, matching the source workbook. Costs are shown negative and every total is recomputed from the recorded line items." %}
+  </p>
+</section>
 
+{% if grid.columns %}
 <section class="panel">
   <div class="data-table-scroll">
     <table class="data-table workbook-grid">
@@ -95,4 +102,9 @@
     </tfoot>
   </table>
 </section>
+{% else %}
+  <section class="panel" aria-label="{% trans 'Finance project prerequisite' %}">
+    {% include "pages/_finance_project_prerequisite.html" %}
+  </section>
+{% endif %}
 {% endblock %}

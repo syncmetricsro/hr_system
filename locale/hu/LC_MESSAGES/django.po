@@ -969,7 +969,7 @@ msgstr "Fogyatékosság típusa"
 #: core/people/forms.py:51 features/logistics/forms.py:75
 #: features/logistics/forms.py:227 features/profitability/catalog_i18n.py:26
 #: templates/pages/equipment_stock.html:48
-#: templates/pages/finance_workbook.html:70
+#: templates/pages/finance_workbook.html:77
 #: templates/pages/goods_receipt_detail.html:16
 #: templates/pages/project_detail.html:35
 msgid "Office"
@@ -1711,7 +1711,7 @@ msgstr "Hónap"
 msgid "Several months"
 msgstr "Több hónap"
 
-#: core/reporting/periods.py:49 templates/pages/finance_project_year.html:33
+#: core/reporting/periods.py:49 templates/pages/finance_project_year.html:42
 #: templates/pages/finance_summary.html:27
 #: templates/partials/ledger_cycle.html:5
 #: templates/partials/period_filter.html:43
@@ -2715,7 +2715,7 @@ msgstr ""
 #: templates/pages/finance_summary.html:9
 #: templates/pages/finance_summary.html:131
 #: templates/pages/finance_workbook.html:8 templates/pages/finance_year.html:4
-#: templates/pages/finance_year.html:8
+#: templates/pages/finance_year.html:8 templates/pages/finance_year.html:94
 msgid "Finance"
 msgstr "Pénzügyek"
 
@@ -2747,36 +2747,35 @@ msgstr ""
 
 #: core/ui/help.py:580
 msgid ""
-"Choose the project and calendar month, then record each revenue or cost line "
-"in its correct category."
+"Create an active project, or edit an existing one, and keep Include this "
+"project in Finance enabled."
 msgstr ""
-"Válassza ki a projektet és a naptári hónapot, majd minden bevétel- vagy "
-"költségsort a megfelelő kategóriában rögzítsen."
+"Hozzon létre egy aktív projektet, vagy szerkesszen egy meglévőt, és hagyja "
+"bekapcsolva az A projekt szerepeljen a Pénzügyekben beállítást."
 
 #: core/ui/help.py:583
 msgid ""
-"Enter every amount as a positive decimal. The category determines whether it "
-"contributes revenue or cost; net is calculated automatically."
+"Open Finance and choose the project under Enter a project year. The workbook "
+"reports are read-only."
 msgstr ""
-"Minden összeget pozitív tizedes számként adjon meg. A kategória határozza "
-"meg, hogy bevételhez vagy költséghez számít; a nettó eredmény automatikusan "
-"készül."
+"Nyissa meg a Pénzügyeket, és a Projektév rögzítése résznél válassza ki a "
+"projektet. A munkafüzet-kimutatások csak olvashatók."
 
 #: core/ui/help.py:586
 msgid ""
-"Review the month detail against source records, then lock the month when it "
-"is final. Reopen only for a genuine correction."
+"Type costs as negative amounts and revenues as positive amounts in the "
+"twelve-month grid. Never type a pre-calculated net value."
 msgstr ""
-"Vesse össze a hónap részleteit a forrásrekordokkal, majd végleges állapotban "
-"zárolja a hónapot. Csak valós javításhoz nyissa újra."
+"A tizenkét hónapos táblázatban a költségeket negatív, a bevételeket pozitív "
+"összegként adja meg. Soha ne írjon be előre kiszámított nettó értéket."
 
 #: core/ui/help.py:589
 msgid ""
-"Use the summary, yearly trend, and category breakdown to inspect the same "
-"underlying lines from different angles."
+"Select Save year once. Review the monthly and yearly reports, then lock a "
+"month when its figures are final."
 msgstr ""
-"Az összesítés, az éves trend és a kategóriabontás ugyanazokat az alapul "
-"szolgáló sorokat mutatja különböző nézőpontokból."
+"Egyszer válassza az Év mentése lehetőséget. Ellenőrizze a havi és éves "
+"kimutatásokat, majd zárolja a hónapot, amikor az adatai véglegesek."
 
 #: core/ui/help.py:592
 msgid "Locked periods are deliberate"
@@ -2784,12 +2783,13 @@ msgstr "A zárolt időszakok szándékosak"
 
 #: core/ui/help.py:594
 msgid ""
-"Do not type a negative cost or a pre-calculated net value. Locking prevents "
-"ordinary edits, and every reopen is an audited exception."
+"The project-year grid uses the workbook signs: costs are negative and "
+"revenues are positive. Locking prevents ordinary edits, and every reopen is "
+"an audited exception."
 msgstr ""
-"Ne írjon be negatív költséget vagy előre kiszámított nettó értéket. A "
-"zárolás megakadályozza a szokásos szerkesztést, minden újranyitás auditált "
-"kivétel."
+"A projektév táblázata a munkafüzet előjeleit használja: a költségek "
+"negatívak, a bevételek pozitívak. A zárolás megakadályozza a szokásos "
+"szerkesztést, minden újranyitás auditált kivétel."
 
 #: core/ui/help.py:600
 msgid ""
@@ -3031,8 +3031,8 @@ msgstr ""
 "Meghatározza az irányt: az előleg vagy levonás csökkenti a bért, a hozzáadás "
 "növeli. Az összeg mindkét esetben pozitív marad."
 
-#: core/ui/help.py:727 templates/pages/finance_project_year.html:26
-#: templates/pages/finance_workbook.html:22 templates/pages/ledger.html:34
+#: core/ui/help.py:727 templates/pages/finance_project_year.html:35
+#: templates/pages/finance_workbook.html:29 templates/pages/ledger.html:34
 #: templates/panels/advances_ledger.html:28
 #: templates/panels/blacklist_case.html:10
 #: templates/panels/blacklist_case.html:33
@@ -3434,7 +3434,7 @@ msgid "Audit access and append-only behavior protect the evidence trail."
 msgstr ""
 "Az Audit-hozzáférés és a csak hozzáfűzhető működés védi a bizonyítékláncot."
 
-#: core/ui/registry.py:211
+#: core/ui/registry.py:209
 msgid "After deductions"
 msgstr "Levonások után"
 
@@ -5381,7 +5381,7 @@ msgid "cost"
 msgstr "költség"
 
 #: features/profitability/models.py:49
-#: templates/pages/finance_project_year.html:30
+#: templates/pages/finance_project_year.html:39
 msgid "locked"
 msgstr "zárolva"
 
@@ -5467,37 +5467,37 @@ msgstr ""
 "A költségeket negatív, a bevételeket pozitív összegként kell megadni. "
 "Ellenőrizze: %(cells)s."
 
-#: features/profitability/views.py:225
+#: features/profitability/views.py:232
 msgid "Saved and recalculated."
 msgstr "Mentve és újraszámolva."
 
-#: features/profitability/views.py:227 features/profitability/views.py:278
-#: features/profitability/views.py:355
+#: features/profitability/views.py:234 features/profitability/views.py:285
+#: features/profitability/views.py:362
 msgid "Invalid input."
 msgstr "Érvénytelen bevitel."
 
-#: features/profitability/views.py:237
+#: features/profitability/views.py:244
 msgid "Month locked."
 msgstr "A hónap zárolva."
 
-#: features/profitability/views.py:248
+#: features/profitability/views.py:255
 msgid "Month reopened."
 msgstr "A hónap újranyitva."
 
-#: features/profitability/views.py:276
+#: features/profitability/views.py:283
 msgid "Financial month saved."
 msgstr "Pénzügyi hónap elmentve."
 
-#: features/profitability/views.py:361
+#: features/profitability/views.py:368
 #, python-format
 msgid "%(cells)s amounts saved across %(months)s month(s)."
 msgstr "%(cells)s összeg mentve %(months)s hónapban."
 
-#: features/profitability/views.py:368
+#: features/profitability/views.py:375
 msgid "Nothing changed."
 msgstr "Semmi nem változott."
 
-#: features/profitability/views.py:373
+#: features/profitability/views.py:380
 #, python-format
 msgid "Locked and left untouched: month(s) %(months)s. Reopen them to edit."
 msgstr ""
@@ -5656,6 +5656,33 @@ msgstr "Frissítések"
 #: templates/notifications/panel.html:113
 msgid "Nothing needs your attention right now."
 msgstr "Jelenleg semmi sem igényel figyelmet."
+
+#: templates/pages/_finance_project_prerequisite.html:3
+msgid "Create a finance-enabled project first"
+msgstr "Először hozzon létre egy Pénzügyekben szereplő projektet"
+
+#: templates/pages/_finance_project_prerequisite.html:5
+msgid ""
+"Finance is organised by project. Until an active project is included in "
+"Finance, there are no project columns or year grids for entering figures."
+msgstr ""
+"A Pénzügyek projektek szerint épül fel. Amíg nincs aktív projekt bevonva a "
+"Pénzügyekbe, nincsenek projektoszlopok vagy éves táblázatok az adatok "
+"rögzítéséhez."
+
+#: templates/pages/_finance_project_prerequisite.html:9
+#: templates/pages/dashboard.html:12 templates/pages/project_list.html:12
+#: templates/pages/reports.html:20
+msgid "New project"
+msgstr "Új projekt"
+
+#: templates/pages/_finance_project_prerequisite.html:10
+msgid "Leave “Include this project in Finance” enabled when creating it."
+msgstr "Létrehozáskor hagyja bekapcsolva az „A projekt szerepeljen a Pénzügyekben” beállítást."
+
+#: templates/pages/_finance_project_prerequisite.html:12
+msgid "Ask a manager to create an active project and include it in Finance."
+msgstr "Kérjen meg egy vezetőt, hogy hozzon létre egy aktív projektet, és vonja be a Pénzügyekbe."
 
 #: templates/pages/accommodation_costs.html:4
 msgid "Accommodation costs"
@@ -6215,11 +6242,6 @@ msgstr "Nincs megfelelőségi figyelmeztetés."
 msgid "Operational overview"
 msgstr "Üzemeltetési áttekintés"
 
-#: templates/pages/dashboard.html:12 templates/pages/project_list.html:12
-#: templates/pages/reports.html:20
-msgid "New project"
-msgstr "Új projekt"
-
 #: templates/pages/dashboard.html:16
 msgid "Operational summaries"
 msgstr "Üzemeltetési összesítők"
@@ -6335,7 +6357,7 @@ msgstr ""
 #: templates/pages/finance_summary.html:85
 #: templates/pages/finance_summary.html:97
 #: templates/pages/finance_summary.html:118
-#: templates/pages/finance_summary.html:143
+#: templates/pages/finance_summary.html:146
 #: templates/pages/finance_year.html:25
 #: templates/pages/transport_trends.html:51
 msgid "Company total"
@@ -6573,7 +6595,7 @@ msgstr "Exportálás"
 #: templates/pages/finance_summary.html:47
 #: templates/pages/finance_summary.html:60
 #: templates/pages/finance_summary.html:89
-#: templates/pages/finance_summary.html:147
+#: templates/pages/finance_summary.html:150
 #: templates/pages/finance_year.html:28 templates/pages/finance_year.html:41
 #: templates/pages/finance_year.html:86
 msgid "Net"
@@ -6612,13 +6634,13 @@ msgid "margin"
 msgstr "árrés"
 
 #: templates/pages/finance_executive.html:52
-#: templates/pages/finance_summary.html:157
+#: templates/pages/finance_summary.html:160
 #: templates/pages/finance_year.html:15
 msgid "Profit/loss by office"
 msgstr "Nyereség/veszteség irodánként"
 
 #: templates/pages/finance_executive.html:57
-#: templates/pages/finance_summary.html:162
+#: templates/pages/finance_summary.html:165
 msgid "Net result by office chart"
 msgstr "Nettó eredmény irodánként diagram"
 
@@ -6626,15 +6648,15 @@ msgstr "Nettó eredmény irodánként diagram"
 #: templates/pages/finance_executive.html:76
 #: templates/pages/finance_summary.html:91
 #: templates/pages/finance_summary.html:124
-#: templates/pages/finance_summary.html:149
-#: templates/pages/finance_summary.html:169
+#: templates/pages/finance_summary.html:152
+#: templates/pages/finance_summary.html:172
 #: templates/pages/finance_year.html:20 templates/pages/finance_year.html:63
 #: templates/pages/finance_year.html:88
 msgid "No financial months."
 msgstr "Nincs pénzügyi hónap."
 
 #: templates/pages/finance_executive.html:71
-#: templates/pages/finance_summary.html:144 templates/pages/finance_year.html:8
+#: templates/pages/finance_summary.html:147 templates/pages/finance_year.html:8
 msgid "Yearly results"
 msgstr "Éves eredmények"
 
@@ -6728,44 +6750,67 @@ msgid "Back to finance"
 msgstr "Vissza a pénzügyekhez"
 
 #: templates/pages/finance_project_year.html:14
+msgid "Data entry"
+msgstr "Adatrögzítés"
+
+#: templates/pages/finance_project_year.html:14
+#: templates/pages/finance_workbook.html:14
+msgid "Read-only report"
+msgstr "Csak olvasható kimutatás"
+
+#: templates/pages/finance_project_year.html:16
 #, python-format
 msgid ""
-"Twelve months for one project, summed from the months already recorded. "
-"Office: %(office)s."
+"This table covers all twelve months for one project. Office: %(office)s."
 msgstr ""
-"Egy projekt tizenkét hónapja, a már rögzített hónapokból összegezve. Iroda: "
+"Ez a táblázat egy projekt mind a tizenkét hónapját tartalmazza. Iroda: "
 "%(office)s."
 
-#: templates/pages/finance_project_year.html:15
+#: templates/pages/finance_project_year.html:17
 msgid ""
-"Type into a month to record it. Costs are entered as negative amounts and "
-"revenues as positive — the same signs as the workbook."
+"Type costs as negative amounts and revenues as positive amounts, then use "
+"Save year once."
 msgstr ""
-"Egy hónapot úgy rögzít, hogy beleír. A költségeket negatív, a bevételeket "
-"pozitív összegként adja meg — ugyanazokkal az előjelekkel, mint a "
-"munkafüzetben."
+"A költségeket negatív, a bevételeket pozitív összegként adja meg, majd "
+"egyszer használja az Év mentése lehetőséget."
 
-#: templates/pages/finance_project_year.html:55
-#: templates/pages/finance_workbook.html:40
+#: templates/pages/finance_project_year.html:17
+msgid "Your role may read these figures but cannot change them."
+msgstr "A szerepköre megtekintheti ezeket az adatokat, de nem módosíthatja őket."
+
+#: templates/pages/finance_project_year.html:21
+msgid ""
+"No months have been recorded yet. Blank cells are expected: entering a value "
+"and saving the year creates the corresponding monthly record."
+msgstr ""
+"Még egyetlen hónapot sem rögzítettek. Az üres cellák rendben vannak: egy "
+"érték megadása és az év mentése létrehozza a megfelelő havi rekordot."
+
+#: templates/pages/finance_project_year.html:21
+msgid "No months have been recorded for this project and year."
+msgstr "Ehhez a projekthez és évhez még nincs rögzített hónap."
+
+#: templates/pages/finance_project_year.html:64
+#: templates/pages/finance_workbook.html:47
 msgid "Total costs"
 msgstr "Összes költség"
 
-#: templates/pages/finance_project_year.html:60
-#: templates/pages/finance_workbook.html:52
+#: templates/pages/finance_project_year.html:69
+#: templates/pages/finance_workbook.html:59
 msgid "Total revenues"
 msgstr "Összes bevétel"
 
-#: templates/pages/finance_project_year.html:65
-#: templates/pages/finance_workbook.html:57
-#: templates/pages/finance_workbook.html:73
+#: templates/pages/finance_project_year.html:74
+#: templates/pages/finance_workbook.html:64
+#: templates/pages/finance_workbook.html:80
 msgid "Profit/loss"
 msgstr "Nyereség/veszteség"
 
-#: templates/pages/finance_project_year.html:74
+#: templates/pages/finance_project_year.html:83
 msgid "Save year"
 msgstr "Év mentése"
 
-#: templates/pages/finance_project_year.html:74
+#: templates/pages/finance_project_year.html:83
 msgid ""
 "Writes every changed amount into the month it belongs to and recalculates "
 "that month. A locked month is left untouched."
@@ -6773,7 +6818,7 @@ msgstr ""
 "Minden módosított összeget abba a hónapba ír, amelyikhez tartozik, és "
 "újraszámolja azt a hónapot. A lezárt hónapot érintetlenül hagyja."
 
-#: templates/pages/finance_project_year.html:79
+#: templates/pages/finance_project_year.html:88
 msgid ""
 "A month with no recorded figures shows as a dash rather than zero — an "
 "unrecorded month and a month that genuinely netted nothing are different "
@@ -6783,13 +6828,25 @@ msgstr ""
 "rögzített hónap és a ténylegesen nulla nettó eredményű hónap két különböző "
 "tény."
 
-#: templates/pages/finance_project_year.html:80
+#: templates/pages/finance_project_year.html:89
 msgid ""
 "The totals rows are computed from the categories above, so they are never "
 "typed in."
 msgstr ""
 "Az összesítő sorok a fenti kategóriákból számolódnak, ezért soha nem kell "
 "beírni őket."
+
+#: templates/pages/finance_project_year.html:92
+msgid "Finance categories are missing"
+msgstr "Hiányoznak a pénzügyi kategóriák"
+
+#: templates/pages/finance_project_year.html:93
+msgid ""
+"The finance category catalogue must be configured before figures can be "
+"entered. Ask an administrator to restore the catalogue."
+msgstr ""
+"Az adatok rögzítése előtt be kell állítani a pénzügyi kategóriák "
+"katalógusát. Kérjen meg egy rendszergazdát a katalógus visszaállítására."
 
 #: templates/pages/finance_summary.html:10
 msgid "Workbook view"
@@ -6849,10 +6906,19 @@ msgid "Per-project results"
 msgstr "Eredmények projektenként"
 
 #: templates/pages/finance_summary.html:132
+#: templates/pages/finance_year.html:95
 msgid "Enter a project year"
 msgstr "Projektév rögzítése"
 
-#: templates/pages/finance_summary.html:135
+#: templates/pages/finance_summary.html:134
+msgid ""
+"This is the table used for entering figures: choose a project, type across "
+"its twelve-month grid, then save the year."
+msgstr ""
+"Ebben a táblázatban rögzíthetők az adatok: válasszon projektet, töltse ki a "
+"tizenkét hónapos táblázatát, majd mentse az évet."
+
+#: templates/pages/finance_summary.html:137
 msgid ""
 "Open the twelve-month grid for this project: categories down, months across, "
 "and the amounts are typed straight into it."
@@ -6860,11 +6926,7 @@ msgstr ""
 "Megnyitja a projekt tizenkét hónapos táblázatát: kategóriák lefelé, hónapok "
 "vízszintesen, az összegeket közvetlenül ide írja be."
 
-#: templates/pages/finance_summary.html:137
-msgid "No project is eligible for financial reporting yet."
-msgstr "Egyetlen projekt sem jogosult még pénzügyi kimutatásra."
-
-#: templates/pages/finance_summary.html:156
+#: templates/pages/finance_summary.html:159
 #: templates/pages/finance_year.html:14
 msgid "Office roll-up"
 msgstr "Irodai összesítés"
@@ -6874,39 +6936,50 @@ msgstr "Irodai összesítés"
 msgid "Workbook"
 msgstr "Munkafüzet"
 
-#: templates/pages/finance_workbook.html:14
+#: templates/pages/finance_workbook.html:16
 msgid ""
-"Projects across, categories down — the layout of the source workbook. Costs "
-"are shown negative; every total is recomputed from the line items rather "
-"than carried over."
+"This workbook cannot be edited. Enter figures in a project’s year grid; "
+"select a project name below to open it."
 msgstr ""
-"A projektek oszlopokban, a kategóriák sorokban jelennek meg — a forrásként "
-"használt munkafüzet elrendezése szerint. A költségek negatív előjellel "
-"láthatók; minden összeg a tételsorokból kerül újraszámításra, nem átvett "
-"érték."
+"Ez a munkafüzet nem szerkeszthető. Az adatokat a projekt éves táblázatában "
+"rögzítse; megnyitásához válassza ki alább a projekt nevét."
 
-#: templates/pages/finance_workbook.html:32
-#: templates/pages/finance_workbook.html:71
+#: templates/pages/finance_workbook.html:19
+msgid ""
+"Projects run across and categories down, matching the source workbook. Costs "
+"are shown negative and every total is recomputed from the recorded line "
+"items."
+msgstr ""
+"A projektek vízszintesen, a kategóriák függőlegesen jelennek meg, a forrás "
+"munkafüzetével egyezően. A költségek negatívak, és minden összesítés a "
+"rögzített tételsorokból számolódik újra."
+
+#: templates/pages/finance_workbook.html:39
+#: templates/pages/finance_workbook.html:78
 msgid "Costs"
 msgstr "Költségek"
 
-#: templates/pages/finance_workbook.html:44
-#: templates/pages/finance_workbook.html:72
+#: templates/pages/finance_workbook.html:51
+#: templates/pages/finance_workbook.html:79
 msgid "Revenues"
 msgstr "Bevételek"
 
-#: templates/pages/finance_workbook.html:66
+#: templates/pages/finance_workbook.html:73
 msgid "By office"
 msgstr "Irodánként"
 
-#: templates/pages/finance_workbook.html:85
+#: templates/pages/finance_workbook.html:92
 msgid "No projects in scope for this period."
 msgstr "Ebben az időszakban nincs a hatókörbe tartozó projekt."
 
-#: templates/pages/finance_workbook.html:90
+#: templates/pages/finance_workbook.html:97
 #: templates/partials/ledger_activity.html:14
 msgid "Total"
 msgstr "Összesen"
+
+#: templates/pages/finance_workbook.html:106
+msgid "Finance project prerequisite"
+msgstr "A pénzügyi projekt előfeltétele"
 
 #: templates/pages/finance_year.html:37
 #, python-format
@@ -6916,6 +6989,10 @@ msgstr "Bevétel, költség és nettó havi bontásban %(year)s évben"
 #: templates/pages/finance_year.html:56
 msgid "Net result by project chart"
 msgstr "Nettó eredmény projektenkénti diagramja"
+
+#: templates/pages/finance_year.html:97
+msgid "Choose a project to enter or correct its figures for this year."
+msgstr "Válasszon projektet az idei adatok rögzítéséhez vagy javításához."
 
 #: templates/pages/goods_receipt_detail.html:4
 msgid "Goods receipt"
@@ -8677,6 +8754,72 @@ msgstr "A legutóbb frissített %(rail_limit)s látható."
 #: templates/partials/worker_rail_body.html:34
 msgid "Open People"
 msgstr "Emberek megnyitása"
+
+#~ msgid ""
+#~ "Choose the project and calendar month, then record each revenue or cost "
+#~ "line in its correct category."
+#~ msgstr ""
+#~ "Válassza ki a projektet és a naptári hónapot, majd minden bevétel- vagy "
+#~ "költségsort a megfelelő kategóriában rögzítsen."
+
+#~ msgid ""
+#~ "Enter every amount as a positive decimal. The category determines whether "
+#~ "it contributes revenue or cost; net is calculated automatically."
+#~ msgstr ""
+#~ "Minden összeget pozitív tizedes számként adjon meg. A kategória határozza "
+#~ "meg, hogy bevételhez vagy költséghez számít; a nettó eredmény "
+#~ "automatikusan készül."
+
+#~ msgid ""
+#~ "Review the month detail against source records, then lock the month when "
+#~ "it is final. Reopen only for a genuine correction."
+#~ msgstr ""
+#~ "Vesse össze a hónap részleteit a forrásrekordokkal, majd végleges "
+#~ "állapotban zárolja a hónapot. Csak valós javításhoz nyissa újra."
+
+#~ msgid ""
+#~ "Use the summary, yearly trend, and category breakdown to inspect the same "
+#~ "underlying lines from different angles."
+#~ msgstr ""
+#~ "Az összesítés, az éves trend és a kategóriabontás ugyanazokat az alapul "
+#~ "szolgáló sorokat mutatja különböző nézőpontokból."
+
+#~ msgid ""
+#~ "Do not type a negative cost or a pre-calculated net value. Locking "
+#~ "prevents ordinary edits, and every reopen is an audited exception."
+#~ msgstr ""
+#~ "Ne írjon be negatív költséget vagy előre kiszámított nettó értéket. A "
+#~ "zárolás megakadályozza a szokásos szerkesztést, minden újranyitás "
+#~ "auditált kivétel."
+
+#, python-format
+#~ msgid ""
+#~ "Twelve months for one project, summed from the months already recorded. "
+#~ "Office: %(office)s."
+#~ msgstr ""
+#~ "Egy projekt tizenkét hónapja, a már rögzített hónapokból összegezve. "
+#~ "Iroda: %(office)s."
+
+#~ msgid ""
+#~ "Type into a month to record it. Costs are entered as negative amounts and "
+#~ "revenues as positive — the same signs as the workbook."
+#~ msgstr ""
+#~ "Egy hónapot úgy rögzít, hogy beleír. A költségeket negatív, a bevételeket "
+#~ "pozitív összegként adja meg — ugyanazokkal az előjelekkel, mint a "
+#~ "munkafüzetben."
+
+#~ msgid "No project is eligible for financial reporting yet."
+#~ msgstr "Egyetlen projekt sem jogosult még pénzügyi kimutatásra."
+
+#~ msgid ""
+#~ "Projects across, categories down — the layout of the source workbook. "
+#~ "Costs are shown negative; every total is recomputed from the line items "
+#~ "rather than carried over."
+#~ msgstr ""
+#~ "A projektek oszlopokban, a kategóriák sorokban jelennek meg — a "
+#~ "forrásként használt munkafüzet elrendezése szerint. A költségek negatív "
+#~ "előjellel láthatók; minden összeg a tételsorokból kerül újraszámításra, "
+#~ "nem átvett érték."
 
 #~ msgid "Empty-bed loss"
 #~ msgstr "Üres ágyak vesztesége"
