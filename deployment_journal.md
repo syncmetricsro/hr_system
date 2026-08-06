@@ -1,5 +1,52 @@
 # Deployment Journal
 
+## 2026-08-06 - Current Finance Help deployed to Jober only
+
+Deployed exact `main` merge **`5402728`** to **`jober-staging` only** as
+`jober-platform:demo-5402728` (source image digest
+`sha256:2302b36c7169ae4331b1bb7391212eda30306ebd3182e9bc98ac230dad656fb3`),
+streamed through Dokku `git:load-image`. CorvinumEU was not redeployed because
+the changed article and image belong to Jober's profitability feature.
+
+The Finance Help article now distinguishes single-month entry from bulk
+project-year entry, explains their sign conventions, and follows the records
+through monthly and annual workbooks, the formula-free Excel export, locking,
+reopening and audit. The refreshed screenshot contains only the fictional
+Slovak demo and shows the current Workbook, CSV, Excel and Record-a-month
+controls.
+
+**No seed or account command ran.** Dokku found no predeploy, release or
+postdeploy task. The only database operation was `manage.py migrate --noinput`,
+which reported *No migrations to apply*. Structural counts were identical
+before and after the release:
+
+```
+users: 11  people: 0  projects: 0  financial_months: 0  audit_events: 11
+```
+
+This preserves the empty operational workspace requested by Jober. No row
+values were read or printed.
+
+Live verification: `check --deploy` found no issues; `migrate --check` exited
+cleanly; the Finance Help registry has seven workflow steps and covers summary,
+monthly workbook, annual workbook and project-year entry; and
+`help/screens/jober/finance.webp` returned HTTP 200 with WebP content and the
+expected 38,258-byte size. `deploy_smoke.sh --https` passed health, login/CSRF,
+fingerprinted static, X-Frame-Options and HSTS.
+
+Pre-deploy gates on `5402728`: Jober **1,159 passed / 16 skipped**,
+CorvinumEU **737 passed / 25 skipped / 271 deselected**, Playwright **72
+passed**; production build/static collection, dependency and vendor integrity,
+Ruff lint/format, Django checks, migration consistency, idempotent extraction
+and PO/MO synchronization all passed.
+
+Rollback target:
+
+```bash
+ssh syncmetric-prime-dokku \
+  "git:from-image jober-staging jober-platform:demo-30869c1"
+```
+
 ## 2026-08-06 - Empty Finance guidance, annual workbook and Excel export deployed to Jober only
 
 Deployed exact `main` merge **`30869c1`** to **`jober-staging` only** as

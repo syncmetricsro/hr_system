@@ -18,8 +18,8 @@
 - Full local gate: production build/static collection, dependency and vendor
   integrity, Ruff lint/format, Django checks, migration consistency, and both
   unit lanes passed: **Jober 1,159 passed / 16 skipped; CorvinumEU 737 passed /
-  25 skipped / 271 deselected.** Targeted capture: **2 passed**; the full
-  browser suite was not run.
+  25 skipped / 271 deselected.** Targeted capture: **2 passed**. Before staging
+  deployment, the full browser suite passed **72/72** in 176.97 seconds.
 
 ## 2026-08-06 - the Excel export is a scoped snapshot, not a calculator
 
