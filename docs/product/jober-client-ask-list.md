@@ -105,6 +105,37 @@ changes the legal basis (A1).
 **C4 · Finance period and P&L scope.** Whether the finance period is October or
 November 2025, and whether profit-and-loss opt-out is per project.
 
+**C5 · Should recruiters see the Reports page — and if not, where do they
+land?** Raised 2026-08-06: recruiters (`naborar`) are apparently not privy to
+what Reports shows.
+
+The straightforward reading is "hide the tab", and it is not that simple, so
+this needs deciding before it is built rather than after. **Reports is the page
+every role lands on after signing in**, and the logo in the corner of every
+screen goes back to it. Hiding it from recruiters therefore has to say where a
+recruiter goes instead, or they are refused at the door and again every time
+they click the logo.
+
+Worth knowing while you decide: the page is not only reports. It also carries
+the active-project and people counts, people-by-status, inactive-by-reason, the
+project-and-personnel list, and the compliance, occupancy and equipment-value
+tiles — and it is how a recruiter reaches the People list today.
+
+What we need from you:
+
+1. Should recruiters see Reports at all?
+2. If not, where should they land after signing in? **Our suggestion: the People
+   list** — it is the screen they work in all day, it is already limited to
+   their own office, and they can already open it.
+3. Does the same apply to coordinators, or to recruiters only?
+
+Managers and Observers are unaffected either way.
+
+*Not blocked on engineering.* Once the landing page is settled the change is
+small — a permission, a hidden tab, and a different destination for the logo and
+the sign-in redirect. Nothing has been built yet, deliberately: building the
+permission first would make the question rhetorical.
+
 ---
 
 ## What we are *not* waiting for
