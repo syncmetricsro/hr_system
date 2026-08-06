@@ -23,6 +23,11 @@ from PIL import Image, ImageOps
 OUT = Path(os.environ.get("HELP_SCREENS_DIR", "/app/static/help/screens"))
 JOBER_PASSWORD = "demo-jober-2026"
 CORVINUM_PASSWORD = "demo-corvinum-2026"
+CAPTURE_SLUGS = {
+    slug.strip()
+    for slug in os.environ.get("HELP_CAPTURE_SLUGS", "").split(",")
+    if slug.strip()
+}
 
 pytestmark = pytest.mark.skipif(
     not os.environ.get("E2E_PYTEST_ARGS", "").endswith("capture_help_screens.py"),
@@ -76,6 +81,8 @@ def _save_webps(page, *, namespace: str, slug: str) -> None:
 
 def _capture_routes(page, *, app_url: str, language: str, namespace: str, routes):
     for slug, route in routes:
+        if CAPTURE_SLUGS and slug not in CAPTURE_SLUGS:
+            continue
         page.goto(f"{app_url}/{language}{route}")
         page.wait_for_load_state("networkidle")
         assert page.locator("main").count() == 1, f"No main content at {page.url}"

@@ -1,5 +1,27 @@
 # Build Journal
 
+## 2026-08-06 - Finance Help follows both entry paths and every report
+
+Jober's in-app Finance article now matches the workflow on the deployed page.
+It begins with the empty-project prerequisite, distinguishes **Record a month**
+from the bulk **Enter a project year** grid, and calls out their deliberate sign
+conventions. The article then follows the same records through the read-only
+monthly and annual workbooks, the selected-year Excel snapshot, office scope,
+month locking and audited reopening.
+
+The first draft incorrectly called the project-year grid the only write path.
+Reviewing the refreshed image caught the still-supported single-month form, so
+the final boundary names all three write surfaces: month creation, month detail
+and project-year entry. Workbooks and downloaded Excel files remain derived
+reports and cannot write back to the application.
+
+The committed screenshot capture can now accept `HELP_CAPTURE_SLUGS`, allowing
+one stale article image to be regenerated through the same isolated,
+fictional-data workflow without rewriting every reviewed Help asset. Only the
+Jober Finance image and thumbnail were refreshed. All new Help text is reviewed
+in SK/HU/UK; safe extraction retained replaced wording as obsolete history and
+a second extraction produced no diff.
+
 ## 2026-08-06 - formula-free Excel snapshot with live charts
 
 The selected Finance year can now be downloaded as an office-scoped `.xlsx`.

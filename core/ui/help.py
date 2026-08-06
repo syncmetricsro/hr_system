@@ -565,36 +565,42 @@ HELP_GROUPS = [
                 "slug": "finance",
                 "title": _("Finance"),
                 "summary": _(
-                    "Record monthly project revenue and cost lines, lock periods, and read results."
+                    "Create one month or enter a project year, compare projects in read-only workbooks, and export a formula-free Excel snapshot."
                 ),
                 "icon": "finance",
                 "flags": ("profitability",),
                 "purpose": _(
-                    "Finance records project profitability from explicit monthly revenue and cost lines and derives every displayed total from those entries."
+                    "Finance keeps project profitability in monthly records and category line items. Managers can create one month or edit a project-year grid; the workbook, chart, and export surfaces are reporting views."
                 ),
                 "role_note": _(
-                    "Authorized finance readers may inspect reports. Recording, locking, reopening, and export actions require their configured permissions, with Manager approval where specified."
+                    "Managers enter, lock, reopen, and export finance data in their office scope. Observers inspect and export across offices. Other authenticated roles may read this article but cannot open Finance."
                 ),
                 "steps": (
                     _(
-                        "Create an active project, or edit an existing one, and keep Include this project in Finance enabled."
+                        "Create an active project and keep Include this project in Finance enabled. If no eligible project exists, Finance explains the prerequisite; Managers can follow New project from that empty state."
                     ),
                     _(
-                        "Open Finance and choose the project under Enter a project year. The workbook reports are read-only."
+                        "For one period, use Record a month and enter Revenue and Cost as positive totals. Then open that month, enter detailed costs as negative amounts and revenues as positive amounts, and use Save & recalculate; the category lines become the derived totals."
                     ),
                     _(
-                        "Type costs as negative amounts and revenues as positive amounts in the twelve-month grid. Never type a pre-calculated net value."
+                        "For bulk entry, select a project under Enter a project year. Type costs as negative amounts and revenues as positive amounts across the twelve-month grid, then use Save year once. Blank new months become monthly records; locked months stay untouched."
                     ),
                     _(
-                        "Select Save year once. Review the monthly and yearly reports, then lock a month when its figures are final."
+                        "Open Workbook view to compare categories down and projects across for one month. It is read-only, and each project heading links back to that project's editable year grid."
                     ),
                     _(
-                        "Use Export Excel for a formula-free snapshot with the yearly project grid, twelve-month summary, office totals, and live charts."
+                        "Select View whole year from the monthly workbook to sum all twelve months. The annual workbook stays read-only, retains eligible project columns even when they have no entries, and shows office subtotals and the grand total."
+                    ),
+                    _(
+                        "Use Export Excel for the selected year. The download contains Year and Months sheets, office-scoped totals, and live monthly-trend and net-by-project charts. It contains values, not worksheet formulas."
+                    ),
+                    _(
+                        "Review the derived results, then lock a month when its figures are final. Reopening a locked month requires a reason and creates an audit event."
                     ),
                 ),
-                "warning_title": _("Locked periods are deliberate"),
+                "warning_title": _("One source of truth, enforced scope"),
                 "warning": _(
-                    "The project-year grid uses the workbook signs: costs are negative and revenues are positive. Locking prevents ordinary edits, and every reopen is an audited exception."
+                    "Record a month, month detail, and the project-year grid are write surfaces. Workbooks and Excel files are derived snapshots, so changing a downloaded file cannot change the application. Readers and exports receive only their permitted office scope."
                 ),
                 "screenshots": (
                     _screen(
@@ -602,14 +608,21 @@ HELP_GROUPS = [
                         _(
                             "The Finance workspace with fictional monthly revenue, costs, and derived results."
                         ),
-                        _("Period and project controls select the financial slice."),
                         _(
-                            "Totals and charts are derived from the recorded line items."
+                            "Record a month creates one period; Enter a project year provides bulk entry farther down the page."
+                        ),
+                        _(
+                            "Workbook and export actions report the same line items without creating another write path."
                         ),
                     ),
                 ),
                 "related": ("projects", "reports", "audit"),
-                "covers": ("finance_summary",),
+                "covers": (
+                    "finance_summary",
+                    "finance_workbook",
+                    "finance_workbook_year",
+                    "finance_project_year",
+                ),
             },
             {
                 "slug": "feedback",

@@ -15,7 +15,11 @@ cd "$(dirname "$0")/.."
 export E2E_PYTEST_ARGS="tests/e2e/capture_help_screens.py"
 export HELP_SCREENS_DIR="${HELP_SCREENS_DIR:-/app/static/help/screens}"
 
-echo "Capturing Jober SK and Corvinum HU Help screenshots from fictional seeds ..."
+if [[ -n "${HELP_CAPTURE_SLUGS:-}" ]]; then
+  echo "Capturing selected Help screenshots (${HELP_CAPTURE_SLUGS}) from fictional seeds ..."
+else
+  echo "Capturing Jober SK and Corvinum HU Help screenshots from fictional seeds ..."
+fi
 scripts/playwright_e2e.sh "$@"
 
 echo
