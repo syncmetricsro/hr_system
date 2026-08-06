@@ -1,5 +1,26 @@
 # Test Journal
 
+## 2026-08-06 - Finance Help names what writes and what only reports
+
+- The Finance article regression renders the English Help page and requires the
+  single-month path, its positive summary inputs, the bulk year path, annual
+  workbook, two-sheet formula-free export and no-write-back boundary.
+- Route metadata covers the summary, monthly workbook, annual workbook and
+  project-year grid; the existing exact-topic and unsupported-client checks
+  continue to keep Finance out of Corvinum.
+- The targeted capture job ran both capture cases but rewrote only
+  `jober/finance.webp` and its thumbnail. Both images were manually reviewed:
+  fictional Slovak data only, current Workbook/CSV/Excel controls visible, and
+  no credentials, logs or restricted records.
+- Translation extraction reports **1,713 active / 1,713 translated / 0 fuzzy**
+  for each of SK/HU/UK, with replaced Help text retained as obsolete history.
+  A second extraction was idempotent and PO/MO synchronization passed.
+- Full local gate: production build/static collection, dependency and vendor
+  integrity, Ruff lint/format, Django checks, migration consistency, and both
+  unit lanes passed: **Jober 1,159 passed / 16 skipped; CorvinumEU 737 passed /
+  25 skipped / 271 deselected.** Targeted capture: **2 passed**; the full
+  browser suite was not run.
+
 ## 2026-08-06 - the Excel export is a scoped snapshot, not a calculator
 
 - A Manager's generated workbook is opened as OOXML and asserted to contain

@@ -132,6 +132,7 @@ docker run --rm --network "$NET" \
   -e CORVINUM_BASE_URL="http://$CORVINUM_APP:8000" \
   -e E2E_PYTEST_ARGS="${E2E_PYTEST_ARGS:-}" \
   -e HELP_SCREENS_DIR="${HELP_SCREENS_DIR:-}" \
+  -e HELP_CAPTURE_SLUGS="${HELP_CAPTURE_SLUGS:-}" \
   -v "$PWD/static/help:/app/static/help" \
   --user "$(id -u):$(id -g)" \
   "$PLAYWRIGHT_TEST_IMAGE" sh -eu -c '

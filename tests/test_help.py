@@ -193,3 +193,34 @@ def test_every_visible_navigation_workflow_has_help_coverage():
 def test_base_english_content_remains_available():
     with translation.override("en"):
         assert str(available_articles()[0]["title"]) == "Getting started"
+
+
+@pytest.mark.jober_only
+def test_finance_help_describes_the_current_write_and_reporting_surfaces(
+    client, reader
+):
+    client.force_login(reader)
+    response = client.get("/en/help/finance/")
+
+    assert response.status_code == 200
+    body = response.content.decode()
+    for expected in (
+        "Record a month",
+        "Revenue and Cost as positive totals",
+        "For bulk entry",
+        "View whole year",
+        "Year and Months sheets",
+        "values, not worksheet formulas",
+        "changing a downloaded file cannot change the application",
+    ):
+        assert expected in body
+
+    finance = next(
+        article for article in available_articles() if article["slug"] == "finance"
+    )
+    assert {
+        "finance_summary",
+        "finance_workbook",
+        "finance_workbook_year",
+        "finance_project_year",
+    } <= set(finance["covers"])

@@ -137,7 +137,7 @@ msgstr "Ugrás a tartalomra"
 #: clients/corvinum_eu/templates/layouts/base.html:39
 #: clients/corvinum_eu/templates/layouts/base.html:72
 #: templates/layouts/base.html:20 templates/layouts/base.html:46
-#: templates/pages/finance_summary.html:8 templates/pages/reports.html:4
+#: templates/pages/finance_summary.html:9 templates/pages/reports.html:4
 #: templates/pages/reports.html:9 templates/pages/reports.html:24
 msgid "Reports"
 msgstr "Jelentések"
@@ -184,18 +184,18 @@ msgstr "Műveletek"
 msgid "Compliance"
 msgstr "Megfelelőség"
 
-#: clients/corvinum_eu/templates/layouts/base.html:53 core/ui/help.py:663
+#: clients/corvinum_eu/templates/layouts/base.html:53 core/ui/help.py:676
 #: templates/layouts/base.html:67 templates/pages/ledger.html:8
 msgid "Ledger"
 msgstr "Főkönyv"
 
-#: clients/corvinum_eu/templates/layouts/base.html:56 core/ui/help.py:767
+#: clients/corvinum_eu/templates/layouts/base.html:56 core/ui/help.py:780
 #: templates/layouts/base.html:70 templates/pages/payslips.html:4
 #: templates/pages/payslips.html:9
 msgid "Payslips"
 msgstr "Bérlapok"
 
-#: clients/corvinum_eu/templates/layouts/base.html:59 core/ui/help.py:851
+#: clients/corvinum_eu/templates/layouts/base.html:59 core/ui/help.py:864
 #: templates/pages/wages.html:4 templates/pages/wages.html:9
 msgid "Gross wages"
 msgstr "Bruttó bérek"
@@ -253,7 +253,7 @@ msgstr "Súgó"
 msgid "Staff activity"
 msgstr "Munkatársi tevékenység"
 
-#: clients/corvinum_eu/templates/layouts/base.html:77 core/ui/help.py:925
+#: clients/corvinum_eu/templates/layouts/base.html:77 core/ui/help.py:938
 #: templates/layouts/base.html:51
 msgid "Audit"
 msgstr "Audit"
@@ -852,8 +852,8 @@ msgid "Notification is not available."
 msgstr "Az értesítés nem érhető el."
 
 #: core/offices/context_processors.py:57
-#: templates/pages/finance_executive.html:22
-#: templates/pages/finance_executive.html:52
+#: templates/pages/finance_executive.html:25
+#: templates/pages/finance_executive.html:55
 msgid "All offices"
 msgstr "Minden iroda"
 
@@ -1204,7 +1204,7 @@ msgstr "Csak elérhető jelöltek ütemezhetők."
 
 #: core/projects/forms.py:31 core/projects/forms.py:55
 #: features/profitability/exports.py:309 templates/pages/feedback_inbox.html:32
-#: templates/pages/finance_summary.html:23
+#: templates/pages/finance_summary.html:26
 #: templates/pages/person_detail.html:61 templates/pages/person_detail.html:81
 #: templates/pages/project_detail.html:8
 #: templates/pages/transport_trends.html:31
@@ -1703,7 +1703,7 @@ msgid "Week"
 msgstr "Hét"
 
 #: core/reporting/periods.py:47 features/profitability/exports.py:292
-#: templates/pages/finance_summary.html:31
+#: templates/pages/finance_summary.html:34
 #: templates/partials/ledger_cycle.html:8
 #: templates/partials/period_filter.html:32
 msgid "Month"
@@ -1715,7 +1715,7 @@ msgstr "Több hónap"
 
 #: core/reporting/periods.py:49 features/profitability/exports.py:187
 #: templates/pages/finance_project_year.html:42
-#: templates/pages/finance_summary.html:28
+#: templates/pages/finance_summary.html:31
 #: templates/partials/ledger_cycle.html:5
 #: templates/partials/period_filter.html:43
 #: templates/partials/period_filter.html:57
@@ -2122,9 +2122,9 @@ msgstr ""
 
 #: core/ui/help.py:248 core/ui/help.py:255 core/ui/help.py:262
 #: core/ui/help.py:269 core/ui/help.py:276 core/ui/help.py:283
-#: core/ui/help.py:713 core/ui/help.py:720 core/ui/help.py:727
-#: core/ui/help.py:734 core/ui/help.py:741 core/ui/help.py:751
-#: core/ui/help.py:759
+#: core/ui/help.py:726 core/ui/help.py:733 core/ui/help.py:740
+#: core/ui/help.py:747 core/ui/help.py:754 core/ui/help.py:764
+#: core/ui/help.py:772
 msgid "Coordinator or Manager"
 msgstr "Koordinátor vagy menedzser"
 
@@ -2191,9 +2191,9 @@ msgstr ""
 "kerül."
 
 #: core/ui/help.py:290 core/ui/help.py:300 core/ui/help.py:307
-#: core/ui/help.py:815 core/ui/help.py:822 core/ui/help.py:829
-#: core/ui/help.py:836 core/ui/help.py:843 core/ui/help.py:896
-#: core/ui/help.py:903 core/ui/help.py:910 core/ui/help.py:917
+#: core/ui/help.py:828 core/ui/help.py:835 core/ui/help.py:842
+#: core/ui/help.py:849 core/ui/help.py:856 core/ui/help.py:909
+#: core/ui/help.py:916 core/ui/help.py:923 core/ui/help.py:930
 #: templates/pages/person_detail.html:76
 msgid "Manager"
 msgstr "Menedzser"
@@ -2710,102 +2710,144 @@ msgstr ""
 # --- finance ---
 #: core/ui/help.py:566 templates/layouts/base.html:64
 #: templates/pages/finance_executive.html:4
-#: templates/pages/finance_executive.html:9
+#: templates/pages/finance_executive.html:10
 #: templates/pages/finance_month_detail.html:8
 #: templates/pages/finance_month_detail.html:39
 #: templates/pages/finance_project_year.html:8
 #: templates/pages/finance_summary.html:4
-#: templates/pages/finance_summary.html:9
-#: templates/pages/finance_summary.html:132
+#: templates/pages/finance_summary.html:10
+#: templates/pages/finance_summary.html:135
 #: templates/pages/finance_workbook.html:8
 #: templates/pages/finance_workbook_year.html:8
-#: templates/pages/finance_year.html:4 templates/pages/finance_year.html:8
-#: templates/pages/finance_year.html:96
+#: templates/pages/finance_year.html:4 templates/pages/finance_year.html:9
+#: templates/pages/finance_year.html:99
 msgid "Finance"
 msgstr "Pénzügyek"
 
 #: core/ui/help.py:568
 msgid ""
-"Record monthly project revenue and cost lines, lock periods, and read "
-"results."
+"Create one month or enter a project year, compare projects in read-only "
+"workbooks, and export a formula-free Excel snapshot."
 msgstr ""
-"Havi projektbevétel- és költségsorok rögzítése, időszakok zárolása és "
-"eredmények értelmezése."
+"Hozzon létre egy hónapot vagy rögzítsen egy projektévet, hasonlítsa össze a "
+"projekteket csak olvasható munkafüzetekben, és exportáljon képletek nélküli "
+"Excel-pillanatképet."
 
 #: core/ui/help.py:573
 msgid ""
-"Finance records project profitability from explicit monthly revenue and cost "
-"lines and derives every displayed total from those entries."
+"Finance keeps project profitability in monthly records and category line "
+"items. Managers can create one month or edit a project-year grid; the "
+"workbook, chart, and export surfaces are reporting views."
 msgstr ""
-"A Pénzügy explicit havi bevétel- és költségsorokból rögzíti a projekt "
-"jövedelmezőségét, és minden megjelenített összesítést ezekből vezet le."
+"A Pénzügyek havi rekordokban és kategóriatételekben tartja nyilván a projektek "
+"jövedelmezőségét. A menedzserek létrehozhatnak egy hónapot vagy szerkeszthetik "
+"a projektév-rácsot; a munkafüzetek, diagramok és exportok jelentésnézetek."
 
 #: core/ui/help.py:576
 msgid ""
-"Authorized finance readers may inspect reports. Recording, locking, "
-"reopening, and export actions require their configured permissions, with "
-"Manager approval where specified."
+"Managers enter, lock, reopen, and export finance data in their office scope. "
+"Observers inspect and export across offices. Other authenticated roles may "
+"read this article but cannot open Finance."
 msgstr ""
-"A jogosult pénzügyi olvasók megtekinthetik a kimutatásokat. A rögzítéshez, "
-"zároláshoz, újranyitáshoz és exporthoz a beállított jogosultság kell, ahol "
-"előírt, vezetői jóváhagyással."
+"A menedzserek a saját irodai hatáskörükben rögzítik, zárolják, újranyitják "
+"és exportálják a pénzügyi adatokat. A megfigyelők az összes iroda adatait "
+"ellenőrzik és exportálják. Más bejelentkezett szerepkörök elolvashatják ezt "
+"a cikket, de nem nyithatják meg a Pénzügyeket."
 
 #: core/ui/help.py:580
 msgid ""
-"Create an active project, or edit an existing one, and keep Include this "
-"project in Finance enabled."
+"Create an active project and keep Include this project in Finance enabled. "
+"If no eligible project exists, Finance explains the prerequisite; Managers "
+"can follow New project from that empty state."
 msgstr ""
-"Hozzon létre egy aktív projektet, vagy szerkesszen egy meglévőt, és hagyja "
-"bekapcsolva az A projekt szerepeljen a Pénzügyekben beállítást."
+"Hozzon létre aktív projektet, és hagyja bekapcsolva A projekt szerepeljen a "
+"Pénzügyekben beállítást. Ha nincs megfelelő projekt, a Pénzügyek ismerteti "
+"az előfeltételt; a menedzserek ebből az üres állapotból az Új projekt "
+"hivatkozást követhetik."
 
 #: core/ui/help.py:583
 msgid ""
-"Open Finance and choose the project under Enter a project year. The workbook "
-"reports are read-only."
+"For one period, use Record a month and enter Revenue and Cost as positive "
+"totals. Then open that month, enter detailed costs as negative amounts and "
+"revenues as positive amounts, and use Save & recalculate; the category lines "
+"become the derived totals."
 msgstr ""
-"Nyissa meg a Pénzügyeket, és a Projektév rögzítése résznél válassza ki a "
-"projektet. A munkafüzet-kimutatások csak olvashatók."
+"Egy időszakhoz használja a Hónap rögzítése lehetőséget, és a Bevétel és "
+"Költség mezőbe pozitív összesítést írjon. Ezután nyissa meg a hónapot, a "
+"részletes költségeket negatív, a bevételeket pozitív összegként adja meg, majd "
+"használja a Mentés és újraszámolás gombot; a kategóriatételekből származnak az "
+"összesítések."
 
 #: core/ui/help.py:586
 msgid ""
-"Type costs as negative amounts and revenues as positive amounts in the "
-"twelve-month grid. Never type a pre-calculated net value."
+"For bulk entry, select a project under Enter a project year. Type costs as "
+"negative amounts and revenues as positive amounts across the twelve-month "
+"grid, then use Save year once. Blank new months become monthly records; "
+"locked months stay untouched."
 msgstr ""
-"A tizenkét hónapos táblázatban a költségeket negatív, a bevételeket pozitív "
-"összegként adja meg. Soha ne írjon be előre kiszámított nettó értéket."
+"Tömeges rögzítéshez válasszon projektet a Projektév rögzítése alatt. A "
+"tizenkét havi rácson a költségeket negatív, a bevételeket pozitív összegként "
+"írja be, majd egyszer használja az Év mentése gombot. Az üres új hónapok havi "
+"rekordokká válnak; a zárolt hónapok érintetlenek maradnak."
 
 #: core/ui/help.py:589
 msgid ""
-"Select Save year once. Review the monthly and yearly reports, then lock a "
-"month when its figures are final."
+"Open Workbook view to compare categories down and projects across for one "
+"month. It is read-only, and each project heading links back to that "
+"project's editable year grid."
 msgstr ""
-"Egyszer válassza az Év mentése lehetőséget. Ellenőrizze a havi és éves "
-"kimutatásokat, majd zárolja a hónapot, amikor az adatai véglegesek."
+"Nyissa meg a Munkafüzet nézetet, hogy egy hónap kategóriáit sorokban, "
+"projektjeit pedig oszlopokban hasonlítsa össze. A nézet csak olvasható, és "
+"minden projektfejléc visszavezet az adott projekt szerkeszthető éves rácsára."
 
 #: core/ui/help.py:592
 msgid ""
-"Use Export Excel for a formula-free snapshot with the yearly project grid, "
-"twelve-month summary, office totals, and live charts."
+"Select View whole year from the monthly workbook to sum all twelve months. "
+"The annual workbook stays read-only, retains eligible project columns even "
+"when they have no entries, and shows office subtotals and the grand total."
 msgstr ""
-"Az Excel exportálása funkcióval képletek nélküli pillanatképet készíthet az "
-"éves projekttáblával, a tizenkét havi összesítéssel, az irodai "
-"összesítésekkel és az élő diagramokkal."
+"A havi munkafüzetben válassza a Teljes év megtekintése lehetőséget mind a "
+"tizenkét hónap összesítéséhez. Az éves munkafüzet csak olvasható marad, "
+"bejegyzés nélkül is megtartja a megfelelő projektek oszlopait, valamint "
+"megjeleníti az irodai részösszegeket és a végösszeget."
 
 #: core/ui/help.py:595
-msgid "Locked periods are deliberate"
-msgstr "A zárolt időszakok szándékosak"
-
-#: core/ui/help.py:597
 msgid ""
-"The project-year grid uses the workbook signs: costs are negative and "
-"revenues are positive. Locking prevents ordinary edits, and every reopen is "
-"an audited exception."
+"Use Export Excel for the selected year. The download contains Year and "
+"Months sheets, office-scoped totals, and live monthly-trend and net-by-"
+"project charts. It contains values, not worksheet formulas."
 msgstr ""
-"A projektév táblázata a munkafüzet előjeleit használja: a költségek "
-"negatívak, a bevételek pozitívak. A zárolás megakadályozza a szokásos "
-"szerkesztést, minden újranyitás auditált kivétel."
+"A kiválasztott évhez használja az Excel exportálása lehetőséget. A letöltés "
+"Év és Hónapok munkalapokat, az irodai hatáskör szerinti összesítéseket, "
+"valamint élő havi trend- és projektenkénti nettódiagramokat tartalmaz. "
+"Értékeket tartalmaz, nem munkalapképleteket."
+
+#: core/ui/help.py:598
+msgid ""
+"Review the derived results, then lock a month when its figures are final. "
+"Reopening a locked month requires a reason and creates an audit event."
+msgstr ""
+"Ellenőrizze a származtatott eredményeket, majd zárolja a hónapot, amikor az "
+"adatai véglegesek. Zárolt hónap újranyitásához indoklás szükséges, és a "
+"művelet audit eseményt hoz létre."
+
+#: core/ui/help.py:601
+msgid "One source of truth, enforced scope"
+msgstr "Egyetlen hiteles adatforrás, kikényszerített hatáskör"
 
 #: core/ui/help.py:603
+msgid ""
+"Record a month, month detail, and the project-year grid are write surfaces. "
+"Workbooks and Excel files are derived snapshots, so changing a downloaded "
+"file cannot change the application. Readers and exports receive only their "
+"permitted office scope."
+msgstr ""
+"A Hónap rögzítése, a hónap részletei és a projektév-rács írási felületek. A "
+"munkafüzetek és Excel-fájlok származtatott pillanatképek, ezért a letöltött "
+"fájl módosítása nem változtatja meg az alkalmazást. Az olvasók és az exportok "
+"csak az engedélyezett irodai hatáskört kapják meg."
+
+#: core/ui/help.py:609
 msgid ""
 "The Finance workspace with fictional monthly revenue, costs, and derived "
 "results."
@@ -2813,27 +2855,35 @@ msgstr ""
 "A Pénzügy munkaterület fiktív havi bevétellel, költségekkel és számított "
 "eredményekkel."
 
-#: core/ui/help.py:605
-msgid "Period and project controls select the financial slice."
-msgstr "Az időszak- és projektvezérlők választják ki a pénzügyi metszetet."
+#: core/ui/help.py:612
+msgid ""
+"Record a month creates one period; Enter a project year provides bulk entry "
+"farther down the page."
+msgstr ""
+"A Hónap rögzítése egy időszakot hoz létre; a Projektév rögzítése tömeges "
+"adatbevitelt biztosít lejjebb az oldalon."
 
-#: core/ui/help.py:607
-msgid "Totals and charts are derived from the recorded line items."
-msgstr "Az összesítések és diagramok a rögzített tételsorokból származnak."
+#: core/ui/help.py:615
+msgid ""
+"Workbook and export actions report the same line items without creating "
+"another write path."
+msgstr ""
+"A munkafüzet és az exportálási műveletek ugyanazokat a tételsorokat mutatják "
+"be, újabb írási útvonal létrehozása nélkül."
 
 # --- feedback ---
-#: core/ui/help.py:616 templates/layouts/base.html:73
+#: core/ui/help.py:629 templates/layouts/base.html:73
 #: templates/pages/feedback_form.html:8 templates/pages/feedback_form.html:27
 msgid "Feedback"
 msgstr "Visszajelzés"
 
-#: core/ui/help.py:618
+#: core/ui/help.py:631
 msgid "Create public links and QR flyers, then review anonymous submissions."
 msgstr ""
 "Nyilvános hivatkozások és QR-szórólapok létrehozása, majd anonim beküldések "
 "áttekintése."
 
-#: core/ui/help.py:623
+#: core/ui/help.py:636
 msgid ""
 "Feedback gives workers a public, account-free way to submit a message "
 "through a controlled link or printed QR flyer."
@@ -2841,7 +2891,7 @@ msgstr ""
 "A Visszajelzés nyilvános, fiók nélküli módot ad a munkavállalóknak üzenet "
 "beküldésére ellenőrzött hivatkozáson vagy nyomtatott QR-szórólapon át."
 
-#: core/ui/help.py:626
+#: core/ui/help.py:639
 msgid ""
 "Managers create links and review the inbox. The submission form is public to "
 "anyone holding the token; Help itself remains authenticated."
@@ -2850,7 +2900,7 @@ msgstr ""
 "üzeneteket. A beküldő űrlap nyilvános minden tokenbirtokosnak; maga a Súgó "
 "bejelentkezéshez kötött."
 
-#: core/ui/help.py:630
+#: core/ui/help.py:643
 msgid ""
 "Create a clearly labelled feedback link and optionally connect it to the "
 "relevant project."
@@ -2858,7 +2908,7 @@ msgstr ""
 "Hozzon létre egyértelműen elnevezett visszajelzési hivatkozást, és szükség "
 "esetén kapcsolja a megfelelő projekthez."
 
-#: core/ui/help.py:633
+#: core/ui/help.py:646
 msgid ""
 "Share the generated URL or download the one-page QR flyer for printing. "
 "Retire a distribution point by controlling where its token is published."
@@ -2867,7 +2917,7 @@ msgstr ""
 "szórólapot. Egy terjesztési pont megszüntetéséhez szabályozza, hol jelenik "
 "meg a tokenje."
 
-#: core/ui/help.py:636
+#: core/ui/help.py:649
 msgid ""
 "A worker opens the public form, writes a message, and may add a rating "
 "without creating an account."
@@ -2875,7 +2925,7 @@ msgstr ""
 "A munkavállaló megnyitja a nyilvános űrlapot, üzenetet ír, és fiók "
 "létrehozása nélkül értékelést is adhat."
 
-#: core/ui/help.py:639
+#: core/ui/help.py:652
 msgid ""
 "Managers review the newest submissions in the inbox and handle them under "
 "the agreed retention and escalation process."
@@ -2883,11 +2933,11 @@ msgstr ""
 "A vezetők a legújabb beküldéseket a beérkezett üzenetek között tekintik át, "
 "és az elfogadott megőrzési és eszkalációs folyamat szerint kezelik."
 
-#: core/ui/help.py:642
+#: core/ui/help.py:655
 msgid "Public token, limited purpose"
 msgstr "Nyilvános token, korlátozott cél"
 
-#: core/ui/help.py:644
+#: core/ui/help.py:657
 msgid ""
 "Anyone with the link can submit. Do not ask workers to include identity "
 "documents, medical details, credentials, or other unnecessary sensitive "
@@ -2897,30 +2947,30 @@ msgstr ""
 "személyazonosító okmányt, egészségügyi adatot, belépési adatot vagy más "
 "szükségtelen érzékeny információt írjanak szabad szövegbe."
 
-#: core/ui/help.py:650
+#: core/ui/help.py:663
 msgid ""
 "The Feedback inbox with fictional submissions and link-management controls."
 msgstr ""
 "A Visszajelzés beérkező nézete fiktív beküldésekkel és hivatkozáskezelő "
 "vezérlőkkel."
 
-#: core/ui/help.py:652
+#: core/ui/help.py:665
 msgid "Link and QR controls create the public entry point."
 msgstr "A hivatkozás- és QR-vezérlők hozzák létre a nyilvános belépési pontot."
 
-#: core/ui/help.py:654
+#: core/ui/help.py:667
 msgid "The authenticated inbox is where Managers review submissions."
 msgstr ""
 "A vezetők a bejelentkezéshez kötött beérkező nézetben tekintik át a "
 "beküldéseket."
 
-#: core/ui/help.py:665
+#: core/ui/help.py:678
 msgid ""
 "Record advances, additions, deductions, reversals, and settlement cycles."
 msgstr ""
 "Előlegek, jóváírások, levonások, sztornók és elszámolási ciklusok rögzítése."
 
-#: core/ui/help.py:670
+#: core/ui/help.py:683
 msgid ""
 "The ledger records explicit pay additions and deductions, groups them into "
 "settlement cycles, and preserves corrections as history."
@@ -2928,7 +2978,7 @@ msgstr ""
 "A nyilvántartás explicit bérjóváírásokat és -levonásokat rögzít, elszámolási "
 "ciklusokba csoportosítja őket, a javításokat pedig előzményként megőrzi."
 
-#: core/ui/help.py:673
+#: core/ui/help.py:686
 msgid ""
 "Authorized readers can inspect cycles. Entry, cancellation, reversal, "
 "settlement, and export each require the corresponding ledger or export "
@@ -2938,7 +2988,7 @@ msgstr ""
 "elszámolás és export mind a megfelelő nyilvántartási vagy "
 "exportjogosultságot igényli."
 
-#: core/ui/help.py:677
+#: core/ui/help.py:690
 msgid ""
 "Record the person, optional project, entry type, category, positive amount, "
 "and a concise note."
@@ -2946,7 +2996,7 @@ msgstr ""
 "Rögzítse a személyt, az opcionális projektet, a tételtípust, kategóriát, "
 "pozitív összeget és rövid megjegyzést."
 
-#: core/ui/help.py:680
+#: core/ui/help.py:693
 msgid ""
 "Review the current Thursday summary and select the intended 20th-to-20th "
 "cycle before including entries."
@@ -2954,7 +3004,7 @@ msgstr ""
 "A tételek bevonása előtt ellenőrizze az aktuális csütörtöki összesítést, és "
 "válassza ki a kívánt 20-ától 20-áig tartó ciklust."
 
-#: core/ui/help.py:683
+#: core/ui/help.py:696
 msgid ""
 "Correct a mistake by cancelling or reversing the original entry with a "
 "reason; never overwrite financial history."
@@ -2962,7 +3012,7 @@ msgstr ""
 "A hibát az eredeti tétel indokolt törlésével vagy sztornózásával javítsa; "
 "pénzügyi előzményt soha ne írjon felül."
 
-#: core/ui/help.py:686
+#: core/ui/help.py:699
 msgid ""
 "After the external deduction process is complete, mark the included cycle "
 "settled and use the approved CSV export when needed."
@@ -2970,11 +3020,11 @@ msgstr ""
 "A külső levonási folyamat befejezése után jelölje elszámoltnak a bevont "
 "ciklust, és szükség esetén használja a jóváhagyott CSV-exportot."
 
-#: core/ui/help.py:689
+#: core/ui/help.py:702
 msgid "Positive amounts, explicit pay effect"
 msgstr "Pozitív összegek, egyértelmű bérhatás"
 
-#: core/ui/help.py:691
+#: core/ui/help.py:704
 msgid ""
 "The entry type controls whether an amount adds to or deducts from pay. This "
 "ledger records source adjustments; it does not calculate statutory payroll."
@@ -2983,7 +3033,7 @@ msgstr ""
 "belőle. Ez a nyilvántartás forráskorrekciókat rögzít; törvényes "
 "bérszámfejtést nem végez."
 
-#: core/ui/help.py:697
+#: core/ui/help.py:710
 msgid ""
 "The ledger workspace with fictional entries, cycle controls, and settlement "
 "summaries."
@@ -2991,18 +3041,18 @@ msgstr ""
 "A nyilvántartási munkaterület fiktív tételekkel, ciklusvezérlőkkel és "
 "elszámolási összesítésekkel."
 
-#: core/ui/help.py:700
+#: core/ui/help.py:713
 msgid "Entry controls record an explicit type, category, and amount."
 msgstr ""
 "A beviteli vezérlők egyértelmű típust, kategóriát és összeget rögzítenek."
 
-#: core/ui/help.py:703
+#: core/ui/help.py:716
 msgid "Cycle controls include, export, and settle the selected period."
 msgstr ""
 "A ciklusvezérlők bevonják, exportálják és elszámolják a kiválasztott "
 "időszakot."
 
-#: core/ui/help.py:709 core/ui/help.py:811 core/ui/help.py:892
+#: core/ui/help.py:722 core/ui/help.py:824 core/ui/help.py:905
 #: features/advances/views.py:80 features/payslips/forms.py:22
 #: templates/pages/ledger.html:21 templates/pages/payslips.html:39
 #: templates/pages/person_detail.html:38 templates/pages/person_detail.html:315
@@ -3012,7 +3062,7 @@ msgstr ""
 msgid "Person"
 msgstr "Személy"
 
-#: core/ui/help.py:711 templates/pages/ledger.html:21
+#: core/ui/help.py:724 templates/pages/ledger.html:21
 msgid ""
 "The worker this money concerns. The entry appears on their pay overview and "
 "in their open balance."
@@ -3020,11 +3070,11 @@ msgstr ""
 "A munkavállaló, akit ez a pénz érint. A tétel megjelenik a béráttekintésében "
 "és a nyitott egyenlegében."
 
-#: core/ui/help.py:716 templates/pages/ledger.html:25
+#: core/ui/help.py:729 templates/pages/ledger.html:25
 msgid "Company / project"
 msgstr "Cég / projekt"
 
-#: core/ui/help.py:718 templates/pages/ledger.html:25
+#: core/ui/help.py:731 templates/pages/ledger.html:25
 msgid ""
 "Optional. Attributes the amount to a partner company for reporting. It does "
 "not change what the worker is paid."
@@ -3032,12 +3082,12 @@ msgstr ""
 "Nem kötelező. A partnercéghez rendeli az összeget a riportoláshoz. Nem "
 "változtatja meg, mennyit kap a munkavállaló."
 
-#: core/ui/help.py:723 templates/pages/ledger.html:30
+#: core/ui/help.py:736 templates/pages/ledger.html:30
 #: templates/panels/advances_ledger.html:24
 msgid "Entry type"
 msgstr "Tétel típusa"
 
-#: core/ui/help.py:725 templates/pages/ledger.html:30
+#: core/ui/help.py:738 templates/pages/ledger.html:30
 msgid ""
 "Decides the direction: an advance or deduction reduces pay, an addition "
 "increases it. The amount stays positive either way."
@@ -3045,7 +3095,7 @@ msgstr ""
 "Meghatározza az irányt: az előleg vagy levonás csökkenti a bért, a hozzáadás "
 "növeli. Az összeg mindkét esetben pozitív marad."
 
-#: core/ui/help.py:730 features/profitability/exports.py:201
+#: core/ui/help.py:743 features/profitability/exports.py:201
 #: templates/pages/_finance_workbook_grid.html:8
 #: templates/pages/finance_project_year.html:35 templates/pages/ledger.html:34
 #: templates/panels/advances_ledger.html:28
@@ -3055,7 +3105,7 @@ msgstr ""
 msgid "Category"
 msgstr "Kategória"
 
-#: core/ui/help.py:732 templates/pages/ledger.html:34
+#: core/ui/help.py:745 templates/pages/ledger.html:34
 msgid ""
 "What the money was for - advance, clothing, footwear, equipment, medical, "
 "travel or other. Groups the cycle report; it does not affect the direction "
@@ -3065,12 +3115,12 @@ msgstr ""
 "vagy egyéb. Csoportosítja a ciklusjelentést; nem befolyásolja az irányt vagy "
 "az összeget."
 
-#: core/ui/help.py:737 templates/pages/ledger.html:38
+#: core/ui/help.py:750 templates/pages/ledger.html:38
 #: templates/panels/advances_ledger.html:32
 msgid "Amount (EUR)"
 msgstr "Összeg (EUR)"
 
-#: core/ui/help.py:739 templates/pages/ledger.html:38
+#: core/ui/help.py:752 templates/pages/ledger.html:38
 msgid ""
 "Always a positive number. Never type a minus sign - the entry type decides "
 "whether this is added or subtracted."
@@ -3078,15 +3128,15 @@ msgstr ""
 "Mindig pozitív szám. Soha ne írjon mínuszjelet – a tétel típusa dönti el, "
 "hogy hozzáadódik vagy levonódik."
 
-#: core/ui/help.py:743
+#: core/ui/help.py:756
 msgid "Once the cycle is included; correct it with a reversal after that."
 msgstr "A ciklus lezárása után; ezt követően sztornó tétellel javítható."
 
-#: core/ui/help.py:747 templates/pages/ledger.html:39
+#: core/ui/help.py:760 templates/pages/ledger.html:39
 msgid "Entry date"
 msgstr "Tétel dátuma"
 
-#: core/ui/help.py:749 templates/pages/ledger.html:39
+#: core/ui/help.py:762 templates/pages/ledger.html:39
 msgid ""
 "The day the money changed hands. It decides which 21st-to-20th payroll cycle "
 "the entry settles in, and which calendar month it appears under on the pay "
@@ -3098,18 +3148,18 @@ msgstr ""
 "béráttekintésben. Hagyja üresen a mai naphoz; a már lezárt cikluson belüli "
 "dátumot elutasítja."
 
-#: core/ui/help.py:752
+#: core/ui/help.py:765
 msgid "Once the cycle containing that date is included."
 msgstr "Az adott dátumot tartalmazó ciklus lezárása után."
 
-#: core/ui/help.py:755 core/ui/help.py:839 core/ui/help.py:913
+#: core/ui/help.py:768 core/ui/help.py:852 core/ui/help.py:926
 #: features/logistics/forms.py:177 templates/pages/ledger.html:40
 #: templates/pages/transport_trends.html:44 templates/pages/wages.html:41
 #: templates/panels/advances_ledger.html:33
 msgid "Note"
 msgstr "Megjegyzés"
 
-#: core/ui/help.py:757 templates/pages/ledger.html:40
+#: core/ui/help.py:770 templates/pages/ledger.html:40
 msgid ""
 "The reason, in words, for whoever reads this months from now. It is carried "
 "into the exports the accountant receives."
@@ -3117,12 +3167,12 @@ msgstr ""
 "Az indok szavakkal annak, aki ezt hónapok múlva olvassa. Átkerül az "
 "exportokba, amelyeket a könyvelő megkap."
 
-#: core/ui/help.py:769
+#: core/ui/help.py:782
 msgid "Record net payslip values and deliver encrypted PDFs safely."
 msgstr ""
 "Nettó bérlapértékek rögzítése és titkosított PDF-ek biztonságos kézbesítése."
 
-#: core/ui/help.py:774
+#: core/ui/help.py:787
 msgid ""
 "Payslips stores the independently supplied net value and can email a freshly "
 "generated encrypted PDF to the worker."
@@ -3130,7 +3180,7 @@ msgstr ""
 "A Bérlapok az önállóan megadott nettó értéket tárolja, és frissen "
 "létrehozott, titkosított PDF-et küldhet e-mailben a munkavállalónak."
 
-#: core/ui/help.py:777
+#: core/ui/help.py:790
 msgid ""
 "Payslip amounts are restricted pay data. Only roles with payslip access can "
 "read them, and only authorized Managers can record or send them."
@@ -3139,7 +3189,7 @@ msgstr ""
 "rendelkező szerepkörök olvashatják, rögzíteni vagy küldeni pedig csak "
 "jogosult vezetők tudják."
 
-#: core/ui/help.py:781
+#: core/ui/help.py:794
 msgid ""
 "Confirm the worker has the correct email address, then record the calendar "
 "month, positive net amount, optional issue date, and note."
@@ -3147,7 +3197,7 @@ msgstr ""
 "Ellenőrizze a munkavállaló e-mail-címét, majd rögzítse a naptári hónapot, a "
 "pozitív nettó összeget, az opcionális kiállítási dátumot és a megjegyzést."
 
-#: core/ui/help.py:784
+#: core/ui/help.py:797
 msgid ""
 "Review the recorded row before sending. Send encrypted PDF generates the "
 "attachment and a random one-time password."
@@ -3155,7 +3205,7 @@ msgstr ""
 "Küldés előtt ellenőrizze a rögzített sort. A Titkosított PDF küldése "
 "létrehozza a mellékletet és egy véletlenszerű egyszeri jelszót."
 
-#: core/ui/help.py:787
+#: core/ui/help.py:800
 msgid ""
 "Tell the worker the password by phone or Messenger, never in the same email "
 "as the encrypted PDF."
@@ -3163,7 +3213,7 @@ msgstr ""
 "A jelszót telefonon vagy Messengeren közölje a munkavállalóval, soha ne "
 "ugyanabban az e-mailben, mint a titkosított PDF-et."
 
-#: core/ui/help.py:790
+#: core/ui/help.py:803
 msgid ""
 "If you resend, a new password is generated and the earlier one is "
 "invalidated. The password is shown once and is not stored for later "
@@ -3172,11 +3222,11 @@ msgstr ""
 "Újraküldéskor új jelszó készül, a korábbi érvényét veszti. A jelszó egyszer "
 "jelenik meg, és későbbi lekéréshez nem tárolódik."
 
-#: core/ui/help.py:793
+#: core/ui/help.py:806
 msgid "Never capture or copy the password into records"
 msgstr "A jelszót soha ne rögzítse és ne másolja rekordba"
 
-#: core/ui/help.py:795
+#: core/ui/help.py:808
 msgid ""
 "Do not screenshot the success message, paste the password into notes, email "
 "it, or send it through the same channel as the PDF. The generated PDF is not "
@@ -3186,7 +3236,7 @@ msgstr ""
 "megjegyzésbe, ne küldje e-mailben vagy a PDF-fel azonos csatornán. A "
 "létrehozott PDF-et az alkalmazás nem tárolja."
 
-#: core/ui/help.py:801
+#: core/ui/help.py:814
 msgid ""
 "The payslip list with fictional net values and delivery states; no passwords "
 "are visible."
@@ -3194,15 +3244,15 @@ msgstr ""
 "A bérlaplista fiktív nettó értékekkel és kézbesítési állapotokkal; jelszó "
 "nem látható."
 
-#: core/ui/help.py:804
+#: core/ui/help.py:817
 msgid "The record form stores the independently supplied net value."
 msgstr "A rögzítőűrlap az önállóan megadott nettó értéket tárolja."
 
-#: core/ui/help.py:806
+#: core/ui/help.py:819
 msgid "Delivery state shows whether an encrypted PDF was sent."
 msgstr "A kézbesítési állapot mutatja, hogy elküldték-e a titkosított PDF-et."
 
-#: core/ui/help.py:813
+#: core/ui/help.py:826
 msgid ""
 "Who the payslip belongs to. A worker with no email address is marked in the "
 "list, because the encrypted PDF cannot be delivered to them."
@@ -3210,11 +3260,11 @@ msgstr ""
 "Kihez tartozik a bérpapír. Az e-mail cím nélküli munkavállaló meg van "
 "jelölve a listában, mert a titkosított PDF nem kézbesíthető neki."
 
-#: core/ui/help.py:818 features/payslips/forms.py:34
+#: core/ui/help.py:831 features/payslips/forms.py:34
 msgid "Pay month"
 msgstr "Bérhónap"
 
-#: core/ui/help.py:820 features/payslips/forms.py:39
+#: core/ui/help.py:833 features/payslips/forms.py:39
 msgid ""
 "The calendar month this payslip pays for, not the month it was issued in. "
 "One payslip per person per month."
@@ -3222,11 +3272,11 @@ msgstr ""
 "A naptári hónap, amelyért ez a bérpapír fizet, nem a kiállítás hónapja. "
 "Személyenként és hónaponként egy bérpapír."
 
-#: core/ui/help.py:825 features/payslips/forms.py:35
+#: core/ui/help.py:838 features/payslips/forms.py:35
 msgid "Net amount (EUR)"
 msgstr "Nettó összeg (EUR)"
 
-#: core/ui/help.py:827 features/payslips/forms.py:43
+#: core/ui/help.py:840 features/payslips/forms.py:43
 msgid ""
 "The net figure printed on the payslip, as paid. It is shown beside the gross "
 "wage and the ledger deductions for the same month; the system does not "
@@ -3236,27 +3286,27 @@ msgstr ""
 "és az adott hónap könyvelési levonásai mellett jelenik meg; a rendszer nem "
 "számolja ki."
 
-#: core/ui/help.py:832 features/payslips/forms.py:25
+#: core/ui/help.py:845 features/payslips/forms.py:25
 msgid "Payslip date (optional)"
 msgstr "Bérlap kiállítási dátuma (nem kötelező)"
 
-#: core/ui/help.py:834
+#: core/ui/help.py:847
 msgid "The date printed on the document. Blank means the day it was recorded."
 msgstr "A dokumentumon szereplő dátum. Üresen hagyva a rögzítés napja."
 
-#: core/ui/help.py:841
+#: core/ui/help.py:854
 msgid ""
 "Free text for the office. It is not included in the PDF sent to the worker."
 msgstr ""
 "Szabad szöveg az irodának. Nem kerül bele a munkavállalónak küldött PDF-be."
 
-#: core/ui/help.py:853
+#: core/ui/help.py:866
 msgid ""
 "Record independent monthly gross-wage source values without payroll "
 "calculation."
 msgstr "Önálló havi bruttóbér-forrásértékek rögzítése bérszámfejtés nélkül."
 
-#: core/ui/help.py:858
+#: core/ui/help.py:871
 msgid ""
 "Gross wages stores the supplied gross amount for a person and month beside, "
 "but independently from, the recorded net payslip."
@@ -3264,7 +3314,7 @@ msgstr ""
 "A Bruttó bérek a személyhez és hónaphoz megadott bruttó összeget a rögzített "
 "nettó bérlap mellett, de attól függetlenül tárolja."
 
-#: core/ui/help.py:861
+#: core/ui/help.py:874
 msgid ""
 "Authorized pay-data readers may inspect the list. Recording a gross wage "
 "requires the wage-management permission."
@@ -3272,7 +3322,7 @@ msgstr ""
 "A jogosult béradat-olvasók megtekinthetik a listát. Bruttó bér rögzítéséhez "
 "bérkezelési jogosultság kell."
 
-#: core/ui/help.py:865
+#: core/ui/help.py:878
 msgid ""
 "Choose the correct person and calendar month, then enter the externally "
 "supplied positive gross amount."
@@ -3280,7 +3330,7 @@ msgstr ""
 "Válassza ki a megfelelő személyt és naptári hónapot, majd adja meg a "
 "kívülről kapott pozitív bruttó összeget."
 
-#: core/ui/help.py:868
+#: core/ui/help.py:881
 msgid ""
 "Add a short source or reconciliation note when it helps another authorized "
 "reader understand the record."
@@ -3288,7 +3338,7 @@ msgstr ""
 "Adjon rövid forrás- vagy egyeztetési megjegyzést, ha az segít egy másik "
 "jogosult olvasónak megérteni a rekordot."
 
-#: core/ui/help.py:871
+#: core/ui/help.py:884
 msgid ""
 "Compare gross and net only as independent source values. Investigate "
 "discrepancies through the payroll owner outside this application."
@@ -3296,11 +3346,11 @@ msgstr ""
 "A bruttó és nettó összeget csak független forrásértékként hasonlítsa össze. "
 "Az eltérést az alkalmazáson kívül, a bérszámfejtés felelősével vizsgálja ki."
 
-#: core/ui/help.py:874
+#: core/ui/help.py:887
 msgid "Not a payroll calculator"
 msgstr "Nem bérszámfejtő"
 
-#: core/ui/help.py:876
+#: core/ui/help.py:889
 msgid ""
 "The application does not derive tax, insurance, statutory deductions, or net "
 "pay from this amount and does not treat a gross-to-net difference as an "
@@ -3310,40 +3360,40 @@ msgstr ""
 "levonást vagy nettó bért, és a bruttó-nettó eltérést nem kezeli automatikus "
 "hibaként."
 
-#: core/ui/help.py:882
+#: core/ui/help.py:895
 msgid ""
 "The gross-wage workspace with fictional independent monthly source values."
 msgstr "A bruttóbér-munkaterület fiktív, önálló havi forrásértékekkel."
 
-#: core/ui/help.py:885
+#: core/ui/help.py:898
 msgid "The form records a person, month, and positive gross amount."
 msgstr "Az űrlap személyt, hónapot és pozitív bruttó összeget rögzít."
 
-#: core/ui/help.py:887
+#: core/ui/help.py:900
 msgid "The table preserves who recorded each source value."
 msgstr "A táblázat megőrzi, ki rögzítette az egyes forrásértékeket."
 
-#: core/ui/help.py:894 features/wage_ledger/forms.py:21
+#: core/ui/help.py:907 features/wage_ledger/forms.py:21
 msgid "The worker who earned this wage. One gross figure per person per month."
 msgstr ""
 "A munkavállaló, aki ezt a bért megkereste. Személyenként és hónaponként egy "
 "bruttó összeg."
 
-#: core/ui/help.py:899 features/wage_ledger/forms.py:16
+#: core/ui/help.py:912 features/wage_ledger/forms.py:16
 #: templates/pages/wages.html:39
 msgid "Wage month"
 msgstr "Bérhónap"
 
-#: core/ui/help.py:901 features/wage_ledger/forms.py:25
+#: core/ui/help.py:914 features/wage_ledger/forms.py:25
 msgid ""
 "The calendar month the wage was earned in, not the month it was paid out."
 msgstr "A naptári hónap, amelyben a bért megkeresték, nem a kifizetés hónapja."
 
-#: core/ui/help.py:906 features/wage_ledger/forms.py:17
+#: core/ui/help.py:919 features/wage_ledger/forms.py:17
 msgid "Gross wage (EUR)"
 msgstr "Bruttó bér (EUR)"
 
-#: core/ui/help.py:908 features/wage_ledger/forms.py:29
+#: core/ui/help.py:921 features/wage_ledger/forms.py:29
 msgid ""
 "Gross, before anything is taken off. Ledger deductions are subtracted from "
 "this on the worker's pay overview; tax and levies are not calculated here."
@@ -3352,7 +3402,7 @@ msgstr ""
 "vonódnak le a könyvelési levonások; adót és járulékot itt nem számol a "
 "rendszer."
 
-#: core/ui/help.py:915 features/wage_ledger/forms.py:34
+#: core/ui/help.py:928 features/wage_ledger/forms.py:34
 msgid ""
 "Where this figure came from - a contract, a timesheet, the accountant. It is "
 "what the next reader checks it against."
@@ -3360,14 +3410,14 @@ msgstr ""
 "Honnan származik ez a szám – szerződésből, munkaidő-nyilvántartásból, a "
 "könyvelőtől. A következő olvasó ehhez viszonyítva ellenőrzi."
 
-#: core/ui/help.py:927
+#: core/ui/help.py:940
 msgid ""
 "Trace sensitive actions, old and new values, actors, reasons, and retention."
 msgstr ""
 "Érzékeny műveletek, régi és új értékek, végrehajtók, indokok és megőrzés "
 "nyomon követése."
 
-#: core/ui/help.py:931
+#: core/ui/help.py:944
 msgid ""
 "Audit is the append-only trace for sensitive actions: who acted, what record "
 "changed, when it happened, and the reason or value snapshot available for "
@@ -3377,7 +3427,7 @@ msgstr ""
 "rekord változott, mikor történt, és milyen indok vagy értékpillanatkép "
 "tartozik az eseményhez."
 
-#: core/ui/help.py:934
+#: core/ui/help.py:947
 msgid ""
 "Only roles with Audit access can open the log. Help explains it to every "
 "role because their own sensitive actions may create events."
@@ -3386,7 +3436,7 @@ msgstr ""
 "Súgó minden szerepkörnek elmagyarázza, mert saját érzékeny műveleteik is "
 "létrehozhatnak eseményt."
 
-#: core/ui/help.py:938
+#: core/ui/help.py:951
 msgid ""
 "Open Audit and narrow the result by actor, worker, action, record type, or "
 "date range."
@@ -3394,7 +3444,7 @@ msgstr ""
 "Nyissa meg az Auditot, és szűkítse az eredményt végrehajtó, munkavállaló, "
 "művelet, rekordtípus vagy dátumtartomány szerint."
 
-#: core/ui/help.py:941
+#: core/ui/help.py:954
 msgid ""
 "Read the newest events first and use the record reference to connect an "
 "event to the operational workflow."
@@ -3402,7 +3452,7 @@ msgstr ""
 "Először a legújabb eseményeket olvassa, és a rekordhivatkozással kapcsolja "
 "az eseményt az operatív folyamathoz."
 
-#: core/ui/help.py:944
+#: core/ui/help.py:957
 msgid ""
 "Use old and new value snapshots where provided to understand the change; "
 "free-text reasons remain in the language originally entered."
@@ -3410,7 +3460,7 @@ msgstr ""
 "Ahol rendelkezésre áll, a régi és új értékpillanatképekből értse meg a "
 "változást; a szabad szöveges indokok az eredeti bevitel nyelvén maradnak."
 
-#: core/ui/help.py:947
+#: core/ui/help.py:960
 msgid ""
 "Use Staff activity for volume reporting. Audit is for traceability and "
 "investigation, not performance totals."
@@ -3418,11 +3468,11 @@ msgstr ""
 "Mennyiségi kimutatáshoz a Munkatársi aktivitást használja. Az Audit nyomon "
 "követésre és vizsgálatra való, nem teljesítményösszesítésre."
 
-#: core/ui/help.py:950
+#: core/ui/help.py:963
 msgid "Append-only and restricted"
 msgstr "Csak hozzáfűzhető és korlátozott"
 
-#: core/ui/help.py:952
+#: core/ui/help.py:965
 msgid ""
 "Ordinary users cannot edit or delete audit events. Retention follows the "
 "approved policy; do not copy restricted event details into a less protected "
@@ -3432,7 +3482,7 @@ msgstr ""
 "auditeseményeket. A megőrzés a jóváhagyott szabályzatot követi; korlátozott "
 "eseményrészletet ne másoljon kevésbé védett rendszerbe."
 
-#: core/ui/help.py:958
+#: core/ui/help.py:971
 msgid ""
 "The Audit page heading and filters, captured without event rows or log "
 "contents."
@@ -3440,11 +3490,11 @@ msgstr ""
 "Az Audit oldal fejléce és szűrői, eseménysorok és naplótartalom nélkül "
 "rögzítve."
 
-#: core/ui/help.py:960
+#: core/ui/help.py:973
 msgid "Filters narrow the trace without changing stored events."
 msgstr "A szűrők a tárolt események módosítása nélkül szűkítik a nyomot."
 
-#: core/ui/help.py:962
+#: core/ui/help.py:975
 msgid "Audit access and append-only behavior protect the evidence trail."
 msgstr ""
 "Az Audit-hozzáférés és a csak hozzáfűzhető működés védi a bizonyítékláncot."
@@ -5432,42 +5482,42 @@ msgstr "Összesen"
 
 #: features/profitability/exports.py:292 features/profitability/exports.py:326
 #: features/profitability/models.py:83 features/profitability/models.py:95
-#: templates/pages/finance_executive.html:15
+#: templates/pages/finance_executive.html:18
 #: templates/pages/finance_month_detail.html:32
-#: templates/pages/finance_summary.html:34
-#: templates/pages/finance_summary.html:46
-#: templates/pages/finance_summary.html:60 templates/pages/finance_year.html:28
-#: templates/pages/finance_year.html:42
+#: templates/pages/finance_summary.html:37
+#: templates/pages/finance_summary.html:49
+#: templates/pages/finance_summary.html:63 templates/pages/finance_year.html:31
+#: templates/pages/finance_year.html:45
 msgid "Revenue"
 msgstr "Bevétel"
 
 #: features/profitability/exports.py:292 features/profitability/exports.py:326
 #: features/profitability/models.py:82
-#: templates/pages/finance_executive.html:16
+#: templates/pages/finance_executive.html:19
 #: templates/pages/finance_month_detail.html:33
-#: templates/pages/finance_summary.html:37
-#: templates/pages/finance_summary.html:47
-#: templates/pages/finance_summary.html:60 templates/pages/finance_year.html:29
-#: templates/pages/finance_year.html:42
+#: templates/pages/finance_summary.html:40
+#: templates/pages/finance_summary.html:50
+#: templates/pages/finance_summary.html:63 templates/pages/finance_year.html:32
+#: templates/pages/finance_year.html:45
 msgid "Cost"
 msgstr "Költség"
 
 #: features/profitability/exports.py:292 features/profitability/exports.py:310
 #: features/profitability/exports.py:326 features/profitability/exports.py:343
-#: templates/pages/finance_executive.html:17
-#: templates/pages/finance_executive.html:75
+#: templates/pages/finance_executive.html:20
+#: templates/pages/finance_executive.html:78
 #: templates/pages/finance_month_detail.html:34
-#: templates/pages/finance_summary.html:48
-#: templates/pages/finance_summary.html:61
-#: templates/pages/finance_summary.html:90
-#: templates/pages/finance_summary.html:151
-#: templates/pages/finance_year.html:30 templates/pages/finance_year.html:43
-#: templates/pages/finance_year.html:88
+#: templates/pages/finance_summary.html:51
+#: templates/pages/finance_summary.html:64
+#: templates/pages/finance_summary.html:93
+#: templates/pages/finance_summary.html:154
+#: templates/pages/finance_year.html:33 templates/pages/finance_year.html:46
+#: templates/pages/finance_year.html:91
 msgid "Net"
 msgstr "Nettó"
 
 #: features/profitability/exports.py:334
-#: templates/pages/finance_summary.html:57
+#: templates/pages/finance_summary.html:60
 msgid "Revenue, cost, and net by month"
 msgstr "Bevétel, költség és nettó havi bontásban"
 
@@ -5796,7 +5846,7 @@ msgstr "Havi szállásköltség"
 #: templates/pages/equipment_stock_receive.html:6
 #: templates/pages/finance_month_detail.html:10
 #: templates/pages/finance_workbook_year.html:10
-#: templates/pages/finance_year.html:10
+#: templates/pages/finance_year.html:11
 msgid "Back"
 msgstr "Vissza"
 
@@ -6448,17 +6498,17 @@ msgstr ""
 "levonásra."
 
 #: templates/pages/equipment_reviews.html:14
-#: templates/pages/finance_executive.html:14
-#: templates/pages/finance_executive.html:35
-#: templates/pages/finance_executive.html:71
-#: templates/pages/finance_summary.html:45
-#: templates/pages/finance_summary.html:53
-#: templates/pages/finance_summary.html:68
-#: templates/pages/finance_summary.html:86
-#: templates/pages/finance_summary.html:98
-#: templates/pages/finance_summary.html:119
-#: templates/pages/finance_summary.html:147
-#: templates/pages/finance_year.html:27
+#: templates/pages/finance_executive.html:17
+#: templates/pages/finance_executive.html:38
+#: templates/pages/finance_executive.html:74
+#: templates/pages/finance_summary.html:48
+#: templates/pages/finance_summary.html:56
+#: templates/pages/finance_summary.html:71
+#: templates/pages/finance_summary.html:89
+#: templates/pages/finance_summary.html:101
+#: templates/pages/finance_summary.html:122
+#: templates/pages/finance_summary.html:150
+#: templates/pages/finance_year.html:30
 #: templates/pages/transport_trends.html:51
 msgid "Company total"
 msgstr "Vállalati összesen"
@@ -6679,81 +6729,81 @@ msgid "No feedback yet."
 msgstr "Még nincs visszajelzés."
 
 # --- dashboard ---
-#: templates/pages/finance_executive.html:8
+#: templates/pages/finance_executive.html:9
 msgid "Executive overview"
 msgstr "Vezetői áttekintés"
 
-#: templates/pages/finance_executive.html:10
-#: templates/pages/finance_summary.html:11
+#: templates/pages/finance_executive.html:12
+#: templates/pages/finance_summary.html:13
 msgid "Export CSV"
 msgstr "CSV exportálása"
 
-#: templates/pages/finance_executive.html:11
-#: templates/pages/finance_summary.html:12 templates/pages/finance_year.html:12
+#: templates/pages/finance_executive.html:13
+#: templates/pages/finance_summary.html:14 templates/pages/finance_year.html:14
 msgid "Export Excel"
 msgstr "Excel exportálása"
 
-#: templates/pages/finance_executive.html:23
+#: templates/pages/finance_executive.html:26
 msgid "Monthly trend by office"
 msgstr "Havi trend irodánként"
 
-#: templates/pages/finance_executive.html:26
 #: templates/pages/finance_executive.html:29
+#: templates/pages/finance_executive.html:32
 msgid "Net result by month, one line per office"
 msgstr "Havi nettó eredmény, irodánként egy vonallal"
 
-#: templates/pages/finance_executive.html:36
-#: templates/pages/finance_executive.html:43
-#: templates/pages/finance_summary.html:69
-#: templates/pages/finance_summary.html:76
+#: templates/pages/finance_executive.html:39
+#: templates/pages/finance_executive.html:46
+#: templates/pages/finance_summary.html:72
+#: templates/pages/finance_summary.html:79
 msgid "Margin"
 msgstr "Árrés"
 
-#: templates/pages/finance_executive.html:38
-#: templates/pages/finance_summary.html:71
+#: templates/pages/finance_executive.html:41
+#: templates/pages/finance_summary.html:74
 #, python-format
 msgid "Margin gauge: %(margin_pct)s%% of revenue"
 msgstr "Árrés mérő: %(margin_pct)s %% a bevételből"
 
-#: templates/pages/finance_executive.html:40
-#: templates/pages/finance_summary.html:73
+#: templates/pages/finance_executive.html:43
+#: templates/pages/finance_summary.html:76
 msgid "Net as a share of revenue"
 msgstr "Nettó a bevétel arányában"
 
-#: templates/pages/finance_executive.html:45
-#: templates/pages/finance_summary.html:78
+#: templates/pages/finance_executive.html:48
+#: templates/pages/finance_summary.html:81
 msgid "margin"
 msgstr "árrés"
 
-#: templates/pages/finance_executive.html:53
-#: templates/pages/finance_summary.html:161
-#: templates/pages/finance_year.html:17
+#: templates/pages/finance_executive.html:56
+#: templates/pages/finance_summary.html:164
+#: templates/pages/finance_year.html:20
 msgid "Profit/loss by office"
 msgstr "Nyereség/veszteség irodánként"
 
-#: templates/pages/finance_executive.html:58
-#: templates/pages/finance_summary.html:166
+#: templates/pages/finance_executive.html:61
+#: templates/pages/finance_summary.html:169
 msgid "Net result by office chart"
 msgstr "Nettó eredmény irodánként diagram"
 
-#: templates/pages/finance_executive.html:65
-#: templates/pages/finance_executive.html:77
-#: templates/pages/finance_summary.html:92
-#: templates/pages/finance_summary.html:125
-#: templates/pages/finance_summary.html:153
-#: templates/pages/finance_summary.html:173
-#: templates/pages/finance_year.html:22 templates/pages/finance_year.html:65
-#: templates/pages/finance_year.html:90
+#: templates/pages/finance_executive.html:68
+#: templates/pages/finance_executive.html:80
+#: templates/pages/finance_summary.html:95
+#: templates/pages/finance_summary.html:128
+#: templates/pages/finance_summary.html:156
+#: templates/pages/finance_summary.html:176
+#: templates/pages/finance_year.html:25 templates/pages/finance_year.html:68
+#: templates/pages/finance_year.html:93
 msgid "No financial months."
 msgstr "Nincs pénzügyi hónap."
 
-#: templates/pages/finance_executive.html:72
-#: templates/pages/finance_summary.html:148 templates/pages/finance_year.html:8
+#: templates/pages/finance_executive.html:75
+#: templates/pages/finance_summary.html:151 templates/pages/finance_year.html:9
 msgid "Yearly results"
 msgstr "Éves eredmények"
 
 #: templates/pages/finance_month_detail.html:8
-#: templates/pages/finance_summary.html:90 templates/pages/finance_year.html:88
+#: templates/pages/finance_summary.html:93 templates/pages/finance_year.html:91
 msgid "Locked"
 msgstr "Zárolva"
 
@@ -6823,7 +6873,8 @@ msgid "Save & recalculate"
 msgstr "Mentés és újraszámolás"
 
 #: templates/pages/finance_month_detail.html:60
-#: templates/pages/finance_summary.html:99 templates/pages/finance_year.html:71
+#: templates/pages/finance_summary.html:102
+#: templates/pages/finance_year.html:74
 msgid "Group breakdown"
 msgstr "Csoportos bontás"
 
@@ -6832,7 +6883,7 @@ msgid "By group"
 msgstr "Csoport szerint"
 
 #: templates/pages/finance_month_detail.html:66
-#: templates/pages/finance_summary.html:104
+#: templates/pages/finance_summary.html:107
 msgid "Net result by finance group chart"
 msgstr "Nettó eredmény pénzügyi csoportonkénti diagramja"
 
@@ -6927,23 +6978,23 @@ msgstr ""
 "Az adatok rögzítése előtt be kell állítani a pénzügyi kategóriák "
 "katalógusát. Kérjen meg egy rendszergazdát a katalógus visszaállítására."
 
-#: templates/pages/finance_summary.html:10 templates/pages/finance_year.html:11
+#: templates/pages/finance_summary.html:11 templates/pages/finance_year.html:12
 msgid "Workbook view"
 msgstr "Munkafüzet nézet"
 
-#: templates/pages/finance_summary.html:17
+#: templates/pages/finance_summary.html:20
 msgid "Record a financial month"
 msgstr "Pénzügyi hónap rögzítése"
 
-#: templates/pages/finance_summary.html:18
+#: templates/pages/finance_summary.html:21
 msgid "Manual entry"
 msgstr "Kézi bevitel"
 
-#: templates/pages/finance_summary.html:19
+#: templates/pages/finance_summary.html:22
 msgid "Record a month"
 msgstr "Hónap rögzítése"
 
-#: templates/pages/finance_summary.html:20
+#: templates/pages/finance_summary.html:23
 msgid ""
 "Every figure here is typed by hand — nothing is pulled from elsewhere in the "
 "system. Create the month, then open it to enter each category; the totals "
@@ -6953,39 +7004,39 @@ msgstr ""
 "Hozza létre a hónapot, majd nyissa meg és adja meg az egyes kategóriákat; "
 "egyedül az összegeket számolja ki a rendszer."
 
-#: templates/pages/finance_summary.html:40
+#: templates/pages/finance_summary.html:43
 msgid "Record month"
 msgstr "Hónap rögzítése"
 
-#: templates/pages/finance_summary.html:54 templates/pages/finance_year.html:36
+#: templates/pages/finance_summary.html:57 templates/pages/finance_year.html:39
 msgid "Monthly trend"
 msgstr "Havi trend"
 
-#: templates/pages/finance_summary.html:62 templates/pages/finance_year.html:44
+#: templates/pages/finance_summary.html:65 templates/pages/finance_year.html:47
 msgid "Monthly revenue, cost, and net trend chart"
 msgstr "Havi bevétel, költség és nettó trend diagram"
 
-#: templates/pages/finance_summary.html:87 templates/pages/finance_year.html:35
-#: templates/pages/finance_year.html:84
+#: templates/pages/finance_summary.html:90 templates/pages/finance_year.html:38
+#: templates/pages/finance_year.html:87
 msgid "Financial months"
 msgstr "Pénzügyi hónapok"
 
-#: templates/pages/finance_summary.html:111
-#: templates/pages/finance_year.html:77
+#: templates/pages/finance_summary.html:114
+#: templates/pages/finance_year.html:80
 msgid "No line items yet."
 msgstr "Még nincsenek tételsorok."
 
-#: templates/pages/finance_summary.html:120
-#: templates/pages/finance_year.html:52
+#: templates/pages/finance_summary.html:123
+#: templates/pages/finance_year.html:55
 msgid "Per-project results"
 msgstr "Eredmények projektenként"
 
-#: templates/pages/finance_summary.html:133
-#: templates/pages/finance_year.html:97
+#: templates/pages/finance_summary.html:136
+#: templates/pages/finance_year.html:100
 msgid "Enter a project year"
 msgstr "Projektév rögzítése"
 
-#: templates/pages/finance_summary.html:135
+#: templates/pages/finance_summary.html:138
 msgid ""
 "This is the table used for entering figures: choose a project, type across "
 "its twelve-month grid, then save the year."
@@ -6993,7 +7044,7 @@ msgstr ""
 "Ebben a táblázatban rögzíthetők az adatok: válasszon projektet, töltse ki a "
 "tizenkét hónapos táblázatát, majd mentse az évet."
 
-#: templates/pages/finance_summary.html:138
+#: templates/pages/finance_summary.html:141
 msgid ""
 "Open the twelve-month grid for this project: categories down, months across, "
 "and the amounts are typed straight into it."
@@ -7001,8 +7052,8 @@ msgstr ""
 "Megnyitja a projekt tizenkét hónapos táblázatát: kategóriák lefelé, hónapok "
 "vízszintesen, az összegeket közvetlenül ide írja be."
 
-#: templates/pages/finance_summary.html:160
-#: templates/pages/finance_year.html:16
+#: templates/pages/finance_summary.html:163
+#: templates/pages/finance_year.html:19
 msgid "Office roll-up"
 msgstr "Irodai összesítés"
 
@@ -7044,16 +7095,16 @@ msgstr ""
 "Ez a nézet projektenként összegzi mind a tizenkét hónapot. A projekt nevére "
 "kattintva megnyithatja a szerkeszthető éves táblázatát."
 
-#: templates/pages/finance_year.html:39
+#: templates/pages/finance_year.html:42
 #, python-format
 msgid "Revenue, cost, and net by month in %(year)s"
 msgstr "Bevétel, költség és nettó havi bontásban %(year)s évben"
 
-#: templates/pages/finance_year.html:58
+#: templates/pages/finance_year.html:61
 msgid "Net result by project chart"
 msgstr "Nettó eredmény projektenkénti diagramja"
 
-#: templates/pages/finance_year.html:99
+#: templates/pages/finance_year.html:102
 msgid "Choose a project to enter or correct its figures for this year."
 msgstr "Válasszon projektet az idei adatok rögzítéséhez vagy javításához."
 
@@ -8821,6 +8872,128 @@ msgstr "A legutóbb frissített %(rail_limit)s látható."
 #: templates/partials/worker_rail_body.html:34
 msgid "Open People"
 msgstr "Emberek megnyitása"
+
+#~ msgid ""
+#~ "Enter one project year, compare projects in read-only workbooks, and "
+#~ "export a formula-free Excel snapshot."
+#~ msgstr ""
+#~ "Rögzítse egy projekt évét, hasonlítsa össze a projekteket csak olvasható "
+#~ "munkafüzetekben, és exportáljon képletek nélküli Excel-pillanatképet."
+
+#~ msgid ""
+#~ "Monthly finance line items are the source of truth. The editable project-"
+#~ "year grid writes those records; the monthly and annual workbooks, totals, "
+#~ "charts, and exports are derived views."
+#~ msgstr ""
+#~ "A havi pénzügyi tételsorok jelentik az egyetlen hiteles adatforrást. A "
+#~ "szerkeszthető projektév-rács írja ezeket a rekordokat; a havi és éves "
+#~ "munkafüzetek, összesítések, diagramok és exportok származtatott nézetek."
+
+#~ msgid ""
+#~ "Under Enter a project year, select a project. This twelve-month grid is "
+#~ "the only editable Finance table: type costs as negative amounts and "
+#~ "revenues as positive amounts, then use Save year once. Blank new months "
+#~ "become monthly records; locked months stay untouched."
+#~ msgstr ""
+#~ "A Projektév rögzítése alatt válasszon projektet. Ez a tizenkét havi rács "
+#~ "a Pénzügyek egyetlen szerkeszthető táblája: a költségeket negatív, a "
+#~ "bevételeket pozitív összegként írja be, majd egyszer használja az Év "
+#~ "mentése gombot. Az üres új hónapok havi rekordokká válnak; a zárolt "
+#~ "hónapok érintetlenek maradnak."
+
+#~ msgid ""
+#~ "Only the project-year grid writes finance data. Workbooks and Excel files "
+#~ "are derived snapshots, so changing a downloaded file cannot change the "
+#~ "application. Readers and exports receive only their permitted office "
+#~ "scope."
+#~ msgstr ""
+#~ "Csak a projektév-rács ír pénzügyi adatokat. A munkafüzetek és Excel-"
+#~ "fájlok származtatott pillanatképek, ezért a letöltött fájl módosítása nem "
+#~ "változtatja meg az alkalmazást. Az olvasók és az exportok csak az "
+#~ "engedélyezett irodai hatáskört kapják meg."
+
+#~ msgid "Enter a project year opens the only editable Finance table."
+#~ msgstr ""
+#~ "A Projektév rögzítése megnyitja a Pénzügyek egyetlen szerkeszthető "
+#~ "tábláját."
+
+#~ msgid ""
+#~ "Record monthly project revenue and cost lines, lock periods, and read "
+#~ "results."
+#~ msgstr ""
+#~ "Havi projektbevétel- és költségsorok rögzítése, időszakok zárolása és "
+#~ "eredmények értelmezése."
+
+#~ msgid ""
+#~ "Finance records project profitability from explicit monthly revenue and "
+#~ "cost lines and derives every displayed total from those entries."
+#~ msgstr ""
+#~ "A Pénzügy explicit havi bevétel- és költségsorokból rögzíti a projekt "
+#~ "jövedelmezőségét, és minden megjelenített összesítést ezekből vezet le."
+
+#~ msgid ""
+#~ "Authorized finance readers may inspect reports. Recording, locking, "
+#~ "reopening, and export actions require their configured permissions, with "
+#~ "Manager approval where specified."
+#~ msgstr ""
+#~ "A jogosult pénzügyi olvasók megtekinthetik a kimutatásokat. A "
+#~ "rögzítéshez, zároláshoz, újranyitáshoz és exporthoz a beállított "
+#~ "jogosultság kell, ahol előírt, vezetői jóváhagyással."
+
+#~ msgid ""
+#~ "Create an active project, or edit an existing one, and keep Include this "
+#~ "project in Finance enabled."
+#~ msgstr ""
+#~ "Hozzon létre egy aktív projektet, vagy szerkesszen egy meglévőt, és "
+#~ "hagyja bekapcsolva az A projekt szerepeljen a Pénzügyekben beállítást."
+
+#~ msgid ""
+#~ "Open Finance and choose the project under Enter a project year. The "
+#~ "workbook reports are read-only."
+#~ msgstr ""
+#~ "Nyissa meg a Pénzügyeket, és a Projektév rögzítése résznél válassza ki a "
+#~ "projektet. A munkafüzet-kimutatások csak olvashatók."
+
+#~ msgid ""
+#~ "Type costs as negative amounts and revenues as positive amounts in the "
+#~ "twelve-month grid. Never type a pre-calculated net value."
+#~ msgstr ""
+#~ "A tizenkét hónapos táblázatban a költségeket negatív, a bevételeket "
+#~ "pozitív összegként adja meg. Soha ne írjon be előre kiszámított nettó "
+#~ "értéket."
+
+#~ msgid ""
+#~ "Select Save year once. Review the monthly and yearly reports, then lock a "
+#~ "month when its figures are final."
+#~ msgstr ""
+#~ "Egyszer válassza az Év mentése lehetőséget. Ellenőrizze a havi és éves "
+#~ "kimutatásokat, majd zárolja a hónapot, amikor az adatai véglegesek."
+
+#~ msgid ""
+#~ "Use Export Excel for a formula-free snapshot with the yearly project "
+#~ "grid, twelve-month summary, office totals, and live charts."
+#~ msgstr ""
+#~ "Az Excel exportálása funkcióval képletek nélküli pillanatképet készíthet "
+#~ "az éves projekttáblával, a tizenkét havi összesítéssel, az irodai "
+#~ "összesítésekkel és az élő diagramokkal."
+
+#~ msgid "Locked periods are deliberate"
+#~ msgstr "A zárolt időszakok szándékosak"
+
+#~ msgid ""
+#~ "The project-year grid uses the workbook signs: costs are negative and "
+#~ "revenues are positive. Locking prevents ordinary edits, and every reopen "
+#~ "is an audited exception."
+#~ msgstr ""
+#~ "A projektév táblázata a munkafüzet előjeleit használja: a költségek "
+#~ "negatívak, a bevételek pozitívak. A zárolás megakadályozza a szokásos "
+#~ "szerkesztést, minden újranyitás auditált kivétel."
+
+#~ msgid "Period and project controls select the financial slice."
+#~ msgstr "Az időszak- és projektvezérlők választják ki a pénzügyi metszetet."
+
+#~ msgid "Totals and charts are derived from the recorded line items."
+#~ msgstr "Az összesítések és diagramok a rögzített tételsorokból származnak."
 
 #~ msgid "No projects in scope for this period."
 #~ msgstr "Ebben az időszakban nincs a hatókörbe tartozó projekt."

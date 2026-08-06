@@ -23,6 +23,13 @@ Run the capture only through the committed isolated workflow:
 scripts/capture_help_screens.sh
 ```
 
+To refresh only named article images while preserving every other reviewed
+asset, pass their comma-separated slugs through the same workflow:
+
+```bash
+HELP_CAPTURE_SLUGS=finance scripts/capture_help_screens.sh
+```
+
 Manually review every generated image before commit. A screenshot that exposes
 restricted data or describes a screen that no longer exists must be rejected,
 not patched with baked-in labels.

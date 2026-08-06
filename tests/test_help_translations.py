@@ -43,9 +43,10 @@ def test_every_help_message_has_a_reviewed_nonempty_translation(language):
 
     # A canary, not a target: it fails when help text is added so the
     # translations cannot be forgotten. 210 -> 263 on 2026-08-04, when the
-    # money and approval articles gained a per-field reference; 264 adds the
-    # formula-free Excel export boundary to Finance Help.
-    assert len(help_msgids) == 264
+    # money and approval articles gained a per-field reference; 264 added the
+    # first formula-free Excel boundary; 266 documents the complete current
+    # Finance workflow (empty state, both write paths, workbooks, and export).
+    assert len(help_msgids) == 266
     assert not (help_msgids - catalog.keys())
     assert all(catalog[msgid].strip() for msgid in help_msgids)
     unchanged = {msgid for msgid in help_msgids if catalog[msgid] == msgid}
