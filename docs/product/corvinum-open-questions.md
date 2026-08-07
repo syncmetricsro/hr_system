@@ -20,14 +20,18 @@ Sources: design doc §5.10/§12.6/§13, Addendum A1.
 | C-Q11 | Bus fuel log `features/fuel_costs` (A1.2 — secondhand request) | **Not built** pending decision-maker confirmation | Decision-maker |
 | C-Q12 | Which equipment items carry recorded values (§13.1) | All issued items take an optional value (existing `features/logistics` model) | Client |
 | C-Q13 | Retention periods for ledger + equipment-deduction history (§13.2) | No purge registered for ledger entries yet (`core/retention` ready when periods are known) | Client + legal |
-| C-Q14 | Staging/production server, domain, DB names | Deployment deferred (ADR 0022) | Owner |
+| C-Q14 | Staging/production server, domain, DB names | **Partly answered 2026-08-07:** production host `corvinum-main` at FORPSI; encrypted-backup host `corvinum-bsite` at Contabo; app/database remain `corvinum` / `pg-corvinum`; current fictional staging stays on `syncmetric-prime`. Final production domain is still required | Owner |
 | C-Q15 | Payslip password delivery channel (ADR 0023 — never by email) | Shown once to the office user; phone/Messenger assumed | Client |
 | C-Q16 | Retention period for stored pay amounts (payslips) | No purge registered yet; joins the GDPR review | Client + legal |
 | C-Q17 | Corvinum wage-source and payroll reconciliation definition | **Narrowed 2026-08-04.** The overview now also shows the office's own ledger deductions and a derived **After deductions** column (gross − recorded ledger entries). The application still does **not** derive statutory net pay or flag the remaining gap as an error; tax, levies, and `radonak.xlsx` remain deferred. The recorded net payslip stays a separate column so the two can be compared | Client + payroll owner |
 | C-Q18 | Confirm the platform document-storage boundary ([decision note](document-storage-boundary.md)) | Base PeopleOps stores structured metadata for high-risk requirements; files only for forklift, crane, and welding licences. Excluded scans require a separately scoped Secure Document Vault | Client |
 | C-Q19 | Confirm employing entity and SK/HU accountant handoff ([research/design note](accountant-data-handoff.md)) | **Supported jurisdictions: Slovakia and Hungary, as separate schedules.** Confirm the entity, employment-level jurisdiction, recipient role/DPA, exact country fields/evidence, custody, transfer, and retention. No ID scans or medical details in routine handoff; mixed, posted, unresolved cross-border, and other-country cases are refused | Client + accountant/payroll owner + legal/privacy |
+| C-Q20 | Is the entered net payslip amount before or after advances already paid in cash? | Stored and printed exactly as entered today. The answer may require changing either the input rule or “Net amount paid” wording | Client + payroll owner |
+| C-Q21 | Should the worker-facing payslip itemize recorded advances/equipment deductions? | **Not built.** Decide only after C-Q20; any itemization must keep recorded net separate and must not imply statutory net-pay calculation | Client + payroll owner |
+| C-Q22 | Are the nine activation-check definitions and their help text correct? | Current wording is an engineering proposal in the fictional seed. Client approval/correction is required before it becomes production bootstrap content | Client |
 | C-Q23 | Confirm CorvinumEU's legal basis, transparency text, provider DPA and retention period for structured job-offer email | **Feature approved by owner 2026-08-07 for HR Admin/Manager and fictional-data testing.** SMS/general mail remain off. `EMAIL_ALLOWED_RECIPIENTS` remains mandatory in non-production practice; real recipients stay blocked by the real-data gate until the legal and retention items are signed off | Client + legal/privacy |
 | C-Q24 | Confirm operational details for [production account onboarding](corvinum-account-onboarding.md) | **Invitation authority answered by owner 2026-08-07:** Observer and Manager may invite Recruiter, Coordinator, or Manager; nobody may invite Observer. Still required: expiry, resend/revoke, existing-account behavior, role changes/deactivation, lost-TOTP recovery, and whether acceptance needs final approval | Owner + client security contact |
+| C-Q25 | Would the office run the optional [paper archive register](paper-archive-register-design.md)? | **Designed, not built and not a base-launch blocker.** Confirm paper types/expiry, whether every sleeve would really be labelled, physical location/access, and per-type retention. Identity and civil-status papers remain outside the proposed register | Client + legal/privacy |
 
 Update this file (and the design doc's §16 back-and-forth notes) as answers
 arrive — the pattern that worked for Jober's Q1–Q5.
@@ -96,7 +100,7 @@ it means, and two of them are worth asking about specifically:
 Read the nine out at the demo and correct them on the spot; they are seed data
 and a wording change is one line each (plus translations).
 
-**C-Q23 — would the office run a paper archive register?** Proposed by the
+**C-Q25 — would the office run a paper archive register?** Proposed by the
 owner on 2026-08-05 and written up in
 [`paper-archive-register-design.md`](paper-archive-register-design.md):
 track that a paper exists and when it expires, never store a scan, and print a

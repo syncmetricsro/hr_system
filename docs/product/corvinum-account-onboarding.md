@@ -43,7 +43,9 @@ Before Corvinum PeopleOps admits production users, the onboarding flow must:
 5. Handle an existing account or pending invitation without leaking account
    information to an unauthorized user.
 6. Require the invitee to set their own password. An invited Manager must also
-   complete the production TOTP requirement before ordinary application use.
+   complete the production TOTP requirement before ordinary application use,
+   and the deployment-bootstrapped Observer must enroll TOTP before inviting
+   anyone.
 7. Audit invitation creation, resend, revocation, acceptance, expiry outcome,
    inviter, recipient identity, and assigned role. Passwords, setup tokens,
    TOTP secrets, and SMTP credentials must never enter audit data.

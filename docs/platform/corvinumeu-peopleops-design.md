@@ -2386,7 +2386,15 @@ This matches the Jober production stack exactly, so the hardening, deployment, a
 
 ## 12.2 Hosting model
 
-Recommended:
+**Production topology decided 2026-08-07:** the two permanent hosts are
+FORPSI `corvinum-main` for the production Dokku app, PostgreSQL, and protected
+media, plus Contabo `corvinum-bsite` for encrypted backup archives only. The
+backup host is not a warm standby and holds no application secrets or
+decryption private key. Existing fictional staging stays on `syncmetric-prime`
+outside the production pair. Canonical gates:
+[`corvinum-production-readiness.md`](../deployment/corvinum-production-readiness.md).
+
+The operating model requires:
 
 - clean VPS controlled by Syncmetric or client-approved provider;
 - EU region, preferably Slovakia/Germany/Austria/Czechia;

@@ -1,5 +1,30 @@
 # Build Journal
 
+## 2026-08-07 - Corvinum production backlog and two-server boundary collected
+
+The production target is now explicit: `corvinum-main` at FORPSI runs the
+PeopleOps application, PostgreSQL, and protected media; `corvinum-bsite` at
+Contabo stores encrypted backup archives only. The latter is not a warm
+standby, holds no application secrets or decryption private key, and cannot
+serve users. Existing fictional staging remains on `syncmetric-prime` and must
+never receive a production restore.
+
+`docs/deployment/corvinum-production-readiness.md` consolidates the launch work
+that had been spread across product questions, security notes, the general
+readiness journal, and deployment runbooks. The main engineering blockers are
+account onboarding/credential recovery, privileged-auth hardening, a safe
+production initializer, complete retention/erasure, current audit coverage,
+media lifecycle, independent outbound-mail gates, fail-closed configuration
+checks, and a production restore rehearsal.
+
+The inventory found a specific bootstrap risk: Corvinum's activation checklist
+is created only by `seed_corvinum_demo`, which also creates known-password demo
+users and fictional operational/pay data. Production therefore needs a clean
+initializer and a system check that refuses an empty critical checklist; the
+demo command must be unavailable or fail closed. The paper archive question
+was also renumbered from the colliding C-Q23 to C-Q25, leaving C-Q23 as the
+offer-email legal gate and C-Q24 as onboarding.
+
 ## 2026-08-07 - CorvinumEU production onboarding authority documented
 
 The owner approved the Corvinum PeopleOps invitation hierarchy for production.
@@ -361,7 +386,7 @@ anyway when there is no alternative. Scope is work papers only; identity and
 civil-status papers stay out until there is a written legal position. One
 change to the proposal — the label goes on the sleeve, never on the document,
 because an altered identity document is invalid in several jurisdictions.
-C-Q23 asks the four questions that decide whether it is built.
+C-Q25 asks the four questions that decide whether it is built.
 
 Jober 1118, CorvinumEU 716, browser 70 (not re-run).
 

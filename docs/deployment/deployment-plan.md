@@ -1,10 +1,13 @@
 # Deployment plan — Dokku on one VPS, both thin clients
 
-> **CorvinumEU production decision (2026-07-15):** Corvinum runs on its own
-> cost-first FORPSI Basic VPS with on-demand staging and an independent
-> encrypted Contabo backup target. The Corvinum rows below describe app naming
-> and settings only; their previous shared/always-on hosting assumption is
-> superseded by [corvinum-basic-production.md](corvinum-basic-production.md).
+> **CorvinumEU production decision (updated 2026-08-07):** the two permanent
+> hosts are FORPSI `corvinum-main` for production and Contabo
+> `corvinum-bsite` for encrypted backups only. Existing fictional staging stays
+> on `syncmetric-prime`, outside that pair. The Corvinum rows below describe
+> app naming and settings only; their previous shared/always-on hosting
+> assumption is superseded by
+> [corvinum-basic-production.md](corvinum-basic-production.md) and the canonical
+> [production backlog](corvinum-production-readiness.md).
 > Jober’s topology is unchanged.
 
 Contextual tooltips are shipped in the existing CSS, JavaScript, and templates.
@@ -27,8 +30,8 @@ Jober staging detail sheet and is referenced below.
 |---|---|---|---|
 | `jober-staging` | `config.settings.production` | `staging.<jober-domain>` | `pg-jober-staging` |
 | `jober` | `config.settings.production` | `<jober-domain>` | `pg-jober` |
-| `corvinum-staging` | `clients.corvinum_eu.production` | `staging.<corvinum-domain>` | `pg-corvinum-staging` |
-| `corvinum` | `clients.corvinum_eu.production` | `<corvinum-domain>` | `pg-corvinum` |
+| `corvinum-staging` on `syncmetric-prime` | `clients.corvinum_eu.production` | current staging domain | `pg-corvinum-staging` |
+| `corvinum` on `corvinum-main` | `clients.corvinum_eu.production` | `<corvinum-domain>` | `pg-corvinum` |
 
 Same image everywhere; **`DJANGO_SETTINGS_MODULE` is the only thing that
 selects the client** (proven daily by the local dual-demo setup). Staging
@@ -124,21 +127,19 @@ Client-specific env:
    gate, ledger, payslip email to a test mailbox via real SMTP).
 3. Production apps only after each client's acceptance + legal gates.
 
-## Asks (what execution is blocked on)
+## Asks and current state
 
-| # | Ask | Blocks |
+| # | Ask/status | Blocks |
 |---|---|---|
-| D1 | SSH access to **syncmetric-prime** (named 2026-07-12; fresh, Dokku to be installed per runbook) | everything |
-| D2 | Parent domain + `jober-staging.<parent>` A record (subdomains chosen 2026-07-12) | Jober app, Twilio webhook |
-| D3 | `corvinum-staging.<parent>` A record (same parent) | Corvinum app |
-| D4 | Doppler service tokens (per app/config) | secrets sync |
-| D5 | SMTP account for CorvinumEU payslips | payslip email beyond demo |
-| D6 | Off-site backup target (bucket or host) | backup schedule |
+| D1–D3 | **Completed for staging:** `syncmetric-prime`, both public staging apps, DNS/TLS and per-app databases exist | — |
+| D4 | Staging Doppler configs exist; create and inject a separate production Corvinum config for `corvinum-main` | production secrets/runtime |
+| D5 | `noreply@corvinum.eu` SMTP is proven with controlled delivery; finish production sender/DPA/retention/DNS and bounce handling | real payslip/offer delivery |
+| D6 | **Target selected:** Contabo `corvinum-bsite`; provision, harden, install encrypted transfer/health schedules, and pass restore drill | real-data backup gate |
 | D7 | Twilio account upgrade decision | Jober SMS without trial prefix |
-| D8 | Legal gates: Jober LIA/contract text; CorvinumEU C-Q6/13/16 | real data on production |
+| D8 | Corvinum legal/privacy/retention and product gates in `corvinum-production-readiness.md` | real Corvinum users/data |
+| D9 | Provision/harden FORPSI `corvinum-main` and choose the final production domain | Corvinum production deploy |
 
-When D1–D4 land, staging deployment is one working session. The concrete,
-value-filled runbook for the named box is
+The concrete staging runbook is
 [syncmetric-prime-staging.md](syncmetric-prime-staging.md) (owner decision
 2026-07-12: fresh VPS **syncmetric-prime**, per-client subdomains under one
 parent, staging-only both clients, owner-runs-I-guide).

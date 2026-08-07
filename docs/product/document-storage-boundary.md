@@ -64,7 +64,7 @@ current certificate file path enforces the three-value `FILE_ALLOWED` set; a
 broader metadata-requirement catalogue remains separate future work — now
 sketched as the **paper archive register**
 ([`paper-archive-register-design.md`](paper-archive-register-design.md),
-designed 2026-08-05, not built, C-Q23). It stays inside this boundary: work
+designed 2026-08-05, not built, C-Q25). It stays inside this boundary: work
 papers only, metadata only, and an opaque token in place of any document
 number.
 

@@ -6,7 +6,7 @@
 >
 > Prepared 2026-08-05, from an owner proposal. The boundary it sits inside:
 > [`document-storage-boundary.md`](document-storage-boundary.md) (adopted
-> 2026-07-31). Open client questions: **C-Q7**, **C-Q23**.
+> 2026-07-31). Open client questions: **C-Q7**, **C-Q25**.
 
 ## The proposal
 
@@ -160,7 +160,7 @@ Size is comparable to the existing certificates feature: a model and catalogue,
 a person panel, a label PDF, a token resolve view, and the expiry rules wired
 into the alerts that already exist.
 
-## What to ask the client (C-Q23)
+## What to ask the client (C-Q25)
 
 1. Which papers does the office actually keep, and which of them expire?
    (This is also the answer to C-Q7.)

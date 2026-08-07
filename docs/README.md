@@ -44,7 +44,6 @@ staff-invitation subsystem deferred) ·
 | Doc | Owner | Purpose |
 |---|---|---|
 | `deployment-plan.md` | Platform | Dokku/VPS deployment architecture for both clients |
-| `deployment-plan.md` | Platform | Dokku/VPS architecture, both clients, asks D1–D8 |
 | `syncmetric-prime-staging.md` | Platform | Concrete staging runbook for the syncmetric-prime VPS |
 | `production-readiness.md` | Platform | Static serving, gunicorn, image checks |
 | `local-dev-db.md` | Platform | Dev Postgres container |
@@ -53,6 +52,8 @@ staff-invitation subsystem deferred) ·
 | `jober-dokku-staging.md` | Jober | Staging skeleton (pending server names) |
 | `jober-twilio-setup.md` | Jober | Twilio + Doppler secrets |
 | `corvinum-demo-runbook.md` | CorvinumEU | Presenter script (~30 min, port 8001) |
+| `corvinum-basic-production.md` | CorvinumEU | Detailed two-host operating runbook for FORPSI `corvinum-main` and encrypted-backup-only Contabo `corvinum-bsite` |
+| `corvinum-production-readiness.md` | CorvinumEU | Canonical launch backlog: P0 engineering, client/legal decisions, `corvinum-main`/`corvinum-bsite`, release evidence, and explicit non-blockers |
 | `avatar-upload-acceptance.md` | Platform | Shared fictional avatar formats, rejection, UI-consumer, and stored-WebP acceptance check |
 | `certificate-upload-acceptance.md` | Platform | Shared fictional PNG/PDF, storage-boundary, multilingual, and cleanup acceptance check |
 
@@ -71,7 +72,7 @@ staff-invitation subsystem deferred) ·
 | `certificate-upload-design.md` | Platform | Shared forklift/crane/welding upload, renewal/history, RBAC, validation, and emergency purge — implemented 2026-07-31 |
 | `document-storage-boundary.md` | Platform | Metadata-only/prohibited high-risk document boundary and optional separately scoped Secure Document Vault |
 | `secure-document-vault-design.md` | Platform | Engineering design for the deferred, separately priced vault — architecture, data model, integration seam, phasing. **Designed, not built** |
-| `paper-archive-register-design.md` | Platform | Track that a physical paper exists and when it expires, with a QR label for the archive sleeve and no scan ever stored. **Designed, not built** (C-Q23) |
+| `paper-archive-register-design.md` | Platform | Track that a physical paper exists and when it expires, with a QR label for the archive sleeve and no scan ever stored. **Designed, not built** (C-Q25) |
 | `secure-document-vault-proposal.md` | Platform | Client-facing offer for the same module: what it adds, what the client must supply, why it is priced apart (C-Q18) |
 | `accountant-data-handoff.md` | Platform | Separate Slovak/Hungarian accountant handoffs: country-specific payroll facts and tax declarations, medical/ID exclusions, secure routing, and refusal of mixed/unresolved jurisdictions |
 | `feedback-flyer-design.md` | Platform | Downloadable PDF+QR flyer for feedback links, Cyrillic-capable via a vendored font (ADR 0028) — implemented 2026-07-24 |
@@ -87,7 +88,7 @@ staff-invitation subsystem deferred) ·
 | `jober-offer-email-design.md` | Jober | Job-offer emails: per-language templates, per-person panel and capped bulk send (ADR 0029, implemented) |
 | `jober-telegram-channel-design.md` | Jober | Canonical Manager/Admin-only, outbound Telegram channel-broadcast design — approved direction, not implemented, client/privacy gates open |
 | `jober-demo-inventory.md`, `jober-demo-to-django-map.md`, `jober-removed-feature-inventory.md`, `jober-source-register.md` | Jober | Build-era inventories and source register |
-| `corvinum-open-questions.md` | CorvinumEU | Corvinum build defaults, answered decisions, and production questions through C-Q24 |
+| `corvinum-open-questions.md` | CorvinumEU | Corvinum build defaults, answered decisions, and production questions through C-Q25 |
 | `corvinum-account-onboarding.md` | CorvinumEU | Production account invitation authority, security baseline, bootstrap boundary, and remaining decisions — **approved role matrix, not implemented** |
 
 ## docs/security/

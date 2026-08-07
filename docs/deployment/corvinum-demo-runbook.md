@@ -805,14 +805,15 @@ confirmed client scope.
    (C-Q6, C-Q15).
 4. Supply the mandatory document list and legally approved retention periods
    for compliance, ledger/equipment history, and pay data (C-Q7, C-Q13, C-Q16).
-5. Confirm Slovak/dark defaults and provide staging/production names
+5. Confirm Slovak/dark defaults and the final production domain. Host names are
+   answered: `corvinum-main` at FORPSI and `corvinum-bsite` at Contabo
    (C-Q8, C-Q14).
 6. Confirm CorvinumEU's job-offer lawful basis/transparency text, mail-provider
    DPA, and outbound-message retention period before any real-recipient use
    (C-Q23).
 
 See [corvinum-open-questions.md](../product/corvinum-open-questions.md) for the
-full C-Q1–C-Q23 register.
+full register through C-Q25.
 
 ## Mandatory caveats
 

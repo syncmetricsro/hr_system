@@ -4,7 +4,13 @@ Tracks what must be true before the Jober app serves real users/data, and the
 state of each gate. "Ready" = verified; "Open" = not done / needs a human or an
 external input. Update this whenever a gate changes state.
 
-Last updated: 2026-07-31
+Last updated: 2026-08-07
+
+CorvinumEU now has a dedicated canonical launch inventory in
+[`corvinum-production-readiness.md`](corvinum-production-readiness.md). This
+platform journal remains useful historical evidence, but Corvinum go/no-go
+must use the dedicated inventory and its `corvinum-main` / `corvinum-bsite`
+topology.
 
 ## Pre-production review findings (2026-07-25)
 
