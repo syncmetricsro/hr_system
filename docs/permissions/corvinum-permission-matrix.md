@@ -1,6 +1,6 @@
 # Permission Matrix — CorvinumEU
 
-Last updated: 2026-08-02
+Last updated: 2026-08-07
 
 Human-readable mirror of `clients/corvinum_eu/policies.py` (`ACTION_ROLES`).
 When you change one, change the other in the same commit. The mechanism
@@ -8,7 +8,8 @@ When you change one, change the other in the same commit. The mechanism
 client policy. **Any core action not listed here is denied for every
 CorvinumEU role** (deny-by-default lookup) — that covers the Jober-only
 features CorvinumEU never mounts (SMS, accommodation, transport, finance P&L,
-feedback).
+feedback). Structured job-offer email is the narrow exception inside the
+otherwise disabled messaging package (ADR 0029 amendment).
 
 Roles: the core four; CorvinumEU's "HR Admin" maps to **Manager/Admin**
 (C-Q9, ADR 0022). Reads are broad per ADR 0008; superusers pass every check. ADR 0026 adds office scoping platform-wide, but it is a **no-op here**: CorvinumEU is single-site and never creates `Office` rows, so `user_office_scope` returns its unrestricted sentinel and no queryset is narrowed.
@@ -48,6 +49,10 @@ Legend: ✅ permitted · — denied
 | `wage.view` | — | — | ✅ | ✅ |
 | `payslip.manage` | — | — | ✅ | — |
 | `payslip.view` | — | — | ✅ | ✅ |
+| `offer_email.send` | — | — | ✅ | — |
+| `offer.manage` | — | — | ✅ | — |
+| `offer_template.manage` | — | — | ✅ | — |
+| `offer_email.bulk_send` | — | — | ✅ | — |
 | `blacklist.propose` | — | ✅ | ✅ | — |
 | `blacklist.decide` | — | — | ✅ | — |
 | `blacklist.view_reason` | — | — | ✅ | — |
@@ -56,14 +61,13 @@ Legend: ✅ permitted · — denied
 | `export.approved` | — | — | ✅ | ✅ |
 | `audit.view` (Observer only from 2026-08-04) | — | — | — | ✅ |
 | `staff_activity.view` (Observer only from 2026-08-04) | — | — | — | ✅ |
-| `offer_email.send` / `offer.manage` / `offer_template.manage` / `offer_email.bulk_send` (worker messaging not in this product) | — | — | — | — |
 
-> **No worker messaging (ADR 0029, peopleops design §15.9).** Neither SMS nor
-> job-offer emails exist here: worker contact is phone + Messenger. The four
-> `offer*` actions are absent from `clients/corvinum_eu/policies.py` (a missing
-> key is deny), the `offer_emails` flag is `False`, and `features.messaging` is
-> not in `INSTALLED_APPS` — so the routes do not exist either. This is a data
-> and configuration difference, not a client branch in core.
+> **Offer email only (owner approval, 2026-08-07; ADR 0029).** CorvinumEU's HR
+> Admin/Manager may author offers and language-specific templates, send one
+> selected offer from a worker profile, or confirm a previewed bulk campaign.
+> Recruiter, Coordinator, and Observer receive no offer action. Ordinary worker
+> messaging is still excluded: `worker_messaging` remains off, so SMS/Twilio
+> routes do not exist and routine contact remains phone + Messenger.
 
 > **Activation needs a manager here too (since 2026-07-27).** The activation
 > route is shared core code, so CorvinumEU gets the same control as Jober: a

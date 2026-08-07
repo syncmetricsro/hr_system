@@ -13,6 +13,17 @@ one with a live mail server unguarded — and the old check was gated on
 `FEATURE_FLAGS["offer_emails"]`, always False there. The decisions below are
 unchanged; only the module boundary moved.
 
+Amendment note, 2026-08-07: the owner approved the structured job-offer email
+workflow for CorvinumEU. This supersedes only the Corvinum exclusion in the
+original decision. `features.messaging` is installed for that client with
+`offer_emails` enabled, while `worker_messaging` remains disabled, so no SMS
+route or Twilio workflow is exposed. CorvinumEU's HR Admin maps to `manager`;
+only that role receives per-person sending, offer authoring, template
+management, and bulk-send actions. SMTP credentials and the from address stay
+in environment secrets. Non-production keeps `EMAIL_ALLOWED_RECIPIENTS`, and
+real recipients remain behind the real-data, lawful-basis, retention, and
+provider gates.
+
 ## Context
 
 Jober could reach a worker by SMS only. `features/messaging` is Twilio-shaped end
@@ -98,14 +109,15 @@ field, and any email counterpart to the `SMS_ALLOWED_RECIPIENTS` staging guard.
   `messaging.W001` when outreach is enabled with a real SMTP backend, DEBUG off,
   and no allowlist. Real sends to real people remain behind the real-data gate.
 
-- **CorvinumEU gets neither the route nor the permission.** `offer_emails` is
-  `False` in base and in `clients/corvinum_eu/settings.py`, the actions are absent
-  from its policy module, and `features.messaging` is not installed there at all.
-  Automated notification to workers is rejected in its design (§15.9).
+- **Client selection remains explicit.** Jober grants its original role set.
+  CorvinumEU now mounts only the structured offer-email workflow and grants all
+  four offer actions to its Manager/HR Admin role. Its SMS flag stays off and
+  the SMS routes remain absent, preserving the interview decision that ordinary
+  worker contact happens by phone or Messenger.
 
 ## Consequences
 
-- Jober gains an auditable outreach channel; every attempt is an `OutboundEmail`
+- Enabled clients gain an auditable outreach channel; every attempt is an `OutboundEmail`
   row whatever the outcome, and a campaign is a single `EmailBatch`.
 - Sends are **synchronous**, like `send_sms`. A batch of 100 holds the request for
   the length of 100 SMTP round-trips. `OFFER_EMAIL_BATCH_LIMIT` caps the blast

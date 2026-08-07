@@ -51,6 +51,7 @@
 | Worker feedback intake | `features/feedback` | ON | CURRENT one-way inbox | OFF | Flag OFF | CorvinumEU rejected worker portal/feedback |
 | Feedback ticket/reply/resolve | `features/feedback` | SPEC | Not implemented | OFF | Not implemented | Identity, reply delivery, and retention open |
 | SMS messaging | `features/messaging` | ON, PENDING | CURRENT Twilio path | OFF | Flag OFF | SK/HU segment; personal-data content pending DPA/provider setup |
+| Structured job-offer email | `features/messaging` | ON, PENDING | CURRENT | ON, PENDING | CURRENT, Manager/HR Admin-only | Per-language templates, recipient preview, opt-out/blacklist guards and audited sends. Real recipients remain gated by each client's lawful basis, provider DPA, retention decision and production readiness |
 | Telegram channel bot | `features/messaging` | ON, PENDING | Not implemented | OFF | Not implemented | Manager/Admin-only, outbound text to one Ukrainian-worker channel; no per-worker delivery model or inbound bot. Pending client access/privacy gates; canonical design: `docs/product/jober-telegram-channel-design.md` |
 | Person history with actor | `core/audit`, `core/people` | SPEC | History lacks complete actor coverage | ON/general audit | Audit current | Jober prefers person timeline; global nav may later be removed |
 | Per-project profitability/P&L | `features/profitability` | ON, SPEC | Flag ON under `features.profitability`; model differs | OFF | Flag OFF | Unblocked by verified Jober workbook; hard client divergence |
@@ -75,7 +76,8 @@
   query behaves exactly as it did before ADR 0026. This is the pattern to copy
   for future site-shaped divergences — it keeps client branching out of `core`.
 - Jober messaging selects SMS and a Telegram broadcast channel. CorvinumEU keeps
-  automated worker messaging OFF.
+  SMS and general worker messaging OFF, but owner approval on 2026-08-07 enables
+  the narrower structured job-offer email workflow for Manager/HR Admin.
 - Both clients may use an operational recovery/advance capability, but client
   policies define entry types and reports. Neither capability authorizes payroll
   computation.
