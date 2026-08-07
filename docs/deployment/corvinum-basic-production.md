@@ -30,6 +30,11 @@ Do not admit real data until all of these are complete:
   see `docs/product/document-storage-boundary.md` §Current at-rest trust
   boundary.
 - No raw payment-card data is collected or backed up by either system.
+- The production account-onboarding gate in
+  `docs/product/corvinum-account-onboarding.md` is implemented and rehearsed:
+  Observer and Manager can invite Recruiter, Coordinator, or Manager through a
+  secure audited flow; nobody can invite an Observer; Manager TOTP enrolment
+  and account recovery work without shared or temporary passwords.
 
 Contabo’s DPA is completed in its customer panel; provider guidance is at
 [Contabo’s DPA article](https://help.contabo.com/en/support/solutions/articles/103000274684-can-i-create-a-data-processing-agreement-with-contabo-/).
@@ -208,3 +213,6 @@ Once per calendar month, schedule a short maintenance window:
 - [ ] Website Supabase database + private CV bucket export is automated,
       encrypted, transferred, and restore-tested.
 - [ ] A monthly restore drill has completed in under four business hours.
+- [ ] The first Observer was created through the controlled deployment
+      bootstrap; that Observer successfully invited a Manager through the
+      expiring, single-use onboarding flow, and the Manager completed TOTP.

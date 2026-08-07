@@ -136,7 +136,7 @@ These are intentionally excluded from the current CorvinumEU product scope.
 | HR Admin | Verify documents, approve profile completeness, manage HR process | Full worker/candidate HR data, document review, approvals |
 | Regional / Operational Manager | Oversee recruiters/coordinators and approve sensitive decisions | Region/project-level visibility, activation approval, blacklist approval |
 | System Admin | Manage users, permissions, settings, audit logs | Full system access |
-| Observer / Read-only User | View selected reports and records without editing | Read-only access to permitted data |
+| Observer / Read-only User | View selected reports and records; bootstrap operational accounts | Read-only access to permitted business data, plus the narrow ability to invite Recruiter, Coordinator, or Manager accounts |
 | Owner / Executive | See high-level operational state | Management dashboard and reports |
 
 ## 4.2 Permission principles
@@ -151,7 +151,9 @@ Core rules:
 - blacklist reasons should be restricted to HR/management/admin roles;
 - advance and deduction entries are sensitive financial data, visible/editable only to office/HR/management roles, not to recruiters by default;
 - equipment issuance and return can be recorded by coordinators/HR for their own workers;
-- observers should not be able to modify records;
+- observers should not modify worker, compliance, finance, or operational
+  records; production account invitations are the narrow exception approved
+  on 2026-08-07;
 - all sensitive changes should be audit logged.
 
 ---
@@ -2706,6 +2708,21 @@ Use this section during discussion.
 - The supported handoff jurisdictions are Slovakia and Hungary, with separate
   rules and exports. Mixed, posted, unresolved cross-border, and other-country
   cases are refused rather than approximated with either schedule.
+
+## Product-owner decision adopted 2026-08-07 — production onboarding
+
+- Corvinum PeopleOps requires secure in-app account onboarding before
+  production; manually created and seeded demo accounts are not the production
+  workflow.
+- Observer may invite Manager, Coordinator, and Recruiter accounts.
+- Manager may invite Manager, Coordinator, and Recruiter accounts.
+- Recruiter and Coordinator cannot invite accounts, and no role can invite an
+  Observer. The first Observer is a controlled deployment bootstrap.
+- Observer's invitation power is a narrow exception to read-only business-data
+  access and must not be implemented by granting broad `user.manage`.
+- Secure acceptance, audit, Manager TOTP enrolment, credential recovery, and
+  the remaining operational choices are specified in
+  [`corvinum-account-onboarding.md`](../product/corvinum-account-onboarding.md).
 
 ## Rejected ideas
 

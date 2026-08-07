@@ -1,5 +1,20 @@
 # Build Journal
 
+## 2026-08-07 - CorvinumEU production onboarding authority documented
+
+The owner approved the Corvinum PeopleOps invitation hierarchy for production.
+Observer and Manager may each invite Recruiter, Coordinator, or Manager;
+Recruiter and Coordinator may not invite, and no application role may invite
+an Observer. The first Observer remains a controlled deployment bootstrap.
+
+This is recorded as a production blocker, not as shipped functionality. The
+target policy deliberately separates the Observer's narrow invitation power
+from broad `user.manage`, preserving Observer's read-only boundary over worker,
+compliance, finance, and operational records. The product note also records the
+minimum secure activation, audit, Manager TOTP, recovery, and staging-rehearsal
+requirements while leaving expiry and lifecycle choices open for the later
+implementation ADR.
+
 ## 2026-08-07 - CorvinumEU structured job-offer email approved
 
 CorvinumEU now mounts the existing offer-email half of `features.messaging`

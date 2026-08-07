@@ -62,6 +62,24 @@ Legend: ✅ permitted · — denied
 | `audit.view` (Observer only from 2026-08-04) | — | — | — | ✅ |
 | `staff_activity.view` (Observer only from 2026-08-04) | — | — | — | ✅ |
 
+## Production onboarding target (approved, not implemented)
+
+Corvinum's production invitation hierarchy is approved, but no invitation
+route or narrow invitation action exists yet:
+
+| Invitation target | Recruiter | Coordinator | Manager/Admin (HR Admin) | Observer |
+|---|---:|---:|---:|---:|
+| Recruiter account | — | — | ✅ | ✅ |
+| Coordinator account | — | — | ✅ | ✅ |
+| Manager account | — | — | ✅ | ✅ |
+| Observer account | — | — | — | — |
+
+This table records the target policy, not current runtime behavior. Observer
+must receive only a dedicated invitation capability; the broader
+`user.manage` action remains Manager-only. No role may invite an Observer; the
+first Observer is created through the controlled deployment bootstrap. See
+[`corvinum-account-onboarding.md`](../product/corvinum-account-onboarding.md).
+
 > **Offer email only (owner approval, 2026-08-07; ADR 0029).** CorvinumEU's HR
 > Admin/Manager may author offers and language-specific templates, send one
 > selected offer from a worker profile, or confirm a previewed bulk campaign.

@@ -87,7 +87,8 @@ staff-invitation subsystem deferred) ·
 | `jober-offer-email-design.md` | Jober | Job-offer emails: per-language templates, per-person panel and capped bulk send (ADR 0029, implemented) |
 | `jober-telegram-channel-design.md` | Jober | Canonical Manager/Admin-only, outbound Telegram channel-broadcast design — approved direction, not implemented, client/privacy gates open |
 | `jober-demo-inventory.md`, `jober-demo-to-django-map.md`, `jober-removed-feature-inventory.md`, `jober-source-register.md` | Jober | Build-era inventories and source register |
-| `corvinum-open-questions.md` | CorvinumEU | C-Q1…C-Q19 build defaults awaiting client confirmation |
+| `corvinum-open-questions.md` | CorvinumEU | Corvinum build defaults, answered decisions, and production questions through C-Q24 |
+| `corvinum-account-onboarding.md` | CorvinumEU | Production account invitation authority, security baseline, bootstrap boundary, and remaining decisions — **approved role matrix, not implemented** |
 
 ## docs/security/
 | Doc | Owner | Purpose |
