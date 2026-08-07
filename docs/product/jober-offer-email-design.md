@@ -18,7 +18,10 @@ default `localhost` host as unset). To enable later: set `DJANGO_EMAIL_HOST`,
 `EMAIL_ALLOWED_RECIPIENTS`.
 
 CorvinumEU payslip delivery is unaffected and verified end to end against real
-SMTP — see `docs/deployment/corvinum-demo-verification-summary.md`.
+SMTP — see `docs/deployment/corvinum-demo-verification-summary.md`. On
+2026-08-07 the owner also approved this structured offer-email workflow for
+CorvinumEU, Manager/HR Admin-only; the narrower client policy is recorded in
+ADR 0029 and its permission matrix.
 
 ### Environment state
 
@@ -173,5 +176,6 @@ backend, the deploy check), `tests/test_offer_email_office_scoping.py`
 - **No self-service unsubscribe link.** Objection is recorded by staff. A
   tokenised public endpoint touching a person record needs its own design.
 - **No open/click tracking.**
-- **Not for CorvinumEU.** Its design rejects automated worker notification
-  (§15.9); it gets neither the flag, the route, nor the permission.
+- **Not general CorvinumEU messaging.** CorvinumEU enables this structured
+  job-offer email workflow for Manager/HR Admin only. SMS, arbitrary group
+  email, scheduling, and Messenger automation remain excluded.

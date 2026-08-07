@@ -49,8 +49,9 @@ The local Corvinum SMTP demo uses Doppler project `hr_system`, config
 doppler configure set --scope . project=hr_system config=dev_corvinum_demo
 ```
 
-**Set the recipient allowlist once, before any real-SMTP run.** Payslip delivery
-consults `EMAIL_ALLOWED_RECIPIENTS` (ADR 0023 amendment); empty means
+**Set the recipient allowlist once, before any real-SMTP run.** Payslip and
+structured job-offer delivery consult `EMAIL_ALLOWED_RECIPIENTS` (ADR 0023
+amendment / ADR 0029); empty means
 *unrestricted*, which is correct in production and dangerous on a demo box:
 
 ```bash
@@ -186,8 +187,10 @@ All four accounts use the password `demo-corvinum-2026`.
   items are critical and initially open.
 - **Alfa Metallwerk / CV-ALFA** and **Beta Logistik / CV-BETA** are the two
   partner projects.
+- **CNC operátor — demo** is a fictional open job offer linked to Alfa
+  Metallwerk, with Slovak and Hungarian templates for every offer-email kind.
 
-## Extended walkthrough - 40–45 minutes
+## Extended walkthrough - 45–50 minutes
 
 ### 1. Secure entry and client isolation - 3 minutes
 
@@ -608,6 +611,22 @@ it never exposes a server-error page.
 If the app was intentionally started without Doppler, the console backend
 prints MIME output instead and does **not** offer a clickable attachment.
 
+### 12A. Structured job-offer email - 3 minutes
+
+1. Open **Offers** as HR Admin. Point out that Recruiter, Coordinator, and
+   Observer do not receive this navigation entry or its routes.
+2. Open **CNC operátor — demo**, review its fictional terms, and show the SK/HU
+   templates. Explain that the worker's preferred language selects the row.
+3. Choose **Send to many** and review the exact included and excluded recipient
+   lists, the rendered preview, and the confirmation checkbox. Do not confirm
+   during an ordinary walkthrough.
+4. If delivery is an explicitly agreed test, first replace one fictional
+   worker's address with the controlled allowlisted inbox and send to that one
+   person. Never widen or clear `EMAIL_ALLOWED_RECIPIENTS` for a demo.
+5. State the boundary: this is a structured offer, not arbitrary group mail;
+   opt-out, blacklist, missing-address and environment guards run before SMTP,
+   and every attempt is audited. SMS remains disabled.
+
 ### 13. Audit filters and person history - 3 minutes
 
 1. Open **Audit** as HR Admin. Filter by Marek or by an action from this
@@ -749,9 +768,9 @@ not be presented as hidden or unfinished menu items:
 - SMS or worker-portal feedback.
 
 Corvinum currently demonstrates people and projects, recruitment trials,
-compliance, activation checklists, equipment review, blacklist decisions,
-advances/deductions, calendar-month gross wages, recorded net payslips,
-notifications, Reports, and Audit. These
+structured Manager-only job-offer email, compliance, activation checklists,
+equipment review, blacklist decisions, advances/deductions, calendar-month
+gross wages, recorded net payslips, notifications, Reports, and Audit. These
 boundaries come from the client feature configuration and remain subject to
 confirmed client scope.
 
@@ -788,9 +807,12 @@ confirmed client scope.
    for compliance, ledger/equipment history, and pay data (C-Q7, C-Q13, C-Q16).
 5. Confirm Slovak/dark defaults and provide staging/production names
    (C-Q8, C-Q14).
+6. Confirm CorvinumEU's job-offer lawful basis/transparency text, mail-provider
+   DPA, and outbound-message retention period before any real-recipient use
+   (C-Q23).
 
 See [corvinum-open-questions.md](../product/corvinum-open-questions.md) for the
-full C-Q1–C-Q16 register.
+full C-Q1–C-Q23 register.
 
 ## Mandatory caveats
 

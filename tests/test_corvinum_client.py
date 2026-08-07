@@ -33,6 +33,8 @@ reverse("wage_list")
 reverse("wage_record")
 reverse("notification_panel")
 reverse("notification_dismiss")
+reverse("offer_list")
+reverse("offer_create")
 if "testserver" not in s.ALLOWED_HOSTS:
     s.ALLOWED_HOSTS.append("testserver")
 from django.test import Client
@@ -56,6 +58,11 @@ assert can(User(role="manager"), Action.WAGE_MANAGE)
 assert can(User(role="observer"), Action.WAGE_VIEW)
 assert not can(User(role="observer"), Action.WAGE_MANAGE)
 assert can(User(role="observer"), Action.PAYSLIP_VIEW)
+assert can(User(role="manager"), Action.OFFER_EMAIL_SEND)
+assert can(User(role="manager"), Action.OFFER_MANAGE)
+assert can(User(role="manager"), Action.OFFER_TEMPLATE_MANAGE)
+assert can(User(role="manager"), Action.OFFER_EMAIL_BULK_SEND)
+assert not can(User(role="recruiter"), Action.OFFER_EMAIL_SEND)
 client = Client()
 login = client.get(reverse("login"))
 login_body = login.content.decode("utf-8")
@@ -71,7 +78,8 @@ assert response["Location"] == "/sk/people/"
 assert response.cookies["corvinum_language"].value == "sk"
 assert "email" in PersonForm.base_fields
 assert "core.notifications" in s.INSTALLED_APPS
-# …and must NOT mount finance, SMS, accommodation, or transport.
+# …and must NOT mount finance, SMS, accommodation, or transport. Job-offer
+# email is a separate, explicitly approved route set.
 for absent in ("finance_summary", "accommodation_list", "transport_trends"):
     try:
         reverse(absent)

@@ -5,8 +5,9 @@
 # Same production image as Jober — DJANGO_SETTINGS_MODULE selects the client.
 # Publishes http://localhost:8001 with its own PostgreSQL and network, so the
 # Jober demo (scripts/dev_app.sh, port 8000) can run at the same time.
-# Payslip emails use the console backend unless a complete, supported SMTP
-# configuration is injected into this process (normally through Doppler).
+# Payslip and structured job-offer emails use the console backend unless a
+# complete, supported SMTP configuration is injected into this process
+# (normally through Doppler).
 #
 # Usage: scripts/corvinum_app.sh up|down|status|logs|rebuild
 set -euo pipefail
@@ -120,7 +121,7 @@ print_access() {
     Coordinator         coordinator@demo.corvinum.test
     Observer            observer@demo.corvinum.test
 
-  Payslip email delivery: ${EMAIL_DELIVERY}
+  Email delivery (payslips + job offers): ${EMAIL_DELIVERY}
   $([ "$EMAIL_DELIVERY" = "console" ] && printf '%s' 'View sent email with: scripts/corvinum_app.sh logs' || printf '%s' 'SMTP credentials were injected into the web runtime only.')
   Stop with: scripts/corvinum_app.sh down
 EOF

@@ -1,5 +1,27 @@
 # Build Journal
 
+## 2026-08-07 - CorvinumEU structured job-offer email approved
+
+CorvinumEU now mounts the existing offer-email half of `features.messaging`
+without mounting its SMS half. The client flag and URL surface expose Offers;
+all four authoring/send actions are restricted to Corvinum's HR Admin/Manager
+mapping. Recruiter, Coordinator, and Observer receive neither navigation nor
+permission, and the Twilio webhook and SMS send route remain absent.
+
+The existing Django mail backend, recipient allowlist, opt-out, blacklist,
+recipient preview, confirmation, batch cap and audit ledger remain the product
+boundary. No mailbox address or credential entered Git. Product approval is
+not treated as legal approval: CorvinumEU's lawful basis/transparency text,
+provider DPA and retention period are C-Q23, and real-recipient use remains
+behind the real-data gate.
+
+The localhost fictional scenario now includes SK/HU templates and one clearly
+marked demo offer. The Corvinum Help article, client matrix, permission matrix,
+product design, environment notes and presenter runbook describe the workflow
+and its boundaries. The local runner's SMTP status label now covers payslips
+and job offers; both still use the same secret-injected backend and controlled
+recipient allowlist.
+
 ## 2026-08-06 - Finance Help follows both entry paths and every report
 
 Jober's in-app Finance article now matches the workflow on the deployed page.

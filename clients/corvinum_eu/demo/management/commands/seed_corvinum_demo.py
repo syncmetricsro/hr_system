@@ -18,6 +18,10 @@ from features.logistics.services import (
     issue_equipment,
     review_deduction,
 )
+from features.messaging.management.commands.seed_offer_emails import (
+    TEMPLATES as OFFER_EMAIL_TEMPLATES,
+)
+from features.messaging.models import JobOffer, OfferEmailTemplate
 from features.payslips.models import Payslip
 from features.payslips.services import record_payslip
 from features.wage_ledger.models import WageEntry
@@ -132,6 +136,31 @@ class Command(BaseCommand):
         )
         beta, _ = Project.objects.get_or_create(
             code="CV-BETA", defaults={"name": "Beta Logistik"}
+        )
+
+        # Structured offer email (ADR 0029 amendment). Corvinum serves SK/HU,
+        # so seed only those operator-authored rows; UK remains maintained by
+        # Jober's seed rather than appearing as an unusable Corvinum option.
+        for kind, language, subject, body in OFFER_EMAIL_TEMPLATES:
+            if language not in {"sk", "hu"}:
+                continue
+            OfferEmailTemplate.objects.update_or_create(
+                kind=kind,
+                language=language,
+                defaults={"subject": subject, "body": body, "is_active": True},
+            )
+        JobOffer.objects.update_or_create(
+            title="CNC operátor — demo",
+            defaults={
+                "project": alfa,
+                "location": "Komárno",
+                "wage": Decimal("9.50"),
+                "wage_unit": JobOffer.WageUnit.HOUR,
+                "currency": "EUR",
+                "start_date": dt.date(2026, 9, 1),
+                "terms": "Fiktívna demo ponuka / Fiktív bemutató ajánlat.",
+                "is_active": True,
+            },
         )
 
         # Global activation checklist (§5.5).

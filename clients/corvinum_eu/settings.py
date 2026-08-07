@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     "features.advances",
     "features.payslips",
     "features.wage_ledger",
+    "features.messaging",  # job-offer email only; worker SMS remains off (ADR 0029)
     "core.ui",
     "clients.corvinum_eu.demo",
 ]
@@ -45,7 +46,7 @@ FEATURE_FLAGS = {
     "transport": False,  # rejected in interview (§15.8)
     "recruitment_trials": True,  # owner-confirmed for the CorvinumEU demo
     "intake": True,
-    "worker_messaging": False,  # phone + Messenger, no SMS module (§15.9)
+    "worker_messaging": False,  # phone + Messenger, no SMS workflow (§15.9)
     "documents": True,  # compliance certificates + expiry (§5.4)
     "feedback": False,  # worker portal rejected (§16)
     "duplicate_blacklist": True,  # §5.6
@@ -54,10 +55,9 @@ FEATURE_FLAGS = {
     "advances": True,  # advance & deduction ledger (§5.10, Stage C2)
     "payslips": True,  # encrypted payslip email (ADR 0023, Stage C5)
     "wage_ledger": True,  # calendar-month gross wage source values
-    # Automated SMS/email notification to workers is rejected for CorvinumEU
-    # (peopleops design §15.9): contact is phone + Messenger. features.messaging
-    # is not installed here either, so this is belt-and-braces.
-    "offer_emails": False,
+    # Owner-approved 2026-08-07: structured job-offer email is enabled for HR
+    # Admin/Manager only. This does not enable general email or worker SMS.
+    "offer_emails": True,
 }
 
 EQUIPMENT_STOCK_LEDGER_ENABLED = False

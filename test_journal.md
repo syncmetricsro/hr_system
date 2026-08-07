@@ -1,5 +1,26 @@
 # Test Journal
 
+## 2026-08-07 - CorvinumEU offer email stays narrow
+
+- Corvinum-specific regressions prove Manager navigation and workspace access,
+  403/no-link behavior for Recruiter, Coordinator and Observer, the per-person
+  offer panel, absent SMS routes, SK/HU-only fictional seed templates, and an
+  office-less two-recipient bulk campaign through Django's in-memory backend.
+  The latter creates two `SENT` records and one batch count without touching an
+  external provider.
+- Installing `features.messaging` exposed six legacy SMS tests that had relied
+  on the whole app being absent under Corvinum. They are now explicitly
+  Jober-only; the Corvinum tests assert that the SMS route stays unmounted, and
+  the focused Jober SMS module remains **9 passed**.
+- Safe extraction reports **1,714 active / 1,714 translated / 0 fuzzy / 203
+  obsolete** for each SK/HU/UK catalog. It added exactly one Help msgid, and a
+  second extraction was byte-for-byte idempotent. PO/MO synchronization passes.
+- Final lanes: **Jober 1,160 passed / 23 skipped; CorvinumEU 749 passed / 18
+  skipped / 337 deselected.** Production-image/static checks, vendor integrity,
+  no-Node check, Ruff lint/format, dependency direction, Django system checks,
+  both migration checks, shell syntax and catalog validation passed. Browser
+  tests were not run because this slice is not being deployed in this turn.
+
 ## 2026-08-06 - Finance Help names what writes and what only reports
 
 - The Finance article regression renders the English Help page and requires the

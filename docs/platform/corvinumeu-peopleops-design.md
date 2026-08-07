@@ -25,6 +25,13 @@
 >
 > **Source.** Decisions below marked "(interview)" come from that first call; they are not assumed to match Jober.
 >
+> **v0.6 amendment, 2026-08-07.** The owner approved one narrow reversal to
+> the interview's automated-email exclusion: CorvinumEU may use the existing
+> structured job-offer email workflow, restricted to HR Admin/Manager. This is
+> not general group mail and does not enable SMS; phone and Messenger remain the
+> ordinary worker-contact channels. ADR 0029 records the delivery, permission,
+> allowlist, audit and real-data gates.
+>
 > **v0.5.** Adds a design-language section (7.0) aligning the app to the existing **corvinum.eu** brand and the admin panel already embedded in that site. Stack confirmed as Django/htmx, derived from the Jober build (section 12).
 >
 > **v0.5.1 — architecture decision locked.** Syncmetric is building a **white-label staffing-agency HR platform**, not bespoke per-client systems. Jober and CorvinumEU are the first two clients of one shared codebase. **Fork and long-lived-branch options are rejected.** Build order: **finish Jober first → extract the shared core from it → build CorvinumEU as the first thin client** (features + theme + config). See 12.4 and the build roadmap in 12.5.
@@ -93,7 +100,7 @@ These are intentionally excluded from the current CorvinumEU product scope.
 - accommodation, room, bed, lodging, or housing logistics;
 - accommodation cost tracking, rooming lists, rent deductions;
 - transportation route / vehicle / driver logistics (interview: explicitly rejected — routes change constantly and drivers will not maintain them);
-- automated SMS / email notification sending (interview: rejected for MVP — worker contact is by phone call and Facebook Messenger);
+- automated SMS or general email notification sending (interview: rejected for MVP — worker contact is by phone call and Facebook Messenger; structured Manager-only job-offer email approved 2026-08-07);
 - worker self-service or feedback portal;
 - daily shift / rota tables for workers.
 
@@ -2121,7 +2128,7 @@ Do not include these in MVP unless CorvinumEU explicitly insists:
 - worker self-service portal;
 - offline mode;
 - transportation route / vehicle / driver logistics (rejected in interview);
-- automated SMS / email notification sending (rejected for MVP — calls + Messenger instead);
+- automated SMS / general email notification sending (rejected for MVP — calls + Messenger instead; structured Manager-only job-offer email is the 2026-08-07 exception);
 - worker self-service or feedback portal;
 - daily shift / rota tables.
 
@@ -2429,7 +2436,7 @@ platform/
 │   ├── equipment            # CorvinumEU
 │   ├── accommodation        # Jober
 │   ├── profitability        # Jober (economic / P&L)
-│   ├── messaging            # Jober (Twilio SMS, pending Telegram channel broadcast)
+│   ├── messaging            # Jober SMS/Telegram; shared structured offer email
 │   └── advances             # CorvinumEU
 ├── clients/
 │   ├── jober/               # settings · policies · workflows · templates · static
@@ -2452,7 +2459,8 @@ INSTALLED_APPS = [
 FEATURE_FLAGS = {
     "accommodation": False,
     "profitability": False,
-    "worker_messaging": False,   # workers contacted by phone + Messenger
+    "worker_messaging": False,   # ordinary contact by phone + Messenger
+    "offer_emails": True,        # Manager-only structured offers (2026-08-07)
     "documents": True, "checklists": True, "duplicate_blacklist": True,
     "equipment": True, "advances": True,
 }
@@ -2508,7 +2516,7 @@ The plan moves in four stages. CorvinumEU specification work (this document) can
 
 ### Stage C — Build CorvinumEU as the first thin client
 
-- create `corvinum_eu/` settings: flags advances on, equipment on, accommodation/financials/messaging off;
+- create `corvinum_eu/` settings: flags advances on, equipment on, accommodation/financials/SMS off, structured offer email on;
 - apply the corvinum.eu design system as the per-client theme (tokens lifted from the live CSS — see 7.0);
 - build the two CorvinumEU feature apps: `features/advances` (advance & deduction ledger, weekly Thursday summary, 20–20 cycle) and `features/equipment` (issued items + cost recovery);
 - where the reuse audit (7.0) clears them, reuse the corvinum.eu admin components (login, 2FA, password reset, applications inbox, bilingual CRUD); otherwise re-implement the design in our stack;
@@ -2641,7 +2649,7 @@ These assumptions should be confirmed before implementation.
 6. Economic / profit-and-loss dashboarding is not needed.
 7. Equipment / clothing / tool / medical issuance with values and deductions IS needed (interview).
 8. Transportation route/vehicle/driver logistics is NOT needed (rejected in interview).
-9. Automated SMS/email notification is NOT needed for MVP — worker contact is by phone and Facebook Messenger.
+9. Automated SMS/general email notification is NOT needed for MVP — worker contact is by phone and Facebook Messenger. Structured job-offer email is the Manager-only exception approved 2026-08-07.
 10. A per-worker cash advance & deduction ledger IS needed (weekly Thursday summary, Friday cash, 20–20 cycle, salary deduction).
 11. The advance/deduction ledger is operational cash tracking, pending client confirmation of the financial boundary.
 12. Payment method varies per worker (cash or bank transfer).
@@ -2671,7 +2679,7 @@ Use this section during discussion.
 
 ## Decisions made (from first interview)
 
-- No accommodation; no transport route/vehicle logistics; no automated SMS/email.
+- No accommodation; no transport route/vehicle logistics; no automated SMS/general email. Structured job-offer email is the Manager-only exception approved 2026-08-07.
 - Equipment/clothing/tools/medical issued with values; deduct cost if not returned.
 - Cash advance & deduction ledger required: weekly Thursday summary, Friday cash distribution, 20th-to-20th cycle, deducted from salary. Modelled with explicit entry-type/pay-effect/settlement-status fields (positive amounts), not signed numbers.
 - Payment method per worker: cash or bank transfer (some avoid bank accounts due to garnishments).
@@ -2702,7 +2710,7 @@ Use this section during discussion.
 ## Rejected ideas
 
 - Transport routes / vehicles / drivers in the system (routes change constantly; drivers will not maintain them).
-- Automated SMS/email to workers (they use phone calls and Facebook Messenger).
+- Automated SMS/general email to workers (they use phone calls and Facebook Messenger); structured Manager-only job-offer email is the approved exception.
 - Worker self-service / feedback portal.
 - Daily shift / rota tables for workers.
 

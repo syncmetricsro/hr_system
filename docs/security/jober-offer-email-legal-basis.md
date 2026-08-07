@@ -7,6 +7,12 @@ reaching a real inbox.**
 
 Implementation: ADR 0029; design `docs/product/jober-offer-email-design.md`.
 
+> **CorvinumEU boundary, 2026-08-07:** product approval to enable the shared
+> workflow does not inherit Jober's stated legal basis. CorvinumEU must supply
+> its own lawful-basis/transparency decision, provider DPA confirmation and
+> retention period before real recipients are permitted. Until then, its use is
+> fictional-data testing behind `EMAIL_ALLOWED_RECIPIENTS`.
+
 ## Legal basis (stated by the client)
 
 **Legitimate interest** (GDPR Art. 6(1)(f)) for operational messaging, recorded in
