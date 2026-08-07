@@ -43,6 +43,9 @@
         <p class="sb-section">{% trans "Workforce" %}</p>
         <a class="sb-item {% nav_active 'people_list' 'person_create' 'person_detail' 'person_edit' 'intake_start' 'intake_panel' %}" href="{% url 'people_list' %}" data-tooltip="{% trans 'People' %}"><span class="material-symbols-outlined" aria-hidden="true">groups</span><span class="sb-text">{% trans "People" %}</span></a>
         <a class="sb-item {% nav_active 'project_list' 'project_detail' %}" href="{% url 'project_list' %}" data-tooltip="{% trans 'Projects' %}"><span class="material-symbols-outlined" aria-hidden="true">engineering</span><span class="sb-text">{% trans "Projects" %}</span></a>
+        {% flag_on 'offer_emails' as has_offers %}
+        {% can 'offer.manage' as may_offers %}
+        {% if may_offers and has_offers %}<a class="sb-item {% nav_active 'offer_list' 'offer_create' 'offer_edit' 'offer_send_bulk' 'offer_template_create' 'offer_template_edit' %}" href="{% url 'offer_list' %}" data-tooltip="{% trans 'Job offers' %}"><span class="material-symbols-outlined" aria-hidden="true">mail</span><span class="sb-text">{% trans "Offers" %}</span></a>{% endif %}
 
         <p class="sb-section">{% trans "Operations" %}</p>
         {% flag_on 'documents' as has_documents %}

@@ -135,7 +135,7 @@ msgid "Skip to content"
 msgstr "Ugrás a tartalomra"
 
 #: clients/corvinum_eu/templates/layouts/base.html:39
-#: clients/corvinum_eu/templates/layouts/base.html:72
+#: clients/corvinum_eu/templates/layouts/base.html:75
 #: templates/layouts/base.html:20 templates/layouts/base.html:46
 #: templates/pages/finance_summary.html:9 templates/pages/reports.html:4
 #: templates/pages/reports.html:9 templates/pages/reports.html:24
@@ -166,15 +166,26 @@ msgstr "Emberek"
 msgid "Projects"
 msgstr "Projektek"
 
+#: clients/corvinum_eu/templates/layouts/base.html:49
+#: templates/layouts/base.html:39 templates/pages/offer_list.html:4
+#: templates/pages/offer_list.html:9 templates/pages/offer_list.html:17
+msgid "Job offers"
+msgstr "Állásajánlatok"
+
+#: clients/corvinum_eu/templates/layouts/base.html:49
+#: templates/layouts/base.html:39
+msgid "Offers"
+msgstr "Ajánlatok"
+
 # --- projects UI ---
-#: clients/corvinum_eu/templates/layouts/base.html:48
+#: clients/corvinum_eu/templates/layouts/base.html:51
 #: templates/pages/dashboard.html:8 templates/pages/project_list.html:8
 #: templates/pages/reports.html:8
 msgid "Operations"
 msgstr "Műveletek"
 
 # --- compliance ---
-#: clients/corvinum_eu/templates/layouts/base.html:50
+#: clients/corvinum_eu/templates/layouts/base.html:53
 #: features/compliance/panels.py:35 features/intake/catalog_i18n.py:12
 #: features/profitability/models.py:90 templates/layouts/base.html:41
 #: templates/pages/compliance_list.html:4
@@ -184,33 +195,33 @@ msgstr "Műveletek"
 msgid "Compliance"
 msgstr "Megfelelőség"
 
-#: clients/corvinum_eu/templates/layouts/base.html:53 core/ui/help.py:676
+#: clients/corvinum_eu/templates/layouts/base.html:56 core/ui/help.py:687
 #: templates/layouts/base.html:67 templates/pages/ledger.html:8
 msgid "Ledger"
 msgstr "Főkönyv"
 
-#: clients/corvinum_eu/templates/layouts/base.html:56 core/ui/help.py:780
+#: clients/corvinum_eu/templates/layouts/base.html:59 core/ui/help.py:791
 #: templates/layouts/base.html:70 templates/pages/payslips.html:4
 #: templates/pages/payslips.html:9
 msgid "Payslips"
 msgstr "Bérlapok"
 
-#: clients/corvinum_eu/templates/layouts/base.html:59 core/ui/help.py:864
+#: clients/corvinum_eu/templates/layouts/base.html:62 core/ui/help.py:875
 #: templates/pages/wages.html:4 templates/pages/wages.html:9
 msgid "Gross wages"
 msgstr "Bruttó bérek"
 
-#: clients/corvinum_eu/templates/layouts/base.html:63
+#: clients/corvinum_eu/templates/layouts/base.html:66
 #: templates/layouts/base.html:54
 msgid "Reviews"
 msgstr "Ellenőrzések"
 
-#: clients/corvinum_eu/templates/layouts/base.html:64
+#: clients/corvinum_eu/templates/layouts/base.html:67
 #: templates/panels/logistics_equipment.html:65
 msgid "Manage equipment catalogue"
 msgstr "Felszerelés-katalóg kezelése"
 
-#: clients/corvinum_eu/templates/layouts/base.html:64
+#: clients/corvinum_eu/templates/layouts/base.html:67
 #: templates/pages/equipment_catalog.html:4
 #: templates/pages/equipment_catalog.html:9
 #: templates/pages/equipment_catalog.html:28
@@ -218,62 +229,62 @@ msgstr "Felszerelés-katalóg kezelése"
 msgid "Equipment catalogue"
 msgstr "Felszerelés-katalóg"
 
-#: clients/corvinum_eu/templates/layouts/base.html:66
+#: clients/corvinum_eu/templates/layouts/base.html:69
 #: templates/layouts/base.html:58 templates/pages/activation_queue.html:9
 #: templates/pages/activation_queue.html:14
 msgid "Activation requests"
 msgstr "Aktiválási kérelmek"
 
-#: clients/corvinum_eu/templates/layouts/base.html:66
+#: clients/corvinum_eu/templates/layouts/base.html:69
 #: templates/layouts/base.html:58 templates/pages/activation_queue.html:4
 msgid "Activations"
 msgstr "Aktiválások"
 
-#: clients/corvinum_eu/templates/layouts/base.html:69 core/ui/help.py:474
+#: clients/corvinum_eu/templates/layouts/base.html:72 core/ui/help.py:485
 #: templates/layouts/base.html:61 templates/pages/blacklist_queue.html:4
 #: templates/panels/blacklist_banner.html:3
 #: templates/panels/blacklist_case.html:5
 msgid "Blacklist"
 msgstr "Feketelista"
 
-#: clients/corvinum_eu/templates/layouts/base.html:71
+#: clients/corvinum_eu/templates/layouts/base.html:74
 #: core/notifications/services.py:169 templates/partials/theme_picker.html:7
 msgid "System"
 msgstr "Rendszer"
 
-#: clients/corvinum_eu/templates/layouts/base.html:73
+#: clients/corvinum_eu/templates/layouts/base.html:76
 #: templates/help/_base.html:8 templates/layouts/base.html:47
 #: templates/pages/help_index.html:4 templates/pages/help_index.html:9
 msgid "Help"
 msgstr "Súgó"
 
-#: clients/corvinum_eu/templates/layouts/base.html:75
+#: clients/corvinum_eu/templates/layouts/base.html:78
 #: templates/layouts/base.html:49 templates/pages/staff_activity.html:4
 #: templates/pages/staff_activity.html:8
 msgid "Staff activity"
 msgstr "Munkatársi tevékenység"
 
-#: clients/corvinum_eu/templates/layouts/base.html:77 core/ui/help.py:938
+#: clients/corvinum_eu/templates/layouts/base.html:80 core/ui/help.py:949
 #: templates/layouts/base.html:51
 msgid "Audit"
 msgstr "Audit"
 
-#: clients/corvinum_eu/templates/layouts/base.html:84
+#: clients/corvinum_eu/templates/layouts/base.html:87
 #: templates/layouts/base.html:93
 msgid "Change your avatar"
 msgstr "Profilkép módosítása"
 
-#: clients/corvinum_eu/templates/layouts/base.html:106
+#: clients/corvinum_eu/templates/layouts/base.html:109
 #: templates/layouts/base.html:81 templates/pages/feedback_form.html:17
 msgid "Language"
 msgstr "Nyelv"
 
-#: clients/corvinum_eu/templates/layouts/base.html:116
+#: clients/corvinum_eu/templates/layouts/base.html:119
 #: templates/layouts/base.html:109
 msgid "Sign out"
 msgstr "Kijelentkezés"
 
-#: clients/corvinum_eu/templates/layouts/base.html:127
+#: clients/corvinum_eu/templates/layouts/base.html:130
 #: templates/layouts/base.html:28 templates/layouts/base.html:29
 msgid "Open navigation"
 msgstr "Navigáció megnyitása"
@@ -1175,7 +1186,7 @@ msgstr "Személy frissítve."
 msgid "Edit person"
 msgstr "Személy szerkesztése"
 
-#: core/people/views.py:243 core/ui/help.py:272
+#: core/people/views.py:243 core/ui/help.py:283
 #: templates/pages/activation_queue.html:29
 #: templates/pages/person_detail.html:173
 #: templates/pages/person_detail.html:212
@@ -1536,7 +1547,7 @@ msgid "Entry medical date cannot be in the future."
 msgstr "Belépő orvosi dátuma nem lehet jövőbeli."
 
 #: core/projects/services.py:274 core/projects/services.py:312
-#: core/ui/help.py:244 features/advances/models.py:38
+#: core/ui/help.py:255 features/advances/models.py:38
 #: features/profitability/catalog_i18n.py:20
 #: templates/pages/activation_queue.html:26
 #: templates/pages/person_detail.html:141
@@ -1548,7 +1559,7 @@ msgstr "Orvosi"
 msgid "Medical clearance is incomplete."
 msgstr "Az orvosi alkalmasság hiányos."
 
-#: core/projects/services.py:275 core/ui/help.py:251
+#: core/projects/services.py:275 core/ui/help.py:262
 #: templates/pages/activation_queue.html:27
 #: templates/pages/person_detail.html:147
 msgid "Gear"
@@ -1558,7 +1569,7 @@ msgstr "Felszerelés"
 msgid "Required equipment is incomplete."
 msgstr "A szükséges felszerelés hiányos."
 
-#: core/projects/services.py:276 core/ui/help.py:258 core/ui/help.py:427
+#: core/projects/services.py:276 core/ui/help.py:269 core/ui/help.py:438
 #: features/profitability/catalog_i18n.py:18
 #: features/profitability/models.py:89 templates/layouts/base.html:43
 #: templates/pages/accommodation_costs.html:6
@@ -1576,7 +1587,7 @@ msgstr "Szállás"
 msgid "Accommodation is incomplete."
 msgstr "A szállás nincs rendezve."
 
-#: core/projects/services.py:277 core/ui/help.py:265
+#: core/projects/services.py:277 core/ui/help.py:276
 #: features/profitability/models.py:88 templates/layouts/base.html:45
 #: templates/pages/person_detail.html:163
 msgid "Transport"
@@ -1891,11 +1902,24 @@ msgstr ""
 "WebP-fájlokat a rendszer négyzetre vágja, 512×512 méretre alakítja, "
 "eltávolítja a metaadataikat, és WebP-ként tárolja."
 
-#: core/ui/help.py:126
+#: core/ui/help.py:130
+msgid ""
+"Authorized staff can create job offers and language-specific templates from "
+"Offers, preview the exact recipients, and confirm a bulk email. On a worker "
+"profile, the offer panel sends one selected offer in that worker's preferred "
+"language."
+msgstr ""
+"Az arra jogosult felhasználók az Ajánlatok menüpontban állásajánlatokat és "
+"nyelvspecifikus sablonokat hozhatnak létre, megtekinthetik a címzettek pontos "
+"listáját, majd megerősíthetik a csoportos e-mail küldését. A munkavállaló "
+"profilján az ajánlati panel egy kiválasztott ajánlatot küld el a munkavállaló "
+"által előnyben részesített nyelven."
+
+#: core/ui/help.py:137
 msgid "Personal-data gate"
 msgstr "Személyesadat-kapu"
 
-#: core/ui/help.py:128
+#: core/ui/help.py:139
 msgid ""
 "Use fictional people until the real-data security gate is complete. Record "
 "only data needed for the workflow, and never use a real identity document as "
@@ -1905,34 +1929,34 @@ msgstr ""
 "használjon. Csak a folyamathoz szükséges adatokat rögzítse, és valódi "
 "személyazonosító okmányt soha ne használjon profilképként."
 
-#: core/ui/help.py:134
+#: core/ui/help.py:145
 msgid ""
 "The People list with fictional workers, status filters, and profile links."
 msgstr ""
 "Az Emberek lista fiktív munkavállalókkal, állapotszűrőkkel és "
 "profillinkekkel."
 
-#: core/ui/help.py:136
+#: core/ui/help.py:147
 msgid "Search and filters narrow the current office-scoped list."
 msgstr "A keresés és a szűrők leszűkítik az aktuális, irodai hatókörű listát."
 
-#: core/ui/help.py:138
+#: core/ui/help.py:149
 msgid "Each row opens the worker profile and shows the lifecycle state."
 msgstr ""
 "Minden sor megnyitja a munkavállaló profilját és mutatja az életciklus-"
 "állapotot."
 
-#: core/ui/help.py:147
+#: core/ui/help.py:158
 msgid "Projects and assignments"
 msgstr "Projektek és beosztások"
 
-#: core/ui/help.py:149
+#: core/ui/help.py:160
 msgid "Create projects, place workers, review headcount, and record exits."
 msgstr ""
 "Projektek létrehozása, munkavállalók beosztása, létszám ellenőrzése és "
 "kilépések rögzítése."
 
-#: core/ui/help.py:153
+#: core/ui/help.py:164
 msgid ""
 "Projects connect workers to the site where they are expected to work and "
 "provide the source for active headcount reporting."
@@ -1940,7 +1964,7 @@ msgstr ""
 "A projektek a munkavállalót a munkavégzés helyéhez kapcsolják, és az aktív "
 "létszámkimutatás forrását adják."
 
-#: core/ui/help.py:156
+#: core/ui/help.py:167
 msgid ""
 "All roles can read allowed projects. Coordinators and Managers normally "
 "manage placements; project creation and editing require the configured "
@@ -1950,7 +1974,7 @@ msgstr ""
 "általában koordinátorok és vezetők kezelik; projektek létrehozásához és "
 "szerkesztéséhez a beállított projektjogosultság kell."
 
-#: core/ui/help.py:160
+#: core/ui/help.py:171
 msgid ""
 "Open Projects and choose an existing project, or create one with its office "
 "and responsible coordinators."
@@ -1958,7 +1982,7 @@ msgstr ""
 "Nyissa meg a Projekteket, válasszon meglévő projektet, vagy hozzon létre "
 "újat az irodával és a felelős koordinátorokkal."
 
-#: core/ui/help.py:163
+#: core/ui/help.py:174
 msgid ""
 "Assign an available worker from the project or person workflow. Confirm the "
 "intended project before submitting."
@@ -1966,7 +1990,7 @@ msgstr ""
 "Rendeljen hozzá elérhető munkavállalót a projekt- vagy személyfolyamatból. "
 "Beküldés előtt erősítse meg a kívánt projektet."
 
-#: core/ui/help.py:166
+#: core/ui/help.py:177
 msgid ""
 "Review active assignments and readiness before asking for activation. "
 "Reports update from these assignment records."
@@ -1974,7 +1998,7 @@ msgstr ""
 "Aktiválás kérése előtt ellenőrizze az aktív beosztásokat és a "
 "felkészültséget. A kimutatások ezekből a beosztási rekordokból frissülnek."
 
-#: core/ui/help.py:169
+#: core/ui/help.py:180
 msgid ""
 "When work ends, use the exit workflow and record the real reason. The exit "
 "reconciles enabled resources and moves the person out of active work."
@@ -1983,11 +2007,11 @@ msgstr ""
 "okot. A kilépés egyezteti az engedélyezett erőforrásokat, és kivezeti a "
 "személyt az aktív munkából."
 
-#: core/ui/help.py:172
+#: core/ui/help.py:183
 msgid "Assignments drive other modules"
 msgstr "A beosztások más modulokat is vezérelnek"
 
-#: core/ui/help.py:174
+#: core/ui/help.py:185
 msgid ""
 "Do not create a second active placement to correct the first. Use the "
 "supported exit and assignment actions so history, resources, status, and "
@@ -1997,33 +2021,33 @@ msgstr ""
 "Használja a támogatott kilépési és beosztási műveleteket, hogy az "
 "előzmények, erőforrások, állapotok és kimutatások összhangban maradjanak."
 
-#: core/ui/help.py:180
+#: core/ui/help.py:191
 msgid ""
 "The Projects workspace with fictional projects and assignment information."
 msgstr "A Projektek munkaterület fiktív projektekkel és beosztási adatokkal."
 
-#: core/ui/help.py:183
+#: core/ui/help.py:194
 msgid "Open a project to review its people and operational details."
 msgstr ""
 "Nyisson meg egy projektet a munkavállalók és operatív részletek "
 "áttekintéséhez."
 
-#: core/ui/help.py:185
+#: core/ui/help.py:196
 msgid "Use the project actions for assignment and maintenance."
 msgstr "A beosztáshoz és karbantartáshoz használja a projektműveleteket."
 
-#: core/ui/help.py:193
+#: core/ui/help.py:204
 msgid "Trials, readiness and activation"
 msgstr "Próbanapok, felkészültség és aktiválás"
 
-#: core/ui/help.py:195
+#: core/ui/help.py:206
 msgid ""
 "Record trial outcomes, complete readiness, and decide activation requests."
 msgstr ""
 "Próbanaperedmények rögzítése, felkészültség teljesítése és aktiválási "
 "kérelmek elbírálása."
 
-#: core/ui/help.py:199
+#: core/ui/help.py:210
 msgid ""
 "This workflow moves a candidate from a trial or preparation stage into "
 "active work only after the required operational checks are complete."
@@ -2031,7 +2055,7 @@ msgstr ""
 "Ez a folyamat csak a szükséges operatív ellenőrzések teljesítése után viszi "
 "át a jelöltet a próba- vagy előkészítési szakaszból aktív munkába."
 
-#: core/ui/help.py:202
+#: core/ui/help.py:213
 msgid ""
 "Recruiters or Coordinators prepare the worker according to their "
 "permissions. Managers decide queued activation requests; reading this "
@@ -2041,7 +2065,7 @@ msgstr ""
 "készítik fel. A várakozó aktiválási kérelmekről a vezetők döntenek; a cikk "
 "olvasása nincs szerepkörhöz kötve."
 
-#: core/ui/help.py:206
+#: core/ui/help.py:217
 msgid ""
 "Schedule a trial for the correct worker and project, then record the actual "
 "outcome instead of changing lifecycle status by hand."
@@ -2049,7 +2073,7 @@ msgstr ""
 "Ütemezzen próbanapot a megfelelő munkavállalóhoz és projekthez, majd az "
 "életciklus-állapot kézi módosítása helyett rögzítse a tényleges eredményt."
 
-#: core/ui/help.py:209
+#: core/ui/help.py:220
 msgid ""
 "Complete each readiness requirement or mark it not applicable with a reason. "
 "Client-specific critical checklist items must also be complete where enabled."
@@ -2058,7 +2082,7 @@ msgstr ""
 "alkalmazhatónak. Ahol engedélyezett, az ügyfélspecifikus kritikus "
 "ellenőrzőlista-elemeket is teljesíteni kell."
 
-#: core/ui/help.py:212
+#: core/ui/help.py:223
 msgid ""
 "Submit the activation request only when the page reports readiness. The "
 "request captures the relevant readiness state for review."
@@ -2067,7 +2091,7 @@ msgstr ""
 "állapotot jelez. A kérelem rögzíti az elbíráláshoz szükséges felkészültségi "
 "állapotot."
 
-#: core/ui/help.py:215
+#: core/ui/help.py:226
 msgid ""
 "A Manager approves to start the assignment or rejects with a reason so the "
 "preparer knows what must be corrected."
@@ -2075,7 +2099,7 @@ msgstr ""
 "A vezető jóváhagyja a beosztás indítását, vagy indoklással elutasítja, hogy "
 "a felkészítő tudja, mit kell javítani."
 
-#: core/ui/help.py:222
+#: core/ui/help.py:233
 msgid ""
 "In checklist-enabled clients, tick every critical activation item on the "
 "worker profile; a critical open item blocks activation even when the "
@@ -2085,11 +2109,11 @@ msgstr ""
 "elemet a munkavállaló profilján; egy nyitott kritikus elem akkor is "
 "blokkolja az aktiválást, ha a szokásos pillérek teljesnek látszanak."
 
-#: core/ui/help.py:226
+#: core/ui/help.py:237
 msgid "Never bypass readiness"
 msgstr "A felkészültséget soha ne kerülje meg"
 
-#: core/ui/help.py:228
+#: core/ui/help.py:239
 msgid ""
 "Activation is a controlled state transition. Correct the underlying trial, "
 "readiness, or checklist record instead of forcing a status that contradicts "
@@ -2099,20 +2123,20 @@ msgstr ""
 "kikényszerítése helyett javítsa az alapul szolgáló próbanap-, felkészültségi "
 "vagy ellenőrzőlista-rekordot."
 
-#: core/ui/help.py:234
+#: core/ui/help.py:245
 msgid "The activation queue with fictional workers awaiting a decision."
 msgstr "Az aktiválási várólista döntésre váró fiktív munkavállalókkal."
 
-#: core/ui/help.py:236
+#: core/ui/help.py:247
 msgid "The queue identifies the worker and requested project."
 msgstr "A várólista azonosítja a munkavállalót és a kért projektet."
 
-#: core/ui/help.py:238
+#: core/ui/help.py:249
 msgid "Decision controls approve or return the request with a reason."
 msgstr ""
 "A döntési vezérlők jóváhagyják, vagy indoklással visszaküldik a kérelmet."
 
-#: core/ui/help.py:246
+#: core/ui/help.py:257
 msgid ""
 "The entry medical certificate is on file. Required - it cannot be marked not-"
 "applicable, and activation is refused without it."
@@ -2120,15 +2144,15 @@ msgstr ""
 "A belépő orvosi igazolás megvan. Kötelező – nem jelölhető nem relevánsnak, "
 "és nélküle az aktiválás elutasításra kerül."
 
-#: core/ui/help.py:248 core/ui/help.py:255 core/ui/help.py:262
-#: core/ui/help.py:269 core/ui/help.py:276 core/ui/help.py:283
-#: core/ui/help.py:726 core/ui/help.py:733 core/ui/help.py:740
-#: core/ui/help.py:747 core/ui/help.py:754 core/ui/help.py:764
-#: core/ui/help.py:772
+#: core/ui/help.py:259 core/ui/help.py:266 core/ui/help.py:273
+#: core/ui/help.py:280 core/ui/help.py:287 core/ui/help.py:294
+#: core/ui/help.py:737 core/ui/help.py:744 core/ui/help.py:751
+#: core/ui/help.py:758 core/ui/help.py:765 core/ui/help.py:775
+#: core/ui/help.py:783
 msgid "Coordinator or Manager"
 msgstr "Koordinátor vagy menedzser"
 
-#: core/ui/help.py:253
+#: core/ui/help.py:264
 msgid ""
 "The worker has the equipment the job needs. Required, like Medical, and "
 "cannot be marked not-applicable."
@@ -2136,7 +2160,7 @@ msgstr ""
 "A munkavállalónak megvan a munkához szükséges felszerelése. Kötelező, "
 "akárcsak az orvosi, és nem jelölhető nem relevánsnak."
 
-#: core/ui/help.py:260
+#: core/ui/help.py:271
 msgid ""
 "A bed is arranged, or genuinely not needed. Marking it not-applicable "
 "requires a written reason."
@@ -2144,7 +2168,7 @@ msgstr ""
 "A szállás megszervezve, vagy valóban nem szükséges. A nem relevánsnak "
 "jelöléshez írásos indoklás kell."
 
-#: core/ui/help.py:267
+#: core/ui/help.py:278
 msgid ""
 "Travel to site is arranged, or not needed with a reason. Hidden entirely "
 "where the transport feature is switched off."
@@ -2152,7 +2176,7 @@ msgstr ""
 "A helyszínre utazás megszervezve, vagy indoklással nem szükséges. Teljesen "
 "rejtve ott, ahol a szállítás funkció ki van kapcsolva."
 
-#: core/ui/help.py:274
+#: core/ui/help.py:285
 msgid ""
 "The date the medical was carried out. It cannot be in the future; a future "
 "date is a typo, not a plan."
@@ -2161,11 +2185,11 @@ msgstr ""
 "dátum elgépelés, nem terv."
 
 # --- projects UI ---
-#: core/ui/help.py:279 templates/pages/person_detail.html:184
+#: core/ui/help.py:290 templates/pages/person_detail.html:184
 msgid "Request activation"
 msgstr "Aktiválás kérelmezése"
 
-#: core/ui/help.py:281
+#: core/ui/help.py:292
 msgid ""
 "Asks a manager to decide. It does not activate anyone, and the four pillars "
 "are re-checked at the moment of the decision in case one regressed in "
@@ -2175,13 +2199,13 @@ msgstr ""
 "pillanatában újraellenőrzi arra az esetre, ha közben valamelyik visszaesett "
 "volna."
 
-#: core/ui/help.py:286 templates/pages/activation_queue.html:34
+#: core/ui/help.py:297 templates/pages/activation_queue.html:34
 #: templates/pages/blacklist_queue.html:29
 #: templates/panels/blacklist_case.html:20
 msgid "Approve"
 msgstr "Jóváhagyás"
 
-#: core/ui/help.py:288 templates/pages/activation_queue.html:34
+#: core/ui/help.py:299 templates/pages/activation_queue.html:34
 msgid ""
 "Puts this worker to work: they move to Working on this project, the "
 "assignment starts today, and accommodation and equipment are committed."
@@ -2190,25 +2214,25 @@ msgstr ""
 "projekten, a beosztás ma kezdődik, a szállás és a felszerelés lekötésre "
 "kerül."
 
-#: core/ui/help.py:290 core/ui/help.py:300 core/ui/help.py:307
-#: core/ui/help.py:828 core/ui/help.py:835 core/ui/help.py:842
-#: core/ui/help.py:849 core/ui/help.py:856 core/ui/help.py:909
-#: core/ui/help.py:916 core/ui/help.py:923 core/ui/help.py:930
+#: core/ui/help.py:301 core/ui/help.py:311 core/ui/help.py:318
+#: core/ui/help.py:839 core/ui/help.py:846 core/ui/help.py:853
+#: core/ui/help.py:860 core/ui/help.py:867 core/ui/help.py:920
+#: core/ui/help.py:927 core/ui/help.py:934 core/ui/help.py:941
 #: templates/pages/person_detail.html:76
 msgid "Manager"
 msgstr "Menedzser"
 
-#: core/ui/help.py:292
+#: core/ui/help.py:303
 msgid "Deciding your own request is allowed, and recorded as a self-approval."
 msgstr "Saját kérelem eldöntése megengedett, és önjóváhagyásként rögzül."
 
-#: core/ui/help.py:296 templates/pages/activation_queue.html:35
+#: core/ui/help.py:307 templates/pages/activation_queue.html:35
 #: templates/pages/blacklist_queue.html:30
 #: templates/panels/blacklist_case.html:21
 msgid "Reject"
 msgstr "Elutasítás"
 
-#: core/ui/help.py:298 templates/pages/activation_queue.html:35
+#: core/ui/help.py:309 templates/pages/activation_queue.html:35
 msgid ""
 "Sends the request back with your reason. The worker stays in readiness and "
 "the coordinator can fix what you name and ask again. A reason is required."
@@ -2216,11 +2240,11 @@ msgstr ""
 "Visszaküldi a kérelmet az indoklásával. A munkavállaló készenlétben marad, a "
 "koordinátor javíthatja, amit megnevez, és újra kérheti. Az indoklás kötelező."
 
-#: core/ui/help.py:303 templates/pages/person_detail.html:77
+#: core/ui/help.py:314 templates/pages/person_detail.html:77
 msgid "Activate without a trial day"
 msgstr "Aktiválás próbanap nélkül"
 
-#: core/ui/help.py:305
+#: core/ui/help.py:316
 msgid ""
 "Opens readiness for a worker the office already knows, with no trial. It "
 "waives the trial only - all four pillars still apply before activation."
@@ -2229,22 +2253,22 @@ msgstr ""
 "próbanap nélkül. Csak a próbanapot engedi el – az aktiválás előtt mind a "
 "négy pillér továbbra is érvényes."
 
-#: core/ui/help.py:316
+#: core/ui/help.py:327
 msgid "Safety and resources"
 msgstr "Biztonság és erőforrások"
 
-#: core/ui/help.py:320
+#: core/ui/help.py:331
 msgid "Certificates and compliance"
 msgstr "Képesítések és megfelelőség"
 
-#: core/ui/help.py:322
+#: core/ui/help.py:333
 msgid ""
 "Store allowed occupational licences and manage expiry, renewal, and archive."
 msgstr ""
 "Engedélyezett szakmai igazolványok tárolása, valamint lejáratuk, megújításuk "
 "és archiválásuk kezelése."
 
-#: core/ui/help.py:327
+#: core/ui/help.py:338
 msgid ""
 "Compliance keeps occupational certificate metadata and the permitted "
 "forklift, crane, and welding files visible before they expire."
@@ -2252,7 +2276,7 @@ msgstr ""
 "A Megfelelőség a szakmai igazolványok metaadatait és az engedélyezett "
 "targoncás, darukezelői és hegesztői fájlokat lejáratuk előtt láthatóvá teszi."
 
-#: core/ui/help.py:330
+#: core/ui/help.py:341
 msgid ""
 "Authorized Recruiters, Coordinators, and Managers can add certificates. "
 "Permanent file removal is Manager-only; private file delivery rechecks "
@@ -2262,7 +2286,7 @@ msgstr ""
 "A fájlok végleges törlése csak vezetőnek engedélyezett; a privát letöltés "
 "ismét ellenőrzi az irodai és érzékenyadat-hozzáférést."
 
-#: core/ui/help.py:334
+#: core/ui/help.py:345
 msgid ""
 "Open a worker and choose Add certificate. Select only Forklift, Crane, or "
 "Welding and enter the issuer, dates, and optional certificate number."
@@ -2271,7 +2295,7 @@ msgstr ""
 "Kizárólag Targoncás, Darukezelői vagy Hegesztői típust válasszon, majd adja "
 "meg a kiadót, a dátumokat és szükség esetén az igazolványszámot."
 
-#: core/ui/help.py:337
+#: core/ui/help.py:348
 msgid ""
 "Upload one PDF, one front image, or front and back images. Review both "
 "private links after saving a two-sided card."
@@ -2279,7 +2303,7 @@ msgstr ""
 "Töltsön fel egy PDF-et, egy előoldali képet, vagy elő- és hátoldali képet. "
 "Kétoldalas kártya mentése után ellenőrizze mindkét privát hivatkozást."
 
-#: core/ui/help.py:340
+#: core/ui/help.py:351
 msgid ""
 "Use Edit to correct metadata or add a missing back image. Use Renew for a "
 "replacement certificate so the previous record remains in history."
@@ -2288,7 +2312,7 @@ msgstr ""
 "Szerkesztést. Csereigazolványhoz a Megújítást használja, így az előző rekord "
 "megmarad az előzményekben."
 
-#: core/ui/help.py:343
+#: core/ui/help.py:354
 msgid ""
 "Archive a record that should no longer be active. Use Manager file removal "
 "only for an improper upload and provide the required reason."
@@ -2296,11 +2320,11 @@ msgstr ""
 "Archiválja a már nem aktív rekordot. A vezetői fájltörlést csak hibás "
 "feltöltésnél használja, és adja meg a kötelező indokot."
 
-#: core/ui/help.py:346
+#: core/ui/help.py:357
 msgid "Strict document-storage boundary"
 msgstr "Szigorú dokumentumtárolási korlát"
 
-#: core/ui/help.py:348
+#: core/ui/help.py:359
 msgid ""
 "Never upload passports, identity cards, birth or residence documents, "
 "financial records, medical reports, or health-certificate scans. Those are "
@@ -2317,35 +2341,35 @@ msgstr ""
 "biztonsági mentés a termelési kapu része. A kapu lezárásáig csak fiktív "
 "igazolványokat használjon."
 
-#: core/ui/help.py:354
+#: core/ui/help.py:365
 msgid ""
 "The compliance workspace showing fictional occupational certificate alerts."
 msgstr "A Megfelelőség munkaterület fiktív szakmaiigazolvány-riasztásokkal."
 
-#: core/ui/help.py:357
+#: core/ui/help.py:368
 msgid "Alerts identify the worker and the occupational requirement."
 msgstr "A riasztások azonosítják a munkavállalót és a szakmai követelményt."
 
-#: core/ui/help.py:359
+#: core/ui/help.py:370
 msgid "Status and due date show which item needs attention first."
 msgstr ""
 "Az állapot és a határidő mutatja, melyik tétel igényel először figyelmet."
 
 # --- logistics: equipment ---
-#: core/ui/help.py:367 features/advances/models.py:37
+#: core/ui/help.py:378 features/advances/models.py:37
 #: features/profitability/models.py:92 templates/pages/equipment_stock.html:7
 #: templates/panels/logistics_equipment.html:4
 msgid "Equipment"
 msgstr "Felszerelés"
 
-#: core/ui/help.py:369
+#: core/ui/help.py:380
 msgid ""
 "Maintain the catalogue, issue items, and handle stock, returns, or reviews."
 msgstr ""
 "A katalógus karbantartása, eszközök kiadása, valamint készlet, visszavétel "
 "vagy felülvizsgálat kezelése."
 
-#: core/ui/help.py:374
+#: core/ui/help.py:385
 msgid ""
 "Equipment records what can be issued, what each worker holds, and how a "
 "missing or returned item is resolved under the client's policy."
@@ -2354,7 +2378,7 @@ msgstr ""
 "hogyan rendezik a hiányzó vagy visszaadott eszközt az ügyfél szabályzata "
 "szerint."
 
-#: core/ui/help.py:377
+#: core/ui/help.py:388
 msgid ""
 "All roles may read the enabled equipment views. Issuing, receiving, "
 "returning, adjusting stock, and deciding deductions each require their "
@@ -2364,7 +2388,7 @@ msgstr ""
 "bevételezés, visszavétel, készletkorrekció és levonási döntés mind a "
 "megfelelő operatív jogosultságot igényli."
 
-#: core/ui/help.py:381
+#: core/ui/help.py:392
 msgid ""
 "Maintain catalogue names, sizes, and prices so an issue can be identified "
 "and valued consistently."
@@ -2372,7 +2396,7 @@ msgstr ""
 "Tartsa karban a katalógusneveket, méreteket és árakat, hogy a kiadás "
 "egységesen azonosítható és értékelhető legyen."
 
-#: core/ui/help.py:384
+#: core/ui/help.py:395
 msgid ""
 "Issue the correct item from the worker profile and verify the worker and "
 "office before submitting."
@@ -2380,7 +2404,7 @@ msgstr ""
 "A megfelelő eszközt a munkavállaló profiljáról adja ki, és beküldés előtt "
 "ellenőrizze a munkavállalót és az irodát."
 
-#: core/ui/help.py:387
+#: core/ui/help.py:398
 msgid ""
 "If an item is not returned, flag it for review. A Manager records whether "
 "the cost is charged or waived instead of editing history."
@@ -2389,7 +2413,7 @@ msgstr ""
 "előzmények átírása helyett rögzíti, hogy a költséget felszámítják vagy "
 "elengedik."
 
-#: core/ui/help.py:394
+#: core/ui/help.py:405
 msgid ""
 "Where stock tracking is enabled, record goods receipts before issuing, use "
 "adjustments only with a reason, and reconcile the office-specific balance "
@@ -2399,7 +2423,7 @@ msgstr ""
 "korrekciót csak indoklással végezzen, és egyeztesse az irodai egyenleget az "
 "átvételi naplóval."
 
-#: core/ui/help.py:400
+#: core/ui/help.py:411
 msgid ""
 "Where returns are enabled, use Return on the original issue so the item "
 "state changes through the recorded workflow and the catalogue remains "
@@ -2409,11 +2433,11 @@ msgstr ""
 "használja, hogy az eszköz állapota rögzített folyamatban változzon, a "
 "katalógus pedig pontos maradjon."
 
-#: core/ui/help.py:404
+#: core/ui/help.py:415
 msgid "Follow the enabled issue policy"
 msgstr "Kövesse az engedélyezett kiadási szabályzatot"
 
-#: core/ui/help.py:406
+#: core/ui/help.py:417
 msgid ""
 "Stock-ledger clients reduce office stock when issuing. Return-enabled "
 "clients record a return on the original issue. The Help page shows only the "
@@ -2424,7 +2448,7 @@ msgstr ""
 "kiadáson rögzítik. A Súgó csak az adott ügyfélnél engedélyezett szabályzatot "
 "mutatja."
 
-#: core/ui/help.py:412
+#: core/ui/help.py:423
 msgid ""
 "The client-specific equipment workspace with fictional catalogue or stock "
 "data."
@@ -2432,22 +2456,22 @@ msgstr ""
 "Az ügyfélspecifikus Felszerelés munkaterület fiktív katalógus- vagy "
 "készletadatokkal."
 
-#: core/ui/help.py:415
+#: core/ui/help.py:426
 msgid "Catalogue or stock rows identify the item and current state."
 msgstr ""
 "A katalógus- vagy készletsorok azonosítják az eszközt és aktuális állapotát."
 
-#: core/ui/help.py:418
+#: core/ui/help.py:429
 msgid "Available actions follow this client's stock and return policy."
 msgstr ""
 "Az elérhető műveletek az ügyfél készlet- és visszavételi szabályzatát "
 "követik."
 
-#: core/ui/help.py:429
+#: core/ui/help.py:440
 msgid "Manage buildings, rooms, assignments, rates, and monthly costs."
 msgstr "Épületek, szobák, elhelyezések, díjak és havi költségek kezelése."
 
-#: core/ui/help.py:434
+#: core/ui/help.py:445
 msgid ""
 "Accommodation connects office-owned buildings and rooms to the workers "
 "living there and to the rates used in operational cost views."
@@ -2455,7 +2479,7 @@ msgstr ""
 "A Szállás az irodához tartozó épületeket és szobákat összekapcsolja az ott "
 "lakó munkavállalókkal és az operatív költségnézetek díjaival."
 
-#: core/ui/help.py:437
+#: core/ui/help.py:448
 msgid ""
 "Readers see accommodation within their office scope. Coordinators and "
 "Managers normally manage rooms and placements; rate and cost actions require "
@@ -2465,7 +2489,7 @@ msgstr ""
 "elhelyezéseket általában koordinátorok és vezetők kezelik; a díj- és "
 "költségműveletek külön jogosultságot igényelnek."
 
-#: core/ui/help.py:441
+#: core/ui/help.py:452
 msgid ""
 "Create the building in the correct office, then add rooms with a real "
 "capacity and the applicable rate."
@@ -2473,7 +2497,7 @@ msgstr ""
 "Hozza létre az épületet a megfelelő irodában, majd adja hozzá a szobákat "
 "valós férőhellyel és az alkalmazandó díjjal."
 
-#: core/ui/help.py:444
+#: core/ui/help.py:455
 msgid ""
 "Assign a worker from the profile and confirm the room still has capacity. "
 "Record the assignment-specific rate only when it genuinely differs."
@@ -2481,7 +2505,7 @@ msgstr ""
 "A profilról helyezze el a munkavállalót, és ellenőrizze, hogy a szobában még "
 "van férőhely. Elhelyezésspecifikus díjat csak valós eltérés esetén rögzítsen."
 
-#: core/ui/help.py:447
+#: core/ui/help.py:458
 msgid ""
 "Release the room when the worker leaves or moves; use a transfer workflow "
 "rather than overlapping active placements."
@@ -2490,7 +2514,7 @@ msgstr ""
 "egymást átfedő aktív elhelyezések helyett használja az áthelyezési "
 "folyamatot."
 
-#: core/ui/help.py:450
+#: core/ui/help.py:461
 msgid ""
 "Use Accommodation costs with the period controls to review occupancy, room "
 "rates, worker payments, and the office-scoped result."
@@ -2498,11 +2522,11 @@ msgstr ""
 "A Szállásköltségek időszakvezérlőivel tekintse át a kihasználtságot, a "
 "szobadíjakat, a munkavállalói befizetéseket és az irodai hatókörű eredményt."
 
-#: core/ui/help.py:453
+#: core/ui/help.py:464
 msgid "Capacity and dates matter"
 msgstr "A férőhely és a dátumok számítanak"
 
-#: core/ui/help.py:455
+#: core/ui/help.py:466
 msgid ""
 "A stale room assignment makes both availability and cost reporting wrong. "
 "Record moves and releases on the date they actually happen."
@@ -2511,7 +2535,7 @@ msgstr ""
 "hibássá teszi. A költözéseket és felszabadításokat a tényleges napjukon "
 "rögzítse."
 
-#: core/ui/help.py:461
+#: core/ui/help.py:472
 msgid ""
 "The accommodation workspace with fictional buildings, occupancy, and cost "
 "information."
@@ -2519,23 +2543,23 @@ msgstr ""
 "A Szállás munkaterület fiktív épületekkel, kihasználtsági és "
 "költségadatokkal."
 
-#: core/ui/help.py:463
+#: core/ui/help.py:474
 msgid "Building and room data define capacity and placement."
 msgstr ""
 "Az épület- és szobaadatok határozzák meg a férőhelyet és az elhelyezést."
 
-#: core/ui/help.py:465
+#: core/ui/help.py:476
 msgid "Period controls and totals explain the accommodation cost view."
 msgstr ""
 "Az időszakvezérlők és összesítések teszik érthetővé a szállásköltség-nézetet."
 
-#: core/ui/help.py:476
+#: core/ui/help.py:487
 msgid "Propose, review, match, and restrict serious re-entry cases."
 msgstr ""
 "Súlyos visszavételi esetek javaslata, felülvizsgálata, egyeztetése és "
 "korlátozása."
 
-#: core/ui/help.py:481
+#: core/ui/help.py:492
 msgid ""
 "The blacklist is a controlled last-resort process for preventing a "
 "specifically reviewed person from being re-entered after a serious issue."
@@ -2543,7 +2567,7 @@ msgstr ""
 "A feketelista ellenőrzött, végső eszköz arra, hogy súlyos eset után egy "
 "konkrétan felülvizsgált személyt ne lehessen újra felvenni."
 
-#: core/ui/help.py:484
+#: core/ui/help.py:495
 msgid ""
 "A Coordinator or Manager may propose a case. Only a Manager decides it; "
 "other authenticated roles may read Help even if they cannot open the review "
@@ -2553,7 +2577,7 @@ msgstr ""
 "bejelentkezett szerepkörök akkor is olvashatják a Súgót, ha a "
 "felülvizsgálati sort nem nyithatják meg."
 
-#: core/ui/help.py:488
+#: core/ui/help.py:499
 msgid ""
 "Open the person's profile, propose a case, choose the approved category, and "
 "write a factual reason without unnecessary sensitive detail."
@@ -2562,7 +2586,7 @@ msgstr ""
 "kategóriát, és írjon tényszerű indokot szükségtelen érzékeny részletek "
 "nélkül."
 
-#: core/ui/help.py:491
+#: core/ui/help.py:502
 msgid ""
 "A Manager reviews the proposal and its privacy-preserving identifiers, then "
 "approves or rejects with a recorded reason."
@@ -2570,7 +2594,7 @@ msgstr ""
 "A vezető áttekinti a javaslatot és az adatvédelmet megőrző azonosítókat, "
 "majd rögzített indokkal jóváhagyja vagy elutasítja."
 
-#: core/ui/help.py:494
+#: core/ui/help.py:505
 msgid ""
 "Approved cases block activation and flag a matching future intake. The "
 "system does not merge people automatically."
@@ -2578,7 +2602,7 @@ msgstr ""
 "A jóváhagyott esetek blokkolják az aktiválást és jelzik a későbbi egyező "
 "felvételt. A rendszer nem egyesít személyeket automatikusan."
 
-#: core/ui/help.py:497
+#: core/ui/help.py:508
 msgid ""
 "If a restriction must be removed, use the controlled removal action so the "
 "reason and actor remain in Audit."
@@ -2586,11 +2610,11 @@ msgstr ""
 "Ha korlátozást kell eltávolítani, használja az ellenőrzött eltávolítási "
 "műveletet, hogy az indok és a végrehajtó megmaradjon az Auditban."
 
-#: core/ui/help.py:500
+#: core/ui/help.py:511
 msgid "High-impact restricted data"
 msgstr "Nagy hatású, korlátozott adat"
 
-#: core/ui/help.py:502
+#: core/ui/help.py:513
 msgid ""
 "Do not use the blacklist for ordinary performance notes or as an automatic "
 "consequence of an exit. Follow the approved legal basis, access, and "
@@ -2600,34 +2624,34 @@ msgstr ""
 "automatikus következményeként. Valós adatok befogadása előtt kövesse a "
 "jóváhagyott jogalapot, hozzáférési és megőrzési szabályzatot."
 
-#: core/ui/help.py:507
+#: core/ui/help.py:518
 msgid "The blacklist review queue with fictional proposed cases."
 msgstr "A feketelista felülvizsgálati sora fiktív javasolt esetekkel."
 
-#: core/ui/help.py:508
+#: core/ui/help.py:519
 msgid "The proposal shows the person, category, and review facts."
 msgstr ""
 "A javaslat mutatja a személyt, a kategóriát és a felülvizsgálati tényeket."
 
-#: core/ui/help.py:509
+#: core/ui/help.py:520
 msgid "A Manager records the decision through explicit controls."
 msgstr "A vezető egyértelmű vezérlőkkel rögzíti a döntést."
 
-#: core/ui/help.py:518
+#: core/ui/help.py:529
 msgid "Reporting and pay"
 msgstr "Kimutatások és bérezés"
 
-#: core/ui/help.py:522
+#: core/ui/help.py:533
 msgid "Reports and staff activity"
 msgstr "Kimutatások és munkatársi aktivitás"
 
-#: core/ui/help.py:524
+#: core/ui/help.py:535
 msgid "Use period filters, drill-downs, office scope, and activity reporting."
 msgstr ""
 "Időszakszűrők, részletezés, irodai hatókör és aktivitási kimutatások "
 "használata."
 
-#: core/ui/help.py:528
+#: core/ui/help.py:539
 msgid ""
 "Reports summarizes current operational records, while Staff activity counts "
 "selected staff actions over a chosen reporting period."
@@ -2635,7 +2659,7 @@ msgstr ""
 "A Kimutatások az aktuális operatív rekordokat összegzi, a Munkatársi "
 "aktivitás pedig a kiválasztott időszak munkatársi műveleteit számolja."
 
-#: core/ui/help.py:531
+#: core/ui/help.py:542
 msgid ""
 "Report visibility follows office scope and each report action. Staff "
 "activity is available only to roles with its reporting permission; Help "
@@ -2645,7 +2669,7 @@ msgstr ""
 "jogosultságokat követi. A Munkatársi aktivitás csak a megfelelő kimutatási "
 "joggal érhető el; a Súgót mindenki olvashatja."
 
-#: core/ui/help.py:535
+#: core/ui/help.py:546
 msgid ""
 "Set the reporting period first. Month, quarter, year, and custom controls "
 "change the rows and totals shown on the page."
@@ -2653,7 +2677,7 @@ msgstr ""
 "Először állítsa be a kimutatási időszakot. A havi, negyedéves, éves és "
 "egyéni vezérlők módosítják az oldalon látható sorokat és összesítéseket."
 
-#: core/ui/help.py:538
+#: core/ui/help.py:549
 msgid ""
 "Open a metric card or linked row to drill down to the underlying People or "
 "Projects view instead of copying a headline number."
@@ -2661,7 +2685,7 @@ msgstr ""
 "Egy főszám másolása helyett nyissa meg a mutatókártyát vagy kapcsolt sort az "
 "alapul szolgáló Emberek vagy Projektek nézet részletezéséhez."
 
-#: core/ui/help.py:541
+#: core/ui/help.py:552
 msgid ""
 "Use Staff activity to compare recorded operational actions, including zero-"
 "activity colleagues where shown."
@@ -2669,7 +2693,7 @@ msgstr ""
 "A Munkatársi aktivitással hasonlítsa össze a rögzített operatív műveleteket, "
 "ahol pedig látható, a nulla aktivitású kollégákat is."
 
-#: core/ui/help.py:544
+#: core/ui/help.py:555
 msgid ""
 "Use Audit—not Staff activity—when you need to know who changed a specific "
 "record, what changed, and why."
@@ -2677,11 +2701,11 @@ msgstr ""
 "Ha azt kell tudnia, ki, mit és miért módosított egy konkrét rekordon, az "
 "Auditot használja, ne a Munkatársi aktivitást."
 
-#: core/ui/help.py:547
+#: core/ui/help.py:558
 msgid "Read totals in scope"
 msgstr "A hatókörön belüli összesítéseket olvassa"
 
-#: core/ui/help.py:549
+#: core/ui/help.py:560
 msgid ""
 "Operational totals include only records visible in your office scope. An "
 "Observer may see cross-office figures that another role cannot."
@@ -2690,7 +2714,7 @@ msgstr ""
 "tartalmazzák. Egy Megfigyelő láthat olyan irodák közötti adatokat, amelyeket "
 "más szerepkör nem."
 
-#: core/ui/help.py:555
+#: core/ui/help.py:566
 msgid ""
 "The Reports workspace with fictional metrics, period controls, and drill-"
 "down links."
@@ -2698,17 +2722,17 @@ msgstr ""
 "A Kimutatások munkaterület fiktív mutatókkal, időszakvezérlőkkel és "
 "részletező hivatkozásokkal."
 
-#: core/ui/help.py:557
+#: core/ui/help.py:568
 msgid "Set the period before interpreting a metric."
 msgstr "A mutató értelmezése előtt állítsa be az időszakot."
 
-#: core/ui/help.py:558
+#: core/ui/help.py:569
 msgid "Linked cards and rows open the records behind the total."
 msgstr ""
 "A kapcsolt kártyák és sorok megnyitják az összesítés mögötti rekordokat."
 
 # --- finance ---
-#: core/ui/help.py:566 templates/layouts/base.html:64
+#: core/ui/help.py:577 templates/layouts/base.html:64
 #: templates/pages/finance_executive.html:4
 #: templates/pages/finance_executive.html:10
 #: templates/pages/finance_month_detail.html:8
@@ -2724,7 +2748,7 @@ msgstr ""
 msgid "Finance"
 msgstr "Pénzügyek"
 
-#: core/ui/help.py:568
+#: core/ui/help.py:579
 msgid ""
 "Create one month or enter a project year, compare projects in read-only "
 "workbooks, and export a formula-free Excel snapshot."
@@ -2733,17 +2757,18 @@ msgstr ""
 "projekteket csak olvasható munkafüzetekben, és exportáljon képletek nélküli "
 "Excel-pillanatképet."
 
-#: core/ui/help.py:573
+#: core/ui/help.py:584
 msgid ""
 "Finance keeps project profitability in monthly records and category line "
 "items. Managers can create one month or edit a project-year grid; the "
 "workbook, chart, and export surfaces are reporting views."
 msgstr ""
-"A Pénzügyek havi rekordokban és kategóriatételekben tartja nyilván a projektek "
-"jövedelmezőségét. A menedzserek létrehozhatnak egy hónapot vagy szerkeszthetik "
-"a projektév-rácsot; a munkafüzetek, diagramok és exportok jelentésnézetek."
+"A Pénzügyek havi rekordokban és kategóriatételekben tartja nyilván a "
+"projektek jövedelmezőségét. A menedzserek létrehozhatnak egy hónapot vagy "
+"szerkeszthetik a projektév-rácsot; a munkafüzetek, diagramok és exportok "
+"jelentésnézetek."
 
-#: core/ui/help.py:576
+#: core/ui/help.py:587
 msgid ""
 "Managers enter, lock, reopen, and export finance data in their office scope. "
 "Observers inspect and export across offices. Other authenticated roles may "
@@ -2754,7 +2779,7 @@ msgstr ""
 "ellenőrzik és exportálják. Más bejelentkezett szerepkörök elolvashatják ezt "
 "a cikket, de nem nyithatják meg a Pénzügyeket."
 
-#: core/ui/help.py:580
+#: core/ui/help.py:591
 msgid ""
 "Create an active project and keep Include this project in Finance enabled. "
 "If no eligible project exists, Finance explains the prerequisite; Managers "
@@ -2765,7 +2790,7 @@ msgstr ""
 "az előfeltételt; a menedzserek ebből az üres állapotból az Új projekt "
 "hivatkozást követhetik."
 
-#: core/ui/help.py:583
+#: core/ui/help.py:594
 msgid ""
 "For one period, use Record a month and enter Revenue and Cost as positive "
 "totals. Then open that month, enter detailed costs as negative amounts and "
@@ -2774,11 +2799,11 @@ msgid ""
 msgstr ""
 "Egy időszakhoz használja a Hónap rögzítése lehetőséget, és a Bevétel és "
 "Költség mezőbe pozitív összesítést írjon. Ezután nyissa meg a hónapot, a "
-"részletes költségeket negatív, a bevételeket pozitív összegként adja meg, majd "
-"használja a Mentés és újraszámolás gombot; a kategóriatételekből származnak az "
-"összesítések."
+"részletes költségeket negatív, a bevételeket pozitív összegként adja meg, "
+"majd használja a Mentés és újraszámolás gombot; a kategóriatételekből "
+"származnak az összesítések."
 
-#: core/ui/help.py:586
+#: core/ui/help.py:597
 msgid ""
 "For bulk entry, select a project under Enter a project year. Type costs as "
 "negative amounts and revenues as positive amounts across the twelve-month "
@@ -2787,10 +2812,10 @@ msgid ""
 msgstr ""
 "Tömeges rögzítéshez válasszon projektet a Projektév rögzítése alatt. A "
 "tizenkét havi rácson a költségeket negatív, a bevételeket pozitív összegként "
-"írja be, majd egyszer használja az Év mentése gombot. Az üres új hónapok havi "
-"rekordokká válnak; a zárolt hónapok érintetlenek maradnak."
+"írja be, majd egyszer használja az Év mentése gombot. Az üres új hónapok "
+"havi rekordokká válnak; a zárolt hónapok érintetlenek maradnak."
 
-#: core/ui/help.py:589
+#: core/ui/help.py:600
 msgid ""
 "Open Workbook view to compare categories down and projects across for one "
 "month. It is read-only, and each project heading links back to that "
@@ -2800,7 +2825,7 @@ msgstr ""
 "projektjeit pedig oszlopokban hasonlítsa össze. A nézet csak olvasható, és "
 "minden projektfejléc visszavezet az adott projekt szerkeszthető éves rácsára."
 
-#: core/ui/help.py:592
+#: core/ui/help.py:603
 msgid ""
 "Select View whole year from the monthly workbook to sum all twelve months. "
 "The annual workbook stays read-only, retains eligible project columns even "
@@ -2811,7 +2836,7 @@ msgstr ""
 "bejegyzés nélkül is megtartja a megfelelő projektek oszlopait, valamint "
 "megjeleníti az irodai részösszegeket és a végösszeget."
 
-#: core/ui/help.py:595
+#: core/ui/help.py:606
 msgid ""
 "Use Export Excel for the selected year. The download contains Year and "
 "Months sheets, office-scoped totals, and live monthly-trend and net-by-"
@@ -2822,7 +2847,7 @@ msgstr ""
 "valamint élő havi trend- és projektenkénti nettódiagramokat tartalmaz. "
 "Értékeket tartalmaz, nem munkalapképleteket."
 
-#: core/ui/help.py:598
+#: core/ui/help.py:609
 msgid ""
 "Review the derived results, then lock a month when its figures are final. "
 "Reopening a locked month requires a reason and creates an audit event."
@@ -2831,11 +2856,11 @@ msgstr ""
 "adatai véglegesek. Zárolt hónap újranyitásához indoklás szükséges, és a "
 "művelet audit eseményt hoz létre."
 
-#: core/ui/help.py:601
+#: core/ui/help.py:612
 msgid "One source of truth, enforced scope"
 msgstr "Egyetlen hiteles adatforrás, kikényszerített hatáskör"
 
-#: core/ui/help.py:603
+#: core/ui/help.py:614
 msgid ""
 "Record a month, month detail, and the project-year grid are write surfaces. "
 "Workbooks and Excel files are derived snapshots, so changing a downloaded "
@@ -2844,10 +2869,10 @@ msgid ""
 msgstr ""
 "A Hónap rögzítése, a hónap részletei és a projektév-rács írási felületek. A "
 "munkafüzetek és Excel-fájlok származtatott pillanatképek, ezért a letöltött "
-"fájl módosítása nem változtatja meg az alkalmazást. Az olvasók és az exportok "
-"csak az engedélyezett irodai hatáskört kapják meg."
+"fájl módosítása nem változtatja meg az alkalmazást. Az olvasók és az "
+"exportok csak az engedélyezett irodai hatáskört kapják meg."
 
-#: core/ui/help.py:609
+#: core/ui/help.py:620
 msgid ""
 "The Finance workspace with fictional monthly revenue, costs, and derived "
 "results."
@@ -2855,7 +2880,7 @@ msgstr ""
 "A Pénzügy munkaterület fiktív havi bevétellel, költségekkel és számított "
 "eredményekkel."
 
-#: core/ui/help.py:612
+#: core/ui/help.py:623
 msgid ""
 "Record a month creates one period; Enter a project year provides bulk entry "
 "farther down the page."
@@ -2863,7 +2888,7 @@ msgstr ""
 "A Hónap rögzítése egy időszakot hoz létre; a Projektév rögzítése tömeges "
 "adatbevitelt biztosít lejjebb az oldalon."
 
-#: core/ui/help.py:615
+#: core/ui/help.py:626
 msgid ""
 "Workbook and export actions report the same line items without creating "
 "another write path."
@@ -2872,18 +2897,18 @@ msgstr ""
 "be, újabb írási útvonal létrehozása nélkül."
 
 # --- feedback ---
-#: core/ui/help.py:629 templates/layouts/base.html:73
+#: core/ui/help.py:640 templates/layouts/base.html:73
 #: templates/pages/feedback_form.html:8 templates/pages/feedback_form.html:27
 msgid "Feedback"
 msgstr "Visszajelzés"
 
-#: core/ui/help.py:631
+#: core/ui/help.py:642
 msgid "Create public links and QR flyers, then review anonymous submissions."
 msgstr ""
 "Nyilvános hivatkozások és QR-szórólapok létrehozása, majd anonim beküldések "
 "áttekintése."
 
-#: core/ui/help.py:636
+#: core/ui/help.py:647
 msgid ""
 "Feedback gives workers a public, account-free way to submit a message "
 "through a controlled link or printed QR flyer."
@@ -2891,7 +2916,7 @@ msgstr ""
 "A Visszajelzés nyilvános, fiók nélküli módot ad a munkavállalóknak üzenet "
 "beküldésére ellenőrzött hivatkozáson vagy nyomtatott QR-szórólapon át."
 
-#: core/ui/help.py:639
+#: core/ui/help.py:650
 msgid ""
 "Managers create links and review the inbox. The submission form is public to "
 "anyone holding the token; Help itself remains authenticated."
@@ -2900,7 +2925,7 @@ msgstr ""
 "üzeneteket. A beküldő űrlap nyilvános minden tokenbirtokosnak; maga a Súgó "
 "bejelentkezéshez kötött."
 
-#: core/ui/help.py:643
+#: core/ui/help.py:654
 msgid ""
 "Create a clearly labelled feedback link and optionally connect it to the "
 "relevant project."
@@ -2908,7 +2933,7 @@ msgstr ""
 "Hozzon létre egyértelműen elnevezett visszajelzési hivatkozást, és szükség "
 "esetén kapcsolja a megfelelő projekthez."
 
-#: core/ui/help.py:646
+#: core/ui/help.py:657
 msgid ""
 "Share the generated URL or download the one-page QR flyer for printing. "
 "Retire a distribution point by controlling where its token is published."
@@ -2917,7 +2942,7 @@ msgstr ""
 "szórólapot. Egy terjesztési pont megszüntetéséhez szabályozza, hol jelenik "
 "meg a tokenje."
 
-#: core/ui/help.py:649
+#: core/ui/help.py:660
 msgid ""
 "A worker opens the public form, writes a message, and may add a rating "
 "without creating an account."
@@ -2925,7 +2950,7 @@ msgstr ""
 "A munkavállaló megnyitja a nyilvános űrlapot, üzenetet ír, és fiók "
 "létrehozása nélkül értékelést is adhat."
 
-#: core/ui/help.py:652
+#: core/ui/help.py:663
 msgid ""
 "Managers review the newest submissions in the inbox and handle them under "
 "the agreed retention and escalation process."
@@ -2933,11 +2958,11 @@ msgstr ""
 "A vezetők a legújabb beküldéseket a beérkezett üzenetek között tekintik át, "
 "és az elfogadott megőrzési és eszkalációs folyamat szerint kezelik."
 
-#: core/ui/help.py:655
+#: core/ui/help.py:666
 msgid "Public token, limited purpose"
 msgstr "Nyilvános token, korlátozott cél"
 
-#: core/ui/help.py:657
+#: core/ui/help.py:668
 msgid ""
 "Anyone with the link can submit. Do not ask workers to include identity "
 "documents, medical details, credentials, or other unnecessary sensitive "
@@ -2947,30 +2972,30 @@ msgstr ""
 "személyazonosító okmányt, egészségügyi adatot, belépési adatot vagy más "
 "szükségtelen érzékeny információt írjanak szabad szövegbe."
 
-#: core/ui/help.py:663
+#: core/ui/help.py:674
 msgid ""
 "The Feedback inbox with fictional submissions and link-management controls."
 msgstr ""
 "A Visszajelzés beérkező nézete fiktív beküldésekkel és hivatkozáskezelő "
 "vezérlőkkel."
 
-#: core/ui/help.py:665
+#: core/ui/help.py:676
 msgid "Link and QR controls create the public entry point."
 msgstr "A hivatkozás- és QR-vezérlők hozzák létre a nyilvános belépési pontot."
 
-#: core/ui/help.py:667
+#: core/ui/help.py:678
 msgid "The authenticated inbox is where Managers review submissions."
 msgstr ""
 "A vezetők a bejelentkezéshez kötött beérkező nézetben tekintik át a "
 "beküldéseket."
 
-#: core/ui/help.py:678
+#: core/ui/help.py:689
 msgid ""
 "Record advances, additions, deductions, reversals, and settlement cycles."
 msgstr ""
 "Előlegek, jóváírások, levonások, sztornók és elszámolási ciklusok rögzítése."
 
-#: core/ui/help.py:683
+#: core/ui/help.py:694
 msgid ""
 "The ledger records explicit pay additions and deductions, groups them into "
 "settlement cycles, and preserves corrections as history."
@@ -2978,7 +3003,7 @@ msgstr ""
 "A nyilvántartás explicit bérjóváírásokat és -levonásokat rögzít, elszámolási "
 "ciklusokba csoportosítja őket, a javításokat pedig előzményként megőrzi."
 
-#: core/ui/help.py:686
+#: core/ui/help.py:697
 msgid ""
 "Authorized readers can inspect cycles. Entry, cancellation, reversal, "
 "settlement, and export each require the corresponding ledger or export "
@@ -2988,7 +3013,7 @@ msgstr ""
 "elszámolás és export mind a megfelelő nyilvántartási vagy "
 "exportjogosultságot igényli."
 
-#: core/ui/help.py:690
+#: core/ui/help.py:701
 msgid ""
 "Record the person, optional project, entry type, category, positive amount, "
 "and a concise note."
@@ -2996,7 +3021,7 @@ msgstr ""
 "Rögzítse a személyt, az opcionális projektet, a tételtípust, kategóriát, "
 "pozitív összeget és rövid megjegyzést."
 
-#: core/ui/help.py:693
+#: core/ui/help.py:704
 msgid ""
 "Review the current Thursday summary and select the intended 20th-to-20th "
 "cycle before including entries."
@@ -3004,7 +3029,7 @@ msgstr ""
 "A tételek bevonása előtt ellenőrizze az aktuális csütörtöki összesítést, és "
 "válassza ki a kívánt 20-ától 20-áig tartó ciklust."
 
-#: core/ui/help.py:696
+#: core/ui/help.py:707
 msgid ""
 "Correct a mistake by cancelling or reversing the original entry with a "
 "reason; never overwrite financial history."
@@ -3012,7 +3037,7 @@ msgstr ""
 "A hibát az eredeti tétel indokolt törlésével vagy sztornózásával javítsa; "
 "pénzügyi előzményt soha ne írjon felül."
 
-#: core/ui/help.py:699
+#: core/ui/help.py:710
 msgid ""
 "After the external deduction process is complete, mark the included cycle "
 "settled and use the approved CSV export when needed."
@@ -3020,11 +3045,11 @@ msgstr ""
 "A külső levonási folyamat befejezése után jelölje elszámoltnak a bevont "
 "ciklust, és szükség esetén használja a jóváhagyott CSV-exportot."
 
-#: core/ui/help.py:702
+#: core/ui/help.py:713
 msgid "Positive amounts, explicit pay effect"
 msgstr "Pozitív összegek, egyértelmű bérhatás"
 
-#: core/ui/help.py:704
+#: core/ui/help.py:715
 msgid ""
 "The entry type controls whether an amount adds to or deducts from pay. This "
 "ledger records source adjustments; it does not calculate statutory payroll."
@@ -3033,7 +3058,7 @@ msgstr ""
 "belőle. Ez a nyilvántartás forráskorrekciókat rögzít; törvényes "
 "bérszámfejtést nem végez."
 
-#: core/ui/help.py:710
+#: core/ui/help.py:721
 msgid ""
 "The ledger workspace with fictional entries, cycle controls, and settlement "
 "summaries."
@@ -3041,18 +3066,18 @@ msgstr ""
 "A nyilvántartási munkaterület fiktív tételekkel, ciklusvezérlőkkel és "
 "elszámolási összesítésekkel."
 
-#: core/ui/help.py:713
+#: core/ui/help.py:724
 msgid "Entry controls record an explicit type, category, and amount."
 msgstr ""
 "A beviteli vezérlők egyértelmű típust, kategóriát és összeget rögzítenek."
 
-#: core/ui/help.py:716
+#: core/ui/help.py:727
 msgid "Cycle controls include, export, and settle the selected period."
 msgstr ""
 "A ciklusvezérlők bevonják, exportálják és elszámolják a kiválasztott "
 "időszakot."
 
-#: core/ui/help.py:722 core/ui/help.py:824 core/ui/help.py:905
+#: core/ui/help.py:733 core/ui/help.py:835 core/ui/help.py:916
 #: features/advances/views.py:80 features/payslips/forms.py:22
 #: templates/pages/ledger.html:21 templates/pages/payslips.html:39
 #: templates/pages/person_detail.html:38 templates/pages/person_detail.html:315
@@ -3062,7 +3087,7 @@ msgstr ""
 msgid "Person"
 msgstr "Személy"
 
-#: core/ui/help.py:724 templates/pages/ledger.html:21
+#: core/ui/help.py:735 templates/pages/ledger.html:21
 msgid ""
 "The worker this money concerns. The entry appears on their pay overview and "
 "in their open balance."
@@ -3070,11 +3095,11 @@ msgstr ""
 "A munkavállaló, akit ez a pénz érint. A tétel megjelenik a béráttekintésében "
 "és a nyitott egyenlegében."
 
-#: core/ui/help.py:729 templates/pages/ledger.html:25
+#: core/ui/help.py:740 templates/pages/ledger.html:25
 msgid "Company / project"
 msgstr "Cég / projekt"
 
-#: core/ui/help.py:731 templates/pages/ledger.html:25
+#: core/ui/help.py:742 templates/pages/ledger.html:25
 msgid ""
 "Optional. Attributes the amount to a partner company for reporting. It does "
 "not change what the worker is paid."
@@ -3082,12 +3107,12 @@ msgstr ""
 "Nem kötelező. A partnercéghez rendeli az összeget a riportoláshoz. Nem "
 "változtatja meg, mennyit kap a munkavállaló."
 
-#: core/ui/help.py:736 templates/pages/ledger.html:30
+#: core/ui/help.py:747 templates/pages/ledger.html:30
 #: templates/panels/advances_ledger.html:24
 msgid "Entry type"
 msgstr "Tétel típusa"
 
-#: core/ui/help.py:738 templates/pages/ledger.html:30
+#: core/ui/help.py:749 templates/pages/ledger.html:30
 msgid ""
 "Decides the direction: an advance or deduction reduces pay, an addition "
 "increases it. The amount stays positive either way."
@@ -3095,7 +3120,7 @@ msgstr ""
 "Meghatározza az irányt: az előleg vagy levonás csökkenti a bért, a hozzáadás "
 "növeli. Az összeg mindkét esetben pozitív marad."
 
-#: core/ui/help.py:743 features/profitability/exports.py:201
+#: core/ui/help.py:754 features/profitability/exports.py:201
 #: templates/pages/_finance_workbook_grid.html:8
 #: templates/pages/finance_project_year.html:35 templates/pages/ledger.html:34
 #: templates/panels/advances_ledger.html:28
@@ -3105,7 +3130,7 @@ msgstr ""
 msgid "Category"
 msgstr "Kategória"
 
-#: core/ui/help.py:745 templates/pages/ledger.html:34
+#: core/ui/help.py:756 templates/pages/ledger.html:34
 msgid ""
 "What the money was for - advance, clothing, footwear, equipment, medical, "
 "travel or other. Groups the cycle report; it does not affect the direction "
@@ -3115,12 +3140,12 @@ msgstr ""
 "vagy egyéb. Csoportosítja a ciklusjelentést; nem befolyásolja az irányt vagy "
 "az összeget."
 
-#: core/ui/help.py:750 templates/pages/ledger.html:38
+#: core/ui/help.py:761 templates/pages/ledger.html:38
 #: templates/panels/advances_ledger.html:32
 msgid "Amount (EUR)"
 msgstr "Összeg (EUR)"
 
-#: core/ui/help.py:752 templates/pages/ledger.html:38
+#: core/ui/help.py:763 templates/pages/ledger.html:38
 msgid ""
 "Always a positive number. Never type a minus sign - the entry type decides "
 "whether this is added or subtracted."
@@ -3128,15 +3153,15 @@ msgstr ""
 "Mindig pozitív szám. Soha ne írjon mínuszjelet – a tétel típusa dönti el, "
 "hogy hozzáadódik vagy levonódik."
 
-#: core/ui/help.py:756
+#: core/ui/help.py:767
 msgid "Once the cycle is included; correct it with a reversal after that."
 msgstr "A ciklus lezárása után; ezt követően sztornó tétellel javítható."
 
-#: core/ui/help.py:760 templates/pages/ledger.html:39
+#: core/ui/help.py:771 templates/pages/ledger.html:39
 msgid "Entry date"
 msgstr "Tétel dátuma"
 
-#: core/ui/help.py:762 templates/pages/ledger.html:39
+#: core/ui/help.py:773 templates/pages/ledger.html:39
 msgid ""
 "The day the money changed hands. It decides which 21st-to-20th payroll cycle "
 "the entry settles in, and which calendar month it appears under on the pay "
@@ -3148,18 +3173,18 @@ msgstr ""
 "béráttekintésben. Hagyja üresen a mai naphoz; a már lezárt cikluson belüli "
 "dátumot elutasítja."
 
-#: core/ui/help.py:765
+#: core/ui/help.py:776
 msgid "Once the cycle containing that date is included."
 msgstr "Az adott dátumot tartalmazó ciklus lezárása után."
 
-#: core/ui/help.py:768 core/ui/help.py:852 core/ui/help.py:926
+#: core/ui/help.py:779 core/ui/help.py:863 core/ui/help.py:937
 #: features/logistics/forms.py:177 templates/pages/ledger.html:40
 #: templates/pages/transport_trends.html:44 templates/pages/wages.html:41
 #: templates/panels/advances_ledger.html:33
 msgid "Note"
 msgstr "Megjegyzés"
 
-#: core/ui/help.py:770 templates/pages/ledger.html:40
+#: core/ui/help.py:781 templates/pages/ledger.html:40
 msgid ""
 "The reason, in words, for whoever reads this months from now. It is carried "
 "into the exports the accountant receives."
@@ -3167,12 +3192,12 @@ msgstr ""
 "Az indok szavakkal annak, aki ezt hónapok múlva olvassa. Átkerül az "
 "exportokba, amelyeket a könyvelő megkap."
 
-#: core/ui/help.py:782
+#: core/ui/help.py:793
 msgid "Record net payslip values and deliver encrypted PDFs safely."
 msgstr ""
 "Nettó bérlapértékek rögzítése és titkosított PDF-ek biztonságos kézbesítése."
 
-#: core/ui/help.py:787
+#: core/ui/help.py:798
 msgid ""
 "Payslips stores the independently supplied net value and can email a freshly "
 "generated encrypted PDF to the worker."
@@ -3180,7 +3205,7 @@ msgstr ""
 "A Bérlapok az önállóan megadott nettó értéket tárolja, és frissen "
 "létrehozott, titkosított PDF-et küldhet e-mailben a munkavállalónak."
 
-#: core/ui/help.py:790
+#: core/ui/help.py:801
 msgid ""
 "Payslip amounts are restricted pay data. Only roles with payslip access can "
 "read them, and only authorized Managers can record or send them."
@@ -3189,7 +3214,7 @@ msgstr ""
 "rendelkező szerepkörök olvashatják, rögzíteni vagy küldeni pedig csak "
 "jogosult vezetők tudják."
 
-#: core/ui/help.py:794
+#: core/ui/help.py:805
 msgid ""
 "Confirm the worker has the correct email address, then record the calendar "
 "month, positive net amount, optional issue date, and note."
@@ -3197,7 +3222,7 @@ msgstr ""
 "Ellenőrizze a munkavállaló e-mail-címét, majd rögzítse a naptári hónapot, a "
 "pozitív nettó összeget, az opcionális kiállítási dátumot és a megjegyzést."
 
-#: core/ui/help.py:797
+#: core/ui/help.py:808
 msgid ""
 "Review the recorded row before sending. Send encrypted PDF generates the "
 "attachment and a random one-time password."
@@ -3205,7 +3230,7 @@ msgstr ""
 "Küldés előtt ellenőrizze a rögzített sort. A Titkosított PDF küldése "
 "létrehozza a mellékletet és egy véletlenszerű egyszeri jelszót."
 
-#: core/ui/help.py:800
+#: core/ui/help.py:811
 msgid ""
 "Tell the worker the password by phone or Messenger, never in the same email "
 "as the encrypted PDF."
@@ -3213,7 +3238,7 @@ msgstr ""
 "A jelszót telefonon vagy Messengeren közölje a munkavállalóval, soha ne "
 "ugyanabban az e-mailben, mint a titkosított PDF-et."
 
-#: core/ui/help.py:803
+#: core/ui/help.py:814
 msgid ""
 "If you resend, a new password is generated and the earlier one is "
 "invalidated. The password is shown once and is not stored for later "
@@ -3222,11 +3247,11 @@ msgstr ""
 "Újraküldéskor új jelszó készül, a korábbi érvényét veszti. A jelszó egyszer "
 "jelenik meg, és későbbi lekéréshez nem tárolódik."
 
-#: core/ui/help.py:806
+#: core/ui/help.py:817
 msgid "Never capture or copy the password into records"
 msgstr "A jelszót soha ne rögzítse és ne másolja rekordba"
 
-#: core/ui/help.py:808
+#: core/ui/help.py:819
 msgid ""
 "Do not screenshot the success message, paste the password into notes, email "
 "it, or send it through the same channel as the PDF. The generated PDF is not "
@@ -3236,7 +3261,7 @@ msgstr ""
 "megjegyzésbe, ne küldje e-mailben vagy a PDF-fel azonos csatornán. A "
 "létrehozott PDF-et az alkalmazás nem tárolja."
 
-#: core/ui/help.py:814
+#: core/ui/help.py:825
 msgid ""
 "The payslip list with fictional net values and delivery states; no passwords "
 "are visible."
@@ -3244,15 +3269,15 @@ msgstr ""
 "A bérlaplista fiktív nettó értékekkel és kézbesítési állapotokkal; jelszó "
 "nem látható."
 
-#: core/ui/help.py:817
+#: core/ui/help.py:828
 msgid "The record form stores the independently supplied net value."
 msgstr "A rögzítőűrlap az önállóan megadott nettó értéket tárolja."
 
-#: core/ui/help.py:819
+#: core/ui/help.py:830
 msgid "Delivery state shows whether an encrypted PDF was sent."
 msgstr "A kézbesítési állapot mutatja, hogy elküldték-e a titkosított PDF-et."
 
-#: core/ui/help.py:826
+#: core/ui/help.py:837
 msgid ""
 "Who the payslip belongs to. A worker with no email address is marked in the "
 "list, because the encrypted PDF cannot be delivered to them."
@@ -3260,11 +3285,11 @@ msgstr ""
 "Kihez tartozik a bérpapír. Az e-mail cím nélküli munkavállaló meg van "
 "jelölve a listában, mert a titkosított PDF nem kézbesíthető neki."
 
-#: core/ui/help.py:831 features/payslips/forms.py:34
+#: core/ui/help.py:842 features/payslips/forms.py:34
 msgid "Pay month"
 msgstr "Bérhónap"
 
-#: core/ui/help.py:833 features/payslips/forms.py:39
+#: core/ui/help.py:844 features/payslips/forms.py:39
 msgid ""
 "The calendar month this payslip pays for, not the month it was issued in. "
 "One payslip per person per month."
@@ -3272,11 +3297,11 @@ msgstr ""
 "A naptári hónap, amelyért ez a bérpapír fizet, nem a kiállítás hónapja. "
 "Személyenként és hónaponként egy bérpapír."
 
-#: core/ui/help.py:838 features/payslips/forms.py:35
+#: core/ui/help.py:849 features/payslips/forms.py:35
 msgid "Net amount (EUR)"
 msgstr "Nettó összeg (EUR)"
 
-#: core/ui/help.py:840 features/payslips/forms.py:43
+#: core/ui/help.py:851 features/payslips/forms.py:43
 msgid ""
 "The net figure printed on the payslip, as paid. It is shown beside the gross "
 "wage and the ledger deductions for the same month; the system does not "
@@ -3286,27 +3311,27 @@ msgstr ""
 "és az adott hónap könyvelési levonásai mellett jelenik meg; a rendszer nem "
 "számolja ki."
 
-#: core/ui/help.py:845 features/payslips/forms.py:25
+#: core/ui/help.py:856 features/payslips/forms.py:25
 msgid "Payslip date (optional)"
 msgstr "Bérlap kiállítási dátuma (nem kötelező)"
 
-#: core/ui/help.py:847
+#: core/ui/help.py:858
 msgid "The date printed on the document. Blank means the day it was recorded."
 msgstr "A dokumentumon szereplő dátum. Üresen hagyva a rögzítés napja."
 
-#: core/ui/help.py:854
+#: core/ui/help.py:865
 msgid ""
 "Free text for the office. It is not included in the PDF sent to the worker."
 msgstr ""
 "Szabad szöveg az irodának. Nem kerül bele a munkavállalónak küldött PDF-be."
 
-#: core/ui/help.py:866
+#: core/ui/help.py:877
 msgid ""
 "Record independent monthly gross-wage source values without payroll "
 "calculation."
 msgstr "Önálló havi bruttóbér-forrásértékek rögzítése bérszámfejtés nélkül."
 
-#: core/ui/help.py:871
+#: core/ui/help.py:882
 msgid ""
 "Gross wages stores the supplied gross amount for a person and month beside, "
 "but independently from, the recorded net payslip."
@@ -3314,7 +3339,7 @@ msgstr ""
 "A Bruttó bérek a személyhez és hónaphoz megadott bruttó összeget a rögzített "
 "nettó bérlap mellett, de attól függetlenül tárolja."
 
-#: core/ui/help.py:874
+#: core/ui/help.py:885
 msgid ""
 "Authorized pay-data readers may inspect the list. Recording a gross wage "
 "requires the wage-management permission."
@@ -3322,7 +3347,7 @@ msgstr ""
 "A jogosult béradat-olvasók megtekinthetik a listát. Bruttó bér rögzítéséhez "
 "bérkezelési jogosultság kell."
 
-#: core/ui/help.py:878
+#: core/ui/help.py:889
 msgid ""
 "Choose the correct person and calendar month, then enter the externally "
 "supplied positive gross amount."
@@ -3330,7 +3355,7 @@ msgstr ""
 "Válassza ki a megfelelő személyt és naptári hónapot, majd adja meg a "
 "kívülről kapott pozitív bruttó összeget."
 
-#: core/ui/help.py:881
+#: core/ui/help.py:892
 msgid ""
 "Add a short source or reconciliation note when it helps another authorized "
 "reader understand the record."
@@ -3338,7 +3363,7 @@ msgstr ""
 "Adjon rövid forrás- vagy egyeztetési megjegyzést, ha az segít egy másik "
 "jogosult olvasónak megérteni a rekordot."
 
-#: core/ui/help.py:884
+#: core/ui/help.py:895
 msgid ""
 "Compare gross and net only as independent source values. Investigate "
 "discrepancies through the payroll owner outside this application."
@@ -3346,11 +3371,11 @@ msgstr ""
 "A bruttó és nettó összeget csak független forrásértékként hasonlítsa össze. "
 "Az eltérést az alkalmazáson kívül, a bérszámfejtés felelősével vizsgálja ki."
 
-#: core/ui/help.py:887
+#: core/ui/help.py:898
 msgid "Not a payroll calculator"
 msgstr "Nem bérszámfejtő"
 
-#: core/ui/help.py:889
+#: core/ui/help.py:900
 msgid ""
 "The application does not derive tax, insurance, statutory deductions, or net "
 "pay from this amount and does not treat a gross-to-net difference as an "
@@ -3360,40 +3385,40 @@ msgstr ""
 "levonást vagy nettó bért, és a bruttó-nettó eltérést nem kezeli automatikus "
 "hibaként."
 
-#: core/ui/help.py:895
+#: core/ui/help.py:906
 msgid ""
 "The gross-wage workspace with fictional independent monthly source values."
 msgstr "A bruttóbér-munkaterület fiktív, önálló havi forrásértékekkel."
 
-#: core/ui/help.py:898
+#: core/ui/help.py:909
 msgid "The form records a person, month, and positive gross amount."
 msgstr "Az űrlap személyt, hónapot és pozitív bruttó összeget rögzít."
 
-#: core/ui/help.py:900
+#: core/ui/help.py:911
 msgid "The table preserves who recorded each source value."
 msgstr "A táblázat megőrzi, ki rögzítette az egyes forrásértékeket."
 
-#: core/ui/help.py:907 features/wage_ledger/forms.py:21
+#: core/ui/help.py:918 features/wage_ledger/forms.py:21
 msgid "The worker who earned this wage. One gross figure per person per month."
 msgstr ""
 "A munkavállaló, aki ezt a bért megkereste. Személyenként és hónaponként egy "
 "bruttó összeg."
 
-#: core/ui/help.py:912 features/wage_ledger/forms.py:16
+#: core/ui/help.py:923 features/wage_ledger/forms.py:16
 #: templates/pages/wages.html:39
 msgid "Wage month"
 msgstr "Bérhónap"
 
-#: core/ui/help.py:914 features/wage_ledger/forms.py:25
+#: core/ui/help.py:925 features/wage_ledger/forms.py:25
 msgid ""
 "The calendar month the wage was earned in, not the month it was paid out."
 msgstr "A naptári hónap, amelyben a bért megkeresték, nem a kifizetés hónapja."
 
-#: core/ui/help.py:919 features/wage_ledger/forms.py:17
+#: core/ui/help.py:930 features/wage_ledger/forms.py:17
 msgid "Gross wage (EUR)"
 msgstr "Bruttó bér (EUR)"
 
-#: core/ui/help.py:921 features/wage_ledger/forms.py:29
+#: core/ui/help.py:932 features/wage_ledger/forms.py:29
 msgid ""
 "Gross, before anything is taken off. Ledger deductions are subtracted from "
 "this on the worker's pay overview; tax and levies are not calculated here."
@@ -3402,7 +3427,7 @@ msgstr ""
 "vonódnak le a könyvelési levonások; adót és járulékot itt nem számol a "
 "rendszer."
 
-#: core/ui/help.py:928 features/wage_ledger/forms.py:34
+#: core/ui/help.py:939 features/wage_ledger/forms.py:34
 msgid ""
 "Where this figure came from - a contract, a timesheet, the accountant. It is "
 "what the next reader checks it against."
@@ -3410,14 +3435,14 @@ msgstr ""
 "Honnan származik ez a szám – szerződésből, munkaidő-nyilvántartásból, a "
 "könyvelőtől. A következő olvasó ehhez viszonyítva ellenőrzi."
 
-#: core/ui/help.py:940
+#: core/ui/help.py:951
 msgid ""
 "Trace sensitive actions, old and new values, actors, reasons, and retention."
 msgstr ""
 "Érzékeny műveletek, régi és új értékek, végrehajtók, indokok és megőrzés "
 "nyomon követése."
 
-#: core/ui/help.py:944
+#: core/ui/help.py:955
 msgid ""
 "Audit is the append-only trace for sensitive actions: who acted, what record "
 "changed, when it happened, and the reason or value snapshot available for "
@@ -3427,7 +3452,7 @@ msgstr ""
 "rekord változott, mikor történt, és milyen indok vagy értékpillanatkép "
 "tartozik az eseményhez."
 
-#: core/ui/help.py:947
+#: core/ui/help.py:958
 msgid ""
 "Only roles with Audit access can open the log. Help explains it to every "
 "role because their own sensitive actions may create events."
@@ -3436,7 +3461,7 @@ msgstr ""
 "Súgó minden szerepkörnek elmagyarázza, mert saját érzékeny műveleteik is "
 "létrehozhatnak eseményt."
 
-#: core/ui/help.py:951
+#: core/ui/help.py:962
 msgid ""
 "Open Audit and narrow the result by actor, worker, action, record type, or "
 "date range."
@@ -3444,7 +3469,7 @@ msgstr ""
 "Nyissa meg az Auditot, és szűkítse az eredményt végrehajtó, munkavállaló, "
 "művelet, rekordtípus vagy dátumtartomány szerint."
 
-#: core/ui/help.py:954
+#: core/ui/help.py:965
 msgid ""
 "Read the newest events first and use the record reference to connect an "
 "event to the operational workflow."
@@ -3452,7 +3477,7 @@ msgstr ""
 "Először a legújabb eseményeket olvassa, és a rekordhivatkozással kapcsolja "
 "az eseményt az operatív folyamathoz."
 
-#: core/ui/help.py:957
+#: core/ui/help.py:968
 msgid ""
 "Use old and new value snapshots where provided to understand the change; "
 "free-text reasons remain in the language originally entered."
@@ -3460,7 +3485,7 @@ msgstr ""
 "Ahol rendelkezésre áll, a régi és új értékpillanatképekből értse meg a "
 "változást; a szabad szöveges indokok az eredeti bevitel nyelvén maradnak."
 
-#: core/ui/help.py:960
+#: core/ui/help.py:971
 msgid ""
 "Use Staff activity for volume reporting. Audit is for traceability and "
 "investigation, not performance totals."
@@ -3468,11 +3493,11 @@ msgstr ""
 "Mennyiségi kimutatáshoz a Munkatársi aktivitást használja. Az Audit nyomon "
 "követésre és vizsgálatra való, nem teljesítményösszesítésre."
 
-#: core/ui/help.py:963
+#: core/ui/help.py:974
 msgid "Append-only and restricted"
 msgstr "Csak hozzáfűzhető és korlátozott"
 
-#: core/ui/help.py:965
+#: core/ui/help.py:976
 msgid ""
 "Ordinary users cannot edit or delete audit events. Retention follows the "
 "approved policy; do not copy restricted event details into a less protected "
@@ -3482,7 +3507,7 @@ msgstr ""
 "auditeseményeket. A megőrzés a jóváhagyott szabályzatot követi; korlátozott "
 "eseményrészletet ne másoljon kevésbé védett rendszerbe."
 
-#: core/ui/help.py:971
+#: core/ui/help.py:982
 msgid ""
 "The Audit page heading and filters, captured without event rows or log "
 "contents."
@@ -3490,11 +3515,11 @@ msgstr ""
 "Az Audit oldal fejléce és szűrői, eseménysorok és naplótartalom nélkül "
 "rögzítve."
 
-#: core/ui/help.py:973
+#: core/ui/help.py:984
 msgid "Filters narrow the trace without changing stored events."
 msgstr "A szűrők a tárolt események módosítása nélkül szűkítik a nyomot."
 
-#: core/ui/help.py:975
+#: core/ui/help.py:986
 msgid "Audit access and append-only behavior protect the evidence trail."
 msgstr ""
 "Az Audit-hozzáférés és a csak hozzáfűzhető működés védi a bizonyítékláncot."
@@ -5715,15 +5740,6 @@ msgstr "Zárolás"
 #: templates/layouts/base.html:36 templates/pages/trials_queue.html:4
 msgid "Field"
 msgstr "Terep"
-
-#: templates/layouts/base.html:39 templates/pages/offer_list.html:4
-#: templates/pages/offer_list.html:9 templates/pages/offer_list.html:17
-msgid "Job offers"
-msgstr "Állásajánlatok"
-
-#: templates/layouts/base.html:39
-msgid "Offers"
-msgstr "Ajánlatok"
 
 #: templates/layouts/base.html:56 templates/pages/goods_receipt_detail.html:7
 #: templates/pages/goods_receipts.html:7

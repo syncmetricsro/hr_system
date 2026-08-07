@@ -26,6 +26,12 @@ ACTION_ROLES: dict[Action, frozenset[Role]] = {
     Action.CERTIFICATE_MANAGE: frozenset({_RECRUITER, _COORDINATOR, _MANAGER}),
     Action.CERTIFICATE_PURGE_FILE: frozenset({_MANAGER}),
     Action.PERSON_ARCHIVE: frozenset({_MANAGER}),
+    # Structured job-offer email (ADR 0029 amendment, 2026-08-07). Corvinum's
+    # HR Admin maps to Manager; every authoring and send surface stays there.
+    Action.OFFER_EMAIL_SEND: frozenset({_MANAGER}),
+    Action.OFFER_MANAGE: frozenset({_MANAGER}),
+    Action.OFFER_TEMPLATE_MANAGE: frozenset({_MANAGER}),
+    Action.OFFER_EMAIL_BULK_SEND: frozenset({_MANAGER}),
     # Assignment / activation (partner company = project, §5.7)
     Action.PROJECT_ASSIGN: frozenset({_COORDINATOR, _MANAGER}),
     Action.TRIAL_RECORD_OUTCOME: frozenset({_COORDINATOR, _MANAGER}),

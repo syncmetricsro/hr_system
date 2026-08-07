@@ -123,6 +123,17 @@ HELP_GROUPS = [
                         "Upload a portrait only when it is useful. Accepted JPEG, PNG, or WebP files are cropped, resized to 512 by 512, stripped of metadata, and stored as WebP."
                     ),
                 ),
+                "conditional_steps": (
+                    {
+                        "flag": "offer_emails",
+                        "text": _(
+                            "Authorized staff can create job offers and language-specific templates from Offers, preview the exact recipients, and confirm a bulk email. On a worker profile, the offer panel sends one selected offer in that worker's preferred language."
+                        ),
+                    },
+                ),
+                "conditional_covers": (
+                    {"flag": "offer_emails", "route": "offer_list"},
+                ),
                 "warning_title": _("Personal-data gate"),
                 "warning": _(
                     "Use fictional people until the real-data security gate is complete. Record only data needed for the workflow, and never use a real identity document as an avatar."
@@ -1048,6 +1059,14 @@ def article_context(article: dict) -> dict:
             if _condition_enabled(item)
         ),
     ]
+    prepared["covers"] = (
+        *article["covers"],
+        *(
+            item["route"]
+            for item in article.get("conditional_covers", ())
+            if _condition_enabled(item)
+        ),
+    )
     return prepared
 
 

@@ -185,6 +185,7 @@ def test_every_visible_navigation_workflow_has_help_coverage():
             "ledger_overview",
             "payslip_list",
             "wage_list",
+            "offer_list",
         },
     }[settings.HELP_ASSET_NAMESPACE]
     assert expected <= covered
@@ -193,6 +194,18 @@ def test_every_visible_navigation_workflow_has_help_coverage():
 def test_base_english_content_remains_available():
     with translation.override("en"):
         assert str(available_articles()[0]["title"]) == "Getting started"
+
+
+def test_offer_help_step_and_navigation_coverage_follow_the_feature_flag(settings):
+    settings.FEATURE_FLAGS = {**settings.FEATURE_FLAGS, "offer_emails": False}
+    people = next(a for a in available_articles() if a["slug"] == "people")
+    assert "offer_list" not in people["covers"]
+
+    settings.FEATURE_FLAGS = {**settings.FEATURE_FLAGS, "offer_emails": True}
+    people = next(a for a in available_articles() if a["slug"] == "people")
+    assert "offer_list" in people["covers"]
+    with translation.override("en"):
+        assert any("confirm a bulk email" in str(step) for step in people["steps"])
 
 
 @pytest.mark.jober_only

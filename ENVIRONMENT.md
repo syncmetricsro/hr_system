@@ -38,7 +38,11 @@ Last updated: 2026-08-05
   `doppler run --project hr_system --config dev_corvinum_demo -- scripts/corvinum_app.sh up`.
   The runner forwards only the required `DJANGO_EMAIL_*` variables to the web
   runtime; migrations and fictional-data seeds never receive provider secrets.
-  Without that injected SMTP backend it safely uses console email.
+  Without that injected SMTP backend it safely uses console email. The same
+  backend now serves encrypted payslips and the Manager-only structured
+  job-offer email workflow; no separate mailbox variables or committed address
+  are introduced. Keep `EMAIL_ALLOWED_RECIPIENTS` set to a controlled demo
+  inbox whenever SMTP is used outside production.
 - The `localhost:8001` runner selects `clients.corvinum_eu.local`, which disables
   TOTP entirely for fictional-data client testing, including for accounts with
   an existing confirmed device. Corvinum staging and production select
