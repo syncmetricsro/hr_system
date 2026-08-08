@@ -1,5 +1,53 @@
 # Deployment Journal
 
+## 2026-08-08 - Explicit offer-recipient selection deployed to Corvinum only
+
+Deployed exact `main` **`29d6d16`** to **`corvinum-staging` only** as
+`jober-platform:corvinum-demo-29d6d16` (source image digest
+`sha256:31849291d81c2ec266a8c3b4a0b257c607fcbee19eb86901241ad659e4a46508`),
+streamed through Dokku `git:load-image`. The release replaces automatic bulk
+offer targeting with explicit checkboxes, a signed 15-minute review, a separate
+irreversible confirmation and an idempotent per-recipient result page.
+
+**No seed, account, reset or provider-send command ran.** Jober was not
+deployed; its web container remained `7469157f601` before and after this
+release. Dokku found no predeploy, release or postdeploy task. The only database
+write was `migrate --noinput`, which applied
+`messaging.0004_emailbatch_request_token`. The migration backfill completed
+with no missing request tokens, and the certificate-policy report found zero
+disallowed records with files.
+
+Value-free mail checks confirmed all eight staging mail variables are present,
+the SMTP backend and TLS are enabled, `email_configured()` is true, and the
+recipient allowlist remains configured. No credential or address was printed.
+The existing staging data has 12 non-archived contacts, one contact eligible
+under the current guards/allowlist, one active Hungarian `new_offer` template,
+and no offer record. The owner can create a fictional offer in the UI and run
+the deliberate one-recipient staging test; no data was inserted to make that
+test possible.
+
+Live verification: `check --deploy`, `migrate --check`, the additive migration,
+certificate policy and public HTTPS smoke all passed. `/sk/offers/` and
+`/hu/offers/` redirect unauthenticated requests to their localized login pages;
+feature inspection confirms offer email on and worker messaging off. The new
+Corvinum web container is `9f1f31f5ef7`, and the reviewed release log contains
+no application error. Several concurrent Dokku SSH checks briefly exhausted
+the VPS listener; running the remaining checks sequentially recovered without
+application downtime.
+
+Pre-deploy gates on `29d6d16`: Jober **1,177 passed / 23 skipped**,
+CorvinumEU **749 passed / 18 skipped / 354 deselected**, Playwright **73
+passed**. Production image/static checks, vendor integrity, no-Node enforcement,
+Ruff, dependency direction, both migration lanes and PO/MO synchronization all
+passed.
+
+Rollback target:
+
+```bash
+ssh syncmetric-prime-dokku \
+  "git:from-image corvinum-staging jober-platform:corvinum-demo-db7ae4d"
+```
+
 ## 2026-08-08 - Corvinum structured offer email deployed with SMTP held for rotation
 
 Deployed exact `main` **`db7ae4d`** to **`corvinum-staging` only** as
