@@ -364,7 +364,8 @@ Per-app extra config (from the owner's local `doppler run` — paste values into
   this runbook.
 - **corvinum-staging**: `DJANGO_EMAIL_HOST/PORT/HOST_USER/HOST_PASSWORD/USE_TLS`
   + `DJANGO_DEFAULT_FROM_EMAIL` for payslip email (or leave the console backend
-  for a first bring-up). 2FA-for-managers is already on via the settings module.
+  for a first bring-up). Set `DJANGO_EMAIL_USE_SSL=0`; TLS and SSL must never
+  both be enabled. 2FA-for-managers is already on via the settings module.
 - **Both apps, whenever a real SMTP backend is configured**:
   `EMAIL_ALLOWED_RECIPIENTS=<controlled test inbox>`. Staging holds fictional
   worker records, and a fictional record with a real address typed into it is
@@ -372,12 +373,14 @@ Per-app extra config (from the owner's local `doppler run` — paste values into
   what stops a demo emailing a stranger. Empty means *unrestricted*, which is
   correct only in production. `manage.py check` reports `mail.W001` when a
   worker-email feature is on with real SMTP and no allowlist.
-- **jober-staging, if offer emails are enabled** (ADR 0029): the same
-  `DJANGO_EMAIL_*` set as corvinum-staging, plus the allowlist above. Offer
-  emails include a **bulk** send, so an unset allowlist here has a larger blast
-  radius than payslips. Setting `DJANGO_EMAIL_BACKEND` to an *empty string*
-  does not disable email safely — Django cannot import it and every send raises;
-  use `django.core.mail.backends.console.EmailBackend` to mean "no email here".
+- **jober-staging, if offer emails are enabled** (ADR 0029): configure the
+  complete `DJANGO_EMAIL_*` set plus the allowlist above. Forpsi port 465 uses
+  implicit SSL: `DJANGO_EMAIL_USE_TLS=0`, `DJANGO_EMAIL_USE_SSL=1`. A STARTTLS
+  provider uses the inverse. Offer emails include a **bulk** send, so an unset
+  allowlist here has a larger blast radius than payslips. Setting
+  `DJANGO_EMAIL_BACKEND` to an *empty string* does not disable email safely —
+  Django cannot import it and every send raises; use
+  `django.core.mail.backends.console.EmailBackend` to mean "no email here".
 
 > **Doppler does not reach the server.** Values are read on the owner's machine
 > (`doppler secrets get ... --plain`) and pasted into `dokku config:set`. There

@@ -15,7 +15,7 @@ from __future__ import annotations
 
 import pytest
 
-from core.checks import worker_email_allowlist_check
+from core.checks import smtp_transport_security_check, worker_email_allowlist_check
 from core.mail import (
     EmailRecipientNotAllowed,
     allowed_recipients,
@@ -133,6 +133,26 @@ def test_smtp_with_a_host_is_configured(settings):
     assert email_configured() is True
 
 
+def test_implicit_ssl_smtp_is_configured(settings):
+    settings.EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+    settings.EMAIL_HOST = "smtp.example.test"
+    settings.DEFAULT_FROM_EMAIL = "noreply@example.test"
+    settings.EMAIL_USE_TLS = False
+    settings.EMAIL_USE_SSL = True
+
+    assert email_configured() is True
+
+
+def test_smtp_with_tls_and_ssl_is_unconfigured(settings):
+    settings.EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+    settings.EMAIL_HOST = "smtp.example.test"
+    settings.DEFAULT_FROM_EMAIL = "noreply@example.test"
+    settings.EMAIL_USE_TLS = True
+    settings.EMAIL_USE_SSL = True
+
+    assert email_configured() is False
+
+
 # --- the deploy check ------------------------------------------------------
 
 
@@ -141,6 +161,24 @@ def _smtp(settings):
     settings.EMAIL_HOST = "smtp.example.test"
     settings.DEFAULT_FROM_EMAIL = "noreply@example.test"
     settings.DEBUG = False
+
+
+def test_check_rejects_tls_and_ssl_together(settings):
+    _smtp(settings)
+    settings.EMAIL_USE_TLS = True
+    settings.EMAIL_USE_SSL = True
+
+    errors = smtp_transport_security_check(None)
+
+    assert [error.id for error in errors] == ["mail.E001"]
+
+
+def test_transport_check_accepts_implicit_ssl(settings):
+    _smtp(settings)
+    settings.EMAIL_USE_TLS = False
+    settings.EMAIL_USE_SSL = True
+
+    assert smtp_transport_security_check(None) == []
 
 
 def test_check_warns_for_offer_emails(settings):

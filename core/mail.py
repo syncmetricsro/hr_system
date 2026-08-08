@@ -72,6 +72,13 @@ def email_configured() -> bool:
         return False
     if "smtp" not in backend:
         return True
+    # Django's SMTP backend accepts STARTTLS or implicit SSL, never both. Keep
+    # the UI and direct-send guards fail-closed instead of calling a backend
+    # configuration that can only raise at delivery time.
+    if bool(getattr(settings, "EMAIL_USE_TLS", False)) and bool(
+        getattr(settings, "EMAIL_USE_SSL", False)
+    ):
+        return False
     # `localhost` is not a mail server anyone chose - it is the os.getenv
     # fallback in config/settings/base.py, i.e. "nobody set this". Treating it
     # as configured made every unconfigured environment offer a Send button and

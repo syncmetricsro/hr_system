@@ -14,10 +14,34 @@ registered inside ``features.messaging`` never runs for CorvinumEU at all.
 from __future__ import annotations
 
 from django.conf import settings
+from django.core.checks import Error as CheckError
 from django.core.checks import Warning as CheckWarning
 from django.core.checks import register
 
 from core.mail import WORKER_EMAIL_FLAGS, allowed_recipients
+
+
+@register()
+def smtp_transport_security_check(app_configs, **kwargs):
+    """Django's SMTP backend cannot combine STARTTLS and implicit SSL."""
+    if "smtp" not in getattr(settings, "EMAIL_BACKEND", ""):
+        return []
+    if not (
+        getattr(settings, "EMAIL_USE_TLS", False)
+        and getattr(settings, "EMAIL_USE_SSL", False)
+    ):
+        return []
+    return [
+        CheckError(
+            "SMTP STARTTLS and implicit SSL are both enabled.",
+            hint=(
+                "Set exactly one of DJANGO_EMAIL_USE_TLS or "
+                "DJANGO_EMAIL_USE_SSL to 1. Port 587 normally uses STARTTLS; "
+                "port 465 normally uses implicit SSL."
+            ),
+            id="mail.E001",
+        )
+    ]
 
 
 @register()

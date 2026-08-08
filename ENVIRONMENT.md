@@ -46,6 +46,11 @@ Last updated: 2026-08-05
   `OFFER_EMAIL_PREVIEW_MAX_AGE` seconds (default `900`); keep the default unless
   an explicitly reviewed operating requirement changes it. The independent
   `OFFER_EMAIL_BATCH_LIMIT` default remains `100` and larger selections fail.
+- SMTP transport security is explicit and mutually exclusive. Providers using
+  STARTTLS (normally port 587) set `DJANGO_EMAIL_USE_TLS=1` and
+  `DJANGO_EMAIL_USE_SSL=0`; providers using implicit SSL (normally port 465)
+  set `DJANGO_EMAIL_USE_TLS=0` and `DJANGO_EMAIL_USE_SSL=1`. Enabling both is a
+  `mail.E001` configuration error and `email_configured()` fails closed.
 - The `localhost:8001` runner selects `clients.corvinum_eu.local`, which disables
   TOTP entirely for fictional-data client testing, including for accounts with
   an existing confirmed device. Corvinum staging and production select

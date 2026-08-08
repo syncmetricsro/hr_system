@@ -10,14 +10,18 @@ The one-person action and explicit multi-recipient workflow are shared, while
 each client's permissions, enabled transports and provider configuration remain
 independent.
 
-**Deferred by decision (2026-08-03):** Jober has not supplied a `noreply@`
-address, so Jober email configuration waits until a demo is scheduled. **No code
-change is needed to hold this state** — the `offer_emails` flag stays on and the
-feature now honestly reports itself unavailable (`email_configured()` treats the
-default `localhost` host as unset). To enable later: set `DJANGO_EMAIL_HOST`,
-`DJANGO_EMAIL_PORT`, `DJANGO_EMAIL_HOST_USER`, `DJANGO_EMAIL_HOST_PASSWORD`,
-`DJANGO_EMAIL_USE_TLS`, `DJANGO_DEFAULT_FROM_EMAIL` **and**
-`EMAIL_ALLOWED_RECIPIENTS`.
+**Staging provider approved 2026-08-08:** SyncMetric supplies the fictional-data
+test sender `test@syncmetric.sk` because Jober has not supplied a dedicated
+mailbox. Its Forpsi SMTP endpoint requires implicit SSL on port 465. Jober
+staging therefore sets `DJANGO_EMAIL_USE_TLS=0` and
+`DJANGO_EMAIL_USE_SSL=1`; Corvinum's existing STARTTLS configuration remains
+unchanged. Production still needs a Jober-owned sender decision.
+
+The complete SMTP set is `DJANGO_EMAIL_BACKEND`, `DJANGO_EMAIL_HOST`,
+`DJANGO_EMAIL_PORT`, `DJANGO_EMAIL_HOST_USER`,
+`DJANGO_EMAIL_HOST_PASSWORD`, `DJANGO_EMAIL_USE_TLS`,
+`DJANGO_EMAIL_USE_SSL`, `DJANGO_DEFAULT_FROM_EMAIL` and the separate execution
+gate `EMAIL_ALLOWED_RECIPIENTS`. TLS and SSL are mutually exclusive.
 
 CorvinumEU payslip delivery is unaffected and verified end to end against real
 SMTP — see `docs/deployment/corvinum-demo-verification-summary.md`. On
@@ -30,7 +34,7 @@ ADR 0029 and its permission matrix.
 | Config | State |
 |---|---|
 | `stg_corvinum-staging` | allowlist set in Doppler **and** applied with `dokku config:set` |
-| `stg_jober-staging` | allowlist set both places; `DJANGO_EMAIL_BACKEND` is still an **empty string** — harmless now that empty reads as unconfigured, but `console.EmailBackend` is the correct way to say "no email here" |
+| `stg_jober-staging` | SyncMetric test sender and Forpsi implicit-SSL settings saved in Doppler; runtime synchronization and controlled-send verification pending |
 | `dev` (Jober local) | no allowlist. Low priority: `scripts/dev_app.sh` forwards no `DJANGO_EMAIL_*`, so it matters only for the cross-config trap — `corvinum_app.sh` *does* forward them, so running it against this config picks up Jober's SMTP with no allowlist |
 | `prd` | no mail configured; production is blocked on deployment-plan ask **D8** regardless |
 

@@ -1,5 +1,19 @@
 # Build Journal
 
+## 2026-08-08 - SMTP supports implicit SSL without weakening STARTTLS
+
+Jober's fictional-data staging mailbox uses Forpsi implicit SSL on port 465,
+while Corvinum uses STARTTLS. The shared settings now expose
+`DJANGO_EMAIL_USE_SSL` alongside `DJANGO_EMAIL_USE_TLS`; the modes are mutually
+exclusive and default to the existing STARTTLS behavior. No dependency or
+client-identity branch was added.
+
+`email_configured()` fails closed when both modes are enabled, and the shared
+system check reports `mail.E001` before deployment. Regression tests cover
+implicit SSL, the invalid combined state and the unchanged non-SMTP behavior.
+The Jober staging design records SyncMetric's `test@syncmetric.sk` as a testing-
+only sender; a Jober-owned production mailbox remains an open decision.
+
 ## 2026-08-08 - Offer campaigns require explicit recipients and a signed review
 
 The old Manager bulk-offer page inferred its audience from filters, selected

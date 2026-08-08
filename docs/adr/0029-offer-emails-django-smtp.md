@@ -36,6 +36,13 @@ The cap now rejects an oversized selection instead of truncating it. Contacts
 without email, opted out, blacklisted, or blocked by a staging allowlist remain
 visible in the picker with a specific disabled reason.
 
+Amendment note, 2026-08-08: SMTP transport security now supports both Django
+transport modes without a new dependency. STARTTLS uses
+`DJANGO_EMAIL_USE_TLS=1` / `DJANGO_EMAIL_USE_SSL=0`; implicit SSL (required by
+Jober staging's Forpsi port 465 endpoint) uses the inverse. `mail.E001` rejects
+both being enabled and `email_configured()` fails closed. Corvinum's STARTTLS
+configuration is unchanged.
+
 ## Context
 
 Jober could reach a worker by SMS only. `features/messaging` is Twilio-shaped end
@@ -118,7 +125,7 @@ field, and any email counterpart to the `SMS_ALLOWED_RECIPIENTS` staging guard.
 - **`EMAIL_ALLOWED_RECIPIENTS` is the execution gate**, in place of a fourth
   boolean switch. Empty means unrestricted, which is what production wants, so it
   cannot simply be made mandatory; instead `manage.py check` emits
-  `messaging.W001` when outreach is enabled with a real SMTP backend, DEBUG off,
+  `mail.W001` when outreach is enabled with a real SMTP backend, DEBUG off,
   and no allowlist. Real sends to real people remain behind the real-data gate.
 
 - **Client selection remains explicit.** Jober grants its original role set.

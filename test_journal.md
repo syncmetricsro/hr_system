@@ -1,5 +1,21 @@
 # Test Journal
 
+## 2026-08-08 - Implicit-SSL SMTP transport
+
+- Shared mail regression tests passed **24/24**, including Forpsi-style
+  implicit SSL, unchanged console/locmem/STARTTLS behavior, fail-closed
+  TLS+SSL configured state and the `mail.E001` system check.
+- A production-settings probe mapped `DJANGO_EMAIL_PORT=465`,
+  `DJANGO_EMAIL_USE_TLS=0` and `DJANGO_EMAIL_USE_SSL=1` to Django's implicit-
+  SSL SMTP backend. The inverse invalid configuration failed `manage.py check`
+  as required. All probes used fictional hosts and no provider credential.
+- The complete quality gate passed: production/static and runtime-artifact
+  build checks, no-Node and vendor verification, Ruff lint/format, both Django
+  and migration checks, **Jober 1,181 passed / 23 skipped** and **CorvinumEU
+  753 passed / 18 skipped / 354 deselected**. Browser tests were not rerun:
+  this slice changes no route, template, JavaScript or CSS, and the preceding
+  explicit-recipient release remains green at 73/73.
+
 ## 2026-08-08 - Explicit offer-recipient selection and idempotent confirmation
 
 - Focused Jober tests cover visible-but-disabled missing-email, opt-out,
