@@ -1,5 +1,52 @@
 # Deployment Journal
 
+## 2026-08-08 - Explicit offer-recipient selection deployed to Jober
+
+Deployed exact `main` **`db34b94`** to **`jober-staging` only** as
+`jober-platform:demo-db34b94` (source image digest
+`sha256:1b9a1a22095518308051070a45a5d4e5a4843b12d2d747ed43bb6eabf3a08bdd`),
+streamed through Dokku `git:load-image`. This gives Jober the same explicit
+checkbox selection, signed review, separate confirmation, idempotency and
+per-recipient result workflow already released to Corvinum.
+
+**No seed, account, reset or provider-send command ran.** Dokku found no
+predeploy, release or postdeploy task. The only database write was
+`migrate --noinput`, which applied
+`messaging.0004_emailbatch_request_token`. Pre- and post-release structural
+counts were identical: 11 users, 3 offices, 9 office memberships, 2 people,
+zero projects, 17 audit events, and zero offers, offer templates, email batches
+or outbound emails. The two people are Jober's own post-reset test records and
+were preserved. The request-token backfill has zero missing values, and the
+certificate-policy report found zero disallowed records with files.
+
+The offer-email feature and the new selection/confirmation routes are active,
+but **Jober staging SMTP is not configured**. The recipient allowlist exists;
+the sender, backend, host, username, password, port and TLS variables do not.
+`email_configured()` therefore returns false and the new picker correctly stops
+progression with an explanation. Jober can inspect the deployed interface after
+creating a fictional offer and template, but an end-to-end preview/send test
+requires Jober-specific staging SMTP credentials. No Corvinum mail credential
+was copied across clients and no console backend was enabled to simulate a
+successful external delivery.
+
+Live verification: `check --deploy`, `migrate --check`, certificate policy and
+public HTTPS smoke passed. `/sk/offers/` and `/hu/offers/` redirect
+unauthenticated requests to their localized login pages. The new Jober web
+container is `8ce74c7459a`, and the reviewed release log contains no application
+error.
+
+The feature gate already recorded for `29d6d16` applies to this runtime:
+Jober **1,177 passed / 23 skipped**, CorvinumEU **749 passed / 18 skipped / 354
+deselected**, and Playwright **73 passed**, with production image/static,
+vendor, no-Node, Ruff, dependency, migrations and translations clean.
+
+Rollback target:
+
+```bash
+ssh syncmetric-prime-dokku \
+  "git:from-image jober-staging jober-platform:demo-5402728"
+```
+
 ## 2026-08-08 - Explicit offer-recipient selection deployed to Corvinum only
 
 Deployed exact `main` **`29d6d16`** to **`corvinum-staging` only** as
