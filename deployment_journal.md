@@ -19,8 +19,9 @@ and one controlled recipient allowlist entry, while the Dokku app had not yet
 received TLS, the explicit sender or the allowlist. During synchronization,
 Dokku unexpectedly echoed the configured values, including the SMTP password,
 into command output. Treat that staging mailbox password as exposed. The app's
-copied password was immediately replaced with an invalid sentinel and its email
-backend changed to Django's console backend. **Do not perform a live send until
+copied password and the old Doppler value were immediately replaced with an
+invalid sentinel, and the app's email backend changed to Django's console
+backend. **Do not perform a live send until
 the Forpsi mailbox password is rotated, the new value replaces the old Doppler
 secret, and the eight mail settings are re-synchronized without printable
 output.** No provider send was attempted in this release.
