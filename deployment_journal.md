@@ -1,5 +1,70 @@
 # Deployment Journal
 
+## 2026-08-09 - Domain entries in the email allowlist
+
+Deployed the exact `main` merge **`99b2b45`** to `jober-staging` and
+`corvinum-staging` as `jober-platform:demo-99b2b45` (image ID
+`sha256:4dbbd49466d1a0d1888ad96ccf374299cd18e64bf985bf33faa8d14b2a1dc885`),
+streamed with `git:load-image`.
+
+`EMAIL_ALLOWED_RECIPIENTS` now accepts whole domains (`@example.com`) beside
+exact addresses, matching the domain **exactly** — a subdomain is listed
+separately. A bare `@` matches nothing, the domain is read from the last `@`,
+and `mail.W002` reports an entry that can never match. The refusal names the
+address it refused.
+
+**Both apps took the code, only Jober took the setting.** The change is in
+`core/`, so leaving CorvinumEU on an older core would have put an unrelated
+surprise in its next release. Its own allowlist is untouched.
+
+**Order mattered and was deliberate.** The code went first: under the new
+matcher the previous value, a single exact address, still behaves exactly as
+before, so nothing broke in the window between the two steps. Setting the
+domains first would have refused every send, because the old code reads
+`@mozmail.com` as an exact address nobody has.
+
+```
+ssh … "config:set jober-staging EMAIL_ALLOWED_RECIPIENTS=@mozmail.com,@jober.sk"
+```
+
+**No migrations**; both apps report *No migrations to apply*.
+
+Verified on the live app, structurally — `jober-staging` is the customer's own
+testing environment, so no row values were read and no mail was sent:
+
+```
+core.mail._split_entries present:        True
+allowed_recipients():                    ['@mozmail.com', '@jober.sk']
+recipient_allowed(t@mozmail.com):        True
+recipient_allowed(a@jober.sk):           True
+recipient_allowed(a@m.jober.sk):         False   <- subdomain, by decision
+recipient_allowed(a@gmail.com):          False
+manage.py check:                         no issues (0 silenced)
+```
+
+That last line is the point of the `config:set` step: `mail.W001` fires on an
+empty allowlist and `mail.W002` on an entry that can never match, so silence is
+the setting having parsed the way it was meant.
+
+Pre-deploy on `99b2b45`: Jober **1192 passed / 23 skipped**, CorvinumEU
+**764 passed / 18 skipped**, Playwright **73 passed**; `ruff check` and
+`ruff format --check` clean over the three changed Python files;
+`check_no_node_artifacts`, `verify_vendor_assets`, `check_dependency_direction`
+and `compile_messages.sh --check` all clean. Both `deploy_smoke.sh --https` runs
+passed health, login/CSRF, fingerprinted static, X-Frame-Options and HSTS.
+
+The browser suite wanted the machine to itself again — the dev stacks were
+stopped first, and it finished 73/73 in 139s. See the 2026-08-06 entry for why.
+
+Rollback target:
+
+```bash
+ssh syncmetric-prime-dokku "git:from-image <app> jober-platform:demo-83a7079"
+```
+
+Rolling the code back also means putting `EMAIL_ALLOWED_RECIPIENTS` back to an
+exact address — the domain form is refused by the older matcher.
+
 ## 2026-08-08 - Jober Forpsi implicit-SSL SMTP enabled
 
 Deployed exact `main` **`83a7079`** to **`jober-staging` only** as
