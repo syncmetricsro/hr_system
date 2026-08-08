@@ -1,5 +1,74 @@
 # Deployment Journal
 
+## 2026-08-09 - Two-factor switched off for the client test window (expires 2026-08-20)
+
+> **Re-enable on 2026-08-20.** Both apps:
+> `ssh syncmetric-prime-dokku "config:set <app> DJANGO_TWO_FACTOR_ENABLED=1"`.
+> Enrolled devices were kept, so each user's second factor returns unchanged and
+> nobody re-enrols. Until then `manage.py check` reports `accounts.W001` on both
+> apps by design.
+
+Deployed the exact `main` merge **`b0770ad`** to `jober-staging` and
+`corvinum-staging` as `jober-platform:demo-b0770ad` (image ID
+`sha256:4d13c27daf0b5744452fd3208e69e5bbd73558386e4bee331e126041350b678f`),
+streamed with `git:load-image`, then:
+
+```
+ssh … "config:set jober-staging    DJANGO_TWO_FACTOR_ENABLED=0"
+ssh … "config:set corvinum-staging DJANGO_TWO_FACTOR_ENABLED=0"
+```
+
+**Why.** Clients test both apps until **20 August** with passwords and login
+details they have been given. A second factor would lock them out.
+
+**What was actually at risk**, measured before the change rather than assumed:
+
+```
+jober-staging     required roles []          devices 0   -> nobody was prompted
+corvinum-staging  required roles ['manager'] devices 1   -> manager login demanded a code
+```
+
+Jober had no lockout today; CorvinumEU had a real one. Both were switched
+anyway, because a voluntary enrolment on Jober during the window would become a
+barrier nobody planned for.
+
+Verified on the live apps afterwards:
+
+```
+jober-staging      enabled: False | roles: []          | managers: 4 | verify: False | setup: False
+corvinum-staging   enabled: False | roles: ['manager'] | managers: 1 | verify: False | setup: False
+```
+
+`verify`/`setup` are `_requires_second_factor` and `_role_requires_totp` over
+the real manager accounts — no manager is sent to a code or to enrolment on
+either app.
+
+**The exemption reports itself.** `accounts.W001` now appears in `manage.py
+check` on both apps, with the re-enable instruction in its hint, and stays there
+until the switch is unset. That is deliberate: the risk of a convenient switch
+is that "we will turn it back on" becomes nobody's job.
+
+**Both apps now accept a password alone**, including manager accounts, on an
+internet-facing host holding whatever the clients enter. That is the accepted
+trade for the test window and it has an end date.
+
+**No migrations.** Both apps report *No migrations to apply*.
+
+Pre-deploy on `b0770ad`: Jober **1199 passed / 23 skipped**, CorvinumEU
+**771 passed / 18 skipped**, Playwright **73 passed** (run with the dev stacks
+stopped); repo checks and catalogs clean. Both `deploy_smoke.sh --https` runs
+passed.
+
+Rollback target:
+
+```bash
+ssh syncmetric-prime-dokku "git:from-image <app> jober-platform:demo-99b2b45"
+```
+
+Rolling the code back also removes the switch: `DJANGO_TWO_FACTOR_ENABLED` has
+no effect on `demo-99b2b45`, so CorvinumEU managers would be asked for a code
+again immediately.
+
 ## 2026-08-09 - Domain entries in the email allowlist
 
 Deployed the exact `main` merge **`99b2b45`** to `jober-staging` and
