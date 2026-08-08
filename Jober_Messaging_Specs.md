@@ -90,9 +90,14 @@ domain semantics:
 - **offer email (ADR 0029, implemented 2026-08-02) uses `OutboundEmail`** —
   subject, body and recipient language, no provider id — plus `JobOffer`,
   `OfferEmailTemplate` and `EmailBatch`. It is the first transport to read
-  `Person.preferred_language`, via templates keyed `(kind, language)`;
+  `Person.preferred_language`, via templates keyed `(kind, language)`. Its
+  Manager-only many-person path is an explicit picker: no default recipients,
+  blocked contacts visible with reasons, exact signed review, a 15-minute
+  expiry, full revalidation, a unique idempotency token and an outcome page.
+  The 100-person ceiling rejects excess selections rather than truncating;
 - Jober policy enables the transports and grants their separate actions;
-- CorvinumEU has neither route nor permission;
+- CorvinumEU enables only structured offer email for Manager/HR Admin. It has
+  neither worker-SMS/Telegram routes nor their permissions;
 - no `features/telegram` package and no client conditional in `core/`.
 
 Provider integrations use the standard library — or, for email, Django's own

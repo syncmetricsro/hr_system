@@ -3,10 +3,12 @@
 Implemented under ADR 0029. Legal basis and pending gates:
 `docs/security/jober-offer-email-legal-basis.md`.
 
-## Status — paused 2026-08-03, read this first
+## Status — implemented; provider gates remain
 
-**Built and ready to review.** PR #157 on `feat/offer-emails`, six commits, CI
-green, no review yet. Nothing uncommitted.
+The structured offer-email feature is implemented for Jober and CorvinumEU.
+The one-person action and explicit multi-recipient workflow are shared, while
+each client's permissions, enabled transports and provider configuration remain
+independent.
 
 **Deferred by decision (2026-08-03):** Jober has not supplied a `noreply@`
 address, so Jober email configuration waits until a demo is scheduled. **No code
@@ -132,11 +134,29 @@ the control disabled and the reason shown. A panel that vanishes reads as a
 missing feature.
 
 **Many people** — `offers/<pk>/send/`, gated by `offer_email.bulk_send` (manager
-only). GET previews: the office-scoped recipient list, the excluded rows *with
-their reasons*, the cap and how many were left out, and the body as the first
-recipient would receive it. POST requires a confirmation checkbox. Preview and
-execution use the same scoped query — a page that scoped its preview but not its
-execution would show ten names and email four hundred.
+only). GET shows every non-archived contact in the offer/office scope. Nobody is
+selected initially. Missing-email, opted-out, blacklisted and staging-
+non-allowlisted contacts stay visible but greyed out with their exact reason;
+eligible contacts have checkboxes plus filtered select-all and clear controls.
+Name/email, office and lifecycle filters reload the result set and clear the
+selection explicitly.
+
+The first POST creates no delivery records. It validates the exact selected IDs
+against that visible, scoped queryset and rejects empty or over-limit selections.
+The review page lists those exact recipients and renders one personalized
+subject/body example for every resolved template language. Its signed payload
+binds the offer, email kind, recipient IDs, acting user and a unique request
+token; it expires after 15 minutes. A second POST requires the Manager to state
+that the list and content were reviewed.
+
+Immediately before sending, the server verifies the signature and rechecks the
+complete selection, scope, offer, templates, SMTP state, addresses, opt-outs,
+blacklist state and environment allowlist. If any recipient changed, nothing is
+sent and a new preview is required. A unique `EmailBatch.request_token` makes a
+double click or browser retry idempotent: it redirects to the existing batch
+result. The result records sent, failed and blocked totals and every recipient's
+outcome. `OFFER_EMAIL_BATCH_LIMIT` (100 by default) is a rejection boundary,
+never a silent truncation.
 
 ## Delivery states
 
@@ -162,6 +182,8 @@ it is set.
 ## Verification
 
 `tests/test_offer_emails.py` (language, rendering, batching),
+`tests/test_offer_bulk_selection.py` (selection, signed review, state-change
+abort, permissions, idempotency and results),
 `tests/test_offer_email_safety.py` (opt-out, blacklist, allowlist, unconfigured
 backend, the deploy check), `tests/test_offer_email_office_scoping.py`
 (request-level 403s on both surfaces), `tests/test_offer_email_seed.py`,

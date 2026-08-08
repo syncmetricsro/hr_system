@@ -439,6 +439,16 @@ if _feature_on("messaging", "offer_emails"):
             name="offer_send_bulk",
         ),
         path(
+            "offers/<int:pk>/send/confirm/",
+            offer_views.offer_send_bulk_confirm,
+            name="offer_send_bulk_confirm",
+        ),
+        path(
+            "offers/batches/<int:pk>/",
+            offer_views.offer_batch_detail,
+            name="offer_batch_detail",
+        ),
+        path(
             "offers/templates/new/",
             offer_views.offer_template_edit,
             name="offer_template_create",

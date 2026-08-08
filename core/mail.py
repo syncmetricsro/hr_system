@@ -1,7 +1,7 @@
 """Whether, and to whom, this environment may send email.
 
 Two features send mail to a worker and they are never installed together:
-``features.messaging`` sends job offers (Jober only, ADR 0029) and
+``features.messaging`` sends structured job offers (ADR 0029) and
 ``features.payslips`` sends encrypted PDFs (CorvinumEU only, ADR 0023). Neither
 can import the other — CorvinumEU installs payslips and not messaging, so that
 import would raise on the one client that most needs the guard — so the rule

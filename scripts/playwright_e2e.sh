@@ -62,6 +62,7 @@ done
 run_manage() {
   docker run --rm --network "$NET" \
     -e DJANGO_SECRET_KEY=e2e-test-secret \
+    -e DJANGO_EMAIL_BACKEND=django.core.mail.backends.console.EmailBackend \
     -e DJANGO_ALLOWED_HOSTS=localhost,127.0.0.1,testserver,"$APP" \
     -e DB_NAME=jober -e DB_USER=jober -e DB_PASSWORD=jober-pass -e DB_HOST="$DB" -e DB_PORT=5432 \
     "$APP_IMAGE" python manage.py "$@"
@@ -95,6 +96,7 @@ run_manage_corvinum seed_corvinum_demo
 
 docker run -d --name "$APP" --network "$NET" \
   -e DJANGO_SECRET_KEY=e2e-test-secret \
+  -e DJANGO_EMAIL_BACKEND=django.core.mail.backends.console.EmailBackend \
   -e DJANGO_ALLOWED_HOSTS=localhost,127.0.0.1,testserver,"$APP" \
   -e DJANGO_SECURE_SSL_REDIRECT=0 \
   -e DJANGO_SESSION_COOKIE_SECURE=0 \

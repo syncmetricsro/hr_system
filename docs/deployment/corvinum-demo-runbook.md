@@ -617,15 +617,26 @@ prints MIME output instead and does **not** offer a clickable attachment.
    Observer do not receive this navigation entry or its routes.
 2. Open **CNC operátor — demo**, review its fictional terms, and show the SK/HU
    templates. Explain that the worker's preferred language selects the row.
-3. Choose **Send to many** and review the exact included and excluded recipient
-   lists, the rendered preview, and the confirmation checkbox. Do not confirm
-   during an ordinary walkthrough.
-4. If delivery is an explicitly agreed test, first replace one fictional
-   worker's address with the controlled allowlisted inbox and send to that one
-   person. Never widen or clear `EMAIL_ALLOWED_RECIPIENTS` for a demo.
-5. State the boundary: this is a structured offer, not arbitrary group mail;
+3. Choose **Send to many**. Confirm that nobody is checked initially. Filter by
+   name/email, status or office; explain that changing filters clears the
+   selection. Contacts with no address, an opt-out, blacklist state or a
+   staging address outside `EMAIL_ALLOWED_RECIPIENTS` stay readable but have a
+   disabled checkbox and a specific reason.
+4. Select only the controlled fictional contact. Choose **Review selected
+   recipients** and verify the exact name/count plus one personalized example
+   for each resolved language. The signed preview expires after 15 minutes and
+   any recipient-state change requires a new review. Do not confirm during an
+   ordinary walkthrough.
+5. If delivery is an explicitly agreed test, first replace that fictional
+   worker's address with the controlled allowlisted inbox, tick **I reviewed the
+   recipients and email content**, and send once. The result page must show one
+   recipient outcome. A repeated confirmation returns to the same batch and
+   cannot send a duplicate. Never widen or clear `EMAIL_ALLOWED_RECIPIENTS` for
+   a demo.
+6. State the boundary: this is a structured offer, not arbitrary group mail;
    opt-out, blacklist, missing-address and environment guards run before SMTP,
-   and every attempt is audited. SMS remains disabled.
+   the 100-recipient cap rejects rather than truncates, and every attempt is
+   audited. SMS remains disabled.
 
 ### 13. Audit filters and person history - 3 minutes
 

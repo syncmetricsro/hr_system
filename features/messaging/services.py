@@ -4,14 +4,17 @@ import base64
 import datetime
 import hashlib
 import hmac
+import itertools
 import json
 import string
 import urllib.error
 import urllib.parse
 import urllib.request
+import uuid
 from smtplib import SMTPException
 
 from django.conf import settings
+from django.core import signing
 from django.core.mail import EmailMessage
 from django.db import transaction
 from django.utils import timezone, translation
@@ -26,6 +29,7 @@ from core.mail import (
 from core.people.models import LifecycleStatus
 from features.messaging.models import (
     EmailBatch,
+    OfferEmailKind,
     OfferEmailTemplate,
     OutboundEmail,
     OutboundMessage,
@@ -164,6 +168,17 @@ class OfferTemplateMissing(Exception):
     """No active template exists for this kind in any usable language."""
 
 
+class OfferPreviewInvalid(Exception):
+    """A bulk preview is expired, altered, or belongs to another action."""
+
+
+class OfferBatchTooLarge(Exception):
+    """The caller tried to exceed the configured bulk-email blast radius."""
+
+
+OFFER_PREVIEW_SALT = "features.messaging.offer-bulk-preview.v1"
+
+
 def _offer_language(person) -> str:
     """The language to write to this worker in.
 
@@ -272,6 +287,71 @@ def offer_email_block_reason(person):
     return ""
 
 
+def offer_email_selection_block_reason(person):
+    """Why a person cannot be selected on the bulk-recipient page.
+
+    This extends the worker-state guards with the environment allowlist. A
+    staging address that cannot pass execution must not look selectable in the
+    preview UI.
+    """
+    reason = offer_email_block_reason(person)
+    if reason:
+        return reason
+    try:
+        assert_recipient_allowed((person.email or "").strip())
+    except EmailRecipientNotAllowed as exc:
+        return str(exc)
+    return ""
+
+
+def sign_offer_batch_preview(offer, kind: str, people, *, actor) -> str:
+    """Bind the reviewed recipients to this offer, actor, and send request."""
+    payload = {
+        "offer": offer.pk,
+        "kind": kind,
+        "recipients": [person.pk for person in people],
+        "actor": actor.pk,
+        "request_token": str(uuid.uuid4()),
+    }
+    return signing.dumps(payload, salt=OFFER_PREVIEW_SALT, compress=True)
+
+
+def load_offer_batch_preview(token: str, offer, *, actor) -> dict:
+    """Load and validate a signed bulk preview for the current actor/offer."""
+    max_age = int(getattr(settings, "OFFER_EMAIL_PREVIEW_MAX_AGE", 15 * 60))
+    try:
+        payload = signing.loads(token, salt=OFFER_PREVIEW_SALT, max_age=max_age)
+    except (signing.BadSignature, signing.SignatureExpired) as exc:
+        raise OfferPreviewInvalid(
+            _("This recipient preview is invalid or expired. Review the list again.")
+        ) from exc
+    try:
+        recipients = [int(value) for value in payload["recipients"]]
+        request_token = uuid.UUID(payload["request_token"])
+        payload_offer = int(payload["offer"])
+        payload_actor = int(payload["actor"])
+        kind = str(payload["kind"])
+    except (KeyError, TypeError, ValueError) as exc:
+        raise OfferPreviewInvalid(
+            _("This recipient preview is invalid or expired. Review the list again.")
+        ) from exc
+    if (
+        payload_offer != offer.pk
+        or payload_actor != actor.pk
+        or kind not in OfferEmailKind.values
+        or not recipients
+        or len(recipients) != len(set(recipients))
+    ):
+        raise OfferPreviewInvalid(
+            _("This recipient preview is invalid or expired. Review the list again.")
+        )
+    return {
+        "kind": kind,
+        "recipient_ids": recipients,
+        "request_token": request_token,
+    }
+
+
 def send_offer_email(
     offer, person, kind: str, *, actor=None, batch=None
 ) -> OutboundEmail:
@@ -332,21 +412,39 @@ def offer_batch_limit() -> int:
     return int(getattr(settings, "OFFER_EMAIL_BATCH_LIMIT", 100))
 
 
-def send_offer_batch(offer, people, kind: str, *, actor=None) -> EmailBatch:
+def send_offer_batch(
+    offer, people, kind: str, *, actor=None, request_token=None
+) -> EmailBatch:
     """Send one offer to many people as a single auditable batch.
 
     ``people`` must already be office-scoped by the caller - this function
     deliberately does no scoping of its own, so that the boundary stays visible
     in the view where the request's user is in hand.
     """
-    recipients = list(people[: offer_batch_limit()])
-    with transaction.atomic():
-        batch = EmailBatch.objects.create(
-            offer=offer,
-            kind=kind,
-            recipient_count=len(recipients),
-            created_by=actor if getattr(actor, "is_authenticated", False) else None,
+    limit = offer_batch_limit()
+    recipients = list(itertools.islice(iter(people), limit + 1))
+    if len(recipients) > limit:
+        raise OfferBatchTooLarge(
+            _("Choose no more than %(limit)s recipients.") % {"limit": limit}
         )
+    defaults = {
+        "offer": offer,
+        "kind": kind,
+        "recipient_count": len(recipients),
+        "created_by": actor if getattr(actor, "is_authenticated", False) else None,
+    }
+    with transaction.atomic():
+        if request_token is None:
+            batch = EmailBatch.objects.create(**defaults)
+            created = True
+        else:
+            batch, created = EmailBatch.objects.get_or_create(
+                request_token=request_token, defaults=defaults
+            )
+    # A browser retry or double-click reaches the existing batch and must never
+    # repeat real-world side effects.
+    if not created:
+        return batch
     # Sends happen outside the transaction on purpose: holding one open across
     # N network round-trips would keep a write lock for the length of the batch,
     # and a failure at recipient 40 must not erase the 39 already delivered.

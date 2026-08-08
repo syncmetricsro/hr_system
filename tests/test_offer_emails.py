@@ -28,6 +28,7 @@ from features.messaging.models import (  # noqa: E402
     OutboundEmail,
 )
 from features.messaging.services import (  # noqa: E402
+    OfferBatchTooLarge,
     OfferTemplateMissing,
     render_offer_email,
     send_offer_batch,
@@ -227,7 +228,7 @@ def test_a_batch_sends_one_email_per_person(offer, settings):
     assert OutboundEmail.objects.filter(batch=batch).count() == 3
 
 
-def test_a_batch_is_capped(offer, settings):
+def test_an_over_limit_batch_is_rejected_instead_of_truncated(offer, settings):
     """A blast-radius limit, not a business rule: a mis-filtered recipient query
     must not become a thousand emails in one POST."""
     settings.OFFER_EMAIL_BATCH_LIMIT = 2
@@ -237,10 +238,11 @@ def test_a_batch_is_capped(offer, settings):
         for index in range(5)
     ]
 
-    batch = send_offer_batch(offer, people, OfferEmailKind.NEW_OFFER)
+    with pytest.raises(OfferBatchTooLarge):
+        send_offer_batch(offer, people, OfferEmailKind.NEW_OFFER)
 
-    assert batch.recipient_count == 2
-    assert len(mail.outbox) == 2
+    assert EmailBatch.objects.count() == 0
+    assert mail.outbox == []
 
 
 def test_one_blocked_recipient_does_not_stop_the_batch(offer, settings):

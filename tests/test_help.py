@@ -205,7 +205,9 @@ def test_offer_help_step_and_navigation_coverage_follow_the_feature_flag(setting
     people = next(a for a in available_articles() if a["slug"] == "people")
     assert "offer_list" in people["covers"]
     with translation.override("en"):
-        assert any("confirm a bulk email" in str(step) for step in people["steps"])
+        assert any(
+            "nobody is selected by default" in str(step) for step in people["steps"]
+        )
 
 
 @pytest.mark.jober_only

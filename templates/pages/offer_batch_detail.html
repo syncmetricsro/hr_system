@@ -1,0 +1,50 @@
+{% extends "layouts/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Offer email result" %} · {{ BRAND_NAME }}{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <p class="eyebrow">{% trans "Delivery result" %}</p>
+  <h1>{% if batch.offer %}{{ batch.offer }}{% else %}{% trans "Deleted offer" %}{% endif %}</h1>
+  <p>{% blocktrans with count=batch.recipient_count %}{{ count }} recipients were selected for this batch.{% endblocktrans %}</p>
+</section>
+
+<section class="grid-3" aria-label="{% trans 'Delivery totals' %}">
+  <article class="metric-card"><span>{% trans "Sent" %}</span><strong>{{ sent_count }}</strong></article>
+  <article class="metric-card"><span>{% trans "Failed" %}</span><strong>{{ failed_count }}</strong></article>
+  <article class="metric-card"><span>{% trans "Blocked" %}</span><strong>{{ blocked_count }}</strong></article>
+  <article class="metric-card"><span>{% trans "Queued" %}</span><strong>{{ queued_count }}</strong></article>
+</section>
+
+{% if not complete %}
+  <section class="panel"><p class="eyebrow">{% trans "This batch did not record an outcome for every selected recipient. Do not resend it; review the audit log before taking further action." %}</p></section>
+{% endif %}
+
+<section class="panel">
+  <h2>{% trans "Recipient outcomes" %}</h2>
+  <div class="data-table-scroll">
+    <table class="data-table">
+      <thead><tr><th>{% trans "Person" %}</th><th>{% trans "Email" %}</th><th>{% trans "Language" %}</th><th>{% trans "Status" %}</th><th>{% trans "Detail" %}</th></tr></thead>
+      <tbody>
+        {% for email in emails %}
+          <tr>
+            <td>{{ email.person|default:"—" }}</td>
+            <td>{{ email.to_email }}</td>
+            <td>{{ email.language|default:"—"|upper }}</td>
+            <td>{{ email.get_status_display }}</td>
+            <td>{{ email.error|default:email.subject|default:"—" }}</td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="5">{% trans "No delivery attempts were recorded." %}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="row-actions">
+  <a class="button" href="{% url 'offer_list' %}">{% trans "Back to job offers" %}</a>
+  <a class="button" href="{% url 'audit_log' %}">{% trans "Open audit log" %}</a>
+</div>
+{% endblock %}

@@ -1,5 +1,32 @@
 # Build Journal
 
+## 2026-08-08 - Offer campaigns require explicit recipients and a signed review
+
+The old Manager bulk-offer page inferred its audience from filters, selected
+everyone it considered sendable and truncated at 100. It is now a deliberate
+three-stage workflow shared by Jober and CorvinumEU: filter a readable contact
+picker, check exact eligible recipients, review those exact names plus one
+personalized example per resolved language, then acknowledge the irreversible
+send. Nobody begins selected. Missing-email, opted-out, blacklisted and staging-
+non-allowlisted contacts remain visible with disabled controls and specific
+reasons; archived people remain absent.
+
+The review is signed for offer, kind, recipient IDs, actor and a unique request
+token, expires after 15 minutes, and is fully revalidated at confirmation. Any
+scope or eligibility change aborts the whole batch. `EmailBatch.request_token`
+is unique, so a repeat submission returns the recorded result rather than
+sending twice. The 100-recipient limit is enforced in the picker, form, confirm
+view and service, and excess is rejected rather than silently shortened. The
+existing one-person profile action is unchanged and now links Managers to the
+many-person workflow.
+
+The result page distinguishes sent, failed and blocked totals and keeps every
+selected recipient's recorded outcome. The implementation remains synchronous,
+uses Django signing and mail only, and adds one safe backfilled UUID migration;
+there is no dependency, free-form mail, queue, scheduling, attachment or SMS
+change. Help, ADR 0029, the messaging/product designs, Corvinum runbook and
+environment guidance now describe the same safety boundary.
+
 ## 2026-08-07 - Corvinum production backlog and two-server boundary collected
 
 The production target is now explicit: `corvinum-main` at FORPSI runs the

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import uuid
 from decimal import Decimal
 
 from django.conf import settings
@@ -250,6 +251,7 @@ class EmailBatch(models.Model):
         verbose_name=_("job offer"),
     )
     kind = models.CharField(_("kind"), max_length=20, choices=OfferEmailKind.choices)
+    request_token = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     recipient_count = models.PositiveIntegerField(_("recipients"), default=0)
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,

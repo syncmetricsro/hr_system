@@ -50,7 +50,10 @@ def test_manager_sees_offer_navigation_and_can_open_workspace(client):
 
 @pytest.mark.parametrize("role", ("recruiter", "coordinator", "observer"))
 def test_non_managers_cannot_see_or_open_offers(client, role):
-    client.force_login(_user(role))
+    user = _user(role)
+    offer = JobOffer.objects.create(title="Restricted demo offer")
+    batch = EmailBatch.objects.create(offer=offer, kind=OfferEmailKind.NEW_OFFER)
+    client.force_login(user)
 
     response = client.get(reverse("offer_list"))
 
@@ -58,6 +61,12 @@ def test_non_managers_cannot_see_or_open_offers(client, role):
     assert (
         reverse("offer_list") not in client.get(reverse("people_list")).content.decode()
     )
+    assert client.get(reverse("offer_send_bulk", args=[offer.pk])).status_code == 403
+    assert (
+        client.post(reverse("offer_send_bulk_confirm", args=[offer.pk]), {}).status_code
+        == 403
+    )
+    assert client.get(reverse("offer_batch_detail", args=[batch.pk])).status_code == 403
 
 
 def test_manager_gets_single_person_offer_panel_without_sms(client):
@@ -107,32 +116,44 @@ def test_manager_can_confirm_a_no_office_bulk_send_with_no_external_provider(
         subject="Ponuka: $offer_title",
         body="Dobrý deň, $first_name.",
     )
+    people = []
     for first_name, address in (
         ("Mira", "mira@demo.corvinum.test"),
         ("Marek", "marek@demo.corvinum.test"),
     ):
-        Person.objects.create(
-            first_name=first_name,
-            last_name="Demo",
-            email=address,
-            preferred_language="sk",
+        people.append(
+            Person.objects.create(
+                first_name=first_name,
+                last_name="Demo",
+                email=address,
+                preferred_language="sk",
+            )
         )
     client.force_login(manager)
 
-    response = client.post(
+    preview = client.post(
         reverse("offer_send_bulk", args=[offer.pk]),
         {
             "kind": OfferEmailKind.NEW_OFFER,
             "lifecycle_status": "",
             "office": "",
-            "confirm": "on",
+            "q": "",
+            "recipients": [person.pk for person in people],
         },
+    )
+    token = preview.context["form"].initial["preview_token"]
+    response = client.post(
+        reverse("offer_send_bulk_confirm", args=[offer.pk]),
+        {"preview_token": token, "confirm": "on"},
     )
 
     assert response.status_code == 302
-    assert response.headers["Location"] == reverse("offer_list")
+    batch = EmailBatch.objects.get()
+    assert response.headers["Location"] == reverse(
+        "offer_batch_detail", args=[batch.pk]
+    )
     assert len(mail.outbox) == 2
-    assert EmailBatch.objects.get().recipient_count == 2
+    assert batch.recipient_count == 2
     assert set(OutboundEmail.objects.values_list("status", flat=True)) == {
         OutboundEmail.Status.SENT
     }

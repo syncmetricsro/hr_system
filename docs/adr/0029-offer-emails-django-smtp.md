@@ -24,6 +24,18 @@ in environment secrets. Non-production keeps `EMAIL_ALLOWED_RECIPIENTS`, and
 real recipients remain behind the real-data, lawful-basis, retention, and
 provider gates.
 
+Amendment note, 2026-08-08: bulk offer delivery is now an explicit three-stage
+workflow. A Manager filters a contact picker and deliberately checks recipients
+(none are checked initially), reviews the exact names plus one personalized
+example per resolved language, then confirms the irreversible send. The review
+payload is signed for the offer, kind, recipient IDs, actor and a unique request
+token, and expires after 15 minutes. Confirmation revalidates the complete set;
+any scope or eligibility change aborts the whole batch. `EmailBatch.request_token`
+is unique, so a retry returns the existing result without another provider send.
+The cap now rejects an oversized selection instead of truncating it. Contacts
+without email, opted out, blacklisted, or blocked by a staging allowlist remain
+visible in the picker with a specific disabled reason.
+
 ## Context
 
 Jober could reach a worker by SMS only. `features/messaging` is Twilio-shaped end
@@ -121,7 +133,8 @@ field, and any email counterpart to the `SMS_ALLOWED_RECIPIENTS` staging guard.
   row whatever the outcome, and a campaign is a single `EmailBatch`.
 - Sends are **synchronous**, like `send_sms`. A batch of 100 holds the request for
   the length of 100 SMTP round-trips. `OFFER_EMAIL_BATCH_LIMIT` caps the blast
-  radius; a queue is the obvious next step if batches grow.
+  radius and rejects larger selections; a queue is the obvious next step if
+  batches grow.
 - There is still **no retry and no delivery confirmation**. SMTP acceptance is not
   delivery, and bounces are invisible to the app.
 - `OutboundEmail` is registered with `core.retention` so the new PII store is not

@@ -26,6 +26,7 @@ if not django_apps.is_installed("features.messaging"):
     pytest.skip("Messaging feature not installed", allow_module_level=True)
 
 from features.messaging.models import (  # noqa: E402
+    EmailBatch,
     JobOffer,
     OfferEmailKind,
     OfferEmailTemplate,
@@ -190,13 +191,33 @@ def test_bulk_send_on_another_offices_offer_is_forbidden(client, two_offices):
     assert response.status_code == 403
 
 
+def test_bulk_result_for_another_office_is_forbidden(client, two_offices):
+    batch = EmailBatch.objects.create(
+        offer=two_offices["their_offer"], kind=OfferEmailKind.NEW_OFFER
+    )
+    client.force_login(two_offices["manager"])
+
+    response = client.get(reverse("offer_batch_detail", args=[batch.pk]))
+
+    assert response.status_code == 403
+
+
+def test_orphaned_bulk_result_without_office_evidence_fails_closed(client, two_offices):
+    batch = EmailBatch.objects.create(offer=None, kind=OfferEmailKind.NEW_OFFER)
+    client.force_login(two_offices["manager"])
+
+    response = client.get(reverse("offer_batch_detail", args=[batch.pk]))
+
+    assert response.status_code == 403
+
+
 def test_bulk_recipients_are_office_scoped(client, two_offices):
     client.force_login(two_offices["manager"])
 
     response = client.get(reverse("offer_send_bulk", args=[two_offices["my_offer"].pk]))
 
     assert response.status_code == 200
-    assert list(response.context["sendable"]) == [two_offices["mine"]]
+    assert [row["person"] for row in response.context["rows"]] == [two_offices["mine"]]
 
 
 def test_bulk_execution_is_scoped_too_not_just_the_preview(client, two_offices):
@@ -204,20 +225,42 @@ def test_bulk_execution_is_scoped_too_not_just_the_preview(client, two_offices):
     that does not."""
     client.force_login(two_offices["manager"])
 
-    client.post(
+    preview = client.post(
         reverse("offer_send_bulk", args=[two_offices["my_offer"].pk]),
-        {"kind": OfferEmailKind.NEW_OFFER, "confirm": "on"},
+        {
+            "kind": OfferEmailKind.NEW_OFFER,
+            "lifecycle_status": "",
+            "office": "",
+            "q": "",
+            "recipients": [two_offices["mine"].pk],
+        },
+    )
+    token = preview.context["form"].initial["preview_token"]
+    response = client.post(
+        reverse("offer_send_bulk_confirm", args=[two_offices["my_offer"].pk]),
+        {"preview_token": token, "confirm": "on"},
     )
 
+    assert response.status_code == 302
     assert [message.to for message in mail.outbox] == [["olha@demo.jober.test"]]
 
 
 def test_bulk_send_requires_the_confirm_box(client, two_offices):
     client.force_login(two_offices["manager"])
 
-    client.post(
+    preview = client.post(
         reverse("offer_send_bulk", args=[two_offices["my_offer"].pk]),
-        {"kind": OfferEmailKind.NEW_OFFER},
+        {
+            "kind": OfferEmailKind.NEW_OFFER,
+            "lifecycle_status": "",
+            "office": "",
+            "q": "",
+            "recipients": [two_offices["mine"].pk],
+        },
+    )
+    client.post(
+        reverse("offer_send_bulk_confirm", args=[two_offices["my_offer"].pk]),
+        {"preview_token": preview.context["form"].initial["preview_token"]},
     )
 
     assert mail.outbox == []

@@ -274,6 +274,7 @@ msgstr "Zmeniť avatar"
 
 #: clients/corvinum_eu/templates/layouts/base.html:109
 #: templates/layouts/base.html:81 templates/pages/feedback_form.html:17
+#: templates/pages/offer_batch_detail.html:28
 msgid "Language"
 msgstr "Jazyk"
 
@@ -360,10 +361,10 @@ msgstr "potvrdené"
 #: features/logistics/models.py:43 features/logistics/models.py:79
 #: features/logistics/models.py:184 features/logistics/models.py:228
 #: features/logistics/models.py:365 features/logistics/models.py:467
-#: features/logistics/models.py:591 features/messaging/models.py:28
-#: features/messaging/models.py:71 features/messaging/models.py:176
-#: features/messaging/models.py:221 features/messaging/models.py:261
-#: features/messaging/models.py:331 features/payslips/models.py:37
+#: features/logistics/models.py:591 features/messaging/models.py:29
+#: features/messaging/models.py:72 features/messaging/models.py:177
+#: features/messaging/models.py:222 features/messaging/models.py:263
+#: features/messaging/models.py:333 features/payslips/models.py:37
 #: features/profitability/models.py:58 features/wage_ledger/models.py:43
 msgid "created"
 msgstr "vytvorené"
@@ -431,8 +432,8 @@ msgstr "ID cieľa"
 #: features/blacklist/models.py:45 features/blacklist/models.py:105
 #: features/checklists/models.py:79 features/compliance/models.py:51
 #: features/intake/models.py:106 features/logistics/models.py:144
-#: features/logistics/models.py:263 features/messaging/models.py:55
-#: features/messaging/models.py:295 features/payslips/models.py:20
+#: features/logistics/models.py:263 features/messaging/models.py:56
+#: features/messaging/models.py:297 features/payslips/models.py:20
 #: features/wage_ledger/models.py:16
 msgid "person"
 msgstr "osoba"
@@ -880,7 +881,7 @@ msgstr "%(first)s +%(count)s"
 #: core/offices/models.py:12 core/projects/models.py:12
 #: features/checklists/models.py:18 features/compliance/models.py:59
 #: features/intake/models.py:25 features/logistics/models.py:29
-#: features/logistics/models.py:216 features/messaging/models.py:18
+#: features/logistics/models.py:216 features/messaging/models.py:19
 msgid "name"
 msgstr "názov"
 
@@ -896,7 +897,7 @@ msgstr "krajina"
 #: core/projects/models.py:21 features/logistics/models.py:41
 #: features/logistics/models.py:355 features/logistics/models.py:440
 #: features/logistics/models.py:519 features/logistics/models.py:554
-#: features/messaging/forms.py:91 features/messaging/models.py:147
+#: features/messaging/forms.py:91 features/messaging/models.py:148
 msgid "office"
 msgstr "pobočka"
 
@@ -933,6 +934,7 @@ msgstr "Priezvisko"
 
 #: core/people/forms.py:41 features/intake/catalog_i18n.py:18
 #: features/intake/models.py:16 templates/pages/login.html:17
+#: templates/pages/offer_batch_detail.html:28
 msgid "Email"
 msgstr "E-mail"
 
@@ -983,6 +985,7 @@ msgstr "Typ postihnutia"
 #: templates/pages/_finance_workbook_grid.html:57
 #: templates/pages/equipment_stock.html:48
 #: templates/pages/goods_receipt_detail.html:16
+#: templates/pages/offer_send_bulk.html:32
 #: templates/pages/project_detail.html:35
 msgid "Office"
 msgstr "Pobočka"
@@ -993,6 +996,7 @@ msgstr "Dátum narodenia nemôže byť v budúcnosti."
 
 # --- lifecycle status labels ---
 #: core/people/models.py:16 templates/pages/dashboard.html:21
+#: templates/pages/offer_send_bulk.html:95
 #: templates/panels/logistics_equipment.html:57
 msgid "Available"
 msgstr "Dostupný"
@@ -1030,8 +1034,8 @@ msgstr "označenie"
 #: features/blacklist/models.py:17 features/blacklist/models.py:113
 #: features/checklists/models.py:25 features/feedback/models.py:25
 #: features/logistics/models.py:31 features/logistics/models.py:103
-#: features/logistics/models.py:227 features/messaging/models.py:20
-#: features/messaging/models.py:168 features/messaging/models.py:213
+#: features/logistics/models.py:227 features/messaging/models.py:21
+#: features/messaging/models.py:169 features/messaging/models.py:214
 #: features/profitability/models.py:121
 msgid "active"
 msgstr "aktívne"
@@ -1285,7 +1289,7 @@ msgstr "zahrnuté do finančného výkazníctva"
 #: core/projects/models.py:40 core/projects/models.py:70
 #: core/projects/models.py:143 core/projects/models.py:215
 #: core/projects/models.py:334 features/feedback/models.py:23
-#: features/logistics/models.py:578 features/messaging/models.py:139
+#: features/logistics/models.py:578 features/messaging/models.py:140
 #: features/profitability/models.py:30
 msgid "project"
 msgstr "projekt"
@@ -1316,13 +1320,13 @@ msgstr "Zrušené"
 #: core/projects/models.py:73 core/projects/models.py:343
 #: features/blacklist/models.py:48 features/intake/models.py:27
 #: features/intake/models.py:108 features/logistics/models.py:153
-#: features/logistics/models.py:273 features/messaging/models.py:60
-#: features/messaging/models.py:321
+#: features/logistics/models.py:273 features/messaging/models.py:61
+#: features/messaging/models.py:323
 msgid "status"
 msgstr "stav"
 
 #: core/projects/models.py:78 features/logistics/models.py:158
-#: features/messaging/models.py:166
+#: features/messaging/models.py:167
 msgid "start date"
 msgstr "dátum začiatku"
 
@@ -1895,15 +1899,24 @@ msgstr ""
 
 #: core/ui/help.py:130
 msgid ""
-"Authorized staff can create job offers and language-specific templates from "
-"Offers, preview the exact recipients, and confirm a bulk email. On a worker "
-"profile, the offer panel sends one selected offer in that worker's preferred "
-"language."
+"Managers can open Send to many from Offers, filter the contact list, and "
+"deliberately select eligible recipients; nobody is selected by default. "
+"Contacts without email, opted out, blacklisted, or blocked by the staging "
+"allowlist stay visible with a disabled reason. Review the exact names and "
+"one personalized example per language, tick the review confirmation, then "
+"send. The preview expires after 15 minutes and any recipient change requires "
+"a fresh review. On a worker profile, the offer panel still sends one "
+"selected offer in that worker's preferred language."
 msgstr ""
-"Používatelia s príslušným oprávnením môžu v časti Ponuky vytvárať pracovné "
-"ponuky a jazykové šablóny, zobraziť ukážku presného zoznamu príjemcov a "
-"potvrdiť hromadný e-mail. Na profile pracovníka panel ponuky odošle jednu "
-"vybranú ponuku v preferovanom jazyku pracovníka."
+"Manažéri môžu v Pracovných ponukách otvoriť Odoslať viacerým, filtrovať "
+"zoznam kontaktov a zámerne vybrať oprávnených príjemcov; predvolene nie je "
+"vybraný nikto. Kontakty bez e-mailu, s odhlásením, na čiernej listine alebo "
+"zablokované skúšobným zoznamom povolených adries zostávajú viditeľné s "
+"dôvodom deaktivácie. Skontrolujte presné mená a jeden personalizovaný "
+"príklad pre každý jazyk, zaškrtnite potvrdenie kontroly a potom odošlite. "
+"Náhľad vyprší po 15 minútach a každá zmena príjemcu vyžaduje novú kontrolu. "
+"Na profile pracovníka panel ponuky naďalej odošle jednu vybranú ponuku v "
+"preferovanom jazyku pracovníka."
 
 #: core/ui/help.py:137
 msgid "Personal-data gate"
@@ -3031,9 +3044,10 @@ msgstr "Ovládanie cyklu zahrnie, exportuje a zúčtuje vybrané obdobie."
 
 #: core/ui/help.py:733 core/ui/help.py:835 core/ui/help.py:916
 #: features/advances/views.py:80 features/payslips/forms.py:22
-#: templates/pages/ledger.html:21 templates/pages/payslips.html:39
-#: templates/pages/person_detail.html:38 templates/pages/person_detail.html:315
-#: templates/pages/wages.html:38 templates/partials/ledger_activity.html:8
+#: templates/pages/ledger.html:21 templates/pages/offer_batch_detail.html:28
+#: templates/pages/payslips.html:39 templates/pages/person_detail.html:38
+#: templates/pages/person_detail.html:315 templates/pages/wages.html:38
+#: templates/partials/ledger_activity.html:8
 #: templates/partials/ledger_activity.html:26
 #: templates/partials/ledger_cycle.html:16
 msgid "Person"
@@ -3567,7 +3581,7 @@ msgstr "kategória"
 msgid "amount"
 msgstr "suma"
 
-#: features/advances/models.py:86 features/messaging/models.py:165
+#: features/advances/models.py:86 features/messaging/models.py:166
 #: features/payslips/models.py:30 features/wage_ledger/models.py:33
 msgid "currency"
 msgstr "mena"
@@ -3865,8 +3879,8 @@ msgstr "Aktivácia"
 msgid "Reactivation"
 msgstr "Reaktivácia"
 
-#: features/checklists/models.py:20 features/messaging/models.py:209
-#: features/messaging/models.py:252 features/messaging/models.py:314
+#: features/checklists/models.py:20 features/messaging/models.py:210
+#: features/messaging/models.py:253 features/messaging/models.py:316
 #: features/profitability/models.py:113
 msgid "kind"
 msgstr "druh"
@@ -4274,7 +4288,7 @@ msgstr "verzie vstupného dotazníka"
 msgid "questionnaire"
 msgstr "dotazník"
 
-#: features/intake/models.py:50 features/messaging/models.py:132
+#: features/intake/models.py:50 features/messaging/models.py:133
 msgid "title"
 msgstr "nadpis"
 
@@ -4986,251 +5000,284 @@ msgstr "Skontrolujte údaje o doprave a skúste to znova."
 msgid "Transport record updated."
 msgstr "Záznam dopravy bol aktualizovaný."
 
-#: features/messaging/forms.py:54
+#: features/messaging/forms.py:55
 msgid "This project belongs to a different office."
 msgstr "Tento projekt patrí inej pobočke."
 
-#: features/messaging/forms.py:72 features/messaging/models.py:179
-#: features/messaging/models.py:250 features/messaging/models.py:303
+#: features/messaging/forms.py:73 features/messaging/models.py:180
+#: features/messaging/models.py:251 features/messaging/models.py:305
 msgid "job offer"
 msgstr "pracovná ponuka"
 
-#: features/messaging/forms.py:74 features/messaging/forms.py:86
+#: features/messaging/forms.py:75 features/messaging/forms.py:86
 msgid "email type"
 msgstr "typ e-mailu"
 
-#: features/messaging/forms.py:94
+#: features/messaging/forms.py:94 templates/pages/offer_send_bulk.html:34
 msgid "All my offices"
 msgstr "Všetky moje pobočky"
 
-#: features/messaging/forms.py:97
-msgid "I have reviewed the recipient list"
-msgstr "Skontroloval som zoznam príjemcov"
+#: features/messaging/forms.py:96
+msgid "search"
+msgstr "hľadanie"
 
-#: features/messaging/forms.py:102
+#: features/messaging/forms.py:98 features/messaging/models.py:255
+msgid "recipients"
+msgstr "príjemcovia"
+
+#: features/messaging/forms.py:101
+msgid "Choose at least one recipient."
+msgstr "Vyberte aspoň jedného príjemcu."
+
+#: features/messaging/forms.py:114 templates/pages/offer_send_bulk.html:27
 msgid "Any"
 msgstr "Ľubovoľné"
 
-#: features/messaging/models.py:19 features/messaging/models.py:58
-#: features/messaging/models.py:84 features/messaging/models.py:212
-#: features/messaging/models.py:319
+#: features/messaging/forms.py:129 features/messaging/services.py:428
+#, python-format
+msgid "Choose no more than %(limit)s recipients."
+msgstr "Vyberte najviac %(limit)s príjemcov."
+
+#: features/messaging/forms.py:138
+msgid "I reviewed the recipients and email content"
+msgstr "Skontroloval/-a som príjemcov a obsah e-mailu"
+
+#: features/messaging/models.py:20 features/messaging/models.py:59
+#: features/messaging/models.py:85 features/messaging/models.py:213
+#: features/messaging/models.py:321
 msgid "body"
 msgstr "obsah"
 
-#: features/messaging/models.py:31
+#: features/messaging/models.py:32
 msgid "message template"
 msgstr "šablóna správy"
 
-#: features/messaging/models.py:32
+#: features/messaging/models.py:33
 msgid "message templates"
 msgstr "šablóny správ"
 
-#: features/messaging/models.py:41 features/messaging/models.py:281
+#: features/messaging/models.py:42 features/messaging/models.py:283
+#: templates/pages/offer_batch_detail.html:17
 msgid "Queued"
 msgstr "Vo fronte"
 
-#: features/messaging/models.py:42 features/messaging/models.py:282
-#: templates/pages/payslips.html:39
+#: features/messaging/models.py:43 features/messaging/models.py:284
+#: templates/pages/offer_batch_detail.html:14 templates/pages/payslips.html:39
 msgid "Sent"
 msgstr "Odoslané"
 
-#: features/messaging/models.py:43 features/messaging/models.py:283
+#: features/messaging/models.py:44 features/messaging/models.py:285
+#: templates/pages/offer_batch_detail.html:15
 msgid "Failed"
 msgstr "Zlyhalo"
 
-#: features/messaging/models.py:47
+#: features/messaging/models.py:48
 msgid "Blocked (recipient not allowed here)"
 msgstr "Zablokované (príjemca tu nie je povolený)"
 
-#: features/messaging/models.py:57 features/messaging/models.py:316
+#: features/messaging/models.py:58 features/messaging/models.py:318
 msgid "to"
 msgstr "komu"
 
-#: features/messaging/models.py:62 features/messaging/models.py:85
+#: features/messaging/models.py:63 features/messaging/models.py:86
 msgid "provider id"
 msgstr "ID poskytovateľa"
 
-#: features/messaging/models.py:63 features/messaging/models.py:323
+#: features/messaging/models.py:64 features/messaging/models.py:325
 msgid "error"
 msgstr "chyba"
 
-#: features/messaging/models.py:74
+#: features/messaging/models.py:75
 msgid "outbound message"
 msgstr "odchádzajúca správa"
 
-#: features/messaging/models.py:75
+#: features/messaging/models.py:76
 msgid "outbound messages"
 msgstr "odchádzajúce správy"
 
-#: features/messaging/models.py:83
+#: features/messaging/models.py:84
 msgid "from"
 msgstr "od"
 
-#: features/messaging/models.py:86
+#: features/messaging/models.py:87
 msgid "received"
 msgstr "prijaté"
 
-#: features/messaging/models.py:89
+#: features/messaging/models.py:90
 msgid "inbound message"
 msgstr "prichádzajúca správa"
 
-#: features/messaging/models.py:90
+#: features/messaging/models.py:91
 msgid "inbound messages"
 msgstr "prichádzajúce správy"
 
-#: features/messaging/models.py:129
+#: features/messaging/models.py:130
 msgid "per hour"
 msgstr "za hodinu"
 
-#: features/messaging/models.py:130
+#: features/messaging/models.py:131
 msgid "per month"
 msgstr "za mesiac"
 
-#: features/messaging/models.py:149
+#: features/messaging/models.py:150
 msgid "location"
 msgstr "miesto"
 
-#: features/messaging/models.py:151
+#: features/messaging/models.py:152
 msgid "wage"
 msgstr "mzda"
 
-#: features/messaging/models.py:159
+#: features/messaging/models.py:160
 msgid "wage unit"
 msgstr "jednotka mzdy"
 
-#: features/messaging/models.py:167
+#: features/messaging/models.py:168
 msgid "terms"
 msgstr "podmienky"
 
-#: features/messaging/models.py:180
+#: features/messaging/models.py:181
 msgid "job offers"
 msgstr "pracovné ponuky"
 
-#: features/messaging/models.py:194 templates/pages/offer_form.html:4
+#: features/messaging/models.py:195 templates/pages/offer_form.html:4
 #: templates/pages/offer_form.html:9
 msgid "New job offer"
 msgstr "Nová pracovná ponuka"
 
-#: features/messaging/models.py:195
+#: features/messaging/models.py:196
 msgid "Offer reminder"
 msgstr "Pripomienka ponuky"
 
-#: features/messaging/models.py:196
+#: features/messaging/models.py:197
 msgid "Seasonal campaign"
 msgstr "Sezónna kampaň"
 
-#: features/messaging/models.py:197
+#: features/messaging/models.py:198
 msgid "Offer closing soon"
 msgstr "Ponuka sa čoskoro uzatvára"
 
-#: features/messaging/models.py:210 features/messaging/models.py:317
+#: features/messaging/models.py:211 features/messaging/models.py:319
 msgid "language"
 msgstr "jazyk"
 
-#: features/messaging/models.py:211 features/messaging/models.py:318
+#: features/messaging/models.py:212 features/messaging/models.py:320
 msgid "subject"
 msgstr "predmet"
 
-#: features/messaging/models.py:224
+#: features/messaging/models.py:225
 msgid "offer email template"
 msgstr "šablóna e-mailu s ponukou"
 
-#: features/messaging/models.py:225
+#: features/messaging/models.py:226
 msgid "offer email templates"
 msgstr "šablóny e-mailov s ponukami"
 
-#: features/messaging/models.py:253
-msgid "recipients"
-msgstr "príjemcovia"
-
-#: features/messaging/models.py:264
+#: features/messaging/models.py:266
 msgid "email batch"
 msgstr "e-mailová dávka"
 
-#: features/messaging/models.py:265
+#: features/messaging/models.py:267
 msgid "email batches"
 msgstr "e-mailové dávky"
 
-#: features/messaging/models.py:287
+#: features/messaging/models.py:289
 msgid "Blocked (not sent)"
 msgstr "Zablokované (neodoslané)"
 
-#: features/messaging/models.py:311
+#: features/messaging/models.py:313
 msgid "batch"
 msgstr "dávka"
 
-#: features/messaging/models.py:334
+#: features/messaging/models.py:336
 msgid "outbound email"
 msgstr "odoslaný e-mail"
 
-#: features/messaging/models.py:335
+#: features/messaging/models.py:337
 msgid "outbound emails"
 msgstr "odoslané e-maily"
 
-#: features/messaging/services.py:267
+#: features/messaging/services.py:282
 msgid "This person has opted out of offer emails."
 msgstr "Táto osoba odmietla zasielanie pracovných ponúk e-mailom."
 
-#: features/messaging/services.py:269
+#: features/messaging/services.py:284
 msgid "This person is blacklisted."
 msgstr "Táto osoba je na čiernej listine."
 
-#: features/messaging/services.py:271 features/payslips/services.py:177
+#: features/messaging/services.py:286 features/payslips/services.py:177
 msgid "This person has no email address on file."
 msgstr "Táto osoba nemá evidovanú e-mailovú adresu."
 
-#: features/messaging/views.py:69
+#: features/messaging/services.py:326 features/messaging/services.py:336
+#: features/messaging/services.py:346
+msgid "This recipient preview is invalid or expired. Review the list again."
+msgstr ""
+"Tento náhľad príjemcov je neplatný alebo vypršal. Znova skontrolujte zoznam."
+
+#: features/messaging/views.py:78
 msgid "This person has no phone number."
 msgstr "Táto osoba nemá telefónne číslo."
 
-#: features/messaging/views.py:80
+#: features/messaging/views.py:89
 msgid "Message body is required."
 msgstr "Telo správy je povinné."
 
-#: features/messaging/views.py:85
+#: features/messaging/views.py:94
 msgid "Message sent."
 msgstr "Správa odoslaná."
 
-#: features/messaging/views.py:88
+#: features/messaging/views.py:97
 #, python-format
 msgid "Message failed: %(error)s"
 msgstr "Správa zlyhala: %(error)s"
 
-#: features/messaging/views.py:166
+#: features/messaging/views.py:175
 msgid "Choose a job offer and an email type."
 msgstr "Vyberte pracovnú ponuku a typ e-mailu."
 
-#: features/messaging/views.py:183
+#: features/messaging/views.py:192
 msgid "Offer email sent."
 msgstr "E-mail s ponukou bol odoslaný."
 
-#: features/messaging/views.py:186
+#: features/messaging/views.py:195
 #, python-format
 msgid "Offer email not sent: %(error)s"
 msgstr "E-mail s ponukou nebol odoslaný: %(error)s"
 
-#: features/messaging/views.py:215
+#: features/messaging/views.py:224
 msgid "Job offer created."
 msgstr "Pracovná ponuka bola vytvorená."
 
-#: features/messaging/views.py:234
+#: features/messaging/views.py:243
 msgid "Job offer updated."
 msgstr "Pracovná ponuka bola aktualizovaná."
 
-#: features/messaging/views.py:248
+#: features/messaging/views.py:257
 msgid "Job offer closed."
 msgstr "Pracovná ponuka bola uzavretá."
 
-#: features/messaging/views.py:312
+#: features/messaging/views.py:365
+msgid "Email is not configured in this environment."
+msgstr "E-mail nie je v tomto prostredí nakonfigurovaný."
+
+#: features/messaging/views.py:367 features/messaging/views.py:377
+#: features/messaging/views.py:467
 msgid "No active template for this email type."
 msgstr "Pre tento typ e-mailu neexistuje aktívna šablóna."
 
-#: features/messaging/views.py:322
-#, python-format
-msgid "Offer emailed to %(count)s people."
-msgstr "Ponuka bola e-mailom odoslaná %(count)s osobám."
+#: features/messaging/views.py:424
+msgid "Review the recipients and email content first."
+msgstr "Najprv skontrolujte príjemcov a obsah e-mailu."
 
-#: features/messaging/views.py:354
+#: features/messaging/views.py:440
+msgid "The selected recipient list is too large."
+msgstr "Zoznam vybraných príjemcov je príliš veľký."
+
+#: features/messaging/views.py:451 features/messaging/views.py:461
+msgid "The recipient list changed after preview. Review it again."
+msgstr "Zoznam príjemcov sa po náhľade zmenil. Skontrolujte ho znova."
+
+#: features/messaging/views.py:519
 msgid "Template saved."
 msgstr "Šablóna bola uložená."
 
@@ -5939,6 +5986,7 @@ msgstr "Mesačná sadzba"
 #: templates/pages/accommodation_list.html:18
 #: templates/pages/compliance_list.html:21
 #: templates/pages/equipment_catalog.html:17
+#: templates/pages/offer_batch_detail.html:28
 #: templates/pages/people_list.html:20 templates/pages/people_list.html:50
 #: templates/pages/project_list.html:38 templates/pages/trials_queue.html:55
 #: templates/panels/blacklist_case.html:8
@@ -5969,7 +6017,7 @@ msgstr "Správa ubytovania"
 #: templates/pages/certificate_action.html:10
 #: templates/pages/certificate_form.html:10
 #: templates/pages/equipment_form.html:10 templates/pages/offer_form.html:16
-#: templates/pages/offer_send_bulk.html:69
+#: templates/pages/offer_send_bulk.html:104
 #: templates/pages/offer_template_form.html:23
 #: templates/pages/project_form.html:9 templates/pages/room_form.html:9
 #: templates/pages/transport_trends.html:22
@@ -6279,9 +6327,10 @@ msgid "Uploading…"
 msgstr "Nahráva sa…"
 
 #: templates/pages/certificate_form.html:26
-#: templates/pages/equipment_reviews.html:31 templates/pages/payslips.html:51
-#: templates/pages/person_detail.html:69 templates/pages/person_detail.html:86
-#: templates/pages/person_detail.html:215
+#: templates/pages/equipment_reviews.html:31
+#: templates/pages/offer_send_bulk_preview.html:38
+#: templates/pages/payslips.html:51 templates/pages/person_detail.html:69
+#: templates/pages/person_detail.html:86 templates/pages/person_detail.html:215
 #: templates/pages/person_detail.html:268
 #: templates/pages/person_detail.html:276
 #: templates/panels/logistics_equipment.html:37
@@ -7181,6 +7230,59 @@ msgstr "Heslo"
 msgid "Continue"
 msgstr "Pokračovať"
 
+#: templates/pages/offer_batch_detail.html:4
+msgid "Offer email result"
+msgstr "Výsledok e-mailu s ponukou"
+
+#: templates/pages/offer_batch_detail.html:8
+msgid "Delivery result"
+msgstr "Výsledok doručenia"
+
+#: templates/pages/offer_batch_detail.html:9
+msgid "Deleted offer"
+msgstr "Odstránená ponuka"
+
+#: templates/pages/offer_batch_detail.html:10
+#, python-format
+msgid "%(count)s recipients were selected for this batch."
+msgstr "Pre túto dávku bolo vybraných %(count)s príjemcov."
+
+#: templates/pages/offer_batch_detail.html:13
+msgid "Delivery totals"
+msgstr "Súčty doručenia"
+
+#: templates/pages/offer_batch_detail.html:16
+msgid "Blocked"
+msgstr "Zablokované"
+
+#: templates/pages/offer_batch_detail.html:21
+msgid ""
+"This batch did not record an outcome for every selected recipient. Do not "
+"resend it; review the audit log before taking further action."
+msgstr ""
+"Táto dávka nezaznamenala výsledok pre každého vybraného príjemcu. "
+"Neodosielajte ju znova; pred ďalším krokom skontrolujte denník auditu."
+
+#: templates/pages/offer_batch_detail.html:25
+msgid "Recipient outcomes"
+msgstr "Výsledky príjemcov"
+
+#: templates/pages/offer_batch_detail.html:28
+msgid "Detail"
+msgstr "Podrobnosti"
+
+#: templates/pages/offer_batch_detail.html:39
+msgid "No delivery attempts were recorded."
+msgstr "Neboli zaznamenané žiadne pokusy o doručenie."
+
+#: templates/pages/offer_batch_detail.html:47
+msgid "Back to job offers"
+msgstr "Späť na pracovné ponuky"
+
+#: templates/pages/offer_batch_detail.html:48
+msgid "Open audit log"
+msgstr "Otvoriť denník auditu"
+
 #: templates/pages/offer_form.html:4
 msgid "Edit job offer"
 msgstr "Upraviť pracovnú ponuku"
@@ -7251,70 +7353,155 @@ msgid "No templates yet. Offers cannot be sent until one exists."
 msgstr "Zatiaľ žiadne šablóny. Ponuky nemožno odoslať, kým nejaká neexistuje."
 
 #: templates/pages/offer_send_bulk.html:4
-#: templates/panels/messaging_offer_email.html:25
-#: templates/panels/messaging_offer_email.html:30
-msgid "Send offer"
-msgstr "Odoslať ponuku"
+msgid "Choose offer recipients"
+msgstr "Vybrať príjemcov ponuky"
 
 #: templates/pages/offer_send_bulk.html:9
 #, python-format
-msgid "Send \"%(title)s\" to many"
-msgstr "Odoslať „%(title)s“ viacerým"
+msgid "Choose recipients for \"%(title)s\""
+msgstr "Vybrať príjemcov pre „%(title)s“"
 
-#: templates/pages/offer_send_bulk.html:13
+#: templates/pages/offer_send_bulk.html:10
+msgid ""
+"Nobody is selected automatically. Filter the list, choose the people who "
+"should receive this offer, then review the exact selection before sending."
+msgstr ""
+"Nikto nie je vybraný automaticky. Filtrujte zoznam, vyberte ľudí, ktorí majú "
+"dostať túto ponuku, a pred odoslaním skontrolujte presný výber."
+
+#: templates/pages/offer_send_bulk.html:14
+msgid "Email is not configured in this environment. Nothing can be sent."
+msgstr "E-mail nie je v tomto prostredí nakonfigurovaný. Nič nemožno odoslať."
+
+#: templates/pages/offer_send_bulk.html:16
+msgid ""
+"No active template exists for this email type. Choose another type or create "
+"its template first."
+msgstr ""
+"Pre tento typ e-mailu neexistuje aktívna šablóna. Vyberte iný typ alebo "
+"najprv vytvorte jeho šablónu."
+
+#: templates/pages/offer_send_bulk.html:20
 #: templates/panels/messaging_offer_email.html:19
 msgid "Email type"
 msgstr "Typ e-mailu"
 
-#: templates/pages/offer_send_bulk.html:18
-msgid "Update preview"
-msgstr "Aktualizovať náhľad"
-
-#: templates/pages/offer_send_bulk.html:22
-msgid ""
-"No active template for this email type — nothing can be sent until one "
-"exists."
-msgstr ""
-"Pre tento typ e-mailu neexistuje aktívna šablóna – kým nejakú nevytvoríte, "
-"nemožno nič odoslať."
-
 #: templates/pages/offer_send_bulk.html:25
-#, python-format
-msgid "Preview, as %(name)s would receive it"
-msgstr "Náhľad, ako by ho dostal(a) %(name)s"
+msgid "Lifecycle status"
+msgstr "Stav životného cyklu"
 
-#: templates/pages/offer_send_bulk.html:32
+#: templates/pages/offer_send_bulk.html:34
 #, python-format
-msgid "%(counter)s recipient"
-msgid_plural "%(counter)s recipients"
-msgstr[0] "%(counter)s príjemca"
-msgstr[1] "%(counter)s príjemcovia"
-msgstr[2] "%(counter)s príjemcov"
+msgid "Offer office — %(office)s"
+msgstr "Pobočka ponuky — %(office)s"
 
-#: templates/pages/offer_send_bulk.html:37
-msgid "Nobody in scope can be emailed this offer."
-msgstr "Túto ponuku nemožno e-mailom poslať nikomu v rozsahu."
+#: templates/pages/offer_send_bulk.html:39
+msgid "Search by name or email"
+msgstr "Hľadať podľa mena alebo e-mailu"
 
 #: templates/pages/offer_send_bulk.html:42
-#, python-format
-msgid ""
-"Capped at %(limit)s; %(extra)s further people were left out of this send."
-msgstr ""
-"Obmedzené na %(limit)s; ďalších %(extra)s osôb nebolo do tohto odoslania "
-"zahrnutých."
+msgid "Apply filters"
+msgstr "Použiť filtre"
 
-#: templates/pages/offer_send_bulk.html:49
-msgid "Excluded"
-msgstr "Vylúčení"
+#: templates/pages/offer_send_bulk.html:43
+msgid "Changing filters clears the current selection."
+msgstr "Zmena filtrov vymaže aktuálny výber."
+
+#: templates/pages/offer_send_bulk.html:61
+#, python-format
+msgid "%(counter)s contact"
+msgid_plural "%(counter)s contacts"
+msgstr[0] "%(counter)s kontakt"
+msgstr[1] "%(counter)s kontakty"
+msgstr[2] "%(counter)s kontaktov"
 
 #: templates/pages/offer_send_bulk.html:62
-#: templates/pages/offer_send_bulk.html:64
-msgid "Send now"
-msgstr "Odoslať teraz"
+msgid "selected"
+msgstr "vybraných"
+
+#: templates/pages/offer_send_bulk.html:63
+#, python-format
+msgid "%(count)s contacts in these results can receive this offer."
+msgstr "Z týchto výsledkov môže túto ponuku dostať %(count)s kontaktov."
 
 #: templates/pages/offer_send_bulk.html:66
-msgid "Email is not configured in this environment."
-msgstr "E-mail nie je v tomto prostredí nakonfigurovaný."
+msgid "Select all eligible in these results"
+msgstr "Vybrať všetkých oprávnených v týchto výsledkoch"
+
+#: templates/pages/offer_send_bulk.html:67
+msgid "Clear selection"
+msgstr "Vymazať výber"
+
+#: templates/pages/offer_send_bulk.html:72
+msgid "Offer recipients"
+msgstr "Príjemcovia ponuky"
+
+#: templates/pages/offer_send_bulk.html:98
+msgid "No contacts match these filters."
+msgstr "Týmto filtrom nezodpovedajú žiadne kontakty."
+
+#: templates/pages/offer_send_bulk.html:103
+msgid "Review selected recipients"
+msgstr "Skontrolovať vybraných príjemcov"
+
+#: templates/pages/offer_send_bulk_preview.html:4
+msgid "Review offer email"
+msgstr "Skontrolovať e-mail s ponukou"
+
+#: templates/pages/offer_send_bulk_preview.html:8
+msgid "Final review"
+msgstr "Záverečná kontrola"
+
+#: templates/pages/offer_send_bulk_preview.html:9
+#, python-format
+msgid "Review \"%(title)s\" before sending"
+msgstr "Pred odoslaním skontrolovať „%(title)s“"
+
+#: templates/pages/offer_send_bulk_preview.html:10
+msgid ""
+"The preview expires after 15 minutes. If anything changes, return to the "
+"recipient list and review it again."
+msgstr ""
+"Náhľad vyprší po 15 minútach. Ak sa čokoľvek zmení, vráťte sa na zoznam "
+"príjemcov a skontrolujte ho znova."
+
+#: templates/pages/offer_send_bulk_preview.html:14
+#, python-format
+msgid "%(counter)s selected recipient"
+msgid_plural "%(counter)s selected recipients"
+msgstr[0] "%(counter)s vybraný príjemca"
+msgstr[1] "%(counter)s vybraní príjemcovia"
+msgstr[2] "%(counter)s vybraných príjemcov"
+
+#: templates/pages/offer_send_bulk_preview.html:24
+#, python-format
+msgid "%(language)s · %(counter)s recipient"
+msgid_plural "%(language)s · %(counter)s recipients"
+msgstr[0] "%(language)s · %(counter)s príjemca"
+msgstr[1] "%(language)s · %(counter)s príjemcovia"
+msgstr[2] "%(language)s · %(counter)s príjemcov"
+
+#: templates/pages/offer_send_bulk_preview.html:25
+#, python-format
+msgid "Personalized example for %(name)s"
+msgstr "Personalizovaný príklad pre %(name)s"
+
+#: templates/pages/offer_send_bulk_preview.html:36
+#: templates/pages/offer_send_bulk_preview.html:38
+msgid ""
+"This sends a separate personalized email to every selected recipient. Email "
+"cannot be recalled."
+msgstr ""
+"Každému vybranému príjemcovi sa odošle samostatný personalizovaný e-mail. E-"
+"mail nemožno odvolať."
+
+#: templates/pages/offer_send_bulk_preview.html:38
+msgid "Send to selected recipients"
+msgstr "Odoslať vybraným príjemcom"
+
+#: templates/pages/offer_send_bulk_preview.html:39
+msgid "Change recipients"
+msgstr "Zmeniť príjemcov"
 
 #: templates/pages/offer_template_form.html:4
 #: templates/pages/offer_template_form.html:9
@@ -8430,6 +8617,11 @@ msgstr "Pre túto pobočku zatiaľ nie sú otvorené žiadne ponuky."
 msgid "Job offer"
 msgstr "Pracovná ponuka"
 
+#: templates/panels/messaging_offer_email.html:25
+#: templates/panels/messaging_offer_email.html:30
+msgid "Send offer"
+msgstr "Odoslať ponuku"
+
 #: templates/panels/messaging_offer_email.html:30
 msgid ""
 "Sends the offer email now, in the worker's preferred language. It cannot be "
@@ -8446,6 +8638,17 @@ msgstr "Skutočný e-mail odchádza von. Už sa nedá vziať späť."
 #, python-format
 msgid "Sends to %(address)s in this worker's preferred language."
 msgstr "Odošle sa na %(address)s v preferovanom jazyku tohto pracovníka."
+
+#: templates/panels/messaging_offer_email.html:41
+msgid ""
+"Need to contact several people? Open Job offers and choose Send to many."
+msgstr ""
+"Potrebujete kontaktovať viac ľudí? Otvorte Pracovné ponuky a zvoľte Odoslať "
+"viacerým."
+
+#: templates/panels/messaging_offer_email.html:42
+msgid "Open job offers"
+msgstr "Otvoriť pracovné ponuky"
 
 # --- messaging / SMS ---
 #: templates/panels/messaging_sms.html:3
@@ -8812,6 +9015,65 @@ msgstr "Zobrazuje sa %(rail_limit)s naposledy aktualizovaných."
 #: templates/partials/worker_rail_body.html:34
 msgid "Open People"
 msgstr "Otvoriť Ľudia"
+
+#~ msgid ""
+#~ "Authorized staff can create job offers and language-specific templates "
+#~ "from Offers, preview the exact recipients, and confirm a bulk email. On a "
+#~ "worker profile, the offer panel sends one selected offer in that worker's "
+#~ "preferred language."
+#~ msgstr ""
+#~ "Používatelia s príslušným oprávnením môžu v časti Ponuky vytvárať "
+#~ "pracovné ponuky a jazykové šablóny, zobraziť ukážku presného zoznamu "
+#~ "príjemcov a potvrdiť hromadný e-mail. Na profile pracovníka panel ponuky "
+#~ "odošle jednu vybranú ponuku v preferovanom jazyku pracovníka."
+
+#~ msgid "I have reviewed the recipient list"
+#~ msgstr "Skontroloval som zoznam príjemcov"
+
+#, python-format
+#~ msgid "Offer emailed to %(count)s people."
+#~ msgstr "Ponuka bola e-mailom odoslaná %(count)s osobám."
+
+#, python-format
+#~ msgid "Send \"%(title)s\" to many"
+#~ msgstr "Odoslať „%(title)s“ viacerým"
+
+#~ msgid "Update preview"
+#~ msgstr "Aktualizovať náhľad"
+
+#~ msgid ""
+#~ "No active template for this email type — nothing can be sent until one "
+#~ "exists."
+#~ msgstr ""
+#~ "Pre tento typ e-mailu neexistuje aktívna šablóna – kým nejakú "
+#~ "nevytvoríte, nemožno nič odoslať."
+
+#, python-format
+#~ msgid "Preview, as %(name)s would receive it"
+#~ msgstr "Náhľad, ako by ho dostal(a) %(name)s"
+
+#, python-format
+#~ msgid "%(counter)s recipient"
+#~ msgid_plural "%(counter)s recipients"
+#~ msgstr[0] "%(counter)s príjemca"
+#~ msgstr[1] "%(counter)s príjemcovia"
+#~ msgstr[2] "%(counter)s príjemcov"
+
+#~ msgid "Nobody in scope can be emailed this offer."
+#~ msgstr "Túto ponuku nemožno e-mailom poslať nikomu v rozsahu."
+
+#, python-format
+#~ msgid ""
+#~ "Capped at %(limit)s; %(extra)s further people were left out of this send."
+#~ msgstr ""
+#~ "Obmedzené na %(limit)s; ďalších %(extra)s osôb nebolo do tohto odoslania "
+#~ "zahrnutých."
+
+#~ msgid "Excluded"
+#~ msgstr "Vylúčení"
+
+#~ msgid "Send now"
+#~ msgstr "Odoslať teraz"
 
 #~ msgid ""
 #~ "Enter one project year, compare projects in read-only workbooks, and "

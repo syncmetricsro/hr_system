@@ -1,71 +1,107 @@
 {% extends "layouts/base.html" %}
 {% load i18n %}
 
-{% block title %}{% trans "Send offer" %} · {{ BRAND_NAME }}{% endblock %}
+{% block title %}{% trans "Choose offer recipients" %} · {{ BRAND_NAME }}{% endblock %}
 
 {% block content %}
 <section class="page-head">
   <p class="eyebrow">{% trans "Recruiting" %}</p>
-  <h1>{% blocktrans with title=offer.title %}Send "{{ title }}" to many{% endblocktrans %}</h1>
+  <h1>{% blocktrans with title=offer.title %}Choose recipients for "{{ title }}"{% endblocktrans %}</h1>
+  <p>{% trans "Nobody is selected automatically. Filter the list, choose the people who should receive this offer, then review the exact selection before sending." %}</p>
 </section>
 
-<form class="stack" method="get">
+{% if not email_configured %}
+  <section class="panel"><p class="eyebrow">{% trans "Email is not configured in this environment. Nothing can be sent." %}</p></section>
+{% elif not template_available %}
+  <section class="panel"><p class="eyebrow">{% trans "No active template exists for this email type. Choose another type or create its template first." %}</p></section>
+{% endif %}
+
+<form class="people-search panel" method="get">
   <label>{% trans "Email type" %}
     <select name="kind">
-      {% for value, label in kinds %}<option value="{{ value }}">{{ label }}</option>{% endfor %}
+      {% for value, label in kinds %}<option value="{{ value }}"{% if value == selected_kind %} selected{% endif %}>{{ label }}</option>{% endfor %}
     </select>
   </label>
-  <button class="button" type="submit">{% trans "Update preview" %}</button>
+  <label>{% trans "Lifecycle status" %}
+    <select name="lifecycle_status">
+      <option value="">{% trans "Any" %}</option>
+      {% for value, label in statuses %}<option value="{{ value }}"{% if value == selected_status %} selected{% endif %}>{{ label }}</option>{% endfor %}
+    </select>
+  </label>
+  {% if offices %}
+    <label>{% trans "Office" %}
+      <select name="office">
+        <option value="">{% if offer_office_label %}{% blocktrans with office=offer_office_label %}Offer office — {{ office }}{% endblocktrans %}{% else %}{% trans "All my offices" %}{% endif %}</option>
+        {% for office in offices %}<option value="{{ office.pk }}"{% if office.pk|stringformat:"s" == selected_office %} selected{% endif %}>{{ office }}</option>{% endfor %}
+      </select>
+    </label>
+  {% endif %}
+  <label>{% trans "Search by name or email" %}
+    <input type="search" name="q" value="{{ query }}" autocomplete="off">
+  </label>
+  <button class="button" type="submit">{% trans "Apply filters" %}</button>
+  <p class="muted">{% trans "Changing filters clears the current selection." %}</p>
 </form>
 
-{% if preview_error %}
-  <p class="eyebrow">{% trans "No active template for this email type — nothing can be sent until one exists." %}</p>
-{% elif preview %}
-  <section class="panel">
-    <p class="eyebrow">{% blocktrans with name=preview.person %}Preview, as {{ name }} would receive it{% endblocktrans %}</p>
-    <h3>{{ preview.subject }}</h3>
-    <pre>{{ preview.body }}</pre>
-  </section>
-{% endif %}
-
-<section class="panel">
-  <p class="eyebrow">{% blocktrans count counter=sendable|length %}{{ counter }} recipient{% plural %}{{ counter }} recipients{% endblocktrans %}</p>
-  <ul class="plain-list">
-    {% for person in sendable %}
-      <li>{{ person }} — {{ person.email }}</li>
-    {% empty %}
-      <li>{% trans "Nobody in scope can be emailed this offer." %}</li>
-    {% endfor %}
-  </ul>
-  {% if truncated %}
-    <p class="eyebrow">
-      {% blocktrans with limit=limit extra=truncated %}Capped at {{ limit }}; {{ extra }} further people were left out of this send.{% endblocktrans %}
-    </p>
-  {% endif %}
-</section>
-
-{% if excluded %}
-  <section class="panel">
-    <p class="eyebrow">{% trans "Excluded" %}</p>
-    <ul class="plain-list">
-      {% for person, reason in excluded %}
-        <li>{{ person }} — {{ reason }}</li>
-      {% endfor %}
-    </ul>
-  </section>
-{% endif %}
-
-<form class="stack" method="post">
+<form
+  class="stack recipient-picker"
+  method="post"
+  x-data="{ selected: [], limit: {{ limit }}, selectAll() { this.selected = Array.from(this.$root.querySelectorAll('[data-recipient-checkbox]')).filter((box) => !box.disabled).slice(0, this.limit).map((box) => box.value) }, clearAll() { this.selected = [] } }"
+>
   {% csrf_token %}
-  {{ form.as_p }}
-  {% if sendable and not preview_error and email_configured %}
-    <button class="button button-primary" type="submit">{% trans "Send now" %}</button>
-  {% else %}
-    <button class="button button-primary" type="submit" disabled>{% trans "Send now" %}</button>
-    {% if not email_configured %}
-      <p class="eyebrow">{% trans "Email is not configured in this environment." %}</p>
-    {% endif %}
-  {% endif %}
-  <a class="button" href="{% url 'offer_list' %}">{% trans "Cancel" %}</a>
+  <input type="hidden" name="kind" value="{{ selected_kind }}">
+  <input type="hidden" name="lifecycle_status" value="{{ selected_status }}">
+  <input type="hidden" name="office" value="{{ selected_office }}">
+  <input type="hidden" name="q" value="{{ query }}">
+
+  {{ form.non_field_errors }}
+  {{ form.recipients.errors }}
+  <section class="panel recipient-picker-toolbar">
+    <div>
+      <p class="eyebrow">{% blocktrans count counter=rows|length %}{{ counter }} contact{% plural %}{{ counter }} contacts{% endblocktrans %}</p>
+      <p aria-live="polite"><strong x-text="selected.length">0</strong> / {{ limit }} {% trans "selected" %}</p>
+      <p class="muted">{% blocktrans with count=eligible_count %}{{ count }} contacts in these results can receive this offer.{% endblocktrans %}</p>
+    </div>
+    <div class="row-actions">
+      <button class="button" type="button" @click="selectAll">{% trans "Select all eligible in these results" %}</button>
+      <button class="button" type="button" @click="clearAll">{% trans "Clear selection" %}</button>
+    </div>
+  </section>
+
+  <fieldset class="recipient-list">
+    <legend class="sr-only">{% trans "Offer recipients" %}</legend>
+    {% for row in rows %}
+      <label class="recipient-row{% if not row.eligible %} recipient-row-disabled{% endif %}">
+        <span class="recipient-choice">
+          <input
+            type="checkbox"
+            name="recipients"
+            value="{{ row.person.pk }}"
+            {% if row.eligible %}
+              data-recipient-checkbox
+              x-model="selected"
+              :disabled="selected.length >= limit && !selected.includes($el.value)"
+            {% else %}
+              disabled
+            {% endif %}
+          >
+        </span>
+        <span class="recipient-person">
+          <strong>{{ row.person }}</strong>
+          <span>{{ row.person.get_lifecycle_status_display }}</span>
+        </span>
+        <span class="recipient-email">{{ row.person.email|default:"—" }}</span>
+        <span class="recipient-language">{{ row.person.preferred_language|default:"—"|upper }}</span>
+        <span class="recipient-reason">{% if row.reason %}{{ row.reason }}{% else %}{% trans "Available" %}{% endif %}</span>
+      </label>
+    {% empty %}
+      <p class="panel">{% trans "No contacts match these filters." %}</p>
+    {% endfor %}
+  </fieldset>
+
+  <div class="row-actions">
+    <button class="button button-primary" type="submit"{% if not eligible_count or not email_configured or not template_available %} disabled{% endif %}>{% trans "Review selected recipients" %}</button>
+    <a class="button" href="{% url 'offer_list' %}">{% trans "Cancel" %}</a>
+  </div>
 </form>
 {% endblock %}

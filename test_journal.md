@@ -1,5 +1,34 @@
 # Test Journal
 
+## 2026-08-08 - Explicit offer-recipient selection and idempotent confirmation
+
+- Focused Jober tests cover visible-but-disabled missing-email, opt-out,
+  blacklist and non-allowlisted contacts; empty defaults; office/status/name/
+  email filters including folded diacritics; exact scoped IDs; empty/over-limit
+  rejection; altered, cross-user and expired preview tokens; full state-change
+  abort; per-language examples; review acknowledgement; duplicate-confirmation
+  idempotency; delivery-result counts; and unchanged one-person delivery. The
+  focused messaging set passed **47/47**.
+- Corvinum-specific tests passed **7/7**, proving Manager access and Recruiter,
+  Coordinator and Observer 403s for picker, confirmation and result routes,
+  while SMS/Twilio remains absent. The no-office SK/HU campaign uses locmem
+  only and records the exact selected pair.
+- Safe extraction added **51 active** msgids, retained **12 replaced automatic-
+  bulk strings** as obsolete history, and a second extraction was idempotent.
+  SK/HU/UK each report **1,753 active / 1,753 translated / 0 fuzzy / 215
+  obsolete**; committed PO/MO synchronization passes. Hungarian received the
+  primary terminology review.
+- Final repository gate: production image/static and runtime-artifact checks,
+  hash/vendor and no-Node controls, Ruff lint/format, dependency direction,
+  both Django/system and migration checks all passed. Complete unit lanes:
+  **Jober 1,177 passed / 23 skipped; CorvinumEU 749 passed / 18 skipped / 354
+  deselected**.
+- Final Playwright run passed **73/73** at the supported desktop/mobile sizes.
+  It exercises the Jober select → multilingual preview → confirm → result path
+  with a fictional address and console backend, plus Corvinum's 375×667 picker,
+  disabled-row readability, 44px row target, no overflow and light/dark themes.
+  No provider email was sent.
+
 ## 2026-08-08 - Corvinum offer email release gate
 
 - Full pre-deploy lanes on `db7ae4d`: **Jober 1,160 passed / 23 skipped;

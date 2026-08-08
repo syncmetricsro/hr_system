@@ -5,6 +5,7 @@ from __future__ import annotations
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
+from core.people.models import Person
 from features.messaging.models import JobOffer, OfferEmailKind, OfferEmailTemplate
 
 
@@ -79,9 +80,8 @@ class SendOfferEmailForm(forms.Form):
             self.fields["offer"].queryset = offer_queryset
 
 
-class BulkOfferEmailForm(forms.Form):
-    """The bulk send page. ``confirm`` is required so reaching this URL with a
-    replayed POST cannot start a campaign."""
+class BulkOfferSelectionForm(forms.Form):
+    """Filters plus the exact recipients a manager deliberately selected."""
 
     kind = forms.ChoiceField(label=_("email type"), choices=OfferEmailKind.choices)
     lifecycle_status = forms.ChoiceField(
@@ -93,11 +93,23 @@ class BulkOfferEmailForm(forms.Form):
         required=False,
         empty_label=_("All my offices"),
     )
-    confirm = forms.BooleanField(
-        label=_("I have reviewed the recipient list"), required=True
+    q = forms.CharField(label=_("search"), required=False, max_length=255)
+    recipients = forms.ModelMultipleChoiceField(
+        label=_("recipients"),
+        queryset=Person.objects.none(),
+        required=True,
+        error_messages={"required": _("Choose at least one recipient.")},
     )
 
-    def __init__(self, *args, office_queryset=None, status_choices=(), **kwargs):
+    def __init__(
+        self,
+        *args,
+        office_queryset=None,
+        recipient_queryset=None,
+        status_choices=(),
+        batch_limit=100,
+        **kwargs,
+    ):
         super().__init__(*args, **kwargs)
         self.fields["lifecycle_status"].choices = [("", _("Any"))] + list(
             status_choices
@@ -106,3 +118,22 @@ class BulkOfferEmailForm(forms.Form):
             self.fields["office"].queryset = office_queryset
         else:
             self.fields.pop("office")
+        if recipient_queryset is not None:
+            self.fields["recipients"].queryset = recipient_queryset
+        self.batch_limit = batch_limit
+
+    def clean_recipients(self):
+        recipients = self.cleaned_data["recipients"]
+        if recipients.count() > self.batch_limit:
+            raise forms.ValidationError(
+                _("Choose no more than %(limit)s recipients."),
+                params={"limit": self.batch_limit},
+            )
+        return recipients
+
+
+class BulkOfferConfirmForm(forms.Form):
+    preview_token = forms.CharField(widget=forms.HiddenInput)
+    confirm = forms.BooleanField(
+        label=_("I reviewed the recipients and email content"), required=True
+    )

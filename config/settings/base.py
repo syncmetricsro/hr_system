@@ -259,6 +259,7 @@ EMAIL_ALLOWED_RECIPIENTS = [
 # Ceiling on one bulk offer send. Not a business rule — a blast-radius limit, so
 # a mis-filtered recipient query cannot become a thousand emails in one POST.
 OFFER_EMAIL_BATCH_LIMIT = int(os.getenv("OFFER_EMAIL_BATCH_LIMIT", "100"))
+OFFER_EMAIL_PREVIEW_MAX_AGE = int(os.getenv("OFFER_EMAIL_PREVIEW_MAX_AGE", "900"))
 
 # Retention for offer-email records. Zero = keep everything, which is the
 # deliberate default: the client has not approved a message/log retention period

@@ -276,6 +276,7 @@ msgstr "Profilkép módosítása"
 
 #: clients/corvinum_eu/templates/layouts/base.html:109
 #: templates/layouts/base.html:81 templates/pages/feedback_form.html:17
+#: templates/pages/offer_batch_detail.html:28
 msgid "Language"
 msgstr "Nyelv"
 
@@ -362,10 +363,10 @@ msgstr "megerősítve"
 #: features/logistics/models.py:43 features/logistics/models.py:79
 #: features/logistics/models.py:184 features/logistics/models.py:228
 #: features/logistics/models.py:365 features/logistics/models.py:467
-#: features/logistics/models.py:591 features/messaging/models.py:28
-#: features/messaging/models.py:71 features/messaging/models.py:176
-#: features/messaging/models.py:221 features/messaging/models.py:261
-#: features/messaging/models.py:331 features/payslips/models.py:37
+#: features/logistics/models.py:591 features/messaging/models.py:29
+#: features/messaging/models.py:72 features/messaging/models.py:177
+#: features/messaging/models.py:222 features/messaging/models.py:263
+#: features/messaging/models.py:333 features/payslips/models.py:37
 #: features/profitability/models.py:58 features/wage_ledger/models.py:43
 msgid "created"
 msgstr "létrehozva"
@@ -433,8 +434,8 @@ msgstr "cél azonosítója"
 #: features/blacklist/models.py:45 features/blacklist/models.py:105
 #: features/checklists/models.py:79 features/compliance/models.py:51
 #: features/intake/models.py:106 features/logistics/models.py:144
-#: features/logistics/models.py:263 features/messaging/models.py:55
-#: features/messaging/models.py:295 features/payslips/models.py:20
+#: features/logistics/models.py:263 features/messaging/models.py:56
+#: features/messaging/models.py:297 features/payslips/models.py:20
 #: features/wage_ledger/models.py:16
 msgid "person"
 msgstr "személy"
@@ -880,7 +881,7 @@ msgstr "%(first)s +%(count)s"
 #: core/offices/models.py:12 core/projects/models.py:12
 #: features/checklists/models.py:18 features/compliance/models.py:59
 #: features/intake/models.py:25 features/logistics/models.py:29
-#: features/logistics/models.py:216 features/messaging/models.py:18
+#: features/logistics/models.py:216 features/messaging/models.py:19
 msgid "name"
 msgstr "név"
 
@@ -896,7 +897,7 @@ msgstr "ország"
 #: core/projects/models.py:21 features/logistics/models.py:41
 #: features/logistics/models.py:355 features/logistics/models.py:440
 #: features/logistics/models.py:519 features/logistics/models.py:554
-#: features/messaging/forms.py:91 features/messaging/models.py:147
+#: features/messaging/forms.py:91 features/messaging/models.py:148
 msgid "office"
 msgstr "iroda"
 
@@ -933,6 +934,7 @@ msgstr "Vezetéknév"
 
 #: core/people/forms.py:41 features/intake/catalog_i18n.py:18
 #: features/intake/models.py:16 templates/pages/login.html:17
+#: templates/pages/offer_batch_detail.html:28
 msgid "Email"
 msgstr "E-mail"
 
@@ -983,6 +985,7 @@ msgstr "Fogyatékosság típusa"
 #: templates/pages/_finance_workbook_grid.html:57
 #: templates/pages/equipment_stock.html:48
 #: templates/pages/goods_receipt_detail.html:16
+#: templates/pages/offer_send_bulk.html:32
 #: templates/pages/project_detail.html:35
 msgid "Office"
 msgstr "Iroda"
@@ -993,6 +996,7 @@ msgstr "A születési dátum nem lehet jövőbeli."
 
 # --- lifecycle status labels ---
 #: core/people/models.py:16 templates/pages/dashboard.html:21
+#: templates/pages/offer_send_bulk.html:95
 #: templates/panels/logistics_equipment.html:57
 msgid "Available"
 msgstr "Elérhető"
@@ -1030,8 +1034,8 @@ msgstr "címke"
 #: features/blacklist/models.py:17 features/blacklist/models.py:113
 #: features/checklists/models.py:25 features/feedback/models.py:25
 #: features/logistics/models.py:31 features/logistics/models.py:103
-#: features/logistics/models.py:227 features/messaging/models.py:20
-#: features/messaging/models.py:168 features/messaging/models.py:213
+#: features/logistics/models.py:227 features/messaging/models.py:21
+#: features/messaging/models.py:169 features/messaging/models.py:214
 #: features/profitability/models.py:121
 msgid "active"
 msgstr "aktív"
@@ -1286,7 +1290,7 @@ msgstr "pénzügyi riportban szerepel"
 #: core/projects/models.py:40 core/projects/models.py:70
 #: core/projects/models.py:143 core/projects/models.py:215
 #: core/projects/models.py:334 features/feedback/models.py:23
-#: features/logistics/models.py:578 features/messaging/models.py:139
+#: features/logistics/models.py:578 features/messaging/models.py:140
 #: features/profitability/models.py:30
 msgid "project"
 msgstr "projekt"
@@ -1317,13 +1321,13 @@ msgstr "Törölve"
 #: core/projects/models.py:73 core/projects/models.py:343
 #: features/blacklist/models.py:48 features/intake/models.py:27
 #: features/intake/models.py:108 features/logistics/models.py:153
-#: features/logistics/models.py:273 features/messaging/models.py:60
-#: features/messaging/models.py:321
+#: features/logistics/models.py:273 features/messaging/models.py:61
+#: features/messaging/models.py:323
 msgid "status"
 msgstr "állapot"
 
 #: core/projects/models.py:78 features/logistics/models.py:158
-#: features/messaging/models.py:166
+#: features/messaging/models.py:167
 msgid "start date"
 msgstr "kezdő dátum"
 
@@ -1904,16 +1908,25 @@ msgstr ""
 
 #: core/ui/help.py:130
 msgid ""
-"Authorized staff can create job offers and language-specific templates from "
-"Offers, preview the exact recipients, and confirm a bulk email. On a worker "
-"profile, the offer panel sends one selected offer in that worker's preferred "
-"language."
+"Managers can open Send to many from Offers, filter the contact list, and "
+"deliberately select eligible recipients; nobody is selected by default. "
+"Contacts without email, opted out, blacklisted, or blocked by the staging "
+"allowlist stay visible with a disabled reason. Review the exact names and "
+"one personalized example per language, tick the review confirmation, then "
+"send. The preview expires after 15 minutes and any recipient change requires "
+"a fresh review. On a worker profile, the offer panel still sends one "
+"selected offer in that worker's preferred language."
 msgstr ""
-"Az arra jogosult felhasználók az Ajánlatok menüpontban állásajánlatokat és "
-"nyelvspecifikus sablonokat hozhatnak létre, megtekinthetik a címzettek pontos "
-"listáját, majd megerősíthetik a csoportos e-mail küldését. A munkavállaló "
-"profilján az ajánlati panel egy kiválasztott ajánlatot küld el a munkavállaló "
-"által előnyben részesített nyelven."
+"A Menedzserek az Állásajánlatoknál megnyithatják a Küldés több személynek "
+"oldalt, szűrhetik a kapcsolati listát, és tudatosan kiválaszthatják a "
+"jogosult címzetteket; alapértelmezetten senki sincs kiválasztva. Az e-mail-"
+"cím nélküli, leiratkozott, feketelistás vagy a tesztkörnyezet engedélyezési "
+"listája által blokkolt kapcsolatok láthatók maradnak, a letiltás konkrét "
+"okával. Ellenőrizze a pontos neveket és nyelvenként egy személyre szabott "
+"példát, jelölje be az áttekintés megerősítését, majd küldje el. Az előnézet "
+"15 perc után lejár, és a címzett bármely változása új áttekintést igényel. A "
+"munkavállaló profilján az ajánlati panel továbbra is egy kiválasztott "
+"ajánlatot küld a munkavállaló preferált nyelvén."
 
 #: core/ui/help.py:137
 msgid "Personal-data gate"
@@ -3079,9 +3092,10 @@ msgstr ""
 
 #: core/ui/help.py:733 core/ui/help.py:835 core/ui/help.py:916
 #: features/advances/views.py:80 features/payslips/forms.py:22
-#: templates/pages/ledger.html:21 templates/pages/payslips.html:39
-#: templates/pages/person_detail.html:38 templates/pages/person_detail.html:315
-#: templates/pages/wages.html:38 templates/partials/ledger_activity.html:8
+#: templates/pages/ledger.html:21 templates/pages/offer_batch_detail.html:28
+#: templates/pages/payslips.html:39 templates/pages/person_detail.html:38
+#: templates/pages/person_detail.html:315 templates/pages/wages.html:38
+#: templates/partials/ledger_activity.html:8
 #: templates/partials/ledger_activity.html:26
 #: templates/partials/ledger_cycle.html:16
 msgid "Person"
@@ -3618,7 +3632,7 @@ msgstr "kategória"
 msgid "amount"
 msgstr "összeg"
 
-#: features/advances/models.py:86 features/messaging/models.py:165
+#: features/advances/models.py:86 features/messaging/models.py:166
 #: features/payslips/models.py:30 features/wage_ledger/models.py:33
 msgid "currency"
 msgstr "pénznem"
@@ -3917,8 +3931,8 @@ msgstr "Aktiválás"
 msgid "Reactivation"
 msgstr "Újraaktiválás"
 
-#: features/checklists/models.py:20 features/messaging/models.py:209
-#: features/messaging/models.py:252 features/messaging/models.py:314
+#: features/checklists/models.py:20 features/messaging/models.py:210
+#: features/messaging/models.py:253 features/messaging/models.py:316
 #: features/profitability/models.py:113
 msgid "kind"
 msgstr "fajta"
@@ -4325,7 +4339,7 @@ msgstr "felvételi kérdőív verziói"
 msgid "questionnaire"
 msgstr "kérdőív"
 
-#: features/intake/models.py:50 features/messaging/models.py:132
+#: features/intake/models.py:50 features/messaging/models.py:133
 msgid "title"
 msgstr "cím"
 
@@ -5042,251 +5056,283 @@ msgstr "Ellenőrizze a szállítás adatait, majd próbálja újra."
 msgid "Transport record updated."
 msgstr "A szállítási bejegyzés frissítve."
 
-#: features/messaging/forms.py:54
+#: features/messaging/forms.py:55
 msgid "This project belongs to a different office."
 msgstr "Ez a projekt másik irodához tartozik."
 
-#: features/messaging/forms.py:72 features/messaging/models.py:179
-#: features/messaging/models.py:250 features/messaging/models.py:303
+#: features/messaging/forms.py:73 features/messaging/models.py:180
+#: features/messaging/models.py:251 features/messaging/models.py:305
 msgid "job offer"
 msgstr "állásajánlat"
 
-#: features/messaging/forms.py:74 features/messaging/forms.py:86
+#: features/messaging/forms.py:75 features/messaging/forms.py:86
 msgid "email type"
 msgstr "e-mail típusa"
 
-#: features/messaging/forms.py:94
+#: features/messaging/forms.py:94 templates/pages/offer_send_bulk.html:34
 msgid "All my offices"
 msgstr "Minden irodám"
 
-#: features/messaging/forms.py:97
-msgid "I have reviewed the recipient list"
-msgstr "Ellenőriztem a címzettek listáját"
+#: features/messaging/forms.py:96
+msgid "search"
+msgstr "keresés"
 
-#: features/messaging/forms.py:102
+#: features/messaging/forms.py:98 features/messaging/models.py:255
+msgid "recipients"
+msgstr "címzettek"
+
+#: features/messaging/forms.py:101
+msgid "Choose at least one recipient."
+msgstr "Válasszon ki legalább egy címzettet."
+
+#: features/messaging/forms.py:114 templates/pages/offer_send_bulk.html:27
 msgid "Any"
 msgstr "Bármely"
 
-#: features/messaging/models.py:19 features/messaging/models.py:58
-#: features/messaging/models.py:84 features/messaging/models.py:212
-#: features/messaging/models.py:319
+#: features/messaging/forms.py:129 features/messaging/services.py:428
+#, python-format
+msgid "Choose no more than %(limit)s recipients."
+msgstr "Legfeljebb %(limit)s címzettet válasszon ki."
+
+#: features/messaging/forms.py:138
+msgid "I reviewed the recipients and email content"
+msgstr "Átnéztem a címzetteket és az e-mail tartalmát"
+
+#: features/messaging/models.py:20 features/messaging/models.py:59
+#: features/messaging/models.py:85 features/messaging/models.py:213
+#: features/messaging/models.py:321
 msgid "body"
 msgstr "törzs"
 
-#: features/messaging/models.py:31
+#: features/messaging/models.py:32
 msgid "message template"
 msgstr "üzenetsablon"
 
-#: features/messaging/models.py:32
+#: features/messaging/models.py:33
 msgid "message templates"
 msgstr "üzenetsablonok"
 
-#: features/messaging/models.py:41 features/messaging/models.py:281
+#: features/messaging/models.py:42 features/messaging/models.py:283
+#: templates/pages/offer_batch_detail.html:17
 msgid "Queued"
 msgstr "Sorban áll"
 
-#: features/messaging/models.py:42 features/messaging/models.py:282
-#: templates/pages/payslips.html:39
+#: features/messaging/models.py:43 features/messaging/models.py:284
+#: templates/pages/offer_batch_detail.html:14 templates/pages/payslips.html:39
 msgid "Sent"
 msgstr "Elküldve"
 
-#: features/messaging/models.py:43 features/messaging/models.py:283
+#: features/messaging/models.py:44 features/messaging/models.py:285
+#: templates/pages/offer_batch_detail.html:15
 msgid "Failed"
 msgstr "Sikertelen"
 
-#: features/messaging/models.py:47
+#: features/messaging/models.py:48
 msgid "Blocked (recipient not allowed here)"
 msgstr "Blokkolva (a címzett itt nem engedélyezett)"
 
-#: features/messaging/models.py:57 features/messaging/models.py:316
+#: features/messaging/models.py:58 features/messaging/models.py:318
 msgid "to"
 msgstr "címzett"
 
-#: features/messaging/models.py:62 features/messaging/models.py:85
+#: features/messaging/models.py:63 features/messaging/models.py:86
 msgid "provider id"
 msgstr "szolgáltatói azonosító"
 
-#: features/messaging/models.py:63 features/messaging/models.py:323
+#: features/messaging/models.py:64 features/messaging/models.py:325
 msgid "error"
 msgstr "hiba"
 
-#: features/messaging/models.py:74
+#: features/messaging/models.py:75
 msgid "outbound message"
 msgstr "kimenő üzenet"
 
-#: features/messaging/models.py:75
+#: features/messaging/models.py:76
 msgid "outbound messages"
 msgstr "kimenő üzenetek"
 
-#: features/messaging/models.py:83
+#: features/messaging/models.py:84
 msgid "from"
 msgstr "feladó"
 
-#: features/messaging/models.py:86
+#: features/messaging/models.py:87
 msgid "received"
 msgstr "beérkezett"
 
-#: features/messaging/models.py:89
+#: features/messaging/models.py:90
 msgid "inbound message"
 msgstr "bejövő üzenet"
 
-#: features/messaging/models.py:90
+#: features/messaging/models.py:91
 msgid "inbound messages"
 msgstr "bejövő üzenetek"
 
-#: features/messaging/models.py:129
+#: features/messaging/models.py:130
 msgid "per hour"
 msgstr "óránként"
 
-#: features/messaging/models.py:130
+#: features/messaging/models.py:131
 msgid "per month"
 msgstr "havonta"
 
-#: features/messaging/models.py:149
+#: features/messaging/models.py:150
 msgid "location"
 msgstr "helyszín"
 
-#: features/messaging/models.py:151
+#: features/messaging/models.py:152
 msgid "wage"
 msgstr "bér"
 
-#: features/messaging/models.py:159
+#: features/messaging/models.py:160
 msgid "wage unit"
 msgstr "bér egysége"
 
-#: features/messaging/models.py:167
+#: features/messaging/models.py:168
 msgid "terms"
 msgstr "feltételek"
 
-#: features/messaging/models.py:180
+#: features/messaging/models.py:181
 msgid "job offers"
 msgstr "állásajánlatok"
 
-#: features/messaging/models.py:194 templates/pages/offer_form.html:4
+#: features/messaging/models.py:195 templates/pages/offer_form.html:4
 #: templates/pages/offer_form.html:9
 msgid "New job offer"
 msgstr "Új állásajánlat"
 
-#: features/messaging/models.py:195
+#: features/messaging/models.py:196
 msgid "Offer reminder"
 msgstr "Ajánlat emlékeztető"
 
-#: features/messaging/models.py:196
+#: features/messaging/models.py:197
 msgid "Seasonal campaign"
 msgstr "Szezonális kampány"
 
-#: features/messaging/models.py:197
+#: features/messaging/models.py:198
 msgid "Offer closing soon"
 msgstr "Az ajánlat hamarosan lezárul"
 
-#: features/messaging/models.py:210 features/messaging/models.py:317
+#: features/messaging/models.py:211 features/messaging/models.py:319
 msgid "language"
 msgstr "nyelv"
 
-#: features/messaging/models.py:211 features/messaging/models.py:318
+#: features/messaging/models.py:212 features/messaging/models.py:320
 msgid "subject"
 msgstr "tárgy"
 
-#: features/messaging/models.py:224
+#: features/messaging/models.py:225
 msgid "offer email template"
 msgstr "ajánlat e-mail sablon"
 
-#: features/messaging/models.py:225
+#: features/messaging/models.py:226
 msgid "offer email templates"
 msgstr "ajánlat e-mail sablonok"
 
-#: features/messaging/models.py:253
-msgid "recipients"
-msgstr "címzettek"
-
-#: features/messaging/models.py:264
+#: features/messaging/models.py:266
 msgid "email batch"
 msgstr "e-mail köteg"
 
-#: features/messaging/models.py:265
+#: features/messaging/models.py:267
 msgid "email batches"
 msgstr "e-mail kötegek"
 
-#: features/messaging/models.py:287
+#: features/messaging/models.py:289
 msgid "Blocked (not sent)"
 msgstr "Blokkolva (nem lett elküldve)"
 
-#: features/messaging/models.py:311
+#: features/messaging/models.py:313
 msgid "batch"
 msgstr "köteg"
 
-#: features/messaging/models.py:334
+#: features/messaging/models.py:336
 msgid "outbound email"
 msgstr "kimenő e-mail"
 
-#: features/messaging/models.py:335
+#: features/messaging/models.py:337
 msgid "outbound emails"
 msgstr "kimenő e-mailek"
 
-#: features/messaging/services.py:267
+#: features/messaging/services.py:282
 msgid "This person has opted out of offer emails."
 msgstr "Ez a személy letiltotta az állásajánlat e-maileket."
 
-#: features/messaging/services.py:269
+#: features/messaging/services.py:284
 msgid "This person is blacklisted."
 msgstr "Ez a személy feketelistán van."
 
-#: features/messaging/services.py:271 features/payslips/services.py:177
+#: features/messaging/services.py:286 features/payslips/services.py:177
 msgid "This person has no email address on file."
 msgstr "Ennek a személynek nincs rögzített e-mail-címe."
 
-#: features/messaging/views.py:69
+#: features/messaging/services.py:326 features/messaging/services.py:336
+#: features/messaging/services.py:346
+msgid "This recipient preview is invalid or expired. Review the list again."
+msgstr "A címzettek előnézete érvénytelen vagy lejárt. Nézze át újra a listát."
+
+#: features/messaging/views.py:78
 msgid "This person has no phone number."
 msgstr "Ennek a személynek nincs telefonszáma."
 
-#: features/messaging/views.py:80
+#: features/messaging/views.py:89
 msgid "Message body is required."
 msgstr "Az üzenet törzse kötelező."
 
-#: features/messaging/views.py:85
+#: features/messaging/views.py:94
 msgid "Message sent."
 msgstr "Üzenet elküldve."
 
-#: features/messaging/views.py:88
+#: features/messaging/views.py:97
 #, python-format
 msgid "Message failed: %(error)s"
 msgstr "Üzenet sikertelen: %(error)s"
 
-#: features/messaging/views.py:166
+#: features/messaging/views.py:175
 msgid "Choose a job offer and an email type."
 msgstr "Válasszon állásajánlatot és e-mail típust."
 
-#: features/messaging/views.py:183
+#: features/messaging/views.py:192
 msgid "Offer email sent."
 msgstr "Az ajánlat e-mail elküldve."
 
-#: features/messaging/views.py:186
+#: features/messaging/views.py:195
 #, python-format
 msgid "Offer email not sent: %(error)s"
 msgstr "Az ajánlat e-mail nem lett elküldve: %(error)s"
 
-#: features/messaging/views.py:215
+#: features/messaging/views.py:224
 msgid "Job offer created."
 msgstr "Az állásajánlat létrehozva."
 
-#: features/messaging/views.py:234
+#: features/messaging/views.py:243
 msgid "Job offer updated."
 msgstr "Az állásajánlat frissítve."
 
-#: features/messaging/views.py:248
+#: features/messaging/views.py:257
 msgid "Job offer closed."
 msgstr "Az állásajánlat lezárva."
 
-#: features/messaging/views.py:312
+#: features/messaging/views.py:365
+msgid "Email is not configured in this environment."
+msgstr "Az e-mail nincs beállítva ebben a környezetben."
+
+#: features/messaging/views.py:367 features/messaging/views.py:377
+#: features/messaging/views.py:467
 msgid "No active template for this email type."
 msgstr "Nincs aktív sablon ehhez az e-mail típushoz."
 
-#: features/messaging/views.py:322
-#, python-format
-msgid "Offer emailed to %(count)s people."
-msgstr "Az ajánlat %(count)s személynek lett elküldve."
+#: features/messaging/views.py:424
+msgid "Review the recipients and email content first."
+msgstr "Először nézze át a címzetteket és az e-mail tartalmát."
 
-#: features/messaging/views.py:354
+#: features/messaging/views.py:440
+msgid "The selected recipient list is too large."
+msgstr "A kiválasztott címzettek listája túl nagy."
+
+#: features/messaging/views.py:451 features/messaging/views.py:461
+msgid "The recipient list changed after preview. Review it again."
+msgstr "A címzettek listája az előnézet óta megváltozott. Nézze át újra."
+
+#: features/messaging/views.py:519
 msgid "Template saved."
 msgstr "A sablon elmentve."
 
@@ -5994,6 +6040,7 @@ msgstr "Havi díj"
 #: templates/pages/accommodation_list.html:18
 #: templates/pages/compliance_list.html:21
 #: templates/pages/equipment_catalog.html:17
+#: templates/pages/offer_batch_detail.html:28
 #: templates/pages/people_list.html:20 templates/pages/people_list.html:50
 #: templates/pages/project_list.html:38 templates/pages/trials_queue.html:55
 #: templates/panels/blacklist_case.html:8
@@ -6024,7 +6071,7 @@ msgstr "Szálláskezelés"
 #: templates/pages/certificate_action.html:10
 #: templates/pages/certificate_form.html:10
 #: templates/pages/equipment_form.html:10 templates/pages/offer_form.html:16
-#: templates/pages/offer_send_bulk.html:69
+#: templates/pages/offer_send_bulk.html:104
 #: templates/pages/offer_template_form.html:23
 #: templates/pages/project_form.html:9 templates/pages/room_form.html:9
 #: templates/pages/transport_trends.html:22
@@ -6336,9 +6383,10 @@ msgid "Uploading…"
 msgstr "Feltöltés…"
 
 #: templates/pages/certificate_form.html:26
-#: templates/pages/equipment_reviews.html:31 templates/pages/payslips.html:51
-#: templates/pages/person_detail.html:69 templates/pages/person_detail.html:86
-#: templates/pages/person_detail.html:215
+#: templates/pages/equipment_reviews.html:31
+#: templates/pages/offer_send_bulk_preview.html:38
+#: templates/pages/payslips.html:51 templates/pages/person_detail.html:69
+#: templates/pages/person_detail.html:86 templates/pages/person_detail.html:215
 #: templates/pages/person_detail.html:268
 #: templates/pages/person_detail.html:276
 #: templates/panels/logistics_equipment.html:37
@@ -7242,6 +7290,59 @@ msgstr "Jelszó"
 msgid "Continue"
 msgstr "Folytatás"
 
+#: templates/pages/offer_batch_detail.html:4
+msgid "Offer email result"
+msgstr "Ajánlati e-mail eredménye"
+
+#: templates/pages/offer_batch_detail.html:8
+msgid "Delivery result"
+msgstr "Kézbesítési eredmény"
+
+#: templates/pages/offer_batch_detail.html:9
+msgid "Deleted offer"
+msgstr "Törölt ajánlat"
+
+#: templates/pages/offer_batch_detail.html:10
+#, python-format
+msgid "%(count)s recipients were selected for this batch."
+msgstr "Ehhez a köteghez %(count)s címzett lett kiválasztva."
+
+#: templates/pages/offer_batch_detail.html:13
+msgid "Delivery totals"
+msgstr "Kézbesítési összesítés"
+
+#: templates/pages/offer_batch_detail.html:16
+msgid "Blocked"
+msgstr "Blokkolva"
+
+#: templates/pages/offer_batch_detail.html:21
+msgid ""
+"This batch did not record an outcome for every selected recipient. Do not "
+"resend it; review the audit log before taking further action."
+msgstr ""
+"Ez a köteg nem rögzített eredményt minden kiválasztott címzettnél. Ne küldje "
+"el újra; további művelet előtt ellenőrizze az auditnaplót."
+
+#: templates/pages/offer_batch_detail.html:25
+msgid "Recipient outcomes"
+msgstr "Címzettenkénti eredmények"
+
+#: templates/pages/offer_batch_detail.html:28
+msgid "Detail"
+msgstr "Részletek"
+
+#: templates/pages/offer_batch_detail.html:39
+msgid "No delivery attempts were recorded."
+msgstr "Nem lett kézbesítési kísérlet rögzítve."
+
+#: templates/pages/offer_batch_detail.html:47
+msgid "Back to job offers"
+msgstr "Vissza az állásajánlatokhoz"
+
+#: templates/pages/offer_batch_detail.html:48
+msgid "Open audit log"
+msgstr "Auditnapló megnyitása"
+
 #: templates/pages/offer_form.html:4
 msgid "Edit job offer"
 msgstr "Állásajánlat szerkesztése"
@@ -7312,69 +7413,152 @@ msgid "No templates yet. Offers cannot be sent until one exists."
 msgstr "Még nincsenek sablonok. Ajánlat nem küldhető, amíg nincs legalább egy."
 
 #: templates/pages/offer_send_bulk.html:4
-#: templates/panels/messaging_offer_email.html:25
-#: templates/panels/messaging_offer_email.html:30
-msgid "Send offer"
-msgstr "Ajánlat küldése"
+msgid "Choose offer recipients"
+msgstr "Ajánlat címzettjeinek kiválasztása"
 
 #: templates/pages/offer_send_bulk.html:9
 #, python-format
-msgid "Send \"%(title)s\" to many"
-msgstr "A(z) „%(title)s” küldése többeknek"
+msgid "Choose recipients for \"%(title)s\""
+msgstr "Címzettek kiválasztása ehhez: „%(title)s”"
 
-#: templates/pages/offer_send_bulk.html:13
+#: templates/pages/offer_send_bulk.html:10
+msgid ""
+"Nobody is selected automatically. Filter the list, choose the people who "
+"should receive this offer, then review the exact selection before sending."
+msgstr ""
+"Senki sincs automatikusan kiválasztva. Szűrje a listát, válassza ki az "
+"ajánlat címzettjeit, majd küldés előtt ellenőrizze a pontos kijelölést."
+
+#: templates/pages/offer_send_bulk.html:14
+msgid "Email is not configured in this environment. Nothing can be sent."
+msgstr "Az e-mail nincs beállítva ebben a környezetben. Semmi nem küldhető el."
+
+#: templates/pages/offer_send_bulk.html:16
+msgid ""
+"No active template exists for this email type. Choose another type or create "
+"its template first."
+msgstr ""
+"Ehhez az e-mail-típushoz nincs aktív sablon. Válasszon másik típust, vagy "
+"előbb hozza létre a sablonját."
+
+#: templates/pages/offer_send_bulk.html:20
 #: templates/panels/messaging_offer_email.html:19
 msgid "Email type"
 msgstr "E-mail típusa"
 
-#: templates/pages/offer_send_bulk.html:18
-msgid "Update preview"
-msgstr "Előnézet frissítése"
-
-#: templates/pages/offer_send_bulk.html:22
-msgid ""
-"No active template for this email type — nothing can be sent until one "
-"exists."
-msgstr ""
-"Nincs aktív sablon ehhez az e-mail típushoz – amíg nem készül egy, semmi nem "
-"küldhető el."
-
 #: templates/pages/offer_send_bulk.html:25
-#, python-format
-msgid "Preview, as %(name)s would receive it"
-msgstr "Előnézet, ahogy %(name)s megkapná"
+msgid "Lifecycle status"
+msgstr "Életciklus-állapot"
 
-#: templates/pages/offer_send_bulk.html:32
+#: templates/pages/offer_send_bulk.html:34
 #, python-format
-msgid "%(counter)s recipient"
-msgid_plural "%(counter)s recipients"
-msgstr[0] "%(counter)s címzett"
-msgstr[1] "%(counter)s címzett"
+msgid "Offer office — %(office)s"
+msgstr "Ajánlat irodája — %(office)s"
 
-#: templates/pages/offer_send_bulk.html:37
-msgid "Nobody in scope can be emailed this offer."
-msgstr "A hatókörben senkinek sem küldhető el ez az ajánlat."
+#: templates/pages/offer_send_bulk.html:39
+msgid "Search by name or email"
+msgstr "Keresés név vagy e-mail-cím alapján"
 
 #: templates/pages/offer_send_bulk.html:42
-#, python-format
-msgid ""
-"Capped at %(limit)s; %(extra)s further people were left out of this send."
-msgstr ""
-"Korlátozva %(limit)s főre; további %(extra)s személy kimaradt ebből a "
-"küldésből."
+msgid "Apply filters"
+msgstr "Szűrők alkalmazása"
 
-#: templates/pages/offer_send_bulk.html:49
-msgid "Excluded"
-msgstr "Kizárva"
+#: templates/pages/offer_send_bulk.html:43
+msgid "Changing filters clears the current selection."
+msgstr "A szűrők módosítása törli az aktuális kijelölést."
+
+#: templates/pages/offer_send_bulk.html:61
+#, python-format
+msgid "%(counter)s contact"
+msgid_plural "%(counter)s contacts"
+msgstr[0] "%(counter)s kapcsolat"
+msgstr[1] "%(counter)s kapcsolat"
 
 #: templates/pages/offer_send_bulk.html:62
-#: templates/pages/offer_send_bulk.html:64
-msgid "Send now"
-msgstr "Küldés most"
+msgid "selected"
+msgstr "kiválasztva"
+
+#: templates/pages/offer_send_bulk.html:63
+#, python-format
+msgid "%(count)s contacts in these results can receive this offer."
+msgstr "Ezek közül %(count)s kapcsolat kaphatja meg ezt az ajánlatot."
 
 #: templates/pages/offer_send_bulk.html:66
-msgid "Email is not configured in this environment."
-msgstr "Az e-mail nincs beállítva ebben a környezetben."
+msgid "Select all eligible in these results"
+msgstr "Az összes jogosult kiválasztása ezekben a találatokban"
+
+#: templates/pages/offer_send_bulk.html:67
+msgid "Clear selection"
+msgstr "Kijelölés törlése"
+
+#: templates/pages/offer_send_bulk.html:72
+msgid "Offer recipients"
+msgstr "Ajánlat címzettjei"
+
+#: templates/pages/offer_send_bulk.html:98
+msgid "No contacts match these filters."
+msgstr "Egyetlen kapcsolat sem felel meg ezeknek a szűrőknek."
+
+#: templates/pages/offer_send_bulk.html:103
+msgid "Review selected recipients"
+msgstr "Kiválasztott címzettek áttekintése"
+
+#: templates/pages/offer_send_bulk_preview.html:4
+msgid "Review offer email"
+msgstr "Ajánlati e-mail áttekintése"
+
+#: templates/pages/offer_send_bulk_preview.html:8
+msgid "Final review"
+msgstr "Végső áttekintés"
+
+#: templates/pages/offer_send_bulk_preview.html:9
+#, python-format
+msgid "Review \"%(title)s\" before sending"
+msgstr "A(z) „%(title)s” áttekintése küldés előtt"
+
+#: templates/pages/offer_send_bulk_preview.html:10
+msgid ""
+"The preview expires after 15 minutes. If anything changes, return to the "
+"recipient list and review it again."
+msgstr ""
+"Az előnézet 15 perc után lejár. Ha bármi megváltozik, térjen vissza a "
+"címzettlistához, és nézze át újra."
+
+#: templates/pages/offer_send_bulk_preview.html:14
+#, python-format
+msgid "%(counter)s selected recipient"
+msgid_plural "%(counter)s selected recipients"
+msgstr[0] "%(counter)s kiválasztott címzett"
+msgstr[1] "%(counter)s kiválasztott címzett"
+
+#: templates/pages/offer_send_bulk_preview.html:24
+#, python-format
+msgid "%(language)s · %(counter)s recipient"
+msgid_plural "%(language)s · %(counter)s recipients"
+msgstr[0] "%(language)s · %(counter)s címzett"
+msgstr[1] "%(language)s · %(counter)s címzett"
+
+#: templates/pages/offer_send_bulk_preview.html:25
+#, python-format
+msgid "Personalized example for %(name)s"
+msgstr "Személyre szabott példa: %(name)s"
+
+#: templates/pages/offer_send_bulk_preview.html:36
+#: templates/pages/offer_send_bulk_preview.html:38
+msgid ""
+"This sends a separate personalized email to every selected recipient. Email "
+"cannot be recalled."
+msgstr ""
+"Minden kiválasztott címzett külön, személyre szabott e-mailt kap. Az e-mail "
+"nem hívható vissza."
+
+#: templates/pages/offer_send_bulk_preview.html:38
+msgid "Send to selected recipients"
+msgstr "Küldés a kiválasztott címzetteknek"
+
+#: templates/pages/offer_send_bulk_preview.html:39
+msgid "Change recipients"
+msgstr "Címzettek módosítása"
 
 #: templates/pages/offer_template_form.html:4
 #: templates/pages/offer_template_form.html:9
@@ -8502,6 +8686,11 @@ msgstr "Ehhez az irodához még nincs nyitott állásajánlat."
 msgid "Job offer"
 msgstr "Állásajánlat"
 
+#: templates/panels/messaging_offer_email.html:25
+#: templates/panels/messaging_offer_email.html:30
+msgid "Send offer"
+msgstr "Ajánlat küldése"
+
 #: templates/panels/messaging_offer_email.html:30
 msgid ""
 "Sends the offer email now, in the worker's preferred language. It cannot be "
@@ -8518,6 +8707,17 @@ msgstr "Valódi e-mail hagyja el a rendszert. Nem lehet visszavonni."
 #, python-format
 msgid "Sends to %(address)s in this worker's preferred language."
 msgstr "Elküldi a(z) %(address)s címre a munkavállaló preferált nyelvén."
+
+#: templates/panels/messaging_offer_email.html:41
+msgid ""
+"Need to contact several people? Open Job offers and choose Send to many."
+msgstr ""
+"Több embert szeretne elérni? Nyissa meg az Állásajánlatokat, és válassza a "
+"Küldés több személynek lehetőséget."
+
+#: templates/panels/messaging_offer_email.html:42
+msgid "Open job offers"
+msgstr "Állásajánlatok megnyitása"
 
 # --- messaging / SMS ---
 #: templates/panels/messaging_sms.html:3
@@ -8888,6 +9088,65 @@ msgstr "A legutóbb frissített %(rail_limit)s látható."
 #: templates/partials/worker_rail_body.html:34
 msgid "Open People"
 msgstr "Emberek megnyitása"
+
+#~ msgid ""
+#~ "Authorized staff can create job offers and language-specific templates "
+#~ "from Offers, preview the exact recipients, and confirm a bulk email. On a "
+#~ "worker profile, the offer panel sends one selected offer in that worker's "
+#~ "preferred language."
+#~ msgstr ""
+#~ "Az arra jogosult felhasználók az Ajánlatok menüpontban állásajánlatokat "
+#~ "és nyelvspecifikus sablonokat hozhatnak létre, megtekinthetik a címzettek "
+#~ "pontos listáját, majd megerősíthetik a csoportos e-mail küldését. A "
+#~ "munkavállaló profilján az ajánlati panel egy kiválasztott ajánlatot küld "
+#~ "el a munkavállaló által előnyben részesített nyelven."
+
+#~ msgid "I have reviewed the recipient list"
+#~ msgstr "Ellenőriztem a címzettek listáját"
+
+#, python-format
+#~ msgid "Offer emailed to %(count)s people."
+#~ msgstr "Az ajánlat %(count)s személynek lett elküldve."
+
+#, python-format
+#~ msgid "Send \"%(title)s\" to many"
+#~ msgstr "A(z) „%(title)s” küldése többeknek"
+
+#~ msgid "Update preview"
+#~ msgstr "Előnézet frissítése"
+
+#~ msgid ""
+#~ "No active template for this email type — nothing can be sent until one "
+#~ "exists."
+#~ msgstr ""
+#~ "Nincs aktív sablon ehhez az e-mail típushoz – amíg nem készül egy, semmi "
+#~ "nem küldhető el."
+
+#, python-format
+#~ msgid "Preview, as %(name)s would receive it"
+#~ msgstr "Előnézet, ahogy %(name)s megkapná"
+
+#, python-format
+#~ msgid "%(counter)s recipient"
+#~ msgid_plural "%(counter)s recipients"
+#~ msgstr[0] "%(counter)s címzett"
+#~ msgstr[1] "%(counter)s címzett"
+
+#~ msgid "Nobody in scope can be emailed this offer."
+#~ msgstr "A hatókörben senkinek sem küldhető el ez az ajánlat."
+
+#, python-format
+#~ msgid ""
+#~ "Capped at %(limit)s; %(extra)s further people were left out of this send."
+#~ msgstr ""
+#~ "Korlátozva %(limit)s főre; további %(extra)s személy kimaradt ebből a "
+#~ "küldésből."
+
+#~ msgid "Excluded"
+#~ msgstr "Kizárva"
+
+#~ msgid "Send now"
+#~ msgstr "Küldés most"
 
 #~ msgid ""
 #~ "Enter one project year, compare projects in read-only workbooks, and "

@@ -127,7 +127,7 @@ HELP_GROUPS = [
                     {
                         "flag": "offer_emails",
                         "text": _(
-                            "Authorized staff can create job offers and language-specific templates from Offers, preview the exact recipients, and confirm a bulk email. On a worker profile, the offer panel sends one selected offer in that worker's preferred language."
+                            "Managers can open Send to many from Offers, filter the contact list, and deliberately select eligible recipients; nobody is selected by default. Contacts without email, opted out, blacklisted, or blocked by the staging allowlist stay visible with a disabled reason. Review the exact names and one personalized example per language, tick the review confirmation, then send. The preview expires after 15 minutes and any recipient change requires a fresh review. On a worker profile, the offer panel still sends one selected offer in that worker's preferred language."
                         ),
                     },
                 ),

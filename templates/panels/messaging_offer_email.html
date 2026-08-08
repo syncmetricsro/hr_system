@@ -1,4 +1,4 @@
-{% load i18n %}
+{% load i18n rbac %}
 <section class="panel workflow-panel">
   <p class="eyebrow">{% trans "Recruiting" %}</p>
   <h2>{% trans "Email a job offer" %}</h2>
@@ -34,6 +34,14 @@
       </p>
     {% endif %}
   </form>
+
+  {% can 'offer_email.bulk_send' as may_bulk %}
+  {% if may_bulk %}
+    <p class="muted">
+      {% blocktrans %}Need to contact several people? Open Job offers and choose Send to many.{% endblocktrans %}
+      <a href="{% url 'offer_list' %}">{% trans "Open job offers" %}</a>
+    </p>
+  {% endif %}
 
   {% if panel.recent_emails %}
     <ul class="plain-list">

@@ -1,0 +1,42 @@
+{% extends "layouts/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Review offer email" %} · {{ BRAND_NAME }}{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <p class="eyebrow">{% trans "Final review" %}</p>
+  <h1>{% blocktrans with title=offer.title %}Review "{{ title }}" before sending{% endblocktrans %}</h1>
+  <p>{% trans "The preview expires after 15 minutes. If anything changes, return to the recipient list and review it again." %}</p>
+</section>
+
+<section class="panel">
+  <h2>{% blocktrans count counter=selected|length %}{{ counter }} selected recipient{% plural %}{{ counter }} selected recipients{% endblocktrans %}</h2>
+  <ul class="plain-list recipient-review-list">
+    {% for person in selected %}
+      <li><strong>{{ person }}</strong> — {{ person.email }} — {{ person.preferred_language|default:"—"|upper }}</li>
+    {% endfor %}
+  </ul>
+</section>
+
+{% for preview in previews %}
+  <section class="panel offer-language-preview">
+    <p class="eyebrow">{% blocktrans with language=preview.language_label count counter=preview.count %}{{ language }} · {{ counter }} recipient{% plural %}{{ language }} · {{ counter }} recipients{% endblocktrans %}</p>
+    <p class="muted">{% blocktrans with name=preview.person %}Personalized example for {{ name }}{% endblocktrans %}</p>
+    <h2>{{ preview.subject }}</h2>
+    <pre>{{ preview.body }}</pre>
+  </section>
+{% endfor %}
+
+<form class="stack panel" method="post" action="{% url 'offer_send_bulk_confirm' offer.pk %}">
+  {% csrf_token %}
+  {{ form.preview_token }}
+  {{ form.confirm.errors }}
+  <label>{{ form.confirm }} {{ form.confirm.label }}</label>
+  <p class="action-consequence">{% trans "This sends a separate personalized email to every selected recipient. Email cannot be recalled." %}</p>
+  <div class="row-actions">
+    <button class="button button-primary button-physical" type="submit" data-tooltip-heading="{% trans 'Real-world action' %}" data-tooltip="{% trans 'This sends a separate personalized email to every selected recipient. Email cannot be recalled.' %}">{% trans "Send to selected recipients" %}</button>
+    <a class="button" href="{% url 'offer_send_bulk' offer.pk %}">{% trans "Change recipients" %}</a>
+  </div>
+</form>
+{% endblock %}

@@ -1481,6 +1481,121 @@ select {
   gap: var(--space-4);
 }
 
+/* Explicit offer-email recipient selection. A disabled contact remains
+   readable because the reason is useful; only the action is muted. */
+.recipient-picker {
+  margin-top: var(--space-4);
+}
+
+.recipient-picker-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.recipient-picker-toolbar p {
+  margin: 0;
+}
+
+.recipient-list {
+  display: grid;
+  gap: var(--space-2);
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.recipient-picker .recipient-row {
+  display: grid;
+  grid-template-columns: 2rem minmax(12rem, 1.35fr) minmax(13rem, 1.5fr) 5rem minmax(12rem, 1fr);
+  align-items: center;
+  gap: var(--space-3);
+  min-height: var(--tap-target);
+  padding: var(--space-3) var(--space-4);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.recipient-picker .recipient-row:hover {
+  border-color: var(--n300);
+}
+
+.recipient-picker .recipient-row-disabled {
+  background: var(--n100);
+  color: var(--muted);
+  cursor: not-allowed;
+}
+
+.recipient-picker .recipient-row-disabled:hover {
+  border-color: var(--line);
+}
+
+.recipient-person {
+  display: grid;
+  min-width: 0;
+}
+
+.recipient-person span,
+.recipient-language,
+.recipient-reason {
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.recipient-email,
+.recipient-reason {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.recipient-review-list {
+  columns: 2 18rem;
+  column-gap: var(--space-6);
+}
+
+.recipient-review-list li {
+  break-inside: avoid;
+}
+
+.offer-language-preview pre {
+  max-width: 100%;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font: inherit;
+}
+
+@media (max-width: 760px) {
+  .recipient-picker-toolbar {
+    align-items: stretch;
+  }
+
+  .recipient-picker-toolbar .row-actions,
+  .recipient-picker-toolbar .button {
+    width: 100%;
+  }
+
+  .recipient-picker .recipient-row {
+    grid-template-columns: 2rem minmax(0, 1fr);
+  }
+
+  .recipient-email,
+  .recipient-language,
+  .recipient-reason {
+    grid-column: 2;
+  }
+
+  .recipient-review-list {
+    columns: 1;
+  }
+}
+
 /* Responsive tabular records used by optional operational features. The
    wrapper owns horizontal overflow so a wide table never widens the page. */
 .data-table-scroll {

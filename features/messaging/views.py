@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+from django.conf import settings
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
+from django.db.models import Q
 from django.http import HttpRequest, HttpResponse, HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect
 from django.template.response import TemplateResponse
@@ -19,13 +21,16 @@ from core.offices.scoping import (
     scope_people,
 )
 from core.projects.models import Project
+from core.people.naming import fold_name
 from features.messaging.forms import (
-    BulkOfferEmailForm,
+    BulkOfferConfirmForm,
+    BulkOfferSelectionForm,
     JobOfferForm,
     OfferEmailTemplateForm,
     SendOfferEmailForm,
 )
 from features.messaging.models import (
+    EmailBatch,
     InboundMessage,
     JobOffer,
     MessageTemplate,
@@ -34,13 +39,17 @@ from features.messaging.models import (
     OutboundEmail,
 )
 from features.messaging.services import (
+    OfferPreviewInvalid,
     OfferTemplateMissing,
+    load_offer_batch_preview,
     offer_batch_limit,
     offer_email_block_reason,
+    offer_email_selection_block_reason,
     render_offer_email,
     send_offer_batch,
     send_offer_email,
     send_sms,
+    sign_offer_batch_preview,
     verify_twilio_signature,
 )
 from core.people.models import LifecycleStatus, Person
@@ -249,7 +258,9 @@ def offer_archive(request: HttpRequest, pk: int) -> HttpResponse:
     return redirect("offer_list")
 
 
-def _bulk_recipients(user, offer: JobOffer, office=None):
+def _bulk_recipients(
+    user, offer: JobOffer, *, office=None, lifecycle_status="", query=""
+):
     """Candidates for a bulk send, office-scoped.
 
     ``scope_people`` rather than a bare ``office__in``: a person with no office
@@ -262,67 +273,122 @@ def _bulk_recipients(user, offer: JobOffer, office=None):
         people = people.filter(office=office)
     elif offer.office_id:
         people = people.filter(office_id=offer.office_id)
+    if lifecycle_status in LifecycleStatus.values:
+        people = people.filter(lifecycle_status=lifecycle_status)
+    if query:
+        folded = fold_name(query)
+        lookup = Q(email__icontains=query) | Q(search_name__icontains=query.casefold())
+        if folded:
+            lookup |= Q(search_fold__contains=folded)
+        people = people.filter(lookup)
     return people.order_by("last_name", "first_name")
+
+
+def _bulk_filter_values(request: HttpRequest, offer: JobOffer):
+    source = request.POST if request.method == "POST" else request.GET
+    kind = source.get("kind") or OfferEmailKind.NEW_OFFER
+    if kind not in OfferEmailKind.values:
+        kind = OfferEmailKind.NEW_OFFER
+    status = source.get("lifecycle_status") or ""
+    if status not in LifecycleStatus.values:
+        status = ""
+    query = (source.get("q") or "").strip()[:255]
+    office_pk = source.get("office") or ""
+    office = None
+    if office_pk:
+        office = get_object_or_404(_scoped_offices(request.user), pk=office_pk)
+    return kind, status, query, office_pk, office
+
+
+def _recipient_rows(candidates):
+    rows = []
+    eligible_ids = []
+    for person in candidates:
+        reason = offer_email_selection_block_reason(person)
+        eligible = not reason
+        if eligible:
+            eligible_ids.append(person.pk)
+        rows.append({"person": person, "eligible": eligible, "reason": reason})
+    return rows, eligible_ids
+
+
+def _language_previews(offer, people, kind):
+    labels = dict(settings.LANGUAGES)
+    groups = {}
+    for person in people:
+        language, subject, body = render_offer_email(offer, person, kind)
+        group = groups.setdefault(
+            language,
+            {
+                "language": language,
+                "language_label": labels.get(language, language),
+                "count": 0,
+                "person": person,
+                "subject": subject,
+                "body": body,
+            },
+        )
+        group["count"] += 1
+    return list(groups.values())
 
 
 @require_action(Action.OFFER_EMAIL_BULK_SEND)
 def offer_send_bulk(request: HttpRequest, pk: int) -> HttpResponse:
+    """Select explicit recipients, then render the signed review step."""
     offer = get_object_or_404(JobOffer, pk=pk)
     _assert_offer_in_scope(request.user, offer)
-
-    form = BulkOfferEmailForm(
+    kind, status, query, office_pk, office = _bulk_filter_values(request, offer)
+    candidates = _bulk_recipients(
+        request.user,
+        offer,
+        office=office,
+        lifecycle_status=status,
+        query=query,
+    )
+    rows, eligible_ids = _recipient_rows(candidates)
+    eligible = candidates.filter(pk__in=eligible_ids)
+    limit = offer_batch_limit()
+    form = BulkOfferSelectionForm(
         request.POST or None,
         office_queryset=_scoped_offices(request.user),
+        recipient_queryset=eligible,
         status_choices=LifecycleStatus.choices,
+        batch_limit=limit,
     )
+    template_available = OfferEmailTemplate.objects.filter(
+        kind=kind, is_active=True
+    ).exists()
+    configured = email_configured()
 
-    kind = (request.POST or request.GET).get("kind") or OfferEmailKind.NEW_OFFER
-    status = (request.POST or request.GET).get("lifecycle_status") or ""
-    office_pk = (request.POST or request.GET).get("office") or ""
-
-    office = None
-    if office_pk:
-        office = get_object_or_404(_scoped_offices(request.user), pk=office_pk)
-
-    candidates = _bulk_recipients(request.user, offer, office=office)
-    if status:
-        candidates = candidates.filter(lifecycle_status=status)
-
-    limit = offer_batch_limit()
-    # Split before the cap so the preview can explain both exclusions and
-    # truncation, rather than silently showing a shorter list.
-    sendable, excluded = [], []
-    for person in candidates:
-        reason = offer_email_block_reason(person)
-        (excluded if reason else sendable).append((person, reason))
-    truncated = max(0, len(sendable) - limit)
-    sendable = sendable[:limit]
-
-    preview_error = ""
-    preview = None
-    if sendable:
-        try:
-            _language, subject, body = render_offer_email(offer, sendable[0][0], kind)
-            preview = {"subject": subject, "body": body, "person": sendable[0][0]}
-        except OfferTemplateMissing as exc:
-            preview_error = str(exc)
-
-    if request.method == "POST" and form.is_valid():
-        if preview_error:
-            messages.error(request, _("No active template for this email type."))
-        else:
-            batch = send_offer_batch(
-                offer,
-                [person for person, _reason in sendable],
-                form.cleaned_data["kind"],
-                actor=request.user,
+    if request.method == "POST":
+        if not configured:
+            form.add_error(None, _("Email is not configured in this environment."))
+        if not template_available:
+            form.add_error(None, _("No active template for this email type."))
+        if form.is_valid() and configured and template_available:
+            selected = list(
+                form.cleaned_data["recipients"].order_by("last_name", "first_name")
             )
-            messages.success(
-                request,
-                _("Offer emailed to %(count)s people.")
-                % {"count": batch.recipient_count},
-            )
-            return redirect("offer_list")
+            try:
+                previews = _language_previews(
+                    offer, selected, form.cleaned_data["kind"]
+                )
+            except OfferTemplateMissing:
+                form.add_error(None, _("No active template for this email type."))
+            else:
+                token = sign_offer_batch_preview(
+                    offer, form.cleaned_data["kind"], selected, actor=request.user
+                )
+                return TemplateResponse(
+                    request,
+                    "pages/offer_send_bulk_preview.html",
+                    {
+                        "offer": offer,
+                        "selected": selected,
+                        "previews": previews,
+                        "form": BulkOfferConfirmForm(initial={"preview_token": token}),
+                    },
+                )
 
     return TemplateResponse(
         request,
@@ -330,14 +396,117 @@ def offer_send_bulk(request: HttpRequest, pk: int) -> HttpResponse:
         {
             "offer": offer,
             "form": form,
-            "sendable": [person for person, _reason in sendable],
-            "excluded": excluded,
-            "truncated": truncated,
+            "rows": rows,
+            "eligible_count": len(eligible_ids),
             "limit": limit,
-            "preview": preview,
-            "preview_error": preview_error,
-            "email_configured": email_configured(),
+            "email_configured": configured,
+            "template_available": template_available,
             "kinds": OfferEmailKind.choices,
+            "statuses": LifecycleStatus.choices,
+            "offices": _scoped_offices(request.user),
+            "selected_kind": kind,
+            "selected_status": status,
+            "selected_office": office_pk,
+            "query": query,
+            "offer_office_label": offer.office,
+        },
+    )
+
+
+@require_POST
+@require_action(Action.OFFER_EMAIL_BULK_SEND)
+def offer_send_bulk_confirm(request: HttpRequest, pk: int) -> HttpResponse:
+    """Revalidate the signed preview, then execute it exactly once."""
+    offer = get_object_or_404(JobOffer, pk=pk)
+    _assert_offer_in_scope(request.user, offer)
+    form = BulkOfferConfirmForm(request.POST)
+    if not form.is_valid():
+        messages.error(request, _("Review the recipients and email content first."))
+        return redirect("offer_send_bulk", pk=offer.pk)
+    try:
+        payload = load_offer_batch_preview(
+            form.cleaned_data["preview_token"], offer, actor=request.user
+        )
+    except OfferPreviewInvalid as exc:
+        messages.error(request, str(exc))
+        return redirect("offer_send_bulk", pk=offer.pk)
+
+    existing = EmailBatch.objects.filter(request_token=payload["request_token"]).first()
+    if existing is not None:
+        return redirect("offer_batch_detail", pk=existing.pk)
+
+    recipient_ids = payload["recipient_ids"]
+    if len(recipient_ids) > offer_batch_limit():
+        messages.error(request, _("The selected recipient list is too large."))
+        return redirect("offer_send_bulk", pk=offer.pk)
+    people = list(
+        scope_people(
+            Person.objects.filter(is_archived=False, pk__in=recipient_ids),
+            request.user,
+        ).order_by("last_name", "first_name")
+    )
+    if {person.pk for person in people} != set(recipient_ids):
+        messages.error(
+            request,
+            _("The recipient list changed after preview. Review it again."),
+        )
+        return redirect("offer_send_bulk", pk=offer.pk)
+    changed = [
+        (person, offer_email_selection_block_reason(person)) for person in people
+    ]
+    changed = [(person, reason) for person, reason in changed if reason]
+    if changed or not offer.is_active or not email_configured():
+        messages.error(
+            request,
+            _("The recipient list changed after preview. Review it again."),
+        )
+        return redirect("offer_send_bulk", pk=offer.pk)
+    try:
+        _language_previews(offer, people, payload["kind"])
+    except OfferTemplateMissing:
+        messages.error(request, _("No active template for this email type."))
+        return redirect("offer_send_bulk", pk=offer.pk)
+
+    batch = send_offer_batch(
+        offer,
+        people,
+        payload["kind"],
+        actor=request.user,
+        request_token=payload["request_token"],
+    )
+    return redirect("offer_batch_detail", pk=batch.pk)
+
+
+@require_action(Action.OFFER_EMAIL_BULK_SEND)
+def offer_batch_detail(request: HttpRequest, pk: int) -> TemplateResponse:
+    batch = get_object_or_404(
+        EmailBatch.objects.select_related("offer", "created_by"), pk=pk
+    )
+    if batch.offer is not None:
+        _assert_offer_in_scope(request.user, batch.offer)
+    emails = list(batch.emails.select_related("person"))
+    if batch.offer is None:
+        # Once the offer is gone, every outcome must still supply an office-
+        # scoped person. An empty batch or a deleted person leaves no boundary
+        # to prove, so fail closed instead of exposing a guessed batch ID.
+        if not emails or any(email_record.person is None for email_record in emails):
+            raise PermissionDenied
+        for email_record in emails:
+            assert_person_in_scope(request.user, email_record.person)
+    counts = {status: 0 for status in OutboundEmail.Status.values}
+    for email_record in emails:
+        counts[email_record.status] += 1
+    return TemplateResponse(
+        request,
+        "pages/offer_batch_detail.html",
+        {
+            "batch": batch,
+            "emails": emails,
+            "sent_count": counts[OutboundEmail.Status.SENT],
+            "failed_count": counts[OutboundEmail.Status.FAILED],
+            "blocked_count": counts[OutboundEmail.Status.BLOCKED],
+            "queued_count": counts[OutboundEmail.Status.QUEUED],
+            "complete": len(emails) == batch.recipient_count,
         },
     )
 

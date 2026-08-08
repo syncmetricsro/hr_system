@@ -42,7 +42,10 @@ Last updated: 2026-08-05
   backend now serves encrypted payslips and the Manager-only structured
   job-offer email workflow; no separate mailbox variables or committed address
   are introduced. Keep `EMAIL_ALLOWED_RECIPIENTS` set to a controlled demo
-  inbox whenever SMTP is used outside production.
+  inbox whenever SMTP is used outside production. Bulk reviews expire after
+  `OFFER_EMAIL_PREVIEW_MAX_AGE` seconds (default `900`); keep the default unless
+  an explicitly reviewed operating requirement changes it. The independent
+  `OFFER_EMAIL_BATCH_LIMIT` default remains `100` and larger selections fail.
 - The `localhost:8001` runner selects `clients.corvinum_eu.local`, which disables
   TOTP entirely for fictional-data client testing, including for accounts with
   an existing confirmed device. Corvinum staging and production select
