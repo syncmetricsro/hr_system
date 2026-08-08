@@ -269,8 +269,15 @@ OFFER_EMAIL_PREVIEW_MAX_AGE = int(os.getenv("OFFER_EMAIL_PREVIEW_MAX_AGE", "900"
 OFFER_EMAIL_RETENTION_DAYS = int(os.getenv("OFFER_EMAIL_RETENTION_DAYS", "0"))
 
 # Master switch for TOTP authentication. Production-like settings leave this
-# enabled; a deliberately separate local/demo settings module may turn it off.
-TWO_FACTOR_AUTH_ENABLED = True
+# enabled; a deliberately separate local/demo settings module may turn it off,
+# and since 2026-08-09 a deployment may too.
+#
+# Env-overridable because a client test window needs it off for a stated period
+# and back on afterwards, and a release per flip makes "afterwards" the thing
+# that gets forgotten. Default stays True, so an environment that says nothing
+# keeps two-factor authentication. `accounts.W001` reports the switch being off
+# outside DEBUG, on every deploy, so a temporary exemption cannot go quiet.
+TWO_FACTOR_AUTH_ENABLED = env_bool("DJANGO_TWO_FACTOR_ENABLED", True)
 
 # Roles that must enroll a TOTP device (Stage B4b). Empty for Jober => zero
 # behavior change; CorvinumEU requires it for HR/admin/manager (§5.12) whenever

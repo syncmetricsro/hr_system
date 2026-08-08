@@ -1,5 +1,43 @@
 # Build Journal
 
+## 2026-08-09 - a deployment can switch two-factor off, and has to say so
+
+Clients test both staging apps until **20 August**. They have been given
+passwords and login details; a second factor would lock them out. The master
+switch existed but was hardcoded `True`, reachable only by a separate settings
+module — which is how `clients/corvinum_eu/local.py` turns it off for the
+localhost runner.
+
+Checked what was actually at risk before changing anything:
+
+```
+jober-staging     required roles []          devices 0   -> nobody is prompted
+corvinum-staging  required roles ['manager'] devices 1   -> manager login demands a code
+```
+
+So Jober had no lockout today and CorvinumEU had a real one. Both get the
+switch anyway: a voluntary enrolment on Jober during the window would become a
+barrier nobody planned.
+
+`TWO_FACTOR_AUTH_ENABLED` now reads `DJANGO_TWO_FACTOR_ENABLED`, **defaulting to
+on** — an environment that says nothing keeps two-factor authentication. The
+alternative, a settings-module change per client, would have made turning it
+back on a release, and "afterwards" is exactly the part that gets forgotten.
+
+**So the exemption announces itself.** `accounts.W001` reports the switch being
+off on any non-DEBUG deployment, on every deploy, until it is undone. DEBUG
+environments are exempt because the local demo runners disable it on purpose and
+a warning there would train people to ignore the warning.
+
+The gate itself needed no change: `_requires_second_factor` and
+`_role_requires_totp` both already consult the master switch, so an
+already-enrolled user signs in with a password and their device row is left
+alone. That is the property the promise rests on, and there is now a test that
+turns the switch off, signs in, turns it back on, and asserts the same account
+is asked for a code again.
+
+Jober 1199, CorvinumEU 771.
+
 ## 2026-08-09 - the email allowlist takes whole domains
 
 `EMAIL_ALLOWED_RECIPIENTS` already took several addresses - it has always been

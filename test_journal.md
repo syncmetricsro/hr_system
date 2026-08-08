@@ -1,5 +1,27 @@
 # Test Journal
 
+## 2026-08-09 - testing a switch by its promise, not its value
+
+- The test that matters is the **round trip**: enrol a device, switch two-factor
+  off, sign in with a password, switch it back on, and assert the same account
+  is sent to the verify step again. "We will re-enable it in August" is only
+  true if nobody has to re-enrol, and asserting the setting's value would not
+  have shown that.
+- The env override is read in a **fresh interpreter** per case, because
+  `settings.py` evaluates it at import: a `settings` fixture would test the
+  fixture, not the mapping. Three cases - unset, `0`, `1` - and the unset one is
+  the important one, since a default that silently flipped to off is the failure
+  nobody would notice.
+- The new check is tested for its **silence** as much as its warning: quiet when
+  two-factor is on, quiet under DEBUG where the local runners disable it
+  deliberately, loud only on a non-DEBUG deployment. A check that fires in
+  ordinary development gets filtered out of people's attention.
+- The existing `test_disabled_two_factor_bypasses_device_and_role_requirement`
+  already covered the disabled semantics, which is why this slice needed no
+  changes to the gate - worth noting that the test written months ago is what
+  made today's change a settings edit.
+- Suites: **Jober 1199 / CorvinumEU 771**.
+
 ## 2026-08-09 - asserting the decision, not just the feature
 
 - The test that earns its place is `test_a_domain_entry_does_not_cover_subdomains`.

@@ -110,3 +110,34 @@ def worker_email_allowlist_syntax_check(app_configs, **kwargs):
             id="mail.W002",
         )
     ]
+
+
+@register()
+def two_factor_disabled_check(app_configs, **kwargs):
+    """Report a deployment running with two-factor authentication switched off.
+
+    The switch exists so a client test window can be granted access without a
+    release per flip (2026-08-09). The risk of that convenience is that "we will
+    turn it back on" becomes nobody's job, so the exemption announces itself on
+    every deploy until it is undone.
+
+    DEBUG environments are exempt: the local demo runners disable it on purpose
+    and warning there would train people to ignore the warning.
+    """
+    if getattr(settings, "DEBUG", False):
+        return []
+    if getattr(settings, "TWO_FACTOR_AUTH_ENABLED", True):
+        return []
+    return [
+        CheckWarning(
+            "Two-factor authentication is disabled on a non-DEBUG deployment.",
+            hint=(
+                "DJANGO_TWO_FACTOR_ENABLED is off, so password alone reaches "
+                "every account including managers. Intended only for a stated, "
+                "time-boxed client test window - unset it (or set it to 1) as "
+                "soon as that window closes. Enrolled devices are kept, so "
+                "re-enabling restores each user's second factor unchanged."
+            ),
+            id="accounts.W001",
+        )
+    ]
