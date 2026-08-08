@@ -43,6 +43,26 @@ Jober staging's Forpsi port 465 endpoint) uses the inverse. `mail.E001` rejects
 both being enabled and `email_configured()` fails closed. Corvinum's STARTTLS
 configuration is unchanged.
 
+Amendment note, 2026-08-09: `EMAIL_ALLOWED_RECIPIENTS` accepts **whole domains**
+alongside exact addresses — an entry beginning with `@` matches every address at
+that domain. Listing individual testers turned out to be the wrong unit for how
+these environments are actually used: `jober-staging` is now the client's own
+testing environment and their people enter their own addresses.
+
+Matching is **exact by domain**: `@jober.sk` allows `anna@jober.sk` and refuses
+`anna@mail.jober.sk`. Subdomain matching was considered and rejected — it makes
+the blast radius invisible, since every present and future subdomain becomes
+sendable without the setting changing. A subdomain is listed separately when it
+is wanted.
+
+Two guards came with it, because the failure mode of this control is silence:
+a bare `@` matches nothing rather than everything, and `manage.py check`
+(`mail.W002`) reports any entry that can never match — `mozmail.com` without the
+leading `@` is read as an address nobody has. The refusal now names the address
+it refused, so a subdomain someone assumed was covered sends the reader to the
+setting rather than to the logs. `SMS_ALLOWED_RECIPIENTS` is deliberately
+unchanged: phone numbers have no domain.
+
 ## Context
 
 Jober could reach a worker by SMS only. `features/messaging` is Twilio-shaped end

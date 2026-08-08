@@ -69,3 +69,44 @@ def worker_email_allowlist_check(app_configs, **kwargs):
             id="mail.W001",
         )
     ]
+
+
+@register()
+def worker_email_allowlist_syntax_check(app_configs, **kwargs):
+    """Warn about an allowlist entry that can never match anything.
+
+    Two typos fail silently and identically from the office's side - the send
+    is refused and nothing says why:
+
+    * ``mozmail.com`` without the leading ``@`` is read as an exact address, and
+      nobody has that address;
+    * a bare ``@`` is a domain rule with no domain, which matches nothing by
+      design (reading it as "any domain" would unrestrict the environment).
+
+    Both are caught here rather than at send time, because ``manage.py check``
+    runs on every deploy and the operator sees it before the office does.
+    """
+    unusable = []
+    for raw in allowed_recipients():
+        entry = (raw or "").strip()
+        if not entry:
+            continue
+        if entry == "@":
+            unusable.append(entry)
+        elif "@" not in entry:
+            unusable.append(entry)
+    if not unusable:
+        return []
+    return [
+        CheckWarning(
+            "EMAIL_ALLOWED_RECIPIENTS contains entries that can never match: "
+            "%s." % ", ".join(unusable),
+            hint=(
+                "An entry is either an exact address (anna@example.com) or a "
+                "whole domain written with a leading @ (@example.com). An "
+                "entry with no @ is treated as an address nobody has; a bare @ "
+                "matches nothing on purpose."
+            ),
+            id="mail.W002",
+        )
+    ]

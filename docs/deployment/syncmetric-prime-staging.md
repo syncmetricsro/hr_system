@@ -373,6 +373,19 @@ Per-app extra config (from the owner's local `doppler run` — paste values into
   what stops a demo emailing a stranger. Empty means *unrestricted*, which is
   correct only in production. `manage.py check` reports `mail.W001` when a
   worker-email feature is on with real SMTP and no allowlist.
+
+  Entries are comma-separated and may be **whole domains**, which is usually
+  what a client-run test environment wants:
+
+  ```
+  EMAIL_ALLOWED_RECIPIENTS=@mozmail.com,@jober.sk,one@example.test
+  ```
+
+  A domain matches **that domain only** — `@jober.sk` refuses
+  `anna@mail.jober.sk`, so list a subdomain separately if it is used. An entry
+  with no `@` is read as an exact address nobody has, and a bare `@` matches
+  nothing; `mail.W002` reports both, so run `manage.py check` after changing
+  this rather than discovering it from a refused send.
 - **jober-staging, if offer emails are enabled** (ADR 0029): configure the
   complete `DJANGO_EMAIL_*` set plus the allowlist above. Forpsi port 465 uses
   implicit SSL: `DJANGO_EMAIL_USE_TLS=0`, `DJANGO_EMAIL_USE_SSL=1`. A STARTTLS

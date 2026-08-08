@@ -1,5 +1,45 @@
 # Build Journal
 
+## 2026-08-09 - the email allowlist takes whole domains
+
+`EMAIL_ALLOWED_RECIPIENTS` already took several addresses - it has always been
+comma-separated - but not a domain: the check compared the whole address, so
+`@jober.sk` matched only an address literally equal to `@jober.sk`, which is
+nothing. Listing individual testers turned out to be the wrong unit for how
+these environments are now used: `jober-staging` belongs to the client's own
+testing and their people enter their own addresses.
+
+An entry beginning with `@` is now a whole domain, mixed freely with exact
+addresses. **Matching is exact by domain**: `@jober.sk` allows `anna@jober.sk`
+and refuses `anna@mail.jober.sk`. Subdomain matching was offered and rejected -
+it makes the blast radius invisible, because every present and future subdomain
+becomes sendable without the setting changing. A subdomain gets listed
+separately when it is wanted, and there is a test asserting the refusal so the
+next reader does not "fix" it.
+
+Three details this control needed, all of them about failing loudly:
+
+- **A bare `@` matches nothing**, not everything. Read as "any domain" it would
+  silently unrestrict the environment - the opposite of what somebody typing
+  into an allowlist intends.
+- **The domain comes from the last `@`**, so a quoted local part cannot smuggle
+  one in: `"a@jober.sk"@evil.test` is an address at *evil.test* and is refused.
+- **`mail.W002`** reports an entry that can never match - `mozmail.com` without
+  the leading `@` is read as an address nobody has. That is the exact failure
+  this whole question came from: a setting that looks right, sends refused, no
+  visible reason. `manage.py check` runs on every deploy, so the operator sees
+  it before the office does.
+
+The refusal now names the address it refused. The likeliest refusal under exact
+matching is a subdomain someone assumed was covered, and naming it sends the
+reader to the setting instead of the logs. The allowlist itself stays out of the
+user-facing string - that belongs in the deploy check.
+
+SMS is deliberately untouched: phone numbers have no domain, and its entries are
+already normalised so spacing and dashes do not matter.
+
+Jober 1192, CorvinumEU 764, browser not re-run.
+
 ## 2026-08-08 - SMTP supports implicit SSL without weakening STARTTLS
 
 Jober's fictional-data staging mailbox uses Forpsi implicit SSL on port 465,

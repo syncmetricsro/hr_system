@@ -242,3 +242,118 @@ def test_check_is_quiet_under_debug(settings):
     settings.EMAIL_ALLOWED_RECIPIENTS = []
 
     assert worker_email_allowlist_check(None) == []
+
+
+# --- domain entries (2026-08-09) -------------------------------------------
+#
+# Listing every tester's address is the wrong unit for how these environments
+# are used: the client's own people enter their own addresses. An entry
+# beginning with @ is a whole domain.
+#
+# Matching is deliberately exact. @jober.sk allows anna@jober.sk and refuses
+# anna@mail.jober.sk, because subdomain matching makes the blast radius
+# invisible - every present and future subdomain becomes sendable without the
+# setting changing.
+
+DOMAIN = "@jober.sk"
+
+
+def test_a_domain_entry_allows_addresses_at_that_domain(settings):
+    settings.EMAIL_ALLOWED_RECIPIENTS = [DOMAIN]
+
+    assert recipient_allowed("anna@jober.sk") is True
+    assert recipient_allowed("someone.else@jober.sk") is True
+
+
+def test_a_domain_entry_refuses_other_domains(settings):
+    settings.EMAIL_ALLOWED_RECIPIENTS = [DOMAIN]
+
+    assert recipient_allowed("anna@notjober.sk") is False
+    assert recipient_allowed(A_REAL_LOOKING_ADDRESS) is False
+
+
+def test_a_domain_entry_does_not_cover_subdomains(settings):
+    """The decision, asserted, because it is the one a later reader will be
+    tempted to 'fix'. A subdomain is listed separately when it is wanted."""
+    settings.EMAIL_ALLOWED_RECIPIENTS = [DOMAIN]
+
+    assert recipient_allowed("anna@mail.jober.sk") is False
+
+    settings.EMAIL_ALLOWED_RECIPIENTS = [DOMAIN, "@mail.jober.sk"]
+    assert recipient_allowed("anna@mail.jober.sk") is True
+
+
+def test_domain_and_exact_entries_mix(settings):
+    settings.EMAIL_ALLOWED_RECIPIENTS = ["@mozmail.com", ALLOWED]
+
+    assert recipient_allowed("tester@mozmail.com") is True
+    assert recipient_allowed(ALLOWED) is True
+    assert recipient_allowed(A_REAL_LOOKING_ADDRESS) is False
+
+
+def test_domain_matching_ignores_case_and_whitespace(settings):
+    settings.EMAIL_ALLOWED_RECIPIENTS = ["  @Jober.SK  "]
+
+    assert recipient_allowed(" Anna@JOBER.sk ") is True
+
+
+def test_a_bare_at_entry_matches_nothing(settings):
+    """Read as 'any domain' it would silently unrestrict the environment, which
+    is the opposite of what somebody typing into an allowlist intends."""
+    settings.EMAIL_ALLOWED_RECIPIENTS = ["@"]
+
+    assert recipient_allowed(A_REAL_LOOKING_ADDRESS) is False
+    assert recipient_allowed("anyone@anywhere.test") is False
+
+
+def test_the_domain_is_taken_from_the_last_at(settings):
+    """A quoted local part must not be able to smuggle a domain in."""
+    settings.EMAIL_ALLOWED_RECIPIENTS = [DOMAIN]
+
+    assert recipient_allowed('"anna@jober.sk"@evil.test') is False
+
+
+def test_the_refusal_names_the_address(settings):
+    """The likeliest refusal is a subdomain somebody assumed was covered.
+    Naming it sends the reader to the setting instead of to the logs."""
+    from django.utils import translation
+
+    settings.EMAIL_ALLOWED_RECIPIENTS = [DOMAIN]
+
+    with translation.override("en"):
+        with pytest.raises(EmailRecipientNotAllowed) as raised:
+            assert_recipient_allowed("anna@mail.jober.sk")
+
+    assert "anna@mail.jober.sk" in str(raised.value)
+
+
+# --- the deploy check for unusable entries ---------------------------------
+
+
+def test_an_entry_without_an_at_is_reported(settings):
+    """mozmail.com instead of @mozmail.com: read as an address nobody has, so
+    every send is refused with nothing on screen explaining it."""
+    from core.checks import worker_email_allowlist_syntax_check
+
+    settings.EMAIL_ALLOWED_RECIPIENTS = ["mozmail.com"]
+
+    warnings = worker_email_allowlist_syntax_check(None)
+
+    assert [w.id for w in warnings] == ["mail.W002"]
+    assert "mozmail.com" in warnings[0].msg
+
+
+def test_a_bare_at_entry_is_reported(settings):
+    from core.checks import worker_email_allowlist_syntax_check
+
+    settings.EMAIL_ALLOWED_RECIPIENTS = ["@"]
+
+    assert [w.id for w in worker_email_allowlist_syntax_check(None)] == ["mail.W002"]
+
+
+def test_a_well_formed_list_is_quiet(settings):
+    from core.checks import worker_email_allowlist_syntax_check
+
+    settings.EMAIL_ALLOWED_RECIPIENTS = ["@mozmail.com", ALLOWED]
+
+    assert worker_email_allowlist_syntax_check(None) == []

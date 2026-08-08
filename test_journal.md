@@ -1,5 +1,26 @@
 # Test Journal
 
+## 2026-08-09 - asserting the decision, not just the feature
+
+- The test that earns its place is `test_a_domain_entry_does_not_cover_subdomains`.
+  Exact-domain matching is a *decision*, and it is the one a later reader will
+  be tempted to relax on the grounds that it is surprising. The test states the
+  refusal and then shows the remedy - listing the subdomain - in the same body.
+- `test_a_bare_at_entry_matches_nothing` guards the failure that would be
+  invisible: an `@` read as "any domain" unrestricts the environment while
+  looking like a tighter setting than before.
+- `test_the_domain_is_taken_from_the_last_at` covers `"a@jober.sk"@evil.test`.
+  Splitting on the first `@` is the obvious implementation and it is wrong.
+- The three check tests assert the **warning fires and the quiet case stays
+  quiet** - a check that warns about everything gets ignored, which is the same
+  as not having it.
+- Verified the new tests failing before keeping them: reverting the matcher to
+  exact-match-only failed four of them. Then, restoring with `git checkout`
+  wiped the unstaged implementation and it had to be re-applied - stash or copy
+  next time, `checkout` restores from the index and the index was empty.
+- Suites: **Jober 1192 / CorvinumEU 764** (browser not re-run - no template or
+  JS changed).
+
 ## 2026-08-08 - Implicit-SSL SMTP transport
 
 - Shared mail regression tests passed **24/24**, including Forpsi-style
