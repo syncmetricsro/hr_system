@@ -33,13 +33,58 @@ def allowed_recipients() -> list[str]:
     return list(getattr(settings, "EMAIL_ALLOWED_RECIPIENTS", []) or [])
 
 
+def _domain_of(address: str) -> str:
+    """The domain part, taken from the **last** ``@``.
+
+    Splitting on the first one would let a quoted local part smuggle a domain
+    in: ``"a@jober.sk"@evil.test`` is an address at *evil.test*.
+    """
+    _local, separator, domain = (address or "").strip().casefold().rpartition("@")
+    return domain if separator else ""
+
+
+def _split_entries(allowed):
+    """Sort the configured entries into exact addresses and domain rules.
+
+    An entry beginning with ``@`` is a whole domain; anything else is an exact
+    address, which is what every entry was before 2026-08-09.
+    """
+    exact, domains = set(), set()
+    for raw in allowed:
+        entry = (raw or "").strip().casefold()
+        if not entry:
+            continue
+        if entry.startswith("@"):
+            domain = entry[1:]
+            # A bare "@" must match nothing. Read as "any domain" it would
+            # silently unrestrict the environment - the opposite of what
+            # somebody typing into an allowlist intends.
+            if domain:
+                domains.add(domain)
+            continue
+        exact.add(entry)
+    return exact, domains
+
+
 def recipient_allowed(address: str) -> bool:
+    """Whether this environment may email ``address``.
+
+    Entries are exact addresses or, since 2026-08-09, whole domains written as
+    ``@example.com``. Domain matching is **exact**: ``@jober.sk`` allows
+    ``anna@jober.sk`` and refuses ``anna@mail.jober.sk``. Subdomain matching
+    would make the blast radius invisible - every present and future subdomain
+    becomes sendable without the setting changing - so a subdomain is listed
+    separately when it is wanted.
+    """
     allowed = allowed_recipients()
     if not allowed:
         return True
-    return (address or "").strip().casefold() in {
-        entry.strip().casefold() for entry in allowed
-    }
+    candidate = (address or "").strip().casefold()
+    exact, domains = _split_entries(allowed)
+    if candidate in exact:
+        return True
+    domain = _domain_of(candidate)
+    return bool(domain) and domain in domains
 
 
 def assert_recipient_allowed(address: str) -> None:
@@ -48,8 +93,17 @@ def assert_recipient_allowed(address: str) -> None:
     password or a PDF for a send that is about to be refused is worse than
     wasteful, because the artefact then exists without a corresponding email."""
     if not recipient_allowed(address):
+        # Name the address. The likeliest refusal is a subdomain somebody
+        # assumed a domain entry covered, and "some address was refused" sends
+        # them to the logs; this sends them to the setting. The allowlist
+        # itself stays out of a user-facing string - it belongs in the deploy
+        # check, which the operator reads and the office does not.
         raise EmailRecipientNotAllowed(
-            _("This environment may only email its configured test addresses.")
+            _(
+                "This environment may only email its configured test "
+                "addresses; %(address)s is not one of them."
+            )
+            % {"address": (address or "").strip()}
         )
 
 

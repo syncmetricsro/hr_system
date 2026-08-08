@@ -774,11 +774,12 @@ msgstr "Skúšobný deň neúspešný"
 msgid "Trial no-show"
 msgstr "Skúšobný deň – nedostavil sa"
 
-#: core/mail.py:52
-msgid "This environment may only email its configured test addresses."
-msgstr ""
-"Toto prostredie môže posielať e-maily len na nakonfigurované testovacie "
-"adresy."
+#: core/mail.py:103
+#, python-format
+msgid ""
+"This environment may only email its configured test addresses; %(address)s "
+"is not one of them."
+msgstr "Toto prostredie smie posielať e-maily len na nastavené testovacie adresy; %(address)s medzi ne nepatrí."
 
 #: core/media.py:167
 msgid "File is too large (max 10MB)."
@@ -5277,7 +5278,7 @@ msgstr "Zoznam vybraných príjemcov je príliš veľký."
 msgid "The recipient list changed after preview. Review it again."
 msgstr "Zoznam príjemcov sa po náhľade zmenil. Skontrolujte ho znova."
 
-#: features/messaging/views.py:519
+#: features/messaging/views.py:523
 msgid "Template saved."
 msgstr "Šablóna bola uložená."
 
@@ -9015,6 +9016,11 @@ msgstr "Zobrazuje sa %(rail_limit)s naposledy aktualizovaných."
 #: templates/partials/worker_rail_body.html:34
 msgid "Open People"
 msgstr "Otvoriť Ľudia"
+
+#~ msgid "This environment may only email its configured test addresses."
+#~ msgstr ""
+#~ "Toto prostredie môže posielať e-maily len na nakonfigurované testovacie "
+#~ "adresy."
 
 #~ msgid ""
 #~ "Authorized staff can create job offers and language-specific templates "

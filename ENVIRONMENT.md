@@ -42,7 +42,16 @@ Last updated: 2026-08-05
   backend now serves encrypted payslips and the Manager-only structured
   job-offer email workflow; no separate mailbox variables or committed address
   are introduced. Keep `EMAIL_ALLOWED_RECIPIENTS` set to a controlled demo
-  inbox whenever SMTP is used outside production. Bulk reviews expire after
+  inbox whenever SMTP is used outside production. It is comma-separated, and
+  since 2026-08-09 an entry beginning with `@` is a **whole domain** —
+  `@mozmail.com,@jober.sk,one@example.test` mixes both forms. Domain matching is
+  **exact**: `@jober.sk` allows `anna@jober.sk` and refuses
+  `anna@mail.jober.sk`, so a subdomain is listed separately when it is wanted.
+  An entry with no `@` is treated as an exact address nobody has, and a bare `@`
+  matches nothing; `manage.py check` reports both (`mail.W002`). Empty still
+  means unrestricted, which is production's setting. `SMS_ALLOWED_RECIPIENTS`
+  has no equivalent — phone numbers have no domain, and its entries are
+  normalised so spacing and dashes do not matter. Bulk reviews expire after
   `OFFER_EMAIL_PREVIEW_MAX_AGE` seconds (default `900`); keep the default unless
   an explicitly reviewed operating requirement changes it. The independent
   `OFFER_EMAIL_BATCH_LIMIT` default remains `100` and larger selections fail.

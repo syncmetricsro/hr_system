@@ -776,9 +776,12 @@ msgstr "A próbanap sikertelen"
 msgid "Trial no-show"
 msgstr "A próbanapon nem jelent meg"
 
-#: core/mail.py:52
-msgid "This environment may only email its configured test addresses."
-msgstr "Ez a környezet csak a beállított teszt e-mail címekre küldhet levelet."
+#: core/mail.py:103
+#, python-format
+msgid ""
+"This environment may only email its configured test addresses; %(address)s "
+"is not one of them."
+msgstr "Ez a környezet csak a beállított tesztcímekre küldhet e-mailt; a(z) %(address)s nem tartozik közéjük."
 
 #: core/media.py:167
 msgid "File is too large (max 10MB)."
@@ -5332,7 +5335,7 @@ msgstr "A kiválasztott címzettek listája túl nagy."
 msgid "The recipient list changed after preview. Review it again."
 msgstr "A címzettek listája az előnézet óta megváltozott. Nézze át újra."
 
-#: features/messaging/views.py:519
+#: features/messaging/views.py:523
 msgid "Template saved."
 msgstr "A sablon elmentve."
 
@@ -9088,6 +9091,10 @@ msgstr "A legutóbb frissített %(rail_limit)s látható."
 #: templates/partials/worker_rail_body.html:34
 msgid "Open People"
 msgstr "Emberek megnyitása"
+
+#~ msgid "This environment may only email its configured test addresses."
+#~ msgstr ""
+#~ "Ez a környezet csak a beállított teszt e-mail címekre küldhet levelet."
 
 #~ msgid ""
 #~ "Authorized staff can create job offers and language-specific templates "

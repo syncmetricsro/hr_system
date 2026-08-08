@@ -777,9 +777,12 @@ msgstr "Пробний день не пройдено"
 msgid "Trial no-show"
 msgstr "Не з'явився на пробний день"
 
-#: core/mail.py:52
-msgid "This environment may only email its configured test addresses."
-msgstr "Це середовище може надсилати листи лише на налаштовані тестові адреси."
+#: core/mail.py:103
+#, python-format
+msgid ""
+"This environment may only email its configured test addresses; %(address)s "
+"is not one of them."
+msgstr "Це середовище може надсилати листи лише на налаштовані тестові адреси; %(address)s не є однією з них."
 
 #: core/media.py:167
 msgid "File is too large (max 10MB)."
@@ -5310,7 +5313,7 @@ msgstr "Список вибраних одержувачів завеликий.
 msgid "The recipient list changed after preview. Review it again."
 msgstr "Список одержувачів змінився після перегляду. Перевірте його ще раз."
 
-#: features/messaging/views.py:519
+#: features/messaging/views.py:523
 msgid "Template saved."
 msgstr "Шаблон збережено."
 
@@ -9060,6 +9063,10 @@ msgstr "Показано %(rail_limit)s останніх оновлених."
 #: templates/partials/worker_rail_body.html:34
 msgid "Open People"
 msgstr "Відкрити Люди"
+
+#~ msgid "This environment may only email its configured test addresses."
+#~ msgstr ""
+#~ "Це середовище може надсилати листи лише на налаштовані тестові адреси."
 
 #~ msgid ""
 #~ "Authorized staff can create job offers and language-specific templates "
