@@ -1,5 +1,51 @@
 # Deployment Journal
 
+## 2026-08-08 - Jober Forpsi implicit-SSL SMTP enabled
+
+Deployed exact `main` **`83a7079`** to **`jober-staging` only** as
+`jober-platform:demo-83a7079` (source image digest
+`sha256:4f78eebb5cd7d23c59582b5467455dc06f2ccd12e8ff9ad64dc2c62b2dd61fab`),
+streamed through Dokku `git:load-image`. Corvinum was not redeployed; its
+existing STARTTLS behavior is unchanged. The shared settings now support
+Forpsi implicit SSL on port 465 and reject simultaneous STARTTLS/SSL with
+`mail.E001`.
+
+**No seed, account, reset, migration write or provider-send command ran.**
+Dokku found no predeploy, release or postdeploy task. Pre- and post-release
+counts remained 11 users, 2 people, zero projects, 17 audit events, zero offers,
+one client-created offer template, and zero email batches/outbound emails.
+
+The nine approved mail keys were synchronized from the scoped Doppler
+configuration to Dokku only after the SSL-capable image was healthy. The sync
+validated every key, shell-escaped each value and suppressed Dokku output; no
+password, token, allowlisted address or other secret value entered the build,
+terminal output or journal. The app restarted cleanly. Value-free runtime checks
+confirmed every value present, port 465, implicit SSL on, STARTTLS off, the
+expected testing sender, a non-empty allowlist and `email_configured() == True`.
+An authenticated SMTP connection opened and closed successfully without
+sending a message.
+
+`check --deploy`, `migrate --check`, public HTTPS smoke and the application-log
+scan passed. Jober currently has two non-archived contacts, neither with an
+email address, so neither is selectable yet. For the controlled manual test,
+Jober must assign one fictional person an address already present in the
+staging allowlist and create a fictional offer; no application data was added
+on their behalf.
+
+Pre-deploy gate: production/runtime image, no-Node and vendor checks, Ruff,
+both client system/migration checks, **Jober 1,181 passed / 23 skipped** and
+**CorvinumEU 753 passed / 18 skipped / 354 deselected**. The focused shared-mail
+lane passed 24/24. Browser tests were not rerun because this release changes no
+route, template, JavaScript or CSS; the immediately preceding messaging release
+passed 73/73.
+
+Rollback target:
+
+```bash
+ssh syncmetric-prime-dokku \
+  "git:from-image jober-staging jober-platform:demo-db34b94"
+```
+
 ## 2026-08-08 - Explicit offer-recipient selection deployed to Jober
 
 Deployed exact `main` **`db34b94`** to **`jober-staging` only** as
