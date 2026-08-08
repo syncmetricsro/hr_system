@@ -1,5 +1,50 @@
 # Deployment Journal
 
+## 2026-08-08 - Corvinum structured offer email deployed with SMTP held for rotation
+
+Deployed exact `main` **`db7ae4d`** to **`corvinum-staging` only** as
+`jober-platform:corvinum-demo-db7ae4d` (source image ID
+`sha256:9507957ddb2580819411646decccae4bf15bca33fd76e87f1e5b99b3a0a42b58`),
+streamed through Dokku `git:load-image`. Jober was not deployed. The release
+enables the Manager/HR Admin structured job-offer workspace for CorvinumEU while
+keeping worker SMS and the Twilio webhook absent.
+
+**No seed or account command ran.** Dokku found no predeploy, release or
+postdeploy task. The only database write was `migrate --noinput`, which applied
+the three existing messaging migrations (`0001` through `0003`). The
+certificate policy report found zero disallowed records with files.
+
+The pre-release mail audit found that Doppler held the required SMTP settings
+and one controlled recipient allowlist entry, while the Dokku app had not yet
+received TLS, the explicit sender or the allowlist. During synchronization,
+Dokku unexpectedly echoed the configured values, including the SMTP password,
+into command output. Treat that staging mailbox password as exposed. The app's
+copied password was immediately replaced with an invalid sentinel and its email
+backend changed to Django's console backend. **Do not perform a live send until
+the Forpsi mailbox password is rotated, the new value replaces the old Doppler
+secret, and the eight mail settings are re-synchronized without printable
+output.** No provider send was attempted in this release.
+
+Live verification: `check --deploy` and `migrate --check` passed; both localized
+`/sk/offers/` and `/hu/offers/` routes exist and redirect unauthenticated users
+to the matching login page; feature inspection confirms offer email on,
+messaging installed and worker SMS off. `deploy_smoke.sh --https` passed health,
+login/CSRF, fingerprinted static, X-Frame-Options and HSTS. Dokku startup and
+port checks passed and the reviewed release logs contain no application error.
+
+Pre-deploy gates on `db7ae4d`: Jober **1,160 passed / 23 skipped**,
+CorvinumEU **749 passed / 18 skipped / 337 deselected**, Playwright **72
+passed**. Production image/static checks, vendor integrity, no-Node enforcement,
+Ruff, dependency direction, both migration lanes and PO/MO synchronization all
+passed.
+
+Rollback target:
+
+```bash
+ssh syncmetric-prime-dokku \
+  "git:from-image corvinum-staging jober-platform:demo-6b55835"
+```
+
 ## 2026-08-06 - Current Finance Help deployed to Jober only
 
 Deployed exact `main` merge **`5402728`** to **`jober-staging` only** as

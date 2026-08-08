@@ -1,5 +1,21 @@
 # Test Journal
 
+## 2026-08-08 - Corvinum offer email release gate
+
+- Full pre-deploy lanes on `db7ae4d`: **Jober 1,160 passed / 23 skipped;
+  CorvinumEU 749 passed / 18 skipped / 337 deselected; Playwright 72 passed**.
+  The browser lane includes six offer-email cases and runs with Django's console
+  backend inside isolated fictional-data stacks.
+- Production image/static collection, dependency and vendor integrity, no-Node
+  enforcement, Ruff, dependency direction, Django checks, both migration lanes
+  and committed PO/MO synchronization all passed.
+- Live read-only checks confirmed the localized offer routes, Corvinum's enabled
+  offer-email feature, installed messaging module and disabled worker SMS. The
+  external smoke gate passed health, login/CSRF, static, X-Frame-Options and
+  HSTS. No live provider email was sent; SMTP remains deliberately disabled
+  pending rotation of a staging credential exposed by deployment command
+  output.
+
 ## 2026-08-07 - CorvinumEU offer email stays narrow
 
 - Corvinum-specific regressions prove Manager navigation and workspace access,
