@@ -39,6 +39,15 @@ passed**. Production image/static checks, vendor integrity, no-Node enforcement,
 Ruff, dependency direction, both migration lanes and PO/MO synchronization all
 passed.
 
+**Credential follow-up, 2026-08-08:** the owner rotated the Forpsi mailbox
+password and replaced the invalid sentinel in the scoped Doppler configuration.
+Only the rotated password and SMTP backend were synchronized to Dokku with all
+command output suppressed. A value-free runtime check confirmed all eight mail
+settings are present, SMTP and TLS are enabled, the sender is correct, the
+rotated password is installed and the staging recipient allowlist remains set.
+`check --deploy`, HTTPS smoke and the application-error log scan passed. Live
+delivery itself was deliberately left for the owner's controlled manual test.
+
 Rollback target:
 
 ```bash
