@@ -55,6 +55,14 @@ Last updated: 2026-08-05
   `OFFER_EMAIL_PREVIEW_MAX_AGE` seconds (default `900`); keep the default unless
   an explicitly reviewed operating requirement changes it. The independent
   `OFFER_EMAIL_BATCH_LIMIT` default remains `100` and larger selections fail.
+- `DJANGO_TWO_FACTOR_ENABLED` is the master switch for TOTP. **Default on**;
+  an environment that says nothing keeps two-factor authentication. Set it to
+  `0` only for a stated, time-boxed reason — a client test window where the
+  office has been given passwords and a second factor would lock them out.
+  While it is off, `manage.py check` reports `accounts.W001` on every deploy, so
+  the exemption cannot go quiet. Turning it back on needs only the variable:
+  enrolled devices are kept, so each user's second factor returns unchanged and
+  nobody re-enrols.
 - SMTP transport security is explicit and mutually exclusive. Providers using
   STARTTLS (normally port 587) set `DJANGO_EMAIL_USE_TLS=1` and
   `DJANGO_EMAIL_USE_SSL=0`; providers using implicit SSL (normally port 465)
